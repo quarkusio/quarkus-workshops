@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.quarkus.workshop</groupId>
+        <artifactId>super-heroes</artifactId>
+    </parent>
+
+    <groupId>io.quarkus.workshopsuper-heroes</groupId>
+    <artifactId>docs</artifactId>
+    <name>Quarkus Workshop :: Super-Heroes :: Docs</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.jeluard</groupId>
+        <artifactId>plantuml-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <executions>
+          <!--<execution>-->
+          <!--<id>output-epub</id>-->
+          <!--<phase>generate-resources</phase>-->
+          <!--<goals>-->
+          <!--<goal>process-asciidoc</goal>-->
+          <!--</goals>-->
+          <!--<configuration>-->
+          <!--<sourceDocumentName>spine.adoc</sourceDocumentName>-->
+          <!--<outputFile>${project.build.directory}/generated-asciidoc/${project.build.finalName}.epub</outputFile>-->
+          <!--<backend>epub3</backend>-->
+          <!--</configuration>-->
+          <!--</execution>-->
+          <!--<execution>-->
+          <!--<id>output-kf8</id>-->
+          <!--<phase>generate-resources</phase>-->
+          <!--<goals>-->
+          <!--<goal>process-asciidoc</goal>-->
+          <!--</goals>-->
+          <!--<configuration>-->
+          <!--<sourceDocumentName>spine.adoc</sourceDocumentName>-->
+          <!--<outputFile>${project.build.directory}/generated-asciidoc/${project.build.finalName}.epub</outputFile>-->
+          <!--<backend>epub3</backend>-->
+          <!--<attributes>-->
+          <!--<ebook-format>kf8</ebook-format>-->
+          <!--</attributes>-->
+          <!--</configuration>-->
+          <!--</execution>-->
+          <!--<execution>-->
+          <!--<id>output-pdf</id>-->
+          <!--<phase>generate-resources</phase>-->
+          <!--<goals>-->
+          <!--<goal>process-asciidoc</goal>-->
+          <!--</goals>-->
+          <!--<configuration>-->
+          <!--<sourceDocumentName>spine.adoc</sourceDocumentName>-->
+          <!--<outputFile>${project.build.directory}/generated-asciidoc/${project.build.finalName}.pdf</outputFile>-->
+          <!--<backend>pdf</backend>-->
+          <!--</configuration>-->
+          <!--</execution>-->
+          <execution>
+            <id>output-html</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <sourceDocumentName>spine.adoc</sourceDocumentName>
+              <outputFile>${project.build.directory}/generated-asciidoc/${project.build.finalName}.html</outputFile>
+              <backend>html5</backend>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
