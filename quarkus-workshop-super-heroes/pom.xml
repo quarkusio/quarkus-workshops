@@ -19,14 +19,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.quarkus.workshop</groupId>
-    <artifactId>super-heroes</artifactId>
+    <groupId>io.quarkus.workshop.super-heroes</groupId>
+    <artifactId>parent-pom</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes</name>
 
     <modules>
         <module>docs</module>
-        <module>demo-99-final</module>
+        <module>exercise-99-final</module>
     </modules>
 </project>

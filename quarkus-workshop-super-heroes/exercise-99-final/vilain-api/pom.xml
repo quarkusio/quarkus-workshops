@@ -20,20 +20,12 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>parent-pom</artifactId>
-        <version>1.0</version>
+        <artifactId>exercise</artifactId>
+        <version>99</version>
     </parent>
 
-    <artifactId>exercise</artifactId>
+    <artifactId>vilain-api</artifactId>
     <version>99</version>
-    <packaging>pom</packaging>
-    <name>Quarkus Workshop :: Super-Heroes :: Final</name>
+    <name>Quarkus Workshop :: Super-Heroes :: Final :: Vilain API</name>
 
-    <modules>
-        <module>fight-api</module>
-        <module>hero-api</module>
-        <module>super-heroes-load</module>
-        <module>super-heroes-ui</module>
-        <module>vilain-api</module>
-    </modules>
 </project>
