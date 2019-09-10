@@ -20,9 +20,6 @@ out/
 .idea_modules/
 
 # Package Files #
-*.jar
-*.war
-*.ear
 *.zip
 *.tar.gz
 *.rar
