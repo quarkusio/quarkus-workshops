@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-
 @Path("/api/villains")
 @Produces(MediaType.APPLICATION_JSON)
 public class VillainResource {
@@ -17,19 +16,18 @@ public class VillainResource {
     VillainService service;
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public List<Villain> getAllVilains() {
-        return service.getAllVilains();
+    public List<Villain> getAllVillains() {
+        return service.getAllVillains();
+    }
+
+    @GET
+    @Path("/{name}")
+    public Villain getVillain(@PathParam("name") String name) {
+        return service.getVillain(name);
     }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{name}")
-    public Villain getVilain(@PathParam("name") String name) {
-        return service.getVilain(name);
-    }
-
-
     @Path("/ping")
     public String ping() {
         return "ping villains";

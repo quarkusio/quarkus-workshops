@@ -10,11 +10,11 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 @Transactional(SUPPORTS)
 public class VillainService {
 
-    public List<Villain> getAllVilains() {
+    public List<Villain> getAllVillains() {
         return Villain.listAll();
     }
 
-    public Villain getVilain(String name) {
+    public Villain getVillain(String name) {
         return Villain.findByName(name);
     }
 }

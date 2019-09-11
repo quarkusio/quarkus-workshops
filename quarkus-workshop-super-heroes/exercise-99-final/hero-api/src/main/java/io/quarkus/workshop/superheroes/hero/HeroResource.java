@@ -16,13 +16,11 @@ public class HeroResource {
     HeroService service;
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
     public List<Hero> getAllHeroes() {
         return service.getAllHeroes();
     }
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
     @Path("/{name}")
     public Hero getHero(@PathParam("name") String name) {
         return service.getHero(name);
