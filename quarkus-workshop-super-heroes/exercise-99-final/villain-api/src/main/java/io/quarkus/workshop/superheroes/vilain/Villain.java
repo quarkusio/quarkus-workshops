@@ -16,4 +16,8 @@ public class Villain extends PanacheEntity {
     @Column(columnDefinition="TEXT")
     public String powers;
 
+    public static Villain findByName(String name){
+        return find("name", name).firstResult();
+    }
+
 }

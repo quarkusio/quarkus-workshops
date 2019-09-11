@@ -13,7 +13,10 @@ public class Hero extends PanacheEntity {
     public int level;
     public String picture;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     public String powers;
 
+    public static Hero findByName(String name) {
+        return find("name", name).firstResult();
+    }
 }
