@@ -34,6 +34,6 @@
         <module>hero-api</module>
         <module>super-heroes-load</module>
         <module>super-heroes-ui</module>
-        <module>vilain-api</module>
+        <module>villain-api</module>
     </modules>
 </project>
