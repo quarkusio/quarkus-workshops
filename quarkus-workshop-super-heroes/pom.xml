@@ -69,6 +69,8 @@
         <version.jruby>9.2.7.0</version.jruby>
         <version.asciidoctorj>2.1.0</version.asciidoctorj>
         <version.asciidoctorj.pdf>1.5.0-beta.5</version.asciidoctorj.pdf>
+        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
+        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
         <!-- Java -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

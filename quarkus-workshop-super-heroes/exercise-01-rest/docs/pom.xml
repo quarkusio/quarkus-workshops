@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.quarkus.workshop.super-heroes</groupId>
+        <artifactId>exercise</artifactId>
+        <version>01</version>
+    </parent>
+
+    <artifactId>docs</artifactId>
+    <version>01</version>
+    <name>Quarkus Workshop :: Super-Heroes :: REST :: Docs</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <configuration>
+                    <relativeBaseDir>true</relativeBaseDir>
+                    <attributes>
+                        <!-- Allows access to remote files (e.g. code on external GitHub) -->
+                        <allow-uri-read/>
+                        <github-raw>${github.raw}</github-raw>
+                        <github-url>${github.url}</github-url>
+                    </attributes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>output-pdf</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDocumentName>spine.adoc</sourceDocumentName>
+                            <outputFile>${project.build.directory}/generated-asciidoc/${project.build.finalName}.pdf</outputFile>
+                            <backend>pdf</backend>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

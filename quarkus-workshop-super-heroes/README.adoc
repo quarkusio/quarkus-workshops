@@ -1,0 +1,6 @@
+= Workshop Super Heroes
+
+== Generate the documentation
+
+You can either generate the documentation for each exercise or for the entire workshop.
+For that, you just run the Maven command `mvn clean generate-resources` under an `docs` directory.

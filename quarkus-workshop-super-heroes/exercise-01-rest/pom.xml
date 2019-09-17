@@ -30,6 +30,7 @@
     <name>Quarkus Workshop :: Super-Heroes :: REST</name>
 
     <modules>
+        <module>docs</module>
         <module>hero-api</module>
         <module>super-heroes-ui</module>
     </modules>
