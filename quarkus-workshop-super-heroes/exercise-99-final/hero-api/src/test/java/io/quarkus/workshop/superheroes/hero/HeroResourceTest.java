@@ -6,7 +6,6 @@ import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ import static org.hamcrest.CoreMatchers.is;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class HeroResourceTest {
 
-    public static final int NB_HEROES = 951;
+    private static final int NB_HEROES = 951;
 
     @Container
     public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
@@ -46,7 +45,7 @@ public class HeroResourceTest {
         );
 
     @Test
-    public void shouldNotGetRandomHero() {
+    void shouldNotGetRandomHero() {
         String uuid = UUID.randomUUID().toString();
         given()
             .pathParam("name", uuid)
@@ -56,7 +55,7 @@ public class HeroResourceTest {
     }
 
     @Test
-    public void shouldPingHeroEndpoint() {
+    void shouldPingHeroEndpoint() {
         given()
             .when().get("/api/heroes/ping")
             .then()
@@ -99,7 +98,6 @@ public class HeroResourceTest {
         assertEquals(NB_HEROES + 1, heroes.size());
     }
 
-    @NotNull
     private TypeRef<List<Hero>> getHeroTypeRef() {
         return new TypeRef<List<Hero>>() {
             // Kept empty on purpose

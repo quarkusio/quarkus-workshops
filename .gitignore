@@ -25,4 +25,5 @@ out/
 *.rar
 **/target
 *dummy*
+ObjectStore
 

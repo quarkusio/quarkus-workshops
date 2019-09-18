@@ -1,11 +1,10 @@
 package io.quarkus.workshop.superheroes.vilain;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.validation.Valid;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/api/villains")
@@ -24,6 +23,12 @@ public class VillainResource {
     @Path("/{name}")
     public Villain getVillain(@PathParam("name") String name) {
         return service.getVillain(name);
+    }
+
+    @POST
+    public Response create(@Valid Villain villain) {
+        villain = service.createVillain(villain);
+        return Response.status(Response.Status.CREATED).entity(villain).build();
     }
 
     @GET

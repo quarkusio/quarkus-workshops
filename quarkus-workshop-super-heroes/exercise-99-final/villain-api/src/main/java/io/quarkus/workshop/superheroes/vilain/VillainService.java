@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
@@ -16,5 +17,11 @@ public class VillainService {
 
     public Villain getVillain(String name) {
         return Villain.findByName(name);
+    }
+
+    @Transactional(REQUIRED)
+    public Villain createVillain(Villain villain) {
+        Villain.persist(villain);
+        return villain;
     }
 }
