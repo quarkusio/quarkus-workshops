@@ -5,6 +5,7 @@ import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.mapper.TypeRef;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,7 @@ import java.util.UUID;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-import static javax.ws.rs.core.Response.Status.NO_CONTENT;
-import static javax.ws.rs.core.Response.Status.OK;
+import static javax.ws.rs.core.Response.Status.*;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -71,6 +71,51 @@ public class VillainResourceTest {
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
         assertEquals(NB_VILLAINS, villains.size());
+    }
+
+    @Test
+    @Order(2)
+    void shouldAddAnItem() {
+        Villain villain = new Villain();
+        villain.name = "Super Chocolatine";
+        villain.level = 42;
+        given()
+            .body(villain)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+            .when()
+            .post("/api/villains")
+            .then()
+            .statusCode(CREATED.getStatusCode())
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .body("name", Is.is("Super Chocolatine"))
+            .body("level", Is.is(42));
+
+        List<Villain> heroes = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS + 1, heroes.size());
+    }
+
+    @Test
+    @Order(3)
+    void testUpdatingAnItem() {
+        Villain villain = new Villain();
+        villain.name = "Super Chocolatine (updated)";
+        villain.level = 42;
+        given()
+            .body(villain)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+            .pathParam("id", 5)
+            .when()
+            .patch("/api/{id}")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .body("name", Is.is(villain.name))
+            .body("level", Is.is(42));
     }
 
     private TypeRef<List<Villain>> getVillainTypeRef() {
