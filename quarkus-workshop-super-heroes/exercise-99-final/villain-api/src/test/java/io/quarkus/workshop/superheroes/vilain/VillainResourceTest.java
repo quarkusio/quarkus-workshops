@@ -46,10 +46,10 @@ public class VillainResourceTest {
     @Test
     public void shouldPingVillainEndpoint() {
         given()
-          .when().get("/api/villains/ping")
-          .then()
-             .statusCode(200)
-             .body(is("ping villains"));
+                .when().get("/api/villains/ping")
+                .then()
+                .statusCode(200)
+                .body(is("ping villains"));
     }
 
 }

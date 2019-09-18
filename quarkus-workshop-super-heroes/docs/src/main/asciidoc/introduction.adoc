@@ -1,5 +1,5 @@
-[[exercise01]]
-= Exercise 01 - REST
+[[introduction]]
+= Introduction
 
 DI, alternatives, interceptors, and decorators enable loose coupling by allowing additional behaviour to vary, either at deployment time or at runtime.
 Events go one step further, allowing beans to interact with no compile time dependency at all.
@@ -9,11 +9,11 @@ This basic schema follows the observer/observable design pattern from the Gang o
 
 Event producers fire events using the `javax.enterprise.event.Event`  interface.
 A producer raises events by calling the `fire()` method, passes the event object, and is not dependent on the observer.
-In <<exercise01-listing-01>> the `BookService` fires an event (`bookAddedEvent`) each time a book is created.
+In <<introduction-listing-01>> the `BookService` fires an event (`bookAddedEvent`) each time a book is created.
 The code `bookAddedEvent.fire(book)` fires the event and notifies any observer methods observing this particular event.
 The content of this event is the `Book` object itself that will be carried from the producer to the consumer.
 
-[[exercise01-listing-01]]
+[[introduction-listing-01]]
 .The BookService Fires an Event Each Time a Book Is Created
 [source]
 ----

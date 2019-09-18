@@ -46,10 +46,10 @@ public class HeroResourceTest {
     @Test
     public void shouldPingHeroEndpoint() {
         given()
-          .when().get("/api/heroes/ping")
-          .then()
-             .statusCode(200)
-             .body(is("ping heroes"));
+                .when().get("/api/heroes/ping")
+                .then()
+                .statusCode(200)
+                .body(is("ping heroes"));
     }
 
 }

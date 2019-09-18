@@ -23,33 +23,33 @@ public class HeroResourceTest {
 
     @Container
     public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
-            .withDatabaseName("heroes-database")
-            .withUsername("superman")
-            .withPassword("superman")
-            .withExposedPorts(5432)
-            .withCreateContainerCmdModifier(cmd ->
-                    cmd
-                            .withHostName("localhost")
-                            .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)))
-            );
+        .withDatabaseName("heroes-database")
+        .withUsername("superman")
+        .withPassword("superman")
+        .withExposedPorts(5432)
+        .withCreateContainerCmdModifier(cmd ->
+            cmd
+                .withHostName("localhost")
+                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)))
+        );
 
     @Test
     public void shouldNotGetRandomHero() {
         String uuid = UUID.randomUUID().toString();
         given()
-                .pathParam("name", uuid)
-                .when().get("/api/heroes/{name}")
-                .then()
-                .statusCode(204);
+            .pathParam("name", uuid)
+            .when().get("/api/heroes/{name}")
+            .then()
+            .statusCode(204);
     }
 
     @Test
     public void shouldPingHeroEndpoint() {
         given()
-          .when().get("/api/heroes/ping")
-          .then()
-             .statusCode(200)
-             .body(is("ping heroes"));
+            .when().get("/api/heroes/ping")
+            .then()
+            .statusCode(200)
+            .body(is("ping heroes"));
     }
 
 }

@@ -1,0 +1,24 @@
+= Quarkus Workshop
+Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
+:data-uri:
+:doctype: book
+:imagesdir: ./images
+:source-highlighter: coderay
+:source-language: java
+// Caption and XRef caption
+:appendix-caption: Appendix
+:listing-caption: Listing
+:figure-caption: Figure
+:table-caption: Table
+:xrefstyle: short
+// TOC
+:toc:
+:toclevels: 4
+:toc-title: Contents
+
+include::introduction.adoc[leveloffset=+1]
+
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01.adoc[leveloffset=+1]
+
+include::../../../../exercise-99-final/docs/src/main/asciidoc/exercise99.adoc[leveloffset=+1]
+

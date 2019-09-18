@@ -21,12 +21,13 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>parent-pom</artifactId>
-        <version>1.0</version>
+        <artifactId>exercise</artifactId>
+        <version>99</version>
     </parent>
 
     <artifactId>docs</artifactId>
-    <name>Quarkus Workshop :: Super-Heroes :: Docs</name>
+    <version>01</version>
+    <name>Quarkus Workshop :: Super-Heroes :: Final :: Docs</name>
 
     <build>
         <plugins>
@@ -55,7 +56,7 @@
                         </goals>
                         <configuration>
                             <sourceDocumentName>spine.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-asciidoc/quarkus-workshop.pdf</outputFile>
+                            <outputFile>${project.build.directory}/generated-asciidoc/${project.build.finalName}.pdf</outputFile>
                             <backend>pdf</backend>
                         </configuration>
                     </execution>

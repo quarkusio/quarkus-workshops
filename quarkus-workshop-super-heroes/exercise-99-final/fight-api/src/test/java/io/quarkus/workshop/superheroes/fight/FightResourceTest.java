@@ -12,10 +12,10 @@ public class FightResourceTest {
     @Test
     public void testFightEndpoint() {
         given()
-          .when().get("/fight")
-          .then()
-             .statusCode(200)
-             .body(is("hello fight"));
+                .when().get("/fight")
+                .then()
+                .statusCode(200)
+                .body(is("hello fight"));
     }
 
 }

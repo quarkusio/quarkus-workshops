@@ -1,0 +1,20 @@
+= Exercise 01 REST
+Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
+:data-uri:
+:doctype: book
+:imagesdir: ./images
+:source-highlighter: coderay
+:source-language: java
+// Caption and XRef caption
+:appendix-caption: Appendix
+:listing-caption: Listing
+:figure-caption: Figure
+:table-caption: Table
+:xrefstyle: short
+// TOC
+:toc:
+:toclevels: 4
+:toc-title: Contents
+
+include::exercise01.adoc[leveloffset=+1]
+

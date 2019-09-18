@@ -13,10 +13,10 @@ public class Villain extends PanacheEntity {
     public int level;
     public String picture;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     public String powers;
 
-    public static Villain findByName(String name){
+    public static Villain findByName(String name) {
         return find("name", name).firstResult();
     }
 
