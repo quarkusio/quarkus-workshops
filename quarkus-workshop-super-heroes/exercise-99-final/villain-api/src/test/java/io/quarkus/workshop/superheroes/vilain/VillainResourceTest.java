@@ -15,13 +15,16 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.UUID;
+import java.util.Random;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -30,37 +33,58 @@ import static org.hamcrest.CoreMatchers.is;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VillainResourceTest {
 
+    private static final String DEFAULT_NAME = "Super Chocolatine";
+    private static final String UPDATED_NAME = "Super Chocolatine (updated)";
+    private static final String DEFAULT_OTHER_NAME = "Super Chocolatine chocolate in";
+    private static final String UPDATED_OTHER_NAME = "Super Chocolatine chocolate in (updated)";
+    private static final String DEFAULT_PICTURE = "super_chocolatine.png";
+    private static final String UPDATED_PICTURE = "super_chocolatine_updated.png";
+    private static final String DEFAULT_POWERS = "does not eat pain au chocolat";
+    private static final String UPDATED_POWERS = "does not eat pain au chocolat (udpated)";
+    private static final int DEFAULT_LEVEL = 42;
+    private static final int UPDATED_LEVEL = 43;
+
     private static final int NB_VILLAINS = 581;
+    private static String villainId;
 
     @Container
     public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
-            .withDatabaseName("villains-database")
-            .withUsername("superbad")
-            .withPassword("superbad")
-            .withExposedPorts(5432)
-            .withCreateContainerCmdModifier(cmd ->
-                    cmd
-                            .withHostName("localhost")
-                            .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)))
-            );
+        .withDatabaseName("villains-database")
+        .withUsername("superbad")
+        .withPassword("superbad")
+        .withExposedPorts(5432)
+        .withCreateContainerCmdModifier(cmd ->
+            cmd
+                .withHostName("localhost")
+                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)))
+        );
 
     @Test
-    void shouldNotGetRandomVillain() {
-        String uuid = UUID.randomUUID().toString();
+    void shouldNotGetUnknownVillain() {
+        Long randomId = new Random().nextLong();
         given()
-                .pathParam("name", uuid)
-                .when().get("/api/villains/{name}")
-                .then()
-                .statusCode(NO_CONTENT.getStatusCode());
+            .pathParam("id", randomId)
+            .when().get("/api/villains/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
     }
 
     @Test
     void shouldPingVillainEndpoint() {
         given()
-                .when().get("/api/villains/ping")
-                .then()
-                .statusCode(OK.getStatusCode())
-                .body(is("ping villains"));
+            .when().get("/api/villains/ping")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .body(is("ping villains"));
+    }
+
+    @Test
+    void shouldGetRandomVillain() {
+        given()
+            .when().get("/api/villains/random")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON);
     }
 
     @Test
@@ -68,7 +92,7 @@ public class VillainResourceTest {
     void shouldGetInitialItems() {
         List<Villain> villains = get("/api/villains").then()
             .statusCode(OK.getStatusCode())
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
         assertEquals(NB_VILLAINS, villains.size());
     }
@@ -77,45 +101,94 @@ public class VillainResourceTest {
     @Order(2)
     void shouldAddAnItem() {
         Villain villain = new Villain();
-        villain.name = "Super Chocolatine";
-        villain.level = 42;
-        given()
+        villain.name = DEFAULT_NAME;
+        villain.otherName = DEFAULT_OTHER_NAME;
+        villain.picture = DEFAULT_PICTURE;
+        villain.powers = DEFAULT_POWERS;
+        villain.level = DEFAULT_LEVEL;
+
+        String location = given()
             .body(villain)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
             .when()
             .post("/api/villains")
             .then()
             .statusCode(CREATED.getStatusCode())
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-            .body("name", Is.is("Super Chocolatine"))
-            .body("level", Is.is(42));
+            .extract().header("Location");
+        assertTrue(location.contains("/api/villains"));
 
-        List<Villain> heroes = get("/api/villains").then()
+        // Stores the id
+        String[] segments = location.split("/");
+        villainId = segments[segments.length - 1];
+        assertNotNull(villainId);
+
+        given()
+            .pathParam("id", villainId)
+            .when().get("/api/villains/{id}")
+            .then()
             .statusCode(OK.getStatusCode())
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .body("name", Is.is(DEFAULT_NAME))
+            .body("otherName", Is.is(DEFAULT_OTHER_NAME))
+            .body("level", Is.is(DEFAULT_LEVEL))
+            .body("picture", Is.is(DEFAULT_PICTURE))
+            .body("powers", Is.is(DEFAULT_POWERS));
+
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
-        assertEquals(NB_VILLAINS + 1, heroes.size());
+        assertEquals(NB_VILLAINS + 1, villains.size());
     }
 
     @Test
     @Order(3)
     void testUpdatingAnItem() {
         Villain villain = new Villain();
-        villain.name = "Super Chocolatine (updated)";
-        villain.level = 42;
+        villain.id = Long.valueOf(villainId);
+        villain.name = UPDATED_NAME;
+        villain.otherName = UPDATED_OTHER_NAME;
+        villain.picture = UPDATED_PICTURE;
+        villain.powers = UPDATED_POWERS;
+        villain.level = UPDATED_LEVEL;
+
         given()
             .body(villain)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
-            .pathParam("id", 5)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
             .when()
-            .patch("/api/{id}")
+            .put("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-            .body("name", Is.is(villain.name))
-            .body("level", Is.is(42));
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .body("name", Is.is(UPDATED_NAME))
+            .body("otherName", Is.is(UPDATED_OTHER_NAME))
+            .body("level", Is.is(UPDATED_LEVEL))
+            .body("picture", Is.is(UPDATED_PICTURE))
+            .body("powers", Is.is(UPDATED_POWERS));
+
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS + 1, villains.size());
+    }
+
+    @Test
+    @Order(4)
+    void shouldRemoveAnItem() {
+        given()
+            .pathParam("id", villainId)
+            .when().delete("/api/villains/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
+
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS, villains.size());
     }
 
     private TypeRef<List<Villain>> getVillainTypeRef() {

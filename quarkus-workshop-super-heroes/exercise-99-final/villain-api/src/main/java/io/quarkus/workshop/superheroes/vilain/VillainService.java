@@ -8,20 +8,45 @@ import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
-@Transactional(SUPPORTS)
+@Transactional(REQUIRED)
 public class VillainService {
 
+    @Transactional(SUPPORTS)
     public List<Villain> getAllVillains() {
         return Villain.listAll();
     }
 
-    public Villain getVillain(String name) {
-        return Villain.findByName(name);
+    @Transactional(SUPPORTS)
+    public Villain findVillainById(Long id) {
+        return Villain.findById(id);
     }
 
-    @Transactional(REQUIRED)
+    @Transactional(SUPPORTS)
+    public Villain findRandomVillain() {
+        Villain randomVillain = null;
+        while (randomVillain == null) {
+            randomVillain = Villain.findRandom();
+        }
+        return randomVillain;
+    }
+
     public Villain createVillain(Villain villain) {
         Villain.persist(villain);
         return villain;
+    }
+
+    public Villain updateVillain(Villain villain) {
+        Villain entity = Villain.findById(villain.id);
+        entity.name = villain.name;
+        entity.otherName = villain.otherName;
+        entity.level = villain.level;
+        entity.picture = villain.picture;
+        entity.powers = villain.powers;
+        return entity;
+    }
+
+    public void deleteVillain(Long id) {
+        Villain villain = Villain.findById(id);
+        villain.delete();
     }
 }

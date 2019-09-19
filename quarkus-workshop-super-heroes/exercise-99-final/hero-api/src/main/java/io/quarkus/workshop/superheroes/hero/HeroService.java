@@ -8,20 +8,45 @@ import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
-@Transactional(SUPPORTS)
+@Transactional(REQUIRED)
 public class HeroService {
 
+    @Transactional(SUPPORTS)
     public List<Hero> getAllHeroes() {
         return Hero.listAll();
     }
 
-    public Hero getHero(String name) {
-        return Hero.findByName(name);
+    @Transactional(SUPPORTS)
+    public Hero findHeroById(Long id) {
+        return Hero.findById(id);
     }
 
-    @Transactional(REQUIRED)
+    @Transactional(SUPPORTS)
+    public Hero findRandomHero() {
+        Hero randomHero = null;
+        while (randomHero == null) {
+            randomHero = Hero.findRandom();
+        }
+        return randomHero;
+    }
+
     public Hero createHero(Hero hero) {
         Hero.persist(hero);
         return hero;
+    }
+
+    public Hero updateHero(Hero hero) {
+        Hero entity = Hero.findById(hero.id);
+        entity.name = hero.name;
+        entity.otherName = hero.otherName;
+        entity.level = hero.level;
+        entity.picture = hero.picture;
+        entity.powers = hero.powers;
+        return entity;
+    }
+
+    public void deleteHero(Long id) {
+        Hero hero = Hero.findById(id);
+        hero.delete();
     }
 }
