@@ -14,19 +14,17 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import javax.ws.rs.core.HttpHeaders;
 import java.util.List;
 import java.util.Random;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @Testcontainers
@@ -88,6 +86,25 @@ public class VillainResourceTest {
     }
 
     @Test
+    void shouldNotAddInvalidItem() {
+        Villain villain = new Villain();
+        villain.name = null;
+        villain.otherName = DEFAULT_OTHER_NAME;
+        villain.picture = DEFAULT_PICTURE;
+        villain.powers = DEFAULT_POWERS;
+        villain.level = 0;
+
+        given()
+            .body(villain)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
+            .when()
+            .post("/api/villains")
+            .then()
+            .statusCode(BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
     @Order(1)
     void shouldGetInitialItems() {
         List<Villain> villains = get("/api/villains").then()
@@ -110,7 +127,7 @@ public class VillainResourceTest {
         String location = given()
             .body(villain)
             .header(CONTENT_TYPE, APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
             .when()
             .post("/api/villains")
             .then()
@@ -156,7 +173,7 @@ public class VillainResourceTest {
         given()
             .body(villain)
             .header(CONTENT_TYPE, APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
             .when()
             .put("/api/villains")
             .then()

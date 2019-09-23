@@ -2,6 +2,7 @@ package io.quarkus.workshop.superheroes.vilain;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -30,12 +31,12 @@ public class VillainService {
         return randomVillain;
     }
 
-    public Villain createVillain(Villain villain) {
+    public Villain createVillain(@Valid Villain villain) {
         Villain.persist(villain);
         return villain;
     }
 
-    public Villain updateVillain(Villain villain) {
+    public Villain updateVillain(@Valid Villain villain) {
         Villain entity = Villain.findById(villain.id);
         entity.name = villain.name;
         entity.otherName = villain.otherName;

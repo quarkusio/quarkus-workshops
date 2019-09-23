@@ -2,6 +2,7 @@ package io.quarkus.workshop.superheroes.hero;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -30,12 +31,12 @@ public class HeroService {
         return randomHero;
     }
 
-    public Hero createHero(Hero hero) {
+    public Hero createHero(@Valid Hero hero) {
         Hero.persist(hero);
         return hero;
     }
 
-    public Hero updateHero(Hero hero) {
+    public Hero updateHero(@Valid Hero hero) {
         Hero entity = Hero.findById(hero.id);
         entity.name = hero.name;
         entity.otherName = hero.otherName;

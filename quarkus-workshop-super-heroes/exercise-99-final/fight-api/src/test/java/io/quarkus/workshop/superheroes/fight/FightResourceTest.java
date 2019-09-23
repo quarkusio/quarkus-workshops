@@ -6,25 +6,26 @@ import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import javax.ws.rs.core.HttpHeaders;
 import java.util.List;
 import java.util.Random;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @Testcontainers
@@ -96,7 +97,7 @@ public class FightResourceTest {
         String location = given()
             .body(fight)
             .header(CONTENT_TYPE, APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
             .when()
             .post("/api/fights")
             .then()

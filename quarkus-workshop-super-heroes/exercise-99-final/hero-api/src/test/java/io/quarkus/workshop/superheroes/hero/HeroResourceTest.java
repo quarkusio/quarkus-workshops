@@ -21,6 +21,7 @@ import java.util.Random;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
@@ -89,6 +90,25 @@ public class HeroResourceTest {
     }
 
     @Test
+    void shouldNotAddInvalidItem() {
+        Hero hero = new Hero();
+        hero.name = null;
+        hero.otherName = DEFAULT_OTHER_NAME;
+        hero.picture = DEFAULT_PICTURE;
+        hero.powers = DEFAULT_POWERS;
+        hero.level = 0;
+
+        given()
+            .body(hero)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
+            .when()
+            .post("/api/heroes")
+            .then()
+            .statusCode(BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
     @Order(1)
     void shouldGetInitialItems() {
         List<Hero> heroes = get("/api/heroes").then()
@@ -111,7 +131,7 @@ public class HeroResourceTest {
         String location = given()
             .body(hero)
             .header(CONTENT_TYPE, APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
             .when()
             .post("/api/heroes")
             .then()
@@ -157,7 +177,7 @@ public class HeroResourceTest {
         given()
             .body(hero)
             .header(CONTENT_TYPE, APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
             .when()
             .put("/api/heroes")
             .then()
