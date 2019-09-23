@@ -3,7 +3,6 @@ package io.quarkus.workshop.superheroes.fight;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
@@ -16,6 +15,14 @@ public class FightResource {
 
     @Inject
     FightService service;
+
+    @GET
+    @Path("/randomfighters")
+    public Response getRandomFighters() {
+        Fighters fighters = service.getRandomFighters();
+        LOGGER.debug("Get random fighters " + fighters);
+        return Response.ok(fighters).build();
+    }
 
     @GET
     public Response getAllFights() {
@@ -38,8 +45,8 @@ public class FightResource {
     }
 
     @POST
-    public Response create(@Valid Fight fight, @Context UriInfo uriInfo) {
-        fight = service.createFight(fight);
+    public Response create(Fighters fighters, @Context UriInfo uriInfo) {
+        Fight fight = service.createFight(fighters);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(fight.id));
         LOGGER.debug("New fight created with URI " + builder.build().toString());
         return Response.created(builder.build()).build();
