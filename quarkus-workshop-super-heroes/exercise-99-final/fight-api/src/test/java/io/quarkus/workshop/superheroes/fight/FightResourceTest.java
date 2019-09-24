@@ -76,6 +76,22 @@ public class FightResourceTest {
     }
 
     @Test
+    void shouldPingOpenAPI() {
+        given()
+            .when().get("/openapi")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    void shouldPingSwaggerUI() {
+        given()
+            .when().get("/swagger-ui")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     @Order(1)
     void shouldGetInitialItems() {
         List<Fight> fights = get("/api/fights").then()
