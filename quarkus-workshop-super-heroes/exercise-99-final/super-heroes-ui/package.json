@@ -2,12 +2,12 @@
   "name": "super-heroes",
   "version": "0.0.0",
   "scripts": {
-    "ng": "../../temp/super-heroes-ui/node_modules/.bin/ng",
-    "start": "../../temp/super-heroes-ui/node_modules/.bin/ng serve",
-    "build": "../../temp/super-heroes-ui/node_modules/.bin/ng build",
-    "test": "../../temp/super-heroes-ui/node_modules/.bin/ng test",
-    "lint": "../../temp/super-heroes-ui/node_modules/.bin/ng lint",
-    "e2e": "../../temp/super-heroes-ui/node_modules/.bin/ng e2e"
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
