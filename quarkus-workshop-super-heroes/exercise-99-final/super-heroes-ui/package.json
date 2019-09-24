@@ -1,0 +1,36 @@
+{
+  "name": "super-heroes",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "../../temp/super-heroes-ui/node_modules/.bin/ng",
+    "start": "../../temp/super-heroes-ui/node_modules/.bin/ng serve",
+    "build": "../../temp/super-heroes-ui/node_modules/.bin/ng build",
+    "test": "../../temp/super-heroes-ui/node_modules/.bin/ng test",
+    "lint": "../../temp/super-heroes-ui/node_modules/.bin/ng lint",
+    "e2e": "../../temp/super-heroes-ui/node_modules/.bin/ng e2e"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~8.2.7",
+    "@angular/common": "~8.2.7",
+    "@angular/compiler": "~8.2.7",
+    "@angular/core": "~8.2.7",
+    "@angular/forms": "~8.2.7",
+    "@angular/platform-browser": "~8.2.7",
+    "@angular/platform-browser-dynamic": "~8.2.7",
+    "@angular/router": "~8.2.7",
+    "rxjs": "~6.4.0",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.803.5",
+    "@angular/cli": "~8.3.5",
+    "@angular/compiler-cli": "~8.2.7",
+    "@angular/language-service": "~8.2.7",
+    "@types/node": "~8.9.4",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.5.3"
+  }
+}
