@@ -89,6 +89,14 @@ public class HeroResourceTest {
     }
 
     @Test
+    void shouldPingSwaggerUI() {
+        given()
+            .when().get("/swagger-ui")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     void shouldGetRandomHero() {
         given()
             .when().get("/api/heroes/random")

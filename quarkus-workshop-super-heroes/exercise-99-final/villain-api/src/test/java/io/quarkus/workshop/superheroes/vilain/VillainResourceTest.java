@@ -85,6 +85,14 @@ public class VillainResourceTest {
     }
 
     @Test
+    void shouldPingSwaggerUI() {
+        given()
+            .when().get("/swagger-ui")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     void shouldGetRandomVillain() {
         given()
             .when().get("/api/villains/random")
