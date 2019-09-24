@@ -81,6 +81,14 @@ public class HeroResourceTest {
     }
 
     @Test
+    void shouldPingOpenAPI() {
+        given()
+            .when().get("/openapi")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     void shouldGetRandomHero() {
         given()
             .when().get("/api/heroes/random")

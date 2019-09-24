@@ -77,6 +77,14 @@ public class VillainResourceTest {
     }
 
     @Test
+    void shouldPingOpenAPI() {
+        given()
+            .when().get("/openapi")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     void shouldGetRandomVillain() {
         given()
             .when().get("/api/villains/random")
