@@ -33,25 +33,20 @@ Install Bootstrap dependency
 
 * `npm install ngx-bootstrap --save`
 
-* In `angular-cli.json` file add :
+* In `index.html` file add :
 ```
-"styles": [
-  "../node_modules/bootstrap/dist/css/bootstrap.css",
-  "jumbotron.css",
-  "styles.css"
-],
-"scripts": [
-  "../node_modules/jquery/dist/jquery.slim.js",
-  "../node_modules/popper.js/dist/popper.js",
-  "../node_modules/bootstrap/dist/js/bootstrap.js"
-],
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 ```
+
 * In `app.module.ts`
 ```
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-  imports: [
-    NgbModule.forRoot()
-  ],
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
+@NgModule({
+  ...
+  imports: [TooltipModule.forRoot(),...]
+  ...
+})
 ```
 
 ### Admin module
