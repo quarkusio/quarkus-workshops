@@ -1,6 +1,7 @@
 package io.quarkus.workshop.superheroes.vilain;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Random;
 
 @Entity
+@Schema(description="The villain fighting against the hero")
 public class Villain extends PanacheEntity {
 
     @NotNull

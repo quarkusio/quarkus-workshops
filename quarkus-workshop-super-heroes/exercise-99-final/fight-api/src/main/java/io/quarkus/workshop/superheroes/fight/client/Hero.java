@@ -1,21 +1,19 @@
 package io.quarkus.workshop.superheroes.fight.client;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import javax.validation.constraints.NotNull;
+
+@Schema(description="The hero fighting against the villain")
 public class Hero {
 
-    private Long id;
+    @NotNull
     private String name;
-    private String otherName;
+    @NotNull
     private int level;
+    @NotNull
     private String picture;
     private String powers;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -23,14 +21,6 @@ public class Hero {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getOtherName() {
-        return otherName;
-    }
-
-    public void setOtherName(String otherName) {
-        this.otherName = otherName;
     }
 
     public int getLevel() {
@@ -60,9 +50,7 @@ public class Hero {
     @Override
     public String toString() {
         return "Hero{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", otherName='" + otherName + '\'' +
+            "name='" + name + '\'' +
             ", level=" + level +
             ", picture='" + picture + '\'' +
             ", powers='" + powers + '\'' +

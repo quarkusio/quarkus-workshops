@@ -54,3 +54,14 @@ The following software needs to be downloaded and installed:
 The next section focuses on how to install and setup the needed software.
 You can skip the next section if you
 
+== TODO TO DELETE
+
+* Hero REST Endpoint
+* Dev
+* Test
+* Hero REST Endpoint Open API - Swagger UI - Annotation
+* GraalVM
+* Villain Endpoint
+* KAFKA
+* Fight Endpoint - REST Client
+

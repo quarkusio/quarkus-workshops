@@ -52,27 +52,32 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 ### Admin module
 
 ```
-$ ng generate module administrator --spec false --routing true --module app
+$ ng generate module admin --spec false --routing true --module app
 
 ```
 
 ### Admin components
 
 ```
-$ ng generate component administrator/number --spec false --module administrator --export true --inline-style true
-$ ng generate component administrator/book-list --spec false --module administrator --export true --inline-style true
-$ ng generate component administrator/book-detail --spec false --module administrator --export true --inline-style true
-$ ng generate component administrator/book-form --spec false --module administrator --export true --inline-style true
-$ ng generate component administrator/book-delete --spec false --module administrator --export true --inline-style true
+$ ng generate component admin/villain-list --spec false --module admin --export true --inline-style true
+$ ng generate component admin/villain-detail --spec false --module admin --export true --inline-style true
+$ ng generate component admin/villain-form --spec false --module admin --export true --inline-style true
+$ ng generate component admin/villain-delete --spec false --module admin --export true --inline-style true
+$ ng generate component admin/hero-list --spec false --module admin --export true --inline-style true
+$ ng generate component admin/hero-detail --spec false --module admin --export true --inline-style true
+$ ng generate component admin/hero-form --spec false --module admin --export true --inline-style true
+$ ng generate component admin/hero-delete --spec false --module admin --export true --inline-style true
 ```
 
 ### Swagger Codegen
 
 ```
-$ swagger-codegen generate -i ../../services/number-api/src/main/webapp/swagger.json -l typescript-angular2 -o src/app/shared
+$ swagger-codegen generate -i http://localhost:8080/openapi -l typescript-angular -o src/app/shared
 $ swagger-codegen generate -i ../../services/book-api/src/main/webapp/swagger.json -l typescript-angular2 -o src/app/shared
 $ swagger-codegen generate -i number-api/src/main/webapp/swagger.json -l java -o tempfeign --api-package org.bakingpie.book.client.api --model-package org.bakingpie.book.client.model --library feign
 ```
+
+
 
 ## Angular CLI documentation
 
