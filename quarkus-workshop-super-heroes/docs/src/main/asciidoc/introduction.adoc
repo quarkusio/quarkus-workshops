@@ -56,9 +56,9 @@ You can skip the next section if you
 
 == TODO TO DELETE
 
-* Hero REST Endpoint
-* Dev
+* Hero REST Endpoint (JAX-RS + Panache + Postgres)
 * Test
+* Dev
 * Hero REST Endpoint Open API - Swagger UI - Annotation
 * GraalVM
 * Villain Endpoint
