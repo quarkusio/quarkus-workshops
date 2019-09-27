@@ -1,11 +1,13 @@
 package io.quarkus.workshop.superheroes.fight.client;
 
 import io.quarkus.test.Mock;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @Mock
 @ApplicationScoped
+@RestClient
 public class MockHeroService implements HeroService {
 
     public static final String DEFAULT_HERO_NAME = "Super Baguette";
