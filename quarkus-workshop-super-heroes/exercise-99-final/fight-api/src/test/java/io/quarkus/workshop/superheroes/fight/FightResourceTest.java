@@ -4,6 +4,8 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.workshop.superheroes.fight.client.Hero;
+import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.restassured.mapper.TypeRef;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.MethodOrderer;
@@ -119,16 +121,20 @@ public class FightResourceTest {
     @Test
     @Order(2)
     void shouldAddAnItem() {
-        Fight fight = new Fight();
-        fight.winnerName = DEFAULT_WINNER_NAME;
-        fight.winnerPicture = DEFAULT_WINNER_PICTURE;
-        fight.winnerLevel = DEFAULT_WINNER_LEVEL;
-        fight.loserName = DEFAULT_LOSER_NAME;
-        fight.loserPicture = DEFAULT_LOSER_PICTURE;
-        fight.loserLevel = DEFAULT_LOSER_LEVEL;
+        Hero hero = new Hero();
+        hero.setName(DEFAULT_WINNER_NAME);
+        hero.setPicture(DEFAULT_WINNER_PICTURE);
+        hero.setLevel(DEFAULT_WINNER_LEVEL);
+        Villain villain = new Villain();
+        villain.setName(DEFAULT_LOSER_NAME);
+        villain.setPicture(DEFAULT_LOSER_PICTURE);
+        villain.setLevel(DEFAULT_LOSER_LEVEL);
+        Fighters fighters = new Fighters();
+        fighters.setHero(hero);
+        fighters.setVillain(villain);
 
         String location = given()
-            .body(fight)
+            .body(fighters)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .header(ACCEPT, APPLICATION_JSON)
             .when()
