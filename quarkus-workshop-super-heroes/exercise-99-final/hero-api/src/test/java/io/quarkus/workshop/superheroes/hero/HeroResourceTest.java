@@ -64,6 +64,7 @@ public class HeroResourceTest {
     @Test
     void shouldPingOpenAPI() {
         given()
+            .header(ACCEPT, APPLICATION_JSON)
             .when().get("/openapi")
             .then()
             .statusCode(OK.getStatusCode());
