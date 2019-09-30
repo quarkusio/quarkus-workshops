@@ -58,25 +58,6 @@ public class VillainResourceTest {
         );
 
     @Test
-    void shouldNotGetUnknownVillain() {
-        Long randomId = new Random().nextLong();
-        given()
-            .pathParam("id", randomId)
-            .when().get("/api/villains/{id}")
-            .then()
-            .statusCode(NO_CONTENT.getStatusCode());
-    }
-
-    @Test
-    void shouldPingVillainEndpoint() {
-        given()
-            .when().get("/api/villains/ping")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .body(is("ping villains"));
-    }
-
-    @Test
     void shouldPingOpenAPI() {
         given()
             .when().get("/openapi")
@@ -90,6 +71,41 @@ public class VillainResourceTest {
             .when().get("/swagger-ui")
             .then()
             .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    void shouldPingLiveness() {
+        given()
+            .when().get("/health/live")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    void shouldPingReadiness() {
+        given()
+            .when().get("/health/ready")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    void shouldPingVillainEndpoint() {
+        given()
+            .when().get("/api/villains/ping")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .body(is("ping villains"));
+    }
+
+    @Test
+    void shouldNotGetUnknownVillain() {
+        Long randomId = new Random().nextLong();
+        given()
+            .pathParam("id", randomId)
+            .when().get("/api/villains/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
     }
 
     @Test

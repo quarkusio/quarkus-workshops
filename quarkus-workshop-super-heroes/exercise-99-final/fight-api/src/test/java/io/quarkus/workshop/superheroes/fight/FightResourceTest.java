@@ -59,25 +59,6 @@ public class FightResourceTest {
         );
 
     @Test
-    void shouldNotGetUnknownFight() {
-        Long randomId = new Random().nextLong();
-        given()
-            .pathParam("id", randomId)
-            .when().get("/api/fights/{id}")
-            .then()
-            .statusCode(NO_CONTENT.getStatusCode());
-    }
-
-    @Test
-    void shouldPingFightEndpoint() {
-        given()
-            .when().get("/api/fights/ping")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .body(is("ping fights"));
-    }
-
-    @Test
     void shouldPingOpenAPI() {
         given()
             .when().get("/openapi")
@@ -94,13 +75,38 @@ public class FightResourceTest {
     }
 
     @Test
-    @Order(1)
-    void shouldGetInitialItems() {
-        List<Fight> fights = get("/api/fights").then()
+    void shouldPingLiveness() {
+        given()
+            .when().get("/health/live")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    void shouldPingReadiness() {
+        given()
+            .when().get("/health/ready")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    void shouldPingFightEndpoint() {
+        given()
+            .when().get("/api/fights/ping")
+            .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
-            .extract().body().as(getFightTypeRef());
-        assertEquals(NB_FIGHTS, fights.size());
+            .body(is("ping fights"));
+    }
+
+    @Test
+    void shouldNotGetUnknownFight() {
+        Long randomId = new Random().nextLong();
+        given()
+            .pathParam("id", randomId)
+            .when().get("/api/fights/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
     }
 
     @Test
@@ -116,6 +122,32 @@ public class FightResourceTest {
             .body("villain.name", Is.is(DEFAULT_VILLAIN_NAME))
             .body("villain.picture", Is.is(DEFAULT_VILLAIN_PICTURE))
             .body("villain.level", Is.is(DEFAULT_VILLAIN_LEVEL));
+    }
+
+    @Test
+    void shouldNotAddInvalidItem() {
+        Fighters fighters = new Fighters();
+        fighters.setHero(null);
+        fighters.setVillain(null);
+
+        given()
+            .body(fighters)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
+            .when()
+            .post("/api/fights")
+            .then()
+            .statusCode(BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    @Order(1)
+    void shouldGetInitialItems() {
+        List<Fight> fights = get("/api/fights").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .extract().body().as(getFightTypeRef());
+        assertEquals(NB_FIGHTS, fights.size());
     }
 
     @Test
