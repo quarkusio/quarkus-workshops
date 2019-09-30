@@ -46,7 +46,7 @@ public class VillainResourceTest {
     private static String villainId;
 
     @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
+    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
         .withDatabaseName("villains-database")
         .withUsername("superbad")
         .withPassword("superbad")

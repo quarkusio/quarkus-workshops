@@ -50,7 +50,7 @@ public class HeroResourceTest {
     private static String heroId;
 
     @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
+    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
         .withDatabaseName("heroes-database")
         .withUsername("superman")
         .withPassword("superman")
