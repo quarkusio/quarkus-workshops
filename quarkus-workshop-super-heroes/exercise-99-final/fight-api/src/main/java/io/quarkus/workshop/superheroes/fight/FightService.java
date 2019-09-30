@@ -28,7 +28,7 @@ public class FightService {
     @RestClient
     VillainService villainService;
 
-    public List<Fight> getAllFights() {
+    public List<Fight> findAllFights() {
         return Fight.listAll();
     }
 
@@ -37,7 +37,7 @@ public class FightService {
     }
 
     @Transactional(REQUIRED)
-    public Fight createFight(Fighters fighters) {
+    public Fight persistFight(Fighters fighters) {
         Fight fight;
 
         if (fighters.getHero().getLevel() > fighters.getVillain().getLevel()) {
@@ -75,7 +75,7 @@ public class FightService {
         return fight;
     }
 
-    public Fighters getRandomFighters() {
+    public Fighters findRandomFighters() {
         Hero hero = heroService.findRandomHero();
         Villain villain = villainService.findRandomVillain();
         Fighters fighters = new Fighters();

@@ -91,6 +91,15 @@ public class FightResourceTest {
     }
 
     @Test
+    void shouldPingMetrics() {
+        given()
+            .header(ACCEPT, APPLICATION_JSON)
+            .when().get("/metrics/application")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     void shouldPingFightEndpoint() {
         given()
             .when().get("/api/fights/ping")

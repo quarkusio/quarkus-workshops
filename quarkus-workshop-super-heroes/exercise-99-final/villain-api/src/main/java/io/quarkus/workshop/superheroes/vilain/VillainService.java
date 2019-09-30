@@ -13,7 +13,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 public class VillainService {
 
     @Transactional(SUPPORTS)
-    public List<Villain> getAllVillains() {
+    public List<Villain> findAllVillains() {
         return Villain.listAll();
     }
 
@@ -31,7 +31,7 @@ public class VillainService {
         return randomVillain;
     }
 
-    public Villain createVillain(@Valid Villain villain) {
+    public Villain persistVillain(@Valid Villain villain) {
         Villain.persist(villain);
         return villain;
     }

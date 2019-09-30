@@ -13,7 +13,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 public class HeroService {
 
     @Transactional(SUPPORTS)
-    public List<Hero> getAllHeroes() {
+    public List<Hero> findAllHeroes() {
         return Hero.listAll();
     }
 
@@ -31,7 +31,7 @@ public class HeroService {
         return randomHero;
     }
 
-    public Hero createHero(@Valid Hero hero) {
+    public Hero persistHero(@Valid Hero hero) {
         Hero.persist(hero);
         return hero;
     }

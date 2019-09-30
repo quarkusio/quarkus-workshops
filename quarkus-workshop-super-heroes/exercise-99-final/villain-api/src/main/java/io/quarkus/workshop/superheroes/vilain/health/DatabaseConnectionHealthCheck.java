@@ -23,7 +23,7 @@ public class DatabaseConnectionHealthCheck implements HealthCheck {
         HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("Database connection health check");
 
         try {
-            List<Villain> villains = villainService.getAllVillains();
+            List<Villain> villains = villainService.findAllVillains();
             responseBuilder.withData("Number of rows in the database", villains.size()).up();
         } catch (IllegalStateException e) {
             responseBuilder.down();

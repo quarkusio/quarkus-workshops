@@ -90,6 +90,15 @@ public class VillainResourceTest {
     }
 
     @Test
+    void shouldPingMetrics() {
+        given()
+            .header(ACCEPT, APPLICATION_JSON)
+            .when().get("/metrics/application")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     void shouldPingVillainEndpoint() {
         given()
             .when().get("/api/villains/ping")
