@@ -47,7 +47,7 @@ public class FightResourceTest {
     private static String fightId;
 
     @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
+    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
         .withDatabaseName("fights-database")
         .withUsername("superfight")
         .withPassword("superfight")
