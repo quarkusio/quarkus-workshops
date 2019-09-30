@@ -25,7 +25,7 @@
         <version>99</version>
     </parent>
 
-    <artifactId>docs</artifactId>
+    <artifactId>docs-final</artifactId>
     <version>01</version>
     <name>Quarkus Workshop :: Super-Heroes :: Final :: Docs</name>
 

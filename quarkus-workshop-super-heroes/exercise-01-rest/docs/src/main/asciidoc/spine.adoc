@@ -1,4 +1,4 @@
-= Exercise 01 REST
+= Exercise 01
 Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
 :data-uri:
 :doctype: book
@@ -16,5 +16,15 @@ Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
 :toclevels: 4
 :toc-title: Contents
 
-include::exercise01.adoc[leveloffset=+1]
+include::exercise01-bootstrapping.adoc[leveloffset=+1]
+
+include::exercise01-rest.adoc[leveloffset=+1]
+
+include::exercise01-openapi.adoc[leveloffset=+1]
+
+include::exercise01-healthcheck.adoc[leveloffset=+1]
+
+include::exercise01-lifecycle.adoc[leveloffset=+1]
+
+include::exercise01-native.adoc[leveloffset=+1]
 

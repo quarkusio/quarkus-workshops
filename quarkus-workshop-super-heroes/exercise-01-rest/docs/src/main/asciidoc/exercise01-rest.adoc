@@ -1,17 +1,10 @@
-[[exercise01]]
-= Exercise 01 - REST
+[[exercise01-rest]]
+= Hero REST Endpoint
 
-DI, alternatives, interceptors, and decorators enable loose coupling by allowing additional behaviour to vary, either at deployment time or at runtime.
-Events go one step further, allowing beans to interact with no compile time dependency at all.
-One bean can define an event, another bean can fire the event, and yet another bean can handle the event.
-The beans can be in separate packages and even in separate tiers of the application.
-This basic schema follows the observer/observable design pattern from the Gang of Four.
+== Architecture
 
-Event producers fire events using the `javax.enterprise.event.Event`  interface.
-A producer raises events by calling the `fire()` method, passes the event object, and is not dependent on the observer.
 In <<exercise01-listing-01>> the `BookService` fires an event (`bookAddedEvent`) each time a book is created.
-The code `bookAddedEvent.fire(book)` fires the event and notifies any observer methods observing this particular event.
-The content of this event is the `Book` object itself that will be carried from the producer to the consumer.
+
 
 [[exercise01-listing-01]]
 .The BookService Fires an Event Each Time a Book Is Created
@@ -19,3 +12,31 @@ The content of this event is the `Book` object itself that will be carried from 
 ----
 include::{github-raw}/exercise-01-rest/hero-api/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[]
 ----
+
+== Development
+
+=== Troubleshooting
+
+You might come accross the following error while developping:
+
+[source,shell]
+----
+WARN  [io.qu.ne.ru.NettyRecorder] (Thread-48) Localhost lookup took more than one second, you need to add a /etc/hosts entry to improve Quarkus startup time. See https://thoeni.io/post/macos-sierra-java/ for details.
+----
+
+If this is the case, it's just a matter to add the node name of your machine to the /etc/hosts. For that, first get the name of your node with the following command:
+
+[source,shell]
+----
+$ uname -n
+my-node.local
+----
+
+Then `sudo vi /etc/hosts` so you have the rights to edit the file and add the following entry
+
+[source,shell]
+----
+127.0.0.1 localhost my-node.local
+----
+
+== Building the Native Image

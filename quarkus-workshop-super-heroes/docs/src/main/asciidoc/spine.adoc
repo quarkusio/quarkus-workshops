@@ -20,7 +20,12 @@ include::introduction.adoc[leveloffset=+1]
 
 include::installing.adoc[leveloffset=+1]
 
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01.adoc[leveloffset=+1]
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-bootstrapping.adoc[leveloffset=+1]
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-rest.adoc[leveloffset=+1]
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-openapi.adoc[leveloffset=+1]
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-healthcheck.adoc[leveloffset=+1]
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-lifecycle.adoc[leveloffset=+1]
+include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-native.adoc[leveloffset=+1]
 
 include::../../../../exercise-99-final/docs/src/main/asciidoc/exercise99.adoc[leveloffset=+1]
 

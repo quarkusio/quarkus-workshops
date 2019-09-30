@@ -25,7 +25,7 @@
         <version>01</version>
     </parent>
 
-    <artifactId>docs</artifactId>
+    <artifactId>docs-rest</artifactId>
     <version>01</version>
     <name>Quarkus Workshop :: Super-Heroes :: REST :: Docs</name>
 

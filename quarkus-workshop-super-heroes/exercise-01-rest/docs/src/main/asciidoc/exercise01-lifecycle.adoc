@@ -1,0 +1,5 @@
+[[exercise01-lifecycle]]
+= Managing the Application Lifecycle
+
+== Adding a Banner
+
