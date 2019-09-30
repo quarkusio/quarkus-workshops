@@ -1,7 +1,7 @@
-package io.quarkus.workshop.superheroes.vilain.health;
+package io.quarkus.workshop.superheroes.villain.health;
 
-import io.quarkus.workshop.superheroes.vilain.Villain;
-import io.quarkus.workshop.superheroes.vilain.VillainService;
+import io.quarkus.workshop.superheroes.villain.Villain;
+import io.quarkus.workshop.superheroes.villain.VillainService;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.HealthCheckResponseBuilder;

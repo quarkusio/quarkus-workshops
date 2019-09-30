@@ -1,4 +1,4 @@
-package io.quarkus.workshop.superheroes.vilain;
+package io.quarkus.workshop.superheroes.villain;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

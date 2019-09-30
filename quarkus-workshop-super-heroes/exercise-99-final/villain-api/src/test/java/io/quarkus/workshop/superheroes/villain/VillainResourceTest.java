@@ -1,4 +1,4 @@
-package io.quarkus.workshop.superheroes.vilain;
+package io.quarkus.workshop.superheroes.villain;
 
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;

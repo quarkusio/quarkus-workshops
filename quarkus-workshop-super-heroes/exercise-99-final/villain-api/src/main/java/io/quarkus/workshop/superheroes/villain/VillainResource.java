@@ -1,4 +1,4 @@
-package io.quarkus.workshop.superheroes.vilain;
+package io.quarkus.workshop.superheroes.villain;
 
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;

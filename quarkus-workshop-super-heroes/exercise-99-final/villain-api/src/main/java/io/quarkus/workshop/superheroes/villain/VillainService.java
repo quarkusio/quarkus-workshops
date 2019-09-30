@@ -1,4 +1,4 @@
-package io.quarkus.workshop.superheroes.vilain;
+package io.quarkus.workshop.superheroes.villain;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
