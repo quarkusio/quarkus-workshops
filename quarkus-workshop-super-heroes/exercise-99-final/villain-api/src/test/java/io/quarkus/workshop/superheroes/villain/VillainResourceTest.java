@@ -100,12 +100,12 @@ public class VillainResourceTest {
     }
 
     @Test
-    void shouldPingVillainEndpoint() {
+    public void testHelloEndpoint() {
         given()
-            .when().get("/api/villains/ping")
+            .when().get("/api/villains/hello")
             .then()
-            .statusCode(OK.getStatusCode())
-            .body(is("ping villains"));
+            .statusCode(200)
+            .body(is("hello"));
     }
 
     @Test

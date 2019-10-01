@@ -112,10 +112,8 @@ public class HeroResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/ping")
-    @Operation(summary = "Pings the Hero REST Endpoint")
-    public Response ping() {
-        LOGGER.debug("Invoking Ping");
-        return Response.ok("ping heroes").build();
+    @Path("/hello")
+    public String hello() {
+        return "hello";
     }
 }

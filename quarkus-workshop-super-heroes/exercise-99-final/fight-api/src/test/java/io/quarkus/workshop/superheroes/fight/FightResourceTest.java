@@ -101,12 +101,12 @@ public class FightResourceTest {
     }
 
     @Test
-    void shouldPingFightEndpoint() {
+    public void testHelloEndpoint() {
         given()
-            .when().get("/api/fights/ping")
+            .when().get("/api/fights/hello")
             .then()
-            .statusCode(OK.getStatusCode())
-            .body(is("ping fights"));
+            .statusCode(200)
+            .body(is("hello"));
     }
 
     @Test

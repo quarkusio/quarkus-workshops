@@ -110,10 +110,8 @@ public class VillainResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/ping")
-    @Operation(summary = "Pings the Villain REST Endpoint")
-    public Response ping() {
-        LOGGER.debug("Invoking Ping");
-        return Response.ok("ping villains").build();
+    @Path("/hello")
+    public String hello() {
+        return "hello";
     }
 }

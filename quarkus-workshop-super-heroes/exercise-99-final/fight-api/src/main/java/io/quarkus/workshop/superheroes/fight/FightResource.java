@@ -89,10 +89,8 @@ public class FightResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/ping")
-    @Operation(summary = "Pings the Fight REST Endpoint")
-    public Response ping() {
-        LOGGER.debug("Invoking Ping");
-        return Response.ok("ping fights").build();
+    @Path("/hello")
+    public String hello() {
+        return "hello";
     }
 }

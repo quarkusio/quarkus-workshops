@@ -7,7 +7,6 @@ import org.eclipse.microprofile.health.Liveness;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
 
 @Liveness
 @ApplicationScoped
@@ -18,7 +17,7 @@ public class PingVillainResourceHealthCheck implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
-        Response response = villainResource.ping();
-        return HealthCheckResponse.named("Ping Villain REST Endpoint").withData("Status code", response.getStatus()).up().build();
+        villainResource.hello();
+        return HealthCheckResponse.named("Ping Villain REST Endpoint").up().build();
     }
 }
