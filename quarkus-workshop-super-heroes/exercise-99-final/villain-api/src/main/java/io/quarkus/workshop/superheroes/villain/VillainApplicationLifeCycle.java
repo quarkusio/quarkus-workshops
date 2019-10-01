@@ -9,9 +9,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
 @ApplicationScoped
-public class ApplicationLifeCycle {
+public class VillainApplicationLifeCycle {
 
-    private static final Logger LOGGER = Logger.getLogger(ApplicationLifeCycle.class);
+    private static final Logger LOGGER = Logger.getLogger(VillainApplicationLifeCycle.class);
 
     void onStart(@Observes StartupEvent ev) {
         LOGGER.info(" __     ___ _ _       _             _    ____ ___ ");

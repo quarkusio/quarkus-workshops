@@ -25,7 +25,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
-@OpenAPIDefinition(info = @Info(title = "Hero API", description = "This API allows CRUD operations on a hero", version = "1.0"))
+@OpenAPIDefinition(info = @Info(title = "Hero API", description = "", version = "1.0"))
 public class HeroResource {
 
     private static final Logger LOGGER = Logger.getLogger(HeroResource.class);
