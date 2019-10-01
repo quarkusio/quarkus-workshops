@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 
 
 @Injectable()
-export class DefaultService {
+export class FightService {
 
     protected basePath = 'http://localhost:8082';
     public defaultHeaders = new HttpHeaders();

@@ -1,27 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Fight } from '../shared';
-
-// const ELEMENT_DATA: Fight[] = [
-//   {id: 1, winnerName: 'Hydrogen', winnerLevel: 10, winnerPicture: 'H',  loserName: 'Hydrogen', loserLevel: 2, loserPicture: 'H'},
-//   {id: 2, winnerName: 'Helium',   winnerLevel: 12, winnerPicture: 'He', loserName: 'Helium',   loserLevel: 4, loserPicture: 'He'},
-//   {id: 3, winnerName: 'Lithium',  winnerLevel: 18, winnerPicture: 'Li', loserName: 'Lithium',  loserLevel: 5, loserPicture: 'Li'},
-// ];
-
-export interface PeriodicElement {
-  id: number;
-  winnerName: string;
-  loserName: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1,  winnerName: 'Hydrogen', loserName: 'H'},
-  {id: 2,  winnerName: 'Helium', loserName: 'He'},
-  {id: 3,  winnerName: 'Lithium', loserName: 'Li'},
-  {id: 4,  winnerName: 'Lithium', loserName: 'Li'},
-  {id: 5,  winnerName: 'Lithium', loserName: 'Li'},
-  {id: 6,  winnerName: 'Lithium', loserName: 'Li'},
-  {id: 7,  winnerName: 'Lithium', loserName: 'Li'},
-];
+import { Fight, FightService } from '../shared';
 
 @Component({
   selector: 'hero-fight-list',
@@ -30,15 +8,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class FightListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'winnerName', 'loserName'];
-  dataSource = ELEMENT_DATA;
+  fights: Fight[];
+  displayedColumns: string[] = ['id', 'fightDate', 'winnerName', 'loserName'];
 
-  // displayedColumns: string[] = ['id', 'winnerName', 'loserName'];
-  // fights = ELEMENT_DATA;
-
-  constructor() { }
+  constructor(private fightService: FightService) {
+  }
 
   ngOnInit() {
+    this.fightService.apiFightsGet().subscribe(fights => this.fights = fights);
   }
 
 }

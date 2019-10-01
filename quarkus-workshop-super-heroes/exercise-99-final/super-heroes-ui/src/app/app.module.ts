@@ -9,6 +9,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { FightService } from './shared';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,13 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
     MatTableModule
   ],
-  providers: [],
+  providers: [FightService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

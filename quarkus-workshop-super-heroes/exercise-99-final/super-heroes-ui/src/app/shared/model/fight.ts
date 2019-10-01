@@ -16,6 +16,7 @@
  */
 export interface Fight {
     id?: number;
+    fightDate: FightFightDate;
     winnerName: string;
     winnerLevel: number;
     winnerPicture: string;

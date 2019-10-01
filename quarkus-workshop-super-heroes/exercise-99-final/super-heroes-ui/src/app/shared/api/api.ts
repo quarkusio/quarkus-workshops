@@ -1,3 +1,3 @@
-export * from './default.service';
-import { DefaultService } from './default.service';
-export const APIS = [DefaultService];
+export * from './fight.service';
+import { FightService } from './fight.service';
+export const APIS = [FightService];
