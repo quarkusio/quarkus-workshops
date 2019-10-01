@@ -24,57 +24,20 @@ npm install -g @angular/cli
 ### Initiliaze
 
 ```
-$ ng new super-heroes --directory super-heroes-ui --prefix hero --routing true --skipTests true --inlineStyle true --commit false --minimal true --style css
-```
-
-### Twitter Bootstrap
-
-Install Bootstrap dependency 
-
-* `npm install ngx-bootstrap --save`
-
-* In `index.html` file add :
-```
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-```
-
-* In `app.module.ts`
-```
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
-@NgModule({
-  ...
-  imports: [TooltipModule.forRoot(),...]
-  ...
-})
-```
-
-### Admin module
-
-```
-$ ng generate module admin --spec false --routing true --module app
-
+$ ng new super-heroes --directory super-heroes-ui --prefix hero --routing false --skipTests true --inlineStyle true --commit false --minimal true --style css
 ```
 
 ### Admin components
 
 ```
-$ ng generate component admin/villain-list --spec false --module admin --export true --inline-style true
-$ ng generate component admin/villain-detail --spec false --module admin --export true --inline-style true
-$ ng generate component admin/villain-form --spec false --module admin --export true --inline-style true
-$ ng generate component admin/villain-delete --spec false --module admin --export true --inline-style true
-$ ng generate component admin/hero-list --spec false --module admin --export true --inline-style true
-$ ng generate component admin/hero-detail --spec false --module admin --export true --inline-style true
-$ ng generate component admin/hero-form --spec false --module admin --export true --inline-style true
-$ ng generate component admin/hero-delete --spec false --module admin --export true --inline-style true
+$ ng generate component fight-list --spec false --inline-style true
+$ ng generate component fight --spec false --inline-style true
 ```
 
 ### Swagger Codegen
 
 ```
-$ swagger-codegen generate -i http://localhost:8080/openapi -l typescript-angular -o src/app/shared
-$ swagger-codegen generate -i ../../services/book-api/src/main/webapp/swagger.json -l typescript-angular2 -o src/app/shared
-$ swagger-codegen generate -i number-api/src/main/webapp/swagger.json -l java -o tempfeign --api-package org.bakingpie.book.client.api --model-package org.bakingpie.book.client.model --library feign
+$ swagger-codegen generate -i http://localhost:8082/openapi -l typescript-angular -o src/app/shared
 ```
 
 

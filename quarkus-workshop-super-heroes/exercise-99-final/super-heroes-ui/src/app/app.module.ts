@@ -1,16 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FightListComponent } from './fight-list/fight-list.component';
+import { FightComponent } from './fight/fight.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FightListComponent,
+    FightComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    BrowserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
