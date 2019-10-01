@@ -1,0 +1,32 @@
+@startuml
+skinparam dpi 300
+allow_mixing
+
+left to right direction
+
+node "Super Hero UI" as ui {
+    agent "Node JS" as uiNodejs
+}
+
+node "Hero" as hero {
+    agent "Quarkus" as heroQuarkus
+    database "Postgresql" as heroPostgresql
+    heroQuarkus .up> heroPostgresql
+}
+
+node "Villain" as villain {
+    agent "Quarkus" as villainQuarkus
+    database "Postgresql" as villainPostgresql
+    villainQuarkus .up> villainPostgresql
+}
+
+node "Fight" as fight {
+    agent "Quarkus" as fightQuarkus
+    database "Postgresql" as fightPostgresql
+    fightQuarkus .up> fightPostgresql
+}
+
+ui ..> fight : http
+fight ..> hero : http
+fight ..> villain : http
+@enduml
