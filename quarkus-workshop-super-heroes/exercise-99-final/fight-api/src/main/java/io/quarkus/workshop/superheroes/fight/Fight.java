@@ -3,7 +3,6 @@ package io.quarkus.workshop.superheroes.fight;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -27,9 +26,6 @@ public class Fight extends PanacheEntity {
     @NotNull
     public String loserPicture;
 
-    @Column(columnDefinition = "TEXT")
-    public String powers;
-
     @Override
     public String toString() {
         return "Fight{" +
@@ -41,7 +37,6 @@ public class Fight extends PanacheEntity {
             ", loserName='" + loserName + '\'' +
             ", loserLevel=" + loserLevel +
             ", loserPicture='" + loserPicture + '\'' +
-            ", powers='" + powers + '\'' +
             '}';
     }
 }
