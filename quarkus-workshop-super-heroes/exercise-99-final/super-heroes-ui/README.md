@@ -34,6 +34,12 @@ $ ng generate component fight-list --spec false --inline-style true
 $ ng generate component fight --spec false --inline-style true
 ```
 
+### Material design
+
+```
+$ ng add @angular/material
+```
+
 ### Swagger Codegen
 
 ```

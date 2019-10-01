@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'hero-fight',
-  templateUrl: './fight.component.html',
-  styles: []
+  templateUrl: './fight.component.html'
 })
 export class FightComponent implements OnInit {
 
