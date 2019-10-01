@@ -13,9 +13,11 @@
 /**
  * The hero fighting against the villain
  */
-export interface Hero {
-    level: number;
-    name: string;
-    picture: string;
-    powers?: string;
+export class Hero {
+  constructor(
+    public name?: string,
+    public picture?: string,
+    public powers?: string,
+) {
+}
 }

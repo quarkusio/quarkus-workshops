@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { FightService } from './shared';
 import { HttpClientModule } from '@angular/common/http';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
+    MatGridListModule,
     MatTableModule
   ],
   providers: [FightService],

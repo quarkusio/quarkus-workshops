@@ -16,7 +16,10 @@ import { Villain } from './villain';
 /**
  * A fight between one hero and one villain
  */
-export interface Fighters {
-  hero: Hero;
-  villain: Villain;
+export class Fighters {
+  constructor(
+    public hero?: Hero,
+    public villain?: Villain,
+  ) {
+  }
 }

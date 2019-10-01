@@ -1,34 +1,28 @@
-<script src="../fight-list/fight-list.component.ts"></script>
-<mat-card class="hero-card">
-    <mat-card-header>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-        <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-        </p>
-    </mat-card-content>
-</mat-card>
+<mat-grid-list cols="2">
+    <mat-card class="hero-card">
+        <mat-card-header>
+            <mat-card-title>{{figthers.hero.name}}</mat-card-title>
+            <mat-card-subtitle>Hero</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="figthers.hero.picture">
+        <mat-card-content>
+            <p>{{figthers.hero.powers}}</p>
+        </mat-card-content>
+    </mat-card>
 
-<mat-card class="hero-card">
-    <mat-card-header>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-        <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-        </p>
-    </mat-card-content>
-</mat-card>
+    <mat-card class="hero-card">
+        <mat-card-header>
+            <mat-card-title>{{figthers.villain.name}}</mat-card-title>
+            <mat-card-subtitle>Villain</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="figthers.villain.picture">
+        <mat-card-content>
+            <p>{{figthers.villain.powers}}</p>
+        </mat-card-content>
+    </mat-card>
+</mat-grid-list>
 
 <mat-card-actions>
+    <button mat-button>NEW FIGHTERS</button>
     <button mat-button>FIGHT</button>
 </mat-card-actions>
