@@ -3,10 +3,8 @@ package io.quarkus.workshop.superheroes.hero;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
-import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
-import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
@@ -25,7 +23,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
-@OpenAPIDefinition(info = @Info(title = "Hero API", description = "", version = "1.0"))
 public class HeroResource {
 
     private static final Logger LOGGER = Logger.getLogger(HeroResource.class);
