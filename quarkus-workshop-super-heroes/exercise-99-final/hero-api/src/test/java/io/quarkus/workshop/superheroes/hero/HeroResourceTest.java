@@ -58,7 +58,7 @@ public class HeroResourceTest {
         .withCreateContainerCmdModifier(cmd ->
             cmd
                 .withHostName("localhost")
-                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)))
+                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
         );
 
     @Test
