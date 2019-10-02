@@ -27,4 +27,5 @@ out/
 *dummy*
 ObjectStore
 maven-wrapper.jar
+node_modules/
 
