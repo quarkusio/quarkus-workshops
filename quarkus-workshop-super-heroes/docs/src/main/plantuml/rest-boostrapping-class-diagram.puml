@@ -1,0 +1,22 @@
+@startuml
+skinparam dpi 300
+
+allow_mixing
+hide empty members
+left to right direction
+!define exception(name) class name << (E,#FFAAAA) >>
+
+package "hero-api" {
+    entity Hero
+    class HeroApplication
+    class HeroApplicationLifeCycle
+    class HeroResource
+    class HeroService
+}
+
+package "tests" {
+    class HeroResourceTest
+    class NativeHeroResourceIT
+}
+
+@enduml

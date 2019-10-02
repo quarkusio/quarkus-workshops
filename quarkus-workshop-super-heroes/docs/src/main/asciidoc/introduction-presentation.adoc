@@ -15,6 +15,12 @@ Then, you’ll be prepared to investigate a bit more and, hopefully, contribute.
 Get this workshop from https://github.com/quarkusio/quarkus-workshops
 ====
 
+== What will you be developping?
+
+[[introduction-presentation-figure-physical-architecture]]
+.Physical Architecture
+image::introduction-physical-architecture.png[]
+
 == What is Quarkus?
 
 == How does this workshop work?
