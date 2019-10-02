@@ -16,16 +16,16 @@ Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
 :toclevels: 4
 :toc-title: Contents
 
-include::introduction.adoc[leveloffset=+1]
+// Introduction
+include::introduction-presentation.adoc[leveloffset=+1]
+include::introduction-installing.adoc[leveloffset=+1]
+include::introduction-using.adoc[leveloffset=+1]
 
-include::installing.adoc[leveloffset=+1]
-
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-bootstrapping.adoc[leveloffset=+1]
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-rest.adoc[leveloffset=+1]
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-openapi.adoc[leveloffset=+1]
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-healthcheck.adoc[leveloffset=+1]
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-lifecycle.adoc[leveloffset=+1]
-include::../../../../exercise-01-rest/docs/src/main/asciidoc/exercise01-native.adoc[leveloffset=+1]
-
-include::../../../../exercise-99-final/docs/src/main/asciidoc/exercise99.adoc[leveloffset=+1]
+// REST API
+include::rest-bootstrapping.adoc[leveloffset=+1]
+include::rest-getting-started.adoc[leveloffset=+1]
+include::rest-openapi.adoc[leveloffset=+1]
+include::rest-healthcheck.adoc[leveloffset=+1]
+include::rest-lifecycle.adoc[leveloffset=+1]
+include::rest-native.adoc[leveloffset=+1]
 

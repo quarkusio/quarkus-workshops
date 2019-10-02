@@ -19,15 +19,65 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>exercise</artifactId>
-        <version>01</version>
-    </parent>
+<!--    <parent>-->
+<!--        <groupId>io.quarkus.workshop.super-heroes</groupId>-->
+<!--        <artifactId>exercise</artifactId>-->
+<!--        <version>01</version>-->
+<!--    </parent>-->
 
+    <groupId>io.quarkus.workshop.super-heroes</groupId>
     <artifactId>hero-api</artifactId>
     <version>01</version>
     <name>Quarkus Workshop :: Super-Heroes :: REST :: Hero API</name>
+
+    <properties>
+        <quarkus.version>0.23.1</quarkus.version>
+        <!-- Test -->
+        <testcontainers.version>1.11.1</testcontainers.version>
+        <!-- Core Maven Plugins -->
+        <surefire-plugin.version>2.22.0</surefire-plugin.version>
+        <!-- PlantUML -->
+        <version.plantuml.maven.plugin>1.2</version.plantuml.maven.plugin>
+        <version.plantuml>1.2019.10</version.plantuml>
+        <!-- Asciidoctor -->
+        <version.asciidoctor.maven.plugin>2.0.0-RC.1</version.asciidoctor.maven.plugin>
+        <version.jruby>9.2.7.0</version.jruby>
+        <version.asciidoctorj>2.1.0</version.asciidoctorj>
+        <version.asciidoctorj.pdf>1.5.0-beta.5</version.asciidoctorj.pdf>
+        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
+        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
+        <!-- Java -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Cross plugins settings -->
+        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -46,6 +96,10 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
 
         <!-- Test -->
         <dependency>
@@ -56,6 +110,11 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

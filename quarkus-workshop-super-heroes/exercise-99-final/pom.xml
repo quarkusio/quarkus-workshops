@@ -31,7 +31,6 @@
     <name>Quarkus Workshop :: Super-Heroes :: Final</name>
 
     <modules>
-        <module>docs</module>
         <module>fight-api</module>
         <module>hero-api</module>
         <module>super-heroes-load</module>
