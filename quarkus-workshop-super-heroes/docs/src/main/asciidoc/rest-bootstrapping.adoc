@@ -1,6 +1,12 @@
 [[rest-bootstrapping]]
 = Bootstrapping the Project
 
+== Architecture Diagram
+
+[[rest-boostrapping-architecture-diagram]]
+.Architecture Diagram
+image::rest-boostrapping-architecture-diagram.png[]
+
 == Bootstrapping the Hero REST Endpoint
 
 The easiest way to create a new Quarkus project is to use Maven archetype.

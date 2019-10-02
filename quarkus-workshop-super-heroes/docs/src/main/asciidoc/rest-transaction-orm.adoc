@@ -1,2 +1,9 @@
 [[rest-transaction-orm]]
 = Transactions and ORM
+
+== Architecture Diagram
+
+[[rest-transaction-orm-architecture-diagram]]
+.Architecture Diagram
+image::rest-transaction-orm-architecture-diagram.png[]
+

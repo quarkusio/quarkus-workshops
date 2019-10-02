@@ -1,5 +1,11 @@
 [[rest-openapi]]
 = Open API
 
+== Architecture Diagram
+
+[[rest-openapi-architecture-diagram]]
+.Architecture Diagram
+image::rest-openapi-architecture-diagram.png[]
+
 == Swagger UI
 

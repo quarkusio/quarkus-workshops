@@ -1,6 +1,12 @@
 [[observability-healthcheck]]
 = Health Check
 
+== Architecture Diagram
+
+[[observability-healthcheck-architecture-diagram]]
+.Architecture Diagram
+image::observability-healthcheck-architecture-diagram.png[]
+
 == Liveness
 
 == Readiness

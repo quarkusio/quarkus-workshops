@@ -1,6 +1,12 @@
 [[quarkus-lifecycle]]
 = Application Lifecycle
 
+== Architecture Diagram
+
+[[quarkus-lifecycle-architecture-diagram]]
+.Architecture Diagram
+image::quarkus-lifecycle-architecture-diagram.png[]
+
 == Adding a Banner
 
 http://patorjk.com/software/taag

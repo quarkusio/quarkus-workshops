@@ -1,0 +1,24 @@
+@startuml
+skinparam dpi 300
+
+allow_mixing
+hide empty members
+left to right direction
+!define exception(name) class name << (E,#FFAAAA) >>
+
+node Quarkus as quarkus <<8083>> {
+    package "hero-api" as heroapi {
+        class HeroResource
+        artifact "index<U+002E>html" as index
+        artifact "application<U+002E>properties" as properties
+    }
+}
+
+package "tests" as tests {
+    class HeroResourceTest
+    class NativeHeroResourceIT
+}
+
+heroapi .[hidden].> tests
+
+@enduml

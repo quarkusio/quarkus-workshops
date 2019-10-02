@@ -1,0 +1,36 @@
+@startuml
+skinparam dpi 300
+
+allow_mixing
+hide empty members
+left to right direction
+!define exception(name) class name << (E,#FFAAAA) >>
+
+node Postgres as postgres <<5433>> {
+    database "heroes-database" as db
+}
+
+node Quarkus as quarkus <<8083>> {
+    package "hero-api" as heroapi {
+        entity Hero
+        class HeroResource
+        class HeroService
+        artifact "index<U+002E>html" as index
+        artifact "application<U+002E>properties" as properties
+        artifact "import<U+002E>sql" as import
+        HeroResource ..> HeroService
+        HeroResource .> Hero
+        properties .[hidden].> import
+        Hero .[hidden].> index
+    }
+}
+
+package "tests" as tests {
+    class HeroResourceTest
+    class NativeHeroResourceIT
+}
+
+quarkus ....> postgres
+heroapi .[hidden].> tests
+
+@enduml
