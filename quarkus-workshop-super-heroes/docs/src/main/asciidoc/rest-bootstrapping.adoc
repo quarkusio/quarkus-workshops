@@ -4,11 +4,11 @@
 == Bootstrapping the Hero REST Endpoint
 
 The easiest way to create a new Quarkus project is to use Maven archetype.
-Let's say you have a `quarkus-workshop` root directory where you have all your code, create a `hero-api` sub-directory, open a terminal and run the following command:
+Let's say you have a `quarkus-workshop` root directory where you have all your code, create a `api-hero` sub-directory, open a terminal and run the following command:
 
 [source,shell]
 ----
-quarkus-workshop/hero-api $ mvn io.quarkus:quarkus-maven-plugin:0.23.1:create \
+quarkus-workshop/api-hero $ mvn io.quarkus:quarkus-maven-plugin:0.23.1:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=hero-api \
     -DclassName="io.quarkus.workshop.superheroes.hero.HeroResource" \
