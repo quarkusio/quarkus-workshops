@@ -17,5 +17,4 @@ export class FightListComponent implements OnInit {
   ngOnInit() {
     this.fightService.apiFightsGet().subscribe(fights => this.fights = fights);
   }
-
 }
