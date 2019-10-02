@@ -1,7 +1,5 @@
-[[introduction]]
-= Introduction
-
-== Quarkus
+[[introduction-presentation]]
+= Presentation of the Workshop
 
 == What is this workshop about?
 
@@ -13,9 +11,11 @@ The idea is that you leave this workshop with a good understanding of what Quark
 Then, you’ll be prepared to investigate a bit more and, hopefully, contribute.
 
 [NOTE]
-----
+====
 Get this workshop from https://github.com/quarkusio/quarkus-workshops
-----
+====
+
+== What is Quarkus?
 
 == How does this workshop work?
 
@@ -48,20 +48,10 @@ This workshop will make of the following software, tools, frameworks that you wi
 The following software needs to be downloaded and installed:
 
 * JDK 8
-* Docker
+* GraalVM
 * Maven 3.3.x
+* Docker
+* Node JS (optionally)
 
 The next section focuses on how to install and setup the needed software.
 You can skip the next section if you
-
-== TODO TO DELETE
-
-* Hero REST Endpoint (JAX-RS + Panache + Postgres)
-* Test
-* Dev
-* Hero REST Endpoint Open API - Swagger UI - Annotation
-* GraalVM
-* Villain Endpoint
-* KAFKA
-* Fight Endpoint - REST Client
-

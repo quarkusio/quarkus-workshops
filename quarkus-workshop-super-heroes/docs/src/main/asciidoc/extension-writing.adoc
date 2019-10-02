@@ -1,0 +1,3 @@
+[[extension-writing]]
+= Writing a Quarkus Extension
+

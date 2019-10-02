@@ -1,0 +1,9 @@
+[[introduction-preparing]]
+= Preparing for the Workshop
+
+== Warm up Maven
+
+== Warm up Docker
+
+== Warm up Node JS (optionally)
+

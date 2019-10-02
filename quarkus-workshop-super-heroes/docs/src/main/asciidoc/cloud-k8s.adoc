@@ -1,0 +1,2 @@
+[[cloud-k8s]]
+= Kubernetes

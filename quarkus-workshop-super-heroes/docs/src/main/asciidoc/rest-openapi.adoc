@@ -1,4 +1,4 @@
-[[exercise01-openapi]]
+[[rest-openapi]]
 = Open API
 
 == Swagger UI

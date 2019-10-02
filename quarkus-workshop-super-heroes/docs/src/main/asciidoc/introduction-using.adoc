@@ -1,5 +1,0 @@
-[[using]]
-= Using Quarkus
-
-== Java SE 8
-

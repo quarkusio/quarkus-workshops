@@ -1,4 +1,4 @@
-[[exercise01-healthcheck]]
+[[observability-healthcheck]]
 = Health Check
 
 == Liveness

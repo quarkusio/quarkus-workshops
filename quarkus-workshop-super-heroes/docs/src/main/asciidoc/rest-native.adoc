@@ -1,6 +1,0 @@
-[[exercise01-native]]
-= Building the Native Hero REST Endpoint
-
-== Building the Native Image
-
-== Production Profile
