@@ -21,13 +21,13 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>exercise</artifactId>
-        <version>99</version>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0</version>
     </parent>
 
     <artifactId>fight-api</artifactId>
-    <version>99</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Final :: Fight API</name>
+    <version>01</version>
+    <name>Quarkus Workshop :: Super-Heroes :: Fight API</name>
 
     <dependencies>
         <dependency>

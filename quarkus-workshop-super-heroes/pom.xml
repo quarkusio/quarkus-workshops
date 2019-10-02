@@ -26,6 +26,7 @@
     <name>Quarkus Workshop :: Super-Heroes</name>
 
     <modules>
+        <module>api-fight</module>
         <module>docs</module>
         <module>exercise-01-rest</module>
         <module>exercise-99-final</module>
