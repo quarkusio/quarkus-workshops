@@ -1,4 +1,7 @@
 [[observability]]
 = Observability
 
-'''
+In the following sections you will add several metrics to the Hero API and gather them within Promotheus
+
+image::observability-physical-architecture.png[align="center"]
+

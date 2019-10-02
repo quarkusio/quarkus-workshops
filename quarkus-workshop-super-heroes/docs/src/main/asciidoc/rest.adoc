@@ -1,4 +1,7 @@
 [[rest]]
 = REST
 
-'''
+In the following sections you will develop a REST API allowing CRUD operations on Super Heroes
+
+image::rest-physical-architecture.png[align="center"]
+
