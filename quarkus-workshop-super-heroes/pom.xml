@@ -61,7 +61,7 @@
     </dependencyManagement>
 
     <properties>
-        <quarkus.version>0.23.1</quarkus.version>
+        <quarkus.version>0.23.2</quarkus.version>
         <!-- Test -->
         <testcontainers.version>1.11.1</testcontainers.version>
         <!-- Core Maven Plugins -->
