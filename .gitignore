@@ -26,4 +26,5 @@ out/
 **/target
 *dummy*
 ObjectStore
+maven-wrapper.jar
 
