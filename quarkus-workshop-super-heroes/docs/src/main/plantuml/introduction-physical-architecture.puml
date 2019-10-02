@@ -4,8 +4,14 @@ allow_mixing
 
 left to right direction
 
+node "Prometheus" as prom {
+}
+
 node "Super Hero UI" as ui {
     agent "Node JS" as uiNodejs
+}
+
+node "Statistics UI" as admin {
 }
 
 node "Hero" as hero {
@@ -26,7 +32,17 @@ node "Fight" as fight {
     fightQuarkus .up> fightPostgresql
 }
 
+node "Statistics" as stat {
+    agent "Quarkus" as fightQuarkus
+}
+
+node "Kafka" as kafka {
+}
+
+stat <.. kafka
 ui ..> fight : http
+admin ..> stat
+fight ..> kafka
 fight ..> hero : http
 fight ..> villain : http
 @enduml

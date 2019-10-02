@@ -43,6 +43,8 @@ include::observability.adoc[leveloffset=+1]
 include::observability-healthcheck.adoc[leveloffset=+2]
 <<<
 include::observability-metrics.adoc[leveloffset=+2]
+<<<
+include::observability-prometheus.adoc[leveloffset=+2]
 
 // Fault Tolerance
 include::fault-tolerance.adoc[leveloffset=+1]
