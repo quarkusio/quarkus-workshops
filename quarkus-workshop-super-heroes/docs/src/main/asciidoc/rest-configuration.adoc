@@ -1,0 +1,17 @@
+[[rest-configuration]]
+= Configuration
+
+Hardcoded values in our code are a no go (even if we all did it at some point ;-)).
+In this guide, we learn how to configure our Hero API.
+
+== Injecting configuration value
+
+Quarkus uses https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config] to inject the configuration in the application.
+The injection uses the `@ConfigProperty` annotation.
+
+
+[NOTE]
+====
+When injecting a configured value, you can use `@Inject @ConfigProperty` or just `@ConfigProperty`.
+The `@Inject` annotation is not necessary for members annotated with `@ConfigProperty`, a behavior which differs from https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config].
+====
