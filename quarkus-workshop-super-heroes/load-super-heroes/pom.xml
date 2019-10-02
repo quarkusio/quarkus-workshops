@@ -25,9 +25,9 @@
         <version>99</version>
     </parent>
 
-    <artifactId>super-heroes-load</artifactId>
-    <version>99</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Final :: Super Heroes Load</name>
+    <artifactId>load-super-heroes</artifactId>
+    <version>01</version>
+    <name>Quarkus Workshop :: Super-Heroes :: Load Super Heroes</name>
 
     <dependencies>
         <dependency>

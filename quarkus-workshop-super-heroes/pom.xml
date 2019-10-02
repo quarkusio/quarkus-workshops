@@ -28,7 +28,9 @@
     <modules>
         <module>api-fight</module>
         <module>api-hero</module>
+        <module>api-villain</module>
         <module>docs</module>
+        <module>load-super-heroes</module>
         <module>exercise-01-rest</module>
         <module>exercise-99-final</module>
     </modules>
