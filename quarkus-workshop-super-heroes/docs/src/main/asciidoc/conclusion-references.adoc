@@ -1,0 +1,8 @@
+[[conclusion-references]]
+= References
+
+* https://github.com/cescoffier/quarkus-todo-app
+* https://github.com/agoncal/baking-microservice-pie
+* https://forge.jboss.org/document/hands-on-lab
+* https://bit.ly/forge-hol
+* https://code.quarkus.io

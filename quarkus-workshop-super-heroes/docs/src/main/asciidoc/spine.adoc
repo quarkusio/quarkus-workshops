@@ -69,3 +69,7 @@ include::cloud.adoc[leveloffset=+1]
 include::cloud-k8s.adoc[leveloffset=+2]
 <<<
 include::cloud-open-shift.adoc[leveloffset=+2]
+
+// Conclusion
+include::conclusion.adoc[leveloffset=+1]
+include::conclusion-references.adoc[leveloffset=+2]
