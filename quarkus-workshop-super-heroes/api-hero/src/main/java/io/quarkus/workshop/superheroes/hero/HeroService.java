@@ -15,7 +15,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 public class HeroService {
 
     // tag::adocConfigProperty[]
-    @ConfigProperty(name = "level.multiplier")
+    @ConfigProperty(name = "level.multiplier", defaultValue="1")
     int levelMultiplier;
     // end::adocConfigProperty[]
 
@@ -38,11 +38,13 @@ public class HeroService {
         return randomHero;
     }
 
+    // tag::adocPersistHero[]
     public Hero persistHero(@Valid Hero hero) {
         hero.level = hero.level * levelMultiplier;
         Hero.persist(hero);
         return hero;
     }
+    // end::adocPersistHero[]
 
     public Hero updateHero(@Valid Hero hero) {
         Hero entity = Hero.findById(hero.id);

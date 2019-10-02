@@ -9,9 +9,40 @@ In this guide, we learn how to configure our Hero API.
 Quarkus uses https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config] to inject the configuration in the application.
 The injection uses the `@ConfigProperty` annotation.
 
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocConfigProperty]
+----
 
 [NOTE]
 ====
 When injecting a configured value, you can use `@Inject @ConfigProperty` or just `@ConfigProperty`.
 The `@Inject` annotation is not necessary for members annotated with `@ConfigProperty`, a behavior which differs from https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config].
 ====
+
+Edit the `HeroService`, and introduce the following configuration properties:
+
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocConfigProperty]
+----
+
+* If you do not provide a value for this property, the application startup fails with `javax.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`
+* A default value of `2` injected if the configuration does not provide a value for `level.multiplier`
+
+Now, modify the `persistHero` method to use the injected properties:
+
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocPersistHero]
+----
+
+== Create the configuration
+
+By default, Quarkus reads `application.properties`.
+Edit the `src/main/resources/application.properties` with the following content:
+
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/main/resources/application.properties[tag=adocConfigProperty]
+----
