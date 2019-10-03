@@ -27,8 +27,7 @@ import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
@@ -43,7 +42,7 @@ public class FightResourceTest {
     private static final String DEFAULT_LOSER_PICTURE = "super_chocolatine.png";
     private static final int DEFAULT_LOSER_LEVEL = 6;
 
-    private static final int NB_FIGHTS = 0;
+    private static final int NB_FIGHTS = 10;
     private static String fightId;
 
     @Container
@@ -175,20 +174,17 @@ public class FightResourceTest {
         fighters.setHero(hero);
         fighters.setVillain(villain);
 
-        String location = given()
+        fightId = given()
             .body(fighters)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .header(ACCEPT, APPLICATION_JSON)
             .when()
             .post("/api/fights")
             .then()
-            .statusCode(CREATED.getStatusCode())
-            .extract().header("Location");
-        assertTrue(location.contains("/api/fights"));
+            .statusCode(OK.getStatusCode())
+            .content(containsString("winner"), containsString("loser"))
+            .extract().body().jsonPath().getString("id");
 
-        // Stores the id
-        String[] segments = location.split("/");
-        fightId = segments[segments.length - 1];
         assertNotNull(fightId);
 
         given()

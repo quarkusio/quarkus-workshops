@@ -73,15 +73,15 @@ public class FightResource {
     }
 
     @POST
-    @Operation(summary = "Creates a fight between two fighters")
-    @APIResponse(responseCode = "201", description = "The URI of the created fight", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class)))
-    @Counted(name = "countCreateFight", description = "Counts how many times the createFight method has been invoked")
-    @Timed(name = "timeCreateFight", description = "Times how long it takes to invoke the createFight method", unit = MetricUnits.MILLISECONDS)
-    public Response createFight(@RequestBody(description = "The two fighters fighting", required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fighters.class))) @Valid Fighters fighters, @Context UriInfo uriInfo) {
+    @Operation(summary = "Trigger a fight between two fighters")
+    @APIResponse(responseCode = "200", description = "The result of the fight", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fight.class)))
+    @Counted(name = "countFight", description = "Counts how many times the createFight method has been invoked")
+    @Timed(name = "timeFight", description = "Times how long it takes to invoke the createFight method", unit = MetricUnits.MILLISECONDS)
+    public Fight fight(@RequestBody(description = "The two fighters fighting", required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fighters.class))) @Valid Fighters fighters, @Context UriInfo uriInfo) {
         Fight fight = service.persistFight(fighters);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(fight.id));
         LOGGER.debug("New fight created with URI " + builder.build().toString());
-        return Response.created(builder.build()).build();
+        return fight;
     }
 
     @GET
