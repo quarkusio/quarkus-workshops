@@ -1,28 +1,43 @@
-<mat-grid-list cols="2">
-    <mat-card class="hero-card">
-        <mat-card-header>
-            <mat-card-title>{{figthers.hero.name}}</mat-card-title>
-            <mat-card-subtitle>Hero</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image [src]="figthers.hero.picture">
-        <mat-card-content>
-            <p>{{figthers.hero.powers}}</p>
-        </mat-card-content>
-    </mat-card>
+<div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-4">
+        <div class="card-pf">
+            <h2 class="hero-name">
+                {{figthers.hero.name}}
+                <span class="level">{{figthers.hero.level}}</span>
+            </h2>
+            <div class="card-pf-body">
+                <img class="rounded" src="{{figthers.hero.picture}}">
 
-    <mat-card class="hero-card">
-        <mat-card-header>
-            <mat-card-title>{{figthers.villain.name}}</mat-card-title>
-            <mat-card-subtitle>Villain</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image [src]="figthers.villain.picture">
-        <mat-card-content>
-            <p>{{figthers.villain.powers}}</p>
-        </mat-card-content>
-    </mat-card>
-</mat-grid-list>
+                <h3 class="card-pf-subtitle">Powers</h3>
+                <p>{{figthers.hero.powers}}</p>
+            </div>
+        </div>
+    </div>
 
-<mat-card-actions>
-    <button (click)="newFighters()"  mat-button>NEW FIGHTERS</button>
-    <button (click)="fight()"  mat-button>FIGHT !</button>
-</mat-card-actions>
+    <div class="col-xs-6 col-sm-4 col-md-4">
+        <div class="card-pf">
+            <div class="card-pf-body">
+                <button (click)="newFighters()" class="btn btn-primary btn-block btn-lg">NEW FIGHTERS</button>
+                <button (click)="fight()" class="btn btn-danger btn-block btn-lg">FIGHT !</button>
+            </div>
+
+            <div *ngIf="winner" class="winner-text">Winner is <span class="winner">{{winner}}</span></div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-4 col-md-4">
+        <div class="card-pf">
+            <h2 class="villain-name">
+                {{figthers.villain.name}}
+                <span class="level">{{figthers.villain.level}}</span>
+            </h2>
+            <div class="card-pf-body">
+                <img class="rounded" src="{{figthers.villain.picture}}">
+
+                <h3 class="card-pf-subtitle">Powers</h3>
+                <p>{{figthers.villain.powers}}</p>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -8,6 +8,7 @@ import { Fighters, FightService, Hero, Villain } from '../shared';
 export class FightComponent implements OnInit {
 
   figthers: Fighters = new Fighters();
+  winner: String;
 
   constructor(private fightService: FightService) {
   }
@@ -17,10 +18,15 @@ export class FightComponent implements OnInit {
   }
 
   fight() {
-    this.fightService.apiFightsPost(this.figthers).subscribe();
+    this.fightService.apiFightsPost(this.figthers).subscribe(
+      fight => {
+        this.winner = fight.winnerName;
+      }
+    );
   }
 
   newFighters() {
+    this.winner = null;
     this.fightService.apiFightsRandomfightersGet().subscribe(figthers => this.figthers = figthers);
   }
 }

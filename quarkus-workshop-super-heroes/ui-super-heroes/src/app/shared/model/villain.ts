@@ -18,6 +18,7 @@ export class Villain {
     public name?: string,
     public picture?: string,
     public powers?: string,
+    public level?: bigint
   ) {
   }
 }

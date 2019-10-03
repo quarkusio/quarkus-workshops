@@ -12,3 +12,47 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 table {
   width: 100%;
 }
+
+.rounded {
+  display: inline-block;
+  position: relative;
+  width: 80%;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.level {
+  float: right;
+  color: deeppink;
+  font-weight: bold;
+}
+
+.hero-name {
+  padding: 20px;
+  background: dodgerblue;
+  color: white;
+}
+
+.villain-name {
+  padding: 20px;
+  background: firebrick;
+  color: white;
+}
+
+.watermark
+{
+  color:greenyellow;
+  font-size:120px;
+  transform:rotate(300deg);
+  -webkit-transform:rotate(300deg);
+}
+
+.winner-text {
+  font-weight: bold;
+  font-size: large;
+}
+
+.winner {
+  color: firebrick;
+}
