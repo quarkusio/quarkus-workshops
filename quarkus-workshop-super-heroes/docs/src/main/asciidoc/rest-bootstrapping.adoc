@@ -14,7 +14,7 @@ Let's say you have a `quarkus-workshop` root directory where you have all your c
 
 [source,shell]
 ----
-quarkus-workshop/api-hero $
+include::{github-raw}/api-hero/bootstrap.sh[tag=adocSnippet]
 ----
 
 == Development

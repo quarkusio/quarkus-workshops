@@ -1,7 +1,20 @@
 [[introduction-preparing]]
 = Preparing for the Workshop
 
+This workshop needs internet access to download all sorts of Maven artifacts or Docker images.
+Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
+Here are a few commands that you can execute before the workshop.
+
 == Warm up Maven
+
+To warm up your Maven repository, first bootstrap a Quarkus project using the following command:
+
+[source,shell]
+----
+include::{github-raw}/api-hero/bootstrap.sh[tag=adocSnippet]
+----
+
+Then, make sure to run a `mvn install` in the directory where the `pom.xml` file is located.
 
 == Warm up Docker
 

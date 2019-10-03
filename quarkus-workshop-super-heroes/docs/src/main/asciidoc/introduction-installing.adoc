@@ -1,12 +1,123 @@
 [[introduction-installing]]
 = Installing Software
 
-== Java SE 8
+== JDK {jdk-version}
+
+Essential for the development and execution of this workshop is the _Java Development Kit_ (JDK).footnote:[Java http://www.oracle.com/technetwork/java/javase]
+The JDK includes several tools such as a compiler (`javac`), a virtual machine, a documentation generator (`javadoc`), monitoring tools (Visual VM) and so on.footnote:[Visual VM https://visualvm.github.io]
+The code in this workshop uses JDK {jdk-version}.
+
+=== Installing the JDK
+
+To install the JDK {jdk-version}, go to the official website, select the appropriate platform and language, and download the distribution.footnote:[Java Website http://www.oracle.com/technetwork/java/javase/downloads/index.html]
+For example, if you are running on Mac OS X, download the DMG file (you should check out the _Accept License Agreement_ check box before hitting the download link to let the download start).
+If you are not on Mac, the download steps are still pretty similar.
+
+There is also an easier way to download and install Java if you are on Mac OS X.
+You can use Homebrew to install JDK jdk-version using the following commands.footnote:[Homebrew https://brew.sh]
+
+[source,shell]
+----
+$ brew tap caskroom/versions
+$ brew cask install java8
+----
+
+=== Checking for Java Installation
+
+Once the installation is complete, it is necessary to set the `JAVA_HOME` variable and the `$JAVA_HOME/bin` directory to the `PATH` variable.
+Check that your system recognises Java by entering `java -version` as well as the Java compiler with `javac -version`.
+
+[source,shell]
+----
+$ java -version
+java version "1.8.0_201"
+Java(TM) SE Runtime Environment (build 1.8.0_201-b09)
+Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)
+$ javac -version
+javac 1.8.0_201
+----
 
 == GraalVM
 
+GraalVM is an extension of the _Java Virtual Machine_ (JVM) to support more languages and several execution modes.footnote:[GraalVM https://www.graalvm.org]
+It supports a large set of languages:
+Java of course, other JVM-based languages (such as Groovy, Kotlin etc.) but also JavaScript, Ruby, Python, R and  C/C++.
+It includes a new high performance Java compiler, itself called _Graal_, which can be used in a _Just-In-Time_ (JIT) configuration on the HotSpot VM, or in an _Ahead-Of-Time_ (AOT) configuration on the Substrate VM.footnote:[SubstrateVM https://github.com/oracle/graal/tree/master/substratevm]
+One objective of Graal is to improve the performance of Java virtual machine-based languages to match the performance of native languages.
+
+=== Installing GraalVM
+
+=== Checking for GraalVM Installation
+
 == Maven 3.3.x
+
+All the examples of this workshop are built and tested using Maven.footnote:[Maven https://maven.apache.org]
+Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork and so forth.
+Based on the "convention over configuration" principle, Maven brings a standard project description and a number of conventions such as a standard directory structure.
+With an extensible architecture based on plugins, Maven can offer many different services.
+
+=== Installing Maven
+
+The examples of this workshop have been developed with Apache Maven 3.3.x.
+Once you have installed JDK {jdk-version}, make sure the `JAVA_HOME` environment variable is set.
+Then, download Maven from http://maven.apache.org/, unzip the file on your hard drive, and add the `apache-maven/bin` directory to your `PATH` variable.
+
+But of course, if you are on Mac OS X and use Homebrew, just install Maven with the following command:
+
+[source,shell]
+----
+$ brew install maven
+----
+
+=== Checking for Maven Installation
+
+Once you've got Maven installed, open a command line and enter mvn `-version` to validate your installation.
+Maven should print its version and the JDK version it uses (which is handy as you might have different JDK versions installed on the same machine).
+
+[source,shell]
+----
+$ mvn -version
+Apache Maven 3.6.0
+Maven home: /usr/local/Cellar/maven/3.6.0/libexec
+Java version: 1.8.0_201, vendor: Oracle Corporation
+OS name: "mac os x", version: "10.14.2", arch: "x86_64", family: "mac"
+----
+
+Be aware that Maven needs Internet access so it can download plugins and project dependencies from the Maven Central and/or other remote repositories.footnote:[Maven Central https://search.maven.org]
+
+=== Some Maven Commands
+
+Maven is a command line utility where you can use several parameters and options to build, test or package your code.
+To get some help on the commands you can type, use the following command:
+
+[source,shell]
+----
+$ mvn --help
+
+usage: mvn [options] [<goal(s)>] [<phase(s)>]
+----
+
+Here are some commands that you will be using to run the examples in the workshop.
+Each invoke a different phase of the project life cycle (clean, compile, install etc.) and use the `pom.xml` to download libraries, customise the compilation, or extend some behaviours with plugins:
+
+* `mvn clean`: Deletes all generated files (compiled classes, generated code, artifacts etc.).
+* `mvn compile`: Compiles the main Java classes.
+* `mvn test-compile`: Compiles the test classes.
+* `mvn test`: Compiles the main Java classes as well as the test classes and executes the tests.
+* `mvn package`: Compiles, executes the tests and packages the code into an archive.
+* `mvn install`: Builds and installs the artifacts in your local repository.
+* `mvn clean install`: Cleans and installs (note that you can add several commands separated by a space, like `mvn clean compile test`).
 
 == Docker
 
 == Node JS (optionally)
+
+== Recap
+
+Just make sure the following commands work on your machine
+
+[source,shell]
+----
+$ java -version
+$ mvn -version
+----
