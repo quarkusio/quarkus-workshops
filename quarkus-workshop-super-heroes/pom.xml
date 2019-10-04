@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.quarkus.workshop.super-heroes</groupId>
-    <artifactId>parent-pom</artifactId>
+    <artifactId>super-parent-pom</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes</name>
