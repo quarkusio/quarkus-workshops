@@ -28,7 +28,6 @@ public class QuackProcessor {
         FaultInjectorRecorder recorder,
         QuackConfig config,
         VertxWebRouterBuildItem router) {
-        System.out.println("Configuring fault injection");
         feature.produce(new FeatureBuildItem("quack"));
         recorder.configure(config, router.getRouter());
     }
