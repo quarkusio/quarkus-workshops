@@ -7,3 +7,22 @@
 .Architecture Diagram
 image::rest-transaction-orm-architecture-diagram.png[]
 
+== Using injection
+
+Dependency injection in Quarkus is based on ArC which is a CDI-based dependency injection solution tailored for Quarkus' architecture.footnote:[ArC https://github.com/quarkusio/quarkus/tree/master/independent-projects/arc]
+You can learn more about it in the Contexts and Dependency Injection guide.footnote:[Quarkus - Contexts and Dependency Injection https://quarkus.io/guides/cdi-reference.html]
+
+ArC comes as a dependency of `quarkus-resteasy` so you already have it handy.
+
+Let's modify the application so that the `HeroResource` injects a reference to `HeroService`:
+
+[source]
+----
+@Path("/api/heroes")
+public class HeroResource {
+
+    @Inject
+    HeroService service;
+    ...
+}
+----
