@@ -8,7 +8,7 @@ You will first install all the needed tools to then develop an entire microservi
 You will finish by extending the capabilities of Quarkus.
 
 The idea is that you leave this workshop with a good understanding of what Quarkus is, what it is not, and how it can help you in your projects.
-Then, you’ll be prepared to investigate a bit more and, hopefully, contribute.
+Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 
 [NOTE]
 ====
@@ -53,10 +53,12 @@ This workshop will make of the following software, tools, frameworks that you wi
 
 The following software needs to be downloaded and installed:
 
+* Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse, VS Code..)
 * JDK 8
 * GraalVM
 * Maven 3.3.x
 * Docker
+* cURL (or any other command line HTTP client)
 * Node JS (optionally)
 
 The next section focuses on how to install and setup the needed software.

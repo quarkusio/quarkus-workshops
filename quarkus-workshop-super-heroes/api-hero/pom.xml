@@ -29,11 +29,14 @@
     <version>01</version>
     <name>Quarkus Workshop :: Super-Heroes :: Hero API</name>
 
+    <!--tag::adocDependency[]-->
     <dependencies>
+        <!--tag::adocDependencyResteasy[]-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
+        <!--end::adocDependencyResteasy[]-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jsonb</artifactId>
@@ -62,8 +65,10 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-metrics</artifactId>
         </dependency>
+        <!--end::adocDependency[]-->
 
         <!-- Test -->
+        <!--tag::adocDependencyTest[]-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -74,6 +79,7 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--end::adocDependencyTest[]-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
