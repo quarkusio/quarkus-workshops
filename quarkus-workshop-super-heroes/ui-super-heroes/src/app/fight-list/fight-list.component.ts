@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Fight, FightService } from '../shared';
+import {MatTableDataSource} from "@angular/material";
 
 @Component({
   selector: 'hero-fight-list',
@@ -8,13 +9,21 @@ import { Fight, FightService } from '../shared';
 })
 export class FightListComponent implements OnInit {
 
-  fights: Fight[];
+  dataSource: MatTableDataSource < Fight > ;
   displayedColumns: string[] = ['id', 'fightDate', 'winnerName', 'loserName'];
 
   constructor(private fightService: FightService) {
+    this.dataSource = new MatTableDataSource<Fight>();
+    fightService.emitter.subscribe(fight => {
+      const data = this.dataSource.data;
+      data.unshift(fight);
+      this.dataSource.data = data;
+    })
   }
 
   ngOnInit() {
-    this.fightService.apiFightsGet().subscribe(fights => this.fights = fights);
+    this.fightService.apiFightsGet().subscribe(fights => {
+      this.dataSource.data = fights.reverse();
+    });
   }
 }

@@ -68,3 +68,16 @@ table {
 #fight-row {
   margin-bottom: 30px;
 }
+
+.fight-list-header {
+  text-align: center !important;
+  vertical-align: middle !important;
+  background: darkgray;
+  color: white;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.mat-cell {
+  vertical-align: middle !important;
+}

@@ -20,6 +20,7 @@ export class FightComponent implements OnInit {
   fight() {
     this.fightService.apiFightsPost(this.figthers).subscribe(
       fight => {
+        this.fightService.onNewFight(fight);
         this.winner = fight.winnerName;
       }
     );

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
+import {EventEmitter, Inject, Injectable, Optional, Output} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
@@ -34,7 +34,10 @@ export class FightService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    @Output() emitter = new EventEmitter<Fight>();
+
+
+  constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -170,6 +173,10 @@ export class FightService {
                 reportProgress: reportProgress
             }
         );
+    }
+
+    public onNewFight(fight: Fight) {
+      this.emitter.emit(fight);
     }
 
     /**
