@@ -97,6 +97,13 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+
+        <!-- Banner -->
+        <dependency>
+            <groupId>io.quarkus.workshop.super-heroes</groupId>
+            <artifactId>quarkus-banner</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
