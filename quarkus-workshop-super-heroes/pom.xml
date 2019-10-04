@@ -36,6 +36,7 @@
         <module>ui-super-heroes</module>
 
         <module>fault-injector-extension</module>
+        <module>banner-extension</module>
     </modules>
 
     <!-- tag::adocDependencyManagement[] -->
