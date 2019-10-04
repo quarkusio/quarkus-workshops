@@ -47,6 +47,14 @@ One objective of Graal is to improve the performance of Java virtual machine-bas
 
 === Installing GraalVM
 
+GraalVM installed from the GraalVM web site.footnote:[GraalVM Download https://www.graalvm.org/downloads]
+Using the community edition is enough.
+Version {graalvm-version} is required.
+
+Once installed, make sure the `GRAALVM_HOME` environment variable configured appropriately and points to the directory where GraalVM is installed (eg. on Mac OS X it will be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home)
+The `native-image` tool must be installed;
+this can be done by running `gu install native-image` from your GraalVM directory.
+
 === Checking for GraalVM Installation
 
 == Maven 3.3.x
