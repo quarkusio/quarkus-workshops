@@ -1,2 +1,6 @@
 [[observability-prometheus]]
 = Prometheus
+
+/!\
+/!\ TODO CLEMENT  /!\
+/!\

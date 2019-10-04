@@ -29,14 +29,14 @@
         <module>api-fight</module>
         <module>api-hero</module>
         <module>api-villain</module>
+        <module>containers</module>
         <module>docs</module>
+        <module>extension-banner</module>
+        <module>extension-fault-injector</module>
         <module>load-super-heroes</module>
         <module>stream-statistics</module>
         <module>ui-statistics</module>
         <module>ui-super-heroes</module>
-
-        <module>fault-injector-extension</module>
-        <module>banner-extension</module>
     </modules>
 
     <!-- tag::adocDependencyManagement[] -->
@@ -62,10 +62,10 @@
                 <version>${testcontainers.version}</version>
                 <scope>test</scope>
             </dependency>
-            <!--end::adocDependencyTestBom[] -->
+            <!-- end::adocDependencyTestBom[] -->
         </dependencies>
     </dependencyManagement>
-    <!--end::adocDependencyManagement[] -->
+    <!-- end::adocDependencyManagement[] -->
 
     <!-- tag::adocProperties[] -->
     <properties>
@@ -73,7 +73,7 @@
         <surefire-plugin.version>2.22.0</surefire-plugin.version>
         <!-- tag::adocPropertiesTestcontainers[] -->
         <testcontainers.version>1.11.1</testcontainers.version>
-        <!--end::adocPropertiesTestcontainers[] -->
+        <!-- end::adocPropertiesTestcontainers[] -->
         <!-- tag::adocPropertiesOthers[] -->
         <version.plantuml.maven.plugin>1.2</version.plantuml.maven.plugin>
         <version.plantuml>1.2019.10</version.plantuml>
@@ -83,14 +83,14 @@
         <version.asciidoctorj.pdf>1.5.0-beta.5</version.asciidoctorj.pdf>
         <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
         <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
-        <!--end::adocPropertiesOthers[] -->
+        <!-- end::adocPropertiesOthers[] -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <!--end::adocProperties[] -->
+    <!-- end::adocProperties[] -->
 
     <!-- tag::adocBuild[] -->
     <build>
@@ -118,7 +118,7 @@
                         </systemProperties>
                     </configuration>
                 </plugin>
-                <!--end::adocBuildSurefire[] -->
+                <!-- end::adocBuildSurefire[] -->
 
                 <!-- tag::adocBuildOthers[] -->
                 <plugin>
@@ -172,11 +172,11 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!--end::adocBuildOthers[] -->
+                <!-- end::adocBuildOthers[] -->
             </plugins>
         </pluginManagement>
     </build>
-    <!--end::adocBuild[] -->
+    <!-- end::adocBuild[] -->
 
     <profiles>
         <profile>

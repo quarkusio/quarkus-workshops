@@ -31,12 +31,12 @@
 
     <!-- tag::adocDependency[] -->
     <dependencies>
-        <!--tag::adocDependencyResteasy[]-->
+        <!-- tag::adocDependencyResteasy[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
-        <!--end::adocDependencyResteasy[] -->
+        <!-- end::adocDependencyResteasy[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jsonb</artifactId>
@@ -65,12 +65,12 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-metrics</artifactId>
         </dependency>
-        <!--end::adocDependency[] -->
+        <!-- end::adocDependency[] -->
 
         <!-- fault-injection -->
         <dependency>
             <groupId>io.quarkus.workshop.super-heroes</groupId>
-            <artifactId>quarkus-fault-injector</artifactId>
+            <artifactId>extension-fault-injector-runtime</artifactId>
             <version>1.0</version>
         </dependency>
 
@@ -86,7 +86,7 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--end::adocDependencyTest[] -->
+        <!-- end::adocDependencyTest[] -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
