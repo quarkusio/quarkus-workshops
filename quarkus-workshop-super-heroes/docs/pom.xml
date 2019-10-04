@@ -45,6 +45,7 @@
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
                         <jdk-version>${maven.compiler.source}</jdk-version>
+                        <graalvm-version>19.2.0.1</graalvm-version>
                     </attributes>
                 </configuration>
                 <executions>
