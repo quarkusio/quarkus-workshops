@@ -51,7 +51,7 @@ public class HeroResourceTest {
 
     @Container
     public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
-        .withDatabaseName("heroes-database")
+        .withDatabaseName("heroes_database")
         .withUsername("superman")
         .withPassword("superman")
         .withExposedPorts(5432)
