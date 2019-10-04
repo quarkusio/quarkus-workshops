@@ -14,8 +14,58 @@ Let's say you have a `quarkus-workshop` root directory where you have all your c
 
 [source,shell]
 ----
-quarkus-workshop/api-hero $
+include::{github-raw}/api-hero/bootstrap.sh[tag=adocSnippet]
 ----
+
+== Directory Structure
+
+Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
+
+[source,text]
+----
+.
+└── hero-api
+   ├── mvnw
+   ├── mvnw.cmd
+   ├── pom.xml
+   └── src
+       ├── main
+       │   ├── docker
+       │   │   ├── Dockerfile.jvm
+       │   │   └── Dockerfile.native
+       │   ├── java
+       │   │   └── io
+       │   │       └── quarkus
+       │   │           └── workshop
+       │   │               └── superheroes
+       │   │                   └── hero
+       │   │                       └── HeroResource.java
+       │   └── resources
+       │       ├── META-INF
+       │       │   └── resources
+       │       │       └── index.html
+       │       └── application.properties
+       └── test
+           └── java
+               └── io
+                   └── quarkus
+                       └── workshop
+                           └── superheroes
+                               └── hero
+                                   ├── HeroResourceTest.java
+                                   └── NativeHeroResourceIT.java
+----
+
+The Maven archetype generates the following `api-hero` sub-directory:
+
+* the Maven structure with a `pom.xml`
+* an `io.quarkus.workshop.superheroes.hero.HeroResource` resource exposed on `/api/heroes`
+* an associated unit test
+* the landing page `index.html` that is accessible on http://localhost:8080 after starting the application
+* example Dockerfile files for both native and jvm modes in `src/main/docker`
+* the `application.properties` configuration file
+
+Once generated, look at the pom.xml. You will find the import of the Quarkus BOM, allowing you to omit the version on the different Quarkus dependencies. In addition, you can see the quarkus-maven-plugin responsible of the packaging of the application and also providing the development mode.
 
 == Development
 

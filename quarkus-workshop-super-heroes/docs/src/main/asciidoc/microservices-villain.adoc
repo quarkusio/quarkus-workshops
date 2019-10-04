@@ -7,3 +7,13 @@
 .Architecture Diagram
 image::microservices-villain-architecture-diagram.png[]
 
+== Bootstrapping the Hero REST Endpoint
+
+Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
+Under the `quarkus-workshop` root directory where you have all your code, create a `api-villain` sub-directory, open a terminal and run the following command:
+
+[source,shell]
+----
+include::{github-raw}/api-villain/bootstrap.sh[tag=adocSnippet]
+----
+

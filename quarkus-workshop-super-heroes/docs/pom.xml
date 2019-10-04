@@ -44,6 +44,7 @@
                         <allow-uri-read/>
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
+                        <jdk-version>${maven.compiler.source}</jdk-version>
                     </attributes>
                 </configuration>
                 <executions>
