@@ -34,6 +34,8 @@
         <module>stream-statistics</module>
         <module>ui-statistics</module>
         <module>ui-super-heroes</module>
+
+        <module>fault-injector-extension</module>
     </modules>
 
     <!--tag::adocDependencyManagement[]-->
