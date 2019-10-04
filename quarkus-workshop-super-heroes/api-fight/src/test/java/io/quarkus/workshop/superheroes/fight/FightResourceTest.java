@@ -47,7 +47,7 @@ public class FightResourceTest {
 
     @Container
     public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
-        .withDatabaseName("fights-database")
+        .withDatabaseName("fights_database")
         .withUsername("superfight")
         .withPassword("superfight")
         .withExposedPorts(5432)
