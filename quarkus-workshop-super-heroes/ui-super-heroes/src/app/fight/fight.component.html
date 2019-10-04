@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row" id="fight-row">
     <div class="col-xs-6 col-sm-4 col-md-4">
-        <div class="card-pf">
+        <div class="card-pf" [className]="winner == figthers.hero.name ? 'winner-card' : 'off'">
             <h2 class="hero-name">
                 {{figthers.hero.name}}
                 <span class="level">{{figthers.hero.level}}</span>
@@ -21,12 +21,12 @@
                 <button (click)="fight()" class="btn btn-danger btn-block btn-lg">FIGHT !</button>
             </div>
 
-            <div *ngIf="winner" class="winner-text">Winner is <span class="winner">{{winner}}</span></div>
+            <div *ngIf="winner" class="winner-text">Winner is <span [className]="winner == figthers.villain.name ? 'winner-villain' : 'winner-hero'">{{winner}}</span></div>
         </div>
     </div>
 
     <div class="col-xs-6 col-sm-4 col-md-4">
-        <div class="card-pf">
+        <div class="card-pf" [className]="winner == figthers.villain.name ? 'winner-card' : 'off'">
             <h2 class="villain-name">
                 {{figthers.villain.name}}
                 <span class="level">{{figthers.villain.level}}</span>

@@ -40,19 +40,31 @@ table {
   color: white;
 }
 
-.watermark
-{
-  color:greenyellow;
-  font-size:120px;
-  transform:rotate(300deg);
-  -webkit-transform:rotate(300deg);
-}
-
 .winner-text {
   font-weight: bold;
   font-size: large;
 }
 
-.winner {
+.winner-hero {
+  color: dodgerblue;
+}
+
+.winner-villain {
   color: firebrick;
+}
+
+.winner-card {
+  box-shadow:
+    inset 0 0 10px #fff,
+    inset 20px 0 50px #77b4f0,
+    inset -20px 0 60px #5fc3d7,
+    inset 20px 0 100px #4a54ff,
+    inset -20px 0 100px #0ff,
+    0 0 50px #fff,
+    -10px 0 50px #4a54ff,
+    10px 0 50px #0ff;
+}
+
+#fight-row {
+  margin-bottom: 30px;
 }
