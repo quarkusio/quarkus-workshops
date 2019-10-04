@@ -179,7 +179,7 @@ export class FightService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFightsPost(body: Fighters, observe?: 'body', reportProgress?: boolean): Observable<URI>;
+    public apiFightsPost(body: Fighters, observe?: 'body', reportProgress?: boolean): Observable<Fight>;
     public apiFightsPost(body: Fighters, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<URI>>;
     public apiFightsPost(body: Fighters, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<URI>>;
     public apiFightsPost(body: Fighters, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
