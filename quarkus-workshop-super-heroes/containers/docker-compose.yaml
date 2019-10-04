@@ -7,3 +7,10 @@ services:
             - "5432:5432"
         volumes:
             - ./db-init/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
+    monitoring:
+        image: "prom/prometheus"
+        container_name: "super-visor"
+        ports:
+          - 9090:9090
+        volumes:
+          - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
