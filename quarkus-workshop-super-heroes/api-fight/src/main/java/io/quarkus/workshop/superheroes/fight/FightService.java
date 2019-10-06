@@ -61,6 +61,8 @@ public class FightService {
         fight.loserName = fighters.getVillain().getName();
         fight.loserPicture = fighters.getVillain().getPicture();
         fight.loserLevel = fighters.getVillain().getLevel();
+        fight.winnerTeam = "heroes";
+        fight.loserTeam = "villains";
         return fight;
     }
 
@@ -72,10 +74,12 @@ public class FightService {
         fight.loserName = fighters.getHero().getName();
         fight.loserPicture = fighters.getHero().getPicture();
         fight.loserLevel = fighters.getHero().getLevel();
+        fight.winnerTeam = "villains";
+        fight.loserTeam = "heroes";
         return fight;
     }
 
-    public Fighters findRandomFighters() {
+    Fighters findRandomFighters() {
         Hero hero = heroService.findRandomHero();
         Villain villain = villainService.findRandomVillain();
         Fighters fighters = new Fighters();
