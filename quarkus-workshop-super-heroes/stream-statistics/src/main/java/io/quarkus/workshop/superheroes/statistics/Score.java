@@ -1,12 +1,25 @@
 package io.quarkus.workshop.superheroes.statistics;
 
 public class Score {
-    protected final String name;
-    protected final int score;
+    protected String name;
+    protected int score;
 
     public Score(String name, int score) {
         this.name = name;
         this.score = score;
+    }
+
+    public Score() {
+    }
+
+    public Score setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Score setScore(int score) {
+        this.score = score;
+        return this;
     }
 
     public String getName() {

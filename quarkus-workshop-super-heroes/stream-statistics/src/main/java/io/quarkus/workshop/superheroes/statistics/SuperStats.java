@@ -12,7 +12,6 @@ import javax.enterprise.context.ApplicationScoped;
 public class SuperStats {
 
     private Ranking topWinners = new Ranking(10);
-    private Ranking topLosers = new Ranking(10);
     private TeamStats stats = new TeamStats();
 
     @Incoming("fights")
@@ -31,22 +30,12 @@ public class SuperStats {
     @Incoming("results")
     @Outgoing("winner-stats")
     public Flowable<Iterable<Score>> computeTopWinners(Flowable<FightResult> results) {
-        return results.groupBy(FightResult::getWinnerName)
+        return results
+            .groupBy(FightResult::getWinnerName)
             .flatMap(group ->
                 group.scan(0, (i, s) -> i + 1)
                     .skip(1)
                     .map(i -> new Score(group.getKey(), i)))
             .flatMapMaybe(score -> topWinners.onNewScore(score));
-    }
-
-    @Incoming("fights")
-    @Outgoing("loser-stats")
-    public Flowable<Iterable<Score>> computeTopLosers(Flowable<FightResult> results) {
-        return results.groupBy(FightResult::getLoserName)
-            .flatMap(group ->
-                group.scan(0, (i, s) -> i + 1)
-                .skip(1)
-                .map(i -> new Score(group.getKey(), i)))
-            .flatMapMaybe(score -> topLosers.onNewScore(score));
     }
 }
