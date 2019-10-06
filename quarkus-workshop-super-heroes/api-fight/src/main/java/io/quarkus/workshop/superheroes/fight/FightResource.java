@@ -78,10 +78,7 @@ public class FightResource {
     @Counted(name = "countFight", description = "Counts how many times the createFight method has been invoked")
     @Timed(name = "timeFight", description = "Times how long it takes to invoke the createFight method", unit = MetricUnits.MILLISECONDS)
     public Fight fight(@RequestBody(description = "The two fighters fighting", required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fighters.class))) @Valid Fighters fighters, @Context UriInfo uriInfo) {
-        Fight fight = service.persistFight(fighters);
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(fight.id));
-        LOGGER.debug("New fight created with URI " + builder.build().toString());
-        return fight;
+        return service.persistFight(fighters);
     }
 
     @GET
