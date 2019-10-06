@@ -14,7 +14,7 @@ import javax.json.bind.JsonbBuilder;
 @ApplicationScoped
 public class KafkaWriter {
 
-    private static final Logger LOGGER = org.jboss.logging.Logger.getLogger(KafkaWriter.class);
+    private static final Logger LOGGER = Logger.getLogger(KafkaWriter.class);
     private Jsonb jsonb;
 
     @PostConstruct
