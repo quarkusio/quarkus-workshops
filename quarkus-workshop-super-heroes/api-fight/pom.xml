@@ -101,7 +101,7 @@
         <!-- Banner -->
         <dependency>
             <groupId>io.quarkus.workshop.super-heroes</groupId>
-            <artifactId>extension-banner-runtime</artifactId>
+            <artifactId>extension-banner</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

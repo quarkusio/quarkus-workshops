@@ -21,8 +21,9 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>super-parent-pom</artifactId>
+        <artifactId>super-extension-parent-pom</artifactId>
         <version>1.0</version>
+        <relativePath>../pom-extensions.xml</relativePath>
     </parent>
 
     <artifactId>extension-fault-injector-parent</artifactId>

@@ -41,7 +41,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus.workshop.super-heroes</groupId>
-            <artifactId>extension-banner-runtime</artifactId>
+            <artifactId>extension-banner</artifactId>
             <version>${project.version}</version>
         </dependency>
 

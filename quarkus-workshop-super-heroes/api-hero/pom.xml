@@ -70,7 +70,7 @@
         <!-- fault-injection -->
         <dependency>
             <groupId>io.quarkus.workshop.super-heroes</groupId>
-            <artifactId>extension-fault-injector-runtime</artifactId>
+            <artifactId>extension-fault-injector</artifactId>
             <version>1.0</version>
         </dependency>
 

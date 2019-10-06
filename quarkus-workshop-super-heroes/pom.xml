@@ -31,12 +31,15 @@
         <module>api-villain</module>
         <module>containers</module>
         <module>docs</module>
-        <module>extension-banner</module>
-        <module>extension-fault-injector</module>
         <module>load-super-heroes</module>
         <module>stream-statistics</module>
         <module>ui-statistics</module>
         <module>ui-super-heroes</module>
+
+        <!--
+        The extensions are not part of the main reactor as they must be built beforehand.
+        Build them with mvn clean install -f pom-extensions.xml
+        -->
     </modules>
 
     <!-- tag::adocDependencyManagement[] -->
