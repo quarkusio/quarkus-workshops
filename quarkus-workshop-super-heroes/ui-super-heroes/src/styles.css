@@ -26,6 +26,7 @@ table {
   float: right;
   color: deeppink;
   font-weight: bold;
+  border-radius: 50%;
 }
 
 .hero-name {
