@@ -67,6 +67,12 @@
             <artifactId>quarkus-rest-client</artifactId>
         </dependency>
 
+        <!-- Kafka integration -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>io.quarkus</groupId>

@@ -4,6 +4,9 @@ import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
+import io.smallrye.reactive.messaging.annotations.Emitter;
+import io.smallrye.reactive.messaging.annotations.OnOverflow;
+import io.smallrye.reactive.messaging.annotations.Stream;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,6 +31,11 @@ public class FightService {
     @RestClient
     VillainService villainService;
 
+    private final Random random = new Random();
+
+    @Inject
+    @Stream("fights-channel") Emitter<Fight> emitter;
+
     public List<Fight> findAllFights() {
         return Fight.listAll();
     }
@@ -40,16 +48,21 @@ public class FightService {
     public Fight persistFight(Fighters fighters) {
         Fight fight;
 
-        if (fighters.getHero().getLevel() > fighters.getVillain().getLevel()) {
+        int heroAdjust = random.nextInt(20);
+        int villainAdjust = random.nextInt(20);
+
+        if ((fighters.getHero().getLevel() + heroAdjust)
+            > (fighters.getVillain().getLevel() + villainAdjust)) {
             fight = heroWon(fighters);
         } else if (fighters.getHero().getLevel() < fighters.getVillain().getLevel()) {
             fight = villainWon(fighters);
         } else {
-            fight = new Random().nextBoolean() ? heroWon(fighters) : villainWon(fighters);
+            fight = random.nextBoolean() ? heroWon(fighters) : villainWon(fighters);
         }
 
         fight.fightDate = Instant.now();
         Fight.persist(fight);
+        emitter.send(fight);
         return fight;
     }
 
