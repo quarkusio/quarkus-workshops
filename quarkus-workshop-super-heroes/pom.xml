@@ -33,7 +33,6 @@
         <module>docs</module>
         <module>load-super-heroes</module>
         <module>stream-statistics</module>
-        <module>ui-statistics</module>
         <module>ui-super-heroes</module>
 
         <!--
