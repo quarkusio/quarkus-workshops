@@ -23,6 +23,38 @@ docker-compose down
 docker-compose rm
 ```
 
+== Build
+
+```bash
+mvn clean install -f pom-extensions.xml
+mvn clean install
+```
+
+== Running the full system
+
+* Run the infrastructure as explained above.
+* In a new terminal, run the heroes microservice
+```bash
+cd api-hero
+mvn clean compile quarkus:dev
+```
+* In a new terminal, run the villains microservice
+```bash
+cd api-villain
+mvn clean compile quarkus:dev
+```
+* In a new terminal, run the fights microservice
+```bash
+cd api-fight
+mvn clean compile quarkus:dev
+```
+
+== Ports
+
+* heroes microservice -> 8083
+* villains microservice -> 8084
+* fights microservice -> 8082, ui on http://localhost:8082/super-heroes
+* stats microservice -> 8085
 
 == References
 
