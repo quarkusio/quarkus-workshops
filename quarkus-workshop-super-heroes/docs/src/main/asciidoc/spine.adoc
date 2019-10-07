@@ -31,8 +31,6 @@ include::rest-bootstrapping.adoc[leveloffset=+2]
 <<<
 include::rest-transaction-orm.adoc[leveloffset=+2]
 <<<
-include::rest-hero-endpoint.adoc[leveloffset=+2]
-<<<
 include::rest-configuration.adoc[leveloffset=+2]
 <<<
 include::rest-openapi.adoc[leveloffset=+2]

@@ -2,17 +2,31 @@
 = Configuration
 
 Hardcoded values in our code are a no go (even if we all did it at some point ;-)).
-In this guide, we learn how to configure our Hero API.
+In this guide, we learn how to configure our Hero API as well as some parts of Quarkus.
+
+== Configuring Logging
+
+Run time configuration of logging is done through the normal `application.properties` file.
+
+[source,properties]
+----
+include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocLogging]
+----
+
+== Configuring Quarkus Listening Port
+
+Because we will end-up running several microservices, let's configure Quarkus so it listens to a different port than 8080:
+
+[source,properties]
+----
+include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocPort]
+----
 
 == Injecting configuration value
 
-Quarkus uses https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config] to inject the configuration in the application.
+When we persist a new hero we want to multiply its level by a value that can be configured.
+For this, Quarkus uses MicroProfile Config to inject the configuration in the application.A statement.footnote:[Microprofile Config https://microprofile.io/project/eclipse/microprofile-config]
 The injection uses the `@ConfigProperty` annotation.
-
-[source,indent=0]
-----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocConfigProperty]
-----
 
 [NOTE]
 ====
@@ -42,12 +56,7 @@ include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/her
 By default, Quarkus reads `application.properties`.
 Edit the `src/main/resources/application.properties` with the following content:
 
-[source,indent=0]
+[source,properties]
 ----
 include::{github-raw}/api-hero/src/main/resources/application.properties[tag=adocConfigProperty]
 ----
-
-quarkus.http.port=8083
-
-
-TODO https://quarkus.io/guides/logging-guide

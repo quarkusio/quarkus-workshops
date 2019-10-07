@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// tag::adocResourceTest[]
 @QuarkusTest
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -61,6 +62,7 @@ public class HeroResourceTest {
                 .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
         );
 
+    // tag::adocOpenAPI[]
     @Test
     void shouldPingOpenAPI() {
         given()
@@ -77,7 +79,9 @@ public class HeroResourceTest {
             .then()
             .statusCode(OK.getStatusCode());
     }
+    // end::adocOpenAPI[]
 
+    // tag::adocHealth[]
     @Test
     void shouldPingLiveness() {
         given()
@@ -93,7 +97,9 @@ public class HeroResourceTest {
             .then()
             .statusCode(OK.getStatusCode());
     }
+    // end::adocHealth[]
 
+    // tag::adocMetrics[]
     @Test
     void shouldPingMetrics() {
         given()
@@ -102,6 +108,7 @@ public class HeroResourceTest {
             .then()
             .statusCode(OK.getStatusCode());
     }
+    // end::adocMetrics[]
 
     @Test
     public void testHelloEndpoint() {
@@ -260,3 +267,4 @@ public class HeroResourceTest {
         };
     }
 }
+// end::adocResourceTest[]

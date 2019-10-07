@@ -86,10 +86,26 @@ But we are missing a business method:
 we need to return a random hero.
 For that it's just a matter to add the following method to our `Hero.java` entity:
 
-[source]
+[source,indent=0]
 ----
 include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[tags=adocFindRandom]
 ----
+
+== Configuring Hibernate
+
+Quarkus development mode is really useful for applications that mix front end or services and database access.
+We use `quarkus.hibernate-orm.database.generation=drop-and-create` in conjunction with `import.sql` so every change to your app and in particular to your entities, the database schema will be properly recreated and your data (stored in `import.sql`) will be used to repopulate it from scratch.
+This is best to perfectly control your environment and works magic with Quarkus live reload mode:
+your entity changes or any change to your `import.sql` is immediately picked up and the schema updated without restarting the application!
+
+For that, make sure to have the following configuration in your `application.properties`:
+
+[source,properties]
+----
+include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocHibernate]
+----
+
+And to add heroes to our database, download the SQL file https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes/api-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 
 == HeroService Transactional Service
 
@@ -136,7 +152,7 @@ Once the dependencies are added to your `pom.xml` file, you’ll need to configu
 This is done in the `src/main/resources/application.properties` file.
 Just add the following datasource configuration:
 
-[source,text]
+[source,properties]
 ----
 include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocDatasource]
 ----
@@ -159,3 +175,24 @@ You can learn more about it in the Contexts and Dependency Injection guide.footn
 
 ArC comes as a dependency of `quarkus-resteasy` so you already have it handy.
 That's why you were able to use `@Inject` in the `HeroResource` to inject a reference to `HeroService`.
+
+== HeroResourceTest
+
+To test the `HeroResource` endpoint, we will be using TestContainers to fire a Postgres database and then test CRUD operations.footnote:[TestContainers https://www.testcontainers.org]
+You will add the following test methods to the `HeroResourceTest` class:
+
+* `shouldNotGetUnknownHero`: giving a random Hero identifier, the `HeroResource` endpoint should return a 204 (No content)
+* `shouldGetRandomHero`: checks that the `HeroResource` endpoint returns a random hero
+* `shouldNotAddInvalidItem`: passing an invalid `Hero` should fail when creating it
+* `shouldGetInitialItems`: checks that the `HeroResource` endpoint returns the list of heroes
+* `shouldAddAnItem`: checks that the `HeroResource` endpoint creates a valid `Hero`
+* `shouldUpdateAnItem`: checks that the `HeroResource` endpoint updates a newly created `Hero`
+* `shouldRemoveAnItem`: checks that the `HeroResource` endpoint deletes a hero from the database
+
+The code is as follow:
+
+[source]
+----
+include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocResourceTest;!adocOpenAPI;!adocHealth;!adocMetrics]
+----
+

@@ -75,7 +75,11 @@ public class HeroResource {
     // end::adocMetrics[]
     @GET
     @Path("/{id}")
-    public Response getHero(@Parameter(description = "Hero identifier", required = true) @PathParam("id") Long id) {
+    public Response getHero(
+        // tag::adocOpenAPI[]
+        @Parameter(description = "Hero identifier", required = true)
+        // end::adocOpenAPI[]
+        @PathParam("id") Long id) {
         Hero hero = service.findHeroById(id);
         if (hero != null) {
             LOGGER.debug("Found hero " + hero);
@@ -95,7 +99,11 @@ public class HeroResource {
     @Timed(name = "timeCreateHero", description = "Times how long it takes to invoke the createHero method", unit = MetricUnits.MILLISECONDS)
     // end::adocMetrics[]
     @POST
-    public Response createHero(@RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class))) @Valid Hero hero, @Context UriInfo uriInfo) {
+    public Response createHero(
+        // tag::adocOpenAPI[]
+        @RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
+        // end::adocOpenAPI[]
+        @Valid Hero hero, @Context UriInfo uriInfo) {
         hero = service.persistHero(hero);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(hero.id));
         LOGGER.debug("New hero created with URI " + builder.build().toString());
@@ -111,7 +119,11 @@ public class HeroResource {
     @Timed(name = "timeUpdateHero", description = "Times how long it takes to invoke the updateHero method", unit = MetricUnits.MILLISECONDS)
     // end::adocMetrics[]
     @PUT
-    public Response updateHero(@RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class))) @Valid Hero hero) {
+    public Response updateHero(
+        // tag::adocOpenAPI[]
+        @RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
+        // end::adocOpenAPI[]
+        @Valid Hero hero) {
         hero = service.updateHero(hero);
         LOGGER.debug("Hero updated with new valued " + hero);
         return Response.ok(hero).build();
@@ -127,7 +139,11 @@ public class HeroResource {
     // end::adocMetrics[]
     @DELETE
     @Path("/{id}")
-    public Response deleteHero(@Parameter(description = "Hero identifier", required = true) @PathParam("id") Long id) {
+    public Response deleteHero(
+        // tag::adocOpenAPI[]
+        @Parameter(description = "Hero identifier", required = true)
+        // end::adocOpenAPI[]
+        @PathParam("id") Long id) {
         service.deleteHero(id);
         LOGGER.debug("Hero deleted with " + id);
         return Response.noContent().build();

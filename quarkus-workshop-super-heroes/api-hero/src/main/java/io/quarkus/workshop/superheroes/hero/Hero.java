@@ -26,7 +26,6 @@ public class Hero extends PanacheEntity {
 
     @Column(columnDefinition = "TEXT")
     public String powers;
-    // end::adocEntity[]
 
     // tag::adocFindRandom[]
     public static Hero findRandom() {
@@ -49,3 +48,4 @@ public class Hero extends PanacheEntity {
             '}';
     }
 }
+// end::adocEntity[]

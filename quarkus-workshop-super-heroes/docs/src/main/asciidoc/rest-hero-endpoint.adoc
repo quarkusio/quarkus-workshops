@@ -1,5 +1,0 @@
-[[rest-hero-endpoint]]
-= Developing the REST Endpoint
-
-== Bootstrapping the Hero REST Endpoint
-
