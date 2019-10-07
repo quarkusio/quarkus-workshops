@@ -1,12 +1,100 @@
 [[rest-openapi]]
 = Open API
 
+By default, a Quarkus application exposes its API description through an OpenAPI specification.
+Quarkus also lets you test it via a user-friendly UI named Swagger UI.
+
 == Architecture Diagram
 
 [[rest-openapi-architecture-diagram]]
 .Architecture Diagram
 image::rest-openapi-architecture-diagram.png[]
 
+== Open API
+
+Quarkus proposes a `smallrye-openapi` extension compliant with the Eclipse MicroProfile OpenAPI specification in order to generate your API OpenAPI v3 specification.footnote:[MicroProfile OpenAPI https://github.com/eclipse/microprofile-open-api]
+You just need to add the openapi extension to your Quarkus application:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="openapi"
+----
+
+Now, we are ready to run our application:
+
+[source,shell]
+----
+$ ./mvnw compile quarkus:dev
+----
+
+Once your application is started, you can make a request to the default `http://localhost:8083/openapi` endpoint:
+
+[source,yaml]
+----
+include::{github-raw}/api-hero/openapi-origin.yaml[]
+----
+
+This contract lacks of documentation.
+The Eclipse Microprofile OpenAPI allows you to customize the methods of your REST endpoint as well as the application.
+
+=== Customizing Methods
+
+The Microprofile OpenAPI has a set of annotations to customize each REST endpoint method so the OpenAPI contract is richer and clearer for consumers:
+
+* `@Operation`: Describes a single API operation on a path.
+* `@APIResponse`: Corresponds to the OpenAPI Response model object which describes a single response from an API Operation
+* `@Parameter`: The name of the parameter.
+* `@RequestBody`: A brief description of the request body.
+
+This is what the `HeroResource` endpoint looks like once annotated
+
+[source]
+----
+include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocMetrics]
+----
+
+=== Customizing the Application
+
+The previous annotations allow you to customize the contract for a given REST Endpoint.
+But it's also important to customize the entire application.
+The Microprofile OpenAPI also has a set of annotation to do so.
+The difference is that these annotations cannot be used on the Endpoint itself, but instead on another Java class configuring the entire application.
+For this we have the `src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplication` class:
+
+[source]
+----
+include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplication.java[tags=adocApplication]
+----
+
+=== Customized Contract
+
+If you go back to the `http://localhost:8083/openapi` endpoint you will see the following OpenAPI contract:
+
+[source,yaml]
+----
+include::{github-raw}/api-hero/openapi.yaml[]
+----
+
 == Swagger UI
 
-TODO https://quarkus.io/guides/openapi-swaggerui-guide
+When building APIs, developers want to test them quickly.
+Swagger UI is a great tool permitting to visualize and interact with your APIs.footnote:[Swagger UI https://swagger.io/tools/swagger-ui]
+The UI is automatically generated from your OpenAPI specification.
+The Quarkus `smallrye-openapi` extension comes with a swagger-ui extension embedding a properly configured Swagger UI page.
+By default, Swagger UI is accessible at `/swagger-ui`.
+So, once your application is started, you can go to `http://localhost:8083/swagger-ui` and play with your API.
+
+You can visualize your API’s operations and schemas.
+
+[[rest-openapi-swaggerui]]
+.Swagger UI
+image::rest-openapi-swaggerui.png[]
+
+== OpenAPI Tests in HeroResourceTest
+
+Let's add a few extra test methods that would make sure OpenAPI and Swagger UI are packaged in the application:
+
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocOpenAPI]
+----
