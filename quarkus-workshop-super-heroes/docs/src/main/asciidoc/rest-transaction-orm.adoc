@@ -6,8 +6,6 @@ In this module we will create a Hero entity and persist/update/delete/retreive i
 
 == Architecture Diagram
 
-[[rest-transaction-orm-architecture-diagram]]
-.Architecture Diagram
 image::rest-transaction-orm-architecture-diagram.png[]
 
 == Directory Structure

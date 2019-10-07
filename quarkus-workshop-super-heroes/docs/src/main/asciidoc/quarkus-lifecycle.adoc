@@ -6,8 +6,6 @@ In this module we will display a banner in the logs once the Hero API has starte
 
 == Architecture Diagram
 
-[[quarkus-lifecycle-architecture-diagram]]
-.Architecture Diagram
 image::quarkus-lifecycle-architecture-diagram.png[]
 
 == Directory Structure
@@ -18,21 +16,21 @@ You will end-up with the following directory structure:
 [source,text]
 ----
 .
-└── hero-api
+└── api-hero
    ├── pom.xml
    └── src
-       └── main
-           └── java
-               └── io
-                   └── quarkus
-                       └── workshop
-                           └── superheroes
-                               └── hero
-                                   ├── Hero.java
-                                   ├── HeroApplicationLifecycle.java
-                                   ├── HeroApplication.java
-                                   ├── HeroResource.java
-                                   └── HeroService.java
+       └── main
+           └── java
+               └── io
+                   └── quarkus
+                       └── workshop
+                           └── superheroes
+                               └── hero
+                                   ├── Hero.java
+                                   ├── HeroApplication.java
+                                   ├── HeroApplicationLifeCycle.java
+                                   ├── HeroResource.java
+                                   └── HeroService.java
 ----
 
 == Displaying a Banner

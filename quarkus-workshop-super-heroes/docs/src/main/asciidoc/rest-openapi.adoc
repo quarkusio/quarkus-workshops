@@ -6,8 +6,6 @@ Quarkus also lets you test it via a user-friendly UI named Swagger UI.
 
 == Architecture Diagram
 
-[[rest-openapi-architecture-diagram]]
-.Architecture Diagram
 image::rest-openapi-architecture-diagram.png[]
 
 == Directory Structure
@@ -42,6 +40,13 @@ You just need to add the openapi extension to your Quarkus application:
 [source,shell]
 ----
 $ ./mvnw quarkus:add-extension -Dextensions="openapi"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/api-hero/pom.xml[tags=adocDependencyOpenAPI]
 ----
 
 Now, we are ready to run our application:

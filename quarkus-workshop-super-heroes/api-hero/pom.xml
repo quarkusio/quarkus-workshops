@@ -59,18 +59,24 @@
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
         <!-- end::adocDependencyValidator[] -->
+        <!-- tag::adocDependencyOpenAPI[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
+        <!-- end::adocDependencyOpenAPI[] -->
+        <!-- tag::adocDependencyHealth[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
+        <!-- end::adocDependencyHealth[] -->
+        <!-- tag::adocDependencyMetrics[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-metrics</artifactId>
         </dependency>
+        <!-- end::adocDependencyMetrics[] -->
         <!-- end::adocDependency[] -->
 
         <!-- fault-injection -->
