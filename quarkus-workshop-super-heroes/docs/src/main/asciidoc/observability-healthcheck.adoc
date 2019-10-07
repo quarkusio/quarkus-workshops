@@ -11,4 +11,12 @@ image::observability-healthcheck-architecture-diagram.png[]
 
 == Readiness
 
+== Health Check Tests in HeroResourceTest
+
+Let's add a few extra test methods that would make sure Health Check are available in the application:
+
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocHealth]
+----
 

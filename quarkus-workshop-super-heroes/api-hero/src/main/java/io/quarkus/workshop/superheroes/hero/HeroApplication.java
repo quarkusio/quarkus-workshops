@@ -10,6 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+// tag::adocApplication[]
 @ApplicationPath("/")
 @OpenAPIDefinition(
     info = @Info(title = "Hero API",
@@ -27,3 +28,4 @@ import javax.ws.rs.core.Application;
 )
 public class HeroApplication extends Application {
 }
+// end::adocApplication[]
