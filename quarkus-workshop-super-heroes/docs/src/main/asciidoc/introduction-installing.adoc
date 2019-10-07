@@ -220,4 +220,7 @@ Just make sure the following commands work on your machine
 ----
 $ java -version
 $ mvn -version
+$ curl --version
+$ docker version
+$ docker-compose version
 ----

@@ -9,3 +9,4 @@ image::rest-openapi-architecture-diagram.png[]
 
 == Swagger UI
 
+TODO https://quarkus.io/guides/openapi-swaggerui-guide

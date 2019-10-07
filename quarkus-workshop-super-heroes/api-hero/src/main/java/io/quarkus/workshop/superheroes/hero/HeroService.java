@@ -10,6 +10,7 @@ import java.util.List;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
+// tag::adocTransactional[]
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class HeroService {
@@ -40,7 +41,9 @@ public class HeroService {
 
     // tag::adocPersistHero[]
     public Hero persistHero(@Valid Hero hero) {
+        // tag::adocPersistHeroLevel[]
         hero.level = hero.level * levelMultiplier;
+        // end::adocPersistHeroLevel[]
         Hero.persist(hero);
         return hero;
     }
@@ -61,3 +64,4 @@ public class HeroService {
         hero.delete();
     }
 }
+// end::adocTransactional[]

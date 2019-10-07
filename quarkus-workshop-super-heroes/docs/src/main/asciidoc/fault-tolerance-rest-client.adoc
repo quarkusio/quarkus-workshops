@@ -1,4 +1,11 @@
 [[fault-tolerance-rest-client]]
 = REST Client
 
+== CORS
 
+TODO https://quarkus.io/guides/rest-json-guide#cors-filter
+TODO https://quarkus.io/guides/undertow-reference.html#cors-filter
+
+== Mock Support
+
+TODO https://quarkus.io/guides/getting-started-testing#mock-support

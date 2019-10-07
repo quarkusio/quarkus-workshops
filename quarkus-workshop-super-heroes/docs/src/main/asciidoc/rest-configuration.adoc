@@ -46,3 +46,8 @@ Edit the `src/main/resources/application.properties` with the following content:
 ----
 include::{github-raw}/api-hero/src/main/resources/application.properties[tag=adocConfigProperty]
 ----
+
+quarkus.http.port=8083
+
+
+TODO https://quarkus.io/guides/logging-guide
