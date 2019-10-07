@@ -3,8 +3,6 @@
 
 == Architecture Diagram
 
-[[rest-boostrapping-architecture-diagram]]
-.Architecture Diagram
 image::rest-boostrapping-architecture-diagram.png[]
 
 == Bootstrapping the Hero REST Endpoint

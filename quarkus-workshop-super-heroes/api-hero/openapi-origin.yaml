@@ -1,0 +1,61 @@
+---
+openapi: 3.0.1
+info:
+  title: Generated API
+  version: "1.0"
+paths:
+  /api/heroes:
+    get:
+      responses:
+        200:
+          description: OK
+    put:
+      responses:
+        200:
+          description: OK
+    post:
+      responses:
+        200:
+          description: OK
+  /api/heroes/hello:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/String'
+  /api/heroes/random:
+    get:
+      responses:
+        200:
+          description: OK
+  /api/heroes/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Long'
+      responses:
+        200:
+          description: OK
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Long'
+      responses:
+        200:
+          description: OK
+components:
+  schemas:
+    Long:
+      format: int64
+      type: integer
+    String:
+      type: string

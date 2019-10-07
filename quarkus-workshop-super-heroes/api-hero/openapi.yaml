@@ -1,0 +1,195 @@
+---
+openapi: 3.0.1
+info:
+  title: Hero API
+  description: This API allows CRUD operations on a hero
+  contact:
+    name: Quarkus
+    url: https://github.com/quarkusio
+  version: "1.0"
+externalDocs:
+  description: All the Quarkus workshops
+  url: https://github.com/quarkusio/quarkus-workshops
+servers:
+- url: http://localhost:8083
+tags:
+- name: api
+  description: Public that can be used by anybody
+- name: heroes
+  description: Anybody interested in heroes
+paths:
+  /api/heroes:
+    get:
+      summary: Returns all the heroes from the database
+      responses:
+        204:
+          description: No heroes
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hero'
+    put:
+      summary: Updates an exiting  hero
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hero'
+        required: true
+      responses:
+        200:
+          description: The updated hero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hero'
+    post:
+      summary: Creates a valid hero
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hero'
+        required: true
+      responses:
+        201:
+          description: The URI of the created hero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/URI'
+  /api/heroes/hello:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/String'
+  /api/heroes/random:
+    get:
+      summary: Returns a random hero
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: The hero fighting against the villain
+                required:
+                - level
+                - name
+                type: object
+                properties:
+                  id:
+                    format: int64
+                    type: integer
+                  level:
+                    format: int32
+                    minimum: 1
+                    type: integer
+                    nullable: false
+                  name:
+                    maxLength: 50
+                    minLength: 3
+                    type: string
+                    nullable: false
+                  otherName:
+                    type: string
+                  picture:
+                    type: string
+                  powers:
+                    type: string
+  /api/heroes/{id}:
+    get:
+      summary: Returns a hero for a given identifier
+      parameters:
+      - name: id
+        in: path
+        description: Hero identifier
+        required: true
+        schema:
+          $ref: '#/components/schemas/Long'
+      responses:
+        204:
+          description: The hero is not found for a given identifier
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hero'
+    delete:
+      summary: Deletes an exiting hero
+      parameters:
+      - name: id
+        in: path
+        description: Hero identifier
+        required: true
+        schema:
+          $ref: '#/components/schemas/Long'
+      responses:
+        204:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hero'
+components:
+  schemas:
+    Hero:
+      description: The hero fighting against the villain
+      required:
+      - level
+      - name
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        level:
+          format: int32
+          minimum: 1
+          type: integer
+          nullable: false
+        name:
+          maxLength: 50
+          minLength: 3
+          type: string
+          nullable: false
+        otherName:
+          type: string
+        picture:
+          type: string
+        powers:
+          type: string
+    URI:
+      type: object
+      properties:
+        string:
+          type: string
+        rawAuthority:
+          type: string
+        rawFragment:
+          type: string
+        rawPath:
+          type: string
+        rawQuery:
+          type: string
+        rawSchemeSpecificPart:
+          type: string
+        rawUserInfo:
+          type: string
+        absolute:
+          type: boolean
+        opaque:
+          type: boolean
+    Long:
+      format: int64
+      type: integer
+    String:
+      type: string

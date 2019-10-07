@@ -3,8 +3,6 @@
 
 == Architecture Diagram
 
-[[microservices-villain-architecture-diagram]]
-.Architecture Diagram
 image::microservices-villain-architecture-diagram.png[]
 
 == Bootstrapping the Hero REST Endpoint

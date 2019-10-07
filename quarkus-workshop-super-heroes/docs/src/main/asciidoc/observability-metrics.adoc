@@ -1,2 +1,25 @@
 [[observability-metrics]]
 = Metrics
+
+To install the MicroProfile Metrics dependency, just run the following command:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="metrics"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/api-hero/pom.xml[tags=adocDependencyMetrics]
+----
+
+== Metrics Tests in HeroResourceTest
+
+Let's add a few extra test methods that would make sure Metrics are available in the application:
+
+[source,indent=0]
+----
+include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
+----

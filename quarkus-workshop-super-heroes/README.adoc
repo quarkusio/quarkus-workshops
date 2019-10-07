@@ -55,6 +55,7 @@ mvn clean compile quarkus:dev
 * villains microservice -> 8084
 * fights microservice -> 8082, ui on http://localhost:8082/super-heroes
 * stats microservice -> 8085, ui on http://localhost:8085/
+* Prometheus -> 9090
 
 == References
 
