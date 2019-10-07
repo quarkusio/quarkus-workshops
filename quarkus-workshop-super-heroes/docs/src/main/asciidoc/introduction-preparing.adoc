@@ -18,5 +18,16 @@ Then, make sure to run a `mvn install` in the directory where the `pom.xml` file
 
 == Warm up Docker
 
+To warm up your Docker repository, create the following `docker-compose.yaml` file :
+
+[source,yaml]
+----
+include::{github-raw}/containers/docker-compose.yaml[tags=!adocVolumePostgres;!adocVolumePrometheus]
+----
+
+Then execute `docker-compose -f docker-compose.yaml up -d`.
+This will download all the Docker images and start the containers.
+Once all the containers are up and running, you can shut them down with the command `docker-compose -f docker-compose.yaml down`.
+
 == Warm up Node JS (optionally)
 
