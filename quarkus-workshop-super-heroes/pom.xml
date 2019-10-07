@@ -26,6 +26,12 @@
     <name>Quarkus Workshop :: Super-Heroes</name>
 
     <modules>
+        <!--
+        The extensions must be first, and packaged first as they are used by the other microservices.
+        -->
+        <module>extension-banner</module>
+        <module>extension-fault-injector</module>
+
         <module>api-fight</module>
         <module>api-hero</module>
         <module>api-villain</module>
@@ -34,11 +40,6 @@
         <module>load-super-heroes</module>
         <module>stream-statistics</module>
         <module>ui-super-heroes</module>
-
-        <!--
-        The extensions are not part of the main reactor as they must be built beforehand.
-        Build them with mvn clean install -f pom-extensions.xml
-        -->
     </modules>
 
     <!-- tag::adocDependencyManagement[] -->
