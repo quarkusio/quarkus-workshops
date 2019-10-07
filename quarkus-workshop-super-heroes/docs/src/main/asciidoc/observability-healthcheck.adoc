@@ -7,6 +7,34 @@
 .Architecture Diagram
 image::observability-healthcheck-architecture-diagram.png[]
 
+== Directory Structure
+
+In this module we will add an extra subdirectory with two classes to handle the Health Check.
+You will end-up with the following directory structure:
+
+[source,text]
+----
+.
+└── hero-api
+   ├── pom.xml
+   └── src
+       └── main
+           └── java
+               └── io
+                   └── quarkus
+                       └── workshop
+                           └── superheroes
+                               └── hero
+                                   ├── health
+                                   |   ├── DatabaseConnectionHealthCheck.java
+                                   |   └── PingHeroResourceHealthCheck.java
+                                   ├── Hero.java
+                                   ├── HeroApplicationLifecycle.java
+                                   ├── HeroApplication.java
+                                   ├── HeroResource.java
+                                   └── HeroService.java
+----
+
 == Liveness
 
 == Readiness

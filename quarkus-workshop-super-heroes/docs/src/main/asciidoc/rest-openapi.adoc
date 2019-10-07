@@ -10,6 +10,30 @@ Quarkus also lets you test it via a user-friendly UI named Swagger UI.
 .Architecture Diagram
 image::rest-openapi-architecture-diagram.png[]
 
+== Directory Structure
+
+In this module we will add extra classes to the Hero API project.
+You will end-up with the following directory structure:
+
+[source,text]
+----
+.
+└── hero-api
+   ├── pom.xml
+   └── src
+       └── main
+           └── java
+               └── io
+                   └── quarkus
+                       └── workshop
+                           └── superheroes
+                               └── hero
+                                   ├── Hero.java
+                                   ├── HeroApplication.java
+                                   ├── HeroResource.java
+                                   └── HeroService.java
+----
+
 == Open API
 
 Quarkus proposes a `smallrye-openapi` extension compliant with the Eclipse MicroProfile OpenAPI specification in order to generate your API OpenAPI v3 specification.footnote:[MicroProfile OpenAPI https://github.com/eclipse/microprofile-open-api]

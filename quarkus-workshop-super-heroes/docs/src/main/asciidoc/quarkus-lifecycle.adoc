@@ -1,12 +1,54 @@
 [[quarkus-lifecycle]]
 = Application Lifecycle
 
+You often need to execute custom actions when the application starts and clean up everything when the application stops.
+In this module we will display a banner in the logs once the Hero API has started.
+
 == Architecture Diagram
 
 [[quarkus-lifecycle-architecture-diagram]]
 .Architecture Diagram
 image::quarkus-lifecycle-architecture-diagram.png[]
 
-== Adding a Banner
+== Directory Structure
 
-http://patorjk.com/software/taag
+In this module we will add an extra classe to handle the Hero API lifecycle.
+You will end-up with the following directory structure:
+
+[source,text]
+----
+.
+└── hero-api
+   ├── pom.xml
+   └── src
+       └── main
+           └── java
+               └── io
+                   └── quarkus
+                       └── workshop
+                           └── superheroes
+                               └── hero
+                                   ├── Hero.java
+                                   ├── HeroApplicationLifecycle.java
+                                   ├── HeroApplication.java
+                                   ├── HeroResource.java
+                                   └── HeroService.java
+----
+
+== Displaying a Banner
+
+Go to the http://patorjk.com/software/taag[following website] and pick up your favourite "Hero API" text banner.
+Create a new class named `HeroApplicationLifeCycle` (or pick another name, the name does not matter) in the `io.quarkus.workshop.superheroes.hero` package, and copy the following content:
+
+[source]
+----
+include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocApplicationLifeCycle;!adocProfileManager]
+----
+
+Thanks to the CDI event bus, the `HeroApplicationLifeCycle` is observing (thanks to `@Observes`):
+
+* The `StartupEvent` so it can exectue code (here, displaying the banner) when the application is starting
+* The `ShutdownEvent` when the application is terminating
+
+Run the application with: `./mvnw compile quarkus:dev`, the banner is printed to the console.
+When the application is stopped, the second log message is printed.
