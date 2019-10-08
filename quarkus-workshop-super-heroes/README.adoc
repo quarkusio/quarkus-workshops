@@ -8,7 +8,7 @@ For that, you just run the Maven command `mvn clean generate-resources` under an
 == Start the infrastructure
 
 This workshop requires a couple of extra _technical_ services (databases, kafka...).
-Start them using the `docker-compose.yaml` file located in the `containers` directory:
+Start them using the `docker-compose.yaml` file located in the `infrastructure` directory:
 
 ```
 cd containers
