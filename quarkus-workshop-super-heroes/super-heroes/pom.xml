@@ -26,8 +26,8 @@
     <name>Quarkus Workshop :: Super-Heroes</name>
 
     <modules>
-        <module>containers</module>
         <module>event-statistics</module>
+        <module>infrastructure</module>
         <module>load-super-heroes</module>
         <module>rest-fight</module>
         <module>rest-hero</module>
