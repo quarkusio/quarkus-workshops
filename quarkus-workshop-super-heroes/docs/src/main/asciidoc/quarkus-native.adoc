@@ -61,6 +61,11 @@ Create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files (`hero-api-1.0-SNAPSHOT.jar` and `hero-api-1.0-SNAPSHOT-runner.jar`), the build also produces `target/hero-api-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
 You can run it using: `./target/hero-api-1.0-SNAPSHOT-runner`.
 
+== @RegisterForReflection
+
+TODO @RegisterForReflection
+
+
 == Testing the Native Executable
 
 Producing a native executable can lead to a few issues, and so it’s also a good idea to run some tests against the application running in the native file.
