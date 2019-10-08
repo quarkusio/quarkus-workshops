@@ -3,9 +3,9 @@
 
 == What is this workshop about?
 
-This workshop should give you a good practical introduction to Quarkus.
-You will first install all the needed tools to then develop an entire microservice architecture.
-You will finish by extending the capabilities of Quarkus.
+This workshop should give you a practical introduction to Quarkus.
+You will first install all the needed tools to then develop an entire microservice architecture, mixing classical HTTP microservices and event-based microservices.
+You will finish by extending the capabilities of Quarkus and learn more about the ability to create native executables.
 
 The idea is that you leave this workshop with a good understanding of what Quarkus is, what it is not, and how it can help you in your projects.
 Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
@@ -55,11 +55,11 @@ The following software needs to be downloaded and installed:
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse, VS Code..)
 * JDK 8
-* GraalVM
-* Maven 3.3.x
+* GraalVM 19.2.0.1
+* Maven 3.6.x
 * Docker
 * cURL (or any other command line HTTP client)
-* Node JS (optionally)
+* Node JS (optional, only if you are in a _frontend_ mood)
 
 The next section focuses on how to install and setup the needed software.
-You can skip the next section if you
+You can skip the next section if you have already installed all the prerequisites.
