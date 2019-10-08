@@ -210,8 +210,6 @@ $ curl http://localhost:8083/api/heroes | jq
 
 == Docker
 
-== Node JS (optionally)
-
 == Recap
 
 Just make sure the following commands work on your machine

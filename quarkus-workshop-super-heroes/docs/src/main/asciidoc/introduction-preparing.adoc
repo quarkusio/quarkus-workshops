@@ -35,6 +35,67 @@ Any microservice systems are going to rely on a set of technical services.
 In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
 This infrastructure starts all these services, so you don't have to worry about them.
 
+== Directory Structure
+>>>>>>> Docs
 
-== Warm up Node JS (optionally)
+In this workshop you will be developing an application dealing with Super Heroes as well as Quarkus extensions.
+The code will be separated into two different directories.
+
+[source,text]
+----
+quarkus-workshop-super-heroes
+├── extensions
+└── super-heroes
+----
+
+=== Super Heroes
+
+Under the `super-hero` directory you will find a set of subdirectories, each one containing a microservice or some tooling.
+
+[source,text]
+----
+quarkus-workshop-super-heroes
+└── super-heroes
+    ├── infrastructure     All the needed infrastructure (Docker images for Postgres, Kafka...)
+    ├── event-statistics   UI and application dealing with fight statistics
+    ├── load-super-heroes  Stress tool loading heroes, villains and fights
+    ├── rest-fight         REST API allowing super heroes to fight
+    ├── rest-hero          REST API for CRUD operations on Heroes
+    ├── rest-villain       REST API for CRUD operations on Villains
+    └── ui-super-heroes    Angular application so we can fight visually
+----
+
+`event-statistics`, `load-super-heroes`, `rest-fight`, `rest-hero` and `rest-villain` are Maven projects and follow the Maven directory structure:
+
+[source,text]
+----
+quarkus-workshop-super-heroes
+├── rest-hero
+│   └── src
+│       ├── main
+│       │   ├── docker
+│       │   ├── java
+│       │   └── resources
+│       └── test
+│           └── java
+----
+
+=== Quarkus Extensions
+
+Under the `extensions` directory you will find quarkus extension.
+
+[source,text]
+----
+quarkus-workshop-super-heroes
+└── extensions
+    ├── extension-banner          Extension displaying a startup banner
+    └── extension-fault-injector  Extension to inject faults
+----
+
+=== Create the Directory Structure
+
+[source,shell]
+----
+include::{github-raw}/create-directory-structure.sh[tags=adocSnippet]
+----
 
