@@ -22,12 +22,19 @@ To warm up your Docker repository, create the following `docker-compose.yaml` fi
 
 [source,yaml]
 ----
-include::{github-raw}/super-heroes/containers/docker-compose.yaml[tags=!adocVolumePostgres;!adocVolumePrometheus]
+include::{github-raw}/super-heroes/infrastructure/docker-compose.yaml[tags=!adocVolumePostgres;!adocVolumePrometheus]
 ----
 
 Then execute `docker-compose -f docker-compose.yaml up -d`.
 This will download all the Docker images and start the containers.
 Once all the containers are up and running, you can shut them down with the command `docker-compose -f docker-compose.yaml down`.
+
+[NOTE]
+.What's this infra?
+Any microservice systems are going to rely on a set of technical services.
+In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
+This infrastructure starts all these services, so you don't have to worry about them.
+
 
 == Warm up Node JS (optionally)
 
