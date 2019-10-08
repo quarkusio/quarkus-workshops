@@ -49,7 +49,7 @@ This will add the following dependency in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyHealth]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHealth]
 ----
 
 Importing the `smallrye-health` extension directly exposes three REST endpoints:
@@ -78,7 +78,7 @@ For that, this is the `PingHeroResourceHealthCheck` class that we can write unde
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/PingHeroResourceHealthCheck.java[tags=adocPingHero]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/PingHeroResourceHealthCheck.java[tags=adocPingHero]
 ----
 
 As you can see health check procedures are defined as implementations of the `HealthCheck` interface which are defined as CDI beans with the CDI qualifier `@Liveness`.
@@ -99,7 +99,7 @@ Create the `io.quarkus.workshop.superheroes.hero.health.DatabaseConnectionHealth
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/DatabaseConnectionHealthCheck.java[tags=adocDatabaseConnection]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/DatabaseConnectionHealthCheck.java[tags=adocDatabaseConnection]
 ----
 
 If you now rerun the health check at http://localhost:8083/health/live the checks array will contain only the previously defined `PingHeroResourceHealthCheck` as it is the only check defined with the `@Liveness` qualifier.
@@ -112,6 +112,6 @@ Let's add a few extra test methods that would make sure Health Check are availab
 
 [source,indent=0]
 ----
-include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocHealth]
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocHealth]
 ----
 

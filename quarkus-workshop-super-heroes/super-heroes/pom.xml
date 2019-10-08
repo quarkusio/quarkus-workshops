@@ -26,19 +26,12 @@
     <name>Quarkus Workshop :: Super-Heroes</name>
 
     <modules>
-        <!--
-        The extensions must be first, and packaged first as they are used by the other microservices.
-        -->
-        <module>extension-banner</module>
-        <module>extension-fault-injector</module>
-
-        <module>api-fight</module>
-        <module>api-hero</module>
-        <module>api-villain</module>
         <module>containers</module>
-        <module>docs</module>
+        <module>event-statistics</module>
         <module>load-super-heroes</module>
-        <module>stream-statistics</module>
+        <module>rest-fight</module>
+        <module>rest-hero</module>
+        <module>rest-villain</module>
         <module>ui-super-heroes</module>
     </modules>
 
@@ -77,16 +70,6 @@
         <!-- tag::adocPropertiesTestcontainers[] -->
         <testcontainers.version>1.11.1</testcontainers.version>
         <!-- end::adocPropertiesTestcontainers[] -->
-        <!-- tag::adocPropertiesOthers[] -->
-        <version.plantuml.maven.plugin>1.2</version.plantuml.maven.plugin>
-        <version.plantuml>1.2019.10</version.plantuml>
-        <version.asciidoctor.maven.plugin>2.0.0-RC.1</version.asciidoctor.maven.plugin>
-        <version.jruby>9.2.7.0</version.jruby>
-        <version.asciidoctorj>2.1.0</version.asciidoctorj>
-        <version.asciidoctorj.pdf>1.5.0-beta.5</version.asciidoctorj.pdf>
-        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
-        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
-        <!-- end::adocPropertiesOthers[] -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -122,60 +105,6 @@
                     </configuration>
                 </plugin>
                 <!-- end::adocBuildSurefire[] -->
-
-                <!-- tag::adocBuildOthers[] -->
-                <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>${version.asciidoctor.maven.plugin}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.jruby</groupId>
-                            <artifactId>jruby</artifactId>
-                            <version>${version.jruby}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj</artifactId>
-                            <version>${version.asciidoctorj}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj-pdf</artifactId>
-                            <version>${version.asciidoctorj.pdf}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
-                    <groupId>com.github.jeluard</groupId>
-                    <artifactId>plantuml-maven-plugin</artifactId>
-                    <version>${version.plantuml.maven.plugin}</version>
-                    <configuration>
-                        <outputDirectory>${basedir}/src/main/asciidoc/images</outputDirectory>
-                        <sourceFiles>
-                            <directory>${basedir}/src/main/plantuml</directory>
-                            <includes>
-                                <include>**/*.puml</include>
-                            </includes>
-                        </sourceFiles>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>net.sourceforge.plantuml</groupId>
-                            <artifactId>plantuml</artifactId>
-                            <version>${version.plantuml}</version>
-                        </dependency>
-                    </dependencies>
-                    <executions>
-                        <execution>
-                            <phase>generate-resources</phase>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- end::adocBuildOthers[] -->
             </plugins>
         </pluginManagement>
     </build>

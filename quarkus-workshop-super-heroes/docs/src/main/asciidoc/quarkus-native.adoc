@@ -154,5 +154,5 @@ For that, just add a log invoking the `ProfileManager.getActiveProfile()` method
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocStartupEvent]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocStartupEvent]
 ----

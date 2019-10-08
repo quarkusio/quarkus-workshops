@@ -12,7 +12,7 @@ Let's say you have a `quarkus-workshop` root directory where you have all your c
 
 [source,shell]
 ----
-include::{github-raw}/api-hero/bootstrap.sh[tag=adocSnippet]
+include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
 ----
 
 == Directory Structure
@@ -69,16 +69,16 @@ In addition, you can see the `quarkus-maven-plugin` responsible of the packaging
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers;!adocPropertiesOthers]
-include::{github-raw}/pom.xml[tags=adocDependencyManagement;!adocDependencyTestBom]
-include::{github-raw}/pom.xml[tags=adocBuild;!adocBuildOthers]
+include::{github-raw}/super-heroes/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers]
+include::{github-raw}/super-heroes/pom.xml[tags=adocDependencyManagement;!adocDependencyTestBom]
+include::{github-raw}/super-heroes/pom.xml[tags=adocBuild]
 ----
 
 If we focus on the dependencies section, you can see the extension allowing the development of REST applications:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyResteasy]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasy]
 ----
 
 == The JAX-RS resource
@@ -167,7 +167,7 @@ In the generated `pom.xml` file, you can see 2 test dependencies:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyTest]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTest]
 ----
 
 Quarkus supports Junit 4 and Junit 5 tests.
@@ -176,8 +176,8 @@ Because of this, the version of the Surefire Maven Plugin must be set, as the de
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers;!adocPropertiesOthers]
-include::{github-raw}/pom.xml[tags=adocBuildSurefire]
+include::{github-raw}/super-heroes/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers]
+include::{github-raw}/super-heroes/pom.xml[tags=adocBuildSurefire]
 ----
 
 We also set the `java.util.logging` system property to make sure tests will use the correct logmanager.

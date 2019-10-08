@@ -10,7 +10,7 @@ Run time configuration of logging is done through the normal `application.proper
 
 [source,properties]
 ----
-include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocLogging]
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocLogging]
 ----
 
 == Configuring Quarkus Listening Port
@@ -19,7 +19,7 @@ Because we will end-up running several microservices, let's configure Quarkus so
 
 [source,properties]
 ----
-include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocPort]
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocPort]
 ----
 
 == Injecting configuration value
@@ -38,7 +38,7 @@ Edit the `HeroService`, and introduce the following configuration properties:
 
 [source,indent=0]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocConfigProperty]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocConfigProperty]
 ----
 
 * If you do not provide a value for this property, the application startup fails with `javax.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`
@@ -48,7 +48,7 @@ Now, modify the `persistHero` method to use the injected properties:
 
 [source,indent=0]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocPersistHero]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocPersistHero]
 ----
 
 == Create the configuration
@@ -58,5 +58,5 @@ Edit the `src/main/resources/application.properties` with the following content:
 
 [source,properties]
 ----
-include::{github-raw}/api-hero/src/main/resources/application.properties[tag=adocConfigProperty]
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tag=adocConfigProperty]
 ----

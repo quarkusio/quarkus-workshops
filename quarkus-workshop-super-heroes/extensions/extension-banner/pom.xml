@@ -21,11 +21,16 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>super-parent-pom</artifactId>
+        <artifactId>extension-parent-pom</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>containers</artifactId>
-    <name>Quarkus Workshop :: Super-Heroes :: Containers</name>
+    <artifactId>extension-banner-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>Quarkus Workshop :: Extensions :: Banner Extension</name>
 
+    <modules>
+        <module>runtime</module>
+        <module>deployment</module>
+    </modules>
 </project>

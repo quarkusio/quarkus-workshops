@@ -21,30 +21,24 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>extension-fault-injector-parent</artifactId>
+        <artifactId>extension-banner-parent</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>extension-fault-injector-deployment</artifactId>
-    <name>Quarkus Workshop :: Super-Heroes :: Fault Injector :: Deployment</name>
+    <artifactId>extension-banner</artifactId>
+    <name>Quarkus Workshop :: Extensions :: Banner Extension :: Runtime</name>
 
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-vertx-http-deployment</artifactId>
+            <artifactId>quarkus-core</artifactId>
             <version>${quarkus.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-core-deployment</artifactId>
+            <artifactId>quarkus-vertx-http</artifactId>
             <version>${quarkus.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus.workshop.super-heroes</groupId>
-            <artifactId>extension-fault-injector</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5-internal</artifactId>
@@ -52,13 +46,30 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bootstrap-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>extension-descriptor</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <deployment>${project.groupId}:${project.artifactId}-deployment:${project.version}</deployment>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
@@ -74,5 +85,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

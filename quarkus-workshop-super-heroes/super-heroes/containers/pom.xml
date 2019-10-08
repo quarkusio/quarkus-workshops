@@ -25,12 +25,8 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>extension-banner-parent</artifactId>
+    <artifactId>containers</artifactId>
+    <name>Quarkus Workshop :: Super-Heroes :: Containers</name>
     <packaging>pom</packaging>
-    <name>Quarkus Workshop :: Super-Heroes :: Banner Extension</name>
 
-    <modules>
-        <module>runtime</module>
-        <module>deployment</module>
-    </modules>
 </project>

@@ -40,7 +40,7 @@ Create a new class named `HeroApplicationLifeCycle` (or pick another name, the n
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocApplicationLifeCycle;!adocProfileManager]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocApplicationLifeCycle;!adocProfileManager]
 ----
 
 Thanks to the CDI event bus, the `HeroApplicationLifeCycle` is observing (thanks to `@Observes`):

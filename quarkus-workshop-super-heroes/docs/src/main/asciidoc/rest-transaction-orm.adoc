@@ -42,8 +42,8 @@ So first, make sure to add the Panache JPA and Bean Validation extensions to you
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyHibernate]
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyValidator]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHibernate]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyValidator]
 ----
 
 To define a Panache entity, simply extend `PanacheEntity`, annotate it with `@Entity` and add your columns as public fields (no need to have getters and setters).
@@ -51,7 +51,7 @@ The `Hero` entity should look like this:
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[tags=adocEntity;!adocFindRandom]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[tags=adocEntity;!adocFindRandom]
 ----
 
 Notice that you can put all your JPA column annotations and Bean Validation constraint annotations on the public fields.
@@ -86,7 +86,7 @@ For that it's just a matter to add the following method to our `Hero.java` entit
 
 [source,indent=0]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[tags=adocFindRandom]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[tags=adocFindRandom]
 ----
 
 == Configuring Hibernate
@@ -100,7 +100,7 @@ For that, make sure to have the following configuration in your `application.pro
 
 [source,properties]
 ----
-include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocHibernate]
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocHibernate]
 ----
 
 And to add heroes to our database, download the SQL file https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes/api-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
@@ -123,7 +123,7 @@ You can control whether and how the transaction is started with parameters on `@
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tags=adocTransactional;!adocConfigProperty;!adocPersistHeroLevel]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tags=adocTransactional;!adocConfigProperty;!adocPersistHeroLevel]
 ----
 
 == Configuring the Datasource
@@ -143,7 +143,7 @@ This will add the following dependency in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyPostgresql]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgresql]
 ----
 
 Once the dependencies are added to your `pom.xml` file, you’ll need to configure Agroal.
@@ -152,7 +152,7 @@ Just add the following datasource configuration:
 
 [source,properties]
 ----
-include::{github-raw}/api-hero/src/main/resources/application.properties[tags=adocDatasource]
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocDatasource]
 ----
 
 == HeroResource Endpoint
@@ -163,7 +163,7 @@ Here are the new methods to add to the `HeroResource` class:
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocOpenAPI;!adocMetrics]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocOpenAPI;!adocMetrics]
 ----
 
 == Dependency Injection
@@ -191,6 +191,6 @@ The code is as follow:
 
 [source]
 ----
-include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocResourceTest;!adocOpenAPI;!adocHealth;!adocMetrics]
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocResourceTest;!adocOpenAPI;!adocHealth;!adocMetrics]
 ----
 

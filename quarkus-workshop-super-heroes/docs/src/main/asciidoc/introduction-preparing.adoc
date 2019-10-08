@@ -11,7 +11,7 @@ To warm up your Maven repository, first bootstrap a Quarkus project using the fo
 
 [source,shell]
 ----
-include::{github-raw}/api-hero/bootstrap.sh[tag=adocSnippet]
+include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
 ----
 
 Then, make sure to run a `mvn install` in the directory where the `pom.xml` file is located.
@@ -22,7 +22,7 @@ To warm up your Docker repository, create the following `docker-compose.yaml` fi
 
 [source,yaml]
 ----
-include::{github-raw}/containers/docker-compose.yaml[tags=!adocVolumePostgres;!adocVolumePrometheus]
+include::{github-raw}/super-heroes/containers/docker-compose.yaml[tags=!adocVolumePostgres;!adocVolumePrometheus]
 ----
 
 Then execute `docker-compose -f docker-compose.yaml up -d`.

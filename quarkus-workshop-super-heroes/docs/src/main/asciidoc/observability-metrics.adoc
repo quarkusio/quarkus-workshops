@@ -12,7 +12,7 @@ This will add the following dependency in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyMetrics]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyMetrics]
 ----
 
 == Metrics Tests in HeroResourceTest
@@ -21,5 +21,5 @@ Let's add a few extra test methods that would make sure Metrics are available in
 
 [source,indent=0]
 ----
-include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
 ----

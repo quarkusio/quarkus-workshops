@@ -46,7 +46,7 @@ This will add the following dependency in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/api-hero/pom.xml[tags=adocDependencyOpenAPI]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 ----
 
 Now, we are ready to run our application:
@@ -60,7 +60,7 @@ Once your application is started, you can make a request to the default `http://
 
 [source,yaml]
 ----
-include::{github-raw}/api-hero/openapi-origin.yaml[]
+include::{github-raw}/super-heroes/rest-hero/openapi-origin.yaml[]
 ----
 
 This contract lacks of documentation.
@@ -79,7 +79,7 @@ This is what the `HeroResource` endpoint looks like once annotated
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocMetrics]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocMetrics]
 ----
 
 === Customizing the Application
@@ -92,7 +92,7 @@ For this we have the `src/main/java/io/quarkus/workshop/superheroes/hero/HeroApp
 
 [source]
 ----
-include::{github-raw}/api-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplication.java[tags=adocApplication]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplication.java[tags=adocApplication]
 ----
 
 === Customized Contract
@@ -101,7 +101,7 @@ If you go back to the `http://localhost:8083/openapi` endpoint you will see the 
 
 [source,yaml]
 ----
-include::{github-raw}/api-hero/openapi.yaml[]
+include::{github-raw}/super-heroes/rest-hero/openapi.yaml[]
 ----
 
 == Swagger UI
@@ -125,5 +125,5 @@ Let's add a few extra test methods that would make sure OpenAPI and Swagger UI a
 
 [source,indent=0]
 ----
-include::{github-raw}/api-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocOpenAPI]
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocOpenAPI]
 ----

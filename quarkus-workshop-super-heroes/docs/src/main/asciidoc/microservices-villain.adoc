@@ -12,6 +12,6 @@ Under the `quarkus-workshop` root directory where you have all your code, create
 
 [source,shell]
 ----
-include::{github-raw}/api-villain/bootstrap.sh[tag=adocSnippet]
+include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 ----
 

@@ -21,13 +21,13 @@
 
     <parent>
         <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>super-parent-pom</artifactId>
+        <artifactId>extension-parent-pom</artifactId>
         <version>1.0</version>
     </parent>
 
     <artifactId>extension-fault-injector-parent</artifactId>
     <packaging>pom</packaging>
-    <name>Quarkus Workshop :: Super-Heroes :: Fault Injector Extension</name>
+    <name>Quarkus Workshop :: Extensions :: Fault Injector Extension</name>
 
     <modules>
         <module>runtime</module>
