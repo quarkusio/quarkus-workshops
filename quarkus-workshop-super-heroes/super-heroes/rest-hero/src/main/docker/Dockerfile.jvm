@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/hero-api-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-hero-jvm .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/hero-api-jvm
+# docker run -i --rm -p 8080:8080 quarkus/rest-hero-jvm
 #
 ###
 FROM fabric8/java-alpine-openjdk8-jre

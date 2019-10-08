@@ -25,9 +25,9 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>api-fight</artifactId>
+    <artifactId>rest-fight</artifactId>
     <version>01</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Fight API</name>
+    <name>Quarkus Workshop :: Super-Heroes :: Fight REST API</name>
 
     <dependencies>
         <dependency>

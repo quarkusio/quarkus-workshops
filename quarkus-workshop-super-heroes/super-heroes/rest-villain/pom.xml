@@ -25,9 +25,9 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>api-villain</artifactId>
+    <artifactId>rest-villain</artifactId>
     <version>01</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Villain API</name>
+    <name>Quarkus Workshop :: Super-Heroes :: Villain REST API</name>
 
     <dependencies>
         <dependency>

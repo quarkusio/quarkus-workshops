@@ -25,9 +25,9 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>stream-statistics</artifactId>
+    <artifactId>event-statistics</artifactId>
     <version>01</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Stream Statistics</name>
+    <name>Quarkus Workshop :: Super-Heroes :: Event Statistics</name>
 
     <dependencies>
         <dependency>

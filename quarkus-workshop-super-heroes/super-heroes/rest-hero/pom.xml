@@ -25,9 +25,9 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>api-hero</artifactId>
+    <artifactId>rest-hero</artifactId>
     <version>01</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Hero API</name>
+    <name>Quarkus Workshop :: Super-Heroes :: Hero REST API</name>
 
     <!-- tag::adocDependency[] -->
     <dependencies>
