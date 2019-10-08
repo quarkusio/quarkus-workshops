@@ -1,7 +1,6 @@
 package io.quarkus.workshop.superheroes.villain;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Column;
@@ -12,8 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Random;
 
 @Entity
-@Schema(description="The villain fighting against the hero")
-@RegisterForReflection
+@Schema(description = "The villain fighting against the hero")
 public class Villain extends PanacheEntity {
 
     @NotNull
@@ -31,8 +29,8 @@ public class Villain extends PanacheEntity {
     public static Villain findRandom() {
         long countVillains = Villain.count();
         Random random = new Random();
-        int randomVillain = random.nextInt((int)countVillains);
-        return Villain.findAll().page(randomVillain,1).firstResult();
+        int randomVillain = random.nextInt((int) countVillains);
+        return Villain.findAll().page(randomVillain, 1).firstResult();
     }
 
     @Override
