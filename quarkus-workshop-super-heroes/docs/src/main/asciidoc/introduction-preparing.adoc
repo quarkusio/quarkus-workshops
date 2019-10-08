@@ -56,7 +56,7 @@ Under the `super-hero` directory you will find a set of subdirectories, each one
 ----
 quarkus-workshop-super-heroes
 └── super-heroes
-    ├── infrastructure     All the needed infrastructure (Docker images for Postgres, Kafka...)
+    ├── infrastructure     All the needed infrastructure (Postgres, Kafka...)
     ├── event-statistics   UI and application dealing with fight statistics
     ├── load-super-heroes  Stress tool loading heroes, villains and fights
     ├── rest-fight         REST API allowing super heroes to fight
@@ -70,14 +70,14 @@ quarkus-workshop-super-heroes
 [source,text]
 ----
 quarkus-workshop-super-heroes
-├── rest-hero
-│   └── src
-│       ├── main
-│       │   ├── docker
-│       │   ├── java
-│       │   └── resources
-│       └── test
-│           └── java
+└── rest-hero
+    └── src
+        ├── main
+        │   ├── docker
+        │   ├── java
+        │   └── resources
+        └── test
+            └── java
 ----
 
 === Quarkus Extensions
@@ -93,6 +93,8 @@ quarkus-workshop-super-heroes
 ----
 
 === Create the Directory Structure
+
+So, before starting to code, make sure you create the right directory structure.
 
 [source,shell]
 ----
