@@ -1,7 +1,23 @@
 [[rest]]
 = REST
 
-In the following sections you will develop a REST API allowing CRUD operations on Super Heroes
+In the following sections, you will develop a REST API allowing CRUD operations on Super Heroes.
 
-image::rest-physical-architecture.png[align="center"]
+This microservice is let's say a _classical_ microservice.
+It uses HTTP to expose a REST API and internally store data into a database.
+This service will be used by the _fight_ microservice.
+
+image::rest-physical-architecture.png[align="center",width=300]
+
+In this chapter, you learn:
+* how to create a new Quarkus application
+* how to implement REST API using Jax-RS
+* how to compose your application using CDI beans
+* how to access your database using Hibernate with Panache
+* how to use transactions
+* how to enable openAPI and swagger
+
+But first, let's describe our service.
+The Super Heroes microservice stores super-heroes, with their names, powers, and so on.
+The REST API allows adding, removing, listing, and picking a random hero from the stored set.
 
