@@ -1,4 +1,4 @@
-package io.quarkus.workshop.superheroes.banner;
+package io.quarkus.workshop.superheroes.banner.deployment;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
