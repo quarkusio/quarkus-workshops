@@ -22,6 +22,7 @@
     <groupId>io.quarkus.workshop.super-heroes</groupId>
     <artifactId>docs</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
     <name>Quarkus Workshop :: Docs</name>
 
     <properties>
@@ -103,12 +104,25 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>output-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <preserveDirectories>true</preserveDirectories>
+                            <outputDirectory>${project.build.directory}/generated-asciidoc</outputDirectory>
+                            <backend>html</backend>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>output-pdf</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <skip>${pdf.skip}</skip>
                             <sourceDocumentName>spine.adoc</sourceDocumentName>
                             <outputFile>${project.build.directory}/generated-asciidoc/quarkus-workshop.pdf</outputFile>
                             <backend>pdf</backend>
