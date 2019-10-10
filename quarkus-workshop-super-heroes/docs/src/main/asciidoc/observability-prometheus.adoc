@@ -1,6 +1,10 @@
 [[observability-prometheus]]
+
 = Prometheus
 
 /!\
 /!\ TODO CLEMENT  /!\
 /!\
+
+== Introducing Load
+

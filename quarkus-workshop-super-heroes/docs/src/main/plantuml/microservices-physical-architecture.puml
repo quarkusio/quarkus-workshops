@@ -1,25 +1,62 @@
 @startuml
 skinparam dpi 300
+skinparam useBetaStyle true
+skinparam handwritten true
 allow_mixing
+
+skinparam node {
+	ArrowColor aqua
+
+	borderColor #566573
+	backgroundColor #F9E79F
+	fontName Calibri
+	fontSize 17
+	fontColor #566573
+}
+
+skinparam database {
+	borderColor #566573
+	backgroundColor #D5F5E3
+}
+
+skinparam agent {
+    backgroundColor<<frontend>> #D2B4DE
+    backgroundColor<<application>> #FAE5D3
+}
+
+skinparam arrow {
+  fontName Calibri
+  color #FF6655
+  fontColor #777777
+  thickness 2
+  fontSize 11
+}
 
 left to right direction
 
+node "Super Hero UI" as ui {
+    agent "Angular" <<frontend>> as uiNodejs
+}
+
 node "Hero" as hero {
-    agent "Quarkus" as heroQuarkus
+    agent "Quarkus" <<application>> as heroQuarkus
     database "Postgresql" as heroPostgresql
     heroQuarkus .up> heroPostgresql
 }
 
 node "Villain" as villain {
-    agent "Quarkus" as villainQuarkus
+    agent "Quarkus" <<application>>  as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }
 
-node "Prometheus" as prometheus {
+node "Fight" as fight {
+    agent "Quarkus" <<application>> as fightQuarkus
+    database "Postgresql" as fightPostgresql
+    fightQuarkus .up> fightPostgresql
 }
 
-hero ..> prometheus
-villain ..> prometheus
-
+uiNodejs --> fightQuarkus : HTTP
+fightQuarkus --> heroQuarkus : HTTP
+fightQuarkus --> villainQuarkus : HTTP
 @enduml

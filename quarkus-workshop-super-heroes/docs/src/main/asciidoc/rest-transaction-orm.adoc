@@ -15,8 +15,8 @@ You will end-up with the following directory structure:
 
 [source,text]
 ----
-.
-└── hero-api
+super-heroes/
+└── rest-hero
    ├── pom.xml
    └── src
        └── main

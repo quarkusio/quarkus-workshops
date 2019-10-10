@@ -1,7 +1,33 @@
 [[microservices]]
 = Microservices
 
-In the following sections you will develop another REST API. This API allows CRUD operations on Villains
+So far we've built one microservice.
+In the following sections you will develop two extra REST APIs.
+We will also add an Angular front-end so we can graphically fight.
 
 image::microservices-physical-architecture.png[align="center"]
 
+== Directory Structure
+
+Each microservice is developped in it's own directory.
+
+[source,text]
+----
+super-heroes/
+├── infrastructure   All the needed infrastructure (Postgres, Kafka...)
+├── rest-fight       REST API allowing super heroes to fight
+│   └── src
+│       ├── main
+│       └── test
+├── rest-hero        REST API for CRUD operations on Heroes
+│   └── src
+│       ├── main
+│       └── test
+├── rest-villain     REST API for CRUD operations on Villains
+│   └── src
+│       ├── main
+│       └── test
+└── ui-super-heroes  Angular application so we can fight visually
+    └── src
+        └── app
+----

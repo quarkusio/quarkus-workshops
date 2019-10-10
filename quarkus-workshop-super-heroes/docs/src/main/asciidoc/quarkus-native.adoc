@@ -58,8 +58,8 @@ To do so, you will find in the `pom.xml` the following profile:
 ----
 
 Create a native executable using: `./mvnw package -Pnative`.
-In addition to the regular files (`hero-api-1.0-SNAPSHOT.jar` and `hero-api-1.0-SNAPSHOT-runner.jar`), the build also produces `target/hero-api-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
-You can run it using: `./target/hero-api-1.0-SNAPSHOT-runner`.
+In addition to the regular files (`rest-hero-1.0-SNAPSHOT.jar` and `rest-hero-1.0-SNAPSHOT-runner.jar`), the build also produces `target/rest-hero-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
+You can run it using: `./target/rest-hero-1.0-SNAPSHOT-runner`.
 
 == @RegisterForReflection
 
@@ -115,17 +115,17 @@ To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw
 
 [source]
 ----
-[hero-api-1.0-SNAPSHOT-runner:43534]    (compile):   8,088.33 ms
-[hero-api-1.0-SNAPSHOT-runner:43534]      compile:  12,693.01 ms
-[hero-api-1.0-SNAPSHOT-runner:43534]        image:   1,980.24 ms
-[hero-api-1.0-SNAPSHOT-runner:43534]        write:     592.88 ms
-[hero-api-1.0-SNAPSHOT-runner:43534]      [total]:  42,691.42 ms
+[rest-hero-1.0-SNAPSHOT-runner:43534]    (compile):   8,088.33 ms
+[rest-hero-1.0-SNAPSHOT-runner:43534]      compile:  12,693.01 ms
+[rest-hero-1.0-SNAPSHOT-runner:43534]        image:   1,980.24 ms
+[rest-hero-1.0-SNAPSHOT-runner:43534]        write:     592.88 ms
+[rest-hero-1.0-SNAPSHOT-runner:43534]      [total]:  42,691.42 ms
 [INFO]
 [INFO] -------------------------------------------------------
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running io.quarkus.workshop.superheroes.hero.NativeHeroResourceIT
-Executing [/Users/agoncal/Code/hero-api/target/hero-api-1.0-SNAPSHOT-runner, -Dquarkus.http.port=8081, -Dtest.url=http://localhost:8081, -Dquarkus.log.file.path=target/quarkus.log]
+Executing [/Users/agoncal/Code/rest-hero/target/rest-hero-1.0-SNAPSHOT-runner, -Dquarkus.http.port=8081, -Dtest.url=http://localhost:8081, -Dquarkus.log.file.path=target/quarkus.log]
 2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Quarkus 0.23.1 started in 0.012s. Listening on: http://0.0.0.0:8081
 2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Profile prod activated.
 2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]

@@ -69,15 +69,14 @@ node "Prometheus" as prometheus {
 }
 
 
-stat <.. kafka : Message
-
-fightQuarkus ..> kafka : Message
 uiNodejs --> fightQuarkus : HTTP
 fightQuarkus --> heroQuarkus : HTTP
 fightQuarkus --> villainQuarkus : HTTP
+fightQuarkus ..> kafka : Message
+
+stat <.. kafka : Message
 
 prometheus .down.> fight : polling
 prometheus  .> hero : polling
 prometheus .> villain : polling
 @enduml
-
