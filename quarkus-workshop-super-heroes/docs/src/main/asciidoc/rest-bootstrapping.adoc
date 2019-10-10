@@ -3,7 +3,10 @@
 
 == Architecture Diagram
 
-image::rest-boostrapping-architecture-diagram.png[]
+[plantuml, png, align=center]
+----
+include::plantuml/rest-boostrapping-architecture-diagram.puml[]
+----
 
 == Bootstrapping the Hero REST Endpoint
 

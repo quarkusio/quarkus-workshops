@@ -18,8 +18,11 @@ Get this workshop from https://github.com/quarkusio/quarkus-workshops
 == What will you be developping?
 
 [[introduction-presentation-figure-physical-architecture]]
+[plantuml, png, align=center]
 .Physical Architecture
-image::introduction-physical-architecture.png[]
+----
+include::plantuml/introduction-physical-architecture.puml[]
+----
 
 == What is Quarkus?
 

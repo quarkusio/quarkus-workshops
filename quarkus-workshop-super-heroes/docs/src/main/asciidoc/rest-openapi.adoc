@@ -6,7 +6,10 @@ Quarkus also lets you test it via a user-friendly UI named Swagger UI.
 
 == Architecture Diagram
 
-image::rest-openapi-architecture-diagram.png[]
+[plantuml, png, align=center]
+----
+include::plantuml/rest-openapi-architecture-diagram.puml[]
+----
 
 == Directory Structure
 

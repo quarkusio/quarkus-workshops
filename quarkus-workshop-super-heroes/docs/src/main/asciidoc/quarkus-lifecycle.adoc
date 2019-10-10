@@ -6,7 +6,10 @@ In this module we will display a banner in the logs once the Hero API has starte
 
 == Architecture Diagram
 
-image::quarkus-lifecycle-architecture-diagram.png[]
+[plantuml, png, align=center]
+----
+include::plantuml/quarkus-lifecycle-architecture-diagram.puml[]
+----
 
 == Directory Structure
 

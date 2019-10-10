@@ -6,7 +6,10 @@ The MicroProfile Health allows applications to provide information about their s
 
 == Architecture Diagram
 
-image::observability-healthcheck-architecture-diagram.png[]
+[plantuml, png, align=center]
+----
+include::plantuml/observability-healthcheck-architecture-diagram.puml[]
+----
 
 == Directory Structure
 

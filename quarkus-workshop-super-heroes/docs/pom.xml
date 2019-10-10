@@ -26,13 +26,13 @@
     <name>Quarkus Workshop :: Docs</name>
 
     <properties>
-        <version.plantuml.maven.plugin>1.2</version.plantuml.maven.plugin>
-        <version.plantuml>1.2019.10</version.plantuml>
         <version.asciidoctor.maven.plugin>2.0.0-RC.1</version.asciidoctor.maven.plugin>
         <version.jruby>9.2.7.0</version.jruby>
         <version.asciidoctorj>2.1.0</version.asciidoctorj>
-        <version.asciidoctorj.pdf>1.5.0-beta.5</version.asciidoctorj.pdf>
-        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
+        <version.asciidoctorj.pdf>1.5.0-alpha.18</version.asciidoctorj.pdf>
+        <version.asciidoctorj.diagram>1.5.18</version.asciidoctorj.diagram>
+        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes
+        </github.raw>
         <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -41,35 +41,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.github.jeluard</groupId>
-                <artifactId>plantuml-maven-plugin</artifactId>
-                <version>${version.plantuml.maven.plugin}</version>
-                <configuration>
-                    <outputDirectory>${basedir}/src/main/asciidoc/images</outputDirectory>
-                    <sourceFiles>
-                        <directory>${basedir}/src/main/plantuml</directory>
-                        <includes>
-                            <include>**/*.puml</include>
-                        </includes>
-                    </sourceFiles>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.plantuml</groupId>
-                        <artifactId>plantuml</artifactId>
-                        <version>${version.plantuml}</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -90,8 +61,16 @@
                         <artifactId>asciidoctorj-pdf</artifactId>
                         <version>${version.asciidoctorj.pdf}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram</artifactId>
+                        <version>${version.asciidoctorj.diagram}</version>
+                    </dependency>
                 </dependencies>
                 <configuration>
+                    <requires>
+                        <require>asciidoctor-diagram</require>​
+                    </requires>
                     <relativeBaseDir>true</relativeBaseDir>
                     <attributes>
                         <!-- Allows access to remote files (e.g. code on external GitHub) -->
