@@ -15,6 +15,9 @@ public class Fighters {
     @NotNull
     private Villain villain;
 
+    // Getters and setters
+
+    // tag::adocSkip[]
     public Hero getHero() {
         return hero;
     }
@@ -38,5 +41,6 @@ public class Fighters {
             ", villain=" + villain +
             '}';
     }
+    // end::adocSkip[]
 }
 // end::adocBean[]

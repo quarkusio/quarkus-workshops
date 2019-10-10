@@ -34,6 +34,8 @@ public class Villain extends PanacheEntity {
         return Villain.findAll().page(randomVillain, 1).firstResult();
     }
 
+    // toString method
+    // tag::adocSkip[]
     @Override
     public String toString() {
         return "Villain{" +
@@ -45,5 +47,6 @@ public class Villain extends PanacheEntity {
             ", powers='" + powers + '\'' +
             '}';
     }
+    // end::adocSkip[]
 }
 // end::adocEntity[]

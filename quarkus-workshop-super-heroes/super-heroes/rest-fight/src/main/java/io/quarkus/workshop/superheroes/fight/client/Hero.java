@@ -4,6 +4,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 
+// tag::adocBean[]
 @Schema(description="The hero fighting against the villain")
 public class Hero {
 
@@ -15,6 +16,9 @@ public class Hero {
     private String picture;
     private String powers;
 
+    // Getters and setters
+
+    // tag::adocSkip[]
     public String getName() {
         return name;
     }
@@ -56,4 +60,6 @@ public class Hero {
             ", powers='" + powers + '\'' +
             '}';
     }
+    // end::adocSkip[]
 }
+// end::adocBean[]
