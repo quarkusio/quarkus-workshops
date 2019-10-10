@@ -5,7 +5,6 @@ import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
 import io.smallrye.reactive.messaging.annotations.Emitter;
-import io.smallrye.reactive.messaging.annotations.OnOverflow;
 import io.smallrye.reactive.messaging.annotations.Stream;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -19,10 +18,12 @@ import java.util.Random;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
+// tag::adocTransactional[]
 @ApplicationScoped
 @Transactional(SUPPORTS)
 public class FightService {
 
+    // tag::adocRestClient[]
     @Inject
     @RestClient
     HeroService heroService;
@@ -30,11 +31,14 @@ public class FightService {
     @Inject
     @RestClient
     VillainService villainService;
+    // end::adocRestClient[]
 
-    private final Random random = new Random();
-
+    // tag::adocKafka[]
     @Inject
     @Stream("fights-channel") Emitter<Fight> emitter;
+    // end::adocKafka[]
+
+    private final Random random = new Random();
 
     public List<Fight> findAllFights() {
         return Fight.listAll();
@@ -66,6 +70,7 @@ public class FightService {
         return fight;
     }
 
+    // tag::adocRestClient[]
     private Fight heroWon(Fighters fighters) {
         Fight fight = new Fight();
         fight.winnerName = fighters.getHero().getName();
@@ -100,4 +105,6 @@ public class FightService {
         fighters.setVillain(villain);
         return fighters;
     }
+    // end::adocRestClient[]
 }
+// end::adocTransactional[]

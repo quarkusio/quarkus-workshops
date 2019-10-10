@@ -6,6 +6,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 
+// tag::adocBean[]
 @Schema(description="A fight between one hero and one villain")
 public class Fighters {
 
@@ -38,3 +39,4 @@ public class Fighters {
             '}';
     }
 }
+// end::adocBean[]

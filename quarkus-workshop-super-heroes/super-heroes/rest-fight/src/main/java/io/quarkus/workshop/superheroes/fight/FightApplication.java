@@ -10,6 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+// tag::adocApplication[]
 @ApplicationPath("/")
 @OpenAPIDefinition(
     info = @Info(title = "Fight API",
@@ -28,3 +29,4 @@ import javax.ws.rs.core.Application;
 )
 public class FightApplication extends Application {
 }
+// end::adocApplication[]
