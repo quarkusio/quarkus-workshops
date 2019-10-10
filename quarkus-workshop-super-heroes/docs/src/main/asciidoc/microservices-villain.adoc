@@ -15,7 +15,7 @@ include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/Villain.java[tag=adocEntity]
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/Villain.java[tags=adocEntity;adocSkip]
 ----
 
 == VillainService Transactional Service

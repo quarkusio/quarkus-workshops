@@ -31,6 +31,7 @@ public class Fight extends PanacheEntity {
     @NotNull
     public String loserTeam;
 
+    // toString method
     // tag::adocSkip[]
     @Override
     public String toString() {
