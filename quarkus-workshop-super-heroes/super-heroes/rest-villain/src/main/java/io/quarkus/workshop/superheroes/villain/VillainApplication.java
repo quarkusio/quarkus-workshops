@@ -10,6 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+// tag::adocApplication[]
 @ApplicationPath("/")
 @OpenAPIDefinition(
     info = @Info(title = "Villain API",
@@ -17,13 +18,14 @@ import javax.ws.rs.core.Application;
         version = "1.0",
         contact = @Contact(name = "Quarkus", url = "https://github.com/quarkusio")),
     servers = {
-        @Server(url = "http://localhost:8083")
+        @Server(url = "http://localhost:8084")
     },
     externalDocs = @ExternalDocumentation(url = "https://github.com/quarkusio/quarkus-workshops", description = "All the Quarkus workshops"),
     tags = {
         @Tag(name = "api", description = "Public that can be used by anybody"),
-        @Tag(name = "villaines", description = "Anybody interested in villaines")
+        @Tag(name = "villaines", description = "Anybody interested in villains")
     }
 )
 public class VillainApplication extends Application {
 }
+// end::adocApplication[]

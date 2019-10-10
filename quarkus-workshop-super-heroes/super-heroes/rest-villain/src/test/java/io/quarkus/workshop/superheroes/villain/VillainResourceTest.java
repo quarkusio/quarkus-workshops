@@ -26,6 +26,7 @@ import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
+// tag::adocResourceTest[]
 @QuarkusTest
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -256,3 +257,4 @@ public class VillainResourceTest {
         };
     }
 }
+// end::adocResourceTest[]

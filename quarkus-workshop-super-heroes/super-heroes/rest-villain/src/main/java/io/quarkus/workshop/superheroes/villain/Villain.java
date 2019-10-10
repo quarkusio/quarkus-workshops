@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Random;
 
+// tag::adocEntity[]
 @Entity
 @Schema(description = "The villain fighting against the hero")
 public class Villain extends PanacheEntity {
@@ -45,3 +46,4 @@ public class Villain extends PanacheEntity {
             '}';
     }
 }
+// end::adocEntity[]

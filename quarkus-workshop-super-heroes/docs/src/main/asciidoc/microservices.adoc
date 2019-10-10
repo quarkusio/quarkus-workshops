@@ -2,12 +2,10 @@
 = Microservices
 
 So far we've built one microservice.
-In the following sections you will develop two extra REST APIs.
-We will also add an Angular front-end so we can graphically fight.
+In the following sections you will develop two extra microservices.
+We will also add an Angular front-end so we can fight graphically.
 
 image::microservices-physical-architecture.png[align="center"]
-
-== Directory Structure
 
 Each microservice is developped in it's own directory.
 

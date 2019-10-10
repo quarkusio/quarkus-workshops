@@ -8,6 +8,7 @@ import org.jboss.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
+// tag::adocApplicationLifeCycle[]
 @ApplicationScoped
 public class VillainApplicationLifeCycle {
 
@@ -26,3 +27,4 @@ public class VillainApplicationLifeCycle {
         LOGGER.info("The application VILLAIN is stopping...");
     }
 }
+// end::adocApplicationLifeCycle[]

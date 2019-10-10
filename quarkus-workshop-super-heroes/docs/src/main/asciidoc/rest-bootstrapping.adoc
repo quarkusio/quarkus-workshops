@@ -100,7 +100,7 @@ public class HeroResource {
 
 It's a very simple REST endpoint, returning "hello" to requests on "/hello".
 
-== Running the application
+== Running the Application
 
 Now we are ready to run our application.
 Use: `./mvnw compile quarkus:dev`:
@@ -206,7 +206,7 @@ Notice that these tests use RestAssured, but feel free to use your favorite libr
 
 Execute it with `./mvnw test` or from your IDE.
 
-== Packaging and run the application
+== Packaging and Running the Application
 
 The application is packaged using `./mvnw package`.
 It produces 2 jar files in `/target`:

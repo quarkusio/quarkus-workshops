@@ -10,6 +10,7 @@ import java.util.List;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
+// tag::adocTransactional[]
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class VillainService {
@@ -57,3 +58,4 @@ public class VillainService {
         villain.delete();
     }
 }
+// end::adocTransactional[]

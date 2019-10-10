@@ -5,13 +5,129 @@
 
 image::microservices-villain-architecture-diagram.png[]
 
-== Bootstrapping the Hero REST Endpoint
+== Bootstrapping the Villain REST Endpoint
 
 Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
-Under the `quarkus-workshop` root directory where you have all your code, create a `api-villain` sub-directory, open a terminal and run the following command:
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, create a `rest-villain` sub-directory, open a terminal and run the following command:
 
 [source,shell]
 ----
 include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 ----
 
+== Villain Entity
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/Villain.java[tag=adocEntity]
+----
+
+== VillainService Transactional Service
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainService.java[tag=adocTransactional]
+----
+
+== VillainResource Endpoint
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainResource.java[tags=adocResource;!adocMetrics]
+----
+
+== VillainApplication for OpenAPI
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplication.java[tag=adocApplication]
+----
+
+== VillainApplicationLifeCycle for Startup Banner
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplicationLifeCycle.java[tag=adocApplicationLifeCycle]
+----
+
+== VillainResourceTest Test Class
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/VillainResourceTest.java[tag=adocResourceTest]
+----
+
+== Configuration
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/resources/application.properties[tags=!adocCORS]
+----
+
+== Running, Testing and Packaging the Application
+
+Now we are ready to run our application.
+Use: `./mvnw compile quarkus:dev`:
+
+Then check that the endpoint returns `hello` as expected:
+
+[source,shell]
+----
+$ curl http://localhost:8080/api/heroes
+hello
+----
+
+http://localhost:8083/swagger-ui` and play with your API.
+
+
+Execute it with `./mvnw test` or from your IDE.
+
+The application is packaged using `./mvnw package`.
+It produces 2 jar files in `/target`:
+
+* `rest-hero-1.0-SNAPSHOT.jar` : containing just the classes and resources of the projects, it’s the regular artifact produced by the Maven build;
+* `rest-hero-1.0-SNAPSHOT-runner.jar` : being an executable jar. Be aware that it’s not an über-jar as the dependencies are copied into the `target/lib` directory.
+
+You can run the application using: `java -jar rest-hero-1.0-SNAPSHOT-runner.jar`.
+
+== Directory Structure
+
+At the end you should have the following directory structure:
+
+[source,text]
+----
+rest-villain/
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── src
+    ├── main
+    │   ├── docker
+    │   │   ├── Dockerfile.jvm
+    │   │   └── Dockerfile.native
+    │   ├── java
+    │   │   └── io
+    │   │       └── quarkus
+    │   │           └── workshop
+    │   │               └── superheroes
+    │   │                   └── villain
+    │   │                       ├── Villain.java
+    │   │                       ├── VillainApplication.java
+    │   │                       ├── VillainApplicationLifeCycle.java
+    │   │                       ├── VillainResource.java
+    │   │                       └── VillainService.java
+    │   └── resources
+    │       ├── META-INF
+    │       │   └── resources
+    │       │       └── index.html
+    │       ├── application.properties
+    │       └── import.sql
+    └── test
+        └── java
+            └── io
+                └── quarkus
+                    └── workshop
+                        └── superheroes
+                            └── villain
+                                └── VillainResourceTest.java
+----
