@@ -50,7 +50,7 @@ include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/worksho
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/VillainResourceTest.java[tag=adocResourceTest]
+include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/VillainResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics]
 ----
 
 == Configuration

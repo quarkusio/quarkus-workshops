@@ -75,6 +75,7 @@ public class VillainResourceTest {
             .statusCode(OK.getStatusCode());
     }
 
+    // tag::adocHealth[]
     @Test
     void shouldPingLiveness() {
         given()
@@ -90,7 +91,9 @@ public class VillainResourceTest {
             .then()
             .statusCode(OK.getStatusCode());
     }
+    // end::adocHealth[]
 
+    // tag::adocMetrics[]
     @Test
     void shouldPingMetrics() {
         given()
@@ -99,6 +102,7 @@ public class VillainResourceTest {
             .then()
             .statusCode(OK.getStatusCode());
     }
+    // end::adocMetrics[]
 
     @Test
     public void testHelloEndpoint() {

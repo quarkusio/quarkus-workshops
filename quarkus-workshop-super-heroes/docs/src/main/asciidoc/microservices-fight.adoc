@@ -22,17 +22,17 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tag=adocBean;adocSkip]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tags=adocBean;!adocSkip]
 ----
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tag=adocBean;adocSkip]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tags=adocBean;!adocSkip]
 ----
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Villain.java[tag=adocBean;adocSkip]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Villain.java[tags=adocBean;!adocSkip]
 ----
 
 == FightService Transactional Service
@@ -72,7 +72,7 @@ We will use a Quarkus extension later on to display a banner for Fight.
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocResourceTest]
+include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics]
 ----
 
 == Configuration
