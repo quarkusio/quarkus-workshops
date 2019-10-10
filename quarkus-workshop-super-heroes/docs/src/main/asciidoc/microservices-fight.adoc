@@ -15,14 +15,24 @@ include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fight.java[tag=adocEntity]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fight.java[tags=adocEntity;!adocSkip]
 ----
 
 == Fighters Bean
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tag=adocBean]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tag=adocBean;adocSkip]
+----
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tag=adocBean;adocSkip]
+----
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Villain.java[tag=adocBean;adocSkip]
 ----
 
 == FightService Transactional Service
