@@ -1,12 +1,12 @@
 @startuml
-skinparam dpi 300
+!include style.puml
 
 allow_mixing
 hide empty members
 left to right direction
 !define exception(name) class name << (E,#FFAAAA) >>
 
-node Quarkus as quarkus <<8083>> {
+node Quarkus as quarkus <<HTTP/8083>> {
     package "hero-api" as heroapi {
         class HeroResource
         artifact "index<U+002E>html" as index

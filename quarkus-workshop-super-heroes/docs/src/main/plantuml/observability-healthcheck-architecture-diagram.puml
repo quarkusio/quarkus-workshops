@@ -1,16 +1,14 @@
 @startuml
-skinparam dpi 300
-
-allow_mixing
+!include style.puml
 hide empty members
 left to right direction
 !define exception(name) class name << (E,#FFAAAA) >>
 
-node Postgres as postgres <<5433>> {
+node Postgres as postgres <<TCP/5433>> {
     database "heroes-database" as db
 }
 
-node Quarkus as quarkus <<8083>> {
+node Quarkus as quarkus <<HTTP/8083>> {
     package "hero-api" as heroapi {
         entity Hero
         class HeroApplication
@@ -38,7 +36,7 @@ package "tests" as tests {
     class NativeHeroResourceIT
 }
 
-quarkus ....> postgres
+HeroService ....> postgres
 heroapi .[hidden].> tests
 
 @enduml

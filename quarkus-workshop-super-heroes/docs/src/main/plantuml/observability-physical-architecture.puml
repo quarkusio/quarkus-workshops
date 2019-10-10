@@ -1,5 +1,5 @@
 @startuml
-skinparam dpi 300
+!include style.puml
 allow_mixing
 
 left to right direction
@@ -13,6 +13,6 @@ node "Hero" as hero {
 node "Prometheus" as prometheus {
 }
 
-hero ..> prometheus
+heroQuarkus ..> prometheus
 
 @enduml
