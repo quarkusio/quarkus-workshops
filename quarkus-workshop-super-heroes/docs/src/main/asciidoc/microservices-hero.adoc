@@ -1,9 +1,6 @@
 [[microservices-hero]]
 = Hero Microservice
 
-== Architecture Diagram
-
-image::microservices-hero-architecture-diagram.png[]
 
 == Bootstrapping the Hero REST Endpoint
 

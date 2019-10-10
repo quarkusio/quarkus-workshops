@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
+// tag::adocEntity[]
 @Entity
 @Schema(description="Each fight has a winner and a loser")
 public class Fight extends PanacheEntity {
@@ -46,3 +47,4 @@ public class Fight extends PanacheEntity {
             '}';
     }
 }
+// end::adocEntity[]

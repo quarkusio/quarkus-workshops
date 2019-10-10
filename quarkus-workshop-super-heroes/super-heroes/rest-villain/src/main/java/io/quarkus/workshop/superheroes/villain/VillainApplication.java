@@ -23,7 +23,7 @@ import javax.ws.rs.core.Application;
     externalDocs = @ExternalDocumentation(url = "https://github.com/quarkusio/quarkus-workshops", description = "All the Quarkus workshops"),
     tags = {
         @Tag(name = "api", description = "Public that can be used by anybody"),
-        @Tag(name = "villaines", description = "Anybody interested in villains")
+        @Tag(name = "villains", description = "Anybody interested in villains")
     }
 )
 public class VillainApplication extends Application {

@@ -1,10 +1,6 @@
 [[microservices-villain]]
 = Villain Microservice
 
-== Architecture Diagram
-
-image::microservices-villain-architecture-diagram.png[]
-
 == Bootstrapping the Villain REST Endpoint
 
 Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
@@ -58,6 +54,8 @@ include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/worksho
 ----
 
 == Configuration
+
+Notice that this instance of Quarkus listens on port 8084
 
 [source]
 ----
