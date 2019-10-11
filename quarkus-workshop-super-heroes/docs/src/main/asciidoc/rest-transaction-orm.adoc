@@ -211,9 +211,8 @@ The test should pass.
 == Running and Testing the Application
 
 Now we are ready to run our application.
-Use: `./mvnw compile quarkus:dev`:
-
-Then check that there are heroes in the database with the following cUrl command:
+Use `./mvnw compile quarkus:dev` to start it.
+Once started, check that there are heroes in the database with the following cUrl command:
 
 [source,shell]
 ----

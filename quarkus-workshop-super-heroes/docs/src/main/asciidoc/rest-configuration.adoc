@@ -65,10 +65,8 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 == Running and Testing the Application
 
 Now we are ready to run our application.
-Use: `./mvnw compile quarkus:dev`:
-
-Then create a new hero with the following cUrl command.
-As you can see, we pass a level of 5 to create this new hero.
+Use `./mvnw compile quarkus:dev` to start it.
+Once started, create a new hero with the following cUrl command:
 
 [source,shell]
 ----
@@ -78,6 +76,7 @@ $ curl -X POST -d  '{"level":5, "name":"Chewbacca", "powers":"Agility, Longevity
 < Location: http://localhost:8083/api/heroes/957
 ----
 
+As you can see, we've passed a level of 5 to create this new hero.
 The cUrl command returns the location of the newly created hero.
 Take this URL and do an HTTP GET on it.
 You will see that the level has been increased.
