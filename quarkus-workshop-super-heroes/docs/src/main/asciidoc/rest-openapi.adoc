@@ -6,7 +6,7 @@ Quarkus also lets you test it via a user-friendly UI named Swagger UI.
 
 == Directory Structure
 
-In this module we will add extra classes to the Hero API project.
+In this module we will add extra class (`HeroApplication`) to the Hero API project.
 You will end-up with the following directory structure:
 
 [source,text]
@@ -123,5 +123,8 @@ Let's add a few extra test methods that would make sure OpenAPI and Swagger UI a
 ----
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocOpenAPI]
 ----
+
+Execute the test using `./mvnw test`.
+The test should pass.
 
 include::common-solution.adoc[]

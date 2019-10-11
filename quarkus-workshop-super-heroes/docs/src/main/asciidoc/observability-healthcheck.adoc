@@ -12,7 +12,7 @@ You will end-up with the following directory structure:
 [source,text]
 ----
 .
-└── api-hero
+└── rest-hero
     ├── pom.xml
     └── src
         └── main

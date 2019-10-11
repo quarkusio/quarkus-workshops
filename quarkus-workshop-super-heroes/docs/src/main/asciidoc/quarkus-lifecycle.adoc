@@ -6,13 +6,13 @@ In this module we will display a banner in the logs once the Hero API has starte
 
 == Directory Structure
 
-In this module we will add an extra classe to handle the Hero API lifecycle.
+In this module we will add an extra class (`HeroApplicationLifeCycle`) to handle the Hero API lifecycle.
 You will end-up with the following directory structure:
 
 [source,text]
 ----
 .
-└── api-hero
+└── rest-hero
    ├── pom.xml
    └── src
        └── main
@@ -31,8 +31,9 @@ You will end-up with the following directory structure:
 
 == Displaying a Banner
 
-Go to the http://patorjk.com/software/taag[following website] and pick up your favourite "Hero API" text banner.
-Create a new class named `HeroApplicationLifeCycle` (or pick another name, the name does not matter) in the `io.quarkus.workshop.superheroes.hero` package, and copy the following content:
+When our application starts, the logs are pretty boring... and lack of a banner (any decent application *must* have a banner nowadays).
+So the first thing that you need to do is to go to the http://patorjk.com/software/taag[following website] and pick up your favourite "Hero API" text banner.
+Create a new class named `HeroApplicationLifeCycle` (or pick another name, the name does not matter) in the `io.quarkus.workshop.superheroes.hero` package, and copy your banner so you end up with a similar content:
 
 [source]
 ----
