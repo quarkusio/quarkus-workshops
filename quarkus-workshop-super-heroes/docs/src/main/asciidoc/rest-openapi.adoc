@@ -130,3 +130,5 @@ Let's add a few extra test methods that would make sure OpenAPI and Swagger UI a
 ----
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocOpenAPI]
 ----
+
+include::common-solution.adoc[]

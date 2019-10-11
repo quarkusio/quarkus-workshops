@@ -177,6 +177,10 @@ You can learn more about it in the Contexts and Dependency Injection guide.footn
 ArC comes as a dependency of `quarkus-resteasy` so you already have it handy.
 That's why you were able to use `@Inject` in the `HeroResource` to inject a reference to `HeroService`.
 
+== Adding Data
+
+/!\ TODO 10 FIRST LINES OF IMPORT.SQL /!\
+
 == CRUD Tests in HeroResourceTest
 
 To test the `HeroResource` endpoint, we will be using TestContainers to fire a Postgres database and then test CRUD operations.footnote:[TestContainers https://www.testcontainers.org]

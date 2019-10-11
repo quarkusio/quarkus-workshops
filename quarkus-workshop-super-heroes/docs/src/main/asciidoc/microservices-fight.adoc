@@ -68,6 +68,10 @@ Notice that there is no `FightApplicationLifeCycle` class.
 We will use a Quarkus extension later on to display a banner for Fight.
 ====
 
+== Adding Data
+
+/!\ TODO 10 FIRST LINES OF IMPORT.SQL /!\
+
 == FightResourceTest Test Class
 
 [source]

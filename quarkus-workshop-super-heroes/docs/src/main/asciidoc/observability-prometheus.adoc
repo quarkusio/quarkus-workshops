@@ -8,3 +8,4 @@
 
 == Introducing Load
 
+include::common-solution.adoc[]

@@ -1,2 +1,4 @@
 [[microservices-ui]]
 = User Interface
+
+include::common-solution.adoc[]

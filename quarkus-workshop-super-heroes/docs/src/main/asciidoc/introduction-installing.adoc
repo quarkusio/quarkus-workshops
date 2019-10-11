@@ -75,10 +75,10 @@ xattr -r -d com.apple.quarantine ${GRAAL_VM}
 Once installed and setup, you should be able to run the following command and get the following output.
 
 [source,shell]
------
+----
 $ $GRAALVM_HOME/bin/native-image --version
 GraalVM Version 19.2.0.1 CE
------
+----
 
 == Maven 3.6.x
 
@@ -146,7 +146,7 @@ To invoke the REST Web Services described in this workshop, we often use cURL.fo
 cURL is a command line tool and library to do reliable data transfers with various protocols, including HTTP.
 It is free, open source (available under the MIT Licence) and has been ported to several operating systems.
 
-== Installing cURL
+=== Installing cURL
 
 If you are on Mac OS X and if you have installed Homebrew, then installing cURL is just a matter of a single command.footnote:[Homebrew https://brew.sh]
 Open your terminal and install cURL with the following command:
@@ -156,7 +156,7 @@ Open your terminal and install cURL with the following command:
 $ brew install curl
 ----
 
-== Checking for cURL Installation
+=== Checking for cURL Installation
 
 Once installed, check for cURL by running `curl --version` in the terminal.
 It should display cURL version:
@@ -169,7 +169,7 @@ Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s
 Features: AsynchDNS IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy
 ----
 
-== Some cURL Commands
+=== Some cURL Commands
 
 cURL is a command line utility where you can use several parameters and options to invoke URLs.
 You invoke `curl` with zero, one or several command-line options to accompany the URL (or set of URLs) you want the transfer to be about.
@@ -193,7 +193,7 @@ Here are some commands that you will be using to invoke the RESTful web service 
 * `curl -H 'Content-Type: application/json' http://localhost:8083/api/heroes/hello`: HTTP GET on a given URL passing the JSON Content Type in the HTTP Header.
 * `curl -X DELETE http://localhost:8083/api/heroes/1`: HTTP DELETE on a given URL.
 
-== Formatting the cURL JSON Output
+=== Formatting the cURL JSON Output
 
 Very often when using cURL to invoke a RESTful web service, we get some JSON payload.
 cURL does not format this JSON, so you will get a flat String such as:
@@ -234,6 +234,12 @@ $ curl http://localhost:8083/api/heroes | jq
 
 == Docker
 
+Docker is a set of platform-as-a-service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.
+Containers are isolated from one another and bundle their own software, libraries and configuration files;
+they can communicate with each other through well-defined channels.
+
+=== Installing Docker
+
 Our infrastructure is going to use Docker to ease the installation of the different technical services (database, monitoring...).
 So for this, we need to install `docker` and `docker-compose`
 Installation instructions are available on the following page:
@@ -247,12 +253,12 @@ Installation instructions are available on the following page:
 
 On Linux, don't forget the post-execution steps described on https://docs.docker.com/install/linux/linux-postinstall/.
 
-== Checking your docker installation
+=== Checking for Docker Installation
 
 Once installed, check that both `docker` and `docker-compose` are available in your `PATH`:
 
-[source, shell]
------
+[source,shell]
+----
 $ docker version
 Client: Docker Engine - Community
 Version:           19.03.2
@@ -287,12 +293,12 @@ docker-compose version 1.24.1, build 4667896b
 docker-py version: 3.7.3
 CPython version: 3.6.8
 OpenSSL version: OpenSSL 1.1.0j  20 Nov 2018
------
+----
 
 Finally, run your first container as follows:
 
-[source, shell]
------
+[source,shell]
+----
 $ docker run hello-world
 
 Hello from Docker!
@@ -315,7 +321,34 @@ Share images, automate workflows, and more with a free Docker ID:
 
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
------
+----
+
+=== Some Docker Commands
+
+Docker is a command line utility where you can use several parameters and options to start/stop a container.
+You invoke `docker` with zero, one or several command-line options with the container or image ID you want to work with.
+Docker comes with several options that are described in the documentation if you need more help.footnote:[Docker commands https://docs.docker.com/engine/reference/commandline/cli]
+To get some help on the commands and options you can type, use the following command:
+
+[source,shell]
+----
+$ docker help
+
+Usage:  docker [OPTIONS] COMMAND
+
+$ docker help attach
+
+Usage:  docker attach [OPTIONS] CONTAINER
+
+Attach local standard input, output, and error streams to a running container
+----
+
+Here are some commands that you will be using to start/stop containers in this workshop.
+
+* `docker container ls`: Lists containers.
+* `docker container start CONTAINER`: Starts one or more stopped containers.
+* `docker-compose -f docker-compose.yaml up -d`: Starts all containers defined in a Docker Compose file.
+* `docker-compose -f docker-compose.yaml down`: Stops all containers defined in a Docker Compose file.
 
 == Recap
 
@@ -324,6 +357,7 @@ Just make sure the following commands work on your machine
 [source,shell]
 ----
 $ java -version
+$ $GRAALVM_HOME/bin/native-image --version
 $ mvn -version
 $ curl --version
 $ docker version

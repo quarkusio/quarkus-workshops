@@ -46,6 +46,10 @@ include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/worksho
 include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplicationLifeCycle.java[tag=adocApplicationLifeCycle]
 ----
 
+== Adding Data
+
+/!\ TODO 10 FIRST LINES OF IMPORT.SQL /!\
+
 == VillainResourceTest Test Class
 
 [source]
