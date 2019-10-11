@@ -2,7 +2,7 @@
 = Transactions and ORM
 
 The Hero API's role is to allow CRUD operations on Super Heroes.
-In this module we will create a Hero entity and persist/update/delete/retreive it from a Postgres database in a transactional way.
+In this module we will create a Hero entity and persist/update/delete/retrieve it from a Postgres database in a transactional way.
 
 == Architecture Diagram
 
@@ -36,7 +36,7 @@ super-heroes/
 
 == Hero Entity
 
-Hibernate ORM is the de facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
+Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
 It makes complex mappings possible, but it does not make simple and common mappings trivial.
 Hibernate ORM with Panache focuses on making your entities trivial and fun to write in Quarkus.footnote:[Panache https://github.com/quarkusio/quarkus/tree/master/extensions/panache]
 
