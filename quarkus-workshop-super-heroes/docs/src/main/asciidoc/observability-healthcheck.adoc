@@ -6,7 +6,7 @@ The MicroProfile Health allows applications to provide information about their s
 
 == Architecture Diagram
 
-[plantuml, png, align=center]
+[plantuml,align=center]
 ----
 include::plantuml/observability-healthcheck-architecture-diagram.puml[]
 ----

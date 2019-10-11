@@ -3,7 +3,7 @@
 
 == Architecture Diagram
 
-[plantuml, png, align=center]
+[plantuml,align=center]
 ----
 include::plantuml/rest-boostrapping-architecture-diagram.puml[]
 ----

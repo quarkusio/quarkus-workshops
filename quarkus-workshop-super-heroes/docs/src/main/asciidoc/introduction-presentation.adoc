@@ -20,13 +20,11 @@ endif::give-solution[]
 == What will you be developing?
 
 [[introduction-presentation-figure-physical-architecture]]
-[plantuml, png, align=center]
+[plantuml,align=center]
 .Physical Architecture
 ----
 include::plantuml/introduction-physical-architecture.puml[]
 ----
-
-== What is Quarkus?
 
 == How does this workshop work?
 

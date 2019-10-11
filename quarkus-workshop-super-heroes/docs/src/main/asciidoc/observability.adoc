@@ -3,7 +3,7 @@
 
 In the following sections you will add several metrics to the Hero API and gather them within Promotheus
 
-[plantuml, png, align=center]
+[plantuml,align=center]
 ----
 include::plantuml/observability-physical-architecture.puml[]
 ----
