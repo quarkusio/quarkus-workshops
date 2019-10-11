@@ -58,7 +58,27 @@ Once installed, make sure the `GRAALVM_HOME` environment variable configured app
 The `native-image` tool must be installed;
 this can be done by running `gu install native-image` from your GraalVM directory.
 
+[NOTE]
+.Mac OS X - Catalina
+====
+On Mac OS X catalina, the installation of the `native-image` executable may fail.
+GraalVM binaries are not (yet) notarized for Catalina.
+To bypass the issue, it is recommended to run the following command instead of disabling macOS Gatekeeper entirely:
+[source,shell]
+-----
+xattr -r -d com.apple.quarantine ${GRAAL_VM}
+-----
+====
+
 === Checking for GraalVM Installation
+
+Once installed and setup, you should be able to run the following command and get the following output.
+
+[source, shell]
+====
+$> $GRAALVM_HOME/bin/native-image --version
+GraalVM Version 19.2.0.1 CE
+====
 
 == Maven 3.3.x
 
