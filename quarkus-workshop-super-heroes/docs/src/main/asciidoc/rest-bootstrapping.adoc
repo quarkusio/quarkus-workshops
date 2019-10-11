@@ -93,7 +93,7 @@ If we focus on the dependencies section, you can see the extension allowing the 
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasy]
 ----
 
-[INFO]
+[TIP]
 .RESTEasy
 ====
 You may not be familiar with RESTEasy (https://resteasy.github.io).
