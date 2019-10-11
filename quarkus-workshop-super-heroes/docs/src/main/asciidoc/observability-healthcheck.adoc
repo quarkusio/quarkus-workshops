@@ -4,13 +4,6 @@
 Quarkus applications can utilize the MicroProfile Health specification through the SmallRye Health extension.
 The MicroProfile Health allows applications to provide information about their state to external viewers which is typically useful in cloud environments where automated processes must be able to determine whether the application should be discarded or restarted.
 
-== Architecture Diagram
-
-[plantuml,align=center]
-----
-include::plantuml/observability-healthcheck-architecture-diagram.puml[]
-----
-
 == Directory Structure
 
 In this module we will add an extra subdirectory with two classes to handle the Health Check.

@@ -4,13 +4,6 @@
 The Hero API's role is to allow CRUD operations on Super Heroes.
 In this module we will create a Hero entity and persist/update/delete/retrieve it from a Postgres database in a transactional way.
 
-== Architecture Diagram
-
-[plantuml,align=center]
-----
-include::plantuml/rest-transaction-orm-architecture-diagram.puml[]
-----
-
 == Directory Structure
 
 In this module we will add extra classes to the Hero API project.
@@ -106,12 +99,10 @@ For that, make sure to have the following configuration in your `application.pro
 include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocHibernate]
 ----
 
-And to add heroes to our database, download the SQL file https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes/api-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
-
 == HeroService Transactional Service
 
-To manipulate the `Hero` entity we will develop a transaction `HeroService` class.
-The idea is to wrap methods modifying your database (e.g. `entity.persist()`) within a transaction.
+To manipulate the `Hero` entity we will develop a transactional `HeroService` class.
+The idea is to wrap methods modifying the database (e.g. `entity.persist()`) within a transaction.
 Marking a CDI bean method `@Transactional` will do that for you and make that method a transaction boundary.
 
 `@Transactional` can be used to control transaction boundaries on any CDI bean at the method level or at the class level to ensure every method is transactional.
@@ -128,6 +119,10 @@ You can control whether and how the transaction is started with parameters on `@
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tags=adocTransactional;!adocConfigProperty;!adocPersistHeroLevel]
 ----
+
+Notice that both methods that persist and update a hero, pass a `Hero` object as a parameter.
+Thanks to the Bean Validation's `@Valid` annotation, the `Hero` object will be checked to see if it's valid or not.
+It it's not, the transaction will be rollbacked.
 
 == Configuring the Datasource
 
@@ -179,7 +174,16 @@ That's why you were able to use `@Inject` in the `HeroResource` to inject a refe
 
 == Adding Data
 
-/!\ TODO 10 FIRST LINES OF IMPORT.SQL /!\
+To load some SQL statements when Hibernate ORM starts, add a `import.sql` in the root of the `resources` directory.
+It contains SQL statements terminated by a semicolon.
+This is useful to have a data set ready for the tests or demos.
+
+[source,sql]
+----
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[tag=adocSQL]
+----
+
+if you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 
 == CRUD Tests in HeroResourceTest
 

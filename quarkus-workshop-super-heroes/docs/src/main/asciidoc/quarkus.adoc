@@ -1,4 +1,9 @@
 [[quarkus]]
 = Quarkus
 
-'''
+Now that we have a Hero REST API, let's dig into Quarkus so we can add a startup banner and build a native image of our Hero API.
+
+In the following sections, you learn:
+
+* how to add behaviour at startup and shutdown time
+* how to build and execute a native image thanks to Quarkus

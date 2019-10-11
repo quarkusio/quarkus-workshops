@@ -4,13 +4,6 @@
 You often need to execute custom actions when the application starts and clean up everything when the application stops.
 In this module we will display a banner in the logs once the Hero API has started.
 
-== Architecture Diagram
-
-[plantuml,align=center]
-----
-include::plantuml/quarkus-lifecycle-architecture-diagram.puml[]
-----
-
 == Directory Structure
 
 In this module we will add an extra classe to handle the Hero API lifecycle.

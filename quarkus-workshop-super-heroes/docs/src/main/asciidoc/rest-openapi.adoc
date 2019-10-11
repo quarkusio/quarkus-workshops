@@ -4,13 +4,6 @@
 By default, a Quarkus application exposes its API description through an OpenAPI specification.
 Quarkus also lets you test it via a user-friendly UI named Swagger UI.
 
-== Architecture Diagram
-
-[plantuml,align=center]
-----
-include::plantuml/rest-openapi-architecture-diagram.puml[]
-----
-
 == Directory Structure
 
 In this module we will add extra classes to the Hero API project.

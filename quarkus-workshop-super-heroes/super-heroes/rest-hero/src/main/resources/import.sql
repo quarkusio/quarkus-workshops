@@ -1,3 +1,4 @@
+-- tag::adocSQL[]
 INSERT INTO hero(id, name, otherName, picture, powers, level)
 VALUES (nextval('hibernate_sequence'), 'Chewbacca', '', 'https://www.superherodb.com/pictures2/portraits/10/050/10466.jpg', 'Agility, Longevity, Marksmanship, Natural Weapons, Stealth, Super Strength, Weapons Master', 5);
 INSERT INTO hero(id, name, otherName, picture, powers, level)
@@ -9,6 +10,7 @@ VALUES (nextval('hibernate_sequence'), 'Warlock (Infinity Gauntlet)', 'Adam Warl
         'Astral Projection, Biokinesis, Duplication, Element Control, Energy Beams, Energy Manipulation, Immortality, Matter Manipulation, Mind Control, Molecular Manipulation, Nigh-Omnipresent, Portal Creation, Reality Warping, Regeneration, Size Changing, Spatial Awareness, Super Speed, Super Strength, Telekinesis, Telepathy, Teleportation, Time Manipulation, Time Travel, Weather Control', 74);
 INSERT INTO hero(id, name, otherName, picture, powers, level)
 VALUES (nextval('hibernate_sequence'), 'Shazam (New 52)', 'Billy Batson', 'https://www.superherodb.com/pictures2/portraits/10/050/14714.jpg', 'Accelerated Healing, Durability, Element Control, Energy Absorption, Energy Blasts, Fire Resistance, Flight, Illumination, Invulnerability, Levitation, Magic, Marksmanship, Super Speed, Super Strength', 14);
+-- end::adocSQL[]
 INSERT INTO hero(id, name, otherName, picture, powers, level)
 VALUES (nextval('hibernate_sequence'), 'Galadriel', '', 'https://www.superherodb.com/pictures2/portraits/11/050/11796.jpg', 'Danger Sense, Immortality, Intelligence, Invisibility, Magic, Precognition, Telekinesis, Telepathy', 17);
 INSERT INTO hero(id, name, otherName, picture, powers, level)
