@@ -100,3 +100,7 @@ So, before starting to code, make sure you create the right directory structure.
 include::{github-raw}/create-directory-structure.sh[tags=adocSnippet]
 ----
 
+=== Ready?
+
+Prerequisites has been installed, the different components have been warmed up,  it's now time to write some code!
+
