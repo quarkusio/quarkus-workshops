@@ -10,12 +10,14 @@ You will finish by extending the capabilities of Quarkus and learn more about th
 The idea is that you leave this workshop with a good understanding of what Quarkus is, what it is not, and how it can help you in your projects.
 Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 
+ifdef::give-solution[]
 [NOTE]
 ====
 Get this workshop from https://github.com/quarkusio/quarkus-workshops
 ====
+endif::give-solution[]
 
-== What will you be developping?
+== What will you be developing?
 
 [[introduction-presentation-figure-physical-architecture]]
 [plantuml, png, align=center]

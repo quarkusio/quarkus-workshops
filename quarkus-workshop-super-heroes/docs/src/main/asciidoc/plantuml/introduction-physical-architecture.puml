@@ -4,7 +4,7 @@
 left to right direction
 
 node "Super Hero UI" as ui {
-    agent "Angular" <<frontend>> as uiNodejs
+    agent "Quarkus" <<frontend>> as uiQuarkus
 }
 
 node "Hero" as hero {
@@ -38,7 +38,7 @@ node "Prometheus" as prometheus {
 }
 
 
-uiNodejs --> fightQuarkus : HTTP
+uiQuarkus --> fightQuarkus : HTTP
 fightQuarkus --> heroQuarkus : HTTP
 fightQuarkus --> villainQuarkus : HTTP
 fightQuarkus ..> kafka : Message
