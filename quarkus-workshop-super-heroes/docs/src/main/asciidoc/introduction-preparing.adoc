@@ -36,9 +36,8 @@ In our context, we are going to use PostgreSQL as the database, Prometheus as th
 This infrastructure starts all these services, so you don't have to worry about them.
 
 == Directory Structure
->>>>>>> Docs
 
-In this workshop you will be developing an application dealing with Super Heroes as well as Quarkus extensions.
+In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories.
 
 [source,text]
@@ -50,7 +49,7 @@ quarkus-workshop-super-heroes
 
 === Super Heroes
 
-Under the `super-hero` directory you will find a set of subdirectories, each one containing a microservice or some tooling.
+Under the `super-heroes` directory you will find a set of subdirectories, each one containing a microservice or some tooling.
 
 [source,text]
 ----
@@ -82,14 +81,14 @@ quarkus-workshop-super-heroes
 
 === Quarkus Extensions
 
-Under the `extensions` directory you will find quarkus extension.
+Under the `extensions` directory you will find quarkus extensions.
 
 [source,text]
 ----
 quarkus-workshop-super-heroes
 └── extensions
     ├── extension-banner          Extension displaying a startup banner
-    └── extension-fault-injector  Extension to inject faults
+    └── extension-fault-injector  Extension to inject network latency and HTTP faults
 ----
 
 === Create the Directory Structure
