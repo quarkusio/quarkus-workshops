@@ -13,6 +13,9 @@ To install the JDK {jdk-version}, go to the official website, select the appropr
 For example, if you are running on Mac OS X, download the DMG file (you should check out the _Accept License Agreement_ check box before hitting the download link to let the download start).
 If you are not on Mac, the download steps are still pretty similar.
 
+Instead of the Oracle distribution, you can use AdoptOpenJDK and download the JDK from https://adoptopenjdk.net.
+Follows the instructions from https://adoptopenjdk.net/installation.html to download and install the JDK for your platform.
+
 There is also an easier way to download and install Java if you are on Mac OS X.
 You can use Homebrew to install JDK jdk-version using the following commands.footnote:[Homebrew https://brew.sh]
 
@@ -86,8 +89,8 @@ Maven should print its version and the JDK version it uses (which is handy as yo
 [source,shell]
 ----
 $ mvn -version
-Apache Maven 3.6.0
-Maven home: /usr/local/Cellar/maven/3.6.0/libexec
+Apache Maven 3.6.2
+Maven home: /usr/local/Cellar/maven/3.6.2/libexec
 Java version: 1.8.0_201, vendor: Oracle Corporation
 OS name: "mac os x", version: "10.14.2", arch: "x86_64", family: "mac"
 ----
