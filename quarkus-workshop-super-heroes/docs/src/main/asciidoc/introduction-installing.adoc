@@ -80,7 +80,7 @@ $> $GRAALVM_HOME/bin/native-image --version
 GraalVM Version 19.2.0.1 CE
 ====
 
-== Maven 3.3.x
+== Maven 3.6.x
 
 All the examples of this workshop are built and tested using Maven.footnote:[Maven https://maven.apache.org]
 Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork and so forth.
@@ -233,6 +233,89 @@ $ curl http://localhost:8083/api/heroes | jq
 ----
 
 == Docker
+
+Our infrastructure is going to use Docker to ease the installation of the different technical services (database, monitoring...).
+So for this, we need to install `docker` and `docker-compose`
+Installation instructions are available on the following page:
+
+* Mac OS X - https://docs.docker.com/docker-for-mac/install/
+* Windows - https://docs.docker.com/docker-for-windows/install/
+* CentOS - https://docs.docker.com/install/linux/docker-ce/centos/
+* Debian - https://docs.docker.com/install/linux/docker-ce/debian/
+* Fedora - https://docs.docker.com/install/linux/docker-ce/fedora/
+* Ubuntu - https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+On Linux, don't forget the post-execution steps described on https://docs.docker.com/install/linux/linux-postinstall/.
+
+== Checking your docker installation
+
+Once installed, check that both `docker` and `docker-compose` are available in your `PATH`:
+
+[source, shell]
+====
+❯ docker version
+Client: Docker Engine - Community
+Version:           19.03.2
+API version:       1.40
+Go version:        go1.12.8
+Git commit:        6a30dfc
+Built:             Thu Aug 29 05:26:49 2019
+OS/Arch:           darwin/amd64
+Experimental:      false
+
+Server: Docker Engine - Community
+Engine:
+Version:          19.03.2
+API version:      1.40 (minimum version 1.12)
+Go version:       go1.12.8
+Git commit:       6a30dfc
+Built:            Thu Aug 29 05:32:21 2019
+OS/Arch:          linux/amd64
+Experimental:     false
+containerd:
+Version:          v1.2.6
+GitCommit:        894b81a4b802e4eb2a91d1ce216b8817763c29fb
+runc:
+Version:          1.0.0-rc8
+GitCommit:        425e105d5a03fabd737a126ad93d62a9eeede87f
+docker-init:
+Version:          0.18.0
+GitCommit:        fec3683
+
+> docker-compose version
+docker-compose version 1.24.1, build 4667896b
+docker-py version: 3.7.3
+CPython version: 3.6.8
+OpenSSL version: OpenSSL 1.1.0j  20 Nov 2018
+====
+
+Finally, run your first container as follows:
+
+[source, shell]
+====
+>  docker run hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+1. The Docker client contacted the Docker daemon.
+2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+(amd64)
+3. The Docker daemon created a new container from that image which runs the
+executable that produces the output you are currently reading.
+4. The Docker daemon streamed that output to the Docker client, which sent it
+to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+$ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+====
 
 == Recap
 
