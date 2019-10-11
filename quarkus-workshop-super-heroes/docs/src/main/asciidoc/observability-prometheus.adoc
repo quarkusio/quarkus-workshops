@@ -9,3 +9,10 @@
 == Introducing Load
 
 include::common-solution.adoc[]
+
+[NOTE]
+====
+To execute the application we now need Prometheus.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====

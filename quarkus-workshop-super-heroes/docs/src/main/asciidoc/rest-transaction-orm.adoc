@@ -210,6 +210,13 @@ The test should pass.
 
 == Running and Testing the Application
 
+[NOTE]
+====
+To execute the application we now need a database.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====
+
 Now we are ready to run our application.
 Use `./mvnw compile quarkus:dev` to start it.
 Once started, check that there are heroes in the database with the following cUrl command:

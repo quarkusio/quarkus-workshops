@@ -1,6 +1,9 @@
 [[microservices-villain]]
 = Villain Microservice
 
+New microservice, new project!
+In this section we will develop a Villain REST Endpoint which is *really* similar to the Hero Endpoint (and remember, copy/paste is your best friend).
+
 == Bootstrapping the Villain REST Endpoint
 
 Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
@@ -11,7 +14,17 @@ Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you 
 include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 ----
 
+[TIP]
+.Prefering Web UI
+====
+Instead of the Maven command, you can use https://code.quarkus.io.
+====
+
 == Villain Entity
+
+Villains need to be stored, updated and retrieved from a database.
+As you know now, Hibernate with Panache make the ORM job really easy.
+So this is what the `Villain` looks like (notice the `findRandom()` method):
 
 [source]
 ----
