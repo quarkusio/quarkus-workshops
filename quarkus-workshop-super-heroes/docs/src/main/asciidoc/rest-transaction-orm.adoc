@@ -6,7 +6,7 @@ In this module we will create a Hero entity and persist/update/delete/retrieve i
 
 == Architecture Diagram
 
-[plantuml, png, align=center]
+[plantuml,align=center]
 ----
 include::plantuml/rest-transaction-orm-architecture-diagram.puml[]
 ----

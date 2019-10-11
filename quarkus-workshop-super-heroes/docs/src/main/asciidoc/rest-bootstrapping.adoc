@@ -6,7 +6,7 @@ That's what your are going to see in this section.
 
 == Architecture Diagram
 
-[plantuml, png, align=center]
+[plantuml,align=center]
 ----
 include::plantuml/rest-boostrapping-architecture-diagram.puml[]
 ----
@@ -251,7 +251,8 @@ You might come across the following error while developing:
 WARN  [io.qu.ne.ru.NettyRecorder] (Thread-48) Localhost lookup took more than one second, you need to add a /etc/hosts entry to improve Quarkus startup time. See https://thoeni.io/post/macos-sierra-java/ for details.
 ----
 
-If this is the case, it's just a matter to add the node name of your machine to the /etc/hosts. For that, first get the name of your node with the following command:
+If this is the case, it's just a matter to add the node name of your machine to the /etc/hosts.
+For that, first get the name of your node with the following command:
 
 [source,shell]
 ----

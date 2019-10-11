@@ -76,7 +76,7 @@ Once installed and setup, you should be able to run the following command and ge
 
 [source,shell]
 -----
-$> $GRAALVM_HOME/bin/native-image --version
+$ $GRAALVM_HOME/bin/native-image --version
 GraalVM Version 19.2.0.1 CE
 -----
 
@@ -253,7 +253,7 @@ Once installed, check that both `docker` and `docker-compose` are available in y
 
 [source, shell]
 -----
-❯ docker version
+$ docker version
 Client: Docker Engine - Community
 Version:           19.03.2
 API version:       1.40
@@ -282,7 +282,7 @@ docker-init:
 Version:          0.18.0
 GitCommit:        fec3683
 
-> docker-compose version
+$ docker-compose version
 docker-compose version 1.24.1, build 4667896b
 docker-py version: 3.7.3
 CPython version: 3.6.8
@@ -293,7 +293,7 @@ Finally, run your first container as follows:
 
 [source, shell]
 -----
->  docker run hello-world
+$ docker run hello-world
 
 Hello from Docker!
 This message shows that your installation appears to be working correctly.

@@ -5,7 +5,7 @@ So far we've built one microservice.
 In the following sections you will develop two extra microservices.
 We will also add an Angular front-end so we can fight graphically.
 
-[plantuml, png, align=center]
+[plantuml,align=center]
 ----
 include::plantuml/microservices-physical-architecture.puml[]
 ----

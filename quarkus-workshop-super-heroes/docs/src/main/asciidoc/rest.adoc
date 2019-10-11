@@ -7,7 +7,7 @@ This microservice is, let's say, a _classical_ microservice.
 It uses HTTP to expose a REST API and internally store data into a database.
 This service will be used by the _fight_ microservice.
 
-[plantuml, png, align=center, width=300]
+[plantuml,align=center,width=300]
 ----
 include::plantuml/rest-physical-architecture.puml[]
 ----
