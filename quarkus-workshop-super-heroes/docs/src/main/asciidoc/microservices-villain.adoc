@@ -48,7 +48,14 @@ include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/worksho
 
 == Adding Data
 
-/!\ TODO 10 FIRST LINES OF IMPORT.SQL /!\
+To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
+
+[source,sql]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[tag=adocSQL]
+----
+
+If you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 
 == VillainResourceTest Test Class
 
