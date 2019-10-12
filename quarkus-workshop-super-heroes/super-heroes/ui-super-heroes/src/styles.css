@@ -54,7 +54,7 @@ table {
   color: firebrick;
 }
 
-.winner-card {
+.hero-winner-card {
   box-shadow:
     inset 0 0 10px #fff,
     inset 20px 0 50px #77b4f0,
@@ -64,6 +64,18 @@ table {
     0 0 50px #fff,
     -10px 0 50px #4a54ff,
     10px 0 50px #0ff;
+}
+
+.villain-winner-card {
+  box-shadow:
+    inset 0 0 10px #fff,
+    inset 20px 0 50px #F078C2,
+    inset -20px 0 60px #D73B46,
+    inset 20px 0 100px #FF5B68,
+    inset -20px 0 100px #FF5A71,
+    0 0 50px #fff,
+    -10px 0 50px #FF5B68,
+    10px 0 50px #FF5B68;
 }
 
 #fight-row {
@@ -81,4 +93,20 @@ table {
 
 .mat-cell {
   vertical-align: middle !important;
+}
+
+.powers {
+  font-size: xx-large;
+}
+
+.hero {
+  color: dodgerblue;
+}
+
+.villain {
+  color: firebrick;
+}
+
+.collapse {
+  padding: 10px;
 }
