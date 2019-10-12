@@ -1,0 +1,22 @@
+@startuml
+!include style.puml
+allow_mixing
+
+component Undertow {
+}
+
+component RESTEasy {
+}
+
+component "Netty / Vert.x" as vertx {
+}
+
+component "Reactive Routes" as rr {
+}
+
+vertx -up-> Undertow
+vertx -up-> RESTEasy
+vertx -up-> rr
+RESTEasy -[hidden]> Undertow
+
+@enduml
