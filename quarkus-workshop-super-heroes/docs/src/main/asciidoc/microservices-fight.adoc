@@ -1,9 +1,15 @@
 [[microservices-fight]]
 = Fight Microservice
 
+Ok, let's develop another microservice.
+We have a REST API that returns a random Hero.
+Another REST API that returns a randam Villain...
+we need a new REST API that invokes those two, gets one random hero and one random villain and makes them fight.
+Let's call it the FIght API.
+
 == Bootstrapping the Fight REST Endpoint
 
-Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
+Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, create a `rest-fight` sub-directory, open a terminal and run the following command:
 
 [source,shell]
@@ -11,7 +17,17 @@ Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you 
 include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
 ----
 
+[TIP]
+.Prefering Web UI
+====
+Instead of the Maven command, you can use https://code.quarkus.io.
+====
+
 == Fight Entity
+
+A fight is between a hero and a villain.
+Each time there is a fight, there is a winner and a loser.
+So the `Fight` entity is there to store all these fights.
 
 [source]
 ----
@@ -20,15 +36,25 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 
 == Fighters Bean
 
+Now comes a trick.
+The Fight REST API will ultimatelly invoke the Hero and Villain APIs (next sections) to get two random fighters.
+The `Fighters` class has one `Hero` and one `Villain`.
+Notice that `Fighters` is not an entity, it is not persisted in the database, just marshalled and unmarshalled to JSon.
+
 [source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tags=adocBean;!adocSkip]
 ----
 
+The Fight REST API is just interested in the hero's name, level, picture and powers (not the other name as described in the Hero API).
+So the `Hero` bean looks like this.
+
 [source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tags=adocBean;!adocSkip]
 ----
+
+`Villain` is pretty similar.
 
 [source]
 ----
@@ -37,6 +63,12 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 
 == FightService Transactional Service
 
+To transactionnally manipulate the `Fight` entity we need a `FightService`.
+Notice the `persistFight` method.
+This method is the one creating a fight between a hero and a villain.
+As you can see the algorithm to determine the winner is a bit random (even though it uses the levels).
+If you are not happy about the way the fight operates, choose your own winning algorithm ;o)
+
 [source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka]
@@ -44,11 +76,13 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 
 [NOTE]
 ====
-For now, just implement two empty methods `villainWon` and `heroWon` which return null.
-Later, these methods will invoke the Hello and Villain API to get a random Hello and random Villain
+For now, just implement an empty `findRandomFighters` method which returns null.
+Later, this method will invoke the Hello and Villain API to get a random Hello and random Villain
 ====
 
 == FightResource Endpoint
+
+To expose a REST API we also need a `FightResource` (with OpenAPI annotations of course).
 
 [source]
 ----
@@ -56,6 +90,8 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 ----
 
 == FightApplication for OpenAPI
+
+The `FightApplication` class is just there to customize the OpenAPI contract.
 
 [source]
 ----
@@ -68,7 +104,21 @@ Notice that there is no `FightApplicationLifeCycle` class.
 We will use a Quarkus extension later on to display a banner for Fight.
 ====
 
+== Adding Data
+
+To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
+
+[source,sql]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[tag=adocSQL]
+----
+
+If you want to add more fights to the database, download the SQL file {github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+
 == FightResourceTest Test Class
+
+We need to test our REST API.
+For that, copy the following `FightResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/fight` directory.
 
 [source]
 ----
@@ -77,7 +127,7 @@ include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/
 
 == Configuration
 
-Notice that this instance of Quarkus listens on port 8084
+Notice that this instance of Quarkus listens on port 8082
 
 [source]
 ----
@@ -86,29 +136,18 @@ include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.pro
 
 == Running, Testing and Packaging the Application
 
-Now we are ready to run our application.
-Use: `./mvnw compile quarkus:dev`:
+First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 
-Then check that the endpoint returns `hello` as expected:
+Now that the tests are green, we are ready to run our application.
+Use `./mvnw compile quarkus:dev` to start it (notice that there is no banner yet, it will come later).
+Once the application is started, just check that it returns the fights from the database with the following cUrl command:
 
 [source,shell]
 ----
-$ curl http://localhost:8080/api/heroes
-hello
+$ curl http://localhost:8082/api/fights
 ----
 
-http://localhost:8083/swagger-ui` and play with your API.
-
-
-Execute it with `./mvnw test` or from your IDE.
-
-The application is packaged using `./mvnw package`.
-It produces 2 jar files in `/target`:
-
-* `rest-hero-1.0-SNAPSHOT.jar` : containing just the classes and resources of the projects, it’s the regular artifact produced by the Maven build;
-* `rest-hero-1.0-SNAPSHOT-runner.jar` : being an executable jar. Be aware that it’s not an über-jar as the dependencies are copied into the `target/lib` directory.
-
-You can run the application using: `java -jar rest-hero-1.0-SNAPSHOT-runner.jar`.
+Remember that you can also check Swagger UI by going to http://localhost:8082/swagger-ui.
 
 == Directory Structure
 
@@ -116,39 +155,40 @@ At the end you should have the following directory structure:
 
 [source,text]
 ----
-rest-fight/
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-└── src
-    ├── main
-    │   ├── docker
-    │   │   ├── Dockerfile.jvm
-    │   │   └── Dockerfile.native
-    │   ├── java
-    │   │   └── io
-    │   │       └── quarkus
-    │   │           └── workshop
-    │   │               └── superheroes
-    │   │                   └── fight
-    │   │                       ├── Fight.java
-    │   │                       ├── FightApplication.java
-    │   │                       ├── FightResource.java
-    │   │                       ├── FightService.java
-    │   │                       └── Fighters.java
-    │   │                           └── KafkaWriter.java
-    │   └── resources
-    │       ├── META-INF
-    │       │   └── resources
-    │       │       └── index.html
-    │       ├── application.properties
-    │       └── import.sql
-    └── test
-        └── java
-            └── io
-                └── quarkus
-                    └── workshop
-                        └── superheroes
-                            └── fight
-                                └── FightResourceTest.java
+super-heroes/
+└── rest-fight/
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── pom.xml
+    └── src
+        ├── main
+        │   ├── docker
+        │   │   ├── Dockerfile.jvm
+        │   │   └── Dockerfile.native
+        │   ├── java
+        │   │   └── io
+        │   │       └── quarkus
+        │   │           └── workshop
+        │   │               └── superheroes
+        │   │                   └── fight
+        │   │                       ├── Fight.java
+        │   │                       ├── FightApplication.java
+        │   │                       ├── FightResource.java
+        │   │                       ├── FightService.java
+        │   │                       └── Fighters.java
+        │   │                           └── KafkaWriter.java
+        │   └── resources
+        │       ├── META-INF
+        │       │   └── resources
+        │       │       └── index.html
+        │       ├── application.properties
+        │       └── import.sql
+        └── test
+            └── java
+                └── io
+                    └── quarkus
+                        └── workshop
+                            └── superheroes
+                                └── fight
+                                    └── FightResourceTest.java
 ----

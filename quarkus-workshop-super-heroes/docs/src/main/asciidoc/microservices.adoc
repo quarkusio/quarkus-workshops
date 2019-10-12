@@ -30,5 +30,6 @@ super-heroes/
 │       └── test
 └── ui-super-heroes  Angular application so we can fight visually
     └── src
-        └── app
+        ├── app
+        └── main
 ----

@@ -47,8 +47,6 @@ include::quarkus-native.adoc[leveloffset=+2]
 // Microservices
 include::microservices.adoc[leveloffset=+1]
 <<<
-include::microservices-hero.adoc[leveloffset=+2]
-<<<
 include::microservices-villain.adoc[leveloffset=+2]
 <<<
 include::microservices-fight.adoc[leveloffset=+2]

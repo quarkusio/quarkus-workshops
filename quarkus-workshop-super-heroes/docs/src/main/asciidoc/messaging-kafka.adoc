@@ -1,2 +1,10 @@
 [[messaging-kafka]]
 = Kafka
+
+
+[NOTE]
+====
+To execute the application we now need Kafka.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====

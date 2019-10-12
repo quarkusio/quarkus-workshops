@@ -1,6 +1,9 @@
 [[microservices-villain]]
 = Villain Microservice
 
+New microservice, new project!
+In this section we will develop a Villain REST Endpoint which is *really* similar to the Hero Endpoint (and remember, copy/paste is your best friend).
+
 == Bootstrapping the Villain REST Endpoint
 
 Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
@@ -11,14 +14,26 @@ Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you 
 include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 ----
 
+[TIP]
+.Prefering Web UI
+====
+Instead of the Maven command, you can use https://code.quarkus.io.
+====
+
 == Villain Entity
+
+Villains need to be stored, updated and retrieved from a database.
+As you know now, Hibernate with Panache makes the ORM job really easy.
+So this is what the `Villain` looks like (notice the `findRandom()` method):
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/Villain.java[tags=adocEntity;adocSkip]
+include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/Villain.java[tags=adocEntity;!adocSkip]
 ----
 
 == VillainService Transactional Service
+
+To transactionnally manipulate a `Villain` entity we need a `VillainService`.
 
 [source]
 ----
@@ -27,12 +42,17 @@ include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/worksho
 
 == VillainResource Endpoint
 
+To expose a REST API we also need a `VillainResource`.
+Notice the OpenAPI annotations.
+
 [source]
 ----
 include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainResource.java[tags=adocResource;!adocMetrics]
 ----
 
 == VillainApplication for OpenAPI
+
+The `VillainApplication` class is just there to customize the OpenAPI contract.
 
 [source]
 ----
@@ -41,12 +61,29 @@ include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/worksho
 
 == VillainApplicationLifeCycle for Startup Banner
 
+The villain API also needs a nice banner.
+Go back to http://patorjk.com/software/taag and pick up your favourite "Villain API" text banner and paste it into the `VillainApplicationLifeCycle` class.
+
 [source]
 ----
 include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplicationLifeCycle.java[tag=adocApplicationLifeCycle]
 ----
 
+== Adding Data
+
+To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
+
+[source,sql]
+----
+include::{github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[tag=adocSQL]
+----
+
+If you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+
 == VillainResourceTest Test Class
+
+We need to test our REST API.
+For that, copy the following `VillainResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/villain` directory.
 
 [source]
 ----
@@ -64,29 +101,36 @@ include::{github-raw}/super-heroes/rest-villain/src/main/resources/application.p
 
 == Running, Testing and Packaging the Application
 
-Now we are ready to run our application.
-Use: `./mvnw compile quarkus:dev`:
+First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 
-Then check that the endpoint returns `hello` as expected:
+Now that the tests are green, we are ready to run our application.
+Use `./mvnw compile quarkus:dev` to start it (notice the nice banner).
+Once the application is started, create a new villain with the following cUrl command:
 
 [source,shell]
 ----
-$ curl http://localhost:8080/api/heroes
-hello
+$ curl -X POST -d  '{"level":2, "name":"Darth Vader", "powers":"Darkness, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
+
+< HTTP/1.1 201 Created
+< Location: http://localhost:8084/api/villains/562
 ----
 
-http://localhost:8083/swagger-ui` and play with your API.
+The cUrl command returns the location of the newly created villain.
+Take this URL and do an HTTP GET on it.
 
+[source,shell]
+----
+$ curl http://localhost:8084/api/villains/562 | jq
 
-Execute it with `./mvnw test` or from your IDE.
+{
+  "id": 562,
+  "level": 6,
+  "name": "Darth Vader",
+  "powers": "Darkness, Longevity"
+}
+----
 
-The application is packaged using `./mvnw package`.
-It produces 2 jar files in `/target`:
-
-* `rest-hero-1.0-SNAPSHOT.jar` : containing just the classes and resources of the projects, it’s the regular artifact produced by the Maven build;
-* `rest-hero-1.0-SNAPSHOT-runner.jar` : being an executable jar. Be aware that it’s not an über-jar as the dependencies are copied into the `target/lib` directory.
-
-You can run the application using: `java -jar rest-hero-1.0-SNAPSHOT-runner.jar`.
+Remember that you can also check Swagger UI by going to http://localhost:8084/swagger-ui.
 
 == Directory Structure
 
@@ -94,38 +138,39 @@ At the end you should have the following directory structure:
 
 [source,text]
 ----
-rest-villain/
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-└── src
-    ├── main
-    │   ├── docker
-    │   │   ├── Dockerfile.jvm
-    │   │   └── Dockerfile.native
-    │   ├── java
-    │   │   └── io
-    │   │       └── quarkus
-    │   │           └── workshop
-    │   │               └── superheroes
-    │   │                   └── villain
-    │   │                       ├── Villain.java
-    │   │                       ├── VillainApplication.java
-    │   │                       ├── VillainApplicationLifeCycle.java
-    │   │                       ├── VillainResource.java
-    │   │                       └── VillainService.java
-    │   └── resources
-    │       ├── META-INF
-    │       │   └── resources
-    │       │       └── index.html
-    │       ├── application.properties
-    │       └── import.sql
-    └── test
-        └── java
-            └── io
-                └── quarkus
-                    └── workshop
-                        └── superheroes
-                            └── villain
-                                └── VillainResourceTest.java
+super-heroes/
+└── rest-villain/
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── pom.xml
+    └── src
+        ├── main
+        │   ├── docker
+        │   │   ├── Dockerfile.jvm
+        │   │   └── Dockerfile.native
+        │   ├── java
+        │   │   └── io
+        │   │       └── quarkus
+        │   │           └── workshop
+        │   │               └── superheroes
+        │   │                   └── villain
+        │   │                       ├── Villain.java
+        │   │                       ├── VillainApplication.java
+        │   │                       ├── VillainApplicationLifeCycle.java
+        │   │                       ├── VillainResource.java
+        │   │                       └── VillainService.java
+        │   └── resources
+        │       ├── META-INF
+        │       │   └── resources
+        │       │       └── index.html
+        │       ├── application.properties
+        │       └── import.sql
+        └── test
+            └── java
+                └── io
+                    └── quarkus
+                        └── workshop
+                            └── superheroes
+                                └── villain
+                                    └── VillainResourceTest.java
 ----

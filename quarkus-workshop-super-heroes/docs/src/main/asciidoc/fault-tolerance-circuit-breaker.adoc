@@ -2,3 +2,4 @@
 = Circuit Breaker
 
 
+include::common-solution.adoc[]

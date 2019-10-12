@@ -1,2 +1,22 @@
 [[microservices-ui]]
 = User Interface
+
+Now that we have the three main microservices, time to have a decent user interface to start fighting.
+The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
+This time you will just download an Angular application, install it, and run it on another Quarkus instance.
+
+== Downloading the Web Application
+
+== Looking at Some Code
+
+You don't need to be an Angular expert, but there are some pieces of code that are
+
+[source,shell]
+----
+$ swagger-codegen generate -i http://localhost:8082/openapi -l typescript-angular -o src/app/shared
+----
+
+== Installing the Web Application on Quarkus
+
+== Running the Web Application
+

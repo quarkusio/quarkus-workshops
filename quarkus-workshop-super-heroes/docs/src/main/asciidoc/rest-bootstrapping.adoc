@@ -4,13 +4,6 @@
 First thing first, we need a project.
 That's what your are going to see in this section.
 
-== Architecture Diagram
-
-[plantuml,align=center]
-----
-include::plantuml/rest-boostrapping-architecture-diagram.puml[]
-----
-
 == Bootstrapping the Hero REST Endpoint
 
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
@@ -21,7 +14,7 @@ Let's say you have a `quarkus-workshop` root directory where you have all your c
 include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
 ----
 
-[NOTE]
+[TIP]
 .Prefering Web UI
 ====
 Instead of the Maven command, you can use https://code.quarkus.io.
@@ -34,7 +27,7 @@ Once you bootstrap the project, you get the following directory structure with a
 [source,text]
 ----
 super-heroes/
-└── rest-hero
+└── rest-hero/
    ├── mvnw
    ├── mvnw.cmd
    ├── pom.xml
@@ -70,7 +63,7 @@ The Maven archetype generates the following `rest-hero` sub-directory:
 
 * the Maven structure with a `pom.xml`
 * an `io.quarkus.workshop.superheroes.hero.HeroResource` resource exposed on `/api/heroes`
-* an associated unit test
+* an associated unit test `HeroResourceTest`
 * the landing page `index.html` that is accessible on http://localhost:8080 after starting the application
 * example `Dockerfile` files for both native and jvm modes in `src/main/docker`
 * the `application.properties` configuration file
@@ -93,8 +86,12 @@ If we focus on the dependencies section, you can see the extension allowing the 
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasy]
 ----
 
+<<<<<<< HEAD
 [TIP]
 .RESTEasy
+=======
+[NOTE]
+>>>>>>> 64844506e55e005eaedc7787ff5b9121754db456
 ====
 You may not be familiar with RESTEasy (https://resteasy.github.io).
 It's an implementation of JAX-RS and it uses to implement RestFul services in Quarkus.
@@ -102,7 +99,7 @@ It's an implementation of JAX-RS and it uses to implement RestFul services in Qu
 
 == The JAX-RS resource
 
-During the project creation, the `src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java` file has been created with the following content:
+During the project creation, the `HeroResource.java` file has been created with the following content:
 
 [source]
 ----
@@ -117,7 +114,7 @@ public class HeroResource {
 }
 ----
 
-It's a very simple REST endpoint, returning "hello" to requests on "/hello".
+It's a very simple REST endpoint, returning "hello" to requests on `/api/heroes`.
 
 == Running the Application
 
@@ -139,11 +136,11 @@ $ ./mvnw compile quarkus:dev
 [INFO] Changes detected - recompiling the module!
 [INFO] Compiling 1 source file to /Users/agoncal/Code/Quarkus/rest-hero/target/classes
 [INFO]
-[INFO] --- quarkus-maven-plugin:0.23.1:dev (default-cli) @ rest-hero ---
+[INFO] --- quarkus-maven-plugin:0.23.2:dev (default-cli) @ rest-hero ---
 [ERROR] Port 5005 in use, not starting in debug mode
 2019-10-04 10:08:11,536 INFO  [io.qua.dep.QuarkusAugmentor] (main) Beginning quarkus augmentation
 2019-10-04 10:08:11,989 INFO  [io.qua.dep.QuarkusAugmentor] (main) Quarkus augmentation completed in 453ms
-2019-10-04 10:08:12,294 INFO  [io.quarkus] (main) Quarkus 0.23.1 started in 0.891s. Listening on: http://0.0.0.0:8080
+2019-10-04 10:08:12,294 INFO  [io.quarkus] (main) Quarkus 0.23.2 started in 0.891s. Listening on: http://0.0.0.0:8080
 2019-10-04 10:08:12,295 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
 2019-10-04 10:08:12,295 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
 ----
@@ -203,7 +200,7 @@ include::{github-raw}/super-heroes/pom.xml[tags=adocBuildSurefire]
 
 We also set the `java.util.logging` system property to make sure tests will use the correct log manager.
 
-The generated project contains a simple test in `src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java`.
+The generated project contains a simple test in `HeroResourceTest.java`.
 
 [source]
 ----

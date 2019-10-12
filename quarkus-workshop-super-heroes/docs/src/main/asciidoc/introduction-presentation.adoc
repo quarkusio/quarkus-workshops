@@ -13,35 +13,49 @@ Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 ifdef::give-solution[]
 [NOTE]
 ====
-Get this workshop from https://github.com/quarkusio/quarkus-workshops
+Get this workshop from https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
 ====
 endif::give-solution[]
 
 == What will you be developing?
 
-[[introduction-presentation-figure-physical-architecture]]
+In this workshop you will develop an application that allows super-heroes to fight against villains.
+Being a workshop about microservices, you will be developing several microservices communicating either synchronously via REST or asynchronously using Kafka:
+
+* _Super Hero UI_: an Angular application allowing you to pick up a random super-hero, a random villain and makes them fight.
+The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
+* _Hero REST API_: Allows CRUD operations on Heroes which are stored in a Postgres database
+* _Villain REST API_: Allows CRUD operations on Villains which are stored in a Postgres database
+* _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random super-hero and a random villain.
+Each fight is stored in a Postgres database
+* _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
+It has a HTML + JQuery UI displaying all the statistics.
+* _Promotheus_ polls metrics from the three microservices Fight, Hero and Villain
+
 [plantuml,align=center]
-.Physical Architecture
 ----
 include::plantuml/introduction-physical-architecture.puml[]
 ----
+
+The main UI allows you to pick up one random Hero and Villain by clicking on "New Fighters".
+Then it's just a matter of clicking on "Fight!" to get them to fight.
+The table at the bottom shows the list of the previous fights.
+
+image::angular-ui.png[]
 
 == How does this workshop work?
 
 You have this material in your hands (either electronically or printed) and you can now follow it step by step.
 The structure of this workshop is as follow :
 
-* Installing all the needed tools:
+* _Installing all the needed tools_:
 in this section you will install all the tools and code to be able to develop, compile and execute our application
-* Using Quarkus:
-in this section you will play with Quarkus so you make sure you understand the basics
-* Developing with Quarkus:
-in this section you will create a microservice archtiecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
+* _Developing with Quarkus_:
+in this section you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
 * Extending Quarkus:
 in this section you will create a Quarkus extension
 
-If you already have the tools installed, skip the "Installing all the needed tools" section.
-If you already know Quarkus a bit, jump to the sections "Developing with Quarkus" and "Extending Quarkus", and start hacking some code and addons.
+If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Developing with Quarkus_ and _Extending Quarkus_, and start hacking some code and addons.
 This "à la carte" mode allows you to make the most of this 6 hours long hands on lab.
 
 == What do you have to do?
@@ -52,9 +66,7 @@ Oh, and be ready to have some fun!
 
 == Software requirements
 
-This workshop will make of the following software, tools, frameworks that you will need to install and now (more or less) how it works.
-
-The following software needs to be downloaded and installed:
+This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse, VS Code..)
 * JDK 8

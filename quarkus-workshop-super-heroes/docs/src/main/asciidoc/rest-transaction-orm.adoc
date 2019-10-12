@@ -4,13 +4,6 @@
 The Hero API's role is to allow CRUD operations on Super Heroes.
 In this module we will create a Hero entity and persist/update/delete/retrieve it from a Postgres database in a transactional way.
 
-== Architecture Diagram
-
-[plantuml,align=center]
-----
-include::plantuml/rest-transaction-orm-architecture-diagram.puml[]
-----
-
 == Directory Structure
 
 In this module we will add extra classes to the Hero API project.
@@ -19,19 +12,19 @@ You will end-up with the following directory structure:
 [source,text]
 ----
 super-heroes/
-└── rest-hero
-   ├── pom.xml
-   └── src
-       └── main
-           └── java
-               └── io
-                   └── quarkus
-                       └── workshop
-                           └── superheroes
-                               └── hero
-                                   ├── Hero.java
-                                   ├── HeroResource.java
-                                   └── HeroService.java
+└── rest-hero/
+    ├── pom.xml
+    └── src
+        └── main
+            └── java
+                └── io
+                    └── quarkus
+                        └── workshop
+                            └── superheroes
+                                └── hero
+                                    ├── Hero.java
+                                    ├── HeroResource.java
+                                    └── HeroService.java
 ----
 
 == Hero Entity
@@ -106,12 +99,10 @@ For that, make sure to have the following configuration in your `application.pro
 include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocHibernate]
 ----
 
-And to add heroes to our database, download the SQL file https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes/api-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
-
 == HeroService Transactional Service
 
-To manipulate the `Hero` entity we will develop a transaction `HeroService` class.
-The idea is to wrap methods modifying your database (e.g. `entity.persist()`) within a transaction.
+To manipulate the `Hero` entity we will develop a transactional `HeroService` class.
+The idea is to wrap methods modifying the database (e.g. `entity.persist()`) within a transaction.
 Marking a CDI bean method `@Transactional` will do that for you and make that method a transaction boundary.
 
 `@Transactional` can be used to control transaction boundaries on any CDI bean at the method level or at the class level to ensure every method is transactional.
@@ -128,6 +119,10 @@ You can control whether and how the transaction is started with parameters on `@
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tags=adocTransactional;!adocConfigProperty;!adocPersistHeroLevel]
 ----
+
+Notice that both methods that persist and update a hero, pass a `Hero` object as a parameter.
+Thanks to the Bean Validation's `@Valid` annotation, the `Hero` object will be checked to see if it's valid or not.
+It it's not, the transaction will be rollbacked.
 
 == Configuring the Datasource
 
@@ -177,6 +172,19 @@ You can learn more about it in the Contexts and Dependency Injection guide.footn
 ArC comes as a dependency of `quarkus-resteasy` so you already have it handy.
 That's why you were able to use `@Inject` in the `HeroResource` to inject a reference to `HeroService`.
 
+== Adding Data
+
+To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
+It contains SQL statements terminated by a semicolon.
+This is useful to have a data set ready for the tests or demos.
+
+[source,sql]
+----
+include::{github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[tag=adocSQL]
+----
+
+If you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+
 == CRUD Tests in HeroResourceTest
 
 To test the `HeroResource` endpoint, we will be using TestContainers to fire a Postgres database and then test CRUD operations.footnote:[TestContainers https://www.testcontainers.org]
@@ -184,7 +192,7 @@ You will add the following test methods to the `HeroResourceTest` class:
 
 * `shouldNotGetUnknownHero`: giving a random Hero identifier, the `HeroResource` endpoint should return a 204 (No content)
 * `shouldGetRandomHero`: checks that the `HeroResource` endpoint returns a random hero
-* `shouldNotAddInvalidItem`: passing an invalid `Hero` should fail when creating it
+* `shouldNotAddInvalidItem`: passing an invalid `Hero` should fail when creating it (thanks to the `@Valid` annotation)
 * `shouldGetInitialItems`: checks that the `HeroResource` endpoint returns the list of heroes
 * `shouldAddAnItem`: checks that the `HeroResource` endpoint creates a valid `Hero`
 * `shouldUpdateAnItem`: checks that the `HeroResource` endpoint updates a newly created `Hero`
@@ -197,3 +205,23 @@ The code is as follow:
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocResourceTest;!adocOpenAPI;!adocHealth;!adocMetrics]
 ----
 
+Execute the test using `./mvnw test`.
+The test should pass.
+
+== Running and Testing the Application
+
+[NOTE]
+====
+To execute the application we now need a database.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====
+
+Now we are ready to run our application.
+Use `./mvnw compile quarkus:dev` to start it.
+Once started, check that there are heroes in the database with the following cUrl command:
+
+[source,shell]
+----
+$ curl http://localhost:8083/api/heroes
+----
