@@ -12,20 +12,20 @@ You will end-up with the following directory structure:
 [source,text]
 ----
 super-heroes/
-└── rest-hero
-   ├── pom.xml
-   └── src
-       └── main
-           └── java
-               └── io
-                   └── quarkus
-                       └── workshop
-                           └── superheroes
-                               └── hero
-                                   ├── Hero.java
-                                   ├── HeroApplication.java
-                                   ├── HeroResource.java
-                                   └── HeroService.java
+└── rest-hero/
+    ├── pom.xml
+    └── src
+        └── main
+            └── java
+                └── io
+                    └── quarkus
+                        └── workshop
+                            └── superheroes
+                                └── hero
+                                    ├── Hero.java
+                                    ├── HeroApplication.java
+                                    ├── HeroResource.java
+                                    └── HeroService.java
 ----
 
 == Open API

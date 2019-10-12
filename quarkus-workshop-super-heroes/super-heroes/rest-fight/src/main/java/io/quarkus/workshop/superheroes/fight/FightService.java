@@ -31,13 +31,13 @@ public class FightService {
     @Inject
     @RestClient
     VillainService villainService;
-    // end::adocRestClient[]
 
+    // end::adocRestClient[]
     // tag::adocKafka[]
     @Inject
     @Stream("fights-channel") Emitter<Fight> emitter;
-    // end::adocKafka[]
 
+    // end::adocKafka[]
     private final Random random = new Random();
 
     public List<Fight> findAllFights() {
@@ -66,11 +66,12 @@ public class FightService {
 
         fight.fightDate = Instant.now();
         Fight.persist(fight);
+        // tag::adocKafka[]
         emitter.send(fight);
+        // end::adocKafka[]
         return fight;
     }
 
-    // tag::adocRestClient[]
     private Fight heroWon(Fighters fighters) {
         Fight fight = new Fight();
         fight.winnerName = fighters.getHero().getName();
@@ -97,6 +98,7 @@ public class FightService {
         return fight;
     }
 
+    // tag::adocRestClient[]
     Fighters findRandomFighters() {
         Hero hero = heroService.findRandomHero();
         Villain villain = villainService.findRandomVillain();

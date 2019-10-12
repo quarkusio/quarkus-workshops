@@ -27,7 +27,7 @@ Once you bootstrap the project, you get the following directory structure with a
 [source,text]
 ----
 super-heroes/
-└── rest-hero
+└── rest-hero/
    ├── mvnw
    ├── mvnw.cmd
    ├── pom.xml
