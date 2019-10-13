@@ -4,6 +4,7 @@ import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
+import io.smallrye.reactive.messaging.annotations.Channel;
 import io.smallrye.reactive.messaging.annotations.Emitter;
 import io.smallrye.reactive.messaging.annotations.Stream;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -33,11 +34,11 @@ public class FightService {
     VillainService villainService;
 
     // end::adocRestClient[]
-    // tag::adocKafka[]
+    // tag::adocKafkaEmitter[]
     @Inject
-    @Stream("fights-channel") Emitter<Fight> emitter;
+    @Channel("fights-channel") Emitter<Fight> emitter;
 
-    // end::adocKafka[]
+    // end::adocKafkaEmitter[]
     private final Random random = new Random();
 
     public List<Fight> findAllFights() {
