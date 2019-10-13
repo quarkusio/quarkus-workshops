@@ -28,7 +28,7 @@ As you can see, it matches our `Fight` Java class.
 Same for `fighters.ts`, `hero.ts` or `villain.ts`.
 Under `api` there is the `fight.service.ts` that defines all the methods to access to our Fight REST API through HTTP.
 
-[source,typescript]
+[source,typescript,indent=0]
 ----
 include::{github-raw}/super-heroes/ui-super-heroes/src/app/shared/api/fight.service.ts[tag=adocService]
 ----
