@@ -6,13 +6,19 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
-import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.substrate.SubstrateResourceBuildItem;
 import io.quarkus.workshop.superheroes.banner.runtime.BannerBean;
 import io.quarkus.workshop.superheroes.banner.runtime.BannerConfig;
 import io.quarkus.workshop.superheroes.banner.runtime.BannerRecorder;
 
 public class BannerProcessor {
+
+    @BuildStep
+    @Record(ExecutionTime.STATIC_INIT)
+    public void configureBannerBean(BeanContainerBuildItem beanContainer, BannerRecorder recorder,
+        BannerConfig config) {
+        recorder.init(beanContainer.getValue(), config);
+    }
 
     @BuildStep
     AdditionalBeanBuildItem registerBannerBean() {
@@ -24,14 +30,5 @@ public class BannerProcessor {
         resource.produce(new SubstrateResourceBuildItem(config.file));
     }
 
-    @BuildStep
-    FeatureBuildItem registerExtensionName() {
-        return new FeatureBuildItem("banner");
-    }
 
-    @BuildStep
-    @Record(ExecutionTime.STATIC_INIT)
-    public void configureBannerBean(BeanContainerBuildItem beanContainer, BannerRecorder recorder, BannerConfig config) {
-        recorder.init(beanContainer.getValue(), config);
-    }
 }
