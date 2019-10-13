@@ -1,7 +1,5 @@
 package io.quarkus.workshop.superheroes.fight.health;
 
-import io.quarkus.workshop.superheroes.fight.Fight;
-import io.quarkus.workshop.superheroes.fight.FightService;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
@@ -9,26 +7,41 @@ import org.eclipse.microprofile.health.Readiness;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.List;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 @Readiness
 @ApplicationScoped
 public class DatabaseConnectionHealthCheck implements HealthCheck {
 
     @Inject
-    FightService fightService;
+    DataSource dataSource;
 
     @Override
     public HealthCheckResponse call() {
-        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("Database connection health check");
-
+        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("Fight health check");
         try {
-            List<Fight> fights = fightService.findAllFights();
-            responseBuilder.withData("Number of rows in the database", fights.size()).up();
-        } catch (IllegalStateException e) {
-            responseBuilder.down();
+            int rows = numberOfRows("fight");
+            responseBuilder.up().withData("rows", rows);
+        } catch (Exception e) {
+            responseBuilder.down().withData("message", e.getMessage());
         }
 
         return responseBuilder.build();
+    }
+
+    private int numberOfRows(String table) throws Exception {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM " + table)
+        ) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
+        }
     }
 }
