@@ -14,7 +14,7 @@ In the log, you can see actions happening at build time during what Quarkus call
 
 [source, shell]
 ----
-[INFO] --- quarkus-maven-plugin:0.23.2:build (default) @ rest-hero ---
+[INFO] --- quarkus-maven-plugin:0.24.0:build (default) @ rest-hero ---
 [INFO] [io.quarkus.deployment.QuarkusAugmentor] Beginning quarkus augmentation
 [INFO] [org.jboss.threads] JBoss Threads version 3.0.0.Final
 [INFO] [org.hibernate.jpa.boot.internal.PersistenceXmlParser] HHH000318: Could not find any META-INF/persistence.xml file in the classpath
@@ -34,9 +34,11 @@ If you run `javap target/transformed-classes/io/quarkus/workshop/superheroes/her
 If now you look at the `target/wiring-classes/io/quarkus/workshop/superheroes/hero`, you can see many generated classes.
 
 All these metadata are computed and managed by _extensions_.
-We are going to learn more about extensions later in this workshop.
+The next figure present some of the extension you already used, but there are a lot more.
+We are going to learn more about extensions later in this workshop, and even build one.
 What's important to understand for now is that the magic is packaged into extension and every time you add a `quarkus-` dependency to your `pom.xml` file, you enable an extension.
 
+image::quarkus-extensions.png[]
 
 
 
