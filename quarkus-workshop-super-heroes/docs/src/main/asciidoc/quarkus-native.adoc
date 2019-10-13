@@ -4,6 +4,7 @@
 == Building a Native Executable
 
 Let’s now produce a native executable for our application.
+As explained in the introduction of this chapter, Quarkus is able to generate native executables.
 It improves the startup time of the application, and produces a minimal disk footprint.
 The executable would have everything to run the application including the "JVM" (shrunk to be just enough to run the application), and the application.
 
@@ -121,7 +122,7 @@ To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw
 [INFO] -------------------------------------------------------
 [INFO] Running io.quarkus.workshop.superheroes.hero.NativeHeroResourceIT
 Executing [/Users/agoncal/Code/rest-hero/target/rest-hero-1.0-SNAPSHOT-runner, -Dquarkus.http.port=8081, -Dtest.url=http://localhost:8081, -Dquarkus.log.file.path=target/quarkus.log]
-2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Quarkus 0.23.2 started in 0.012s. Listening on: http://0.0.0.0:8081
+2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Quarkus 0.24.0 started in 0.012s. Listening on: http://0.0.0.0:8081
 2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Profile prod activated.
 2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
 [INFO]
