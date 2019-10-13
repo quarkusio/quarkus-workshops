@@ -4,7 +4,7 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.mapper.TypeRef;
+import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

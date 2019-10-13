@@ -6,12 +6,11 @@ import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
-import io.restassured.mapper.TypeRef;
+
+import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
+import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -57,6 +56,19 @@ public class FightResourceTest {
                 .withHostName("localhost")
                 .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
         );
+
+    @Container
+    public static final KafkaContainer KAFKA = new KafkaContainer();
+
+    @BeforeAll
+    public static void configureKafkaLocation() {
+        System.setProperty("kafka.bootstrap.servers", KAFKA.getBootstrapServers());
+    }
+
+    @AfterAll
+    public static void clearKafkaLocation() {
+        System.clearProperty("kafka.bootstrap.servers");
+    }
 
     @Test
     void shouldPingOpenAPI() {
@@ -187,7 +199,7 @@ public class FightResourceTest {
             .post("/api/fights")
             .then()
             .statusCode(OK.getStatusCode())
-            .content(containsString("winner"), containsString("loser"))
+            .body(containsString("winner"), containsString("loser"))
             .extract().body().jsonPath().getString("id");
 
         assertNotNull(fightId);
