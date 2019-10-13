@@ -7,16 +7,72 @@ This time you will just download an Angular application, install it, and run it 
 
 == Downloading the Web Application
 
+Go to {github-raw}/super-heroes/ui-super-heroes and download the entire code into the `ui-super-heroes` directory.
+Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
+Notice that there is a `pom.xml` file.
+This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven.
+The `pom.xml` also allows us to package the Angular application into Quarkus.
+
 == Looking at Some Code
 
-You don't need to be an Angular expert, but there are some pieces of code that are
+You don't need to be an Angular expert, but there are some pieces of code that are worth looking at.
+If you look under the `src/app/shared` directory, you will find an `api` and a `model` sub-directory.
+Let's look at `fight.ts`.
+
+[source,typescript,indent=0]
+----
+include::{github-raw}/super-heroes/ui-super-heroes/src/app/shared/model/fight.ts[tag=adocModel]
+----
+
+As you can see, it matches our `Fight` Java class.
+Same for `fighters.ts`, `hero.ts` or `villain.ts`.
+Under `api` there is the `fight.service.ts` that defines all the methods to access to our Fight REST API through HTTP.
+
+[source,typescript,indent=0]
+----
+include::{github-raw}/super-heroes/ui-super-heroes/src/app/shared/api/fight.service.ts[tag=adocService]
+----
+
+Well, guess what?
+We didn't have to type this code either.
+It was generated thanks to a tool called `swagger-codegen`.footnote:[Swagger Codegen https://github.com/swagger-api/swagger-codegen]
+Because our Fight REST API exposes an OpenAPI contract, `swagger-codegen` just swallows it, and generates the TypeScript code to access it.
+It's just a matter of running:
 
 [source,shell]
 ----
 $ swagger-codegen generate -i http://localhost:8082/openapi -l typescript-angular -o src/app/shared
 ----
 
+Here, you see another advantage of exposing an OpenAPI contract:
+it documents the API which can be read by a human, or processed by tools.
+
 == Installing the Web Application on Quarkus
+
+Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
+Execute `./mvnw install` and Maven will download and install Node JS and NPM and build the application.
+You should now have a `node_modules` directory with all the Angular dependencies.
+
+To install the Angular application into a Quarkus instance, we just build the app and copy the bundles under the `resources/META-INF/resources` directory.
+Look at the `package.sh`, that's exactly what it does.
+
+[source,shell]
+----
+include::{github-raw}/super-heroes/ui-super-heroes/package.sh[tag=adocShell]
+----
+
+Execute the `package.sh` script.
+You will see all the Javascript files under `resources/META-INF/resources` directory.
+We are now ready to go.
 
 == Running the Web Application
 
+As usual, use `./mvnw compile quarkus:dev` to start the web application.
+Once the application is started, go to http://localhost:8080 (8080 is the default port as we didn't change it in the `application.properties` this time).
+It should display the main web page.
+Start playing!
+
+image::angular-ui.png[]
+
+Oups, not working yet!
+Let's move on to the next section then and make the application work.
