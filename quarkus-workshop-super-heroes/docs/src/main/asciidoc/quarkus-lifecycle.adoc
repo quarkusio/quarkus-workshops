@@ -1,6 +1,7 @@
 [[quarkus-lifecycle]]
 = Application Lifecycle
 
+Now that you know how is structured Quarkus, let's continue using various extensions.
 You often need to execute custom actions when the application starts and clean up everything when the application stops.
 In this module we will display a banner in the logs once the Hero API has started.
 
@@ -40,10 +41,10 @@ Create a new class named `HeroApplicationLifeCycle` (or pick another name, the n
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocApplicationLifeCycle;!adocProfileManager]
 ----
 
-Thanks to the CDI event bus, the `HeroApplicationLifeCycle` is observing (thanks to `@Observes`):
+Thanks to the CDI `@Observes`, the `HeroApplicationLifeCycle` is invoked:
 
-* The `StartupEvent` so it can exectue code (here, displaying the banner) when the application is starting
-* The `ShutdownEvent` when the application is terminating
+* on startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
+* on shutdown with the `ShutdownEvent` when the application is terminating
 
 Run the application with: `./mvnw compile quarkus:dev`, the banner is printed to the console.
 When the application is stopped, the second log message is printed.
