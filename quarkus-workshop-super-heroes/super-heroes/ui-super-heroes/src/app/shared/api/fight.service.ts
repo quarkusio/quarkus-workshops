@@ -68,11 +68,11 @@ export class FightService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    // tag::adocService
+    // tag::adocService[]
     public apiFightsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<Fight>>;
     public apiFightsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Fight>>>;
     public apiFightsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Fight>>>;
-    // end::adocService
+    // end::adocService[]
     public apiFightsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -234,11 +234,11 @@ export class FightService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    // tag::adocService
+    // tag::adocService[]
     public apiFightsRandomfightersGet(observe?: 'body', reportProgress?: boolean): Observable<Fighters>;
     public apiFightsRandomfightersGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Fighters>>;
     public apiFightsRandomfightersGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Fighters>>;
-    // end::adocService
+    // end::adocService[]
     public apiFightsRandomfightersGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
