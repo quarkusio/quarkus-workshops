@@ -21,10 +21,7 @@ public class BannerBean {
     }
 
     void onStart(@Observes StartupEvent ev) {
-        URL resource = BannerBean.class.getClassLoader().getResource(path);
-        if (resource == null) {
-            resource = Thread.currentThread().getContextClassLoader().getResource(path);
-        }
+        URL resource = Thread.currentThread().getContextClassLoader().getResource(path);
         if (resource == null) {
             throw new IllegalArgumentException("Unable to find the banner: " + path);
         }
