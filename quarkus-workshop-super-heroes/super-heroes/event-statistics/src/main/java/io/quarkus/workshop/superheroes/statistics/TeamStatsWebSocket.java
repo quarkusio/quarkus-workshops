@@ -2,6 +2,7 @@ package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
+import io.smallrye.reactive.messaging.annotations.Channel;
 import io.smallrye.reactive.messaging.annotations.Stream;
 import org.jboss.logging.Logger;
 
@@ -20,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @ApplicationScoped
 public class TeamStatsWebSocket {
 
-    @Inject @Stream("team-stats") Flowable<Double> stream;
+    @Inject @Channel("team-stats") Flowable<Double> stream;
 
     private static final Logger LOGGER = Logger.getLogger(TeamStatsWebSocket.class);
 
