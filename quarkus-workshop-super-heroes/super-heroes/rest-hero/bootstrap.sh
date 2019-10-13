@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # tag::adocSnippet[]
-mvn io.quarkus:quarkus-maven-plugin:0.23.2:create \
+mvn io.quarkus:quarkus-maven-plugin:0.24.0:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-hero \
     -DclassName="io.quarkus.workshop.superheroes.hero.HeroResource" \
