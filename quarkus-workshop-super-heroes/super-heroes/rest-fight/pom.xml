@@ -68,10 +68,12 @@
         </dependency>
 
         <!-- Kafka integration -->
+        <!-- tag::kafkaDependency[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
         </dependency>
+        <!-- end::kafkaDependency[] -->
 
         <!-- Test -->
         <dependency>
