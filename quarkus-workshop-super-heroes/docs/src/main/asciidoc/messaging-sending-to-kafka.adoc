@@ -1,0 +1,75 @@
+= Sending messages to Kafka
+
+In this section, you are going to see how you can send messages to a Kafka topic.
+
+== Adding the Reactive Messaging dependency
+
+First, stop the _fight_ microservice, and edit the `pom.xml` file to add the following dependency:
+
+[source,xml]
+----
+include::{github-raw}/super-heroes/rest-fight/pom.xml[tag=kafkaDependency]
+----
+
+Then, you can restart the microservice, using `mvn compile quarkus:dev`.
+
+== Connecting imperative and reactive using an Emitter
+
+Now edit the `FightService` class.
+First, add the following field:
+
+[source, java]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocKafkaEmitter]
+----
+
+This field is an _emitter_, and let you send events or messages (here fights) to the _channel_ specified with the `@Channel` annotation.
+A _channel_ is the destination.
+
+In the `persistFight` method, add the following line just before the `return` statement:
+
+[source, java]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocKafka]
+----
+
+With this in place, every time the application persists a `fight`, it is also sent to the `fights-channel` channel.
+
+== Transforming messages transiting on a channel
+
+Now, in the _fight_ microservice, create the `io.quarkus.workshop.superheroes.fight.kafka.KafkaWriter` class with the following content:
+
+[source, java]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/kafka/KafkaWriter.java[]
+----
+
+This bean receives the fights sent by the `FightService` and serializes them as JSON.
+This eases sending the message to Kafka as it avoids writing a specific serializer or a schema.
+
+Note the `@Incoming` and `@Outgoing` annotation.
+Both take a channel name as a parameter.
+When used together, it indicates that the method receives _things_ (`fights`) from the channel indicated in the `@Incoming` annotation, and produces _things_ (strings) sent to the channel indicated in the `@Outgoing` annotation.
+It's only one of the possible signature, reactive messaging proposed more than 30 variants, and you are going to see more possibilities soon.
+
+== Connect to Kafka
+
+At this point, the serialized fights are sent to the `fights` channel.
+You need to connect this `channel` to a Kafka topic.
+For this, edit the `application.properties` file and add the following properties:
+
+[source, text]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tag=adocKafka]
+----
+
+These properties are structured as follows: `mp.messaging.[incoming|outgoing].channel.attribute=value`.
+For example, `mp.messaging.outgoing.fights.connector` configures configure the connector used for the `outgoing` channel `fights`.
+
+The `mp.messaging.outgoing.fights.value.serializer` configures the serializer used to write the message in Kafka.
+When omitted, the Kafka topic reuses the channel name (`fights`).
+Also, it connects by default to `localhost:9092`.
+You can override this using the `kafka.bootstrap.servers` property.
+
+Now, you have connected the fight microservice to Kafka, and you are sending new fights to the Kafka topic.
+Let's see how you can read these messages in the `stats` microservice.
