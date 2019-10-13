@@ -1,0 +1,6 @@
+= From HTTP to Reactive microservices
+
+In this chapter, you see that Quarkus is not limited to HTTP microservice, but fits perfectly in an event-driven architecture.
+We just scratched the surface, and there are many more features in Quarkus that make it a great framework to implement reactive microservices.
+From reactive routes to integration pattern, via Vert.x integration, check the different reactive guides from the Quarkus web site.
+
