@@ -74,7 +74,15 @@ include::observability-prometheus.adoc[leveloffset=+2]
 // Messaging
 include::messaging.adoc[leveloffset=+1]
 <<<
-include::messaging-kafka.adoc[leveloffset=+2]
+include::messaging-architecture.adoc[leveloffset=+2]
+<<<
+include::messaging-sending-to-kafka.adoc[leveloffset=+2]
+<<<
+include::messaging-reading-from-kafka.adoc[leveloffset=+2]
+<<<
+include::messaging-websocket.adoc[leveloffset=+2]
+<<<
+include::messaging-conclusion.adoc[leveloffset=+2]
 
 // Extensions
 include::extension.adoc[leveloffset=+1]
