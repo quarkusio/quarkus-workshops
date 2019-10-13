@@ -2,7 +2,7 @@ package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
-import io.smallrye.reactive.messaging.annotations.Stream;
+import io.smallrye.reactive.messaging.annotations.Channel;
 import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -20,12 +20,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @ServerEndpoint("/stats/winners")
 @ApplicationScoped
-public class TopWinnerWebSockets {
+public class TopWinnerWebSocket {
 
-    private static final Logger LOGGER = Logger.getLogger(TopWinnerWebSockets.class);
+    private static final Logger LOGGER = Logger.getLogger(TopWinnerWebSocket.class);
     private Jsonb jsonb;
 
-    @Inject @Stream("winner-stats") Flowable<Iterable<Score>> winners;
+    @Inject @Channel("winner-stats") Flowable<Iterable<Score>> winners;
 
     private List<Session> sessions = new CopyOnWriteArrayList<>();
     private Disposable subscription;
@@ -43,7 +43,9 @@ public class TopWinnerWebSockets {
     @PostConstruct
     public void subscribe() {
         jsonb = JsonbBuilder.create();
-        subscription = winners.subscribe(scores -> sessions.forEach(session -> write(session, scores)));
+        subscription = winners
+            .map(scores -> jsonb.toJson(scores))
+            .subscribe(serialized -> sessions.forEach(session -> write(session, serialized)));
     }
 
     @PreDestroy
@@ -52,8 +54,8 @@ public class TopWinnerWebSockets {
         jsonb.close();
     }
 
-    private void write(Session session, Iterable<Score> scores) {
-        session.getAsyncRemote().sendText(jsonb.toJson(scores), result -> {
+    private void write(Session session, String serialized) {
+        session.getAsyncRemote().sendText(serialized, result -> {
             if (result.getException() != null) {
                 LOGGER.error("Unable to write message to web socket", result.getException());
             }
