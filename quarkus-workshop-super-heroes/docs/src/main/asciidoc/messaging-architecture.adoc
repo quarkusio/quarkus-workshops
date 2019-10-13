@@ -1,0 +1,20 @@
+= Review of the architecture
+
+In this chapter, we are going to use events as a way for microservices to interact.
+You are going to extend the current system with the `stats` group depicted on the next figure:
+
+[plantuml,align=center]
+----
+include::plantuml/messaging-architecture.puml[]
+----
+
+When the application persists a new fight, in the _fight_ microservice, you are going to send it to a Kafka topic.
+These messages are read in the _statistics_ microservice, processed, and the result is sent to a UI using web sockets.
+
+[NOTE]
+====
+To execute the application we now need Kafka.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====
+
