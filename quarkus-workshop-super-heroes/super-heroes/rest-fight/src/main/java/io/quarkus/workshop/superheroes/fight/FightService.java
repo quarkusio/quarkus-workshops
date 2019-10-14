@@ -134,6 +134,7 @@ public class FightService {
 
     // tag::adocFallback[]
     Hero fallbackRandomHero() {
+        LOGGER.warn("Falling back on Hero");
         Hero hero = new Hero();
         hero.setName("Fallback hero");
         hero.setPicture("https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero");
@@ -143,6 +144,7 @@ public class FightService {
     }
 
     Villain fallbackRandomVillain() {
+        LOGGER.warn("Falling back on Villain");
         Villain villain = new Villain();
         villain.setName("Fallback villain");
         villain.setPicture("https://dummyimage.com/280x380/b22222/ffffff&text=Fallback+Villain");

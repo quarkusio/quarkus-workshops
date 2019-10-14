@@ -3,7 +3,7 @@
 
 == Building a Native Executable
 
-Let’s now produce a native executable for our application.
+Let's now produce a native executable for our application.
 As explained in the introduction of this chapter, Quarkus is able to generate native executables.
 It improves the startup time of the application, and produces a minimal disk footprint.
 The executable would have everything to run the application including the "JVM" (shrunk to be just enough to run the application), and the application.
@@ -64,7 +64,7 @@ You can run it using: `./target/rest-hero-1.0-SNAPSHOT-runner`.
 
 == Testing the Native Executable
 
-Producing a native executable can lead to a few issues, and so it’s also a good idea to run some tests against the application running in the native file.
+Producing a native executable can lead to a few issues, and so it's also a good idea to run some tests against the application running in the native file.
 In the `pom.xml` file, the native profile contains:
 
 [source,xml,indent=0]

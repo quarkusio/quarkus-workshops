@@ -1,3 +1,5 @@
 [[fault-tolerance-resiliency]]
 = Resiliency
 
+
+include::common-solution.adoc[]

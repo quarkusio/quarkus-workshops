@@ -65,7 +65,7 @@ All of the health REST endpoints return a simple JSON object with two fields:
 * `checks` — an array of individual checks
 
 The general `status` of the health check is computed as a logical AND of all the declared health check procedures.
-The checks array is empty as we have not specified any health check procedure yet so let’s define some.
+The checks array is empty as we have not specified any health check procedure yet so let's define some.
 
 === Liveness
 
