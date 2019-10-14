@@ -33,7 +33,7 @@ If we set the property to a higher value than the timeout, let's say 10.000, the
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=adocTimeout]
+process.milliseconds=10000
 ----
 
 == Running the Application
