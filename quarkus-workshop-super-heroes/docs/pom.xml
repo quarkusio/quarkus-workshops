@@ -94,6 +94,13 @@
                             <preserveDirectories>true</preserveDirectories>
                             <outputDirectory>${project.build.directory}/generated-asciidoc</outputDirectory>
                             <backend>html</backend>
+                            <attributes>
+                                <toc>left</toc>
+                                <linkcss>false</linkcss>
+                                <docinfo1>true</docinfo1>
+                                <icons>font</icons>
+                                <toclevels>3</toclevels>
+                            </attributes>
                         </configuration>
                     </execution>
                     <execution>
