@@ -14,7 +14,7 @@ image::fault-tolerance-pending.png[]
 Getting random fighters can take longer than expected.
 To simulate a long running process, update the `FightResource` with the following code:
 
-[source]
+[source,indent=0]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocFaultTolerance;!adocMetrics]
 ----
