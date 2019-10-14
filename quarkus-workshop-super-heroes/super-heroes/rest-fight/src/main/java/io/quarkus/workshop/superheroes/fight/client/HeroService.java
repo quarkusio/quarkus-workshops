@@ -1,7 +1,7 @@
-// tag::adocRestClient
+// tag::adocRestClient[]
 package io.quarkus.workshop.superheroes.fight.client;
 
-// end::adocRestClient
+// end::adocRestClient[]
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.ws.rs.GET;
@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-// tag::adocRestClient
+// tag::adocRestClient[]
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
 @RegisterRestClient
@@ -19,4 +19,4 @@ public interface HeroService {
     @Path("/random")
     Hero findRandomHero();
 }
-// end::adocRestClient
+// end::adocRestClient[]
