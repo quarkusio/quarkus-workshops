@@ -1,5 +1,7 @@
+// tag::adocWriter[]
 package io.quarkus.workshop.superheroes.fight.kafka;
 
+// end::adocWriter[]
 import io.quarkus.workshop.superheroes.fight.Fight;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;

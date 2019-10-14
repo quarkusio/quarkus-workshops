@@ -1,5 +1,7 @@
+// tag::adocBean[]
 package io.quarkus.workshop.superheroes.fight.client;
 
+// end::adocBean[]
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;

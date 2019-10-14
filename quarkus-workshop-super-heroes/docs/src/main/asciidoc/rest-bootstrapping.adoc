@@ -74,7 +74,7 @@ In addition, you can see the `quarkus-maven-plugin` responsible of the packaging
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers]
+include::{github-raw}/super-heroes/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers;!adocDependencyKafkaBom]
 include::{github-raw}/super-heroes/pom.xml[tags=adocDependencyManagement;!adocDependencyTestBom]
 include::{github-raw}/super-heroes/pom.xml[tags=adocBuild]
 ----
@@ -89,16 +89,18 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasy
 [TIP]
 .RESTEasy
 ====
-You may not be familiar with RESTEasy (https://resteasy.github.io).
+You may not be familiar with RESTEasy.footnote:[RESTEasy https://resteasy.github.io]
 It's an implementation of JAX-RS and it uses to implement RestFul services in Quarkus.
 ====
 
-== The JAX-RS resource
+== The JAX-RS Resource
 
 During the project creation, the `HeroResource.java` file has been created with the following content:
 
 [source]
 ----
+package io.quarkus.workshop.superheroes.hero;
+
 @Path("/api/heroes")
 public class HeroResource {
 
@@ -173,7 +175,7 @@ $ curl http://localhost:8080/api/heroes
 hello hero
 ----
 
-== Testing
+== Testing the Application
 
 All right, so far so good, but wouldn’t it be better with a few tests, just in case.
 
@@ -200,6 +202,8 @@ The generated project contains a simple test in `HeroResourceTest.java`.
 
 [source]
 ----
+package io.quarkus.workshop.superheroes.hero;
+
 @QuarkusTest
 public class HeroResourceTest {
 
