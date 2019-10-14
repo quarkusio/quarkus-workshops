@@ -2,13 +2,16 @@
 package io.quarkus.workshop.superheroes.fight;
 
 // end::adocTransactional[]
+
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
 import io.smallrye.reactive.messaging.annotations.Channel;
 import io.smallrye.reactive.messaging.annotations.Emitter;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -40,6 +43,8 @@ public class FightService {
     @Channel("fights-channel") Emitter<Fight> emitter;
 
     // end::adocKafkaEmitter[]
+    private static final Logger LOGGER = Logger.getLogger(FightService.class);
+
     private final Random random = new Random();
 
     public List<Fight> findAllFights() {
@@ -75,6 +80,7 @@ public class FightService {
     }
 
     private Fight heroWon(Fighters fighters) {
+        LOGGER.info("Yes, Hero won :o)");
         Fight fight = new Fight();
         fight.winnerName = fighters.getHero().getName();
         fight.winnerPicture = fighters.getHero().getPicture();
@@ -88,6 +94,7 @@ public class FightService {
     }
 
     private Fight villainWon(Fighters fighters) {
+        LOGGER.info("Gee, Villain won :o(");
         Fight fight = new Fight();
         fight.winnerName = fighters.getVillain().getName();
         fight.winnerPicture = fighters.getVillain().getPicture();
@@ -102,13 +109,47 @@ public class FightService {
 
     // tag::adocRestClient[]
     Fighters findRandomFighters() {
-        Hero hero = heroService.findRandomHero();
-        Villain villain = villainService.findRandomVillain();
+        Hero hero = findRandomHero();
+        Villain villain = findRandomVillain();
         Fighters fighters = new Fighters();
         fighters.setHero(hero);
         fighters.setVillain(villain);
         return fighters;
     }
+
+    // tag::adocFallback[]
+    @Fallback(fallbackMethod = "fallbackRandomHero")
+    // end::adocFallback[]
+    Hero findRandomHero() {
+        return heroService.findRandomHero();
+    }
+
+    // tag::adocFallback[]
+    @Fallback(fallbackMethod = "fallbackRandomVillain")
+    // end::adocFallback[]
+    Villain findRandomVillain() {
+        return villainService.findRandomVillain();
+    }
     // end::adocRestClient[]
+
+    // tag::adocFallback[]
+    Hero fallbackRandomHero() {
+        Hero hero = new Hero();
+        hero.setName("Fallback hero");
+        hero.setPicture("https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero");
+        hero.setPowers("Fallback hero powers");
+        hero.setLevel(42);
+        return hero;
+    }
+
+    Villain fallbackRandomVillain() {
+        Villain villain = new Villain();
+        villain.setName("Fallback villain");
+        villain.setPicture("https://dummyimage.com/280x380/b22222/ffffff&text=Fallback+Villain");
+        villain.setPowers("Fallback villain powers");
+        villain.setLevel(42);
+        return villain;
+    }
+    // end::adocFallback[]
 }
 // end::adocTransactional[]

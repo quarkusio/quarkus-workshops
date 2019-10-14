@@ -1,5 +1,36 @@
 [[fault-tolerance-circuit-breaker]]
 = Circuit Breaker
 
+So now you've been playing this great Super Heroes Fight for a few hours... and you kill the Hero REST API.
+What happens?
+Well, the Fight REST API cannot invoke the Hero API anymore and breaks with the following exception:
+
+[source,text]
+----
+ERROR [io.qu.ve.ht.ru.QuarkusErrorHandler] HTTP Request to /api/fights/randomfighters failed:
+org.jboss.resteasy.spi.UnhandledException: javax.ws.rs.ProcessingException: RESTEASY004655: Unable to invoke request: java.net.ConnectException: Connection refused (Connection refused)
+at org.jboss.resteasy.core.ExceptionHandler.handleApplicationException(ExceptionHandler.java:106)
+at org.jboss.resteasy.core.ExceptionHandler.handleException(ExceptionHandler.java:372)
+at org.jboss.resteasy.core.SynchronousDispatcher.writeException(SynchronousDispatcher.java:209)
+at org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:496)
+----
+
+One of the challenges brought by the distributed nature of microservices is that communication with external systems is inherently unreliable.
+This increases demand on resiliency of applications.
+To simplify making more resilient applications, Quarkus contains an implementation of the MicroProfile Fault Tolerance specification.A statement.footnote:[MicroProfile Fault Tolerance https://github.com/eclipse/microprofile-fault-tolerance]
+
+To install the MicroProfile Fault Tolerance dependency, just run the following command:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/pom.xml[tags=adocFaultToleranceDependency]
+----
 
 include::common-solution.adoc[]
