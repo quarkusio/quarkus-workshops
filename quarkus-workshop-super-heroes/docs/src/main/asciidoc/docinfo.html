@@ -37,11 +37,9 @@
         var clipboard = new ClipboardJS('.clipboard', {
             target: function(b) {
                 var p = b.parentNode;
-                console.log(b, b.parentNode.className,  p.getElementsByClassName("code")[0], p.childNodes[0]);
-                var res = p.getElementsByClassName("code")[0]
+                return p.getElementsByClassName("code")[0]
                     ? p.getElementsByClassName("code")[0]
                     : p.childNodes[0];
-                return res;
             }
         });
         clipboard.on('success', function(e) {
