@@ -43,5 +43,6 @@ public class Score {
             ", score=" + score +
             '}';
     }
+    // end::adocSkip[]
 }
 // end::adocBean[]
