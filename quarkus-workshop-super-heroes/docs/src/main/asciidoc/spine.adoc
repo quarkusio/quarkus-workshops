@@ -37,8 +37,7 @@ include::rest-openapi.adoc[leveloffset=+2]
 
 // Quarkus
 include::quarkus.adoc[leveloffset=+1]
-<<<
-include::quarkus-augmentation.adoc[leveloffset=+1]
+include::quarkus-augmentation.adoc[leveloffset=+2]
 <<<
 include::quarkus-lifecycle.adoc[leveloffset=+2]
 <<<

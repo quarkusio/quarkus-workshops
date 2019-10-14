@@ -1,3 +1,6 @@
+[[quarkus-augmentation]]
+= Quarkus Augmentation
+
 Let's demystify all this.
 
 So far, you have developed the superheroes microservice.
@@ -7,7 +10,7 @@ Let's now package this application using:
 
 [source, shell]
 ----
-mvn package
+$ mvn package
 ----
 
 In the log, you can see actions happening at build time during what Quarkus call the _augmentation_ phase.
@@ -23,13 +26,19 @@ In the log, you can see actions happening at build time during what Quarkus call
 ----
 
 In this log, you can see that the Hibernate XML parser has been executed at build time.
-This saves from having to 1. embed an XML parser at runtime, 2. Do the actual parsing, 3. Configure Hibernate based on the content of the file.
+This saves from having to:
+
+1. embed an XML parser at runtime,
+2. Do the actual parsing,
+3. Configure Hibernate based on the content of the file.
+
 With Quarkus, at runtime, almost everything is already configured.
 Only runtime configuration properties are applied at startup (such as database URLs).
 
-Also, during this augmentation, Java classes are generated or extended. Remember the `Hero` Panache entity.
+Also, during this augmentation, Java classes are generated or extended.
+Remember the `Hero` Panache entity.
 The class is extended during the _agumentation_.
-If you run `javap target/transformed-classes/io/quarkus/workshop/superheroes/hero/Hero.class` , you can see methods prefixed with `$$`, which have been added to the class.
+If you run `javap target/transformed-classes/io/quarkus/workshop/superheroes/hero/Hero.class`, you can see methods prefixed with `$$`, which have been added to the class.
 
 If now you look at the `target/wiring-classes/io/quarkus/workshop/superheroes/hero`, you can see many generated classes.
 

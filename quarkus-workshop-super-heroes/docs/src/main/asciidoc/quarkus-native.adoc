@@ -148,7 +148,7 @@ By default Quarkus has three profiles, although it is possible to use as many as
 Let's change the `HeroApplicationLifeCycle` so it displays the current profile.
 For that, just add a log invoking the `ProfileManager.getActiveProfile()` method:
 
-[source]
+[source,indent=0]
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocStartupEvent]
 ----

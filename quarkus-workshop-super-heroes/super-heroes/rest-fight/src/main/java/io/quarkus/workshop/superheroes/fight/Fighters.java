@@ -1,5 +1,7 @@
+// tag::adocBean[]
 package io.quarkus.workshop.superheroes.fight;
 
+// end::adocBean[]
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

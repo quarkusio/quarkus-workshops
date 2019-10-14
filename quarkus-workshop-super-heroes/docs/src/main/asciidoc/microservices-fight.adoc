@@ -47,14 +47,14 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 ----
 
 The Fight REST API is just interested in the hero's name, level, picture and powers (not the other name as described in the Hero API).
-So the `Hero` bean looks like this.
+So the `Hero` bean looks like this (notice the `client` subpackage):
 
 [source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tags=adocBean;!adocSkip]
 ----
 
-`Villain` is pretty similar.
+`Villain` is pretty similar (also in the `client` subpackage):
 
 [source]
 ----

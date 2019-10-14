@@ -19,7 +19,7 @@ You don't need to be an Angular expert, but there are some pieces of code that a
 If you look under the `src/app/shared` directory, you will find an `api` and a `model` sub-directory.
 Let's look at `fight.ts`.
 
-[source,typescript,indent=0]
+[source,javascript,indent=0]
 ----
 include::{github-raw}/super-heroes/ui-super-heroes/src/app/shared/model/fight.ts[tag=adocModel]
 ----

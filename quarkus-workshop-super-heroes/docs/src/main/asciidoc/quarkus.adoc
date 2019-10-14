@@ -11,7 +11,6 @@ In this chapter, you are going to see:
 * Some Quarkus features such as the application lifecycle support
 * How you can use Quarkus to generate native executable
 
-
 == What's Quarkus?
 
 Java was born more than 20 years ago.
@@ -29,7 +28,7 @@ But all these features have a cost, and the memory required to run Java applicat
 The issue is not the JVM itself; it's also the Java ecosystem that needs to be reinvented.
 
 That's where Quarkus, and other projects, enter the game.
-Quarkus proposes to generalize "Ahead of Time" technics.
+Quarkus proposes to generalize "Ahead of Time" technics.footnote:[Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]
 When a Quarkus application is built, some work that usually happens at runtime is moved to the build time.
 Thus, when the application runs, everything has been pre-computed, and all the annotation scanning, XML parsing, and so on won't be executed anymore.
 It has two direct benefits on the startup (a lot faster) and memory consumption.

@@ -1,5 +1,7 @@
+// tag::adocApplication[]
 package io.quarkus.workshop.superheroes.villain;
 
+// end::adocApplication[]
 import org.eclipse.microprofile.openapi.annotations.ExternalDocumentation;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;

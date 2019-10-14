@@ -111,8 +111,6 @@ So, once your application is started, you can go to `http://localhost:8083/swagg
 
 You can visualize your API’s operations and schemas.
 
-[[rest-openapi-swaggerui]]
-.Swagger UI
 image::rest-openapi-swaggerui.png[]
 
 == OpenAPI Tests in HeroResourceTest

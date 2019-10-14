@@ -1,5 +1,7 @@
+// tag::adocResourceTest[]
 package io.quarkus.workshop.superheroes.hero;
 
+// end::adocResourceTest[]
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;

@@ -1,5 +1,7 @@
+// tag::adocApplicationLifeCycle[]
 package io.quarkus.workshop.superheroes.hero;
 
+// end::adocApplicationLifeCycle[]
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.runtime.configuration.ProfileManager;

@@ -1,5 +1,7 @@
+// tag::adocTransactional[]
 package io.quarkus.workshop.superheroes.villain;
 
+// end::adocTransactional[]
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
