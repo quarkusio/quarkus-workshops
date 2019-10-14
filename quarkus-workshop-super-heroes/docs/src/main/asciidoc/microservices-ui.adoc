@@ -68,7 +68,7 @@ We are now ready to go.
 == Running the Web Application
 
 As usual, use `./mvnw compile quarkus:dev` to start the web application.
-Once the application is started, go to http://localhost:8080 (8080 is the default port as we didn't change it in the `application.properties` this time).
+Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).
 It should display the main web page.
 Start playing!
 

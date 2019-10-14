@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+// tag::adocBean[]
 public class Ranking {
 
     private final int max;
@@ -47,3 +48,4 @@ public class Ranking {
         }
     }
 }
+// end::adocBean[]

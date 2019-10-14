@@ -4,6 +4,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import java.time.Instant;
 
+// tag::adocBean[]
 @RegisterForReflection
 public class FightResult {
 
@@ -18,6 +19,8 @@ public class FightResult {
     private String winnerTeam;
     private String loserTeam;
 
+    // Getters and Setters
+    // tag::adocSkip[]
     public long getId() {
         return id;
     }
@@ -107,4 +110,6 @@ public class FightResult {
         this.loserTeam = loserTeam;
         return this;
     }
+    // end::adocSkip[]
 }
+// end::adocBean[]

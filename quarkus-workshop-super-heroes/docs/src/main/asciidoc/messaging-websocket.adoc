@@ -1,4 +1,4 @@
-= Sending events on WebSockets
+= Sending Events on WebSockets
 
 At this point, you read the _fights_ from Kafka and computes statistics.
 Actually, even if you start the application, nothing will happen as nobody consumes these statistics.
@@ -11,7 +11,7 @@ Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class
 
 [source, java]
 ----
-include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStatsWebSocket.java[]
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStatsWebSocket.java[tag=adocWebSocket]
 ----
 
 This component is a WebSocket as specified by the `@ServerEndpoint("/stats/team")` annotation.
@@ -30,12 +30,12 @@ Without it, items would not be emitted.
 
 == The `TopWinner` web socket
 
-The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribe to the `winner-stats` channel.
+The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
 Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
 
 [source, java]
 ----
-include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TopWinnerWebSocket.java[]
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TopWinnerWebSocket.java[tag=adocWebSocket]
 ----
 
 Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also use JSONB to transform the object into a serialized form.
@@ -50,7 +50,7 @@ Create the `META-INF/resources/index.html` file with the following content:
 include::{github-raw}/super-heroes/event-statistics/src/main/resources/META-INF/resources/index.html[]
 ----
 
-== Run the application
+== Running the Application
 
 You are all set!
 Time to start the application using:
