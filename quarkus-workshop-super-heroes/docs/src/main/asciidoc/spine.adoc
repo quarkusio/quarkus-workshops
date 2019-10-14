@@ -61,7 +61,7 @@ include::fault-tolerance-rest-client.adoc[leveloffset=+2]
 <<<
 include::fault-tolerance-fallbacks.adoc[leveloffset=+2]
 <<<
-include::fault-tolerance-resiliency.adoc[leveloffset=+2]
+include::fault-tolerance-timeout.adoc[leveloffset=+2]
 
 // Observability
 include::observability.adoc[leveloffset=+1]

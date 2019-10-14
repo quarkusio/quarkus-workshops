@@ -49,4 +49,7 @@ Now we are ready to run our application and test the fallbacks.
 For that, kill the Hero (and/or the Villain API) and start playing again.
 You should see the following:
 
-image::fallback.png[]
+image::fault-tolerance-fallback.png[]
+
+Restart the Hero REST API... and keep on playing.
+Super heroes are back to the fight!

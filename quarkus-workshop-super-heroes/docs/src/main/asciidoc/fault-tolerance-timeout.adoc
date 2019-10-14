@@ -1,0 +1,11 @@
+[[fault-tolerance-timeout]]
+= Timeout
+
+image::fault-tolerance-pending.png[]
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocTimeout;!adocMetrics]
+----
+
+include::common-solution.adoc[]
