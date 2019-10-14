@@ -2,6 +2,7 @@ package io.quarkus.workshop.superheroes.statistics;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
+// tag::adocBean[]
 @RegisterForReflection
 public class Score {
     protected String name;
@@ -15,6 +16,8 @@ public class Score {
     public Score() {
     }
 
+    // Getters, Setters and toString
+    // tag::adocSkip[]
     public Score setName(String name) {
         this.name = name;
         return this;
@@ -40,4 +43,6 @@ public class Score {
             ", score=" + score +
             '}';
     }
+    // end::adocSkip[]
 }
+// end::adocBean[]

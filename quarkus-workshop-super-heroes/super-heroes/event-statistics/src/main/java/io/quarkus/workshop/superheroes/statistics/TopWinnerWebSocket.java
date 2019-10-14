@@ -18,6 +18,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+// tag::adocWebSocket[]
 @ServerEndpoint("/stats/winners")
 @ApplicationScoped
 public class TopWinnerWebSocket {
@@ -62,3 +63,4 @@ public class TopWinnerWebSocket {
         });
     }
 }
+// end::adocWebSocket[]

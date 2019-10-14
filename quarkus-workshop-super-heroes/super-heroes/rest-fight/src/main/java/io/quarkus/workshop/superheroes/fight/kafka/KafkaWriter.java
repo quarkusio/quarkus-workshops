@@ -11,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 
+// tag::adocWriter[]
 @ApplicationScoped
 public class KafkaWriter {
 
@@ -38,3 +39,4 @@ public class KafkaWriter {
     }
 
 }
+// end::adocWriter[]

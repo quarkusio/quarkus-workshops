@@ -72,6 +72,7 @@ export class FightService {
     public apiFightsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<Fight>>;
     public apiFightsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Fight>>>;
     public apiFightsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Fight>>>;
+
     // end::adocService[]
     public apiFightsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 

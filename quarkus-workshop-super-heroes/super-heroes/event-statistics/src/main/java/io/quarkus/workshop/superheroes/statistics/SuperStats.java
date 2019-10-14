@@ -8,6 +8,7 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import javax.enterprise.context.ApplicationScoped;
 
+// tag::adocBean[]
 @ApplicationScoped
 public class SuperStats {
 
@@ -31,11 +32,19 @@ public class SuperStats {
     @Outgoing("winner-stats")
     public Flowable<Iterable<Score>> computeTopWinners(Flowable<FightResult> results) {
         return results
+            // Create a sub-stream per hero and villain - for each winner, we get a new sub-stream
             .groupBy(FightResult::getWinnerName)
+            // For each of these sub-stream
             .flatMap(group ->
+                // Compute the new score (increment the score by one)
                 group.scan(0, (i, s) -> i + 1)
+                    // Skip the initial 0, oddity of the scan operator
                     .skip(1)
+                    // Creates the Score object
                     .map(i -> new Score(group.getKey(), i)))
+            // For every Score emitted by the sub-streams, add it to the
+            // ranking object and check if it changes the top 10.
             .flatMapMaybe(score -> topWinners.onNewScore(score));
     }
 }
+// end::adocBean[]
