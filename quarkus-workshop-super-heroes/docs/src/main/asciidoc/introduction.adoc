@@ -1,6 +1,8 @@
 [[introduction]]
 = Welcome
 
+'''
+
 Let’s start from the beginning..​.
 Quarkus.
 What’s Quarkus?

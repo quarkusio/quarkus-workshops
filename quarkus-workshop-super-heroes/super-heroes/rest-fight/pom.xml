@@ -62,10 +62,12 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-metrics</artifactId>
         </dependency>
+        <!-- tag::restClientDependency[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client</artifactId>
         </dependency>
+        <!-- end::restClientDependency[] -->
 
         <!-- Kafka integration -->
         <!-- tag::kafkaDependency[] -->

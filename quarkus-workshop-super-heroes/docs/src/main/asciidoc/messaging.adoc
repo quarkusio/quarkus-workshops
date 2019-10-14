@@ -1,6 +1,8 @@
 [[messaging]]
 = Messaging
 
+'''
+
 So far, we have build 3 microservices, all using HTTP to interact.
 However, HTTP has significant flaws, such as temporal coupling between the actors.
 If the service is not there or is slow, the caller is directly impacted.

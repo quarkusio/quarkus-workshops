@@ -1,6 +1,8 @@
 [[rest]]
 = REST
 
+'''
+
 At the heart of the Super Hero application comes Heroes.
 We need to expose a REST API allowing CRUD operations on Super Heroes.
 This microservice is, let's say, a _classical_ microservice.

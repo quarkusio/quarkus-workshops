@@ -51,6 +51,8 @@ include::microservices-villain.adoc[leveloffset=+2]
 include::microservices-fight.adoc[leveloffset=+2]
 <<<
 include::microservices-ui.adoc[leveloffset=+2]
+<<<
+include::microservices-cors.adoc[leveloffset=+2]
 
 // Fault Tolerance
 include::fault-tolerance.adoc[leveloffset=+1]

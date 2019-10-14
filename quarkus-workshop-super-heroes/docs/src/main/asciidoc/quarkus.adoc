@@ -1,6 +1,8 @@
 [[quarkus]]
 = Quarkus
 
+'''
+
 In the previous chapter, you had a quick peek to Quarkus and how you can build HTTP / REST-based applications with it.
 But that was just the beginning, Quarkus can do a lot more, and this is the purpose of this chapter.
 In this chapter, you are going to see:
