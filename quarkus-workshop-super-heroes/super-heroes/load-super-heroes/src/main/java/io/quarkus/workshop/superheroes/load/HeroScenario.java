@@ -37,14 +37,15 @@ public class HeroScenario extends ScenarioInvoker {
 
     private static final int NB_HEROES = 951;
 
-    private static final String targetUrl = "http://localhost:8083";
-
-    private static final String contextRoot = "/api/heroes";
-
     @Override
     protected String getTargetUrl() {
         return targetUrl;
     }
+
+    // tag::adocScenario[]
+    private static final String targetUrl = "http://localhost:8083";
+
+    private static final String contextRoot = "/api/heroes";
 
     @Override
     protected List<Endpoint> getEndpoints() {
@@ -55,9 +56,9 @@ public class HeroScenario extends ScenarioInvoker {
              endpointWithTemplates(contextRoot + "/{id}", "GET", this::idParam),
              endpointWithTemplates(contextRoot + "/{id}", "DELETE", this::idParam),
              endpointWithEntity(contextRoot, "POST", this::createHero)
-        )
-            .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        ).collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
+    // end::adocScenario[]
 
     private Entity createHero() {
         final Superhero hero = faker.superhero();
