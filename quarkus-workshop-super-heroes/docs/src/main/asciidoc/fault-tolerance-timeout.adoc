@@ -1,11 +1,52 @@
 [[fault-tolerance-timeout]]
 = Timeout
 
+Sometimes invoking a REST API can take long.
+In fat, the more microservices invoke other microservices, the more network latency you can have.
+And what happens when a HTTP request takes long?
+Well, if hangs.
+On your browser you can the request pending if you turn on the dev tools and look at what's the network is doing.
+
 image::fault-tolerance-pending.png[]
+
+== Adding Timeouts
+
+Getting random fighters can take longer than expected.
+To simulate a long running process, update the `FightResource` with the following code:
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocTimeout;!adocMetrics]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocFaultTolerance;!adocMetrics]
+----
+
+Let's say we've added some new functionality in the `veryLongProcess` method.
+When the process is really too long and the system is overloaded, we would rather time out.
+
+[NOTE]
+====
+Here we throw the `InterruptedException` in the method signature.
+But what you would have to do in real life is to catch it, and propose a fallback algorithm when the process timesout.
+====
+
+Note that the timeout was configured to 250 ms, and a `Thread.sleep` was introduced and can be configured in the `application.properties`.
+If we set the property to a higher value than the timeout, let's say 10.000, then the request should be interrupted.
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=adocTimeout]
+----
+
+== Running the Application
+
+Now that you have set the number of waiting milliseconds to 10.000, run the application and start fighting again.
+You should see the following:
+
+[source,text]
+----
+ERROR [io.qu.ve.ht.ru.QuarkusErrorHandler] HTTP Request to /api/fights/randomfighters failed:
+org.jboss.resteasy.spi.UnhandledException: org.eclipse.microprofile.faulttolerance.exceptions.TimeoutException:
+com.netflix.hystrix.exception.HystrixRuntimeException: io_quarkus_workshop_superheroes_fight_FightResource#getRandomFighters() timed-out and no fallback available.
+at org.jboss.resteasy.core.ExceptionHandler.handleApplicationException(ExceptionHandler.java:106)
 ----
 
 include::common-solution.adoc[]

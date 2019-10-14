@@ -42,6 +42,7 @@ public class FightResource {
     @Inject
     FightService service;
 
+    // tag::adocFaultTolerance[]
     // tag::adocTimeout[]
     @ConfigProperty(name = "process.milliseconds", defaultValue="0")
     long tooManyMilliseconds;
@@ -63,11 +64,14 @@ public class FightResource {
     @GET
     @Path("/randomfighters")
     public Response getRandomFighters() throws InterruptedException {
+        // tag::adocTimeout[]
         veryLongProcess();
+        // end::adocTimeout[]
         Fighters fighters = service.findRandomFighters();
         LOGGER.debug("Get random fighters " + fighters);
         return Response.ok(fighters).build();
     }
+    // end::adocFaultTolerance[]
 
     @Operation(summary = "Returns all the fights from the database")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fight.class, type = SchemaType.ARRAY)))
