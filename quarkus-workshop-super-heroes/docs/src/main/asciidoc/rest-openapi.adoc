@@ -28,10 +28,10 @@ super-heroes/
                                     └── HeroService.java
 ----
 
-== Open API
+== Installing Dependencies
 
 Quarkus proposes a `smallrye-openapi` extension compliant with the Eclipse MicroProfile OpenAPI specification in order to generate your API OpenAPI v3 specification.footnote:[MicroProfile OpenAPI https://github.com/eclipse/microprofile-open-api]
-You just need to add the openapi extension to your Quarkus application:
+To install the OpenAPI dependency, just run the following command:
 
 [source,shell]
 ----
@@ -44,6 +44,8 @@ This will add the following dependency in the `pom.xml` file:
 ----
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 ----
+
+== Open API
 
 Now, we are ready to run our application:
 

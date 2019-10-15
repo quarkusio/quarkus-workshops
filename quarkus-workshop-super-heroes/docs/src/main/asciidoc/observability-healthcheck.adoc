@@ -32,7 +32,7 @@ super-heroes/
                                         └── PingHeroResourceHealthCheck.java
 ----
 
-== Running the Default Health Check
+== Installing Dependencies
 
 To install the MicroProfile Health dependency, just run the following command:
 
@@ -47,6 +47,8 @@ This will add the following dependency in the `pom.xml` file:
 ----
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHealth]
 ----
+
+== Running the Default Health Check
 
 Importing the `smallrye-health` extension directly exposes three REST endpoints:
 

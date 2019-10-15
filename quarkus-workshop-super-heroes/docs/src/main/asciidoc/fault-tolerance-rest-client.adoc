@@ -2,6 +2,9 @@
 = REST Client
 
 This chapter explains how to use the MicroProfile REST Client in order to interact with REST APIs with very little effort.footnote:[MicroProfile REST Client https://github.com/eclipse/microprofile-rest-client]
+
+== Installing Dependencies
+
 To install the MicroProfile REST Client dependency, just run the following command:
 
 [source,shell]

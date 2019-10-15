@@ -1,6 +1,8 @@
 [[observability-metrics]]
 = Metrics
 
+== Installing Dependencies
+
 To install the MicroProfile Metrics dependency, just run the following command:
 
 [source,shell]
