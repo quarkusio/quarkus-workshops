@@ -46,19 +46,3 @@ INFO: GET - http://localhost:8084/api/villains/126 - 200
 INFO: GET - http://localhost:8082/api/fights/hello - 200
 INFO: DELETE - http://localhost:8083/api/heroes/491 - 204
 ----
-
-== Prometheus
-
-/!\
-/!\ TODO  /!\
-/!\
-
-[NOTE]
-====
-To execute the application we now need Prometheus.
-Make sure the infrastructure is up and running.
-This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
-====
-
-include::common-solution.adoc[]
-

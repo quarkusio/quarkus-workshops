@@ -19,6 +19,8 @@ One of the challenges brought by the distributed nature of microservices is that
 This increases demand on resiliency of applications.
 To simplify making more resilient applications, Quarkus contains an implementation of the MicroProfile Fault Tolerance specification.footnote:[MicroProfile Fault Tolerance https://github.com/eclipse/microprofile-fault-tolerance]
 
+== Installing Dependencies
+
 To install the MicroProfile Fault Tolerance dependency, just run the following command:
 
 [source,shell]

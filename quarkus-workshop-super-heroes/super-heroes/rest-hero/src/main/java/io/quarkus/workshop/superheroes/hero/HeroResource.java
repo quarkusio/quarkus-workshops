@@ -34,6 +34,7 @@ public class HeroResource {
     @Inject
     HeroService service;
 
+    // tag::adocMetricsMethods[]
     // tag::adocOpenAPI[]
     @Operation(summary = "Returns a random hero")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class, required = true)))
@@ -49,6 +50,7 @@ public class HeroResource {
         LOGGER.debug("Found random hero " + hero);
         return Response.ok(hero).build();
     }
+    // end::adocMetricsMethods[]
 
     // tag::adocOpenAPI[]
     @Operation(summary = "Returns all the heroes from the database")
