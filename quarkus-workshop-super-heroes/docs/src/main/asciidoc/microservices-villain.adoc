@@ -20,6 +20,49 @@ include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 Instead of the Maven command, you can use https://code.quarkus.io.
 ====
 
+== Directory Structure
+
+At the end you should have the following directory structure:
+
+[source,text]
+----
+super-heroes/
+└── rest-villain/
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── pom.xml
+    └── src
+        ├── main
+        │   ├── docker
+        │   │   ├── Dockerfile.jvm
+        │   │   └── Dockerfile.native
+        │   ├── java
+        │   │   └── io
+        │   │       └── quarkus
+        │   │           └── workshop
+        │   │               └── superheroes
+        │   │                   └── villain
+        │   │                       ├── Villain.java
+        │   │                       ├── VillainApplication.java
+        │   │                       ├── VillainApplicationLifeCycle.java
+        │   │                       ├── VillainResource.java
+        │   │                       └── VillainService.java
+        │   └── resources
+        │       ├── META-INF
+        │       │   └── resources
+        │       │       └── index.html
+        │       ├── application.properties
+        │       └── import.sql
+        └── test
+            └── java
+                └── io
+                    └── quarkus
+                        └── workshop
+                            └── superheroes
+                                └── villain
+                                    └── VillainResourceTest.java
+----
+
 == Villain Entity
 
 Villains need to be stored, updated and retrieved from a database.
@@ -131,46 +174,3 @@ $ curl http://localhost:8084/api/villains/562 | jq
 ----
 
 Remember that you can also check Swagger UI by going to http://localhost:8084/swagger-ui.
-
-== Directory Structure
-
-At the end you should have the following directory structure:
-
-[source,text]
-----
-super-heroes/
-└── rest-villain/
-    ├── mvnw
-    ├── mvnw.cmd
-    ├── pom.xml
-    └── src
-        ├── main
-        │   ├── docker
-        │   │   ├── Dockerfile.jvm
-        │   │   └── Dockerfile.native
-        │   ├── java
-        │   │   └── io
-        │   │       └── quarkus
-        │   │           └── workshop
-        │   │               └── superheroes
-        │   │                   └── villain
-        │   │                       ├── Villain.java
-        │   │                       ├── VillainApplication.java
-        │   │                       ├── VillainApplicationLifeCycle.java
-        │   │                       ├── VillainResource.java
-        │   │                       └── VillainService.java
-        │   └── resources
-        │       ├── META-INF
-        │       │   └── resources
-        │       │       └── index.html
-        │       ├── application.properties
-        │       └── import.sql
-        └── test
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── villain
-                                    └── VillainResourceTest.java
-----

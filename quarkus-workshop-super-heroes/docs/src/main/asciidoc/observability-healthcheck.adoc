@@ -32,7 +32,7 @@ super-heroes/
                                         └── PingHeroResourceHealthCheck.java
 ----
 
-== Installing Dependencies
+== Installing the Health Dependency
 
 To install the MicroProfile Health dependency, just run the following command:
 

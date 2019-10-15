@@ -2,6 +2,11 @@
 
 In this section, you are going to see how you can send messages to a Kafka topic.footnote:[Kafka Topic https://kafka.apache.org/intro#intro_topics]
 
+== Directory Structure
+
+/!\ TODO /!\
+If appropriate, show the directory structure (tree command) so the attendee know which classes/packages will be developped
+
 == Adding the Reactive Messaging Dependency
 
 First, stop the _fight_ microservice, and edit the `pom.xml` file to add the following dependency:

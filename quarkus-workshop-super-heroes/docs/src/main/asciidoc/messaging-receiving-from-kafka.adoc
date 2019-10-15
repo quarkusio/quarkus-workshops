@@ -5,6 +5,11 @@ For this, you are going to create a new microservice, named `stats`.
 This microservice computes statistics based on the results of the fights.
 For example, it determines if villains win more battle than heroes, and who is the superhero or supervillain having won the most fights.
 
+== Directory Structure
+
+/!\ TODO /!\
+If appropriate, show the directory structure (tree command) so the attendee know which classes/packages will be developped
+
 == Bootstrapping the Statistics REST Endpoint
 
 Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command.

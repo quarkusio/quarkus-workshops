@@ -1,5 +1,5 @@
 [[introduction-presentation]]
-= Presentation of the Workshop
+= Presenting the Workshop
 
 == What Is This Workshop About?
 

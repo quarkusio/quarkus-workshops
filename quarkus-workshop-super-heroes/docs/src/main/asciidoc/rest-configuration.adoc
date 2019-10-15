@@ -1,5 +1,5 @@
 [[rest-configuration]]
-= Configuration
+= Configuring the Hero Microservice
 
 Hardcoded values in our code are a no go (even if we all did it at some point ;-)).
 In this guide, we learn how to configure our Hero API as well as some parts of Quarkus.

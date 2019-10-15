@@ -1,5 +1,5 @@
 [[observability-prometheus]]
-= Prometheus
+= Displaying Metrics on Prometheus
 
 Now that we've added some load to our application, let's measure it with Prometheus.footnote:[Prometheus https://prometheus.io]
 Prometheus is an open-source systems monitoring and alerting toolkit that integrates well with Quarkus.

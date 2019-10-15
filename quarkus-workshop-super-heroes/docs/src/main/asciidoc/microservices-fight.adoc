@@ -23,6 +23,50 @@ include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
 Instead of the Maven command, you can use https://code.quarkus.io.
 ====
 
+== Directory Structure
+
+At the end you should have the following directory structure:
+
+[source,text]
+----
+super-heroes/
+└── rest-fight/
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── pom.xml
+    └── src
+        ├── main
+        │   ├── docker
+        │   │   ├── Dockerfile.jvm
+        │   │   └── Dockerfile.native
+        │   ├── java
+        │   │   └── io
+        │   │       └── quarkus
+        │   │           └── workshop
+        │   │               └── superheroes
+        │   │                   └── fight
+        │   │                       ├── Fight.java
+        │   │                       ├── FightApplication.java
+        │   │                       ├── FightResource.java
+        │   │                       ├── FightService.java
+        │   │                       └── Fighters.java
+        │   │                           └── KafkaWriter.java
+        │   └── resources
+        │       ├── META-INF
+        │       │   └── resources
+        │       │       └── index.html
+        │       ├── application.properties
+        │       └── import.sql
+        └── test
+            └── java
+                └── io
+                    └── quarkus
+                        └── workshop
+                            └── superheroes
+                                └── fight
+                                    └── FightResourceTest.java
+----
+
 == Fight Entity
 
 A fight is between a hero and a villain.
@@ -148,47 +192,3 @@ $ curl http://localhost:8082/api/fights
 ----
 
 Remember that you can also check Swagger UI by going to http://localhost:8082/swagger-ui.
-
-== Directory Structure
-
-At the end you should have the following directory structure:
-
-[source,text]
-----
-super-heroes/
-└── rest-fight/
-    ├── mvnw
-    ├── mvnw.cmd
-    ├── pom.xml
-    └── src
-        ├── main
-        │   ├── docker
-        │   │   ├── Dockerfile.jvm
-        │   │   └── Dockerfile.native
-        │   ├── java
-        │   │   └── io
-        │   │       └── quarkus
-        │   │           └── workshop
-        │   │               └── superheroes
-        │   │                   └── fight
-        │   │                       ├── Fight.java
-        │   │                       ├── FightApplication.java
-        │   │                       ├── FightResource.java
-        │   │                       ├── FightService.java
-        │   │                       └── Fighters.java
-        │   │                           └── KafkaWriter.java
-        │   └── resources
-        │       ├── META-INF
-        │       │   └── resources
-        │       │       └── index.html
-        │       ├── application.properties
-        │       └── import.sql
-        └── test
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── fight
-                                    └── FightResourceTest.java
-----
