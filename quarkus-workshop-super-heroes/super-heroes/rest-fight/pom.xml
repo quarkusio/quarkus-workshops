@@ -62,12 +62,18 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-metrics</artifactId>
         </dependency>
-        <!-- tag::restClientDependency[] -->
+        <!-- tag::adocFaultToleranceDependency[] -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
+        </dependency>
+        <!-- end::adocFaultToleranceDependency[] -->
+        <!-- tag::adocRestClientDependency[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client</artifactId>
         </dependency>
-        <!-- end::restClientDependency[] -->
+        <!-- end::adocRestClientDependency[] -->
 
         <!-- Kafka integration -->
         <!-- tag::kafkaDependency[] -->

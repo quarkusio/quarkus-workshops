@@ -71,7 +71,7 @@ If you are not happy about the way the fight operates, choose your own winning a
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka;!adocFallback]
 ----
 
 [NOTE]
@@ -86,7 +86,7 @@ To expose a REST API we also need a `FightResource` (with OpenAPI annotations of
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocResource;!adocMetrics]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocResource;!adocMetrics;!adocTimeout]
 ----
 
 == FightApplication for OpenAPI

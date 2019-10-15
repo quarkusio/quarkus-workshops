@@ -1,5 +1,0 @@
-[[fault-tolerance-circuit-breaker]]
-= Circuit Breaker
-
-
-include::common-solution.adoc[]

@@ -103,7 +103,7 @@ $ brew install maven
 
 === Checking for Maven Installation
 
-Once you've got Maven installed, open a command line and enter mvn `-version` to validate your installation.
+Once you've got Maven installed, open a command line and enter `mvn -version` to validate your installation.
 Maven should print its version and the JDK version it uses (which is handy as you might have different JDK versions installed on the same machine).
 
 [source,shell]

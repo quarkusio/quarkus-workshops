@@ -23,3 +23,8 @@ Let's add a few extra test methods that would make sure Metrics are available in
 ----
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
 ----
+
+[NOTE]
+====
+Again, in this chapter, we've just shown you how to add metrics for the Hero API, but you should do the same for Fight and Villain.
+====

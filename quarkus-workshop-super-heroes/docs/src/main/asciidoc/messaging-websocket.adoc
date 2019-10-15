@@ -57,7 +57,7 @@ Time to start the application using:
 
 [source, shell]
 ----
-mvn compile quarkus:dev
+$ mvn compile quarkus:dev
 ----
 
 Then, open `http://localhost:8085` in a new browser window.

@@ -2,6 +2,9 @@
 package io.quarkus.workshop.superheroes.fight;
 
 // end::adocResource[]
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -39,19 +42,36 @@ public class FightResource {
     @Inject
     FightService service;
 
+    // tag::adocFaultTolerance[]
+    // tag::adocTimeout[]
+    @ConfigProperty(name = "process.milliseconds", defaultValue="0")
+    long tooManyMilliseconds;
+
+    private void veryLongProcess() throws InterruptedException {
+        Thread.sleep(tooManyMilliseconds);
+    }
+
+    // end::adocTimeout[]
     @Operation(summary = "Returns two random fighters")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fighters.class, required = true)))
     // tag::adocMetrics[]
     @Counted(name = "countGetRandomFighters", description = "Counts how many times the getRandomFighters method has been invoked")
     @Timed(name = "timeGetRandomFighters", description = "Times how long it takes to invoke the getRandomFighters method", unit = MetricUnits.MILLISECONDS)
     // end::adocMetrics[]
+    // tag::adocTimeout[]
+    @Timeout(250)
+    // end::adocTimeout[]
     @GET
     @Path("/randomfighters")
-    public Response getRandomFighters() {
+    public Response getRandomFighters() throws InterruptedException {
+        // tag::adocTimeout[]
+        veryLongProcess();
+        // end::adocTimeout[]
         Fighters fighters = service.findRandomFighters();
         LOGGER.debug("Get random fighters " + fighters);
         return Response.ok(fighters).build();
     }
+    // end::adocFaultTolerance[]
 
     @Operation(summary = "Returns all the fights from the database")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fight.class, type = SchemaType.ARRAY)))

@@ -109,7 +109,7 @@ The Quarkus `smallrye-openapi` extension comes with a swagger-ui extension embed
 By default, Swagger UI is accessible at `/swagger-ui`.
 So, once your application is started, you can go to `http://localhost:8083/swagger-ui` and play with your API.
 
-You can visualize your API’s operations and schemas.
+You can visualize your API's operations and schemas.
 
 image::rest-openapi-swaggerui.png[]
 

@@ -2,7 +2,7 @@
 = REST Client
 
 This chapter explains how to use the MicroProfile REST Client in order to interact with REST APIs with very little effort.footnote:[MicroProfile REST Client https://github.com/eclipse/microprofile-rest-client]
-To install the MicroProfile Metrics dependency, just run the following command:
+To install the MicroProfile REST Client dependency, just run the following command:
 
 [source,shell]
 ----
@@ -13,7 +13,7 @@ This will add the following dependency in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/rest-fight/pom.xml[tags=restClientDependency]
+include::{github-raw}/super-heroes/rest-fight/pom.xml[tags=adocRestClientDependency]
 ----
 
 == FightService Invoking External Microservices
@@ -25,7 +25,7 @@ For that, add the following code to the `FightService` class:
 
 [source,indent=0]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocRestClient]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocRestClient;!adocFallback]
 ----
 
 Note that in addition to the standard CDI `@Inject` annotation, we also need to use the MicroProfile `@RestClient` annotation to inject `HeroService` and `VillainService`.
