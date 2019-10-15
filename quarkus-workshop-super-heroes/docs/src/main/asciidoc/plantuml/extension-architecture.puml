@@ -1,0 +1,34 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+package "banner-deployment" as deployment {
+    class BannerProcessor {
+        @BuildStep recordBannerBeanInitialization()
+        @BuildStep registerBannerBean()
+        @BuildStep addResourceToNativeImage()
+    }
+}
+
+package "banner-runtime" as runtime {
+    class BannerConfig {
+        String path
+    }
+    class BannerRecorder {
+        configureBannerBean()
+    }
+    class BannerBean {
+        setup(String path)
+        onStart(...)
+    }
+}
+
+
+
+deployment --> runtime : Maven dependency
+BannerProcessor <.. BannerConfig : Mapped from configuration
+BannerProcessor ..> BannerRecorder : Use
+BannerRecorder ..> BannerBean: Initialize
+
+@enduml
