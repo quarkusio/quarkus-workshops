@@ -45,3 +45,17 @@ As stated above, an extension is divided into 2 parts, called `deployment` (augm
 include::plantuml/extension-architecture.puml[]
 ----
 
+Create a new directory, named `banner-extension`, and execute, from this directory the following commands:
+
+[source,shell]
+----
+include::{github-raw}/extensions/extension-banner/bootstrap.sh[tag=adocSnippet]
+----
+
+This script creates the structures:
+
+* one parent `pom.xml` importing the `quarkus-bom` and the `quarkus-bom-deployment`
+* a module for the runtime
+* a module for the deployment, with a dependency on the runtime artifact
+
+
