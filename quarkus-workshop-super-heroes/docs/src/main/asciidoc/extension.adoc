@@ -1,4 +1,47 @@
 [[extension]]
-= Extension
+= Writing a Quarkus Extension
 
 '''
+
+Most of the Quarkus magic happens inside _so-called_ extensions.
+The goal of an extension is to compute _just enough bytecode_ to start the services that the application requires, and drop everything else.
+
+So, when writing an extension, you need to distinguish the action that:
+
+* Can be done at build time
+* Must be done at runtime
+
+Because of this distinction, extensions are divided into 2 parts: a build time augmentation and a runtime.
+The augmentation part is responsible for all the metadata processing, annotation scanning, XML parsing...
+The output of this augmentation is **recorded bytecode**, which will be called at runtime to instantiate the relevant services.
+This means that metadata is only processed once at build time, which both saves on startup time, and also on memory usage as the classes that are used for processing are not loaded (or even present) in the runtime JVM.
+
+In this chapter, you are going to implement your _banner_ extension.
+Instead of having to include the bean invoked during the application startup in the application code, you are going to write an extension that does this.
+This extension is configured with the path of the banner file, register the generic bean displaying the banner and is taking care of GraalVM metadata.
+
+== The extension framework
+
+Quarkus's mission is to transform your entire application, including the libraries it uses, into an artifact that uses significantly fewer resources than traditional approaches.
+These can then be used to build native executables using GraalVM.
+To do this, you need to analyze and understand the full "closed world" of the application.
+Without the complete context, the best that can be achieved is partial and limited generic support.
+
+To build an extension, Quarkus provides a framework to:
+
+* read configuration from the `application.properties` file and map it to objects,
+* read metadata from classes without having to load them, this includes classpath and annotation scanning,
+* generate bytecode if needed (for proxies for instance),
+* pass sensible defaults to the application,
+* make the application compatible with GraalVM (resources, reflection, substitutions),
+* implement hot reload mechanism
+
+== Structure of an extension
+
+As stated above, an extension is divided into 2 parts, called `deployment` (augmentation) and `runtime`.
+
+[plantuml,align=center]
+----
+include::plantuml/extension-architecture.puml[]
+----
+
