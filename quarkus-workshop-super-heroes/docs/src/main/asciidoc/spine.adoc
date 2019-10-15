@@ -70,6 +70,8 @@ include::observability-healthcheck.adoc[leveloffset=+2]
 <<<
 include::observability-metrics.adoc[leveloffset=+2]
 <<<
+include::observability-load.adoc[leveloffset=+2]
+<<<
 include::observability-prometheus.adoc[leveloffset=+2]
 
 // Messaging

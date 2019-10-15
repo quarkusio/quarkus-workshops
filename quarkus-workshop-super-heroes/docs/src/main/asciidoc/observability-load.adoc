@@ -1,0 +1,64 @@
+[[observability-load]]
+= Load
+
+Now that we have the three main microservices exposing health checks and metrics, time to have a decent user interface to  monitor how the system behaves.
+The purpose of this workshop is to add some load to our application.
+You will download the load application, install it and run it.
+
+== Downloading the Load Application
+
+Go to {github-raw}/super-heroes/load-super-heroes and download the entire code into the `load-super-heroes` directory.
+It is a Maven application, so you will find a `pom.xml` file with all the dependencies.
+This application is not a Quarkus application, just a Java app that simulates users interacting with the system so it generates some load.
+
+== Looking at Some Code
+
+The `SuperHeroesLoad` class is just a `main` that executes the `FightScenario`, `HeroScenario` and `VillainScenario` in different threads.
+For example, if you look at the `HeroScenario`, you will see that it's just a suit of HTTP calls on the Hero API:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/load-super-heroes/src/main/java/io/quarkus/workshop/superheroes/load/HeroScenario.java[tag=adocScenario]
+----
+
+== Running the Load Application
+
+You are all set!
+Time to compile and start the load application using:
+
+[source, shell]
+----
+$ mvn compile
+$ mvn exec:java
+----
+
+You will see the following logs:
+
+[source, shell]
+----
+INFO: GET - http://localhost:8082/api/fights/1 - 200
+INFO: DELETE - http://localhost:8084/api/villains/440 - 204
+INFO: GET - http://localhost:8083/api/heroes - 200
+INFO: GET - http://localhost:8084/api/villains/hello - 200
+INFO: GET - http://localhost:8082/api/fights - 200
+INFO: GET - http://localhost:8083/api/heroes/581 - 200
+INFO: GET - http://localhost:8084/api/villains/126 - 200
+INFO: GET - http://localhost:8082/api/fights/hello - 200
+INFO: DELETE - http://localhost:8083/api/heroes/491 - 204
+----
+
+== Prometheus
+
+/!\
+/!\ TODO  /!\
+/!\
+
+[NOTE]
+====
+To execute the application we now need Prometheus.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====
+
+include::common-solution.adoc[]
+
