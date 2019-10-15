@@ -29,3 +29,7 @@ ObjectStore
 maven-wrapper.jar
 node_modules/
 node/
+
+.project
+.classpath
+.settings
