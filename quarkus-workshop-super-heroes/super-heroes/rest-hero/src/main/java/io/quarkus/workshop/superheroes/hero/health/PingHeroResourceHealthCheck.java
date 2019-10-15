@@ -1,5 +1,7 @@
+// tag::adocPingHero[]
 package io.quarkus.workshop.superheroes.hero.health;
 
+// end::adocPingHero[]
 import io.quarkus.workshop.superheroes.hero.HeroResource;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;

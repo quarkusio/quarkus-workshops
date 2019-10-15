@@ -1,5 +1,7 @@
+// tag::adocDatabaseConnection[]
 package io.quarkus.workshop.superheroes.hero.health;
 
+// end::adocDatabaseConnection[]
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
