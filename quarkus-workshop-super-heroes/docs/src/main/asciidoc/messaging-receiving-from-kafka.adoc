@@ -1,4 +1,4 @@
-= Receiving messages from Kafka
+= Receiving Messages from Kafka
 
 In this section, you are going to see how you can receive messages from a Kafka topic.
 For this, you are going to create a new microservice, named `stats`.
@@ -21,7 +21,7 @@ As you can see in the command, you can configure the extensions you want using t
 Open the `pom.xml` file to see the result.
 ====
 
-== Computing statistics
+== Computing Statistics
 
 Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
 This class contains 3 methods annotated with `@Incoming` and `@Outgoing`.

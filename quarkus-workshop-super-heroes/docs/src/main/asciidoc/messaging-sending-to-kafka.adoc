@@ -2,7 +2,7 @@
 
 In this section, you are going to see how you can send messages to a Kafka topic.footnote:[Kafka Topic https://kafka.apache.org/intro#intro_topics]
 
-== Adding the Reactive Messaging dependency
+== Adding the Reactive Messaging Dependency
 
 First, stop the _fight_ microservice, and edit the `pom.xml` file to add the following dependency:
 
@@ -20,7 +20,7 @@ Make sure the infrastructure is up and running.
 This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
 ====
 
-== Connecting Imperative and Reactive using an Emitter
+== Connecting Imperative and Reactive Using an Emitter
 
 Now edit the `FightService` class.
 First, add the following field:

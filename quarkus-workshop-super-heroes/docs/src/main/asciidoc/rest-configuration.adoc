@@ -23,7 +23,7 @@ This is quite easy as we just need to add one property in the `application.prope
 include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocPort]
 ----
 
-== Injecting configuration value
+== Injecting Configuration Value
 
 When we persist a new hero we want to multiply its level by a value that can be configured.
 For this, Quarkus uses MicroProfile Config to inject the configuration in the application.footnote:[Microprofile Config https://microprofile.io/project/eclipse/microprofile-config]
@@ -52,7 +52,7 @@ Now, modify the `HeroService.persistHero()` method to use the injected propertie
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocPersistHero]
 ----
 
-== Create the configuration
+== Create the Configuration
 
 By default, Quarkus reads `application.properties`.
 Edit the `src/main/resources/application.properties` with the following content:
