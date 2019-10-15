@@ -6,7 +6,7 @@ import io.quarkus.runtime.annotations.Recorder;
 @Recorder
 public class BannerRecorder {
 
-    public void init(BeanContainer container, BannerConfig config) {
+    public void configureBannerBean(BeanContainer container, BannerConfig config) {
         container.instance(BannerBean.class).setup(config.file);
     }
 }

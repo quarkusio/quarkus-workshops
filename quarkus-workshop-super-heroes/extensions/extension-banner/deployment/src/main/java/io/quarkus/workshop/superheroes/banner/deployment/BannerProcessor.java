@@ -15,9 +15,9 @@ public class BannerProcessor {
 
     @BuildStep
     @Record(ExecutionTime.STATIC_INIT)
-    public void configureBannerBean(BeanContainerBuildItem beanContainer, BannerRecorder recorder,
+    public void recordBannerBeanInitialization(BeanContainerBuildItem beanContainer, BannerRecorder recorder,
         BannerConfig config) {
-        recorder.init(beanContainer.getValue(), config);
+        recorder.configureBannerBean(beanContainer.getValue(), config);
     }
 
     @BuildStep
