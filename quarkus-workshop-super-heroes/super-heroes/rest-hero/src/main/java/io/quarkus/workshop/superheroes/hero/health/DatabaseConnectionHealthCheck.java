@@ -1,7 +1,7 @@
-// tag::adocDatabaseConnection[]
 package io.quarkus.workshop.superheroes.hero.health;
 
-// end::adocDatabaseConnection[]
+import io.quarkus.workshop.superheroes.hero.Hero;
+import io.quarkus.workshop.superheroes.hero.HeroService;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
@@ -9,10 +9,7 @@ import org.eclipse.microprofile.health.Readiness;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.List;
 
 // tag::adocDatabaseConnection[]
 @Readiness
@@ -20,32 +17,21 @@ import java.sql.Statement;
 public class DatabaseConnectionHealthCheck implements HealthCheck {
 
     @Inject
-    DataSource dataSource;
+    HeroService heroService;
 
     @Override
     public HealthCheckResponse call() {
-        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("Hero health check");
+        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse
+            .named("Hero Datasource connection health check");
+
         try {
-            int rows = numberOfRows("hero");
-            responseBuilder.up().withData("rows", rows);
-        } catch (Exception e) {
-            responseBuilder.down().withData("message", e.getMessage());
+            List<Hero> heroes = heroService.findAllHeroes();
+            responseBuilder.withData("Number of heroes in the database", heroes.size()).up();
+        } catch (IllegalStateException e) {
+            responseBuilder.down();
         }
 
         return responseBuilder.build();
-    }
-
-    private int numberOfRows(String table) throws Exception {
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM " + table)
-        ) {
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            } else {
-                return 0;
-            }
-        }
     }
 }
 // end::adocDatabaseConnection[]

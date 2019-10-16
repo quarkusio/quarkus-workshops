@@ -1,6 +1,6 @@
 package io.quarkus.workshop.superheroes.statistics;
 
-public class TeamStats {
+class TeamStats {
 
     private int villains = 0;
     private int heroes = 0;

@@ -40,7 +40,7 @@ echo "<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w
     </dependencyManagement>
 
     <properties>
-        <quarkus.version>0.24.0</quarkus.version>
+        <quarkus.version>0.25.0</quarkus.version>
         <surefire-plugin.version>2.22.0</surefire-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -102,6 +102,15 @@ echo "<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w
                             <version>\${quarkus.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                    <systemProperties>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # tag::adocSnippet[]
-mvn io.quarkus:quarkus-maven-plugin:0.24.0:create \
+mvn io.quarkus:quarkus-maven-plugin:0.25.0:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=event-statistics \
     -DclassName="io.quarkus.workshop.superheroes.statistics.StatisticResource" \

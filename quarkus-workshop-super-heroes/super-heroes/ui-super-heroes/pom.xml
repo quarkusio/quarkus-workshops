@@ -38,7 +38,7 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-undertow</artifactId>
+            <artifactId>quarkus-resteasy</artifactId>
         </dependency>
     </dependencies>
 
