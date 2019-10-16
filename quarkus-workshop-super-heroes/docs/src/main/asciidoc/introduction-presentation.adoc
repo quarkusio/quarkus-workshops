@@ -80,7 +80,7 @@ The next section focuses on how to install and setup the needed software.
 You can skip the next section if you have already installed all the prerequisites.
 
 [WARNING]
---
-This workshow assumes a bash shell.
+====
+This workshop assumes a bash shell.
 If you run on Windows in particular, adjust the commands accordingly.
---
+====
