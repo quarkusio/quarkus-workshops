@@ -8,7 +8,6 @@ import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.substrate.SubstrateResourceBuildItem;
 import io.quarkus.workshop.superheroes.banner.runtime.BannerBean;
-import io.quarkus.workshop.superheroes.banner.runtime.BannerConfig;
 import io.quarkus.workshop.superheroes.banner.runtime.BannerRecorder;
 
 public class BannerProcessor {
@@ -17,7 +16,7 @@ public class BannerProcessor {
     @Record(ExecutionTime.STATIC_INIT)
     public void recordBannerBeanInitialization(BeanContainerBuildItem beanContainer, BannerRecorder recorder,
         BannerConfig config) {
-        recorder.configureBannerBean(beanContainer.getValue(), config);
+        recorder.configureBannerBean(beanContainer.getValue(), config.file);
     }
 
     @BuildStep

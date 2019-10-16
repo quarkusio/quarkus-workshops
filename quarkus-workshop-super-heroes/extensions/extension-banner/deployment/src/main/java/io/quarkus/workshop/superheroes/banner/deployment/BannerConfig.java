@@ -1,10 +1,10 @@
-package io.quarkus.workshop.superheroes.banner.runtime;
+package io.quarkus.workshop.superheroes.banner.deployment;
 
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 
-@ConfigRoot(name = "banner", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+@ConfigRoot(name = "banner", phase = ConfigPhase.BUILD_TIME)
 public class BannerConfig {
 
     /**

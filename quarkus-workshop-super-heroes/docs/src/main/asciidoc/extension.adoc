@@ -52,10 +52,50 @@ Create a new directory, named `banner-extension`, and execute, from this directo
 include::{github-raw}/extensions/extension-banner/bootstrap.sh[tag=adocSnippet]
 ----
 
-This script creates the structures:
+This script creates the structure for the banner extension:
 
 * one parent `pom.xml` importing the `quarkus-bom` and the `quarkus-bom-deployment`
 * a module for the runtime
 * a module for the deployment, with a dependency on the runtime artifact
+
+== The Runtime module
+
+The _runtime_ part of an extension contains only the classes and resources required at runtime.
+For the banner extension, it would be:
+
+* a config mapping file to configure the path of the banner file
+* the bean displaying the banner
+* the recorder initializing the bean with the path
+
+First, let's create the configuration class.
+In the runtime module, creates the `io.quarkus.workshop.superheroes.banner.runtime.BannerConfig` class with the following content:
+
+[source, java]
+----
+include::{github-raw}/extensions/extension-banner/runtime/src/main/java/io/quarkus/workshop/superheroes/banner/runtime/BannerConfig.javabootstrap.sh[]
+----
+
+The `BannerConfig` class is a class representing properties from the `application.properties` file.
+The class is `ConfigRoot` annotation indicates the _prefix_.
+Here `banner` indicate that the prefix would be `quarkus.banner`.
+The phase attribute
+
+
+
+package io.quarkus.workshop.superheroes.banner.runtime;
+
+import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.annotations.ConfigPhase;
+import io.quarkus.runtime.annotations.ConfigRoot;
+
+@ConfigRoot(name = "banner", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+public class BannerConfig {
+
+    /**
+     * The path of the banner.
+     */
+    @ConfigItem public String file;
+}
+
 
 
