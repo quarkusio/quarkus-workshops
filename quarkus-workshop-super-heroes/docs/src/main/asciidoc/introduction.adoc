@@ -7,12 +7,14 @@ Let's start from the beginning..​.
 Quarkus.
 What's Quarkus?
 That's a pretty good question, and probably a good start.
-If you go on the https://quarkus.io[Quarkus web site], Quarkus is "A Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot, crafted from the best of breed Java libraries and standards".
+If you go on the https://quarkus.io[Quarkus web site], Quarkus is "A Kubernetes Native Java stack tailored for OpenJDK HotSpot & GraalVM, crafted from the best of breed Java libraries and standards".
 This description is rather unclear, but does a very good job at using bankable keywords, right?
 It's also written: "Supersonic Subatomic Java".
 Still very foggy.
+In practice, Quarkus is an Open Source stack to write Java applications, specifically backend applications.
 In this lab, we are going to explain what Quarkus is, and, because the best way to understand Quarkus is to use it, build a set of microservices with it.
 Don't be mistaken, Quarkus is not limited to microservices, and we are going to learn about this in the workshop.
+
 
 This lab offers attendees an intro-level, hands-on session with Quarkus, from the first line of code to making services, to consuming them, and finally to assembling everything in a consistent system.
 But, what are we going to build?
