@@ -3,7 +3,12 @@
 
 This chapter explains how to use the MicroProfile REST Client in order to interact with REST APIs with very little effort.footnote:[MicroProfile REST Client https://github.com/eclipse/microprofile-rest-client]
 
-== Installing Dependencies
+== Directory Structure
+
+/!\ TODO /!\
+If appropriate, show the directory structure (tree command) so the attendee know which classes/packages will be developped
+
+== Installing the REST Client Dependency
 
 To install the MicroProfile REST Client dependency, just run the following command:
 

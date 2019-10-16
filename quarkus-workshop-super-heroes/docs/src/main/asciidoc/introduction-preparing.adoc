@@ -5,7 +5,7 @@ This workshop needs internet access to download all sorts of Maven artifacts, Do
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
 
-== Warm up Maven
+== Warming up Maven
 
 To warm up your Maven repository, first bootstrap a Quarkus project using the following command:
 
@@ -16,7 +16,7 @@ include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
 
 Then, make sure to run a `mvn install` in the directory where the `pom.xml` file is located.
 
-== Warm up Docker
+== Warming up Docker
 
 To warm up your Docker repository, create the following `docker-compose.yaml` file :
 
@@ -37,7 +37,7 @@ In our context, we are going to use PostgreSQL as the database, Prometheus as th
 This infrastructure starts all these services, so you don't have to worry about them.
 ====
 
-== Directory Structure
+== Creating the Directories Structure
 
 In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
@@ -94,7 +94,7 @@ quarkus-workshop-super-heroes
     └── extension-fault-injector  Injects network latency and HTTP faults
 ----
 
-=== Create the Directory Structure
+=== Script Creating the Directory Structure
 
 So, before starting to code, make sure you create the right directory structure.
 
@@ -103,7 +103,7 @@ So, before starting to code, make sure you create the right directory structure.
 include::{github-raw}/create-directory-structure.sh[tags=adocSnippet]
 ----
 
-=== Ready?
+== Ready?
 
 Prerequisites has been installed, the different components have been warmed up,  it's now time to write some code!
 

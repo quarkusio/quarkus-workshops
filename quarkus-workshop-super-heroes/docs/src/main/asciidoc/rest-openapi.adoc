@@ -28,7 +28,7 @@ super-heroes/
                                     └── HeroService.java
 ----
 
-== Installing Dependencies
+== Installing the OpenAPI Dependency
 
 Quarkus proposes a `smallrye-openapi` extension compliant with the Eclipse MicroProfile OpenAPI specification in order to generate your API OpenAPI v3 specification.footnote:[MicroProfile OpenAPI https://github.com/eclipse/microprofile-open-api]
 To install the OpenAPI dependency, just run the following command:

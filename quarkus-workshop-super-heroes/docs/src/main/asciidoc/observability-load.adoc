@@ -1,5 +1,5 @@
 [[observability-load]]
-= Load
+= Loading the Microservices
 
 Now that we have the three main microservices exposing health checks and metrics, time to have a decent user interface to  monitor how the system behaves.
 The purpose of this workshop is to add some load to our application.

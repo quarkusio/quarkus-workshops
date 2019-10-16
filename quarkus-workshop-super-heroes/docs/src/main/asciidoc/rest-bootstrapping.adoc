@@ -1,5 +1,5 @@
 [[rest-bootstrapping]]
-= Bootstrapping the Project
+= Hero Microservice
 
 First thing first, we need a project.
 That's what your are going to see in this section.

@@ -20,7 +20,7 @@ In this chapter, you are going to implement your _banner_ extension.
 Instead of having to include the bean invoked during the application startup in the application code, you are going to write an extension that does this.
 This extension is configured with the path of the banner file, register the generic bean displaying the banner and is taking care of GraalVM metadata.
 
-== The extension framework
+== The Extension Framework
 
 Quarkus's mission is to transform your entire application, including the libraries it uses, into an artifact that uses significantly fewer resources than traditional approaches.
 These can then be used to build native executables using GraalVM.

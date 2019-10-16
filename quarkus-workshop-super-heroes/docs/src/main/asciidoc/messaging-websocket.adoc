@@ -5,7 +5,7 @@ Actually, even if you start the application, nothing will happen as nobody consu
 
 In this section, we are going to consume these statistics and send them to two WebSockets.
 
-== The `TeamStats` WebSocket
+== The TeamStats WebSocket
 
 Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
 
@@ -28,7 +28,7 @@ It indicates that someone is interested in the items transiting on the stream, a
 In this case, it triggers the connection to Kafka and starts receiving the messages from Kafka.
 Without it, items would not be emitted.
 
-== The `TopWinner` web socket
+== The TopWinner WebSocket
 
 The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
 Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:

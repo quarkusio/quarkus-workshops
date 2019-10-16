@@ -27,6 +27,23 @@ super-heroes/
                                     └── HeroService.java
 ----
 
+== Installing the PostgreSQL Dependency
+
+To install the PostgreSQL driver dependency, just run the following command:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgresql]
+----
+
+
 == Hero Entity
 
 Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
@@ -130,21 +147,6 @@ Our project now requires a connection to a PostgreSQL database.
 The main way of obtaining connections to a database is to use a datasource.
 In Quarkus, the out of the box datasource and connection pooling implementation is Agroal.footnote:[Agroal https://agroal.github.io]
 
-To install the PostgreSQL driver dependency, just run the following command:
-
-[source,shell]
-----
-$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql"
-----
-
-This will add the following dependency in the `pom.xml` file:
-
-[source,xml,indent=0]
-----
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgresql]
-----
-
-Once the dependencies are added to your `pom.xml` file, you'll need to configure Agroal.
 This is done in the `src/main/resources/application.properties` file.
 Just add the following datasource configuration:
 
