@@ -167,6 +167,8 @@ The development mode also allows debugging and listens for a debugger on port 50
 If you want to wait for the debugger to attach before running you can pass `-Dsuspend=true` on the command line.
 If you don't want the debugger at all you can use `-Ddebug=false`.
 
+Alright, time to change some code.
+Open your favorite IDE and import the project.
 To check that the hot reload is working, update the method `HeroResource.hello()` by returning the String "hello hero".
 Now, execute the cUrl command again, the output has changed without you to having to stop and restart Quarkus:
 
