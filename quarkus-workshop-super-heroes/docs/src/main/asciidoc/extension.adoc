@@ -1,4 +1,4 @@
-[extension]]
+[[extension]]
 = Writing a Quarkus Extension
 
 '"
