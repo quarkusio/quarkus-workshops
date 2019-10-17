@@ -164,7 +164,7 @@ your request is then serviced by the redeployed application.
 If there are any issues with compilation or deployment an error page will let you know.
 
 The development mode also allows debugging and listens for a debugger on port 5005.
-If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line.
+If you want to wait for the debugger to attach before running you can pass `-Dsuspend=true` on the command line.
 If you don't want the debugger at all you can use `-Ddebug=false`.
 
 To check that the hot reload is working, update the method `HeroResource.hello()` by returning the String "hello hero".
