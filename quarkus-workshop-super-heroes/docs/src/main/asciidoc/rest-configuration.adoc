@@ -73,7 +73,7 @@ Once started, create a new hero with the following cUrl command:
 $ curl -X POST -d  '{"level":5, "name":"Chewbacca", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" http://localhost:8083/api/heroes -v
 
 < HTTP/1.1 201 Created
-< Location: http://localhost:8083/api/heroes/957
+< Location: http://localhost:8083/api/heroes/952
 ----
 
 As you can see, we've passed a level of 5 to create this new hero.
@@ -83,7 +83,7 @@ You will see that the level has been increased.
 
 [source,shell]
 ----
-$ curl http://localhost:8083/api/heroes/957 | jq
+$ curl http://localhost:8083/api/heroes/952 | jq
 
 {
   "id": 957,

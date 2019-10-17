@@ -261,5 +261,5 @@ Once started, check that there are heroes in the database with the following cUr
 
 [source,shell]
 ----
-$ curl http://localhost:8083/api/heroes
+$ curl http://localhost:8080/api/heroes
 ----
