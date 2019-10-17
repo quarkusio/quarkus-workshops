@@ -2,16 +2,10 @@
 package io.quarkus.workshop.superheroes.hero;
 
 // end::adocResourceTest[]
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,16 +47,21 @@ public class HeroResourceTest {
     private static String heroId;
 
     @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
+    private static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
         .withDatabaseName("heroes_database")
         .withUsername("superman")
         .withPassword("superman")
-        .withExposedPorts(5432)
-        .withCreateContainerCmdModifier(cmd ->
-            cmd
-                .withHostName("localhost")
-                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
-        );
+        .withExposedPorts(5432);
+
+    @BeforeAll
+    static void configure() {
+        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
+    }
+
+    @AfterAll
+    static void cleanup() {
+        System.clearProperty("quarkus.datasource.url");
+    }
 
     // tag::adocOpenAPI[]
     @Test
