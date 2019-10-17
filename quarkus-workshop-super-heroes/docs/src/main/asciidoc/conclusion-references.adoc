@@ -6,3 +6,4 @@
 * https://forge.jboss.org/document/hands-on-lab
 * https://bit.ly/forge-hol
 * https://code.quarkus.io
+* https://quarkus.io/guides/all-config

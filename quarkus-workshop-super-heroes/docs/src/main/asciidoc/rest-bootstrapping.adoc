@@ -7,7 +7,8 @@ That's what your are going to see in this section.
 == Bootstrapping the Hero REST Endpoint
 
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
-Let's say you have a `quarkus-workshop` root directory where you have all your code, create a `rest-hero` sub-directory, open a terminal and run the following command:
+We have created the project structure earlier, so we will move to the `rest-hero` directory and run the project creation command.
+Open a terminal and run the following command:
 
 [source,shell]
 ----
@@ -15,7 +16,7 @@ include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
 ----
 
 [TIP]
-.Prefering Web UI
+.Preferring Web UI
 ====
 Instead of the Maven command, you can use https://code.quarkus.io.
 ====
@@ -163,9 +164,11 @@ your request is then serviced by the redeployed application.
 If there are any issues with compilation or deployment an error page will let you know.
 
 The development mode also allows debugging and listens for a debugger on port 5005.
-If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line.
+If you want to wait for the debugger to attach before running you can pass `-Dsuspend=true` on the command line.
 If you don't want the debugger at all you can use `-Ddebug=false`.
 
+Alright, time to change some code.
+Open your favorite IDE and import the project.
 To check that the hot reload is working, update the method `HeroResource.hello()` by returning the String "hello hero".
 Now, execute the cUrl command again, the output has changed without you to having to stop and restart Quarkus:
 
