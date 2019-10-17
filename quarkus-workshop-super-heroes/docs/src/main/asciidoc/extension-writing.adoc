@@ -1,8 +1,0 @@
-[[extension-writing]]
-= Writing a Quarkus Extension
-
-== Directory Structure
-
-/!\ TODO /!\
-If appropriate, show the directory structure (tree command) so the attendee know which classes/packages will be developped
-

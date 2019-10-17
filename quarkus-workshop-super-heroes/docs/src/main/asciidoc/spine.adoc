@@ -87,8 +87,6 @@ include::messaging-conclusion.adoc[leveloffset=+2]
 
 // Extensions
 include::extension.adoc[leveloffset=+1]
-<<<
-include::extension-writing.adoc[leveloffset=+2]
 
 // Cloud
 include::cloud.adoc[leveloffset=+1]
