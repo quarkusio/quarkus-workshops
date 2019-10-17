@@ -1,7 +1,7 @@
 [[extension]]
 = Writing a Quarkus Extension
 
-'"
+'''
 
 Most of the Quarkus magic happens inside extensions.
 The goal of an extension is to compute _just enough bytecode_ to start the services that the application requires, and drop everything else.
@@ -131,7 +131,7 @@ In the deployment module, create the `io.quarkus.workshop.superheroes.banner.dep
 
 [source, java]
 ----
-include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/quarkus/workshop/superheroes/banner/runtime/BannerConfig.java[]
+include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/quarkus/workshop/superheroes/banner/deployment/BannerConfig.java[]
 ----
 
 This class maps entries from the `application.properties` file to an object.
@@ -144,7 +144,7 @@ Create the `io.quarkus.workshop.superheroes.banner.deployment.BannerProcessor` c
 
 [source, java]
 ----
-include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/quarkus/workshop/superheroes/banner/runtime/BannerProcessor.java[]
+include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/quarkus/workshop/superheroes/banner/deployment/BannerProcessor.java[]
 ----
 
 This class is the core of the extension.
