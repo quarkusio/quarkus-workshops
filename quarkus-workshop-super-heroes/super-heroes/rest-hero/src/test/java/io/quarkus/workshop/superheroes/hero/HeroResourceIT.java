@@ -1,11 +1,17 @@
-// tag::adocResourceTest[]
+
 package io.quarkus.workshop.superheroes.hero;
 
-// end::adocResourceTest[]
-import io.quarkus.test.junit.QuarkusTest;
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
+import io.quarkus.test.junit.SubstrateTest;
 import io.restassured.common.mapper.TypeRef;
+import io.vertx.core.json.JsonObject;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -22,15 +28,12 @@ import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-// tag::adocResourceTest[]
-@QuarkusTest
+@SubstrateTest
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class HeroResourceTest {
+public class HeroResourceIT {
 
     private static final String DEFAULT_NAME = "Super Baguette";
     private static final String UPDATED_NAME = "Super Baguette (updated)";
@@ -40,10 +43,7 @@ public class HeroResourceTest {
     private static final String UPDATED_PICTURE = "super_baguette_updated.png";
     private static final String DEFAULT_POWERS = "eats baguette really quickly";
     private static final String UPDATED_POWERS = "eats baguette really quickly (udpated)";
-    private static final int DEFAULT_LEVEL = 42;
-    private static final int UPDATED_LEVEL = 43;
 
-    private static final int NB_HEROES = 951;
     private static String heroId;
 
     @Container
@@ -51,17 +51,12 @@ public class HeroResourceTest {
         .withDatabaseName("heroes_database")
         .withUsername("superman")
         .withPassword("superman")
-        .withExposedPorts(5432);
-
-    @BeforeAll
-    private static void configure() {
-        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
-    }
-
-    @AfterAll
-    private static void cleanup() {
-        System.clearProperty("quarkus.datasource.url");
-    }
+        .withExposedPorts(5432)
+        .withCreateContainerCmdModifier(cmd ->
+            cmd
+                .withHostName("localhost")
+                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
+        );
 
     // tag::adocOpenAPI[]
     @Test
@@ -73,13 +68,6 @@ public class HeroResourceTest {
             .statusCode(OK.getStatusCode());
     }
 
-    @Test
-    void shouldPingSwaggerUI() {
-        given()
-            .when().get("/swagger-ui")
-            .then()
-            .statusCode(OK.getStatusCode());
-    }
     // end::adocOpenAPI[]
 
     // tag::adocHealth[]
@@ -131,25 +119,15 @@ public class HeroResourceTest {
     }
 
     @Test
-    void shouldGetRandomHero() {
-        given()
-            .when().get("/api/heroes/random")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON);
-    }
-
-    @Test
     void shouldNotAddInvalidItem() {
-        Hero hero = new Hero();
-        hero.name = null;
-        hero.otherName = DEFAULT_OTHER_NAME;
-        hero.picture = DEFAULT_PICTURE;
-        hero.powers = DEFAULT_POWERS;
-        hero.level = 0;
+        JsonObject hero = new JsonObject();
+        hero.put("otherName", DEFAULT_OTHER_NAME);
+        hero.put("picture", DEFAULT_PICTURE);
+        hero.put("powers", DEFAULT_POWERS);
+        hero.put("level", 0);
 
         given()
-            .body(hero)
+            .body(hero.encode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .header(ACCEPT, APPLICATION_JSON)
             .when()
@@ -165,21 +143,21 @@ public class HeroResourceTest {
             .statusCode(OK.getStatusCode())
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
-        assertEquals(NB_HEROES, heroes.size());
+        assertEquals(0, heroes.size());
     }
 
     @Test
     @Order(2)
     void shouldAddAnItem() {
-        Hero hero = new Hero();
-        hero.name = DEFAULT_NAME;
-        hero.otherName = DEFAULT_OTHER_NAME;
-        hero.picture = DEFAULT_PICTURE;
-        hero.powers = DEFAULT_POWERS;
-        hero.level = DEFAULT_LEVEL;
+        JsonObject hero = new JsonObject();
+        hero.put("name", DEFAULT_NAME);
+        hero.put("otherName", DEFAULT_OTHER_NAME);
+        hero.put("picture", DEFAULT_PICTURE);
+        hero.put("powers", DEFAULT_POWERS);
+        hero.put("level", 20);
 
         String location = given()
-            .body(hero)
+            .body(hero.encode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .header(ACCEPT, APPLICATION_JSON)
             .when()
@@ -202,7 +180,7 @@ public class HeroResourceTest {
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body("name", Is.is(DEFAULT_NAME))
             .body("otherName", Is.is(DEFAULT_OTHER_NAME))
-            .body("level", Is.is(DEFAULT_LEVEL))
+            .body("level", Is.is(60))
             .body("picture", Is.is(DEFAULT_PICTURE))
             .body("powers", Is.is(DEFAULT_POWERS));
 
@@ -210,22 +188,22 @@ public class HeroResourceTest {
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
-        assertEquals(NB_HEROES + 1, heroes.size());
+        assertEquals(1, heroes.size());
     }
 
     @Test
     @Order(3)
     void shouldUpdateAnItem() {
-        Hero hero = new Hero();
-        hero.id = Long.valueOf(heroId);
-        hero.name = UPDATED_NAME;
-        hero.otherName = UPDATED_OTHER_NAME;
-        hero.picture = UPDATED_PICTURE;
-        hero.powers = UPDATED_POWERS;
-        hero.level = UPDATED_LEVEL;
+        JsonObject hero = new JsonObject();
+        hero.put("id", Long.valueOf(heroId));
+        hero.put("name", UPDATED_NAME);
+        hero.put("otherName", UPDATED_OTHER_NAME);
+        hero.put("picture", UPDATED_PICTURE);
+        hero.put("powers", UPDATED_POWERS);
+        hero.put("level", 21);
 
         given()
-            .body(hero)
+            .body(hero.encode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .header(ACCEPT, APPLICATION_JSON)
             .when()
@@ -235,7 +213,7 @@ public class HeroResourceTest {
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body("name", Is.is(UPDATED_NAME))
             .body("otherName", Is.is(UPDATED_OTHER_NAME))
-            .body("level", Is.is(UPDATED_LEVEL))
+            .body("level", Is.is(21))
             .body("picture", Is.is(UPDATED_PICTURE))
             .body("powers", Is.is(UPDATED_POWERS));
 
@@ -243,7 +221,7 @@ public class HeroResourceTest {
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
-        assertEquals(NB_HEROES + 1, heroes.size());
+        assertEquals(1, heroes.size());
     }
 
     @Test
@@ -259,7 +237,7 @@ public class HeroResourceTest {
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
-        assertEquals(NB_HEROES, heroes.size());
+        assertEquals(0, heroes.size());
     }
 
     private TypeRef<List<Hero>> getHeroTypeRef() {
@@ -267,5 +245,5 @@ public class HeroResourceTest {
             // Kept empty on purpose
         };
     }
+
 }
-// end::adocResourceTest[]
