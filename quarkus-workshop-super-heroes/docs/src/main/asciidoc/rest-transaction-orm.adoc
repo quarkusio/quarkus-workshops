@@ -205,6 +205,15 @@ If you want to add more heroes to the database, download the SQL file {github-ra
 == CRUD Tests in HeroResourceTest
 
 To test the `HeroResource` endpoint, we will be using TestContainers to fire a Postgres database and then test CRUD operations.footnote:[TestContainers https://www.testcontainers.org]
+As you will see, these tests are more complex as they start a Postgres database to allow CRUD operations to be tested against a real database.
+For that we will install the TestContainers dependency in our `pom.xml`:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestContainers]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestREST]
+----
+
 You will add the following test methods to the `HeroResourceTest` class:
 
 * `shouldNotGetUnknownHero`: giving a random Hero identifier, the `HeroResource` endpoint should return a 204 (No content)
@@ -220,14 +229,6 @@ The code is as follow:
 [source]
 ----
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocResourceTest;!adocOpenAPI;!adocHealth;!adocMetrics]
-----
-
-As you can see, these tests are more complex as they start a Postgres database to allow CRUD operations to be tested against a real database.
-For that we need to install the TestContainers dependency in our `pom.xml`:
-
-[source,xml,indent=0]
-----
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestContainers]
 ----
 
 Execute the test using `./mvnw test`.
