@@ -37,10 +37,12 @@
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
         <!-- end::adocDependencyResteasy[] -->
+        <!-- tag::adocDependencyResteasyJsonB[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jsonb</artifactId>
         </dependency>
+        <!-- end::adocDependencyResteasyJsonB[] -->
         <!-- tag::adocDependencyHibernate[] -->
         <dependency>
             <groupId>io.quarkus</groupId>

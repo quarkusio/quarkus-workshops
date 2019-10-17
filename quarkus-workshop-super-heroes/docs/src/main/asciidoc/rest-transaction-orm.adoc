@@ -166,6 +166,14 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 
 The `HeroResource` Endpoint was bootstrapped with only one method `hello()`.
 We need to add extra methods that will allow CRUD operations on heroes.
+
+But first, our application will use JSON as payload, so let's add the RESTEasy JSON-B extension.
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasyJsonB]
+----
+
 Here are the new methods to add to the `HeroResource` class:
 
 [source]
