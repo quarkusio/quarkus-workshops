@@ -43,6 +43,8 @@ This will add the following dependency in the `pom.xml` file:
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgresql]
 ----
 
+Fomr now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
+The command does accept partial extension names: in this case we used `jdbc-postgresql` instead of the complete `io.quarkus:quarkus-jdbc-postgresql`.
 
 == Hero Entity
 
@@ -58,6 +60,11 @@ So first, make sure to add the Panache JPA and Bean Validation extensions to you
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHibernate]
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyValidator]
 ----
+
+[TIP]
+--
+When you change your POM, don't forget to restart the `quarkus:dev` mode.
+--
 
 To define a Panache entity, simply extend `PanacheEntity`, annotate it with `@Entity` and add your columns as public fields (no need to have getters and setters).
 The `Hero` entity should look like this:
@@ -159,6 +166,14 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 
 The `HeroResource` Endpoint was bootstrapped with only one method `hello()`.
 We need to add extra methods that will allow CRUD operations on heroes.
+
+But first, our application will use JSON as payload, so let's add the RESTEasy JSON-B extension.
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasyJsonB]
+----
+
 Here are the new methods to add to the `HeroResource` class:
 
 [source]

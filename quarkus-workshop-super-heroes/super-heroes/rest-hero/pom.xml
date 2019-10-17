@@ -37,10 +37,12 @@
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
         <!-- end::adocDependencyResteasy[] -->
+        <!-- tag::adocDependencyResteasyJsonB[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jsonb</artifactId>
         </dependency>
+        <!-- end::adocDependencyResteasyJsonB[] -->
         <!-- tag::adocDependencyHibernate[] -->
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -103,10 +105,12 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <version>1.12.2</version>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
+            <version>1.12.2</version>
         </dependency>
         <!-- end::adocDependencyTestContainers[] -->
     </dependencies>
