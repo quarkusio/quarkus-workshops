@@ -118,12 +118,17 @@
             <artifactId>kafka</artifactId>
         </dependency>
 
-        <!-- Banner -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
+        <!-- tag::banner[] -->
         <dependency>
             <groupId>io.quarkus.workshop.super-heroes</groupId>
             <artifactId>extension-banner</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- end::banner[] -->
     </dependencies>
 
     <build>
