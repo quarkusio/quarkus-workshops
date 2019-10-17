@@ -13,7 +13,7 @@ Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
 :xrefstyle: short
 // TOC
 :toc:
-:toclevels: 3
+:toclevels: 2
 :toc-title: Contents
 
 // Introduction
