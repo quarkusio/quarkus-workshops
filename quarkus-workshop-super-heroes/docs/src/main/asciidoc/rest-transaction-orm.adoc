@@ -201,12 +201,13 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[tag=a
 ----
 
 If you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+This is recommended to do so now because test assertions depend on the full data set.
 
 == CRUD Tests in HeroResourceTest
 
 To test the `HeroResource` endpoint, we will be using TestContainers to fire a Postgres database and then test CRUD operations.footnote:[TestContainers https://www.testcontainers.org]
 As you will see, these tests are more complex as they start a Postgres database to allow CRUD operations to be tested against a real database.
-For that we will install the TestContainers dependency in our `pom.xml`:
+For that we will install the TestContainers dependency in our `pom.xml` as well as some extra test dependencies:
 
 [source,xml,indent=0]
 ----
