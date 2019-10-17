@@ -23,6 +23,7 @@ class HeroApplicationLifeCycle {
         LOGGER.info(" | |_| |/ _ \\ '__/ _ \\     / _ \\ | |_) | | ");
         LOGGER.info(" |  _  |  __/ | | (_) |   / ___ \\|  __/| | ");
         LOGGER.info(" |_| |_|\\___|_|  \\___/   /_/   \\_\\_|  |___|");
+        LOGGER.info("                         Powered by Quarkus");
         // tag::adocProfileManager[]
         LOGGER.info("The application HERO is starting with profile " + ProfileManager.getActiveProfile());
         // end::adocProfileManager[]

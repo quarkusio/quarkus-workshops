@@ -22,18 +22,20 @@ Java has always been able to reinvent itself to stay relevant.
 
 But a new revolution is happening right now.
 While for years, most applications were running on huge machines, with lots of CPU and memory, they are now running on the Cloud, in constrained environments, in containers, where the resources are shared.
+Density is the new optimization: crank as many mini-apps (or microservices) as possible per node.
+And scale by adding more instances of an app instead of a more powerful single instance.
 
-The Java ergonomics, designed 20 years ago, does not fit well in this new environment.
+The Java ergonomics, designed 20 years ago, do not fit well in this new environment.
 Java applications were designed to run 24/7 for months, even years.
 The JIT is optimizing the execution over time; the GC manages the memory efficiently...
-But all these features have a cost, and the memory required to run Java applications and startup times are showstoppers.
+But all these features have a cost, and the memory required to run Java applications and startup times are showstoppers when instead of one application, you deploy 20 or 50 microservices.
 The issue is not the JVM itself; it's also the Java ecosystem that needs to be reinvented.
 
 That's where Quarkus, and other projects, enter the game.
-Quarkus proposes to generalize "Ahead of Time" technics.footnote:[Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]
+Quarkus proposes to generalize "Ahead of Time" techniques.footnote:[Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]
 When a Quarkus application is built, some work that usually happens at runtime is moved to the build time.
 Thus, when the application runs, everything has been pre-computed, and all the annotation scanning, XML parsing, and so on won't be executed anymore.
-It has two direct benefits on the startup (a lot faster) and memory consumption.
+It has two direct benefits: on the startup time (a lot faster) and on memory consumption (a lot lower).
 
 image::quarkus-augmentation.png[]
 
