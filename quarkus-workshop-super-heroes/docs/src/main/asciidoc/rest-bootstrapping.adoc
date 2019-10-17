@@ -226,6 +226,8 @@ Then, the `testHelloEndpoint` method checks the HTTP response status code and co
 Notice that these tests use RestAssured, but feel free to use your favorite library.footnote:[RestAssured http://rest-assured.io]
 
 Execute it with `./mvnw test` or from your IDE.
+It fails! It's expected, you changed the output of `HeroResource.hello()` earlier.
+Adjust the test body condition accordingly.
 
 == Packaging and Running the Application
 
@@ -236,7 +238,7 @@ It produces 2 jar files in `/target`:
 * `rest-hero-1.0-SNAPSHOT-runner.jar` : being an executable jar.
 Be aware that it's not an über-jar as the dependencies are copied into the `target/lib` directory.
 
-You can run the application using: `java -jar rest-hero-1.0-SNAPSHOT-runner.jar`.
+You can run the application using: `java -jar target/rest-hero-1.0-SNAPSHOT-runner.jar`.
 
 [NOTE]
 ====
