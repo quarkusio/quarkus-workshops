@@ -212,8 +212,9 @@ This is useful to have a data set ready for the tests or demos.
 include::{github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[tag=adocSQL]
 ----
 
-If you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
-This is recommended to do so now because test assertions depend on the full data set.
+Ok, but that's just a few entries.
+Download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+Now, you have around 500 heroes that will be loaded in the database.
 
 == CRUD Tests in HeroResourceTest
 
