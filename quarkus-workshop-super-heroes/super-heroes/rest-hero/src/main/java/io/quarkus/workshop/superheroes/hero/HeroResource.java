@@ -2,9 +2,12 @@
 package io.quarkus.workshop.superheroes.hero;
 
 // end::adocResource[]
+// tag::adocMetricsImports[]
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
+// tag::endMetricsImports[]
+// tag::adocOpenAPIImports[]
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -12,6 +15,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+// end::adocOpenAPIImports[]
 // tag::adocResource[]
 import org.jboss.logging.Logger;
 
