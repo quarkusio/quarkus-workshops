@@ -37,7 +37,7 @@ public class HeroResourceTest {
     private static final String DEFAULT_PICTURE = "super_baguette.png";
     private static final String UPDATED_PICTURE = "super_baguette_updated.png";
     private static final String DEFAULT_POWERS = "eats baguette really quickly";
-    private static final String UPDATED_POWERS = "eats baguette really quickly (udpated)";
+    private static final String UPDATED_POWERS = "eats baguette really quickly (updated)";
     private static final int DEFAULT_LEVEL = 42;
     private static final int UPDATED_LEVEL = 43;
 

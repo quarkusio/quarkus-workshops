@@ -42,7 +42,7 @@ public class NativeHeroResourceIT {
     private static final String DEFAULT_PICTURE = "super_baguette.png";
     private static final String UPDATED_PICTURE = "super_baguette_updated.png";
     private static final String DEFAULT_POWERS = "eats baguette really quickly";
-    private static final String UPDATED_POWERS = "eats baguette really quickly (udpated)";
+    private static final String UPDATED_POWERS = "eats baguette really quickly (updated)";
 
     private static String heroId;
 
