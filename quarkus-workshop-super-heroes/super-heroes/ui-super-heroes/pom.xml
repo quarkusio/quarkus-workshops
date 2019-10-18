@@ -30,6 +30,13 @@
     <name>Quarkus Workshop :: Super-Heroes :: Super Heroes UI</name>
 
     <properties>
+        <quarkus.version>0.25.0</quarkus.version>
+        <surefire-plugin.version>2.22.0</surefire-plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <node.version>v10.16.3</node.version>
         <npm.version>6.11.3</npm.version>
         <frontend-maven-plugin.version>1.8.0</frontend-maven-plugin.version>
@@ -42,11 +49,31 @@
         </dependency>
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>

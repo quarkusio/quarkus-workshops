@@ -75,9 +75,9 @@ In addition, you can see the `quarkus-maven-plugin` responsible of the packaging
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers;!adocDependencyKafkaBom]
-include::{github-raw}/super-heroes/pom.xml[tags=adocDependencyManagement;!adocDependencyTestBom]
-include::{github-raw}/super-heroes/pom.xml[tags=adocBuild]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocProperties]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyManagement]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocBuild]
 ----
 
 If we focus on the dependencies section, you can see the extension allowing the development of REST applications:
@@ -195,8 +195,8 @@ Because of this, the version of the Surefire Maven Plugin must be set, as the de
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/pom.xml[tags=adocProperties;!adocPropertiesTestcontainers]
-include::{github-raw}/super-heroes/pom.xml[tags=adocBuildSurefire]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocProperties]
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocBuildSurefire]
 ----
 
 We also set the `java.util.logging` system property to make sure tests will use the correct log manager.
