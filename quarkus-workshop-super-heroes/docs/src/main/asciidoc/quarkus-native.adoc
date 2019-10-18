@@ -98,22 +98,24 @@ In the `pom.xml` file, the native profile contains:
 
 This instructs the failsafe-maven-plugin to run integration-test and indicates the location of the produced native executable.
 
-Then, open the src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java`.
+Then, open the src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java` and update it with the following:
 It contains:
 
-[source]
+[source,java]
 ----
-@SubstrateTest
-public class NativeHeroResourceIT extends HeroResourceTest {
-
-    // Execute the same tests but in native mode.
-}
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java[tags=adocResourceIT]
 ----
 
-Notice that `NativeHeroResourceIT` extends from `HeroResourceTest`.
 Instead of using `@QuarkusTest`, it uses the `@SubstrateTest` test runner that starts the application from the native file before the tests.
 The executable is retrieved using the `native.image.path` system property configured in the Failsafe Maven Plugin.
 We extend our previous tests, but you can also implement your own tests.
+
+[NOTE]
+--
+Notice that `NativeHeroResourceIT` does not extend `HeroResourceTest`.
+It is a good practice to share the same tests for native and JVM mode that way but in our case the behavior is a bit different.
+For example, we don not want Swager UI exposed in our native image.
+--
 
 To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw verify -Pnative`:
 

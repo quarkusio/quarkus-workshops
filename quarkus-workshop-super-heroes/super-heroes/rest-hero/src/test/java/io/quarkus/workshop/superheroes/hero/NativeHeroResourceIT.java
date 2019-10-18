@@ -30,10 +30,11 @@ import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
+// tag::adocResourceIT[]
 @SubstrateTest
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class HeroResourceIT {
+public class NativeHeroResourceIT {
 
     private static final String DEFAULT_NAME = "Super Baguette";
     private static final String UPDATED_NAME = "Super Baguette (updated)";
@@ -247,3 +248,4 @@ public class HeroResourceIT {
     }
 
 }
+// end::adocResourceIT[]
