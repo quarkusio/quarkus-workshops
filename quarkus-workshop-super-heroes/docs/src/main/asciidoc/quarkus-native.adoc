@@ -121,7 +121,7 @@ We extend our previous tests, but you can also implement your own tests.
 --
 Notice that `NativeHeroResourceIT` does not extend `HeroResourceTest`.
 It is a good practice to share the same tests for native and JVM mode that way but in our case the behavior is a bit different.
-For example, we don not want Swager UI exposed in our native image.
+For example, we do not want Swagger UI exposed in our native image.
 --
 
 To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw verify -Pnative`:
@@ -149,23 +149,4 @@ Executing [/Users/agoncal/Code/rest-hero/target/rest-hero-1.0-SNAPSHOT-runner, -
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-----
-
-== Displaying the Current Profile
-
-Quarkus supports the notion of configuration profiles.
-These allow you to have multiple configuration in the same file and select between them via a profile name.
-
-By default Quarkus has three profiles, although it is possible to use as many as you like. The default profiles are:
-
-* `dev` - Activated when in development mode (i.e. `quarkus:dev`)
-* `test` - Activated when running tests
-* `prod` - The default profile when not running in development or test mode
-
-Let's change the `HeroApplicationLifeCycle` so it displays the current profile.
-For that, just add a log invoking the `ProfileManager.getActiveProfile()` method:
-
-[source,indent=0]
-----
-include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplicationLifeCycle.java[tags=adocStartupEvent]
 ----
