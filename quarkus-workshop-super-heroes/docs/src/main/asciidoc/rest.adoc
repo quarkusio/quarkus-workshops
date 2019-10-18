@@ -1,5 +1,5 @@
 [[rest]]
-= REST
+= Creating a REST/HTTP Microservice
 
 '''
 
