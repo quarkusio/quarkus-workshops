@@ -70,6 +70,14 @@ Create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files (`rest-hero-1.0-SNAPSHOT.jar` and `rest-hero-1.0-SNAPSHOT-runner.jar`), the build also produces `target/rest-hero-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
 You can run it using: `./target/rest-hero-1.0-SNAPSHOT-runner`.
 
+
+[WARNING]
+====
+Creating a native executable requires a lot of memory and CPU.
+It also takes a few minutes, even for simple application like the Hero microservice.
+Most of the time is spent during the dead code elimination, as it traverse the whole (closed) world.
+====
+
 == Testing the Native Executable
 
 Producing a native executable can lead to a few issues, and so it's also a good idea to run some tests against the application running in the native file.
