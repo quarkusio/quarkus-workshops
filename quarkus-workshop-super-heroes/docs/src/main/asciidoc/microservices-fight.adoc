@@ -17,6 +17,27 @@ Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you 
 include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
 ----
 
+Also add Testcontainers to your `pom.xml`.
+
+[source,xml]
+--
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>1.12.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>1.12.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>test</scope>
+    </dependency>
+--
+
 [TIP]
 .Prefering Web UI
 ====
@@ -167,7 +188,7 @@ To load some SQL statements when Hibernate ORM starts, add the following `import
 include::{github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[tag=adocSQL]
 ----
 
-If you want to add more fights to the database, download the SQL file {github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+We recommend however that you add all of the data set by, downloading the SQL file {github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[import.sql] and copying it under `src/main/resources`, tests do depend on the full set.
 
 == FightResourceTest Test Class
 
