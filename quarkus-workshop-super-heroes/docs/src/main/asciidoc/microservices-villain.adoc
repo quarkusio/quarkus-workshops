@@ -153,6 +153,12 @@ For that, copy the following `VillainResourceTest` class under the `src/test/jav
 include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/VillainResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics]
 ----
 
+[NOTE]
+--
+For the villain microservices, we won't cover the native test, as it will be the same as for the hero microservice.
+So delete the `NativeVillainResourceIT` class.
+--
+
 == Configuration
 
 Notice that this instance of Quarkus listens on port 8084
