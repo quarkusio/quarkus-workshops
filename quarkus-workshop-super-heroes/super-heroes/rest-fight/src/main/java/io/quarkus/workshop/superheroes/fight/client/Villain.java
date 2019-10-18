@@ -18,7 +18,7 @@ public class Villain {
     public String picture;
     public String powers;
 
-    // Getters and setters
+    // toString method
 
     // tag::adocSkip[]
     @Override

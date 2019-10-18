@@ -17,7 +17,7 @@ public class Fighters {
     @NotNull
     public Villain villain;
 
-    // Getters and setters
+    // toString method
 
     // tag::adocSkip[]
     @Override

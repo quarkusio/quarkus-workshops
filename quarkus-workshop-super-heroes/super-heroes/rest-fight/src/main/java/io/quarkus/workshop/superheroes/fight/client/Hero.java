@@ -18,7 +18,7 @@ public class Hero {
     public String picture;
     public String powers;
 
-    // Getters and setters
+    // toString method
 
     // tag::adocSkip[]
     @Override
