@@ -22,6 +22,7 @@ public class VillainApplicationLifeCycle {
         LOGGER.info("  \\ \\ / /| | | |/ _` | | '_ \\     / _ \\ | |_) | | ");
         LOGGER.info("   \\ V / | | | | (_| | | | | |   / ___ \\|  __/| | ");
         LOGGER.info("    \\_/  |_|_|_|\\__,_|_|_| |_|  /_/   \\_\\_|  |___|");
+        LOGGER.info("                         Powered by Quarkus");
         LOGGER.info("The application VILLAIN is starting with profile " + ProfileManager.getActiveProfile());
     }
 
