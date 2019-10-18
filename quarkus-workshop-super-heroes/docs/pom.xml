@@ -94,6 +94,7 @@
                             <preserveDirectories>true</preserveDirectories>
                             <outputDirectory>${project.build.directory}/generated-asciidoc</outputDirectory>
                             <backend>html</backend>
+                            <sourceDocumentName>spine.adoc</sourceDocumentName>
                             <attributes>
                                 <toc>left</toc>
                                 <linkcss>false</linkcss>
