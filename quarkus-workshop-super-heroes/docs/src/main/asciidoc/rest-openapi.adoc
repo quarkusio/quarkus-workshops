@@ -68,6 +68,12 @@ Once your application is started, you can make a request to the default `http://
 include::{github-raw}/super-heroes/rest-hero/openapi-origin.yaml[]
 ----
 
+[NOTE]
+====
+Use cURL to retrieve the document:
+`curl http://localhost:8083/openapi`
+====
+
 This contract lacks of documentation.
 The Eclipse Microprofile OpenAPI allows you to customize the methods of your REST endpoint as well as the application.
 
