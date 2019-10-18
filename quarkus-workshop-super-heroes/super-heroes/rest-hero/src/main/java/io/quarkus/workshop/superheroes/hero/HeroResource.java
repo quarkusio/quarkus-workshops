@@ -1,6 +1,7 @@
 // tag::adocResource[]
 package io.quarkus.workshop.superheroes.hero;
 
+// end::adocResource[]
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -11,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+// tag::adocResource[]
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -23,6 +25,7 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
+// tag::adocResource[]
 @Path("/api/heroes")
 @Produces(APPLICATION_JSON)
 public class HeroResource {
