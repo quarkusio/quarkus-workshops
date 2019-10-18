@@ -128,7 +128,7 @@ We use `quarkus.hibernate-orm.database.generation=drop-and-create` in conjunctio
 This is best to perfectly control your environment and works magic with Quarkus live reload mode:
 your entity changes or any change to your `import.sql` is immediately picked up and the schema updated without restarting the application!
 
-For that, make sure to have the following configuration in your `application.properties`:
+For that, make sure to have the following configuration in your `application.properties` (located in `src/main/resources`):
 
 [source,properties]
 ----
