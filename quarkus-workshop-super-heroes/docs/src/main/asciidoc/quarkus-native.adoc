@@ -110,7 +110,7 @@ Then, open the `src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroRes
 
 [source,java]
 ----
-include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java[tags=adocResourceIT]
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java[tags=adocResourceIT;!adocHealth;!adocMetrics]
 ----
 
 Instead of using `@QuarkusTest`, it uses the `@SubstrateTest` test runner that starts the application from the native file before the tests.
