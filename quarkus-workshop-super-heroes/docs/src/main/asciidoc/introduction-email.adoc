@@ -1,0 +1,17 @@
+[[introduction-email]]
+= Getting Ready for the Quarkus Worshop at Voxxed Microservices
+
+Hi all,
+
+Voxxed Microservices is approaching, and soon we will all be spending an entire day coding some microservices with Quarkus!
+Aren't you excited about it?
+
+But before we start coding, we want you to install a few tools so the workshop goes smoothly.
+As you will see, the microservice architecture that we will be developing is quite rich in terms of technologies:
+We need a few tools installed, repositories to be filled and Docker images to be downloaded.
+So please, find attached a PDF document introducing the workshop, and explaining how to install the needed tools.
+If you have any problem following this guide, just ping us by email and we will help you.
+
+See you soon.
+
+Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
