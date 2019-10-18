@@ -23,6 +23,8 @@ This is quite easy as we just need to add one property in the `application.prope
 include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocPort]
 ----
 
+You would need to restart the application to change the port.
+
 == Injecting Configuration Value
 
 When we persist a new hero we want to multiply its level by a value that can be configured.
