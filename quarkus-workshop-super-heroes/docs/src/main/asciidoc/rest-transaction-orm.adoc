@@ -116,6 +116,11 @@ For that it's just a matter to add the following method to our `Hero.java` entit
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/Hero.java[tags=adocFindRandom]
 ----
 
+[NOTE]
+====
+You would need to add the following import statement if not done automatically by your IDE `import java.util.Random;`
+====
+
 == Configuring Hibernate
 
 Quarkus development mode is really useful for applications that mix front end or services and database access.
