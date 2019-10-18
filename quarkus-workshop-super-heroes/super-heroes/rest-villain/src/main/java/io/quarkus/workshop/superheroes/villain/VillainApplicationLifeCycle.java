@@ -1,7 +1,6 @@
 // tag::adocApplicationLifeCycle[]
 package io.quarkus.workshop.superheroes.villain;
 
-// end::adocApplicationLifeCycle[]
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.runtime.configuration.ProfileManager;
@@ -10,7 +9,6 @@ import org.jboss.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
-// tag::adocApplicationLifeCycle[]
 @ApplicationScoped
 public class VillainApplicationLifeCycle {
 

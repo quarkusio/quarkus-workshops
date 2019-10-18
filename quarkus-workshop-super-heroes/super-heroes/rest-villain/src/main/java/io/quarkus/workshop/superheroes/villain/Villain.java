@@ -34,7 +34,6 @@ public class Villain extends PanacheEntity {
         return findAll().page(randomVillain, 1).firstResult();
     }
 
-    // toString method
     // tag::adocSkip[]
     @Override
     public String toString() {
