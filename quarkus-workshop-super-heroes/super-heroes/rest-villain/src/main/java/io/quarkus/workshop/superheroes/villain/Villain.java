@@ -1,7 +1,6 @@
 // tag::adocEntity[]
 package io.quarkus.workshop.superheroes.villain;
 
-// end::adocEntity[]
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Random;
 
-// tag::adocEntity[]
 @Entity
 @Schema(description = "The villain fighting against the hero")
 public class Villain extends PanacheEntity {
