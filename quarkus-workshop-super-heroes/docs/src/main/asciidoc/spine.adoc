@@ -41,6 +41,8 @@ include::quarkus-augmentation.adoc[leveloffset=+2]
 <<<
 include::quarkus-lifecycle.adoc[leveloffset=+2]
 <<<
+include::quarkus-profile.adoc[leveloffset=+2]
+<<<
 include::quarkus-native.adoc[leveloffset=+2]
 
 // Microservices
