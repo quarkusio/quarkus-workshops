@@ -28,10 +28,10 @@ public class Villain extends PanacheEntity {
     public String powers;
 
     public static Villain findRandom() {
-        long countVillains = Villain.count();
+        long countVillains = count();
         Random random = new Random();
         int randomVillain = random.nextInt((int) countVillains);
-        return Villain.findAll().page(randomVillain, 1).firstResult();
+        return findAll().page(randomVillain, 1).firstResult();
     }
 
     // toString method
