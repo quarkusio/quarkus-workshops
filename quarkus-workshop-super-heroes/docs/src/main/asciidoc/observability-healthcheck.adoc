@@ -9,27 +9,34 @@ The MicroProfile Health allows applications to provide information about their s
 In this module we will add an extra subdirectory with two classes to handle the Health Check.
 You will end-up with the following directory structure:
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-└── rest-hero/
-    ├── pom.xml
-    └── src
-        └── main
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── hero
-                                    ├── Hero.java
-                                    ├── HeroApplication.java
-                                    ├── HeroApplicationLifeCycle.java
-                                    ├── HeroResource.java
-                                    ├── HeroService.java
-                                    └── health
-                                        ├── DatabaseConnectionHealthCheck.java
-                                        └── PingHeroResourceHealthCheck.java
+@startsalt
+{
+{
+T
+super-heroes
++  rest-hero
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  Hero.java
+++++++++++  HeroApplication.java
+++++++++++  HeroApplicationLifeCycle.java
+++++++++++  HeroResource.java
+++++++++++  HeroService.java
+++++++++++  health
++++++++++++  DatabaseConnectionHealthCheck.java
++++++++++++  PingHeroResourceHealthCheck.java
+++  pom.xml
+}
+}
+@endsalt
 ----
 
 == Installing the Health Dependency

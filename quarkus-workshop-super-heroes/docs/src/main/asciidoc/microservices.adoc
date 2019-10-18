@@ -14,24 +14,31 @@ include::plantuml/microservices-physical-architecture.puml[]
 
 Each microservice is developed in it's own directory.
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-├── infrastructure   All the needed infrastructure (Postgres, Kafka...)
-├── rest-fight       REST API allowing super heroes to fight
-│   └── src
-│       ├── main
-│       └── test
-├── rest-hero        REST API for CRUD operations on Heroes
-│   └── src
-│       ├── main
-│       └── test
-├── rest-villain     REST API for CRUD operations on Villains
-│   └── src
-│       ├── main
-│       └── test
-└── ui-super-heroes  Angular application so we can fight visually
-    └── src
-        ├── app
-        └── main
+@startsalt
+{
+{
+T
+super-heroes
++  infrastructure
++  rest-fight
+++  src
++++  main
++++  test
++  rest-hero
+++  src
++++  main
++++  test
++  rest-villain
+++  src
++++  main
++++  test
++  ui-super-heroes
+++  src
++++  app
++++  main
+}
+}
+@endsalt
 ----

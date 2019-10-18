@@ -25,39 +25,46 @@ Instead of the Maven command, you can use https://code.quarkus.io.
 
 Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-└── rest-hero/
-   ├── mvnw
-   ├── mvnw.cmd
-   ├── pom.xml
-   └── src
-       ├── main
-       │   ├── docker
-       │   │   ├── Dockerfile.jvm
-       │   │   └── Dockerfile.native
-       │   ├── java
-       │   │   └── io
-       │   │       └── quarkus
-       │   │           └── workshop
-       │   │               └── superheroes
-       │   │                   └── hero
-       │   │                       └── HeroResource.java
-       │   └── resources
-       │       ├── META-INF
-       │       │   └── resources
-       │       │       └── index.html
-       │       └── application.properties
-       └── test
-           └── java
-               └── io
-                   └── quarkus
-                       └── workshop
-                           └── superheroes
-                               └── hero
-                                   ├── HeroResourceTest.java
-                                   └── NativeHeroResourceIT.java
+@startsalt
+{
+{
+T
+super-heroes
++  rest-hero
+++  src
++++  main
+++++  docker
++++++  Dockerfile.jvm
++++++  Dockerfile.native
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  HeroResource.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  HeroResourceTest.java
+++++++++++  NativeHeroResourceIT.java
+++  mvnw
+++  mvnw.cmd
+++  pom.xml
+}
+}
+@endsalt
 ----
 
 The Maven archetype generates the following `rest-hero` sub-directory:

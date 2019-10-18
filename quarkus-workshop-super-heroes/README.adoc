@@ -62,3 +62,74 @@ mvn clean compile quarkus:dev
 * https://github.com/agoncal/baking-microservice-pie
 * https://forge.jboss.org/document/hands-on-lab
 * https://bit.ly/forge-hol
+
+== Note for ourselves
+
+We can use http://plantuml.com/en/salt[Salt] to generate an image from a `tree` directory structure.
+We need a few search and replaces, but we can easily go from :
+
+[source,text]
+----
+super-heroes/
++  infrastructure   All the needed infrastructure (Postgres, Kafka...)
++  rest-fight       REST API allowing super heroes to fight
+│   └── src
+│       +  main
+│       └── test
++  rest-hero        REST API for CRUD operations on Heroes
+│   └── src
+│       +  main
+│       └── test
++  rest-villain     REST API for CRUD operations on Villains
+│   └── src
+│       +  main
+│       └── test
+└── ui-super-heroes  Angular application so we can fight visually
+    └── src
+        +  app
+        └── main
+----
+
+to :
+
+[source,text]
+----
+@startsalt
+{
+{
+T
++ infrastructure
++ rest-fight
+++ src
+++ main
+++ test
++ rest-hero
+++ src
+++ main
+++ test
++ rest-villain
+++ src
+++ main
+++ test
++ ui-super-heroes
++ src
++ app
++ main
+}
+}
+@endsalt
+----
+
+Here is the sequence of search&replace to easily go from one format to another one:
+
+[source,text]
+----
+// Change the characters with +
+Replace `/` with ``
+Replace `├──` with `+ `
+Replace `└──` with `+ `
+Replace `│` with ` `
+// Might have some special character (replace it with a blank)
+Replace ' ' with ' '
+Replace `    ` with `+`
+----

@@ -27,44 +27,51 @@ Instead of the Maven command, you can use https://code.quarkus.io.
 
 At the end you should have the following directory structure:
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-└── rest-fight/
-    ├── mvnw
-    ├── mvnw.cmd
-    ├── pom.xml
-    └── src
-        ├── main
-        │   ├── docker
-        │   │   ├── Dockerfile.jvm
-        │   │   └── Dockerfile.native
-        │   ├── java
-        │   │   └── io
-        │   │       └── quarkus
-        │   │           └── workshop
-        │   │               └── superheroes
-        │   │                   └── fight
-        │   │                       ├── Fight.java
-        │   │                       ├── FightApplication.java
-        │   │                       ├── FightResource.java
-        │   │                       ├── FightService.java
-        │   │                       └── Fighters.java
-        │   │                           └── KafkaWriter.java
-        │   └── resources
-        │       ├── META-INF
-        │       │   └── resources
-        │       │       └── index.html
-        │       ├── application.properties
-        │       └── import.sql
-        └── test
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── fight
-                                    └── FightResourceTest.java
+@startsalt
+{
+{
+T
+super-heroes
++  rest-fight
+++  src
++++  main
+++++  docker
++++++  Dockerfile.jvm
++++++  Dockerfile.native
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  fight
+++++++++++  Fight.java
+++++++++++  FightApplication.java
+++++++++++  FightResource.java
+++++++++++  FightService.java
+++++++++++  Fighters.java
+++++++++++  KafkaWriter.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++++  import.sql
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  fight
+++++++++++  FightResourceTest.java
+++  mvnw
+++  mvnw.cmd
+++  pom.xml
+}
+}
+@endsalt
 ----
 
 == Fight Entity

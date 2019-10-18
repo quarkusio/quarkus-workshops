@@ -31,43 +31,50 @@ Instead of the Maven command, you can use https://code.quarkus.io.
 
 At the end you should have the following directory structure:
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-└── rest-villain/
-    ├── mvnw
-    ├── mvnw.cmd
-    ├── pom.xml
-    └── src
-        ├── main
-        │   ├── docker
-        │   │   ├── Dockerfile.jvm
-        │   │   └── Dockerfile.native
-        │   ├── java
-        │   │   └── io
-        │   │       └── quarkus
-        │   │           └── workshop
-        │   │               └── superheroes
-        │   │                   └── villain
-        │   │                       ├── Villain.java
-        │   │                       ├── VillainApplication.java
-        │   │                       ├── VillainApplicationLifeCycle.java
-        │   │                       ├── VillainResource.java
-        │   │                       └── VillainService.java
-        │   └── resources
-        │       ├── META-INF
-        │       │   └── resources
-        │       │       └── index.html
-        │       ├── application.properties
-        │       └── import.sql
-        └── test
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── villain
-                                    └── VillainResourceTest.java
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villain
+++  src
++++  main
+++++  docker
++++++  Dockerfile.jvm
++++++  Dockerfile.native
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainApplication.java
+++++++++++  VillainApplicationLifeCycle.java
+++++++++++  VillainResource.java
+++++++++++  VillainService.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++++  import.sql
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  VillainResourceTest.java
+++  mvnw
+++  mvnw.cmd
+++  pom.xml
+}
+}
+@endsalt
 ----
 
 == Villain Entity

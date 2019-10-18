@@ -58,35 +58,42 @@ This script creates the structure for the banner extension:
 
 The final structure of the extension developed in this section is the following:
 
-[source]
+[plantuml]
 ----
-.
-├── deployment
-│   ├── pom.xml
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── io
-│   │   │   │       └── quarkus
-│   │   │   │           └── workshop
-│   │   │   │               └── superheroes
-│   │   │   │                   └── banner
-│   │   │   │                       └── deployment
-│   │   │   │                           ├── BannerConfig.java
-│   │   │   │                           └── BannerProcessor.java
-├── pom.xml
-├── runtime
-│   ├── pom.xml
-│   ├── src
-│   │   └── main
-│   │       └── java
-│   │           └── io
-│   │               └── quarkus
-│   │                   └── workshop
-│   │                       └── superheroes
-│   │                           └── banner
-│   │                               └── runtime
-│   │                                   └── BannerRecorder.java
+@startsalt
+{
+{
+T
+extension-banner
++  deployment
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  banner
+++++++++++  deployment
++++++++++++  BannerConfig.java
++++++++++++  BannerProcessor.java
+++  pom.xml
++  runtime
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  banner
+++++++++++  runtime
++++++++++++  BannerRecorder.java
+++  pom.xml
++  pom.xml
+}
+}
+@endsalt
 ----
 
 

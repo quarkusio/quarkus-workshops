@@ -42,56 +42,84 @@ This infrastructure starts all these services, so you don't have to worry about 
 In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
 
-[source,text]
+[plantuml]
 ----
+@startsalt
+{
+{
+T
 quarkus-workshop-super-heroes
-├── extensions             The Quarkus extensions
-└── super-heroes           The entire Super Hero application
++ extensions             The Quarkus extensions
++ super-heroes         The entire Super Hero application
+}
+}
+@endsalt
 ----
 
 === Super Heroes Application
 
 Under the `super-heroes` directory you will find the entire Super Hero application spread throughout a set of subdirectories, each one containing a microservice or some tooling.
 
-[source,text]
+[plantuml]
 ----
+@startsalt
+{
+{
+T
 quarkus-workshop-super-heroes
-└── super-heroes
-    ├── infrastructure     All the needed infrastructure (Postgres, Kafka...)
-    ├── event-statistics   UI and application dealing with fight statistics
-    ├── load-super-heroes  Stress tool loading heroes, villains and fights
-    ├── rest-fight         REST API allowing super heroes to fight
-    ├── rest-hero          REST API for CRUD operations on Heroes
-    ├── rest-villain       REST API for CRUD operations on Villains
-    └── ui-super-heroes    Angular application so we can fight visually
++ super-heroes
+++ infrastructure          All the needed infrastructure (Postgres, Kafka...)
+++ event-statistics        UI and application dealing with fight statistics
+++ load-super-heroes  Stress tool loading heroes, villains and fights
+++ rest-fight                REST API allowing super heroes to fight
+++ rest-hero                REST API for CRUD operations on Heroes
+++ rest-villain              REST API for CRUD operations on Villains
+++ ui-super-heroes     Angular application so we can fight visually
+}
+}
+@endsalt
 ----
 
 Most of thses subdirectories are Maven projects and follow the Maven directory structure:
 
-[source,text]
+[plantuml]
 ----
+@startsalt
+{
+{
+T
 quarkus-workshop-super-heroes
-└── super-heroes
-    └── rest-hero
-        └── src
-            ├── main
-            │   ├── docker
-            │   ├── java
-            │   └── resources
-            └── test
-                └── java
++  super-heroes
+++ rest-hero
++++ src
+++++  main
++++++  docker
++++++  java
++++++  resources
+++++  test
++++++  java
+}
+}
+@endsalt
 ----
 
 === Quarkus Extensions
 
 Under the `extensions` directory you will find quarkus extensions.
 
-[source,text]
+[plantuml]
 ----
+@startsalt
+{
+{
+T
 quarkus-workshop-super-heroes
-└── extensions
-    ├── extension-banner          Extension displaying a startup banner
-    └── extension-fault-injector  Injects network latency and HTTP faults
++  extensions
+++  extension-banner           Extension displaying a startup banner
+++  extension-fault-injector   Injects network latency and HTTP faults
+}
+}
+@endsalt
 ----
 
 === Script Creating the Directory Structure

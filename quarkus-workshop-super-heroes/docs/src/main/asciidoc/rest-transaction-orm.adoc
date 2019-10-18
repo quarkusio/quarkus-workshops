@@ -9,22 +9,29 @@ In this module we will create a Hero entity and persist/update/delete/retrieve i
 In this module we will add extra classes to the Hero API project.
 You will end-up with the following directory structure:
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-└── rest-hero/
-    ├── pom.xml
-    └── src
-        └── main
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── hero
-                                    ├── Hero.java
-                                    ├── HeroResource.java
-                                    └── HeroService.java
+@startsalt
+{
+{
+T
+super-heroes
++  rest-hero
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  Hero.java
+++++++++++  HeroResource.java
+++++++++++  HeroService.java
+++  pom.xml
+}
+}
+@endsalt
 ----
 
 == Installing the PostgreSQL Dependency

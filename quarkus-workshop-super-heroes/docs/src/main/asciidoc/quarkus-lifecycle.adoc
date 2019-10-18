@@ -10,24 +10,31 @@ In this module we will display a banner in the logs once the Hero API has starte
 In this module we will add an extra class (`HeroApplicationLifeCycle`) to handle the Hero API lifecycle.
 You will end-up with the following directory structure:
 
-[source,text]
+[plantuml]
 ----
-super-heroes/
-└── rest-hero/
-    ├── pom.xml
-    └── src
-        └── main
-            └── java
-                └── io
-                    └── quarkus
-                        └── workshop
-                            └── superheroes
-                                └── hero
-                                    ├── Hero.java
-                                    ├── HeroApplication.java
-                                    ├── HeroApplicationLifeCycle.java
-                                    ├── HeroResource.java
-                                    └── HeroService.java
+@startsalt
+{
+{
+T
+super-heroes
++  rest-hero
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  Hero.java
+++++++++++  HeroApplication.java
+++++++++++  HeroApplicationLifeCycle.java
+++++++++++  HeroResource.java
+++++++++++  HeroService.java
+++  pom.xml
+}
+}
+@endsalt
 ----
 
 == Displaying a Banner
