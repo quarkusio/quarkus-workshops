@@ -7,7 +7,7 @@ This time you will just download an Angular application, install it, and run it 
 
 == Downloading the Web Application
 
-Go to {github-raw}/super-heroes/ui-super-heroes and download the entire code into the `ui-super-heroes` directory.
+Download the zip file {github-raw}/super-heroes/ui-super-heroes/ui-super-heroes.zip and unzip the entire code into your `ui-super-heroes` directory.
 Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
 Notice that there is a `pom.xml` file.
 This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven.

@@ -7,7 +7,7 @@ You will download the load application, install it and run it.
 
 == Downloading the Load Application
 
-Go to {github-raw}/super-heroes/load-super-heroes and download the entire code into the `load-super-heroes` directory.
+Download the zip file {github-raw}/super-heroes/load-super-heroes/load-super-heroes.zip and unzip the entire code into your `load-super-heroes` directory.
 It is a Maven application, so you will find a `pom.xml` file with all the dependencies.
 This application is not a Quarkus application, just a Java app that simulates users interacting with the system so it generates some load.
 

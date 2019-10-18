@@ -18,7 +18,7 @@ Also add the following dependencies:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/rest-villain/pom.xml.sh[tag=adocDependencyTest]
+include::{github-raw}/super-heroes/rest-villain/pom.xml[tag=adocDependencyTest]
 ----
 
 [TIP]

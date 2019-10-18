@@ -20,7 +20,6 @@ out/
 .idea_modules/
 
 # Package Files #
-*.zip
 *.tar.gz
 *.rar
 **/target

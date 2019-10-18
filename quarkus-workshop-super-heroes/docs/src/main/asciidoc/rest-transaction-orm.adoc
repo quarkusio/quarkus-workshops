@@ -240,7 +240,7 @@ The test should pass.
 To execute the application we now need a database (and later one we will need Prometheus and Kafka).
 Let's use Docker and docker compose to ease the installation of such infrastructure.
 
-Go to {github-raw}/super-heroes/infrastructure and download the entire code into the `infrastructure` directory.
+Download the zip file {github-raw}/super-heroes/infrastructure/infrastructure.zip and unzip the entire code into your `infrastructure` directory.
 Here, you will find a `docker-compose.yaml` file which defines all the needed Docker images.
 Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases (the `monitoring` directory will be explained later).
 
