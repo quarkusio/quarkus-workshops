@@ -44,6 +44,11 @@ Edit the `HeroService`, and introduce the following configuration properties:
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tag=adocConfigProperty]
 ----
 
+[NOTE]
+====
+You may need to add the following import statement if your IDE does not do it automatically: `import org.eclipse.microprofile.config.inject.ConfigProperty;`
+====
+
 * If you do not provide a value for this property, the application startup fails with `javax.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`
 * A default value (property `defaultValue`) is injected if the configuration does not provide a value for `level.multiplier`
 
