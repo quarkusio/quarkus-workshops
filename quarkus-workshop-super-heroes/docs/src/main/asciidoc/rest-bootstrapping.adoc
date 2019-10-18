@@ -203,6 +203,7 @@ Because of this, the version of the Surefire Maven Plugin must be set, as the de
 [source,xml,indent=0]
 ----
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocProperties]
+<!-- ------- -->
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocBuildSurefire]
 ----
 
