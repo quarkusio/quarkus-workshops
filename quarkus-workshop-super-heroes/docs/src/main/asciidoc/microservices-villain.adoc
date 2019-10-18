@@ -135,7 +135,8 @@ To load some SQL statements when Hibernate ORM starts, add the following `import
 include::{github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[tag=adocSQL]
 ----
 
-If you want to add more heroes to the database, download the SQL file {github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+It is recommended however do download the full data set as the tests will be adjusted for it.
+Download the SQL file {github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 
 == VillainResourceTest Test Class
 
@@ -169,7 +170,7 @@ Once the application is started, create a new villain with the following cUrl co
 $ curl -X POST -d  '{"level":2, "name":"Darth Vader", "powers":"Darkness, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
 
 < HTTP/1.1 201 Created
-< Location: http://localhost:8084/api/villains/562
+< Location: http://localhost:8084/api/villains/582
 ----
 
 The cUrl command returns the location of the newly created villain.
@@ -177,11 +178,11 @@ Take this URL and do an HTTP GET on it.
 
 [source,shell]
 ----
-$ curl http://localhost:8084/api/villains/562 | jq
+$ curl http://localhost:8084/api/villains/582 | jq
 
 {
-  "id": 562,
-  "level": 6,
+  "id": 582,
+  "level": 4,
   "name": "Darth Vader",
   "powers": "Darkness, Longevity"
 }
