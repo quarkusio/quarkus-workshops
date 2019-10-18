@@ -16,24 +16,10 @@ include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
 
 Also add the following dependencies:
 
-[source,xml]
---
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>1.12.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>1.12.2</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <scope>test</scope>
-    </dependency>
---
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-villain/pom.xml.sh[tag=adocDependencyTest]
+----
 
 [TIP]
 .Prefering Web UI
