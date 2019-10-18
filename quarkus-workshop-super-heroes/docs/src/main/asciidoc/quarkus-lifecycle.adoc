@@ -55,3 +55,9 @@ Thanks to the CDI `@Observes`, the `HeroApplicationLifeCycle` is invoked:
 
 Run the application with: `./mvnw compile quarkus:dev`, the banner is printed to the console.
 When the application is stopped, the second log message is printed.
+
+[NOTE]
+====
+If your application was still running, just send an HTTP request, like go to http://localhost:8083.
+As the application code changed, the application is restarted.
+====
