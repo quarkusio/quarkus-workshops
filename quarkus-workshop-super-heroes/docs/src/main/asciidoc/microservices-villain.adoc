@@ -4,6 +4,13 @@
 New microservice, new project!
 In this section we will develop a Villain REST Endpoint which is *really* similar to the Hero Endpoint (and remember, copy/paste is your best friend).
 
+[TIP]
+====
+If you are running out of time, or if you can't be bothered in typing all the code of the Villain REST Endpoint, you can also download the code.
+Download the zip file {github-raw}/super-heroes/rest-villain/rest-villain.zip and unzip the entire code into your `rest-villain` directory.
+If you do that, you can skip entirely this chapter and go straight to <<microservices-fight#microservices-fight>>.
+====
+
 == Bootstrapping the Villain REST Endpoint
 
 Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
