@@ -13,29 +13,13 @@ import javax.validation.constraints.NotNull;
 public class Fighters {
 
     @NotNull
-    private Hero hero;
+    public Hero hero;
     @NotNull
-    private Villain villain;
+    public Villain villain;
 
     // Getters and setters
 
     // tag::adocSkip[]
-    public Hero getHero() {
-        return hero;
-    }
-
-    public void setHero(Hero hero) {
-        this.hero = hero;
-    }
-
-    public Villain getVillain() {
-        return villain;
-    }
-
-    public void setVillain(Villain villain) {
-        this.villain = villain;
-    }
-
     @Override
     public String toString() {
         return "Fighters{" +

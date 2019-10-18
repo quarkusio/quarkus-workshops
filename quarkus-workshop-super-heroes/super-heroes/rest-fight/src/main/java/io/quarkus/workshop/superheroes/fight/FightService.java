@@ -62,10 +62,10 @@ public class FightService {
         int heroAdjust = random.nextInt(20);
         int villainAdjust = random.nextInt(20);
 
-        if ((fighters.getHero().getLevel() + heroAdjust)
-            > (fighters.getVillain().getLevel() + villainAdjust)) {
+        if ((fighters.hero.level + heroAdjust)
+            > (fighters.villain.level + villainAdjust)) {
             fight = heroWon(fighters);
-        } else if (fighters.getHero().getLevel() < fighters.getVillain().getLevel()) {
+        } else if (fighters.hero.level < fighters.villain.level) {
             fight = villainWon(fighters);
         } else {
             fight = random.nextBoolean() ? heroWon(fighters) : villainWon(fighters);
@@ -82,12 +82,12 @@ public class FightService {
     private Fight heroWon(Fighters fighters) {
         LOGGER.info("Yes, Hero won :o)");
         Fight fight = new Fight();
-        fight.winnerName = fighters.getHero().getName();
-        fight.winnerPicture = fighters.getHero().getPicture();
-        fight.winnerLevel = fighters.getHero().getLevel();
-        fight.loserName = fighters.getVillain().getName();
-        fight.loserPicture = fighters.getVillain().getPicture();
-        fight.loserLevel = fighters.getVillain().getLevel();
+        fight.winnerName = fighters.hero.name;
+        fight.winnerPicture = fighters.hero.picture;
+        fight.winnerLevel = fighters.hero.level;
+        fight.loserName = fighters.villain.name;
+        fight.loserPicture = fighters.villain.picture;
+        fight.loserLevel = fighters.villain.level;
         fight.winnerTeam = "heroes";
         fight.loserTeam = "villains";
         return fight;
@@ -96,12 +96,12 @@ public class FightService {
     private Fight villainWon(Fighters fighters) {
         LOGGER.info("Gee, Villain won :o(");
         Fight fight = new Fight();
-        fight.winnerName = fighters.getVillain().getName();
-        fight.winnerPicture = fighters.getVillain().getPicture();
-        fight.winnerLevel = fighters.getVillain().getLevel();
-        fight.loserName = fighters.getHero().getName();
-        fight.loserPicture = fighters.getHero().getPicture();
-        fight.loserLevel = fighters.getHero().getLevel();
+        fight.winnerName = fighters.villain.name;
+        fight.winnerPicture = fighters.villain.picture;
+        fight.winnerLevel = fighters.villain.level;
+        fight.loserName = fighters.hero.name;
+        fight.loserPicture = fighters.hero.picture;
+        fight.loserLevel = fighters.hero.level;
         fight.winnerTeam = "villains";
         fight.loserTeam = "heroes";
         return fight;
@@ -112,8 +112,8 @@ public class FightService {
         Hero hero = findRandomHero();
         Villain villain = findRandomVillain();
         Fighters fighters = new Fighters();
-        fighters.setHero(hero);
-        fighters.setVillain(villain);
+        fighters.hero = hero;
+        fighters.villain = villain;
         return fighters;
     }
 
@@ -136,20 +136,20 @@ public class FightService {
     Hero fallbackRandomHero() {
         LOGGER.warn("Falling back on Hero");
         Hero hero = new Hero();
-        hero.setName("Fallback hero");
-        hero.setPicture("https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero");
-        hero.setPowers("Fallback hero powers");
-        hero.setLevel(42);
+        hero.name = "Fallback hero";
+        hero.picture = "https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero";
+        hero.powers = "Fallback hero powers";
+        hero.level = 42;
         return hero;
     }
 
     Villain fallbackRandomVillain() {
         LOGGER.warn("Falling back on Villain");
         Villain villain = new Villain();
-        villain.setName("Fallback villain");
-        villain.setPicture("https://dummyimage.com/280x380/b22222/ffffff&text=Fallback+Villain");
-        villain.setPowers("Fallback villain powers");
-        villain.setLevel(42);
+        villain.name = "Fallback villain";
+        villain.picture = "https://dummyimage.com/280x380/b22222/ffffff&text=Fallback+Villain";
+        villain.powers = "Fallback villain powers";
+        villain.level = 42;
         return villain;
     }
     // end::adocFallback[]

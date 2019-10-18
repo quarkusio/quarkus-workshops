@@ -155,8 +155,8 @@ public class FightResourceTest {
     @Test
     void shouldNotAddInvalidItem() {
         Fighters fighters = new Fighters();
-        fighters.setHero(null);
-        fighters.setVillain(null);
+        fighters.hero = null;
+        fighters.villain = null;
 
         given()
             .body(fighters)
@@ -182,16 +182,16 @@ public class FightResourceTest {
     @Order(2)
     void shouldAddAnItem() {
         Hero hero = new Hero();
-        hero.setName(DEFAULT_WINNER_NAME);
-        hero.setPicture(DEFAULT_WINNER_PICTURE);
-        hero.setLevel(DEFAULT_WINNER_LEVEL);
+        hero.name = DEFAULT_WINNER_NAME;
+        hero.picture = DEFAULT_WINNER_PICTURE;
+        hero.level = DEFAULT_WINNER_LEVEL;
         Villain villain = new Villain();
-        villain.setName(DEFAULT_LOSER_NAME);
-        villain.setPicture(DEFAULT_LOSER_PICTURE);
-        villain.setLevel(DEFAULT_LOSER_LEVEL);
+        villain.name = DEFAULT_LOSER_NAME;
+        villain.picture = DEFAULT_LOSER_PICTURE;
+        villain.level = DEFAULT_LOSER_LEVEL;
         Fighters fighters = new Fighters();
-        fighters.setHero(hero);
-        fighters.setVillain(villain);
+        fighters.hero = hero;
+        fighters.villain = villain;
 
         fightId = given()
             .body(fighters)

@@ -21,10 +21,10 @@ public class MockHeroService implements HeroService {
     @Override
     public Hero findRandomHero() {
         Hero hero = new Hero();
-        hero.setName(DEFAULT_HERO_NAME);
-        hero.setPicture(DEFAULT_HERO_PICTURE);
-        hero.setPowers(DEFAULT_HERO_POWERS);
-        hero.setLevel(DEFAULT_HERO_LEVEL);
+        hero.name = DEFAULT_HERO_NAME;
+        hero.picture = DEFAULT_HERO_PICTURE;
+        hero.powers = DEFAULT_HERO_POWERS;
+        hero.level = DEFAULT_HERO_LEVEL;
         return hero;
     }
 }

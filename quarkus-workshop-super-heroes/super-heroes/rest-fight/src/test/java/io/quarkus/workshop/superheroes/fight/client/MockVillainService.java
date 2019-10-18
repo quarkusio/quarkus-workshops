@@ -21,10 +21,10 @@ public class MockVillainService implements VillainService {
     @Override
     public Villain findRandomVillain() {
         Villain villain = new Villain();
-        villain.setName(DEFAULT_VILLAIN_NAME);
-        villain.setPicture(DEFAULT_VILLAIN_PICTURE);
-        villain.setPowers(DEFAULT_VILLAIN_POWERS);
-        villain.setLevel(DEFAULT_VILLAIN_LEVEL);
+        villain.name = DEFAULT_VILLAIN_NAME;
+        villain.picture = DEFAULT_VILLAIN_PICTURE;
+        villain.powers = DEFAULT_VILLAIN_POWERS;
+        villain.level = DEFAULT_VILLAIN_LEVEL;
         return villain;
     }
 }

@@ -11,48 +11,16 @@ import javax.validation.constraints.NotNull;
 public class Villain {
 
     @NotNull
-    private String name;
+    public String name;
     @NotNull
-    private int level;
+    public int level;
     @NotNull
-    private String picture;
-    private String powers;
+    public String picture;
+    public String powers;
 
     // Getters and setters
 
     // tag::adocSkip[]
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public String getPowers() {
-        return powers;
-    }
-
-    public void setPowers(String powers) {
-        this.powers = powers;
-    }
-
     @Override
     public String toString() {
         return "Villain{" +
