@@ -34,4 +34,5 @@ Package your application with `mvn package`, and start it with `java -Dquarkus.p
 You will see that the `foo` profile is enabled.
 As not overridden, the `level.multiplier` property has the value 3.
 
-
+Profiles are very useful to customize the configuration per environment.
+We are going to see an example of such customization in the next section.
