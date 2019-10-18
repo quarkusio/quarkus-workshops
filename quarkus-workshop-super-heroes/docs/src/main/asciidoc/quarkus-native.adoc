@@ -145,25 +145,32 @@ To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw
 
 [source]
 ----
-[rest-hero-1.0-SNAPSHOT-runner:43534]    (compile):   8,088.33 ms
-[rest-hero-1.0-SNAPSHOT-runner:43534]      compile:  12,693.01 ms
-[rest-hero-1.0-SNAPSHOT-runner:43534]        image:   1,980.24 ms
-[rest-hero-1.0-SNAPSHOT-runner:43534]        write:     592.88 ms
-[rest-hero-1.0-SNAPSHOT-runner:43534]      [total]:  42,691.42 ms
+[INFO] --- maven-failsafe-plugin:2.22.0:integration-test (default) @ rest-hero ---
 [INFO]
 [INFO] -------------------------------------------------------
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running io.quarkus.workshop.superheroes.hero.NativeHeroResourceIT
-Executing [/Users/agoncal/Code/rest-hero/target/rest-hero-1.0-SNAPSHOT-runner, -Dquarkus.http.port=8081, -Dtest.url=http://localhost:8081, -Dquarkus.log.file.path=target/quarkus.log]
-2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Quarkus 0.25.0 started in 0.012s. Listening on: http://0.0.0.0:8081
-2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Profile prod activated.
-2019-10-04 15:55:59,044 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
+...
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)   _   _                      _    ____ ___
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  | | | | ___ _ __ ___       / \  |  _ \_ _|
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  | |_| |/ _ \ '__/ _ \     / _ \ | |_) | |
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  |  _  |  __/ | | (_) |   / ___ \|  __/| |
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  |_| |_|\___|_|  \___/   /_/   \_\_|  |___|
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)                          Powered by Quarkus
+...
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.068 s - in io.quarkus.workshop.superheroes.hero.NativeHeroResourceIT
 [INFO]
 [INFO] Results:
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO]
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- maven-failsafe-plugin:2.22.0:verify (default) @ rest-hero ---
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  05:29 min
+[INFO] Finished at: 2019-10-18T20:43:03+02:00
 [INFO] ------------------------------------------------------------------------
 ----
