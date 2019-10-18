@@ -3,7 +3,7 @@ package io.quarkus.workshop.superheroes.hero;
 
 // end::adocTransactional[]
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-
+// tag::adocTransactional[]
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -12,7 +12,6 @@ import java.util.List;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-// tag::adocTransactional[]
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class HeroService {
