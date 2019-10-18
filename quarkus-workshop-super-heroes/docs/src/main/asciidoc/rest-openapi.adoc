@@ -90,7 +90,7 @@ This is what the `HeroResource` endpoint looks like once annotated
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocMetrics]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;adocOpenAPIImports;!adocMetrics;!adocMetricsImports]
 ----
 
 === Customizing the Application
