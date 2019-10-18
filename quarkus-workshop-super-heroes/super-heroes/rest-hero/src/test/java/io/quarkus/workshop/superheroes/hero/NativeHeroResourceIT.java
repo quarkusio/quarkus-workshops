@@ -1,4 +1,4 @@
-
+// tag::adocResourceIT[]
 package io.quarkus.workshop.superheroes.hero;
 
 import com.github.dockerjava.api.model.ExposedPort;
@@ -30,7 +30,6 @@ import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-// tag::adocResourceIT[]
 @SubstrateTest
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
