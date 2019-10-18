@@ -1,17 +1,13 @@
 // tag::adocResourceTest[]
 package io.quarkus.workshop.superheroes.villain;
 
-// end::adocResourceTest[]
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -28,7 +24,6 @@ import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-// tag::adocResourceTest[]
 @QuarkusTest
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -41,7 +36,7 @@ public class VillainResourceTest {
     private static final String DEFAULT_PICTURE = "super_chocolatine.png";
     private static final String UPDATED_PICTURE = "super_chocolatine_updated.png";
     private static final String DEFAULT_POWERS = "does not eat pain au chocolat";
-    private static final String UPDATED_POWERS = "does not eat pain au chocolat (udpated)";
+    private static final String UPDATED_POWERS = "does not eat pain au chocolat (updated)";
     private static final int DEFAULT_LEVEL = 42;
     private static final int UPDATED_LEVEL = 43;
 
@@ -53,12 +48,17 @@ public class VillainResourceTest {
         .withDatabaseName("villains_database")
         .withUsername("superbad")
         .withPassword("superbad")
-        .withExposedPorts(5432)
-        .withCreateContainerCmdModifier(cmd ->
-            cmd
-                .withHostName("localhost")
-                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
-        );
+        .withExposedPorts(5432);
+
+    @BeforeAll
+    private static void configure() {
+        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
+    }
+
+    @AfterAll
+    private static void cleanup() {
+        System.clearProperty("quarkus.datasource.url");
+    }
 
     @Test
     void shouldPingOpenAPI() {
