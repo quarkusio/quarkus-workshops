@@ -1,7 +1,6 @@
 // tag::adocTransactional[]
 package io.quarkus.workshop.superheroes.villain;
 
-// end::adocTransactional[]
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,7 +11,6 @@ import java.util.List;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-// tag::adocTransactional[]
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class VillainService {
@@ -41,7 +39,7 @@ public class VillainService {
 
     public Villain persistVillain(@Valid Villain villain) {
         villain.level = villain.level * levelMultiplier;
-        Villain.persist(villain);
+        villain.persist();
         return villain;
     }
 
