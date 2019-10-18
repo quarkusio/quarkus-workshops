@@ -181,7 +181,7 @@ We need to add extra methods that will allow CRUD operations on heroes.
 
 But first, our application will use JSON as payload, so let's add the RESTEasy JSON-B extension.
 
-[source]
+[source, xml, indent=0]
 ----
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasyJsonB]
 ----
