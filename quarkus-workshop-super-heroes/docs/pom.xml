@@ -78,7 +78,7 @@
                         <allow-uri-read/>
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
-                        <give-solution>false</give-solution>
+                        <give-solution>true</give-solution>
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>19.2.0.1</graalvm-version>
                     </attributes>
