@@ -54,7 +54,7 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 
 == Open API
 
-Now, we are ready to run our application:
+Now, we are ready to restart our application (stop it first if you didn't):
 
 [source,shell]
 ----
