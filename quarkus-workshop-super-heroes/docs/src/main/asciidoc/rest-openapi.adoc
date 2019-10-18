@@ -138,6 +138,12 @@ include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/s
 ----
 
 Execute the test using `./mvnw test`.
-The test should pass.
+
+[NOTE]
+====
+The tests may fail because of the _multiplier_.
+In the `application.properties` file, add: `%test.level.multiplier=1`
+We will cover this syntax later.
+====
 
 include::common-solution.adoc[]
