@@ -106,7 +106,7 @@ In the `pom.xml` file, the native profile contains:
 
 This instructs the failsafe-maven-plugin to run integration-test and indicates the location of the produced native executable.
 
-Then, open the src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java` and update it with the following:
+Then, open the `src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java` and update it with the following:
 
 [source,java]
 ----
