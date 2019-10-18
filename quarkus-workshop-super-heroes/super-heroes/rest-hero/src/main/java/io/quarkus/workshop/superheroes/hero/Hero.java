@@ -1,7 +1,6 @@
 // tag::adocEntity[]
 package io.quarkus.workshop.superheroes.hero;
 
-// end::adocEntity[]
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -10,7 +9,9 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+// end::adocEntity[]
 import java.util.Random;
+
 
 @Schema(description = "The hero fighting against the villain")
 // tag::adocEntity[]
