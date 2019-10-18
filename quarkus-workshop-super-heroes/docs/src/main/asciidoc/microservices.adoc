@@ -4,7 +4,7 @@
 '''
 
 So far we've built one microservice.
-In the following sections you will develop two extra microservices.
+In the following sections you will develop two extra microservices: a _villain_ microservice, a mad copycat of the _hero_ microservice, and a _fight_ microservice where heroes and villains fight.
 We will also add an Angular front-end so we can fight graphically.
 
 [plantuml,align=center]
