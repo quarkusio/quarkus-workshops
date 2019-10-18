@@ -124,6 +124,23 @@ It is a good practice to share the same tests for native and JVM mode that way b
 For example, we do not want Swagger UI exposed in our native image.
 --
 
+Before running the test, we need to configure in which _profile_ they run.
+If you look at the test class, it starts a database on a specific port (5499).
+We need to configure the application to connect on this port.
+For this edit the `application.properties` and add:
+
+[source]
+----
+quarkus.test.native-image-profile=it
+%it.quarkus.datasource.url=jdbc:postgresql://localhost:5499/heroes_database
+----
+
+The first line configure the profile to use in the native integration tests.
+Here we use a custom profile named `it`.
+Note that by default `prod` is used.
+The second line overrides the JDBC url to use the right port.
+Now we can run the tests.
+
 To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw verify -Pnative`:
 
 [source]
