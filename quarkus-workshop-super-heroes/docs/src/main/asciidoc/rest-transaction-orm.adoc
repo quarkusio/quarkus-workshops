@@ -190,7 +190,7 @@ Here are the new methods to add to the `HeroResource` class:
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocOpenAPI;!adocMetrics]
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocResource;!adocOpenAPI;!adocMetrics,!adocMetricsImports,!adocOpenAPIImports]
 ----
 
 == Dependency Injection
