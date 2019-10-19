@@ -140,7 +140,7 @@ So, these classes are just used to map the results from the Hero and Villain mic
 
 == FightService Transactional Service
 
-To transactionnally manipulate the `Fight` entity we need a `FightService`.
+To _transactionnally_ manipulate the `Fight` entity we need a `FightService`.
 Notice the `persistFight` method.
 This method is the one creating a fight between a hero and a villain.
 As you can see the algorithm to determine the winner is a bit random (even though it uses the levels).
