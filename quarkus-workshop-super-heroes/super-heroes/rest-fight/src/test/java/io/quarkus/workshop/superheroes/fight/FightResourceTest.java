@@ -52,24 +52,21 @@ public class FightResourceTest {
         .withDatabaseName("fights_database")
         .withUsername("superfight")
         .withPassword("superfight")
-        .withExposedPorts(5432)
-        .withCreateContainerCmdModifier(cmd ->
-            cmd
-                .withHostName("localhost")
-                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
-        );
+        .withExposedPorts(5432);
 
     @Container
     public static final KafkaContainer KAFKA = new KafkaContainer();
 
     @BeforeAll
     public static void configureKafkaLocation() {
+        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
         System.setProperty("kafka.bootstrap.servers", KAFKA.getBootstrapServers());
     }
 
     @AfterAll
     public static void clearKafkaLocation() {
         System.clearProperty("kafka.bootstrap.servers");
+        System.clearProperty("quarkus.datasource.url");
     }
 
     @Test
