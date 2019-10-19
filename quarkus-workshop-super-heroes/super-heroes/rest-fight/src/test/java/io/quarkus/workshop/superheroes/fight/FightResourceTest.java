@@ -16,10 +16,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.List;
 import java.util.Random;
 
-// end::adocRandom[]
+// tag::adocRandom[]
 import static io.quarkus.workshop.superheroes.fight.client.MockHeroService.*;
 import static io.quarkus.workshop.superheroes.fight.client.MockVillainService.*;
-// tag::adocRandom[]
+// end::adocRandom[]
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
