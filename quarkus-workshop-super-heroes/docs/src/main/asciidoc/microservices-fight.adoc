@@ -36,6 +36,11 @@ Also add Testcontainers to your `pom.xml`.
   <artifactId>jackson-databind</artifactId>
   <scope>test</scope>
 </dependency>
+<dependency>
+  <groupId>org.testcontainers</groupId>
+  <artifactId>kafka</artifactId>
+  <version>1.12.2</version>
+</dependency>
 --
 
 [TIP]
@@ -199,6 +204,35 @@ include::{github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[tag=
 ...
 ----
 
+== Configuration
+
+As usual, we need to configure the application.
+In the `application.properties` file add:
+
+[source,properties]
+----
+quarkus.datasource.url=jdbc:postgresql://localhost:5432/fights_database
+
+quarkus.datasource.driver=org.postgresql.Driver
+quarkus.datasource.username=superfight
+quarkus.datasource.password=superfight
+quarkus.datasource.max-size=8
+quarkus.datasource.min-size=2
+quarkus.hibernate-orm.database.generation=drop-and-create
+quarkus.hibernate-orm.log.sql=true
+
+## Logging configuration
+quarkus.log.console.enable=true
+quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
+quarkus.log.console.level=DEBUG
+quarkus.log.console.color=true
+
+## Production configuration
+%prod.quarkus.hibernate-orm.log.sql=false
+%prod.quarkus.log.console.level=INFO
+%prod.quarkus.hibernate-orm.database.generation=update
+----
+
 == FightResourceTest Test Class
 
 We need to test our REST API.
@@ -206,8 +240,9 @@ For that, copy the following `FightResourceTest` class under the `src/test/java/
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics]
+include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics;!adocRandom]
 ----
+
 
 == Configuration
 

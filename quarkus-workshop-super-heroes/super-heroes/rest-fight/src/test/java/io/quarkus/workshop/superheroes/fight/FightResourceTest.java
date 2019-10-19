@@ -16,8 +16,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.List;
 import java.util.Random;
 
+// end::adocRandom[]
 import static io.quarkus.workshop.superheroes.fight.client.MockHeroService.*;
 import static io.quarkus.workshop.superheroes.fight.client.MockVillainService.*;
+// tag::adocRandom[]
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
@@ -129,6 +131,7 @@ public class FightResourceTest {
             .statusCode(NO_CONTENT.getStatusCode());
     }
 
+    // end::adocRandom[]
     @Test
     void shouldGetRandomFighters() {
         given()
@@ -143,6 +146,7 @@ public class FightResourceTest {
             .body("villain.picture", Is.is(DEFAULT_VILLAIN_PICTURE))
             .body("villain.level", Is.is(DEFAULT_VILLAIN_LEVEL));
     }
+    // tag::adocRandom[]
 
     @Test
     void shouldNotAddInvalidItem() {
