@@ -134,6 +134,7 @@ public class FightService {
     }
     // end::adocRestClient[]
 
+    // tag::adocRestClient[]
     // tag::adocFallback[]
     Hero fallbackRandomHero() {
         LOGGER.warn("Falling back on Hero");
@@ -155,5 +156,6 @@ public class FightService {
         return villain;
     }
     // end::adocFallback[]
+    // end::adocRestClient[]
 }
 // end::adocTransactional[]
