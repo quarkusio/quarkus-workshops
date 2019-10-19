@@ -5,8 +5,50 @@ This chapter explains how to use the MicroProfile REST Client in order to intera
 
 == Directory Structure
 
-/!\ TODO /!\
-If appropriate, show the directory structure (tree command) so the attendee know which classes/packages will be developped
+Remember the structure of the Fight microservice:
+
+[source,text]
+--
+.
+├── pom.xml
+├── src
+│   ├── main
+│   │   ├── docker
+│   │   ├── java
+│   │   │   └── io
+│   │   │       └── quarkus
+│   │   │           └── workshop
+│   │   │               └── superheroes
+│   │   │                   └── fight
+│   │   │                       ├── Fight.java
+│   │   │                       ├── FightApplication.java
+│   │   │                       ├── FightResource.java
+│   │   │                       ├── FightService.java
+│   │   │                       ├── Fighters.java
+│   │   │                       └── client
+│   │   │                           ├── Hero.java
+│   │   │                           └── Villain.java
+│   │   └── resources
+│   │       ├── META-INF
+│   │       │   └── resources
+│   │       │       └── index.html
+│   │       ├── application.properties
+│   │       └── import.sql
+│   └── test
+│       └── java
+│           └── io
+│               └── quarkus
+│                   └── workshop
+│                       └── superheroes
+│                           └── fight
+│                               └── FightResourceTest.java
+--
+
+We are going to rework the:
+
+* `FightService` class
+* `FightResourceTest` class
+* `application.properties`
 
 == Installing the REST Client Dependency
 
