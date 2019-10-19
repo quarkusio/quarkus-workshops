@@ -1,7 +1,6 @@
 // tag::adocApplication[]
 package io.quarkus.workshop.superheroes.fight;
 
-// end::adocApplication[]
 import org.eclipse.microprofile.openapi.annotations.ExternalDocumentation;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
@@ -12,7 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-// tag::adocApplication[]
 @ApplicationPath("/")
 @OpenAPIDefinition(
     info = @Info(title = "Fight API",
