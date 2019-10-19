@@ -132,6 +132,8 @@ public class FightResourceTest {
     }
 
     // tag::adocRandom[]
+
+    //....
     @Test
     void shouldGetRandomFighters() {
         given()
