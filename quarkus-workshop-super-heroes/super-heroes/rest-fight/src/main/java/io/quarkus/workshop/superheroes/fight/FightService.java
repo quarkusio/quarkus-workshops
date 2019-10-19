@@ -58,6 +58,7 @@ public class FightService {
 
     @Transactional(REQUIRED)
     public Fight persistFight(Fighters fighters) {
+        // Amazingly fancy logic to determine the winner...
         Fight fight;
 
         int heroAdjust = random.nextInt(20);
@@ -73,7 +74,7 @@ public class FightService {
         }
 
         fight.fightDate = Instant.now();
-        Fight.persist(fight);
+        fight.persist(fight);
         // tag::adocKafka[]
         emitter.send(fight);
         // end::adocKafka[]
@@ -140,7 +141,7 @@ public class FightService {
         hero.name = "Fallback hero";
         hero.picture = "https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero";
         hero.powers = "Fallback hero powers";
-        hero.level = 42;
+        hero.level = 1;
         return hero;
     }
 
