@@ -166,7 +166,7 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 For now, just implement an empty `Fighters findRandomFighters()` method which returns null.
 Later, this method will invoke the Hello and Villain API to get a random Hello and random Villain.
 So for now something like the following is enough:
-[source, java]
+[source]
 --
 public Fighters findRandomFighters() {
     // Will be implemented later
@@ -174,8 +174,6 @@ public Fighters findRandomFighters() {
 }
 --
 ====
-
-
 
 == FightResource Endpoint
 

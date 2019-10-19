@@ -9,7 +9,7 @@ In this section, we are going to consume these statistics and send them to two W
 
 Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
 
-[source, java]
+[source]
 ----
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStatsWebSocket.java[tag=adocWebSocket]
 ----
@@ -33,7 +33,7 @@ Without it, items would not be emitted.
 The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
 Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
 
-[source, java]
+[source]
 ----
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TopWinnerWebSocket.java[tag=adocWebSocket]
 ----

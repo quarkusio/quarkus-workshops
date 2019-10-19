@@ -7,42 +7,49 @@ This chapter explains how to use the MicroProfile REST Client in order to intera
 
 Remember the structure of the Fight microservice:
 
-[source,text]
---
+[plantuml]
+----
+@startsalt
+{
+{
+T
 .
-├── pom.xml
-├── src
-│   ├── main
-│   │   ├── docker
-│   │   ├── java
-│   │   │   └── io
-│   │   │       └── quarkus
-│   │   │           └── workshop
-│   │   │               └── superheroes
-│   │   │                   └── fight
-│   │   │                       ├── Fight.java
-│   │   │                       ├── FightApplication.java
-│   │   │                       ├── FightResource.java
-│   │   │                       ├── FightService.java
-│   │   │                       ├── Fighters.java
-│   │   │                       └── client
-│   │   │                           ├── Hero.java
-│   │   │                           └── Villain.java
-│   │   └── resources
-│   │       ├── META-INF
-│   │       │   └── resources
-│   │       │       └── index.html
-│   │       ├── application.properties
-│   │       └── import.sql
-│   └── test
-        └── java
-            └── io
-                └── quarkus
-                    └── workshop
-                        └── superheroes
-                            └── fight
-                                └── FightResourceTest.java
---
++ src
+++ main
++++ docker
++++ java
+++++ io
++++++ quarkus
+++++++ workshop
++++++++ superheroes
+++++++++ fight
++++++++++ Fight.java
++++++++++ FightApplication.java
++++++++++ FightResource.java
++++++++++ FightService.java
++++++++++ Fighters.java
++++++++++ client
++++++++++++ Hero.java
++++++++++++ Villain.java
++++ resources
+++++ META-INF
++++++ resources
+++++++ index.html
++++++ application.properties
++++++ import.sql
+++ test
++++ java
+++++ io
++++++ quarkus
+++++++ workshop
+++++++++ superheroes
++++++++++ fight
+++++++++++ FightResourceTest.java
++ pom.xml
+}
+}
+@endsalt
+----
 
 We are going to rework the:
 
@@ -113,7 +120,7 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 
 Once created, go back to the `FightService` class and add the following import statements:
 
-[source, java]
+[source]
 --
 import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
@@ -149,21 +156,21 @@ Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could b
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
 So, to mock the `HeroService` interface we just need to implement the following `MockHeroService` class:
 
-[source, java]
+[source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockHeroService.java[tag=adocTest]
 ----
 
 Do the same for the `MockVillainService`:
 
-[source, java]
+[source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockVillainService.java[tag=adocTest]
 ----
 
 Finally, edit the `FightResourceTest` and add the following method:
 
-[source, java]
+[source]
 --
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocRandom]
 --

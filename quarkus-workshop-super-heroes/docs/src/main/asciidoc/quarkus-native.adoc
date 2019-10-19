@@ -108,7 +108,7 @@ This instructs the failsafe-maven-plugin to run integration-test and indicates t
 
 Then, open the `src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java` and update it with the following:
 
-[source,java]
+[source]
 ----
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java[tags=adocResourceIT;!adocHealth;!adocMetrics]
 ----

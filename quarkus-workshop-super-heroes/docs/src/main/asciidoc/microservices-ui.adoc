@@ -77,5 +77,5 @@ It should display the main web page.
 image::angular-ui.png[]
 
 Oups, not working yet!
-Not even the picture, must must have been forgotten something!
+Not even the picture, must have been forgotten something!
 Let's move on to the next section then and make the application work.
