@@ -50,7 +50,7 @@ it documents the API which can be read by a human, or processed by tools.
 == Installing the Web Application on Quarkus
 
 Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
-Execute `./mvnw install` and Maven will download and install Node JS and NPM and build the application.
+Execute `mvn install` and Maven will download and install Node JS and NPM and build the application.
 You should now have a `node_modules` directory with all the Angular dependencies.
 
 To install the Angular application into a Quarkus instance, we just build the app and copy the bundles under the `resources/META-INF/resources` directory.
@@ -67,12 +67,15 @@ We are now ready to go.
 
 == Running the Web Application
 
-As usual, use `./mvnw compile quarkus:dev` to start the web application.
+As usual, use `mvn compile quarkus:dev` to start the web application.
+
+Be sure you have the hero and villain microservices running (dev mode is enough).
+
 Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).
 It should display the main web page.
-Start playing!
 
 image::angular-ui.png[]
 
 Oups, not working yet!
+Not even the picture, must must have been forgotten something!
 Let's move on to the next section then and make the application work.
