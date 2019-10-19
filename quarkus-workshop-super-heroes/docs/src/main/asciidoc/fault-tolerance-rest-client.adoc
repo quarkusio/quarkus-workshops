@@ -111,6 +111,14 @@ The `VillainService` is very similar and looks like this:
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/VillainService.java[tag=adocRestClient]
 ----
 
+Once created, go back to the `FightService` class and add the following import statements:
+
+[source, java]
+--
+import io.quarkus.workshop.superheroes.fight.client.HeroService;
+import io.quarkus.workshop.superheroes.fight.client.VillainService;
+--
+
 == Configuring REST Client Invocation
 
 In order to determine the base URL to which REST calls will be made, the REST Client uses configuration from `application.properties`.

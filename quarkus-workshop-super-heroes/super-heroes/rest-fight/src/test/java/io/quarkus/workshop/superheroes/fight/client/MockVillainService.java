@@ -1,13 +1,11 @@
 // tag::adocTest[]
 package io.quarkus.workshop.superheroes.fight.client;
 
-// end::adocTest[]
 import io.quarkus.test.Mock;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 
-// tag::adocTest[]
 @Mock
 @ApplicationScoped
 @RestClient
