@@ -235,6 +235,8 @@ quarkus.log.console.color=true
 %prod.quarkus.hibernate-orm.database.generation=update
 ----
 
+Note that the fight service uses the port 8082.
+
 == FightResourceTest Test Class
 
 We need to test our REST API.

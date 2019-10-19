@@ -131,7 +131,7 @@ public class FightResourceTest {
             .statusCode(NO_CONTENT.getStatusCode());
     }
 
-    // end::adocRandom[]
+    // tag::adocRandom[]
     @Test
     void shouldGetRandomFighters() {
         given()
@@ -146,7 +146,7 @@ public class FightResourceTest {
             .body("villain.picture", Is.is(DEFAULT_VILLAIN_PICTURE))
             .body("villain.level", Is.is(DEFAULT_VILLAIN_LEVEL));
     }
-    // tag::adocRandom[]
+    // end::adocRandom[]
 
     @Test
     void shouldNotAddInvalidItem() {
