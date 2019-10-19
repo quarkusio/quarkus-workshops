@@ -211,6 +211,8 @@ In the `application.properties` file add:
 
 [source,properties]
 ----
+quarkus.http.port=8082
+
 quarkus.datasource.url=jdbc:postgresql://localhost:5432/fights_database
 
 quarkus.datasource.driver=org.postgresql.Driver
@@ -243,15 +245,7 @@ For that, copy the following `FightResourceTest` class under the `src/test/java/
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics;!adocRandom]
 ----
 
-
-== Configuration
-
-Notice that this instance of Quarkus listens on port 8082
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=!adocCORS]
-----
+Also, delete the generated `NativeFightResourceIT` class, as we won't run native test for this microservice.
 
 == Running, Testing and Packaging the Application
 
