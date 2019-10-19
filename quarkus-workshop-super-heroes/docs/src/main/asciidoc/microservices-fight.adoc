@@ -169,11 +169,13 @@ So for now something like the following is enough:
 [source, java]
 --
 public Fighters findRandomFighters() {
-// Will be implemented later
-return null;
+    // Will be implemented later
+    return null;
 }
 --
 ====
+
+
 
 == FightResource Endpoint
 
