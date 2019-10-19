@@ -1,12 +1,10 @@
 // tag::adocBean[]
 package io.quarkus.workshop.superheroes.fight.client;
 
-// end::adocBean[]
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 
-// tag::adocBean[]
 @Schema(description="The villain fighting against the hero")
 public class Villain {
 
@@ -17,9 +15,7 @@ public class Villain {
     @NotNull
     public String picture;
     public String powers;
-
-    // toString method
-
+    
     // tag::adocSkip[]
     @Override
     public String toString() {
