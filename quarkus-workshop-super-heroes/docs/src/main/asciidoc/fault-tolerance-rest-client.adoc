@@ -149,17 +149,24 @@ Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could b
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
 So, to mock the `HeroService` interface we just need to implement the following `MockHeroService` class:
 
-[source]
+[source, java]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockHeroService.java[tag=adocTest]
 ----
 
 Do the same for the `MockVillainService`:
 
-[source]
+[source, java]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockVillainService.java[tag=adocTest]
 ----
+
+Finally, edit the `FightResourceTest` and add the following method:
+
+[source, java]
+--
+include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocRandom]
+--
 
 == Running and Testing the Application
 
