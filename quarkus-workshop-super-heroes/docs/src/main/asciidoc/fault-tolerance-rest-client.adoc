@@ -35,13 +35,13 @@ Remember the structure of the Fight microservice:
 │   │       ├── application.properties
 │   │       └── import.sql
 │   └── test
-│       └── java
-│           └── io
-│               └── quarkus
-│                   └── workshop
-│                       └── superheroes
-│                           └── fight
-│                               └── FightResourceTest.java
+        └── java
+            └── io
+                └── quarkus
+                    └── workshop
+                        └── superheroes
+                            └── fight
+                                └── FightResourceTest.java
 --
 
 We are going to rework the:
@@ -68,10 +68,10 @@ include::{github-raw}/super-heroes/rest-fight/pom.xml[tags=adocRestClientDepende
 
 == FightService Invoking External Microservices
 
-Do you remember that in the previous sections we left the `FightService.findRandomFighters()` method return `null`
+Remember that in the previous sections we left the `FightService.findRandomFighters()` method returns `null`.
 We have to fix this.
 What we actually want is to invoke both the Hero and Villain APIs, asking for a random hero and a random villain.
-For that, add the following code to the `FightService` class:
+For that, replace the `findRandomFighters` method with the following code to the `FightService` class:
 
 [source,indent=0]
 ----
@@ -79,6 +79,11 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 ----
 
 Note that in addition to the standard CDI `@Inject` annotation, we also need to use the MicroProfile `@RestClient` annotation to inject `HeroService` and `VillainService`.
+
+[NOTE]
+--
+If not done automatically by your IDE, add the following import statement: `import org.eclipse.microprofile.rest.client.inject.RestClient;`
+--
 
 == Creating the Interfaces
 
