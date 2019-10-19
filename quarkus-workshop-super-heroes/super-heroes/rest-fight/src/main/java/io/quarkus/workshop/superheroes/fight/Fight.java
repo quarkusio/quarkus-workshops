@@ -1,7 +1,6 @@
 // tag::adocEntity[]
 package io.quarkus.workshop.superheroes.fight;
 
-// end::adocEntity[]
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -9,7 +8,6 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
-// tag::adocEntity[]
 @Entity
 @Schema(description="Each fight has a winner and a loser")
 public class Fight extends PanacheEntity {
