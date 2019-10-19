@@ -8,7 +8,7 @@ If you look at the console of your Browser you should see something similar to t
 
 image::cors.png[]
 
-Quarkus comes with a CORS filter which implements the `javax.servlet.Filter` interface and intercepts all incoming HTTP requests.
+Quarkus comes with a CORS filter which intercepts all incoming HTTP requests.
 It can be enabled in the Quarkus configuration file, `src/main/resources/application.properties`:
 
 [source,properties]
@@ -39,4 +39,21 @@ If the filter is enabled and an HTTP request is identified as cross-origin, the 
 |The duration indicating how long the results of a pre-flight request can be cached. This value will be returned in a Access-Control-Max-Age response header.
 |===
 
-So make sure you set the `quarkus.http.cors` property to `true` on the Fight, Hero and Villain REST APIs before moving on.
+So make sure you set the `quarkus.http.cors` property to `true` on the:
+
+1. Fight microservice,
+2. Hero microservice,
+3. Villain microservice
+
+But, even with this, the UI is still not working.
+The explanation is simple, we forgot another thing:
+
+[plantuml,align=center]
+----
+include::plantuml/fights-sequence.puml[]
+----
+
+Remember the function to retrieve random fighters.
+We returned `null`.
+
+
