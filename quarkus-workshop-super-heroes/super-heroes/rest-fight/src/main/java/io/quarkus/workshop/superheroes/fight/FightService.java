@@ -136,6 +136,7 @@ public class FightService {
 
     // tag::adocRestClient[]
     // tag::adocFallback[]
+
     Hero fallbackRandomHero() {
         LOGGER.warn("Falling back on Hero");
         Hero hero = new Hero();
