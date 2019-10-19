@@ -1,7 +1,6 @@
 // tag::adocTransactional[]
 package io.quarkus.workshop.superheroes.fight;
 
-// end::adocTransactional[]
 
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.HeroService;
@@ -23,7 +22,6 @@ import java.util.Random;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-// tag::adocTransactional[]
 @ApplicationScoped
 @Transactional(SUPPORTS)
 public class FightService {

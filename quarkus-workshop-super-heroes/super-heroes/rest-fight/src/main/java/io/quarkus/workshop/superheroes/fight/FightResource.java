@@ -1,7 +1,6 @@
 // tag::adocResource[]
 package io.quarkus.workshop.superheroes.fight;
 
-// end::adocResource[]
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -32,7 +31,6 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
-// tag::adocResource[]
 @Path("/api/fights")
 @Produces(APPLICATION_JSON)
 public class FightResource {
