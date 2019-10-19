@@ -15,8 +15,6 @@ public class Fighters {
     @NotNull
     public Villain villain;
 
-    // toString method
-
     // tag::adocSkip[]
     @Override
     public String toString() {
