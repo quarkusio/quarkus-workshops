@@ -148,7 +148,7 @@ If you are not happy about the way the fight operates, choose your own winning a
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka;!adocFallback]
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka;!adocKafkaEmitter;!adocFallback]
 ----
 
 [NOTE]

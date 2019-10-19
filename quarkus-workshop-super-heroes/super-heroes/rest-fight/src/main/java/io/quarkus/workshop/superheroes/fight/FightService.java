@@ -1,10 +1,13 @@
 // tag::adocTransactional[]
 package io.quarkus.workshop.superheroes.fight;
 
-
+// tag::adocTransactional[]
 import io.quarkus.workshop.superheroes.fight.client.Hero;
+// end::adocTransactional[]
 import io.quarkus.workshop.superheroes.fight.client.HeroService;
+// tag::adocTransactional[]
 import io.quarkus.workshop.superheroes.fight.client.Villain;
+// end::adocTransactional[]
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
 // tag::adocTransactional[]
 import io.smallrye.reactive.messaging.annotations.Channel;
