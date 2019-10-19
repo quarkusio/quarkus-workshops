@@ -54,6 +54,6 @@ include::plantuml/fights-sequence.puml[]
 ----
 
 Remember the function to retrieve random fighters.
-We returned `null`.
-
+We are currently returning `null`.
+Let's move to the next session to see how we can implement this method.
 
