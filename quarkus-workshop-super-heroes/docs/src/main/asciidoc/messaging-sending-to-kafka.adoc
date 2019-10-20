@@ -84,8 +84,18 @@ First, add the following field:
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocKafkaEmitter]
 ----
 
+[NOTE]
+---
+You will also need to add the following imports:
+[source, java]
+====
+import io.smallrye.reactive.messaging.annotations.Channel;
+import io.smallrye.reactive.messaging.annotations.Emitter;
+====
+---
+
 This field is an _emitter_, and lets you send events or messages (here fights) to the _channel_ specified with the `@Channel` annotation.
-A _channel_ is the destination.
+A _channel_ is a _virtual_ destination.
 
 In the `persistFight` method, add the following line just before the `return` statement:
 
