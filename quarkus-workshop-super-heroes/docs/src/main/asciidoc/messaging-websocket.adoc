@@ -50,7 +50,7 @@ Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also 
 == The UI
 
 Finally, you need a UI to watch these live statistics.
-Create the `META-INF/resources/index.html` file with the following content:
+Replace the `META-INF/resources/index.html` file with the following content:
 
 [source, html]
 ----
