@@ -45,6 +45,7 @@ Also add Testcontainers to your `pom.xml`.
   <groupId>org.testcontainers</groupId>
   <artifactId>kafka</artifactId>
   <version>1.12.2</version>
+  <scope>test</scope>
 </dependency>
 --
 
