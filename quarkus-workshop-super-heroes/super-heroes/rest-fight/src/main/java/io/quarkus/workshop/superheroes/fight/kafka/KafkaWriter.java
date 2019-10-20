@@ -1,7 +1,6 @@
 // tag::adocWriter[]
 package io.quarkus.workshop.superheroes.fight.kafka;
 
-// end::adocWriter[]
 import io.quarkus.workshop.superheroes.fight.Fight;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
@@ -13,7 +12,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 
-// tag::adocWriter[]
 @ApplicationScoped
 public class KafkaWriter {
 
