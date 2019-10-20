@@ -1,8 +1,8 @@
+// tag::adocBean[]
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
-// tag::adocBean[]
 @RegisterForReflection
 public class Score {
     protected String name;

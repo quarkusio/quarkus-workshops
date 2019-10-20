@@ -1,10 +1,10 @@
+// tag::adocBean[]
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import java.time.Instant;
 
-// tag::adocBean[]
 @RegisterForReflection
 public class FightResult {
 

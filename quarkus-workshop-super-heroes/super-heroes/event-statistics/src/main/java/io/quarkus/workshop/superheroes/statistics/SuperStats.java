@@ -1,3 +1,4 @@
+// tag::adocBean[]
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Flowable;
@@ -8,7 +9,6 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import javax.enterprise.context.ApplicationScoped;
 
-// tag::adocBean[]
 @ApplicationScoped
 public class SuperStats {
 

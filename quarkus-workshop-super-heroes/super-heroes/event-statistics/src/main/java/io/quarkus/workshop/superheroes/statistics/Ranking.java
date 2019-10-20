@@ -1,3 +1,4 @@
+// tag::adocBean[]
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Maybe;
@@ -6,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-// tag::adocBean[]
 public class Ranking {
 
     private final int max;
