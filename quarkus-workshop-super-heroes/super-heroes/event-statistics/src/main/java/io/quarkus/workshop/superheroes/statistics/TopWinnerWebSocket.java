@@ -1,3 +1,4 @@
+// tag::adocWebSocket[]
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Flowable;
@@ -18,7 +19,6 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-// tag::adocWebSocket[]
 @ServerEndpoint("/stats/winners")
 @ApplicationScoped
 public class TopWinnerWebSocket {
