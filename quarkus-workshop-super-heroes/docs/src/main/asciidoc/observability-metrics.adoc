@@ -4,6 +4,9 @@
 MicroProfile Metrics allows applications to gather various metrics and statistics that provide insights into what is happening inside the application.footnote:[MicroProfile Metrics https://microprofile.io/project/eclipse/microprofile-metrics]
 The metrics can be read remotely using JSON format or the OpenMetrics format, so that they can be processed by additional tools such as Prometheus, and stored for analysis and visualisation.footnote:[OpenMetrics https://openmetrics.io]
 
+While you could add add metrics to all our microservices, we are focusing on the Hero microservice.
+You can apply the same to the other microservices.
+
 == Installing the Metrics Dependency
 
 To install the MicroProfile Metrics dependency, just run the following command:
@@ -20,6 +23,11 @@ This will add the following dependency in the `pom.xml` file:
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyMetrics]
 ----
 
+[IMPORTANT]
+--
+Don't forget to restart the dev mode after having added the extension.
+--
+
 == Adding Metrics to HeroResource
 
 We want now to measure all methods of all our REST resources.
@@ -35,6 +43,17 @@ Below the source code of the `getRandomHero()` method, but make sure to add metr
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocMetricsMethods]
 ----
+
+[NOTE]
+--
+You will need to add the following import statements:
+[source]
+====
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+====
+--
 
 == Metrics Tests in HeroResourceTest
 
