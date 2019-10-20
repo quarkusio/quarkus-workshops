@@ -61,9 +61,9 @@ include::{github-raw}/super-heroes/rest-fight/pom.xml[tag=kafkaDependency]
 ----
 
 [NOTE]
-----
+====
 The extension may already have been added when the fight microservice has been created.
-----
+====
 
 Then, you can restart the microservice, using `mvn compile quarkus:dev`.
 
@@ -85,14 +85,13 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 ----
 
 [NOTE]
----
-You will also need to add the following imports:
-[source, java]
 ====
+You will also need to add the following imports:
+```
 import io.smallrye.reactive.messaging.annotations.Channel;
 import io.smallrye.reactive.messaging.annotations.Emitter;
+```
 ====
----
 
 This field is an _emitter_, and lets you send events or messages (here fights) to the _channel_ specified with the `@Channel` annotation.
 A _channel_ is a _virtual_ destination.
