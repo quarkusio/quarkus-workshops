@@ -88,7 +88,9 @@ This information is required when running the application as a native executable
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/FightResult.java[tags=adocBean;!adocSkip]
 ----
 
-The `Ranking` class is used to compute a floating top 10.
+In `FightResult`, add or generate the getter and setter methods for the `private` fields.
+
+Then, create the `Ranking` class, used to compute a floating top 10, with the following content:
 
 [source]
 ----
@@ -108,6 +110,12 @@ The `TeamStats` class is an object keeping track of the number of battles won by
 ----
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStats.java[]
 ----
+
+[TIP]
+====
+The `@RegisterForReflection` annotation instruct the native compilation to allow reflection access to the class.
+Without, the serialization/deserialization would not work when running the native executable.
+====
 
 == Reading Messages from Kafka
 
