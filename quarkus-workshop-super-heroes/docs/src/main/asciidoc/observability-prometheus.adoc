@@ -41,3 +41,8 @@ image::fault-tolerance-prometheus-3.png[]
 
 include::common-solution.adoc[]
 
+[NOTE]
+====
+Stop the load application before going further.
+====
+
