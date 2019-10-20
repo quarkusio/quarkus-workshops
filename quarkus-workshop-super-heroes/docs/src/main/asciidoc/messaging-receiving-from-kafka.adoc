@@ -98,6 +98,7 @@ include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/wor
 ----
 
 The `Score` class is a simple structure storing the name of a hero or villain and its actual score, _i.e._ the number of won battles.
+Don't forget to generate the getter and setter methods.
 
 [source]
 ----
