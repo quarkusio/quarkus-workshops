@@ -39,6 +39,9 @@ super-heroes
 @endsalt
 ----
 
+While you could add add health checks to all our microservices, we are focusing on the Hero microservice.
+You can apply the same to the other microservices.
+
 == Installing the Health Dependency
 
 To install the MicroProfile Health dependency, just run the following command:
@@ -55,6 +58,11 @@ This will add the following dependency in the `pom.xml` file:
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHealth]
 ----
 
+[IMPORTANT]
+--
+Don't forget to restart the dev mode after having added the extension.
+--
+
 == Running the Default Health Check
 
 Importing the `smallrye-health` extension directly exposes three REST endpoints:
@@ -63,10 +71,11 @@ Importing the `smallrye-health` extension directly exposes three REST endpoints:
 * `/health/ready` - The application is ready to serve requests.
 * `/health` - Accumulating all health check procedures in the application.
 
-To check that the `smallrye-health` extension is working as expected:
+To check that the `smallrye-health` extension is working as expected, access using your browser or cURL:
 
-* start your Quarkus application with `mvn compile quarkus:dev`
-* access the http://localhost:8083/health/live endpoint using your browser or curl http://localhost:8083/health/live
+* http://localhost:8083/health/live
+* http://localhost:8083/health/ready
+* http://localhost:8083/health
 
 All of the health REST endpoints return a simple JSON object with two fields:
 
