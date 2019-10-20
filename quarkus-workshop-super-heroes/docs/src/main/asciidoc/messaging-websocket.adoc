@@ -4,6 +4,13 @@ At this point, you read the _fights_ from Kafka and computes statistics.
 Actually, even if you start the application, nothing will happen as nobody consumes these statistics.
 
 In this section, we are going to consume these statistics and send them to two WebSockets.
+For this, we are going to add two classes and a simple presentation page:
+
+* `TeamStatsWebSocket`
+* `TopWinnerWebSocket`
+* `index.html`
+
+Quarkus uses the http://jcp.org/en/jsr/detail?id=356[JSR 356] providing an annotation-driven approach to implement WebSockets.
 
 == The TeamStats WebSocket
 
