@@ -7,8 +7,35 @@ For example, it determines if villains win more battle than heroes, and who is t
 
 == Directory Structure
 
-/!\ TODO /!\
-If appropriate, show the directory structure (tree command) so the attendee know which classes/packages will be developped
+In this section, we are going to develop the following structure:
+
+[plantuml]
+--
+@startsalt
+{
+{
+T
+super-heroes
++  event-statistics
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  statistics
+++++++++++ FightResult.java
+++++++++++ FightResult.java
+++++++++++ Ranking.java
+++++++++++ Score.java
+++++++++++ SuperStats.java
+++++++++++ TeamStats.java
+++  pom.xml
+}
+}
+@endsalt
+--
 
 == Bootstrapping the Statistics REST Endpoint
 
