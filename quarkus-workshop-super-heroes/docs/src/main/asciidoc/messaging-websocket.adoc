@@ -70,3 +70,5 @@ $ mvn compile quarkus:dev
 Then, open `http://localhost:8085` in a new browser window.
 Trigger some fights, and you should see the live statistics moving.
 
+include::common-solution.adoc[]
+
