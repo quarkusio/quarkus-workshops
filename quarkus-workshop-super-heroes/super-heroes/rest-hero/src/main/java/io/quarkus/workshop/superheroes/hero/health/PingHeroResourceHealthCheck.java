@@ -1,7 +1,6 @@
 // tag::adocPingHero[]
 package io.quarkus.workshop.superheroes.hero.health;
 
-// end::adocPingHero[]
 import io.quarkus.workshop.superheroes.hero.HeroResource;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
@@ -10,7 +9,6 @@ import org.eclipse.microprofile.health.Liveness;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-// tag::adocPingHero[]
 @Liveness
 @ApplicationScoped
 public class PingHeroResourceHealthCheck implements HealthCheck {
