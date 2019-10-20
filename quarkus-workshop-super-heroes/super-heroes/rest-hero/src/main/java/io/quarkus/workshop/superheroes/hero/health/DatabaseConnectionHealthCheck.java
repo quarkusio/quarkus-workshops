@@ -1,3 +1,4 @@
+// tag::adocDatabaseConnection[]
 package io.quarkus.workshop.superheroes.hero.health;
 
 import io.quarkus.workshop.superheroes.hero.Hero;
@@ -11,7 +12,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
-// tag::adocDatabaseConnection[]
 @Readiness
 @ApplicationScoped
 public class DatabaseConnectionHealthCheck implements HealthCheck {
