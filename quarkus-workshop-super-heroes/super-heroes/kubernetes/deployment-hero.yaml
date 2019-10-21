@@ -1,0 +1,71 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+    - apiVersion: "v1"
+      kind: "Service"
+      metadata:
+          labels:
+              app: "quarkus-workshop-hero"
+              version: "01"
+              group: "cescoffier"
+          name: "quarkus-workshop-hero"
+      spec:
+          ports:
+              - name: "http"
+                port: 8080
+                targetPort: 8080
+          selector:
+              app: "quarkus-workshop-hero"
+              version: "01"
+              group: "cescoffier"
+          type: "ClusterIP"
+    - apiVersion: "apps/v1"
+      kind: "Deployment"
+      metadata:
+          labels:
+              app: "quarkus-workshop-hero"
+              version: "01"
+              group: "cescoffier"
+          name: "quarkus-workshop-hero"
+      spec:
+          replicas: 1
+          selector:
+              matchLabels:
+                  app: "quarkus-workshop-hero"
+                  version: "01"
+                  group: "cescoffier"
+          template:
+              metadata:
+                  labels:
+                      app: "quarkus-workshop-hero"
+                      version: "01"
+                      group: "cescoffier"
+              spec:
+                  containers:
+                      - image: "cescoffier/quarkus-workshop-hero:latest"
+                        imagePullPolicy: "IfNotPresent"
+                        name: "quarkus-workshop-hero"
+                        ports:
+                            - containerPort: 8080
+                              name: "http"
+                              protocol: "TCP"
+                        env:
+                            - name: "KUBERNETES_NAMESPACE"
+                              valueFrom:
+                                  fieldRef:
+                                      fieldPath: "metadata.namespace"
+
+                            - name: QUARKUS_DATASOURCE_URL
+                              valueFrom:
+                                  configMapKeyRef:
+                                      name: hero-config
+                                      key: database
+
+                            - name: QUARKUS_HTTP_PORT
+                              valueFrom:
+                                  configMapKeyRef:
+                                      name: hero-config
+                                      key: port
+
+

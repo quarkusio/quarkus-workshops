@@ -1,0 +1,70 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+    - apiVersion: "v1"
+      kind: "Service"
+      metadata:
+          labels:
+              app: "quarkus-workshop-villain"
+              version: "01"
+              group: "cescoffier"
+          name: "quarkus-workshop-villain"
+      spec:
+          ports:
+              - name: "http"
+                port: 8080
+                targetPort: 8080
+          selector:
+              app: "quarkus-workshop-villain"
+              version: "01"
+              group: "cescoffier"
+          type: "ClusterIP"
+    - apiVersion: "apps/v1"
+      kind: "Deployment"
+      metadata:
+          labels:
+              app: "quarkus-workshop-villain"
+              version: "01"
+              group: "cescoffier"
+          name: "quarkus-workshop-villain"
+      spec:
+          replicas: 1
+          selector:
+              matchLabels:
+                  app: "quarkus-workshop-villain"
+                  version: "01"
+                  group: "cescoffier"
+          template:
+              metadata:
+                  labels:
+                      app: "quarkus-workshop-villain"
+                      version: "01"
+                      group: "cescoffier"
+              spec:
+                  containers:
+                      - env:
+                            - name: "KUBERNETES_NAMESPACE"
+                              valueFrom:
+                                  fieldRef:
+                                      fieldPath: "metadata.namespace"
+
+                            - name: QUARKUS_DATASOURCE_URL
+                              valueFrom:
+                                  configMapKeyRef:
+                                      name: villain-config
+                                      key: database
+
+                            - name: QUARKUS_HTTP_PORT
+                              valueFrom:
+                                  configMapKeyRef:
+                                      name: villain-config
+                                      key: port
+
+                        image: "cescoffier/quarkus-workshop-villain:latest"
+                        imagePullPolicy: "IfNotPresent"
+                        name: "quarkus-workshop-villain"
+                        ports:
+                            - containerPort: 8080
+                              name: "http"
+                              protocol: "TCP"
