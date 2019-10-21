@@ -100,9 +100,9 @@ cd ..
 ----
 
 [NOTE]
-----
+====
 Replace `ORG` with your DockerHub / Quay.io username.
-----
+====
 
 == Deploying on Kubernetes
 
