@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+    port: "8080"
+    database: "jdbc:postgresql://villains-database:5432/villains-database"
+kind: ConfigMap
+metadata:
+    name: villain-config

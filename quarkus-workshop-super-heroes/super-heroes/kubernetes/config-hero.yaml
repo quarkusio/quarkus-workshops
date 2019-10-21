@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+    port: "8080"
+    database: "jdbc:postgresql://heroes-database:5432/heroes-database"
+kind: ConfigMap
+metadata:
+    name: hero-config
