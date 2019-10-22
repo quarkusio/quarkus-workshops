@@ -19,12 +19,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>super-parent-pom</artifactId>
-        <version>1.0</version>
-    </parent>
-
+    <groupId>io.quarkus.workshop.super-heroes</groupId>
     <artifactId>ui-super-heroes</artifactId>
     <version>01</version>
     <name>Quarkus Workshop :: Super-Heroes :: Super Heroes UI</name>
