@@ -43,7 +43,7 @@ As stated above, an extension is divided into 2 parts, called `deployment` (augm
 include::plantuml/extension-architecture.puml[]
 ----
 
-Create a new directory, named `banner-extension`, and execute, from this directory the following commands:
+From the directory `extensions/extension-banner` execute the following commands:
 
 [source,shell]
 ----
