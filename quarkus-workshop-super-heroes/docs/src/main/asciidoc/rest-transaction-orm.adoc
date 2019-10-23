@@ -260,6 +260,17 @@ Notice that there is a `db-init` directory with a `initialize-databases.sql` scr
 Now, for the infrastructure to be up and running, just execute `docker-compose -f docker-compose.yaml up -d`.
 You should see a few logs going on and then all the containers get started.
 
+[WARNING]
+====
+If you have an issue creating the roles for the database with the `initialize-databases.sql` file, you have to execute the following commands:
+
+```
+$ docker exec -it --user postgres super-database psql -c "CREATE ROLE superman LOGIN PASSWORD 'superman' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+$ docker exec -it --user postgres super-database psql -c "CREATE ROLE superbad LOGIN PASSWORD 'superbad' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+$ docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight LOGIN PASSWORD 'superfight' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+```
+====
+
 [NOTE]
 ====
 During the workshop, just leave all the containers up and running.
