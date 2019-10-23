@@ -72,6 +72,13 @@ Execute the `package.sh` script.
 You will see all the Javascript files under `resources/META-INF/resources` directory.
 We are now ready to go.
 
+[WARNING]
+====
+If the `ng` command does not work because it can't find `node`, there is a little hack to solve it.
+Open the file `ui-super-heroes/node_modules/.bin/ng` and change the shebang line from `#!/usr/bin/env node` to `#!/usr/bin/env ./node/node`.
+This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/node` directory
+====
+
 == Running the Web Application
 
 As usual, use `mvn compile quarkus:dev` to start the web application.
