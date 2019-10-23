@@ -131,6 +131,23 @@ So, before starting to code, make sure you create the right directory structure.
 include::{github-raw}/create-directory-structure.sh[tags=adocSnippet]
 ----
 
+== Checking Ports
+
+During this workshop we will use several ports.
+Just make sure the following ports are free so you don't run into any conflicts
+
+[source,shell]
+----
+$ lsof -i tcp:8080    // UI
+$ lsof -i tcp:8082    // Fight REST API
+$ lsof -i tcp:8083    // Hero REST API
+$ lsof -i tcp:8084    // Villain REST API
+$ lsof -i tcp:5432    // Postgres
+$ lsof -i tcp:9090    // Prometheus
+$ lsof -i tcp:2181    // Zookeeper
+$ lsof -i tcp:9092    // Kafka
+----
+
 == Ready?
 
 Prerequisites has been installed, the different components have been warmed up,  it's now time to write some code!
