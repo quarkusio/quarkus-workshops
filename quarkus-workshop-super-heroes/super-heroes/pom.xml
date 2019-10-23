@@ -34,18 +34,4 @@
         <module>rest-villain</module>
         <module>ui-super-heroes</module>
     </modules>
-
-    <properties>
-        <quarkus.version>0.25.0</quarkus.version>
-        <surefire-plugin.version>2.22.0</surefire-plugin.version>
-        <!-- tag::adocPropertiesTestcontainers[] -->
-        <testcontainers.version>1.12.2</testcontainers.version>
-        <!-- end::adocPropertiesTestcontainers[] -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
 </project>
