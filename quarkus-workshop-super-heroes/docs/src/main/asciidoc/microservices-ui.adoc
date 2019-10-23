@@ -56,7 +56,7 @@ At this stage, make sure the following commands work:
 
 [source,shell]
 ----
-ng version
+ng version (or ./node_modules/.bin/ng version)
 node -v
 ----
 
