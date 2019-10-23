@@ -99,7 +99,7 @@ The previous annotations allow you to customize the contract for a given REST En
 But it's also important to customize the entire application.
 The Microprofile OpenAPI also has a set of annotation to do so.
 The difference is that these annotations cannot be used on the Endpoint itself, but instead on another Java class configuring the entire application.
-For this we have the `src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplication` class:
+For this, you need to create the `src/main/java/io/quarkus/workshop/superheroes/hero/HeroApplication` class with the following content:
 
 [source]
 ----
