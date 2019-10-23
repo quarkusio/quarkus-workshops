@@ -5,38 +5,6 @@ This workshop needs internet access to download all sorts of Maven artifacts, Do
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
 
-== Warming up Maven
-
-To warm up your Maven repository, first bootstrap a Quarkus project using the following command:
-
-[source,shell]
-----
-include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
-----
-
-Then, make sure to run a `mvn install` in the directory where the `pom.xml` file is located.
-
-== Warming up Docker
-
-To warm up your Docker repository, create the following `docker-compose.yaml` file :
-
-[source,yaml]
-----
-include::{github-raw}/super-heroes/infrastructure/docker-compose.yaml[tags=!adocVolumePostgres;!adocVolumePrometheus]
-----
-
-Then execute `docker-compose -f docker-compose.yaml up -d`.
-This will download all the Docker images and start the containers.
-Once all the containers are up and running, you can shut them down with the command `docker-compose -f docker-compose.yaml down`.
-
-[NOTE]
-====
-.What's this infra?
-Any microservice system is going to rely on a set of technical services.
-In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
-This infrastructure starts all these services, so you don't have to worry about them.
-====
-
 == Creating the Directories Structure
 
 In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
@@ -130,6 +98,47 @@ So, before starting to code, make sure you create the right directory structure.
 ----
 include::{github-raw}/create-directory-structure.sh[tags=adocSnippet]
 ----
+
+== Warming up Maven
+
+To warm up your Maven repository, first bootstrap a Quarkus project using the following command:
+
+[source,shell]
+----
+include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
+----
+
+Then, make sure to run a `mvn install` in the directory where the `pom.xml` file is located.
+
+== Warming up Docker
+
+To warm up your Docker repository, download the zip file {github-raw}/super-heroes/infrastructure/infrastructure.zip and unzip the entire code into the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
+Here, you will find a `docker-compose.yaml` file which defines all the needed Docker images.
+Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases and a `monitoring` directory (all that will be explained later).
+
+Then execute `docker-compose -f docker-compose.yaml up -d`.
+This will download all the Docker images and start the containers.
+
+[WARNING]
+====
+If you have an issue creating the roles for the database with the `initialize-databases.sql` file, you have to execute the following commands:
+
+```
+docker exec -it --user postgres super-database psql -c "CREATE ROLE superman LOGIN PASSWORD 'superman' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+docker exec -it --user postgres super-database psql -c "CREATE ROLE superbad LOGIN PASSWORD 'superbad' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight LOGIN PASSWORD 'superfight' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+```
+====
+
+Once all the containers are up and running, you can shut them down with the command `docker-compose -f docker-compose.yaml down`.
+
+[NOTE]
+====
+.What's this infra?
+Any microservice system is going to rely on a set of technical services.
+In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
+This infrastructure starts all these services, so you don't have to worry about them.
+====
 
 == Checking Ports
 

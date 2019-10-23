@@ -248,28 +248,14 @@ include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/s
 Execute the test using `./mvnw test`.
 The test should pass.
 
-== Downloading and Running the Infrastructure
+== Running the Infrastructure
 
 To execute the application we now need a database (and later one we will need Prometheus and Kafka).
 Let's use Docker and docker compose to ease the installation of such infrastructure.
 
-Download the zip file {github-raw}/super-heroes/infrastructure/infrastructure.zip and unzip the entire code into your `infrastructure` directory.
-Here, you will find a `docker-compose.yaml` file which defines all the needed Docker images.
-Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases (the `monitoring` directory will be explained later).
-
-Now, for the infrastructure to be up and running, just execute `docker-compose -f docker-compose.yaml up -d`.
+You should already have installed the infrastructure into the `infrastructure` directory.
+Now, just execute `docker-compose -f docker-compose.yaml up -d`.
 You should see a few logs going on and then all the containers get started.
-
-[WARNING]
-====
-If you have an issue creating the roles for the database with the `initialize-databases.sql` file, you have to execute the following commands:
-
-```
-docker exec -it --user postgres super-database psql -c "CREATE ROLE superman LOGIN PASSWORD 'superman' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-docker exec -it --user postgres super-database psql -c "CREATE ROLE superbad LOGIN PASSWORD 'superbad' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight LOGIN PASSWORD 'superfight' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-```
-====
 
 [NOTE]
 ====
