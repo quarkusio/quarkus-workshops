@@ -68,6 +68,11 @@ Oh, and be ready to have some fun!
 
 First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
 
+[WARNING]
+====
+If you are using Mac OS X make sure the version is greater than 10.11.x (Captain).
+====
+
 This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse, VS Code..)
