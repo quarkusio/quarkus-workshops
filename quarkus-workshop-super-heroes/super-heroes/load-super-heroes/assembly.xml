@@ -8,12 +8,21 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
+            <directory>${project.basedir}/.mvn</directory>
+        </fileSet>
+        <fileSet>
             <directory>${project.basedir}/src</directory>
         </fileSet>
     </fileSets>
     <files>
         <file>
             <source>${project.basedir}/pom.xml</source>
+        </file>
+        <file>
+            <source>${project.basedir}/mvnw</source>
+        </file>
+        <file>
+            <source>${project.basedir}/mvnw.cmd</source>
         </file>
     </files>
 </assembly>
