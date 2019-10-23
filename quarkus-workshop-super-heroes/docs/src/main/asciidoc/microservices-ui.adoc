@@ -57,7 +57,7 @@ At this stage, make sure the following commands work:
 [source,shell]
 ----
 ng version (or ./node_modules/.bin/ng version)
-node -v
+node -v    (or ./node/node -v)
 ----
 
 To install the Angular application into a Quarkus instance, we just build the app and copy the bundles under the `resources/META-INF/resources` directory.
