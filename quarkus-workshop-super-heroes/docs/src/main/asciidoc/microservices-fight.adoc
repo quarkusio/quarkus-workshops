@@ -217,28 +217,7 @@ In the `application.properties` file add:
 
 [source,properties]
 ----
-quarkus.http.port=8082
-
-quarkus.datasource.url=jdbc:postgresql://localhost:5432/fights_database
-
-quarkus.datasource.driver=org.postgresql.Driver
-quarkus.datasource.username=superfight
-quarkus.datasource.password=superfight
-quarkus.datasource.max-size=8
-quarkus.datasource.min-size=2
-quarkus.hibernate-orm.database.generation=drop-and-create
-quarkus.hibernate-orm.log.sql=true
-
-## Logging configuration
-quarkus.log.console.enable=true
-quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
-quarkus.log.console.level=DEBUG
-quarkus.log.console.color=true
-
-## Production configuration
-%prod.quarkus.hibernate-orm.log.sql=false
-%prod.quarkus.log.console.level=INFO
-%prod.quarkus.hibernate-orm.database.generation=update
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=!adocCORS;!adocRestClient;!adocKafka;!adocBanner]
 ----
 
 Note that the fight service uses the port 8082.
