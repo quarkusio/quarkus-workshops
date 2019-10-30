@@ -48,6 +48,25 @@ Java of course, other JVM-based languages (such as Groovy, Kotlin etc.) but also
 It includes a new high performance Java compiler, itself called _Graal_, which can be used in a _Just-In-Time_ (JIT) configuration on the HotSpot VM, or in an _Ahead-Of-Time_ (AOT) configuration on the Substrate VM.footnote:[SubstrateVM https://github.com/oracle/graal/tree/master/substratevm]
 One objective of Graal is to improve the performance of Java virtual machine-based languages to match the performance of native languages.
 
+=== Prerequisites for GraalVM
+
+On Linux, you need GCC, and the glibc and zlib headers. Examples for common distributions:
+
+[source,shell]
+----
+# dnf (rpm-based)
+sudo dnf install gcc glibc-devel zlib-devel
+# Debian-based distributions:
+sudo apt-get install build-essential libz-dev zlib1g-dev
+----
+
+On MacOS X, XCode provides the required dependencies to build native executables:
+
+[source,shell]
+----
+xcode-select --install
+----
+
 === Installing GraalVM
 
 GraalVM installed from the GraalVM web site.footnote:[GraalVM Download https://www.graalvm.org/downloads]
