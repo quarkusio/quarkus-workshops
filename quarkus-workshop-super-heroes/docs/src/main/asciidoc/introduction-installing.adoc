@@ -263,8 +263,8 @@ Our infrastructure is going to use Docker to ease the installation of the differ
 So for this, we need to install `docker` and `docker-compose`
 Installation instructions are available on the following page:
 
-* Mac OS X - https://docs.docker.com/docker-for-mac/install/
-* Windows - https://docs.docker.com/docker-for-windows/install/
+* Mac OS X - https://docs.docker.com/docker-for-mac/install/ (version 18.03+)
+* Windows - https://docs.docker.com/docker-for-windows/install/ (version 18.03+)
 * CentOS - https://docs.docker.com/install/linux/docker-ce/centos/
 * Debian - https://docs.docker.com/install/linux/docker-ce/debian/
 * Fedora - https://docs.docker.com/install/linux/docker-ce/fedora/
