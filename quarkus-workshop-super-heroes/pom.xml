@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.quarkus.workshop.super-heroes</groupId>
+    <artifactId>super-parent-root</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>Quarkus Workshop :: Super-Heroes - R00T</name>
+
+    <!--
+    This pom file is a convenient way to build the complete workshop. It is not intended to be a parent pom file.
+
+    Attendees:
+    * Build the structure using: mvn clean install
+
+    Workshop organizers:
+    * Build the zip to provide to the attendees using: mvn assembly:single -N
+    * Run a full build using: mvn clean install -Pnative -Pfull
+
+    -->
+
+    <modules>
+        <module>extensions/extension-fault-injector</module>
+        <module>super-heroes/rest-villain</module>
+        <module>super-heroes/ui-super-heroes</module>
+        <module>super-heroes/load-super-heroes</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>full</id>
+            <modules>
+                <module>extensions/extension-banner</module>
+                <module>super-heroes/rest-hero</module>
+                <module>super-heroes/rest-fight</module>
+                <module>super-heroes/event-statistics</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <finalName>quarkus-super-heroes-workshop</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+                    <attach>false</attach>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                    <outputDirectory>dist</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
