@@ -113,8 +113,14 @@ Then, make sure to run a `mvn install` in the directory where the `pom.xml` file
 == Warming up Docker
 
 To warm up your Docker repository, download the zip file {github-raw}/super-heroes/infrastructure/infrastructure.zip and unzip the entire code into the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
-Here, you will find a `docker-compose.yaml` file which defines all the needed Docker images.
+Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which defines all the needed Docker images.
 Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases and a `monitoring` directory (all that will be explained later).
+
+[WARNING]
+.Linux User
+====
+If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose`.yaml
+====
 
 Then execute `docker-compose -f docker-compose.yaml up -d`.
 This will download all the Docker images and start the containers.
