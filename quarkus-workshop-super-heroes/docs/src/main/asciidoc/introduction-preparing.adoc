@@ -5,7 +5,9 @@ This workshop needs internet access to download all sorts of Maven artifacts, Do
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
 
-== Creating the Directories Structure
+== Download the workshop scaffolding
+
+First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
 
 In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
@@ -27,6 +29,7 @@ quarkus-workshop-super-heroes
 === Super Heroes Application
 
 Under the `super-heroes` directory you will find the entire Super Hero application spread throughout a set of subdirectories, each one containing a microservice or some tooling.
+The final structure will be the following:
 
 [plantuml]
 ----
@@ -37,10 +40,10 @@ T
 quarkus-workshop-super-heroes
 + super-heroes
 ++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
-++ event-statistics        | UI and application dealing with fight statistics
+++ event-statistics        | UI and application dealing with fight statistics (you will create it)
 ++ load-super-heroes       | Stress tool loading heroes, villains and fights
-++ rest-fight              | REST API allowing super heroes to fight
-++ rest-hero               | REST API for CRUD operations on Heroes
+++ rest-fight              | REST API allowing super heroes to fight (you will create it)
+++ rest-hero               | REST API for CRUD operations on Heroes (you will create it)
 ++ rest-villain            | REST API for CRUD operations on Villains
 ++ ui-super-heroes         | Angular application so we can fight visually
 }
@@ -48,7 +51,7 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
-Most of thses subdirectories are Maven projects and follow the Maven directory structure:
+Most of theses subdirectories are Maven projects and follow the Maven directory structure:
 
 [plantuml]
 ----
@@ -74,6 +77,7 @@ quarkus-workshop-super-heroes
 === Quarkus Extensions
 
 Under the `extensions` directory you will find quarkus extensions.
+By the end of the workshop, you will get:
 
 [plantuml]
 ----
@@ -83,36 +87,27 @@ Under the `extensions` directory you will find quarkus extensions.
 T
 quarkus-workshop-super-heroes
 +  extensions
-++  extension-banner           | Extension displaying a startup banner
+++  extension-banner           | Extension displaying a startup banner (you will create it)
 ++  extension-fault-injector   | Injects network latency and HTTP faults
 }
 }
 @endsalt
 ----
 
-=== Script Creating the Directory Structure
-
-So, before starting to code, make sure you create the right directory structure.
-
-[source,shell]
-----
-include::{github-raw}/create-directory-structure.sh[tags=adocSnippet]
-----
-
 == Warming up Maven
 
-To warm up your Maven repository, first bootstrap a Quarkus project using the following command:
+Now that you have the initial structure in place, navigate to the the root directory and run:
 
 [source,shell]
 ----
-include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
+mvn clean install
 ----
 
-Then, make sure to run a `mvn install` in the directory where the `pom.xml` file is located.
+By running this command, it downloads all the required dependencies.
 
 == Warming up Docker
 
-To warm up your Docker repository, download the zip file {github-raw}/super-heroes/infrastructure/infrastructure.zip and unzip the entire code into the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
+To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
 Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which defines all the needed Docker images.
 Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases and a `monitoring` directory (all that will be explained later).
 
@@ -122,7 +117,7 @@ Notice that there is a `db-init` directory with a `initialize-databases.sql` scr
 If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose`.yaml
 ====
 
-Then execute `docker-compose -f docker-compose.yaml up -d`.
+Then execute `docker-compose -f docker-compose.yaml up -d` or `docker-compose -f docker-compose-linux.yaml up -d` on Linux.
 This will download all the Docker images and start the containers.
 
 [WARNING]
@@ -136,7 +131,13 @@ docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight L
 ```
 ====
 
-Once all the containers are up and running, you can shut them down with the command `docker-compose -f docker-compose.yaml down`.
+Once all the containers are up and running, you can shut them down with the commands:
+
+[source, shell]
+----
+docker-compose -f docker-compose.yaml down
+docker-compose -f docker-compose.yaml rm
+----
 
 [NOTE]
 ====

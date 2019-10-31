@@ -5,9 +5,10 @@ Now that we have the three main microservices, time to have a decent user interf
 The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
 This time you will just download an Angular application, install it, and run it on another Quarkus instance.
 
-== Downloading the Web Application
+== The Web Application
 
-Download the zip file {github-raw}/super-heroes/ui-super-heroes/ui-super-heroes.zip and unzip the entire code into your `ui-super-heroes` directory.
+Navigate to the `super-heroes/ui-super-heroes/ui-super-heroes` directory.
+It contains the code of the microservice.
 Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
 Notice that there is a `pom.xml` file.
 This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven.

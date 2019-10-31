@@ -2,41 +2,14 @@
 = Villain Microservice
 
 New microservice, new project!
-In this section we will develop a Villain REST Endpoint which is *really* similar to the Hero Endpoint (and remember, copy/paste is your best friend).
+In this section we will see the counterpart of the Hero microservice: the Villain microservice!
+The Villain REST Endpoint is *really* similar to the Hero Endpoint.
 
-[TIP]
-====
-If you are running out of time, or if you can't be bothered in typing all the code of the Villain REST Endpoint, you can also download the code.
-Download the zip file {github-raw}/super-heroes/rest-villain/rest-villain.zip and unzip the entire code into your `rest-villain` directory.
-If you do that, you can skip entirely this chapter and go straight to <<microservices-fight#microservices-fight>>.
-====
-
-== Bootstrapping the Villain REST Endpoint
-
-Like for the Hero API, the easiest way to create this new Quarkus project is to use a Maven archetype.
-Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, create a `rest-villain` sub-directory, open a terminal and run the following command:
-
-[source,shell]
-----
-include::{github-raw}/super-heroes/rest-villain/bootstrap.sh[tag=adocSnippet]
-----
-
-Also add the following dependencies:
-
-[source,xml,indent=0]
-----
-include::{github-raw}/super-heroes/rest-villain/pom.xml[tag=adocDependencyTest]
-----
-
-[TIP]
-.Prefering Web UI
-====
-Instead of the Maven command, you can use https://code.quarkus.io.
-====
+The code has already been provided in the `/super-heroes/rest-villain/` directory.
 
 == Directory Structure
 
-At the end you should have the following directory structure:
+As for the hero microservice, you have the following directory structure:
 
 [plantuml]
 ----
@@ -126,7 +99,7 @@ include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/worksho
 == VillainApplicationLifeCycle for Startup Banner
 
 The villain API also needs a nice banner.
-Go back to http://patorjk.com/software/taag and pick up your favourite "Villain API" text banner and paste it into the `VillainApplicationLifeCycle` class.
+The provided one has been created from http://patorjk.com/software/taag:
 
 [source]
 ----
@@ -145,7 +118,7 @@ include::{github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[ta
 
 == VillainResourceTest Test Class
 
-We need to test our REST API.
+The microservice is also tested.
 For that, copy the following `VillainResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/villain` directory.
 
 [source]
