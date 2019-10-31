@@ -65,17 +65,6 @@
                     <mainClass>io.quarkus.workshop.superheroes.load.SuperHeroesLoad</mainClass>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <finalName>load-super-heroes</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <descriptors>
-                        <descriptor>assembly.xml</descriptor>
-                    </descriptors>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
