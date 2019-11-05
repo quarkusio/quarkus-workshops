@@ -11,7 +11,7 @@ cd /tmp
 rm -fR /tmp/quarkus-workshops
 git clone git@github.com:quarkusio/quarkus-workshops.git
 cd quarkus-workshops
-git co gh-pages
+git checkout gh-pages
 cd $old
 rm -fR /tmp/quarkus-workshops/super-heros
 rsync -avz ./target/generated-asciidoc/ /tmp/quarkus-workshops/super-heros
