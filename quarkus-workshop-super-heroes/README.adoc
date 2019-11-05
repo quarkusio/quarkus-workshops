@@ -1,5 +1,9 @@
 = Workshop Super Heroes
 
+== Instructions
+
+Check https://quarkus.io/quarkus-workshops/super-heros/ to get the workshop instructions.
+
 == Generate the documentation
 
 You can either generate the documentation for each exercise or for the entire workshop.
