@@ -19,13 +19,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.quarkus.workshop.super-heroes</groupId>
-        <artifactId>extension-parent-pom</artifactId>
-        <version>1.0</version>
-    </parent>
-
+    <groupId>io.quarkus.workshop.super-heroes</groupId>
     <artifactId>extension-banner-parent</artifactId>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Extensions :: Banner Extension</name>
 
@@ -33,4 +29,33 @@
         <module>runtime</module>
         <module>deployment</module>
     </modules>
+
+    <properties>
+        <quarkus.version>0.28.1</quarkus.version>
+        <surefire-plugin.version>2.22.0</surefire-plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom-deployment</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
