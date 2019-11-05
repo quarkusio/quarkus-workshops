@@ -4,7 +4,7 @@
 mkdir -p quarkus-workshop-super-heroes/super-heroes/rest-hero
 
 cd quarkus-workshop-super-heroes/super-heroes/rest-hero
-mvn io.quarkus:quarkus-maven-plugin:0.27.0:create \
+mvn io.quarkus:quarkus-maven-plugin:0.28.1:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-hero \
     -DclassName="io.quarkus.workshop.superheroes.hero.HeroResource" \

@@ -142,11 +142,11 @@ $ ./mvnw compile quarkus:dev
 [INFO] Changes detected - recompiling the module!
 [INFO] Compiling 1 source file to /Users/agoncal/Code/Quarkus/rest-hero/target/classes
 [INFO]
-[INFO] --- quarkus-maven-plugin:0.27.0:dev (default-cli) @ rest-hero ---
+[INFO] --- quarkus-maven-plugin:0.28.1:dev (default-cli) @ rest-hero ---
 [ERROR] Port 5005 in use, not starting in debug mode
 2019-10-04 10:08:11,536 INFO  [io.qua.dep.QuarkusAugmentor] (main) Beginning quarkus augmentation
 2019-10-04 10:08:11,989 INFO  [io.qua.dep.QuarkusAugmentor] (main) Quarkus augmentation completed in 453ms
-2019-10-04 10:08:12,294 INFO  [io.quarkus] (main) Quarkus 0.27.0 started in 0.891s. Listening on: http://0.0.0.0:8080
+2019-10-04 10:08:12,294 INFO  [io.quarkus] (main) Quarkus 0.28.1 started in 0.891s. Listening on: http://0.0.0.0:8080
 2019-10-04 10:08:12,295 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
 2019-10-04 10:08:12,295 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
 ----
