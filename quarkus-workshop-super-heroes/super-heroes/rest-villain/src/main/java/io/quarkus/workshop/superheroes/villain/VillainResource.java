@@ -120,7 +120,7 @@ public class VillainResource {
     }
 
     @Operation(summary = "Deletes an exiting villain")
-    @APIResponse(responseCode = "204", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class)))
+    @APIResponse(responseCode = "204")
     // tag::adocMetrics[]
     @Counted(name = "countDeleteVillain", description = "Counts how many times the deleteVillain method has been invoked")
     @Timed(name = "timeDeleteVillain", description = "Times how long it takes to invoke the deleteVillain method", unit = MetricUnits.MILLISECONDS)

@@ -139,7 +139,7 @@ public class HeroResource {
 
     // tag::adocOpenAPI[]
     @Operation(summary = "Deletes an exiting hero")
-    @APIResponse(responseCode = "204", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
+    @APIResponse(responseCode = "204")
     // end::adocOpenAPI[]
     // tag::adocMetrics[]
     @Counted(name = "countDeleteHero", description = "Counts how many times the deleteHero method has been invoked")
