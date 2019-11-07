@@ -75,7 +75,7 @@ If you are using Mac OS X make sure the version is greater than 10.11.x (Captain
 
 This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
 
-* Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse, VS Code..)
+* Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
 * JDK 8
 * GraalVM 19.2.0.1
 * Maven 3.6.x
