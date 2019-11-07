@@ -77,7 +77,7 @@ This workshop will make use of the following software, tools, frameworks that yo
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
 * JDK 8
-* GraalVM 19.2.0.1
+* GraalVM 19.2.1
 * Maven 3.6.x
 * Docker
 * cURL (or any other command line HTTP client)

@@ -96,7 +96,7 @@ Once installed and setup, you should be able to run the following command and ge
 [source,shell]
 ----
 $ $GRAALVM_HOME/bin/native-image --version
-GraalVM Version 19.2.0.1 CE
+GraalVM Version 19.2.1 CE
 ----
 
 == Maven 3.6.x
