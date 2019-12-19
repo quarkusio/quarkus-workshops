@@ -13,9 +13,9 @@ git clone git@github.com:quarkusio/quarkus-workshops.git
 cd quarkus-workshops
 git checkout gh-pages
 cd $old
-rm -fR /tmp/quarkus-workshops/super-heros
-rsync -avz ./target/generated-asciidoc/ /tmp/quarkus-workshops/super-heros
-cp /tmp/quarkus-workshops/super-heros/spine.html /tmp/quarkus-workshops/super-heros/index.html 
+rm -fR /tmp/quarkus-workshops/super-heroes
+rsync -avz ./target/generated-asciidoc/ /tmp/quarkus-workshops/super-heroes
+cp /tmp/quarkus-workshops/super-heroes/spine.html /tmp/quarkus-workshops/super-heroes/index.html 
 cd /tmp/quarkus-workshops
 git add .
 git commit -m "update Quarkus workshop"
