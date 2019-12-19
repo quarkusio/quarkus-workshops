@@ -1,0 +1,16 @@
+@startuml
+!include style.puml
+
+skinparam RankSep 20
+
+left to right direction
+
+node "Hero" as hero {
+    agent "Quarkus" as heroQuarkus <<application>>
+    database "Postgresql" as heroPostgresql
+    heroQuarkus .up> heroPostgresql
+}
+
+_REST ()-- heroQuarkus
+
+@enduml
