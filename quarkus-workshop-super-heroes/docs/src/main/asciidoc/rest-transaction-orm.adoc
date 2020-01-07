@@ -50,7 +50,7 @@ This will add the following dependency in the `pom.xml` file:
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgresql]
 ----
 
-Fomr now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
+From now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
 The command does accept partial extension names: in this case we used `jdbc-postgresql` instead of the complete `io.quarkus:quarkus-jdbc-postgresql`.
 
 == Hero Entity
