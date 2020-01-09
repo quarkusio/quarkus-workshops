@@ -25,5 +25,35 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml
 
+        # GITHUB_API_TOKEN
 
+  publication:
+    needs: [build_java8, build_java11]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install JDK 11
+        uses: joschi/setup-jdk@v1.0.0
+        with:
+          java-version: 'openjdk11'
+      - name: Site generation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+        run: |  
+          cd quarkus-workshop-super-heroes/docs
+          export old=`pwd`
+          mvn install
+          cd /tmp
+          rm -fR /tmp/quarkus-workshops
+          git clone https://cescoffier:${GITHUB_TOKEN}@github.com/quarkusio/quarkus-workshops.git
+          cd quarkus-workshops
+          git checkout gh-pages
+          cd $old
+          rm -fR /tmp/quarkus-workshops/super-heroes
+          rsync -avz ./target/generated-asciidoc/ /tmp/quarkus-workshops/super-heroes
+          cp /tmp/quarkus-workshops/super-heroes/spine.html /tmp/quarkus-workshops/super-heroes/index.html
+          cd /tmp/quarkus-workshops
+          git add .
+          git commit -m "update Quarkus workshop"
+          git push origin gh-pages      
 
