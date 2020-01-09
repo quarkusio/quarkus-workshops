@@ -40,9 +40,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
         run: |  
+          sudo apt-get install graphviz
+
           git config --global user.email "clement@apache.org"
           git config --global user.name "Clement Escoffier"
-          
+
           cd quarkus-workshop-super-heroes/docs      
           export old=`pwd`
           mvn install
