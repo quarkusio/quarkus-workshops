@@ -37,7 +37,7 @@ Only runtime configuration properties are applied at startup (such as database U
 
 Also, during this augmentation, Java classes are generated or extended.
 Remember the `Hero` Panache entity.
-The class is extended during the _agumentation_.
+The class is extended during the _augmentation_.
 If you run `javap target/transformed-classes/io/quarkus/workshop/superheroes/hero/Hero.class`, you can see methods prefixed with `$$`, which have been added to the class.
 
 If now you look at the `target/wiring-classes/io/quarkus/workshop/superheroes/hero`, you can see many generated classes.
