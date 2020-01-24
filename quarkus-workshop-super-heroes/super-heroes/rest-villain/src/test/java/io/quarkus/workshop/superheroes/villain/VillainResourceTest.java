@@ -1,13 +1,14 @@
 // tag::adocResourceTest[]
 package io.quarkus.workshop.superheroes.villain;
 
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.*;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
 import java.util.Random;
@@ -22,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
-@Testcontainers
+@QuarkusTestResource(DatabaseResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VillainResourceTest {
 
@@ -39,23 +40,6 @@ public class VillainResourceTest {
 
     private static final int NB_VILLAINS = 581;
     private static String villainId;
-
-    @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
-        .withDatabaseName("villains_database")
-        .withUsername("superbad")
-        .withPassword("superbad")
-        .withExposedPorts(5432);
-
-    @BeforeAll
-    private static void configure() {
-        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
-    }
-
-    @AfterAll
-    private static void cleanup() {
-        System.clearProperty("quarkus.datasource.url");
-    }
 
     @Test
     void shouldPingOpenAPI() {
