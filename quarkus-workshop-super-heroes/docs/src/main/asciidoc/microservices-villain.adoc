@@ -126,6 +126,13 @@ For that, copy the following `VillainResourceTest` class under the `src/test/jav
 include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/VillainResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics]
 ----
 
+Also create the required test resource (`DatabaseResource`):
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/DatabaseResource.java[]
+----
+
 [NOTE]
 --
 For the villain microservices, we won't cover the native test, as it will be the same as for the hero microservice.
