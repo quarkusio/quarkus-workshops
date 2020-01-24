@@ -1,10 +1,8 @@
 // tag::adocResourceIT[]
 package io.quarkus.workshop.superheroes.hero;
 
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
-import io.quarkus.test.junit.SubstrateTest;
+import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.junit.NativeImageTest;
 import io.restassured.common.mapper.TypeRef;
 import io.vertx.core.json.JsonObject;
 import org.hamcrest.core.Is;
@@ -12,9 +10,6 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -30,8 +25,8 @@ import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SubstrateTest
-@Testcontainers
+@NativeImageTest
+@QuarkusTestResource(DatabaseResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NativeHeroResourceIT {
 
@@ -45,18 +40,6 @@ public class NativeHeroResourceIT {
     private static final String UPDATED_POWERS = "eats baguette really quickly (updated)";
 
     private static String heroId;
-
-    @Container
-    private static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
-        .withDatabaseName("heroes_database")
-        .withUsername("superman")
-        .withPassword("superman")
-        .withExposedPorts(5432)
-        .withCreateContainerCmdModifier(cmd ->
-            cmd
-                .withHostName("localhost")
-                .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
-        );
 
     // tag::adocOpenAPI[]
     @Test
