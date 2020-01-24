@@ -1,25 +1,22 @@
 // tag::adocResourceTest[]
 package io.quarkus.workshop.superheroes.fight;
 
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
-
 import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
-import org.junit.jupiter.api.*;
-import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
 import java.util.Random;
 
-// tag::adocRandom[]
 import static io.quarkus.workshop.superheroes.fight.client.MockHeroService.*;
 import static io.quarkus.workshop.superheroes.fight.client.MockVillainService.*;
-// end::adocRandom[]
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
@@ -27,10 +24,15 @@ import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+// tag::adocRandom[]
+// end::adocRandom[]
 
 @QuarkusTest
-@Testcontainers
+@QuarkusTestResource(DatabaseResource.class)
+@QuarkusTestResource(KafkaResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FightResourceTest {
 
@@ -43,28 +45,6 @@ public class FightResourceTest {
 
     private static final int NB_FIGHTS = 10;
     private static String fightId;
-
-    @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
-        .withDatabaseName("fights_database")
-        .withUsername("superfight")
-        .withPassword("superfight")
-        .withExposedPorts(5432);
-
-    @Container
-    public static final KafkaContainer KAFKA = new KafkaContainer();
-
-    @BeforeAll
-    public static void configureKafkaLocation() {
-        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
-        System.setProperty("kafka.bootstrap.servers", KAFKA.getBootstrapServers());
-    }
-
-    @AfterAll
-    public static void clearKafkaLocation() {
-        System.clearProperty("kafka.bootstrap.servers");
-        System.clearProperty("quarkus.datasource.url");
-    }
 
     @Test
     void shouldPingOpenAPI() {
