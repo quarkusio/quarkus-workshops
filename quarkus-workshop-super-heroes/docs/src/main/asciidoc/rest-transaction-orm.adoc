@@ -218,8 +218,10 @@ Now, you have around 500 heroes that will be loaded in the database.
 
 == CRUD Tests in HeroResourceTest
 
-To test the `HeroResource` endpoint, we will be using TestContainers to fire a Postgres database and then test CRUD operations.footnote:[TestContainers https://www.testcontainers.org]
-As you will see, these tests are more complex as they start a Postgres database to allow CRUD operations to be tested against a real database.
+To test the `HeroResource` endpoint, we will be using a `QuarkusTestResource` that will fire a Postgres database and then test CRUD operations.
+The `QuarkusTestResource` is a test extension that can configure the environment before running the application.
+In our context, we will be using TestContainers to start our database.footnote:[TestContainers https://www.testcontainers.org]
+
 For that we will install the TestContainers dependency in our `pom.xml` as well as some extra test dependencies:
 
 [source,xml,indent=0]
@@ -228,7 +230,18 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestCont
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestREST]
 ----
 
-You will add the following test methods to the `HeroResourceTest` class:
+Then, you need to create the `QuarkusTestResource`.
+Create the `io.quarkus.workshop.superheroes.hero.DatabaseResource` classes with the following content:
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/DatabaseResource.java[]
+----
+
+This code just starts the database before the application, and set the `quarkus.datasource.url` system property to indicate to the application where is the test database.
+Note that the database would use a random port.
+
+Then, in `io.quarkus.workshop.superheroes.hero.HeroResourceTest`, you will add the following test methods to the `HeroResourceTest` class:
 
 * `shouldNotGetUnknownHero`: giving a random Hero identifier, the `HeroResource` endpoint should return a 204 (No content)
 * `shouldGetRandomHero`: checks that the `HeroResource` endpoint returns a random hero
@@ -245,7 +258,17 @@ The code is as follow:
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocResourceTest;!adocOpenAPI;!adocHealth;!adocMetrics]
 ----
 
-Execute the test using `./mvnw test`.
+Let's have a look to the 2 annotations used on the `HeroResourceTest` class.
+`@QuarkusTest` indicates that this test class is checking the behavior of a Quarkus application.
+The test framework starts the application before the test class and stops it once all the tests have been executed.
+The tests and the application runs in the same JVM, meaning that the test can be injected with application _beans_.
+This feature is very useful to test specific parts of the application.
+However in our case, we just execute HTTP requests to check the result.
+
+Notice also the `@QuarkusTestResource(DatabaseResource.class)`.
+It is how the `QuarkusTestResource` are attached to a test class.
+
+With this code written, execute the test using `./mvnw test`.
 The test should pass.
 
 == Running the Infrastructure
