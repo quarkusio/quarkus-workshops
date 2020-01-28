@@ -1,5 +1,5 @@
 [[quarkus-native]]
-= Building Native Images
+= From Java to Native
 
 == Building a Native Executable
 
@@ -63,13 +63,16 @@ To do so, you will find in the `pom.xml` the following profile:
       </plugin>
     </plugins>
   </build>
+  <properties>
+    <quarkus.package.type>native</quarkus.package.type>
+  </properties>
 </profile>
 ----
 
-Create a native executable using: `./mvnw package -Pnative`.
+Make sure you have the `GRAALVM_HOME` environment variable defined and pointing to where you installed GraalVM.
+Then create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files (`rest-hero-1.0-SNAPSHOT.jar` and `rest-hero-1.0-SNAPSHOT-runner.jar`), the build also produces `target/rest-hero-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
 You can run it using: `./target/rest-hero-1.0-SNAPSHOT-runner`.
-
 
 [WARNING]
 ====
