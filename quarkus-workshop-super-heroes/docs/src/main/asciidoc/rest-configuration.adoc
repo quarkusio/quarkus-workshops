@@ -109,10 +109,8 @@ It's an amazing tool to manipulate JSON in the shell.
 More info on: https://stedolan.github.io/jq/
 ====
 
-[NOTE]
-.Hey! Tests are failing now!
-====
-If you run the tests with these changes, they will fail.
-Indeed, they are not aware of our multiplier.
-We will see how we can configure them to pass gain very soon.
-====
+Hey! Wait a minute! Tests are failing now!
+Indeed, they don't know the multiplier.
+In the `application.properties` file, add: `%test.level.multiplier=1` which set the multiplier to 1 when running the tests.
+We will cover the `%test` syntax soon.
+
