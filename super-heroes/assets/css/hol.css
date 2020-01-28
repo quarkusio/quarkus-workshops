@@ -61,6 +61,11 @@ h6 {
     color: darkblue;
 }
 
+h3, h4, .h3, .h4 {
+  border-bottom: 1px solid darkblue;
+  padding-top: 0.2em;
+}
+
 h1 {
     margin: .67em 0;
     font-size: 1.5em;
