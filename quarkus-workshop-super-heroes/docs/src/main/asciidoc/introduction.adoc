@@ -28,6 +28,7 @@ Well, it's going to be a set of microservices (we want to be trendy):
 This workshop is a BYOL (Bring Your Own Laptop) session, so bring your Windows, OSX, or Linux laptop.
 You need JDK 8+ on your machine, Apache Maven (3.6+), and Docker.
 On Windows, some parts may be qualified as _experimental_.
+On Mac and Windows, Docker for _x_ is recommended instead of the Docker toolbox setup.
 
 What you are going to learn:
 
