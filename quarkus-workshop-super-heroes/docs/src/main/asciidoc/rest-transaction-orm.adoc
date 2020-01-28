@@ -65,6 +65,23 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgres
 
 From now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
 
+
+== Running the Infrastructure
+
+Before going further, be sure to run the infrastructure.
+To execute this service, you need a database (and later on we will need Prometheus and Kafka).
+Let's use Docker and docker compose to ease the installation of such infrastructure.
+
+You should already have installed the infrastructure into the `infrastructure` directory.
+Now, just execute `docker-compose -f docker-compose.yaml up -d`.
+You should see a few logs going on and then all the containers get started.
+
+[NOTE]
+====
+During the workshop, just leave all the containers up and running.
+Then, after the workshop, remember to shut them down using: `docker-compose -f docker-compose.yaml down`
+====
+
 == Hero Entity
 
 To define a Panache entity, simply extend `PanacheEntity`, annotate it with `@Entity` and add your columns as public fields (no need to have getters and setters).
@@ -205,7 +222,7 @@ Ok, but that's just a few entries.
 Download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 Now, you have around 500 heroes that will be loaded in the database.
 
-If you didn't et, start the application in dev mode:
+If you didn't yet, start the application in dev mode:
 
 [source,shell]
 ----
@@ -269,29 +286,3 @@ It is how the `QuarkusTestResource` are attached to a test class.
 
 With this code written, execute the test using `./mvnw test`.
 The test should pass.
-
-== Running the Infrastructure
-
-To execute the application we now need a database (and later one we will need Prometheus and Kafka).
-Let's use Docker and docker compose to ease the installation of such infrastructure.
-
-You should already have installed the infrastructure into the `infrastructure` directory.
-Now, just execute `docker-compose -f docker-compose.yaml up -d`.
-You should see a few logs going on and then all the containers get started.
-
-[NOTE]
-====
-During the workshop, just leave all the containers up and running.
-Then, after the workshop, remember to shut them down using: `docker-compose -f docker-compose.yaml down`
-====
-
-== Running the Application
-
-Now that the tests pass and that our infrastructure is up and running, we are ready to run our application.
-Use `./mvnw compile quarkus:dev` to start it.
-Once started, check that there are heroes in the database with the following cUrl command:
-
-[source,shell]
-----
-$ curl http://localhost:8080/api/heroes
-----
