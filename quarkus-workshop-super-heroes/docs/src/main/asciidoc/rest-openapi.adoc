@@ -54,32 +54,20 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 
 == Open API
 
-Now, we are ready to restart our application (stop it first if you didn't):
+Now, you _curl_ `http://localhost:8083/openapi` endpoint:
 
 [source,shell]
 ----
-$ ./mvnw compile quarkus:dev
-----
-
-Once your application is started, you can make a request to the default `http://localhost:8083/openapi` endpoint:
-
-[source,yaml]
-----
+$ curl http://localhost:8083/openapi
 include::{github-raw}/super-heroes/rest-hero/openapi-origin.yaml[]
 ----
 
-[NOTE]
-====
-Use cURL to retrieve the document:
-`curl http://localhost:8083/openapi`
-====
-
 This contract lacks of documentation.
-The Eclipse Microprofile OpenAPI allows you to customize the methods of your REST endpoint as well as the application.
+The Eclipse MicroProfile OpenAPI allows you to customize the methods of your REST endpoint as well as the application.
 
 === Customizing Methods
 
-The Microprofile OpenAPI has a set of annotations to customize each REST endpoint method so the OpenAPI contract is richer and clearer for consumers:
+The MicroProfile OpenAPI has a set of annotations to customize each REST endpoint method so the OpenAPI contract is richer and clearer for consumers:
 
 * `@Operation`: Describes a single API operation on a path.
 * `@APIResponse`: Corresponds to the OpenAPI Response model object which describes a single response from an API Operation
@@ -128,9 +116,11 @@ You can visualize your API's operations and schemas.
 
 image::rest-openapi-swaggerui.png[]
 
+For example, you can try the `/api/heroes/random` endpoint to retrieve a random hero.
+
 == OpenAPI Tests in HeroResourceTest
 
-Let's add a few extra test methods that would make sure OpenAPI and Swagger UI are packaged in the application:
+Let's add a few extra test methods in `HeroResourceTest` that would make sure OpenAPI and Swagger UI are packaged in the application:
 
 [source,indent=0]
 ----
@@ -138,12 +128,5 @@ include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/s
 ----
 
 Execute the test using `./mvnw test`.
-
-[NOTE]
-====
-The tests may fail because of the _multiplier_.
-In the `application.properties` file, add: `%test.level.multiplier=1`
-We will cover this syntax later.
-====
 
 include::common-solution.adoc[]
