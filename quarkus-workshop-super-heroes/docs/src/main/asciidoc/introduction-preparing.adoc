@@ -94,6 +94,23 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
+== Checking Ports
+
+During this workshop we will use several ports.
+Just make sure the following ports are free so you don't run into any conflicts
+
+[source,shell]
+----
+$ lsof -i tcp:8080    // UI
+$ lsof -i tcp:8082    // Fight REST API
+$ lsof -i tcp:8083    // Hero REST API
+$ lsof -i tcp:8084    // Villain REST API
+$ lsof -i tcp:5432    // Postgres
+$ lsof -i tcp:9090    // Prometheus
+$ lsof -i tcp:2181    // Zookeeper
+$ lsof -i tcp:9092    // Kafka
+----
+
 == Warming up Maven
 
 Now that you have the initial structure in place, navigate to the the root directory and run:
@@ -146,23 +163,6 @@ Any microservice system is going to rely on a set of technical services.
 In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
 This infrastructure starts all these services, so you don't have to worry about them.
 ====
-
-== Checking Ports
-
-During this workshop we will use several ports.
-Just make sure the following ports are free so you don't run into any conflicts
-
-[source,shell]
-----
-$ lsof -i tcp:8080    // UI
-$ lsof -i tcp:8082    // Fight REST API
-$ lsof -i tcp:8083    // Hero REST API
-$ lsof -i tcp:8084    // Villain REST API
-$ lsof -i tcp:5432    // Postgres
-$ lsof -i tcp:9090    // Prometheus
-$ lsof -i tcp:2181    // Zookeeper
-$ lsof -i tcp:9092    // Kafka
-----
 
 == Ready?
 
