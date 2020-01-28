@@ -34,16 +34,29 @@ super-heroes
 @endsalt
 ----
 
-== Installing the PostgreSQL Dependency
+== Installing the PostgreSQL Dependency, Hibernate with Panache and Hibernate Validator
 
-To install the PostgreSQL driver dependency, just run the following command:
+This microservice:
+
+* interacts with a PostGreSQL database - so it needs a driver
+* uses Hibernate with Panache - so need the dependency on it
+* validates payloads and entities - so need a validator
+* consumes and produces JSON - so we need a mapper
+
+Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
+It makes complex mappings possible, but it does not make simple and common mappings trivial.
+Hibernate ORM with Panache focuses on making your entities trivial and fun to write in Quarkus.footnote:[Panache https://github.com/quarkusio/quarkus/tree/master/extensions/panache]
+
+Because JPA and Bean Validation work well together, we will use Bean Validation to constrain our business model.
+
+To add the required dependencies, just run the following command:
 
 [source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql"
+$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,resteasy-jsonb"
 ----
 
-This will add the following dependency in the `pom.xml` file:
+This will add the following dependencies in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
@@ -51,27 +64,8 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgres
 ----
 
 From now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
-The command does accept partial extension names: in this case we used `jdbc-postgresql` instead of the complete `io.quarkus:quarkus-jdbc-postgresql`.
 
 == Hero Entity
-
-Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
-It makes complex mappings possible, but it does not make simple and common mappings trivial.
-Hibernate ORM with Panache focuses on making your entities trivial and fun to write in Quarkus.footnote:[Panache https://github.com/quarkusio/quarkus/tree/master/extensions/panache]
-
-Because JPA and Bean Validation work well together, we will use Bean Validation to constrain our business model.
-So first, make sure to add the Panache JPA and Bean Validation extensions to your `pom.xml`:
-
-[source,xml,indent=0]
-----
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHibernate]
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyValidator]
-----
-
-[TIP]
---
-When you change your POM, don't forget to restart the `quarkus:dev` mode.
---
 
 To define a Panache entity, simply extend `PanacheEntity`, annotate it with `@Entity` and add your columns as public fields (no need to have getters and setters).
 The `Hero` entity should look like this:
@@ -151,6 +145,8 @@ You can control whether and how the transaction is started with parameters on `@
 * `@Transactional(NOT_SUPPORTED)`: if a transaction was started, suspends it and works with no transaction for the boundary of the method ; otherwise works with no transaction.
 * `@Transactional(NEVER)`: if a transaction was started, raises an exception ; otherwise works with no transaction.
 
+Creates a new `HeroService.java` file in the same package with the following content:
+
 [source]
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroService.java[tags=adocTransactional;!adocConfigProperty;!adocPersistHeroLevel]
@@ -158,7 +154,7 @@ include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/s
 
 Notice that both methods that persist and update a hero, pass a `Hero` object as a parameter.
 Thanks to the Bean Validation's `@Valid` annotation, the `Hero` object will be checked to see if it's valid or not.
-It it's not, the transaction will be rollbacked.
+It it's not, the transaction will be rollback-ed.
 
 == Configuring the Datasource
 
@@ -178,13 +174,6 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 
 The `HeroResource` Endpoint was bootstrapped with only one method `hello()`.
 We need to add extra methods that will allow CRUD operations on heroes.
-
-But first, our application will use JSON as payload, so let's add the RESTEasy JSON-B extension.
-
-[source, xml, indent=0]
-----
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyResteasyJsonB]
-----
 
 Here are the new methods to add to the `HeroResource` class:
 
@@ -215,6 +204,16 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[tag=a
 Ok, but that's just a few entries.
 Download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 Now, you have around 500 heroes that will be loaded in the database.
+
+If you didn't et, start the application in dev mode:
+
+[source,shell]
+----
+$./mvnw quarkus:dev
+----
+
+Then, open your browser to http://localhost:8080/api/heroes.
+You should see lots of heroes...
 
 == CRUD Tests in HeroResourceTest
 
