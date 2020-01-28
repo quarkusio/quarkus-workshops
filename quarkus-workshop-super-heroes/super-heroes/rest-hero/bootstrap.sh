@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # tag::adocSnippet[]
-# If not already created, create the structure:
-mkdir -p quarkus-workshop-super-heroes/super-heroes/rest-hero
-
-cd quarkus-workshop-super-heroes/super-heroes/rest-hero
+cd quarkus-workshop-super-heroes/super-heroes
 mvn io.quarkus:quarkus-maven-plugin:1.2.0.Final:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-hero \

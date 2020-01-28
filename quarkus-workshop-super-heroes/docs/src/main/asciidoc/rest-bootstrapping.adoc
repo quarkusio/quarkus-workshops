@@ -101,6 +101,12 @@ You may not be familiar with RESTEasy.footnote:[RESTEasy https://resteasy.github
 It's an implementation of JAX-RS and it uses to implement RestFul services in Quarkus.
 ====
 
+[NOTE]
+.What's this Quarkus Platform thingy?
+====
+The Quarkus platform includes Quarkus as well as third-party extensions, like Apache Camel.
+====
+
 == The JAX-RS Resource
 
 During the project creation, the `HeroResource.java` file has been created with the following content:
@@ -125,30 +131,24 @@ It's a very simple REST endpoint, returning "hello" to requests on `/api/heroes`
 == Running the Application
 
 Now we are ready to run our application.
-Use: `./mvnw compile quarkus:dev`:
+Use: `./mvnw quarkus:dev`:
 
 [source,shell]
 ----
-$ ./mvnw compile quarkus:dev
-[INFO] -------------< io.quarkus.workshop.super-heroes:rest-hero >--------------
+$ ./mvnw quarkus:dev
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -------------< io.quarkus.workshop.super-heroes:rest-hero >-------------
 [INFO] Building rest-hero 1.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ rest-hero ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Copying 2 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ rest-hero ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 1 source file to /Users/agoncal/Code/Quarkus/rest-hero/target/classes
-[INFO]
 [INFO] --- quarkus-maven-plugin:1.2.0.Final:dev (default-cli) @ rest-hero ---
-[ERROR] Port 5005 in use, not starting in debug mode
-2019-10-04 10:08:11,536 INFO  [io.qua.dep.QuarkusAugmentor] (main) Beginning quarkus augmentation
-2019-10-04 10:08:11,989 INFO  [io.qua.dep.QuarkusAugmentor] (main) Quarkus augmentation completed in 453ms
-2019-10-04 10:08:12,294 INFO  [io.quarkus] (main) Quarkus 1.2.0.Final started in 0.891s. Listening on: http://0.0.0.0:8080
-2019-10-04 10:08:12,295 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
-2019-10-04 10:08:12,295 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/clement/Downloads/quarkus-super-heroes-workshop/super-heroes/rest-hero/target/classes
+Listening for transport dt_socket at address: 5005
+2020-01-28 15:09:02,111 INFO  [io.quarkus] (main) rest-hero 1.0-SNAPSHOT (running on Quarkus 1.2.0.Final) started in 2.161s. Listening on: http://0.0.0.0:8080
+2020-01-28 15:09:02,123 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
+2020-01-28 15:09:02,124 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
 ----
 
 Then check that the endpoint returns `hello` as expected:
@@ -202,8 +202,6 @@ Because of this, the version of the Surefire Maven Plugin must be set, as the de
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocProperties]
-<!-- ------- -->
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocBuildSurefire]
 ----
 
