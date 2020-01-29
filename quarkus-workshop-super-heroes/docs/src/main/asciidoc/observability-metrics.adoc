@@ -23,11 +23,6 @@ This will add the following dependency in the `pom.xml` file:
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyMetrics]
 ----
 
-[IMPORTANT]
---
-Don't forget to restart the dev mode after having added the extension.
---
-
 == Adding Metrics to HeroResource
 
 We want now to measure all methods of all our REST resources.

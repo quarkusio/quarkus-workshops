@@ -23,6 +23,14 @@ Make sure the infrastructure is up and running.
 This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
 ====
 
+[NOTE]
+.On Linux / Ubuntu
+====
+On Linux, you may need to update the `localhost` from the `prometheus-linux.yml` file with the IP associated with the `docker0` interface.
+Find the address, update the `prometheus-linux.yml` and restart the infrastructure.
+Don't forget to restart the microservices to re-populate the databases.
+====
+
 == Adding Graphs to Prometheus
 
 The Prometheus console is accessible at http://localhost:9090.
