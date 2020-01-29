@@ -10,42 +10,41 @@ Let's call it the Fight API.
 == Bootstrapping the Fight REST Endpoint
 
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
-Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, create a `rest-fight` sub-directory, open a terminal and run the following command:
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, open a terminal and run the following command:
 
 [source,shell]
 ----
 include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
 ----
 
-Also add Testcontainers to your `pom.xml`.
+Also add Testcontainers and other test-related dependencies to your `pom.xml`.
 
 [source,xml, indent=0]
 --
 <dependency>
-  <groupId>org.testcontainers</groupId>
-  <artifactId>junit-jupiter</artifactId>
-  <version>1.12.2</version>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <scope>test</scope>
 </dependency>
 <dependency>
-  <groupId>org.testcontainers</groupId>
-  <artifactId>postgresql</artifactId>
-  <version>1.12.2</version>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>1.12.2</version>
 </dependency>
 <dependency>
-  <groupId>com.fasterxml.jackson.core</groupId>
-  <artifactId>jackson-databind</artifactId>
-  <scope>test</scope>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>1.12.2</version>
 </dependency>
 <dependency>
-  <groupId>com.fasterxml.jackson.datatype</groupId>
-  <artifactId>jackson-datatype-jsr310</artifactId>
-  <scope>test</scope>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>kafka</artifactId>
+    <version>1.12.2</version>
 </dependency>
 <dependency>
-  <groupId>org.testcontainers</groupId>
-  <artifactId>kafka</artifactId>
-  <version>1.12.2</version>
-  <scope>test</scope>
+    <groupId>org.scala-lang</groupId>
+    <artifactId>scala-library</artifactId>
+    <scope>test</scope>
 </dependency>
 --
 
@@ -256,7 +255,7 @@ Also, delete the generated `NativeFightResourceIT` class, as we won't run native
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 
 Now that the tests are green, we are ready to run our application.
-Use `./mvnw compile quarkus:dev` to start it (notice that there is no banner yet, it will come later).
+Use `./mvnw quarkus:dev` to start it (notice that there is no banner yet, it will come later).
 Once the application is started, just check that it returns the fights from the database with the following cUrl command:
 
 [source,shell]
