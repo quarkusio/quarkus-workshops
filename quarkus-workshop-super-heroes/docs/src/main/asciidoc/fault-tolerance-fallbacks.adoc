@@ -1,5 +1,7 @@
 [[fault-tolerance-fallbacks]]
-= Fallbacks
+= Fallbacks (optional)
+
+_This chapter is optional, you can jump to the <<Timeout>> chapter if you already know about fault-tolerance and fallback._
 
 So now you've been playing this great Super Heroes Fight for a few hours... and you kill the Hero REST API.
 What happens?

@@ -1,5 +1,8 @@
 [[observability]]
-= Observability
+= Observability (optional)
+
+_This chapter is optional. It covers health checks, metrics and prometheus. You can jump to the <<Event-driven and Reactive microservices>> chapter if you want._
+
 
 '''
 

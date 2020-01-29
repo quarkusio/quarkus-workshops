@@ -1,7 +1,9 @@
 [[fault-tolerance-timeout]]
-= Timeout
+= Timeout (optional)
 
-Sometimes invoking a REST API can take long.
+_This chapter is optional, you can jump to the <<Observability>> chapter if you already know about fault-tolerance and timeout._
+
+Sometimes invoking a REST API can take a long time.
 In fat, the more microservices invoke other microservices, the more network latency you can have.
 And what happens when a HTTP request takes long?
 Well, if hangs.
