@@ -101,7 +101,7 @@ The `Score` class is a simple structure storing the name of a hero or villain an
 
 [source]
 ----
-include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Score.java[tags=adocBean;!adocSkip]
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Score.java[tags=adocBean]
 ----
 
 The `TeamStats` class is an object keeping track of the number of battles won by heroes and villains.
