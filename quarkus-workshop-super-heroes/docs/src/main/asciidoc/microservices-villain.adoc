@@ -6,6 +6,7 @@ In this section we will see the counterpart of the Hero microservice: the Villai
 The Villain REST Endpoint is *really* similar to the Hero Endpoint.
 
 The code has already been provided in the `/super-heroes/rest-villain/` directory.
+There is almost no differences with the hero microservice, just that it provides super villains instead and uses the port `8084`.
 
 == Directory Structure
 
@@ -57,96 +58,7 @@ super-heroes
 @endsalt
 ----
 
-== Villain Entity
-
-Villains need to be stored, updated and retrieved from a database.
-As you know now, Hibernate with Panache makes the ORM job really easy.
-So this is what the `Villain` looks like (notice the `findRandom()` method):
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/Villain.java[tags=adocEntity;!adocSkip]
-----
-
-== VillainService Transactional Service
-
-To transactionnally manipulate a `Villain` entity we need a `VillainService`.
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainService.java[tag=adocTransactional]
-----
-
-== VillainResource Endpoint
-
-To expose a REST API we also need a `VillainResource`.
-Notice the OpenAPI annotations.
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainResource.java[tags=adocResource;!adocMetrics]
-----
-
-== VillainApplication for OpenAPI
-
-The `VillainApplication` class is just there to customize the OpenAPI contract.
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplication.java[tag=adocApplication]
-----
-
-== VillainApplicationLifeCycle for Startup Banner
-
-The villain API also needs a nice banner.
-The provided one has been created from http://patorjk.com/software/taag:
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplicationLifeCycle.java[tag=adocApplicationLifeCycle]
-----
-
-== Adding Data
-
-To load some SQL statements when Hibernate ORM starts, download the SQL file {github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
-
-[source,sql]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/resources/import.sql[tag=adocSQL]
-...
-----
-
-== VillainResourceTest Test Class
-
-The microservice is also tested.
-For that, copy the following `VillainResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/villain` directory.
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/VillainResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics]
-----
-
-Also create the required test resource (`DatabaseResource`):
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/test/java/io/quarkus/workshop/superheroes/villain/DatabaseResource.java[]
-----
-
-[NOTE]
---
-For the villain microservices, we won't cover the native test, as it will be the same as for the hero microservice.
-So delete the `NativeVillainResourceIT` class.
---
-
-== Configuration
-
-Notice that this instance of Quarkus listens on port 8084
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-villain/src/main/resources/application.properties[tags=!adocCORS]
-----
+If you look at the code, it's very similar to the hero microservice.
 
 == Running, Testing and Packaging the Application
 
