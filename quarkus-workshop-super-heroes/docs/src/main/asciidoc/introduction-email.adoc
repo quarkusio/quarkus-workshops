@@ -1,9 +1,9 @@
 [[introduction-email]]
-= Getting Ready for the Quarkus Worshop at Voxxed Microservices
+= Getting Ready for the Quarkus Workshop
 
 Hi all,
 
-Voxxed Microservices is approaching, and soon we will all be spending an entire day coding some microservices with Quarkus!
+The conference is approaching, and soon we will all be spending a bit of time coding some microservices with Quarkus!
 Aren't you excited about it?
 
 But before we start coding, *we want you to install a few tools* so the workshop goes smoothly.
