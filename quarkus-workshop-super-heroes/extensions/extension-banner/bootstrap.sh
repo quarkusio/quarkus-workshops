@@ -106,7 +106,7 @@ echo "<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.0.0-M4</version>
                 <configuration>
                     <systemProperties>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>

@@ -225,7 +225,7 @@ Now, restart the microservice with:
 
 [source, shell]
 ----
-mvn compile quarkus:dev
+mvn quarkus:dev
 ----
 
 And the banner will be displayed.
