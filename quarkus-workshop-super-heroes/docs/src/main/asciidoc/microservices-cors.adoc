@@ -9,7 +9,7 @@ If you look at the console of your Browser you should see something similar to t
 image::cors.png[]
 
 Quarkus comes with a CORS filter which intercepts all incoming HTTP requests.
-It can be enabled in the Quarkus configuration file, `src/main/resources/application.properties`:
+It can be enabled in the Quarkus configuration file:
 
 [source,properties]
 ----
