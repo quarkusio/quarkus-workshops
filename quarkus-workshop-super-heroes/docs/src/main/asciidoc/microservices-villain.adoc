@@ -153,7 +153,7 @@ include::{github-raw}/super-heroes/rest-villain/src/main/resources/application.p
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 
 Now that the tests are green, we are ready to run our application.
-Use `./mvnw compile quarkus:dev` to start it (notice the nice banner).
+Use `./mvnw quarkus:dev` to start it (notice the nice banner).
 Once the application is started, create a new villain with the following cUrl command:
 
 [source,shell]
