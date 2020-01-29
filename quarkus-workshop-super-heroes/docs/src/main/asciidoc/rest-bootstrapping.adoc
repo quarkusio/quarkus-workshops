@@ -102,9 +102,9 @@ It's an implementation of JAX-RS and it uses to implement RestFul services in Qu
 ====
 
 [NOTE]
-.What's this Quarkus Platform thingy?
+.What's this Quarkus Universe thingy?
 ====
-The Quarkus platform includes Quarkus as well as third-party extensions, like Apache Camel.
+The Quarkus Universe includes Quarkus as well as third-party extensions, like Apache Camel.
 ====
 
 == The JAX-RS Resource
