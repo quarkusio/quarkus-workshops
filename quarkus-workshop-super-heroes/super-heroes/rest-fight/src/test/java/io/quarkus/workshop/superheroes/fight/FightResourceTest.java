@@ -13,10 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
-import java.util.Random;
 
-import static io.quarkus.workshop.superheroes.fight.client.MockHeroService.*;
-import static io.quarkus.workshop.superheroes.fight.client.MockVillainService.*;
+import java.util.Random;
+// tag::adocRandom[]
+import io.quarkus.workshop.superheroes.fight.client.MockHeroService;
+import io.quarkus.workshop.superheroes.fight.client.MockVillainService;
+// end::adocRandom[]
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
@@ -27,8 +29,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-// tag::adocRandom[]
-// end::adocRandom[]
+
+
 
 @QuarkusTest
 @QuarkusTestResource(DatabaseResource.class)
@@ -121,12 +123,12 @@ public class FightResourceTest {
             .then()
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, APPLICATION_JSON)
-            .body("hero.name", Is.is(DEFAULT_HERO_NAME))
-            .body("hero.picture", Is.is(DEFAULT_HERO_PICTURE))
-            .body("hero.level", Is.is(DEFAULT_HERO_LEVEL))
-            .body("villain.name", Is.is(DEFAULT_VILLAIN_NAME))
-            .body("villain.picture", Is.is(DEFAULT_VILLAIN_PICTURE))
-            .body("villain.level", Is.is(DEFAULT_VILLAIN_LEVEL));
+            .body("hero.name", Is.is(MockHeroService.DEFAULT_HERO_NAME))
+            .body("hero.picture", Is.is(MockHeroService.DEFAULT_HERO_PICTURE))
+            .body("hero.level", Is.is(MockHeroService.DEFAULT_HERO_LEVEL))
+            .body("villain.name", Is.is(MockVillainService.DEFAULT_VILLAIN_NAME))
+            .body("villain.picture", Is.is(MockVillainService.DEFAULT_VILLAIN_PICTURE))
+            .body("villain.level", Is.is(MockVillainService.DEFAULT_VILLAIN_LEVEL));
     }
     // end::adocRandom[]
 
