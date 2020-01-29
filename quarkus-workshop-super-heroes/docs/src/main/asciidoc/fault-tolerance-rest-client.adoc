@@ -144,10 +144,12 @@ Supported scope values are `@Singleton`, `@Dependent`, `@ApplicationScoped` and 
 The default scope is `@Dependent`.
 The default scope can also be defined on the interface.
 
+Now, go back in the UI and refresh, you should see some pictures!
+
 == Updating the Test with Mock Support
 
-So now we have our problem:
-to run the tests of the Fight API we need the Hero and Villain REST APIs to be up and running.
+But, now we have another problem.
+To run the tests of the Fight API we need the Hero and Villain REST APIs to be up and running.
 To avoid this, we need to Mock the `HeroService` and `VillainService` interfaces.
 
 Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.footnote:[Alternatives https://docs.jboss.org/weld/reference/latest/en-US/html/beanscdi.html#_alternatives]
@@ -174,6 +176,15 @@ Finally, edit the `FightResourceTest` and add the following method:
 --
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocRandom]
 --
+
+[NOTE]
+====
+You would need the following import statements:
+```
+import io.quarkus.workshop.superheroes.fight.client.MockHeroService;
+import io.quarkus.workshop.superheroes.fight.client.MockVillainService;
+```
+====
 
 == Running and Testing the Application
 
