@@ -4,7 +4,7 @@ In this section, you are going to see how you can send messages to a Kafka topic
 
 == Directory Structure
 
-In this section we are going to extend the Fight microservice.
+In this section we are going to extend the **Fight microservice**.
 In the following tree, we are going to edit the marked classes
 
 [plantuml]
@@ -45,7 +45,6 @@ super-heroes
 
 == Adding the Reactive Messaging Dependency
 
-First, stop the _fight_ microservice.
 To install the Kafka support, just run the following command:
 
 [source, shell]
@@ -71,7 +70,7 @@ Then, you can restart the microservice, using `mvn compile quarkus:dev`.
 ====
 To execute the application we now need Kafka.
 Make sure the infrastructure is up and running.
-This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d` (or the Linux variant).
 ====
 
 == Connecting Imperative and Reactive Using an Emitter
@@ -103,24 +102,7 @@ In the `persistFight` method, add the following line just before the `return` st
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocKafka]
 ----
 
-With this in place, every time the application persists a `fight`, it also sends the `fight` to the `fights-channel` channel.
-
-== Transforming Messages Transiting on a Channel
-
-Now, in the _Fight_ microservice, create the `io.quarkus.workshop.superheroes.fight.kafka.KafkaWriter` class with the following content:
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/kafka/KafkaWriter.java[tag=adocWriter]
-----
-
-This bean receives the fights sent by the `FightService` and serializes them as JSON.
-This eases sending the message to Kafka as it avoids writing a specific serializer or a schema.
-
-Note the `@Incoming` and `@Outgoing` annotation.
-Both take a channel name as a parameter.
-When used together, it indicates that the method receives _things_ (`fights`) from the channel indicated in the `@Incoming` annotation, and produces _things_ (strings) sent to the channel indicated in the `@Outgoing` annotation.
-It's only one of the possible signature, reactive messaging proposed more than 30 variants, and you are going to see more possibilities soon.
+With this in place, every time the application persists a `fight`, it also sends the `fight` to the `fights` _channel_.
 
 == Connecting to Kafka
 
@@ -146,6 +128,12 @@ The `mp.messaging.outgoing.fights.value.serializer` configures the serializer us
 When omitted, the Kafka topic reuses the channel name (`fights`).
 Also, it connects by default to `localhost:9092`.
 You can override this using the `kafka.bootstrap.servers` property.
+
+If you go back to the UI and play some fights, you would see, in the fight microservice log, something like:
+[source,text]
+----
+Message org.eclipse.microprofile.reactive.messaging.Message$$Lambda$1021/763397690@1f6e0af3 sent successfully to Kafka topic 'fights'
+----
 
 Now, you have connected the fight microservice to Kafka, and you are sending new fights to the Kafka topic.
 Let's see how you can read these messages in the `stats` microservice.

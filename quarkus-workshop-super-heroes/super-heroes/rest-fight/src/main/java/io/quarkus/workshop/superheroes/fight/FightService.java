@@ -41,7 +41,7 @@ public class FightService {
     // end::adocRestClient[]
     // tag::adocKafkaEmitter[]
     @Inject
-    @Channel("fights-channel") Emitter<Fight> emitter;
+    @Channel("fights") Emitter<Fight> emitter;
 
     // end::adocKafkaEmitter[]
     private static final Logger LOGGER = Logger.getLogger(FightService.class);

@@ -6,4 +6,5 @@ mvn io.quarkus:quarkus-maven-plugin:1.2.0.Final:create \
     -DclassName="io.quarkus.workshop.superheroes.statistics.StatisticResource" \
     -Dpath="api/stats" \
     -Dextensions="kafka, vertx, resteasy-jsonb, undertow-websockets"
+cd event-statistics
 # end::adocSnippet[]

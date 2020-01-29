@@ -3,7 +3,7 @@
 In this section, you are going to see how you can receive messages from a Kafka topic.
 For this, you are going to create a new microservice, named `stats`.
 This microservice computes statistics based on the results of the fights.
-For example, it determines if villains win more battle than heroes, and who is the superhero or supervillain having won the most fights.
+For example, it determines if villains win more battle than heroes, and who is the superhero or super-villain having won the most fights.
 
 == Directory Structure
 
@@ -40,7 +40,7 @@ super-heroes
 == Bootstrapping the Statistics REST Endpoint
 
 Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command.
-Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, create a `event-statistics` sub-directory, open a terminal and run the following command:
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, open a terminal and run the following command:
 
 [source,shell]
 ----
@@ -98,7 +98,6 @@ include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/wor
 ----
 
 The `Score` class is a simple structure storing the name of a hero or villain and its actual score, _i.e._ the number of won battles.
-Don't forget to generate the getter and setter methods.
 
 [source]
 ----
