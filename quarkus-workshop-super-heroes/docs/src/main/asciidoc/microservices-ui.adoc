@@ -14,7 +14,9 @@ Notice that there is a `pom.xml` file.
 This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven.
 The `pom.xml` also allows us to package the Angular application into Quarkus.
 
-== Looking at Some Code
+If you are not in a _frontend mood", just scroll to <<Installing the Web Application on Quarkus>>
+
+== Looking at Some Code (optional)
 
 You don't need to be an Angular expert, but there are some pieces of code that are worth looking at.
 If you look under the `src/app/shared` directory, you will find an `api` and a `model` sub-directory.
@@ -82,7 +84,7 @@ This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/no
 
 == Running the Web Application
 
-As usual, use `mvn compile quarkus:dev` to start the web application.
+As usual, use `mvn quarkus:dev` to start the web application.
 
 Be sure you have the hero and villain microservices running (dev mode is enough).
 
