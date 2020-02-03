@@ -53,7 +53,7 @@ Thanks to the CDI `@Observes`, the `HeroApplicationLifeCycle` is invoked:
 * on startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
 * on shutdown with the `ShutdownEvent` when the application is terminating
 
-Run the application with: `./mvnw compile quarkus:dev`, the banner is printed to the console.
+Run the application with: `./mvnw quarkus:dev`, the banner is printed to the console.
 When the application is stopped, the second log message is printed.
 
 [NOTE]
