@@ -4,7 +4,7 @@
 _This chapter is optional, you can jump to the <<observability>> chapter or to the <<messaging>> chapter if you already know about fault-tolerance and timeout._
 
 Sometimes invoking a REST API can take a long time.
-In fat, the more microservices invoke other microservices, the more network latency you can have.
+In fact, the more microservices invoke other microservices, the more network latency you can have.
 And what happens when a HTTP request takes long?
 Well, if hangs.
 On your browser you can the request pending if you turn on the dev tools and look at what's the network is doing.
