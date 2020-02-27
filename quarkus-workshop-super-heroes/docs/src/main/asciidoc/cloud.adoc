@@ -15,7 +15,7 @@ The native compilation uses the OS and architecture of the host system.
 
 And... Linux Containers are ... _Linux_.
 So before being able to build a container with our native executable, we need to produce compatible native executables.
-If you hare using a Linux 64 bits machine, you are good to go.
+If you are using a Linux 64 bits machine, you are good to go.
 If not, Quarkus comes with a trick to produce these executable:
 
 [source, shell]
