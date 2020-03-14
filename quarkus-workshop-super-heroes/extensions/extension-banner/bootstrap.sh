@@ -40,7 +40,7 @@ echo "<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w
     </dependencyManagement>
 
     <properties>
-        <quarkus.version>1.2.0.Final</quarkus.version>
+        <quarkus.version>1.3.0.Final</quarkus.version>
         <surefire-plugin.version>2.22.0</surefire-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
