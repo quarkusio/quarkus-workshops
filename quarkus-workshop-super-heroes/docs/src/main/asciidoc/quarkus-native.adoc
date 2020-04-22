@@ -1,6 +1,8 @@
 [[quarkus-native]]
 = From Java to Native
 
+:icons: font
+
 == Building a Native Executable
 
 Let's now produce a native executable for our application.
@@ -70,6 +72,9 @@ To do so, you will find in the `pom.xml` the following profile:
 ----
 
 Make sure you have the `GRAALVM_HOME` environment variable defined and pointing to where you installed GraalVM.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Then create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files (`rest-hero-1.0-SNAPSHOT.jar` and `rest-hero-1.0-SNAPSHOT-runner.jar`), the build also produces `target/rest-hero-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
 You can run it using: `./target/rest-hero-1.0-SNAPSHOT-runner`.
@@ -109,6 +114,8 @@ In the `pom.xml` file, the native profile contains:
 
 This instructs the failsafe-maven-plugin to run integration-test and indicates the location of the produced native executable.
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Then, open the `src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java` and update it with the following:
 
 [source]
@@ -127,6 +134,8 @@ For example, we do not want Swagger UI exposed in our native image.
 --
 
 Also notice that this class also use the `@QuarkusTestResource` to start and stop the database.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw verify -Pnative`:
 

@@ -1,6 +1,8 @@
 [[observability-prometheus]]
 = Displaying Metrics on Prometheus
 
+:icons: font
+
 Now that we've added some load to our application, let's measure it with Prometheus.footnote:[Prometheus https://prometheus.io]
 Prometheus is an open-source systems monitoring and alerting toolkit that integrates well with Quarkus.
 
@@ -39,7 +41,10 @@ image::fault-tolerance-prometheus-1.png[]
 
 Out of the box, you get a lot of basic JVM metrics or even metrics of Prometheus itself, which are useful.
 But let's create new graphs with the metrics of our microservices.
-Type `timeGetRandomHero` in the query, and select `application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second` in the box, and click _Execute_.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Tape `timeGetRandomHero` in the query, and select `application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second` in the box, and click _Execute_.
 
 image::fault-tolerance-prometheus-2.png[]
 

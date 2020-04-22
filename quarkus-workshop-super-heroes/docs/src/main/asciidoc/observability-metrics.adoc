@@ -1,6 +1,8 @@
 [[observability-metrics]]
 = Metrics
 
+:icons: font
+
 MicroProfile Metrics allows applications to gather various metrics and statistics that provide insights into what is happening inside the application.footnote:[MicroProfile Metrics https://microprofile.io/project/eclipse/microprofile-metrics]
 The metrics can be read remotely using JSON format or the OpenMetrics format, so that they can be processed by additional tools such as Prometheus, and stored for analysis and visualisation.footnote:[OpenMetrics https://openmetrics.io]
 
@@ -8,6 +10,8 @@ While you could add add metrics to all our microservices, we are focusing on the
 You can apply the same to the other microservices.
 
 == Installing the Metrics Dependency
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 To install the MicroProfile Metrics dependency, just run the following command:
 
@@ -26,6 +30,9 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyMetrics]
 == Adding Metrics to HeroResource
 
 We want now to measure all methods of all our REST resources.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 For that, we need a few annotations to make sure that our desired metrics are calculated over time and can be exported for manual analysis or processing by additional tooling.
 The metrics that we will gather are these:
 
@@ -38,6 +45,7 @@ Below the source code of the `getRandomHero()` method, but make sure to add metr
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocMetricsMethods]
 ----
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 [NOTE]
 --
@@ -50,6 +58,8 @@ import org.eclipse.microprofile.metrics.annotation.Timed;
 --
 
 == Metrics Tests in HeroResourceTest
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Let's add an extra test method that would make sure Metrics are available in the application:
 

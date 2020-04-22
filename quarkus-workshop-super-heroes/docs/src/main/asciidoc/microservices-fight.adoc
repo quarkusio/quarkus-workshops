@@ -1,6 +1,8 @@
 [[microservices-fight]]
 = Fight Microservice
 
+:icons: font
+
 Ok, let's develop another microservice.
 We have a REST API that returns a random Hero.
 Another REST API that returns a random Villain...
@@ -10,12 +12,18 @@ Let's call it the Fight API.
 == Bootstrapping the Fight REST Endpoint
 
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
-Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, open a terminal and run the following command:
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Open a terminal and run the following command:
 
 [source,shell]
 ----
 include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
 ----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Also add Testcontainers and other test-related dependencies to your `pom.xml`.
 
@@ -166,6 +174,8 @@ If you are not happy about the way the fight operates, choose your own winning a
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka;!adocKafkaEmitter;!adocFallback]
 ----
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 [NOTE]
 ====
 For now, just implement an empty `Fighters findRandomFighters()` method which returns null.
@@ -206,6 +216,8 @@ We will use a Quarkus extension later on to display a banner for Fight.
 
 == Adding Data
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 To load some SQL statements when Hibernate ORM starts, download the SQL file {github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 
 [source,sql]
@@ -217,6 +229,9 @@ include::{github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[tag=
 == Configuration
 
 As usual, we need to configure the application.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 In the `application.properties` file add:
 
 [source,properties]
@@ -229,6 +244,9 @@ Note that the fight service uses the port 8082.
 == FightResourceTest Test Class
 
 We need to test our REST API.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 For that, copy the following `FightResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/fight` directory.
 
 [source]
@@ -239,12 +257,16 @@ include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/
 You would also need, not only one but 2 `QuarkusTestResources`, one for the database and one for Kafka.
 We could have merged both in a single class, but we wanted to illustrate the possibility to have more than one resources.
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 So, create the `DatabaseResource` class in the same package as the `FightResourceTest` class, and add the following content:
 
 [source]
 ----
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/DatabaseResource.java[]
 ----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Then, create the `KafkaResource` class with the following content:
 
@@ -253,9 +275,13 @@ Then, create the `KafkaResource` class with the following content:
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/KafkaResource.java[]
 ----
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Also, delete the generated `NativeFightResourceIT` class, as we won't run native test for this microservice.
 
 == Running, Testing and Packaging the Application
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 

@@ -1,6 +1,8 @@
 [[microservices-ui]]
 = User Interface
 
+:icons: font
+
 Now that we have the three main microservices, time to have a decent user interface to start fighting.
 The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
 This time you will just download an Angular application, install it, and run it on another Quarkus instance.
@@ -53,6 +55,9 @@ it documents the API which can be read by a human, or processed by tools.
 == Installing the Web Application on Quarkus
 
 Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Execute `mvn install` and Maven will download and install Node JS and NPM and build the application.
 You should now have a `node_modules` directory with all the Angular dependencies.
 At this stage, make sure the following commands work:
@@ -71,6 +76,8 @@ Look at the `package.sh`, that's exactly what it does.
 include::{github-raw}/super-heroes/ui-super-heroes/package.sh[tag=adocShell]
 ----
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Execute the `package.sh` script.
 You will see all the Javascript files under `resources/META-INF/resources` directory.
 We are now ready to go.
@@ -83,6 +90,8 @@ This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/no
 ====
 
 == Running the Web Application
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 As usual, use `mvn quarkus:dev` to start the web application.
 

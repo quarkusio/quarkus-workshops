@@ -1,11 +1,15 @@
 [[introduction-preparing]]
 = Preparing for the Workshop
 
+:icons: font
+
 This workshop needs internet access to download all sorts of Maven artifacts, Docker images and even pictures.
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
 
 == Download the workshop scaffolding
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
 
@@ -97,6 +101,9 @@ quarkus-workshop-super-heroes
 == Checking Ports
 
 During this workshop we will use several ports.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Just make sure the following ports are free so you don't run into any conflicts
 
 [source,shell]
@@ -115,6 +122,9 @@ $ lsof -i tcp:9092    // Kafka
 
 Now that you have the initial structure in place, navigate to the the root directory and run:
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+
 [source,shell]
 ----
 mvn clean install
@@ -123,6 +133,8 @@ mvn clean install
 By running this command, it downloads all the required dependencies.
 
 == Warming up Docker
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
 Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which defines all the needed Docker images.

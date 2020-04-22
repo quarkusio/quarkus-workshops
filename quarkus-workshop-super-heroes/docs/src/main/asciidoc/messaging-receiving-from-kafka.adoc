@@ -1,5 +1,7 @@
 = Receiving Messages from Kafka
 
+:icons: font
+
 In this section, you are going to see how you can receive messages from a Kafka topic.
 For this, you are going to create a new microservice, named `stats`.
 This microservice computes statistics based on the results of the fights.
@@ -40,7 +42,11 @@ super-heroes
 == Bootstrapping the Statistics REST Endpoint
 
 Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command.
-Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code, open a terminal and run the following command:
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Open a terminal and run the following command:
 
 [source,shell]
 ----
@@ -54,6 +60,8 @@ Open the `pom.xml` file to see the result.
 ====
 
 == Computing Statistics
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
 This class contains 3 methods annotated with `@Incoming` and `@Outgoing`.
@@ -77,6 +85,8 @@ The `computeTopWinners` method uses more advanced reactive programming construct
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/SuperStats.java[tag=adocBean]
 ----
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 In addition, create the `io.quarkus.workshop.superheroes.statistics.FightResult`,  `io.quarkus.workshop.superheroes.statistics.Ranking`, `io.quarkus.workshop.superheroes.statistics.Score` and `io.quarkus.workshop.superheroes.statistics.TeamStats` classes with the following contents:
 
 The `FightResult` class is used to deserialize the JSON object from the Kafka topic.
@@ -87,6 +97,8 @@ This information is required when running the application as a native executable
 ----
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/FightResult.java[tags=adocBean;!adocSkip]
 ----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 In `FightResult`, add or generate the getter and setter methods for the `private` fields.
 
@@ -120,6 +132,9 @@ Without, the serialization/deserialization would not work when running the nativ
 == Reading Messages from Kafka
 
 It's now time to connect the `fights` channel with the Kafka topic.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Edit the `application.properties` file and add the following content:
 
 [source,properties]
