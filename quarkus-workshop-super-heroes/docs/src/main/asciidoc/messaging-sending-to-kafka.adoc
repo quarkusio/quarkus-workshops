@@ -1,5 +1,7 @@
 = Sending Messages to Kafka
 
+:icons: font
+
 In this section, you are going to see how you can send messages to a Kafka topic.footnote:[Kafka Topic https://kafka.apache.org/intro#intro_topics]
 
 == Directory Structure
@@ -45,6 +47,8 @@ super-heroes
 
 == Adding the Reactive Messaging Dependency
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 To install the Kafka support, just run the following command:
 
 [source, shell]
@@ -74,6 +78,8 @@ This means that you've executed `docker-compose -f docker-compose.yaml up -d` (o
 ====
 
 == Connecting Imperative and Reactive Using an Emitter
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Now edit the `FightService` class.
 First, add the following field:
@@ -108,6 +114,9 @@ With this in place, every time the application persists a `fight`, it also sends
 
 At this point, the serialized fights are sent to the `fights` channel.
 You need to connect this `channel` to a Kafka topic.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 For this, edit the `application.properties` file and add the following properties:
 
 [source,properties]
@@ -122,7 +131,7 @@ These properties are structured as follows:
 mp.messaging.[incoming|outgoing].channel.attribute=value
 ----
 
-For example, `mp.messaging.outgoing.fights.connector` configures configure the connector used for the `outgoing` channel `fights`.
+For example, `mp.messaging.outgoing.fights.connector` configures the connector used for the `outgoing` channel `fights`.
 
 The `mp.messaging.outgoing.fights.value.serializer` configures the serializer used to write the message in Kafka.
 When omitted, the Kafka topic reuses the channel name (`fights`).

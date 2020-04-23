@@ -1,6 +1,8 @@
 [[observability-load]]
 = Loading the Microservices
 
+:icons: font
+
 Now that we have the three main microservices exposing health checks and metrics, time to have a decent user interface to  monitor how the system behaves.
 The purpose of this workshop is to add some load to our application.
 You will download the load application, install it and run it.
@@ -21,6 +23,8 @@ include::{github-raw}/super-heroes/load-super-heroes/src/main/java/io/quarkus/wo
 ----
 
 == Running the Load Application
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 You are all set!
 Time to compile and start the load application using:

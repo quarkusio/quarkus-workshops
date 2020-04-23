@@ -1,5 +1,7 @@
 = Sending Events on WebSockets
 
+:icons: font
+
 At this point, you read the _fights_ from Kafka and computes statistics.
 Actually, even if you start the application, nothing will happen as nobody consumes these statistics.
 
@@ -13,6 +15,8 @@ For this, we are going to add two classes and a simple presentation page:
 Quarkus uses the http://jcp.org/en/jsr/detail?id=356[JSR 356] providing an annotation-driven approach to implement WebSockets.
 
 == The TeamStats WebSocket
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
 
@@ -38,6 +42,9 @@ Without it, items would not be emitted.
 == The TopWinner WebSocket
 
 The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
 
 [source]
@@ -50,6 +57,10 @@ Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also 
 == The UI
 
 Finally, you need a UI to watch these live statistics.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+
 Replace the `META-INF/resources/index.html` file with the following content:
 
 [source, html]
@@ -60,6 +71,9 @@ include::{github-raw}/super-heroes/event-statistics/src/main/resources/META-INF/
 == Running the Application
 
 You are all set!
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Time to start the application using:
 
 [source, shell]

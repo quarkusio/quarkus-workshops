@@ -1,6 +1,8 @@
 [[rest-configuration]]
 = Configuring the Hero Microservice
 
+:icons: font
+
 Hardcoded values in our code are a no go (even if we all did it at some point ;-)).
 In this guide, we learn how to configure our Hero API as well as some parts of Quarkus.
 
@@ -18,12 +20,17 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 Because we will end-up running several microservices, let's configure Quarkus so it listens to a different port than 8080:
 This is quite easy as we just need to add one property in the `application.properties` file:
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 [source,properties]
 ----
 include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocPort]
 ----
 
 Changing the port is one of the rare configuration that cannot be done while the application is running.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 You would need to restart the application to change the port.
 
 Hit `CTRL+C` to stop the application and restart it with: `./mvnw quarkus:dev`
@@ -40,6 +47,8 @@ When injecting a configured value, you can use `@Inject @ConfigProperty` or just
 The `@Inject` annotation is not necessary for members annotated with `@ConfigProperty`, a behavior which differs from https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config].
 ====
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Edit the `HeroService`, and introduce the following configuration properties:
 
 [source,indent=0]
@@ -55,6 +64,8 @@ You may need to add the following import statement if your IDE does not do it au
 * If you do not provide a value for this property, the application startup fails with `javax.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`
 * A default value (property `defaultValue`) is injected if the configuration does not provide a value for `level.multiplier`
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Now, modify the `HeroService.persistHero()` method to use the injected properties:
 
 [source,indent=0]
@@ -65,6 +76,9 @@ include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/s
 == Create the Configuration
 
 By default, Quarkus reads `application.properties`.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Edit the `src/main/resources/application.properties` with the following content:
 
 [source,properties]
@@ -73,6 +87,8 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 ----
 
 == Running and Testing the Application
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 If you didn't already, start the application with `./mvnw quarkus:dev`.
 Once started, create a new hero with the following cUrl command:
@@ -111,6 +127,9 @@ More info on: https://stedolan.github.io/jq/
 
 Hey! Wait a minute! Tests are failing now!
 Indeed, they don't know the multiplier.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 In the `application.properties` file, add: `%test.level.multiplier=1` which set the multiplier to 1 when running the tests.
 We will cover the `%test` syntax soon.
 

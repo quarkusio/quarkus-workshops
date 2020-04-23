@@ -1,6 +1,8 @@
 [[rest-bootstrapping]]
 = Hero Microservice
 
+:icons: font
+
 First thing first, we need a project.
 That's what your are going to see in this section.
 
@@ -9,6 +11,8 @@ That's what your are going to see in this section.
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
 We have created the project structure earlier, so we will move to the `rest-hero` directory and run the project creation command.
 Open a terminal and run the following command:
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
@@ -131,6 +135,9 @@ It's a very simple REST endpoint, returning "hello" to requests on `/api/heroes`
 == Running the Application
 
 Now we are ready to run our application.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Use: `./mvnw quarkus:dev`:
 
 [source,shell]
@@ -153,7 +160,7 @@ Listening for transport dt_socket at address: 5005
 
 Then check that the endpoint returns `hello` as expected:
 
-[source,shell]
+[source,shell]Now we are ready to run our application
 ----
 $ curl http://localhost:8080/api/heroes
 hello
@@ -178,6 +185,8 @@ Alright, time to change some code.
 Open your favorite IDE and import the project.
 To check that the hot reload is working, update the method `HeroResource.hello()` by returning the String "hello hero".
 Now, execute the cUrl command again, the output has changed without you to having to stop and restart Quarkus:
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
@@ -231,11 +240,15 @@ By using the `QuarkusTest` runner, the `HeroResourceTest` class instructs JUnit 
 Then, the `testHelloEndpoint` method checks the HTTP response status code and content.
 Notice that these tests use RestAssured, but feel free to use your favorite library.footnote:[RestAssured http://rest-assured.io]
 
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
 Execute it with `./mvnw test` or from your IDE.
 It fails! It's expected, you changed the output of `HeroResource.hello()` earlier.
 Adjust the test body condition accordingly.
 
 == Packaging and Running the Application
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 The application is packaged using `./mvnw package`.
 It produces 2 jar files in `/target`:
