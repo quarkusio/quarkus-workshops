@@ -125,7 +125,7 @@ include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/wor
 
 [TIP]
 ====
-The `@RegisterForReflection` annotation instruct the native compilation to allow reflection access to the class.
+The `@RegisterForReflection` annotation instructs the native compilation to allow reflection access to the class.
 Without, the serialization/deserialization would not work when running the native executable.
 ====
 
