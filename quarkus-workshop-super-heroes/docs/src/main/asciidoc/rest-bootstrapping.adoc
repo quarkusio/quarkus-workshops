@@ -142,11 +142,11 @@ $ ./mvnw quarkus:dev
 [INFO] Building rest-hero 1.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- quarkus-maven-plugin:1.2.0.Final:dev (default-cli) @ rest-hero ---
+[INFO] --- quarkus-maven-plugin:1.3.0.Final:dev (default-cli) @ rest-hero ---
 [INFO] Changes detected - recompiling the module!
 [INFO] Compiling 1 source file to /Users/clement/Downloads/quarkus-super-heroes-workshop/super-heroes/rest-hero/target/classes
 Listening for transport dt_socket at address: 5005
-2020-01-28 15:09:02,111 INFO  [io.quarkus] (main) rest-hero 1.0-SNAPSHOT (running on Quarkus 1.2.0.Final) started in 2.161s. Listening on: http://0.0.0.0:8080
+2020-01-28 15:09:02,111 INFO  [io.quarkus] (main) rest-hero 1.0-SNAPSHOT (running on Quarkus 1.3.0.Final) started in 2.161s. Listening on: http://0.0.0.0:8080
 2020-01-28 15:09:02,123 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
 2020-01-28 15:09:02,124 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
 ----
