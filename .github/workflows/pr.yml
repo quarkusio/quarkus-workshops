@@ -12,7 +12,7 @@ jobs:
       with:
         java-version: 'openjdk8'
     - name: Build with Maven
-      run: mvn -B clean install -Pnative -Dquarkus.native.container-build=true --file quarkus-workshop-super-heroes/pom.xml
+      run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml
 
   build_java11:
     runs-on: ubuntu-latest
@@ -23,5 +23,5 @@ jobs:
         with:
           java-version: 'openjdk11'
       - name: Build with Maven
-        run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml
+        run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true
 
