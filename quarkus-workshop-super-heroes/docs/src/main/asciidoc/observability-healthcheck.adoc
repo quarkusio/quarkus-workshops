@@ -41,7 +41,7 @@ super-heroes
 @endsalt
 ----
 
-While you could add add health checks to all our microservices, we are focusing on the **Hero microservice**.
+While you could add health checks to all our microservices, we are focusing on the **Hero microservice**.
 So don't forget to switch to the Hero microservice code.
 You can apply the same to the other microservices.
 
