@@ -6,5 +6,5 @@ mvn io.quarkus:quarkus-maven-plugin:1.2.0.Final:create \
     -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
     -Dpath="api/fights"
 cd rest-fight
-./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-jsonb,openapi,kafka"
+./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-jsonb,smallrye-openapi,kafka"
 # end::adocSnippet[]
