@@ -2,26 +2,15 @@ name: Pull Request
 
 on: pull_request
 
-jobs:
-  build_java8:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install JDK 1.8
-      uses: joschi/setup-jdk@v1.0.0
-      with:
-        java-version: 'openjdk8'
-    - name: Build with Maven
-      run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml
-
+jobs:  
   build_java11:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Install JDK 11
-        uses: joschi/setup-jdk@v1.0.0
+        uses: AdoptOpenJDK/install-jdk@v1.1.0
         with:
-          java-version: 'openjdk11'
+          version: '11'
       - name: Build with Maven
         run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true
 
