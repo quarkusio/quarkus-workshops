@@ -29,13 +29,6 @@ echo "<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-             <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-bom-deployment</artifactId>
-                <version>\${quarkus.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

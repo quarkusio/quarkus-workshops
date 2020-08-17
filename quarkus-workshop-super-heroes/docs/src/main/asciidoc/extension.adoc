@@ -56,7 +56,7 @@ include::{github-raw}/extensions/extension-banner/bootstrap.sh[tag=adocSnippet]
 
 This script creates the structure for the banner extension:
 
-* one parent `pom.xml` importing the `quarkus-bom` and the `quarkus-bom-deployment`
+* one parent `pom.xml` importing the `quarkus-bom`
 * a module for the runtime
 * a module for the deployment, with a dependency on the runtime artifact
 
