@@ -32,3 +32,4 @@ node/
 .project
 .classpath
 .settings
+.factorypath
