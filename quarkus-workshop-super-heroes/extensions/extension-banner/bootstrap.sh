@@ -77,7 +77,6 @@ echo "<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5-internal</artifactId>
-            <version>\${quarkus.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
