@@ -13,7 +13,7 @@ Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 ifdef::give-solution[]
 [NOTE]
 ====
-Get this workshop from https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
+Get this workshop from https://github.com/bbvahackathon/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
 ====
 endif::give-solution[]
 
@@ -67,16 +67,17 @@ Oh, and be ready to have some fun!
 == Software Requirements
 
 First of all, make sure you have Web browser installed on your laptop and internet connectivity.
+You will also need a GitHub account.
 
 This workshop will make use of the following software, tools, frameworks:
 
-* Code Ready Workspaces as IDE.
+* CodeReady Workspaces as IDE.
 * JDK 8
 * Maven 3.6.x
 * cURL (or any other command line HTTP client)
 * Node JS (optional, only if you are in a _frontend_ mood)
 
-Your environment is remote and can be accessed via Code Ready Workspaces (CRW) through your local browser, you just need to configure some elements.
+Your environment is remote and can be accessed via CodeReady Workspaces (CRW) through your local browser, you just need to sign up and configure some elements.
 Your environment includes also Red Hat's OpenShift Container Platform (OCP).
 
 The next section focuses on how to install and setup the needed software.

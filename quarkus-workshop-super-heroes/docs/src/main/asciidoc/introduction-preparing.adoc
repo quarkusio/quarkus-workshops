@@ -7,11 +7,17 @@ This workshop needs internet access to download all sorts of Maven artifacts, Do
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
 
-== Download the workshop scaffolding
+== Get the workshop scaffolding
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+First, get the workshop scaffolding by cloning the https://github.com/bbvahackathon/quarkus-super-heroes-workshop repository.
+
+On your CRW terminal:
+[source,shell]
+----
+$ git clone https://github.com/bbvahackathon/quarkus-super-heroes-workshop
+----
 
 In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
@@ -98,29 +104,68 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
-== Checking Ports
+Now, we can proceed to create the 3 databases that we are using. They are described in an OpenShift manifest that can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
 
-During this workshop we will use several ports.
-
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
-
-Just make sure the following ports are free so you don't run into any conflicts
+As we did for kafka, we will create the DBs using `oc` utility from the CRW terminal.
+Make sure that you are authenticated with your USERNAME and you are using the `USERNAME-heroes` namespace, then apply the databases yaml file:
 
 [source,shell]
 ----
-$ lsof -i tcp:8080    // UI
-$ lsof -i tcp:8082    // Fight REST API
-$ lsof -i tcp:8083    // Hero REST API
-$ lsof -i tcp:8084    // Villain REST API
-$ lsof -i tcp:5432    // Postgres
-$ lsof -i tcp:9090    // Prometheus
-$ lsof -i tcp:2181    // Zookeeper
-$ lsof -i tcp:9092    // Kafka
+$ oc login ....
+$ oc project USERNAME-heroes
+$ oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
 ----
+
+You can verify the availability of databases with the following command:
+[source,shell]
+----
+$ curl http://heroes-database.USERNAME-heroes:5432
+----
+You should have the following response:
+
+----
+curl: (52) Empty reply from server
+----
+
+== Heroes Databases
+
+We need to create the 3 databases that we are using. They are described in an OpenShift manifest that can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
+
+As we did for kafka, we will create the DBs using `oc` utility from the CRW terminal.
+Make sure that you are authenticated with your USERNAME and you are using the `USERNAME-heroes` namespace, then apply the databases yaml file:
+
+[source,shell]
+----
+$ oc login ....
+$ oc project USERNAME-heroes
+$ oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
+----
+
+You can verify the availability of databases with the following command:
+[source,shell]
+----
+$ curl http://heroes-database.USERNAME-heroes:5432
+----
+You should have the following response:
+
+----
+curl: (52) Empty reply from server
+----
+
 
 == Warming up Maven
 
-Now that you have the initial structure in place, navigate to the the root directory and run:
+Now that you have the initial structure in place, we just need configure the correct url for the database.
+
+On your CRW, edit the `quarkus-super-heroes-workshop/super-heroes/rest-villain/src/main/resources/application.properties` file and the change database configuration:
+
+----
+quarkus.datasource.jdbc.url=jdbc:postgresql://villains-database.USERNAME-heroes:5432/villains_database
+----
+
+Change USERNAME with your own.
+
+Now, you can navigate to the root directory and run:
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
@@ -132,48 +177,12 @@ mvn clean install
 
 By running this command, it downloads all the required dependencies.
 
-== Warming up Docker
-
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
-
-To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
-Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which defines all the needed Docker images.
-Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases and a `monitoring` directory (all that will be explained later).
-
-[WARNING]
-.Linux User
-====
-If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose`.yaml
-====
-
-Then execute `docker-compose -f docker-compose.yaml up -d` or `docker-compose -f docker-compose-linux.yaml up -d` on Linux.
-This will download all the Docker images and start the containers.
-
-[WARNING]
-====
-If you have an issue creating the roles for the database with the `initialize-databases.sql` file, you have to execute the following commands:
-
-```
-docker exec -it --user postgres super-database psql -c "CREATE ROLE superman LOGIN PASSWORD 'superman' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-docker exec -it --user postgres super-database psql -c "CREATE ROLE superbad LOGIN PASSWORD 'superbad' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight LOGIN PASSWORD 'superfight' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-```
-====
-
-Once all the containers are up and running, you can shut them down with the commands:
-
-[source, shell]
-----
-docker-compose -f docker-compose.yaml down
-docker-compose -f docker-compose.yaml rm
-----
-
 [NOTE]
 ====
 .What's this infra?
 Any microservice system is going to rely on a set of technical services.
 In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
-This infrastructure starts all these services, so you don't have to worry about them.
+The infrastructure folder contains the OpenShift manifests to create the OpenShift resources in order to have this techincal service available.
 ====
 
 == Ready?
