@@ -104,30 +104,7 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
-Now, we can proceed to create the 3 databases that we are using. They are described in an OpenShift manifest that can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
-
-As we did for kafka, we will create the DBs using `oc` utility from the CRW terminal.
-Make sure that you are authenticated with your USERNAME and you are using the `USERNAME-heroes` namespace, then apply the databases yaml file:
-
-[source,shell]
-----
-$ oc login ....
-$ oc project USERNAME-heroes
-$ oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
-----
-
-You can verify the availability of databases with the following command:
-[source,shell]
-----
-$ curl http://heroes-database.USERNAME-heroes:5432
-----
-You should have the following response:
-
-----
-curl: (52) Empty reply from server
-----
-
-== Heroes Databases
+== Databases
 
 We need to create the 3 databases that we are using. They are described in an OpenShift manifest that can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
 
