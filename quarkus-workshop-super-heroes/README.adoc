@@ -164,3 +164,15 @@ Replace `│` with ` `
 Replace ' ' with ' '
 Replace `    ` with `+`
 ----
+
+== Running DBs locally with Docker
+
+rest-hero
+```bash
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=superman -e POSTGRES_PASSWORD=superman -e POSTGRES_DB=heroes_database -p 5432:5432 postgres:11.5
+```
+
+rest-villain
+```bash
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=superbad -e POSTGRES_PASSWORD=superbad -e POSTGRES_DB=villains_database -p 5432:5432 postgres:11.5
+```
