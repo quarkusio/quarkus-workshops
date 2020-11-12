@@ -1,3 +1,30 @@
+= Red Hat Quarkus workshop for BBVA 2O2O
+
+== Session Title
+The goal of Quarkus is to make Java a leading platform in Kubernetes/OpenShift and serverless environments, while offering developers a unified reactive and imperative programming model to optimally address a wider range of distributed application architectures
+This lab offers attendees an intro-level, hands-on session with Quarkus, from the first line of code to making services, to consuming them, and finally to assembling everything in a consistent system. But, what are we going to build? Well, it’s going to be a set of microservices (we want to be trendy):
+
+== Goals
+
+In this lab, you will :
+
+- Code a microservices architecture
+- Use Hibernate with Panache
+- Use HTTP and events (Kafka)
+- Code on Code Ready Workspaces and next deploy on OpenShift
+
+== Agenda
+
+* Quarkus Introduction[presentation]: 15min - Auri?
+* Instructor message: 5 min (Carlos)
+* Play with the Lab: 2h20 (attendees)
+* Debriefing - Q&A : 15min (All)
+
+== Table of Contents
+
+. *link:modules/01_setup_lab.adoc[Lab Setup]*
+. *link:modules/01_scenario/02_scenario_Lab.adoc[Let's Code!]*
+
 = Workshop Super Heroes
 
 == Instructions
