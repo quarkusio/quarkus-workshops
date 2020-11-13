@@ -98,6 +98,16 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
+For next steps, you need to be authenticated on OpenShift with your own user
+
+[source,shell]
+----
+$ oc login ....
+$ oc project USERNAME-heroes
+----
+
+NOTE: change USERNAME with your own.
+
 == Kafka
 
 You can create the server and topic that will be used during the workshop with the `oc` utility. The OpenShift manifests containing the resources to create can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
@@ -118,8 +128,6 @@ Make sure that you are authenticated with your USERNAME and you are using the `U
 
 [source,shell]
 ----
-$ oc login ....
-$ oc project USERNAME-heroes
 $ oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
 ----
 
@@ -139,13 +147,13 @@ curl: (52) Empty reply from server
 
 Now that you have the initial structure in place, we just need configure the correct url for the database.
 
-On your CRW, edit the `quarkus-workshop-super-heroes/super-heroes/rest-villain/src/main/resources/application.properties` file and the change database configuration:
+On your CRW, edit the `quarkus-workshop-super-heroes/super-heroes/rest-villain/src/main/resources/application.properties` file and change database configuration:
 
 ----
 quarkus.datasource.jdbc.url=jdbc:postgresql://villains-database.USERNAME-heroes:5432/villains_database
 ----
 
-Change USERNAME with your own.
+NOTE: Change USERNAME with your own.
 
 Now, you can navigate to the root directory `quarkus-workshop-super-heroes/` and run:
 
