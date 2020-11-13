@@ -20,16 +20,12 @@ In this lab, you will :
 * Play with the Lab: 2h20 (attendees)
 * Debriefing - Q&A : 15min (All)
 
-== Table of Contents
-
-. *link:modules/01_setup_lab.adoc[Lab Setup]*
-. *link:modules/01_scenario/02_scenario_Lab.adoc[Let's Code!]*
 
 = Workshop Super Heroes
 
 == Instructions
 
-Check https://quarkus.io/quarkus-workshops/super-heros/ to get the workshop instructions.
+Check https://bbvahackathon.github.io to get the workshop instructions.
 
 == Generate the documentation
 
@@ -51,17 +47,17 @@ mvn clean install
 * Run the infrastructure as explained above.
 * In a new terminal, run the heroes microservice
 ```bash
-cd api-hero
+cd rest-hero
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the villains microservice
 ```bash
-cd api-villain
+cd rest-villain
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd api-fight
+cd rest-fight
 mvn clean compile quarkus:dev
 ```
 
