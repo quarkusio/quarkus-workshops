@@ -92,13 +92,5 @@ This operator is responsible for managing a Kafka cluster running within an Open
 The PostgreSQL operator allows to package, install, configure and manage a PostgreSQL database within an OpenShift cluster.
 This operator is not pre-installed. We need to do it.
 
-. Access to your OCP Web Console and authenticate using the following user credentials
-.. *username*:    opentlc-mgr
-.. *password*:    r3dh4t1!
-. In the left menu, go to `Operators -> OperatorHub` and serch for a `Postgres` operator. Select the `PostgreSQL Operator by Dev4Ddevs.com`
-. Click `Install`
-. In the installation dialog, select the namespace `USERNAME-heroes` created previously in the `Installed Namespace` field.
-. Click `Install`.
-
 #Congratulations!#
 Your lab environment is now ready to use.

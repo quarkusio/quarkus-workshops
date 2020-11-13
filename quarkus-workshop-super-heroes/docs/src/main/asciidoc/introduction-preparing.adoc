@@ -7,17 +7,11 @@ This workshop needs internet access to download all sorts of Maven artifacts, Do
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
 
-== Get the workshop scaffolding
+== Download the workshop scaffolding
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-First, get the workshop scaffolding by cloning the https://github.com/bbvahackathon/quarkus-workshop-super-heroes repository.
-
-On your CRW terminal:
-[source,shell]
-----
-$ git clone https://github.com/bbvahackathon/quarkus-super-heroes-workshop
-----
+First, download the zip file  {github-raw}/dist/quarkus-workshop-super-heroes.zip, and unzip it wherever you want.
 
 In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
@@ -153,7 +147,7 @@ quarkus.datasource.jdbc.url=jdbc:postgresql://villains-database.USERNAME-heroes:
 
 Change USERNAME with your own.
 
-Now, you can navigate to the root directory and run:
+Now, you can navigate to the root directory `quarkus-workshop-super-heroes/` and run:
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
