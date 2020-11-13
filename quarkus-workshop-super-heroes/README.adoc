@@ -38,21 +38,7 @@ For that, you just run the Maven command `mvn clean generate-resources` under an
 
 == Start the infrastructure
 
-This workshop requires a couple of extra _technical_ services (databases, kafka...).
-Start them using the `docker-compose.yaml` file located in the `infrastructure` directory:
-
-```
-cd containers
-docker-compose up
-```
-
-Stop them using:
-
-```
-CTRL+C
-docker-compose down
-docker-compose rm
-```
+./super-heroes/infrastructure/prerequisites.sh -c 1 --start 5 -s api.cluster-04b6.04b6.example.opentlc.com:6443
 
 == Build
 

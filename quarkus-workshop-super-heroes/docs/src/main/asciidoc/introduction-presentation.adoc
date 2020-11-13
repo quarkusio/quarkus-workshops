@@ -69,14 +69,6 @@ Oh, and be ready to have some fun!
 First of all, make sure you have Web browser installed on your laptop and internet connectivity.
 You will also need a GitHub account.
 
-This workshop will make use of the following software, tools, frameworks:
-
-* CodeReady Workspaces as IDE.
-* JDK 8
-* Maven 3.6.x
-* cURL (or any other command line HTTP client)
-* Node JS (optional, only if you are in a _frontend_ mood)
-
 Your environment is remote and can be accessed via CodeReady Workspaces (CRW) through your local browser, you just need to sign up and configure some elements.
 Your environment includes also Red Hat's OpenShift Container Platform (OCP).
 

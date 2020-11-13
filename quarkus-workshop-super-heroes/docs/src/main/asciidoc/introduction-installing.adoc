@@ -87,15 +87,6 @@ Your lab environment comes pre-installed with various OpenShift operators.
 
 This operator is responsible for managing a Kafka cluster running within an OpenShift cluster. In particular, the operator will create the kafka server, the topic and configure its parameters.
 
-You can create the server and topic that will be used during the workshop with the `oc` utility. The OpenShift manifests containing the resources to create can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
-
-From the CRW terminal where you are authenticated on OpenShift, run:
-
-[source,shell]
-----
-$ oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/kafka.yaml
-----
-
 *PostgreSQL operator*
 
 The PostgreSQL operator allows to package, install, configure and manage a PostgreSQL database within an OpenShift cluster.

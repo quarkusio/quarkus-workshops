@@ -11,7 +11,7 @@ Here are a few commands that you can execute before the workshop.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-First, get the workshop scaffolding by cloning the https://github.com/bbvahackathon/quarkus-super-heroes-workshop repository.
+First, get the workshop scaffolding by cloning the https://github.com/bbvahackathon/quarkus-workshop-super-heroes repository.
 
 On your CRW terminal:
 [source,shell]
@@ -104,6 +104,17 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
+== Kafka
+
+You can create the server and topic that will be used during the workshop with the `oc` utility. The OpenShift manifests containing the resources to create can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
+
+From the CRW terminal where you are authenticated on OpenShift, run:
+
+[source,shell]
+----
+$ oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/kafka.yaml
+----
+
 == Databases
 
 We need to create the 3 databases that we are using. They are described in an OpenShift manifest that can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
@@ -134,7 +145,7 @@ curl: (52) Empty reply from server
 
 Now that you have the initial structure in place, we just need configure the correct url for the database.
 
-On your CRW, edit the `quarkus-super-heroes-workshop/super-heroes/rest-villain/src/main/resources/application.properties` file and the change database configuration:
+On your CRW, edit the `quarkus-workshop-super-heroes/super-heroes/rest-villain/src/main/resources/application.properties` file and the change database configuration:
 
 ----
 quarkus.datasource.jdbc.url=jdbc:postgresql://villains-database.USERNAME-heroes:5432/villains_database
