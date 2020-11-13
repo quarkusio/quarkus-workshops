@@ -5,15 +5,15 @@
 ## WILL PUBLISH STUFF ON THE WEBSITE, DON'T SCREW UP
 export old=`pwd`
 #build doc
-mvn install
+#mvn clean generate-resources
 #publish doc
 cd /tmp
 rm -fR /tmp/bbvahackathon.github.io
 git clone git@github.com:bbvahackathon/bbvahackathon.github.io.git
-#git checkout gh-pages
 cd $old
 #rm -fR /tmp/bbvahackathon.github.io
 rsync -avz ./target/generated-asciidoc/ /tmp/bbvahackathon.github.io
+#cp -r ./target/generated-asciidoc/ /tmp/bbvahackathon.github.io
 cp /tmp/bbvahackathon.github.io/generated-asciidoc/spine.html /tmp/bbvahackathon.github.io/index.html
 cd /tmp/bbvahackathon.github.io
 git add .
