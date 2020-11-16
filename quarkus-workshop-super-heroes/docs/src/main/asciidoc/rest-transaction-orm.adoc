@@ -67,33 +67,6 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyPostgres
 
 From now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
 
-
-== Running the Infrastructure
-
-Before going further, be sure to run the infrastructure.
-To execute this service, you need a database (and later on we will need Prometheus and Kafka).
-Let's use Docker and docker compose to ease the installation of such infrastructure.
-
-You should already have installed the infrastructure into the `infrastructure` directory.
-Now, just execute `docker-compose -f docker-compose.yaml up -d`.
-You should see a few logs going on and then all the containers get started.
-
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
-
-On Linux, use the `docker-compose-linux.yaml`:
-
-[source,shell]
-.On Linux
-----
-docker-compose -f docker-compose-linux.yaml up -d
-----
-
-[NOTE]
-====
-During the workshop, just leave all the containers up and running.
-Then, after the workshop, remember to shut them down using: `docker-compose -f docker-compose.yaml down` or  `docker-compose -f docker-compose-linux.yaml down` on Linux.
-====
-
 == Hero Entity
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
@@ -254,37 +227,27 @@ If you didn't yet, start the application in dev mode:
 $./mvnw quarkus:dev
 ----
 
-Then, open your browser to http://localhost:8080/api/heroes.
+[NOTE]
+--
+Consider copying the url mentioned by CRW
+--
+
+Then, open your browser to $URL/api/heroes.
 You should see lots of heroes...
 
 == CRUD Tests in HeroResourceTest
 
 To test the `HeroResource` endpoint, we will be using a `QuarkusTestResource` that will fire a Postgres database and then test CRUD operations.
-The `QuarkusTestResource` is a test extension that can configure the environment before running the application.
-In our context, we will be using TestContainers to start our database.footnote:[TestContainers https://www.testcontainers.org]
+The `QuarkusTestResource` is a test extension that can configure the environment before running the application but in our context, because of CRW, we will be using the database configured and running on OpenShift.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-For that we will install the TestContainers dependency in our `pom.xml` as well as some extra test dependencies:
+We need to install in our `pom.xml` an extra dependency for data-binding functionality:
 
 [source,xml,indent=0]
 ----
-include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestContainers]
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestREST]
 ----
-
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
-
-Then, you need to create the `QuarkusTestResource`.
-Create the `io.quarkus.workshop.superheroes.hero.DatabaseResource` classes with the following content:
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/DatabaseResource.java[]
-----
-
-This code just starts the database before the application, and set the `quarkus.datasource.url` system property to indicate to the application where is the test database.
-Note that the database would use a random port.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
@@ -311,9 +274,6 @@ The test framework starts the application before the test class and stops it onc
 The tests and the application runs in the same JVM, meaning that the test can be injected with application _beans_.
 This feature is very useful to test specific parts of the application.
 However in our case, we just execute HTTP requests to check the result.
-
-Notice also the `@QuarkusTestResource(DatabaseResource.class)`.
-It is how the `QuarkusTestResource` are attached to a test class.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 

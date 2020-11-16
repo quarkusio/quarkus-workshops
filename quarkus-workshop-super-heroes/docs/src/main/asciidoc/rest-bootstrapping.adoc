@@ -166,11 +166,11 @@ Then check that the endpoint returns `hello` as expected:
 
 [source,shell]Now we are ready to run our application
 ----
-$ curl URL/api/heroes
+$ curl $URL/api/heroes
 hello
 ----
 
-Alternatively, you can open URL/api/heroes in your browser.
+Alternatively, you can open $URL/api/heroes in your browser.
 
 [NOTE]
 --
