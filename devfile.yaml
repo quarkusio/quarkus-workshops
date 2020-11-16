@@ -1,0 +1,68 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: quarkus-shw-
+projects:
+  - name: quarkus-workshops
+    source:
+      location: 'https://github.com/bbvahackathon/quarkus-workshops/raw/master/quarkus-workshop-super-heroes/dist/quarkus-workshop-super-heroes.zip'
+      type: zip
+components:
+  - id: redhat/quarkus-java11/latest
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - name: service-0
+        port: 8080
+      - name: service-1
+        port: 8081
+      - name: service-2
+        port: 8082
+      - name: service-3
+        port: 8083
+      - name: ui
+        port: 4200
+      - attributes:
+          path: /hello/greeting/che-user
+        name: hello-greeting-endpoint
+        port: 8080
+    memoryLimit: 2048Mi
+    type: dockerimage
+    volumes:
+      - name: m2
+        containerPath: /home/jboss/.m2
+    alias: maven
+    image: 'quay.io/cvicens/crw-quarkus-stack:2.5'
+    env:
+      - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
+        name: JAVA_OPTS
+      - value: $(JAVA_OPTS)
+        name: MAVEN_OPTS
+commands:
+  - name: 1. Package the application
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-quickstarts/getting-started'
+        type: exec
+        command: mvn package
+        component: maven
+  - name: 2. Start Quarkus in devmode (hot deploy + debug)
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-quickstarts/getting-started'
+        type: exec
+        command: 'mvn compile quarkus:dev'
+        component: maven
+  - name: Attach remote debugger
+    actions:
+      - referenceContent: |
+          {
+            "version": "0.2.0",
+            "configurations": [
+              {
+                "type": "java",
+                "request": "attach",
+                "name": "Attach to Remote Quarkus App",
+                "hostName": "localhost",
+                "port": 5005
+              }
+            ]
+          }
+        type: vscode-launch
