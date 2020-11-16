@@ -19,12 +19,6 @@ icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 include::{github-raw}/super-heroes/rest-hero/bootstrap.sh[tag=adocSnippet]
 ----
 
-[TIP]
-.Preferring Web UI
-====
-Instead of the Maven command, you can use https://code.quarkus.io.
-====
-
 == Directory Structure
 
 Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
@@ -140,6 +134,11 @@ icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Use: `./mvnw quarkus:dev`:
 
+[NOTE]
+--
+**IMPORTANT** copy the url mentioned in the CodeReady Workspace pop-up. The url should contain the port 8080 as we can see in the previous log. This url corresponds to the rest-hero microservice.
+--
+
 [source,shell]
 ----
 $ ./mvnw quarkus:dev
@@ -149,24 +148,34 @@ $ ./mvnw quarkus:dev
 [INFO] Building rest-hero 1.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- quarkus-maven-plugin:1.2.0.Final:dev (default-cli) @ rest-hero ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 1 source file to /Users/clement/Downloads/quarkus-workshop-super-heroes/super-heroes/rest-hero/target/classes
+[INFO] --- quarkus-maven-plugin:1.9.2.Final:dev (default-cli) @ rest-hero ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Nothing to compile - all classes are up to date
 Listening for transport dt_socket at address: 5005
-2020-01-28 15:09:02,111 INFO  [io.quarkus] (main) rest-hero 1.0-SNAPSHOT (running on Quarkus 1.2.0.Final) started in 2.161s. Listening on: http://0.0.0.0:8080
-2020-01-28 15:09:02,123 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
-2020-01-28 15:09:02,124 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
+__  ____  __  _____   ___  __ ____  ______
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+2020-11-16 10:01:51,331 INFO  [io.quarkus] (Quarkus Main Thread) rest-hero 1.0-SNAPSHOT on JVM (powered by Quarkus 1.9.2.Final) started in 3.797s. Listening on: http://0.0.0.0:8080
+2020-11-16 10:01:51,343 INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+2020-11-16 10:01:51,343 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, resteasy]
 ----
 
 Then check that the endpoint returns `hello` as expected:
 
 [source,shell]Now we are ready to run our application
 ----
-$ curl http://localhost:8080/api/heroes
+$ curl URL/api/heroes
 hello
 ----
 
-Alternatively, you can open http://localhost:8080/api/heroes in your browser.
+Alternatively, you can open URL/api/heroes in your browser.
+
+[NOTE]
+--
+Change the url by the one you should have got from CRW
+--
 
 == Development Mode
 
