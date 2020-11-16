@@ -1,0 +1,57 @@
+---
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+    name: heroes-database
+spec:
+    databaseCpu: 30m
+    databaseCpuLimit: 60m
+    databaseMemoryLimit: 512Mi
+    databaseMemoryRequest: 128Mi
+    databaseName: heroes_database
+    databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+    databasePassword: superman
+    databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+    databaseStorageRequest: 1Gi
+    databaseUser: superman
+    databaseUserKeyEnvVar: POSTGRESQL_USER
+    image: centos/postgresql-96-centos7
+    size: 1
+---
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+    name: fights-database
+spec:
+    databaseCpu: 30m
+    databaseCpuLimit: 60m
+    databaseMemoryLimit: 512Mi
+    databaseMemoryRequest: 128Mi
+    databaseName: fights_database
+    databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+    databasePassword: superfight
+    databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+    databaseStorageRequest: 1Gi
+    databaseUser: superfight
+    databaseUserKeyEnvVar: POSTGRESQL_USER
+    image: centos/postgresql-96-centos7
+    size: 1
+---
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+    name: villains-database
+spec:
+    databaseCpu: 30m
+    databaseCpuLimit: 60m
+    databaseMemoryLimit: 512Mi
+    databaseMemoryRequest: 128Mi
+    databaseName: villains_database
+    databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+    databasePassword: superbad
+    databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+    databaseStorageRequest: 1Gi
+    databaseUser: superbad
+    databaseUserKeyEnvVar: POSTGRESQL_USER
+    image: centos/postgresql-96-centos7
+    size: 1

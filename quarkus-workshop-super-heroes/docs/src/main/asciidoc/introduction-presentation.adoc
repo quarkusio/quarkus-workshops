@@ -13,7 +13,7 @@ Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 ifdef::give-solution[]
 [NOTE]
 ====
-Get this workshop from https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
+Get this workshop from https://github.com/bbvahackathon/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
 ====
 endif::give-solution[]
 
@@ -66,28 +66,12 @@ Oh, and be ready to have some fun!
 
 == Software Requirements
 
-First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
+First of all, make sure you have Web browser installed on your laptop and internet connectivity.
+You will also need a GitHub account.
 
-[WARNING]
-====
-If you are using Mac OS X make sure the version is greater than 10.11.x (Captain).
-====
-
-This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
-
-* Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
-* JDK 8
-* GraalVM 19.2.1 or 19.3.1
-* Maven 3.6.x
-* Docker
-* cURL (or any other command line HTTP client)
-* Node JS (optional, only if you are in a _frontend_ mood)
+Your environment is remote and can be accessed via CodeReady Workspaces (CRW) through your local browser, you just need to sign up and configure some elements.
+Your environment includes also Red Hat's OpenShift Container Platform (OCP).
 
 The next section focuses on how to install and setup the needed software.
 You can skip the next section if you have already installed all the prerequisites.
 
-[WARNING]
-====
-This workshop assumes a bash shell.
-If you run on Windows in particular, adjust the commands accordingly.
-====
