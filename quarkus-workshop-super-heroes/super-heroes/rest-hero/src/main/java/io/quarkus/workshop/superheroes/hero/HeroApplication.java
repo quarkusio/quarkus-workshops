@@ -17,9 +17,7 @@ import javax.ws.rs.core.Application;
         description = "This API allows CRUD operations on a hero",
         version = "1.0",
         contact = @Contact(name = "Quarkus", url = "https://github.com/quarkusio")),
-    servers = {
-        @Server(url = "http://localhost:8083")
-    },
+
     externalDocs = @ExternalDocumentation(url = "https://github.com/quarkusio/quarkus-workshops", description = "All the Quarkus workshops"),
     tags = {
         @Tag(name = "api", description = "Public that can be used by anybody"),
