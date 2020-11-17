@@ -2,6 +2,6 @@ ifdef::give-solution[]
 [WARNING]
 ====
 If you have any problem with the code, don't understand or feel you are running, remember to ask for some help.
-Also, you can get the code of this entire workshop from https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes.
+Also, you can get the code of this entire workshop from https://github.com/bbva/quarkus-workshops/tree/master/quarkus-workshop-super-heroes.
 ====
 endif::give-solution[]

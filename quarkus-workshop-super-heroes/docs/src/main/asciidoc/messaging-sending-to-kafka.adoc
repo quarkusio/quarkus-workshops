@@ -53,7 +53,7 @@ To install the Kafka support, just run the following command:
 
 [source, shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="kafka"
+$ ./mvnw quarkus:add-extension -Dextensions="messaging-kafka"
 ----
 
 The previous command adds the following dependency:
