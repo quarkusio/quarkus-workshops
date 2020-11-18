@@ -36,14 +36,9 @@ include::rest-configuration.adoc[leveloffset=+2]
 include::rest-openapi.adoc[leveloffset=+2]
 
 // Quarkus
-include::quarkus.adoc[leveloffset=+1]
-include::quarkus-augmentation.adoc[leveloffset=+2]
-<<<
 include::quarkus-lifecycle.adoc[leveloffset=+2]
 <<<
 include::quarkus-profile.adoc[leveloffset=+2]
-<<<
-include::quarkus-native.adoc[leveloffset=+2]
 
 // Microservices
 include::microservices.adoc[leveloffset=+1]
@@ -60,17 +55,6 @@ include::microservices-cors.adoc[leveloffset=+2]
 include::fault-tolerance.adoc[leveloffset=+1]
 <<<
 include::fault-tolerance-rest-client.adoc[leveloffset=+2]
-
-// Messaging
-include::messaging.adoc[leveloffset=+1]
-<<<
-include::messaging-sending-to-kafka.adoc[leveloffset=+2]
-<<<
-include::messaging-receiving-from-kafka.adoc[leveloffset=+2]
-<<<
-include::messaging-websocket.adoc[leveloffset=+2]
-<<<
-include::messaging-conclusion.adoc[leveloffset=+2]
 
 // Cloud
 include::cloud.adoc[leveloffset=+1]
