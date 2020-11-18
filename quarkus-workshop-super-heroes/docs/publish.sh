@@ -16,6 +16,6 @@ rsync -avz ./target/generated-asciidoc/ /tmp/bbvahackathon.github.io
 cp /tmp/bbvahackathon.github.io/spine.html /tmp/bbvahackathon.github.io/index.html
 cd /tmp/bbvahackathon.github.io
 git add .
-git commit -m "regenerating docs for Quarkus workshop"
+git commit -m "update docs for Quarkus workshop"
 git push origin -u master
 cd $old
