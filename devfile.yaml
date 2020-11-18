@@ -39,8 +39,6 @@ components:
         name: JAVA_OPTS
       - value: $(JAVA_OPTS)
         name: MAVEN_OPTS
-      - value: '[$CHE_WORKSPACE_NAMESPACE \W]\$ '
-        name: PS1
 commands:
   - name: Attach remote debugger
     actions:
