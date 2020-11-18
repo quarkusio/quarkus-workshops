@@ -42,18 +42,6 @@ components:
       - value: '[$CHE_WORKSPACE_NAMESPACE \W]\$ '
         name: PS1
 commands:
-  - name: 1. Package the application
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-quickstarts/getting-started'
-        type: exec
-        command: mvn package
-        component: maven
-  - name: 2. Start Quarkus in devmode (hot deploy + debug)
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-quickstarts/getting-started'
-        type: exec
-        command: 'mvn compile quarkus:dev'
-        component: maven
   - name: Attach remote debugger
     actions:
       - referenceContent: |
