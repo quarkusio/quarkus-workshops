@@ -13,7 +13,7 @@ Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 ifdef::give-solution[]
 [NOTE]
 ====
-Get this workshop from https://github.com/bbvahackathon/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
+Get this workshop from https://github.com/bbvahackathon/quarkus-workshop-super-heroes/tree/master/quarkus-workshop-super-heroes
 ====
 endif::give-solution[]
 
@@ -73,5 +73,5 @@ Your environment is remote and can be accessed via CodeReady Workspaces (CRW) th
 Your environment includes also Red Hat's OpenShift Container Platform (OCP).
 
 The next section focuses on how to install and setup the needed software.
-You can skip the next section if you have already installed all the prerequisites.
+
 

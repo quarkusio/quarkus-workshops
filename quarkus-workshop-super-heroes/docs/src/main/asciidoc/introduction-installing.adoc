@@ -5,36 +5,24 @@
 == CodeReady Workspace
 
 CodeReady Workspaces is a collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development.
-An access to CRW will be provided.
+You are going to create your own environment.
 
-=== CRW Configuration
+=== CRW creation
 
-* Access to your CRW and sign up with the credentials provided:
+* Go to the Etherpad site and choose an user. This user will be used to access the CRW and the OpenShift Web Console and for naming some components that you are going to create during the workshop.
+
+* Launch the CRW creation by clicking the link mentioned in the Etherpad site.
+
+* Once the CRW creation done, access to your CRW and sign up with your own user (selected previously in Etherpad) and full fill the form:
 
 	user: USERNAME
 	pwd: openshift
+	email: USERNAME@ocp.com
+	first name: Yago
+	last name: Sanchez
 
-	Luego en el formulario de registro pon lo que quieras (excepto username que tiene que ser user2), por ejemplo:
-
-	email: user2@ocp.com
-	first name: User
-	last name: U2
-
-* Configure a Quarkus workspace in the Get Started
-
-image::crw-getting-started.png[]
-
-* Give more memory to your workspace:
-We need to increase the memory allowed to our workspace. To do that go to your workspace settings, select Devfile and modify the `memoryLimit` parameter, 2048Mi should be enough:
-
-`Workspaces -> quarkus-XXXX -> Devfile`
-
-image::crw-set-ws-memory-limit.png[]
-
-[source,yaml]
-----
-memoryLimit: 2048Mi
-----
+If everything goes well, you should have a CodeReady Workspace with a `quarkus-workshop` folder ready to start to code:
+image::crw-arrival.png[]
 
 * Finally, open a terminal from the Terminal menu -> Open Terminal in specific container -> maven.
 
@@ -63,34 +51,25 @@ The project we are going to develop will contain 3 microservices accessing to a 
 . In the terminal of your CRW, authenticate into OpenShift as a non cluster admin user (USERNAME) using the `oc` utility.
 
 NOTE: You can get the command for authenticating from the OpenShift Web Console.
+
 [source,shell]
 ----
 $ oc login
 ----
 
-The namespace created for hosting your CRW environment is USERNAME-codeready where `USERNAME` correspond to your specific username.
-
-. Create the namespace for hosting the databases running the following command.
-
-[source,shell]
-----
-$ oc new-project USERNAME-heroes
-----
+There are 2 namespaces (OpenShift projects) in your OpenShift cluster:
+The namespace for hosting your CRW environment is USERNAME-codeready where `USERNAME` correspond to your specific username.
+The namespace for hosting databases and microservices is USERNAME-heroes.
 
 NOTE: change the USERNAME with your own.
 
 === Operators
 
-Your lab environment comes pre-installed with various OpenShift operators.
-
-*AMQ Streams*
-
-This operator is responsible for managing a Kafka cluster running within an OpenShift cluster. In particular, the operator will create the kafka server, the topic and configure its parameters.
+Your lab environment comes pre-installed with an OpenShift operator.
 
 *PostgreSQL operator*
 
 The PostgreSQL operator allows to package, install, configure and manage a PostgreSQL database within an OpenShift cluster.
-This operator is not pre-installed. We need to do it.
 
 #Congratulations!#
 Your lab environment is now ready to use.
