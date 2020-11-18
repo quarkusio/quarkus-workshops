@@ -2,7 +2,7 @@ apiVersion: 1.0.0
 metadata:
   generateName: quarkus-shw-
 projects:
-  - name: quarkus-workshops
+  - name: quarkus-workshop-super-heroes
     source:
       location: 'https://github.com/bbvahackathon/quarkus-workshops/raw/master/quarkus-workshop-super-heroes/dist/quarkus-workshop-super-heroes.zip'
       type: zip
