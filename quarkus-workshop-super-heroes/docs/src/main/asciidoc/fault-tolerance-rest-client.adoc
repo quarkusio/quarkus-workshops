@@ -158,7 +158,7 @@ In order to make it work, you need to set up the `WKSPC_SERVICE_URL` env var. Yo
 
 [source, shell]
 --
-$ export WKSPC_SERVICE_URL="http://$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
+$ export WKSPC_SERVICE_URL="$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
 --
 
 Having this configuration means that the default scope of `HeroService` will be `@Singleton`.
