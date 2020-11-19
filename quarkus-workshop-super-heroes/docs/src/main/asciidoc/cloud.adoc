@@ -75,12 +75,97 @@ If everything went well the URL of the microservice should be logged in the cons
 [INFO] ------------------------------------------------------------------------
 ----
 
-=== Deploying the Villain and Fight microservices
+=== Deploying the others microservices
 
-Follow the same approach for the villain and fight microservices.
-Note that, for the fight microservice, there are more properties to configure:
+For villain microservice follow the same approach.
 
-*  the location of the hero and villain microservice
+==== Fight microservice
+
+* Add the OpenShift extension running the following command in the rest-fights directory:
+
+[source, shell]
+----
+./mvnw quarkus:add-extension -Dextensions="openshift"
+----
+
+* Define this env variable to make easier the config of the microservices urls for
+
+[source, properties]
+--
+$ export WKSPC_SERVICE_URL="http://$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
+--
+
+[NOTE]
+--
+Don't forget use your own user
+--
+
+* Add the following properties in the rest-fights `application.properties` file:
+
+[source, properties]
+--
+quarkus.kubernetes-client.trust-certs=true
+quarkus.kubernetes-client.namespace=${PROJECT_NAME:USERNAME-heroes}
+
+quarkus.openshift.expose=true
+--
+
+* Also, we need to configure the new locations of the hero and villain microservice.
+Edit the `application.properties` file and modify the following properties:
+
+[source,properties]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tag=adocOpenShiftRestClient]
+----
+
+Trigger the build and deployment, run the following command. Make sure that you are logged and using the `USERNAME-heroes` project.
+
+[source, shell]
+----
+$ oc login
+$ oc project USERNAME-heroes
+$ ./mvnw clean package -Dquarkus.kubernetes.deploy=true
+----
+
+==== UI microservice
+
+* Add the OpenShift extension running the following command in the rest-fights directory:
+
+[source, shell]
+----
+./mvnw quarkus:add-extension -Dextensions="openshift"
+----
+
+* Add the following properties in the rest-fights `application.properties` file:
+
+[source, properties]
+--
+quarkus.kubernetes-client.trust-certs=true
+quarkus.kubernetes-client.namespace=${PROJECT_NAME:USERNAME-heroes}
+
+quarkus.openshift.expose=true
+quarkus.openshift.env.vars.BASE_PATH=${FIGHT_ROUTE}
+--
+
+The `` property make the UI able to contact the fight microservice. As it is dependending on a env var, consider to define it using the following command:
+
+[source, properties]
+--
+$ export FIGHT_ROUTE=http://$(oc get route -n USERNAME-heroes | grep fight | awk '{ print $2 }')
+--
+[NOTE]
+--
+Don't forget use your own user
+--
+
+Trigger the build and deployment, run the following command. Make sure that you are logged and using the `USERNAME-heroes` project.
+
+[source, shell]
+----
+$ oc login
+$ oc project USERNAME-heroes
+$ ./mvnw clean package -Dquarkus.kubernetes.deploy=true
+----
 
 
 Once everything is configured and deployed, your system is now running on OpenShift.

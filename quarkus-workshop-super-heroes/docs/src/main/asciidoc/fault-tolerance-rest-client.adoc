@@ -150,8 +150,16 @@ The name of the property needs to follow a certain convention which is best disp
 include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tag=adocRestClient]
 ----
 
-Having this configuration means that all requests performed using `HeroService` will use http://localhost:8083 as the base URL.
-Using this configuration, calling the `findRandomHero` method of `HeroService` would result in an HTTP GET request being made to http://localhost:8083/api/heroes/random.
+Having this configuration means that all requests performed using `HeroService` will use your specific rest-fight service exposed by the `USERNAME-codeready` project, http://localhost:8083 by default, as the base URL.
+Using this configuration, calling the `findRandomHero` method of `HeroService` would result in an HTTP GET request being made to ${rest-hero-url}/api/heroes/random.
+
+This configuration works only for the `dev` profile.
+In order to make it work, you need to set up the `WKSPC_SERVICE_URL` env var. You can do it running the following command:
+
+[source, shell]
+--
+$ export WKSPC_SERVICE_URL="http://$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
+--
 
 Having this configuration means that the default scope of `HeroService` will be `@Singleton`.
 Supported scope values are `@Singleton`, `@Dependent`, `@ApplicationScoped` and `@RequestScoped`.
