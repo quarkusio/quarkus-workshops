@@ -59,11 +59,11 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 
 == Open API
 
-Now, you _curl_ `http://localhost:8083/openapi` endpoint:
+Now, you _curl_ the hero endpoint:
 
 [source,shell]
 ----
-$ curl http://localhost:8083/openapi
+$ curl $(oc get route -n USERNAME-codeready | grep 8083 | awk '{ print $2 }')/openapi
 include::{github-raw}/super-heroes/rest-hero/openapi-origin.yaml[]
 ----
 

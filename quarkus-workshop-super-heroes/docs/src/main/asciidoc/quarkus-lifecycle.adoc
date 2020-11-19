@@ -65,6 +65,6 @@ When the application is stopped, the second log message is printed.
 
 [NOTE]
 ====
-If your application was still running, just send an HTTP request, like go to http://localhost:8083.
+If your application was still running, just send an HTTP request, like go to the hero endpoint url.
 As the application code changed, the application is restarted.
 ====

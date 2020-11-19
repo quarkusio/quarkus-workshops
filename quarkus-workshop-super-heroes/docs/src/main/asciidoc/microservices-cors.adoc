@@ -5,7 +5,7 @@
 
 Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served.footnote:[CORS https://en.wikipedia.org/wiki/Cross-origin_resource_sharing]
 So when we want our heroes and villains to fight, we actually cross several origins:
-we go from localhost:8080 (the UI) to localhost:8082 (Fight API) which invokes localhost:8083 (Hero) and localhost:8084 (Villain).
+we go from the UI to Fight API  which invokes Hero API and Villain API.
 If you look at the console of your Browser you should see something similar to this:
 
 image::cors.png[]

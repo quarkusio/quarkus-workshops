@@ -223,4 +223,4 @@ First, make sure the tests pass by executing the command `./mvnw test` (or from 
 
 Now that the tests are green, we are ready to run our application.
 Use `./mvnw compile quarkus:dev` to start it.
-Once the application is started, go to http://localhost:8080 and start fighting (finally !).
+Once the application is started, go to the corresponding url (`$(oc get route -n USERNAME-codeready | grep 8080 | awk '{ print $2 }')`) and start fighting (finally !).

@@ -8,9 +8,6 @@ import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 // end::adocTransactional[]
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
-import io.smallrye.reactive.messaging.annotations.Channel;
-import io.smallrye.reactive.messaging.annotations.Emitter;
-import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 // tag::adocTransactional[]
 import org.jboss.logging.Logger;
@@ -25,9 +22,14 @@ import java.util.Random;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
+
 @ApplicationScoped
 @Transactional(SUPPORTS)
 public class FightService {
+
+    private static final Logger LOGGER = Logger.getLogger(FightService.class);
+
+    private final Random random = new Random();
 
     // tag::adocRestClient[]
     @Inject
@@ -37,16 +39,7 @@ public class FightService {
     @Inject
     @RestClient
     VillainService villainService;
-
     // end::adocRestClient[]
-    // tag::adocKafkaEmitter[]
-    @Inject
-    @Channel("fights") Emitter<Fight> emitter;
-
-    // end::adocKafkaEmitter[]
-    private static final Logger LOGGER = Logger.getLogger(FightService.class);
-
-    private final Random random = new Random();
 
     public List<Fight> findAllFights() {
         return Fight.listAll();
@@ -75,9 +68,6 @@ public class FightService {
 
         fight.fightDate = Instant.now();
         fight.persist(fight);
-        // tag::adocKafka[]
-        emitter.send(fight);
-        // end::adocKafka[]
         return fight;
     }
 
@@ -119,16 +109,12 @@ public class FightService {
         return fighters;
     }
 
-    // tag::adocFallback[]
-    @Fallback(fallbackMethod = "fallbackRandomHero")
-    // end::adocFallback[]
+
     Hero findRandomHero() {
         return heroService.findRandomHero();
     }
 
-    // tag::adocFallback[]
-    @Fallback(fallbackMethod = "fallbackRandomVillain")
-    // end::adocFallback[]
+
     Villain findRandomVillain() {
         return villainService.findRandomVillain();
     }
@@ -137,26 +123,6 @@ public class FightService {
     // tag::adocRestClient[]
     // tag::adocFallback[]
 
-    public Hero fallbackRandomHero() {
-        LOGGER.warn("Falling back on Hero");
-        Hero hero = new Hero();
-        hero.name = "Fallback hero";
-        hero.picture = "https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero";
-        hero.powers = "Fallback hero powers";
-        hero.level = 1;
-        return hero;
-    }
 
-    public Villain fallbackRandomVillain() {
-        LOGGER.warn("Falling back on Villain");
-        Villain villain = new Villain();
-        villain.name = "Fallback villain";
-        villain.picture = "https://dummyimage.com/280x380/b22222/ffffff&text=Fallback+Villain";
-        villain.powers = "Fallback villain powers";
-        villain.level = 42;
-        return villain;
-    }
-    // end::adocFallback[]
-    // end::adocRestClient[]
 }
 // end::adocTransactional[]

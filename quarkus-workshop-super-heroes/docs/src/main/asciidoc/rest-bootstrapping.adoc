@@ -70,7 +70,7 @@ The Maven archetype generates the following `rest-hero` sub-directory:
 * the Maven structure with a `pom.xml`
 * an `io.quarkus.workshop.superheroes.hero.HeroResource` resource exposed on `/api/heroes`
 * an associated unit test `HeroResourceTest`
-* the landing page `index.html` that is accessible on http://localhost:8080 after starting the application
+* the landing page `index.html` that is accessible after starting the application
 * example `Dockerfile` files for both native and jvm modes in `src/main/docker`
 * the `application.properties` configuration file
 
@@ -199,7 +199,7 @@ icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
-$ curl http://localhost:8080/api/heroes
+$ curl http://$(oc get route -n USERNAME-codeready | grep 8080 | awk '{ print $2 }')/api/heroes
 hello hero
 ----
 
