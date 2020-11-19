@@ -9,7 +9,7 @@ That's what your are going to see in this section.
 == Bootstrapping the Hero REST Endpoint
 
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
-We have created the project structure earlier, so we will move to the `rest-hero` directory and run the project creation command.
+We have created the project structure earlier, so we will move to the `super-heroes` directory and run the project creation command.
 Open a terminal and run the following command:
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#

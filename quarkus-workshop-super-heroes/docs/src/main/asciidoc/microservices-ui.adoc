@@ -91,6 +91,13 @@ This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/no
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
+Set the following env var to allow the ui-super-heroes service contact the rest-fight.
+
+[source, properties]
+--
+$ export BASE_PATH=http://$(oc get route -n USERNAME-codeready | grep 8082 | awk '{ print $2 }')
+--
+
 As usual, use `mvn quarkus:dev` to start the web application.
 
 Be sure you have the hero and villain microservices running (dev mode is enough).
