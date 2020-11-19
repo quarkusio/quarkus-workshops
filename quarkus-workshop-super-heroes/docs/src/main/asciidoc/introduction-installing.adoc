@@ -22,6 +22,7 @@ You are going to create your own environment.
 	last name: Sanchez
 
 If everything goes well, you should have a CodeReady Workspace with a `quarkus-workshop` folder ready to start to code:
+
 image::crw-arrival.png[]
 
 * Finally, open a terminal from the Terminal menu -> Open Terminal in specific container -> maven.

@@ -4,10 +4,9 @@
 == What Is This Workshop About?
 
 This workshop should give you a practical introduction to Quarkus.
-You will first install all the needed tools to then develop an entire microservice architecture, mixing classical HTTP microservices and event-based microservices.
-You will finish by extending the capabilities of Quarkus and learn more about the ability to create native executables.
+You will first install all the needed tools to then develop an entire microservice architecture, mixing classical HTTP microservices.
 
-The idea is that you leave this workshop with a good understanding of what Quarkus is, what it is not, and how it can help you in your projects.
+The idea is that you leave this workshop with a first experience using Quarkus, what it is not, and how it can help you in your projects.
 Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 
 ifdef::give-solution[]
@@ -20,7 +19,7 @@ endif::give-solution[]
 == What Will You Be Developing?
 
 In this workshop you will develop an application that allows super-heroes to fight against villains.
-Being a workshop about microservices, you will be developing several microservices communicating either synchronously via REST or asynchronously using Kafka:
+Being a workshop about microservices, you will be developing several microservices communicating either synchronously via REST :
 
 * _Super Hero UI_: an Angular application allowing you to pick up a random super-hero, a random villain and makes them fight.
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
@@ -28,9 +27,6 @@ The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
 * _Villain REST API_: Allows CRUD operations on Villains which are stored in a Postgres database
 * _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random super-hero and a random villain.
 Each fight is stored in a Postgres database
-* _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
-It has a HTML + JQuery UI displaying all the statistics.
-* _Promotheus_ polls metrics from the three microservices Fight, Hero and Villain
 
 [plantuml,align=center]
 ----
@@ -52,10 +48,8 @@ The structure of this workshop is as follow :
 in this section you will install all the tools and code to be able to develop, compile and execute our application
 * _Developing with Quarkus_:
 in this section you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
-* Extending Quarkus:
-in this section you will create a Quarkus extension
 
-If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Developing with Quarkus_ and _Extending Quarkus_, and start hacking some code and addons.
+If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Developing with Quarkus_, and start hacking some code and addons.
 This "à la carte" mode allows you to make the most of this 6 hours long hands on lab.
 
 == What Do You Have to Do?
