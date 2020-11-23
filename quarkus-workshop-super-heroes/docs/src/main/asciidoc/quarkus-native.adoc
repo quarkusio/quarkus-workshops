@@ -1,0 +1,172 @@
+[[quarkus-native]]
+= From Java to Native
+
+:icons: font
+
+== Building a Native Executable
+
+Let's now produce a native executable for our application.
+As explained in the introduction of this chapter, Quarkus is able to generate native executables.
+Just like Go, native executable don't need a VM to run, they contain the whole application, like an `.exe` file on Windows.
+
+It improves the startup time of the application, and produces a minimal disk footprint.
+The executable would have everything to run the application including the "JVM" (shrunk to be just enough to run the application), and the application.
+
+[NOTE]
+--
+Choosing JVM execution vs native executable execution depends on your application needs and environment.
+Discuss with the lab organizers for some insights
+--
+
+To do so, you will find in the `pom.xml` the following profile:
+
+[source,xml]
+----
+<profile>
+  <id>native</id>
+  <activation>
+    <property>
+      <name>native</name>
+    </property>
+  </activation>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-maven-plugin</artifactId>
+        <version>${quarkus.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>native-image</goal>
+            </goals>
+            <configuration>
+              <enableHttpUrlHandler>true</enableHttpUrlHandler>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${surefire-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <systemProperties>
+                <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+              </systemProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <quarkus.package.type>native</quarkus.package.type>
+  </properties>
+</profile>
+----
+
+Make sure you have the `GRAALVM_HOME` environment variable defined and pointing to where you installed GraalVM.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Then create a native executable using: `./mvnw package -Pnative`.
+In addition to the regular files (`rest-hero-1.0-SNAPSHOT.jar` and `rest-hero-1.0-SNAPSHOT-runner.jar`), the build also produces `target/rest-hero-1.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
+You can run it using: `./target/rest-hero-1.0-SNAPSHOT-runner`.
+
+[WARNING]
+====
+Creating a native executable requires a lot of memory and CPU.
+It also takes a few minutes, even for simple application like the Hero microservice.
+Most of the time is spent during the dead code elimination, as it traverse the whole (closed) world.
+====
+
+== Testing the Native Executable
+
+Producing a native executable can lead to a few issues, and so it's also a good idea to run some tests against the application running in the native file.
+In the `pom.xml` file, the native profile contains:
+
+[source,xml,indent=0]
+----
+<plugin>
+  <artifactId>maven-failsafe-plugin</artifactId>
+  <version>${surefire-plugin.version}</version>
+  <executions>
+    <execution>
+      <goals>
+        <goal>integration-test</goal>
+        <goal>verify</goal>
+      </goals>
+      <configuration>
+        <systemProperties>
+          <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+        </systemProperties>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+----
+
+This instructs the failsafe-maven-plugin to run integration-test and indicates the location of the produced native executable.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Then, open the `src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java` and update it with the following:
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java[tags=adocResourceIT;!adocHealth;!adocMetrics]
+----
+
+Instead of using `@QuarkusTest`, it uses the `@NativeImageTest` test runner that starts the application from the native file before the tests.
+The executable is retrieved using the `native.image.path` system property configured in the Failsafe Maven Plugin.
+
+[NOTE]
+--
+Notice that `NativeHeroResourceIT` does not extend `HeroResourceTest`.
+It is a good practice to share the same tests for native and JVM mode that way but in our case the behavior is a bit different.
+For example, we do not want Swagger UI exposed in our native image.
+--
+
+Also notice that this class also use the `@QuarkusTestResource` to start and stop the database.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+To see the `NativeHeroResourceIT` run against the native executable, use `./mvnw verify -Pnative`:
+
+[source]
+----
+[INFO] --- maven-failsafe-plugin:2.22.0:integration-test (default) @ rest-hero ---
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running io.quarkus.workshop.superheroes.hero.NativeHeroResourceIT
+...
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)   _   _                      _    ____ ___
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  | | | | ___ _ __ ___       / \  |  _ \_ _|
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  | |_| |/ _ \ '__/ _ \     / _ \ | |_) | |
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  |  _  |  __/ | | (_) |   / ___ \|  __/| |
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)  |_| |_|\___|_|  \___/   /_/   \_\_|  |___|
+20:42:59 INFO  [io.qu.wo.su.he.HeroApplicationLifeCycle] (main)                          Powered by Quarkus
+...
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.068 s - in io.quarkus.workshop.superheroes.hero.NativeHeroResourceIT
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- maven-failsafe-plugin:2.22.0:verify (default) @ rest-hero ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  05:29 min
+[INFO] Finished at: 2019-10-18T20:43:03+02:00
+[INFO] ------------------------------------------------------------------------
+----

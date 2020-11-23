@@ -95,9 +95,10 @@ Once started, create a new hero with the following cUrl command:
 
 [source,shell]
 ----
-$ curl -X POST -d  '{"level":5, "name":"Chewbacca", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" $(oc get route -n USERNAME-codeready | grep 8083 | awk '{ print $2 }')/api/heroes -v
+$ curl -X POST -d  '{"level":5, "name":"Chewbacca", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" http://localhost:8083/api/heroes -v
 
 < HTTP/1.1 201 Created
+< Location: http://localhost:8083/api/heroes/952
 ----
 
 As you can see, we've passed a level of 5 to create this new hero.
@@ -117,7 +118,12 @@ $ curl http://localhost:8083/api/heroes/952 | jq
 }
 ----
 
-
+[NOTE]
+====
+You may not know `jq`.
+It's an amazing tool to manipulate JSON in the shell.
+More info on: https://stedolan.github.io/jq/
+====
 
 Hey! Wait a minute! Tests are failing now!
 Indeed, they don't know the multiplier.

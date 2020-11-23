@@ -1,0 +1,148 @@
+= Receiving Messages from Kafka
+
+:icons: font
+
+In this section, you are going to see how you can receive messages from a Kafka topic.
+For this, you are going to create a new microservice, named `stats`.
+This microservice computes statistics based on the results of the fights.
+For example, it determines if villains win more battle than heroes, and who is the superhero or super-villain having won the most fights.
+
+== Directory Structure
+
+In this section, we are going to develop the following structure:
+
+[plantuml]
+--
+@startsalt
+{
+{
+T
+super-heroes
++  event-statistics
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  statistics
+++++++++++ FightResult.java
+++++++++++ FightResult.java
+++++++++++ Ranking.java
+++++++++++ Score.java
+++++++++++ SuperStats.java
+++++++++++ TeamStats.java
+++  pom.xml
+}
+}
+@endsalt
+--
+
+== Bootstrapping the Statistics REST Endpoint
+
+Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command.
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Open a terminal and run the following command:
+
+[source,shell]
+----
+include::{github-raw}/super-heroes/event-statistics/bootstrap.sh[tag=adocSnippet]
+----
+
+[NOTE]
+====
+As you can see in the command, you can configure the extensions you want using the `-Dextensions` parameter.
+Open the `pom.xml` file to see the result.
+====
+
+== Computing Statistics
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
+This class contains 3 methods annotated with `@Incoming` and `@Outgoing`.
+
+The first one (`toFightResults`) is responsible for deserializing the JSON content received from Kafka.
+It gets items from the `fights` channel and produces items sent to the `results` channel.
+It takes a `Flowable` parameter and returns another `Flowable`.
+`Flowable` is a class provided by RX Java 2 and represents a stream of data.
+So, this method is called only once with a `Flowable` representing the incoming channel, and the returned `Flowable` is the outgoing channel.
+In the body of the method, each item from the incoming channel are _mapped_ to `FightResults`.
+
+The `@Broadcast` annotation indicates that several consumers (methods) consume the items produced by the method.
+
+The `computeTeamStats` method follows the same pattern.
+It computes the ratio of victories for heroes and villains.
+
+The `computeTopWinners` method uses more advanced reactive programming constructs such as `groupBy`, `flatMap` and `scan`:
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/SuperStats.java[tag=adocBean]
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+In addition, create the `io.quarkus.workshop.superheroes.statistics.FightResult`,  `io.quarkus.workshop.superheroes.statistics.Ranking`, `io.quarkus.workshop.superheroes.statistics.Score` and `io.quarkus.workshop.superheroes.statistics.TeamStats` classes with the following contents:
+
+The `FightResult` class is used to deserialize the JSON object from the Kafka topic.
+Note the `@RegisterForReflection` annotation indicating to Quarkus that this class is accessed using reflection.footnote:[RegisterForReflection https://quarkus.io/guides/writing-native-applications-tips#alternative-with-registerforreflection]
+This information is required when running the application as a native executable.
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/FightResult.java[tags=adocBean;!adocSkip]
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+In `FightResult`, add or generate the getter and setter methods for the `private` fields.
+
+Then, create the `Ranking` class, used to compute a floating top 10, with the following content:
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Ranking.java[tag=adocBean]
+----
+
+The `Score` class is a simple structure storing the name of a hero or villain and its actual score, _i.e._ the number of won battles.
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Score.java[tags=adocBean]
+----
+
+The `TeamStats` class is an object keeping track of the number of battles won by heroes and villains.
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStats.java[]
+----
+
+[TIP]
+====
+The `@RegisterForReflection` annotation instructs the native compilation to allow reflection access to the class.
+Without, the serialization/deserialization would not work when running the native executable.
+====
+
+== Reading Messages from Kafka
+
+It's now time to connect the `fights` channel with the Kafka topic.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Edit the `application.properties` file and add the following content:
+
+[source,properties]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/resources/application.properties[tag=adocKafka]
+----
+
+As for the writing side, it configures the Kafka connector.
+The `mp.messaging.incoming.fights.auto.offset.reset=earliest` property indicates that the topic is read from the earliest available record.
+Check the Kafka configuration to see all the available settings.
+

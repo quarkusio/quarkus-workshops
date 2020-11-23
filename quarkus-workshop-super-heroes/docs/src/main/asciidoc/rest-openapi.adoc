@@ -59,11 +59,11 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 
 == Open API
 
-Now, you _curl_ the hero endpoint:
+Now, you _curl_ `http://localhost:8083/openapi` endpoint:
 
 [source,shell]
 ----
-$ curl $(oc get route -n USERNAME-codeready | grep 8083 | awk '{ print $2 }')/openapi
+$ curl http://localhost:8083/openapi
 include::{github-raw}/super-heroes/rest-hero/openapi-origin.yaml[]
 ----
 
@@ -104,7 +104,7 @@ include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/s
 
 === Customized Contract
 
-If you go back to the `$URL/openapi` endpoint you will see the following OpenAPI contract:
+If you go back to the `http://localhost:8083/openapi` endpoint you will see the following OpenAPI contract:
 
 [source,yaml]
 ----
@@ -118,16 +118,11 @@ Swagger UI is a great tool permitting to visualize and interact with your APIs.f
 The UI is automatically generated from your OpenAPI specification.
 The Quarkus `smallrye-openapi` extension comes with a swagger-ui extension embedding a properly configured Swagger UI page.
 By default, Swagger UI is accessible at `/swagger-ui`.
-So, once your application is started, you can go to `$URL/swagger-ui` and play with your API.
+So, once your application is started, you can go to `http://localhost:8083/swagger-ui` and play with your API.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 You can visualize your API's operations and schemas.
-
-[NOTE]
---
-Notice that in the Swagger UI you have your specific URL exposing the rest-hero service
---
 
 image::rest-openapi-swaggerui.png[]
 

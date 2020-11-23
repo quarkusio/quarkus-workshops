@@ -1,0 +1,76 @@
+[[fault-tolerance-fallbacks]]
+= Fallbacks (optional)
+
+:icons: font
+
+_This chapter is optional, you can jump to the <<fault-tolerance-timeout>> chapter, <<observability>> chapter or to the <<messaging>> chapter if you already know about fault-tolerance and fallback._
+
+So now you've been playing this great Super Heroes Fight for a few hours... and you kill the Hero REST API.
+What happens?
+Well, the Fight REST API cannot invoke the Hero API anymore and breaks with the following exception:
+
+[source,text]
+----
+ERROR [io.qu.ve.ht.ru.QuarkusErrorHandler] HTTP Request to /api/fights/randomfighters failed:
+org.jboss.resteasy.spi.UnhandledException: javax.ws.rs.ProcessingException: RESTEASY004655: Unable to invoke request: java.net.ConnectException: Connection refused (Connection refused)
+at org.jboss.resteasy.core.ExceptionHandler.handleApplicationException(ExceptionHandler.java:106)
+at org.jboss.resteasy.core.ExceptionHandler.handleException(ExceptionHandler.java:372)
+at org.jboss.resteasy.core.SynchronousDispatcher.writeException(SynchronousDispatcher.java:209)
+at org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:496)
+----
+
+One of the challenges brought by the distributed nature of microservices is that communication with external systems is inherently unreliable.
+This increases demand on resiliency of applications.
+To simplify making more resilient applications, Quarkus contains an implementation of the MicroProfile Fault Tolerance specification.footnote:[MicroProfile Fault Tolerance https://github.com/eclipse/microprofile-fault-tolerance]
+
+== Installing the Fault Tolerance Dependency
+
+To install the MicroProfile Fault Tolerance dependency, just run the following command:
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/pom.xml[tags=adocFaultToleranceDependency]
+----
+
+== Adding Fallbacks
+
+Let's make our find random fighters feature better by providing a fallback way of getting a dummy hero or villain in case of failure.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+For that, add two fallback methods to the `FightService` and a `@Fallback` annotation to both `findRandomHero` and `findRandomVillain` methods as follows:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocRestClient,adocFallback]
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+[NOTE]
+--
+Also add the `import org.eclipse.microprofile.faulttolerance.Fallback;` statement.
+--
+
+== Running the Application
+
+Now we are ready to run our application and test the fallbacks.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+For that, kill the Hero (and/or the Villain API) and start playing again.
+You should see the following:
+
+image::fault-tolerance-fallback.png[]
+
+Restart the Hero REST API... and keep on playing.
+Super heroes are back to the fight!

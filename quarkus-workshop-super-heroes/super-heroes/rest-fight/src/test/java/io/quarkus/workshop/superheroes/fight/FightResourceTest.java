@@ -33,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @QuarkusTest
+@QuarkusTestResource(DatabaseResource.class)
+@QuarkusTestResource(KafkaResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FightResourceTest {
 
@@ -63,7 +65,34 @@ public class FightResourceTest {
             .statusCode(OK.getStatusCode());
     }
 
+    // tag::adocHealth[]
+    @Test
+    void shouldPingLiveness() {
+        given()
+            .when().get("/health/live")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
 
+    @Test
+    void shouldPingReadiness() {
+        given()
+            .when().get("/health/ready")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+    // end::adocHealth[]
+
+    // tag::adocMetrics[]
+    @Test
+    void shouldPingMetrics() {
+        given()
+            .header(ACCEPT, APPLICATION_JSON)
+            .when().get("/metrics/application")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+    // end::adocMetrics[]
 
     @Test
     public void testHelloEndpoint() {
@@ -84,6 +113,24 @@ public class FightResourceTest {
             .statusCode(NO_CONTENT.getStatusCode());
     }
 
+    // tag::adocRandom[]
+
+    //....
+    @Test
+    void shouldGetRandomFighters() {
+        given()
+            .when().get("/api/fights/randomfighters")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .body("hero.name", Is.is(MockHeroService.DEFAULT_HERO_NAME))
+            .body("hero.picture", Is.is(MockHeroService.DEFAULT_HERO_PICTURE))
+            .body("hero.level", Is.is(MockHeroService.DEFAULT_HERO_LEVEL))
+            .body("villain.name", Is.is(MockVillainService.DEFAULT_VILLAIN_NAME))
+            .body("villain.picture", Is.is(MockVillainService.DEFAULT_VILLAIN_PICTURE))
+            .body("villain.level", Is.is(MockVillainService.DEFAULT_VILLAIN_LEVEL));
+    }
+    // end::adocRandom[]
 
     @Test
     void shouldNotAddInvalidItem() {
@@ -165,24 +212,5 @@ public class FightResourceTest {
             // Kept empty on purpose
         };
     }
-
-    // tag::adocRandom[]
-
-    //....
-    @Test
-    void shouldGetRandomFighters() {
-        given()
-            .when().get("/api/fights/randomfighters")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
-            .body("hero.name", Is.is(MockHeroService.DEFAULT_HERO_NAME))
-            .body("hero.picture", Is.is(MockHeroService.DEFAULT_HERO_PICTURE))
-            .body("hero.level", Is.is(MockHeroService.DEFAULT_HERO_LEVEL))
-            .body("villain.name", Is.is(MockVillainService.DEFAULT_VILLAIN_NAME))
-            .body("villain.picture", Is.is(MockVillainService.DEFAULT_VILLAIN_PICTURE))
-            .body("villain.level", Is.is(MockVillainService.DEFAULT_VILLAIN_LEVEL));
-    }
 }
-// end::adocRandom[]
 // end::adocResourceTest[]

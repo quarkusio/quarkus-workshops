@@ -1,0 +1,88 @@
+= Sending Events on WebSockets
+
+:icons: font
+
+At this point, you read the _fights_ from Kafka and computes statistics.
+Actually, even if you start the application, nothing will happen as nobody consumes these statistics.
+
+In this section, we are going to consume these statistics and send them to two WebSockets.
+For this, we are going to add two classes and a simple presentation page:
+
+* `TeamStatsWebSocket`
+* `TopWinnerWebSocket`
+* `index.html`
+
+Quarkus uses the http://jcp.org/en/jsr/detail?id=356[JSR 356] providing an annotation-driven approach to implement WebSockets.
+
+== The TeamStats WebSocket
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStatsWebSocket.java[tag=adocWebSocket]
+----
+
+This component is a WebSocket as specified by the `@ServerEndpoint("/stats/team")` annotation.
+It handles the `/stats/team` WebSocket.
+
+When a client (like a browser) connects to the WebSocket, it keeps track of the session.
+This session is released when the client disconnects.
+
+The `TeamStatsWebSocket` also injects a `Flowable` attached to the `team-stats` channel.
+After creation, the component subscribes to this stream and broadcasts the fights to the different clients connected to the web socket.
+
+The _subscription_ is an essential part of the stream lifecycle.
+It indicates that someone is interested in the items transiting on the stream, and it triggers the emission.
+In this case, it triggers the connection to Kafka and starts receiving the messages from Kafka.
+Without it, items would not be emitted.
+
+== The TopWinner WebSocket
+
+The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
+
+[source]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TopWinnerWebSocket.java[tag=adocWebSocket]
+----
+
+Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also use JSONB to transform the object into a serialized form.
+
+== The UI
+
+Finally, you need a UI to watch these live statistics.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+
+Replace the `META-INF/resources/index.html` file with the following content:
+
+[source, html]
+----
+include::{github-raw}/super-heroes/event-statistics/src/main/resources/META-INF/resources/index.html[]
+----
+
+== Running the Application
+
+You are all set!
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Time to start the application using:
+
+[source, shell]
+----
+$ mvn compile quarkus:dev
+----
+
+Then, open `http://localhost:8085` in a new browser window.
+Trigger some fights, and you should see the live statistics moving.
+
+include::common-solution.adoc[]
+

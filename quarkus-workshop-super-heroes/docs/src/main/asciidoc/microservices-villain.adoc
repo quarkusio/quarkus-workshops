@@ -77,9 +77,10 @@ Once the application is started, create a new villain with the following cUrl co
 
 [source,shell]
 ----
-$ curl -X POST -d  '{"level":2, "name":"Darth Vader", "powers":"Darkness, Longevity"}'  -H "Content-Type: application/json" $(oc get route -n USERNAME-codeready | grep 8084 | awk '{ print $2 }')/api/villains -v
+$ curl -X POST -d  '{"level":2, "name":"Darth Vader", "powers":"Darkness, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
 
 < HTTP/1.1 201 Created
+< Location: http://localhost:8084/api/villains/582
 ----
 
 The cUrl command returns the location of the newly created villain.
@@ -87,7 +88,7 @@ Take this URL and do an HTTP GET on it.
 
 [source,shell]
 ----
-$ curl $URL/api/villains/582 | jq
+$ curl http://localhost:8084/api/villains/582 | jq
 
 {
   "id": 582,
@@ -97,9 +98,4 @@ $ curl $URL/api/villains/582 | jq
 }
 ----
 
-Remember that you can also check Swagger UI by going to $URL/swagger-ui.
-
-[NOTE]
---
-Change the URL with yours.
---
+Remember that you can also check Swagger UI by going to http://localhost:8084/swagger-ui.

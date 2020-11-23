@@ -62,7 +62,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <finalName>quarkus-workshop-super-heroes</finalName>
+                    <finalName>quarkus-super-heroes-workshop</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
                     <attach>false</attach>

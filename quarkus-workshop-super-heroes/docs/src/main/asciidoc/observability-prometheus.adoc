@@ -1,0 +1,61 @@
+[[observability-prometheus]]
+= Displaying Metrics on Prometheus
+
+:icons: font
+
+Now that we've added some load to our application, let's measure it with Prometheus.footnote:[Prometheus https://prometheus.io]
+Prometheus is an open-source systems monitoring and alerting toolkit that integrates well with Quarkus.
+
+== Configuring Prometheus
+
+Prometheus needs to be configured to poll data from our microservices.
+This is made under our `infrastructure` directory, in the `prometheus.yml` file:
+
+[source,yaml,indent=0]
+----
+include::{github-raw}/super-heroes/infrastructure/monitoring/prometheus.yml[tags=adocPrometheus]
+----
+
+This file contains basic Prometheus configuration, plus a specific `scrape_config` which instructs Prometheus to look for application metrics from both Prometheus itself, and our Quarkus microservices at the `/metrics` endpoint.
+
+[NOTE]
+====
+To execute the application we now need Prometheus.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+====
+
+[NOTE]
+.On Linux / Ubuntu
+====
+On Linux, you may need to update the `localhost` from the `prometheus-linux.yml` file with the IP associated with the `docker0` interface.
+Find the address, update the `prometheus-linux.yml` and restart the infrastructure.
+Don't forget to restart the microservices to re-populate the databases.
+====
+
+== Adding Graphs to Prometheus
+
+The Prometheus console is accessible at http://localhost:9090.
+
+image::fault-tolerance-prometheus-1.png[]
+
+Out of the box, you get a lot of basic JVM metrics or even metrics of Prometheus itself, which are useful.
+But let's create new graphs with the metrics of our microservices.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Tape `timeGetRandomHero` in the query, and select `application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second` in the box, and click _Execute_.
+
+image::fault-tolerance-prometheus-2.png[]
+
+This will fetch the values from our metric showing the number of checks performed:
+
+image::fault-tolerance-prometheus-3.png[]
+
+include::common-solution.adoc[]
+
+[NOTE]
+====
+Stop the load application before going further.
+====
+

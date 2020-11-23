@@ -9,11 +9,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { FightService } from './shared';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
-
-import { FightService } from './shared/api/fight.service';
-import { ConfigService } from './shared/api/config.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +29,7 @@ import { ConfigService } from './shared/api/config.service';
     MatGridListModule,
     MatTableModule
   ],
-  providers: [FightService, ConfigService],
+  providers: [FightService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

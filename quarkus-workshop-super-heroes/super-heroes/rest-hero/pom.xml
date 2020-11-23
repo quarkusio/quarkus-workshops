@@ -32,10 +32,10 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <quarkus-plugin.version>1.9.2.Final</quarkus-plugin.version>
+        <quarkus-plugin.version>1.2.0.Final</quarkus-plugin.version>
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>1.9.2.Final</quarkus.platform.version>
+        <quarkus.platform.version>1.2.0.Final</quarkus.platform.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
     <!-- end::adocProperties[] -->

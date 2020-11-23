@@ -7,153 +7,378 @@
 
 This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
 There are many different approaches to achieve these deployments.
-In this chapter, we are focusing on the creation of containers using Quarkus java executables and the deployment of our system in OpenShift using the https://quarkus.io/guides/deploying-to-openshift[Quarkus OpenShift extension].
+In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.
 
-== Build and Deploy (in a single step)
+== From bare metal to containers
 
-Add the OpenShift extension running the following command in the rest-heroes directory:
+In this section, we are going to package our microservices into containers.
+In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+The native compilation uses the OS and architecture of the host system.
+
+And... Linux Containers are ... _Linux_.
+So before being able to build a container with our native executable, we need to produce compatible native executables.
+If you are using a Linux 64 bits machine, you are good to go.
+If not, Quarkus comes with a trick to produce these executable:
 
 [source, shell]
 ----
-./mvnw quarkus:add-extension -Dextensions="openshift"
+$ mvn clean package -Pnative -Dnative-image.docker-build=true -DskipTests
 ----
 
-Some properties need to be added to the `application.properties` file of each microservice. Edit the file and add:
+The `-Dnative-image.docker-build=true` allows running the native compilation inside a container (provided by Quarkus).
+The result is a Linux 64 bits executable.
 
-[source, properties]
---
-quarkus.kubernetes-client.trust-certs=true
-quarkus.kubernetes-client.namespace=${PROJECT_NAME:USERNAME-heroes}
+[TIP]
+====
+Building a native executable takes time, CPU, and memory.
+It's even more accurate in the container.
+So, first, be sure that your container system has enough memory to build the executable.
+It requires at least 6Gb of memory, 8Gb is recommended.
+====
 
-quarkus.openshift.expose=true
---
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-The expose parameter’s purpose is to expose the service to clients outside the cluster via `Route`.
+Execute the above command for all our microservices.
+We also copy the UI into the fight service, to simplify the process:
+
+[source, shell]
+----
+cd rest-hero
+mvn clean package -Pnative -Dnative-image.docker-build=true -DskipTests
+cd ..
+cd rest-villain
+mvn clean package -Pnative -Dnative-image.docker-build=true -DskipTests
+cd ..
+cd rest-fight
+cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
+mvn clean package -Pnative -Dnative-image.docker-build=true -DskipTests
+cd ..
+cd event-statistics
+mvn clean package -Pnative -Dnative-image.docker-build=true -DskipTests
+cd ..
+----
+
+== Building containers
+
+Now that we have the native executables, we can build containers.
+When you create projects, Quarkus generates two `Dockerfiles`:
+
+1. `Dockerfile.jvm` - A `Dockerfile` for running the application in JVM mode
+2. `Dockerfile.native` - A `Dockerfile` for running the application in native mode
+
+We are interested in this second file.
+Open one of these `Dockerfile.native` files:
+
+[source, text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /work/
+COPY target/*-runner /work/application
+RUN chmod 775 /work
+EXPOSE 8080
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
+It also exposes the port 8080.
+Wait, our microservices are not configured to run on the port 8080.
+We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.
+
+To build the containers, use the following scripts:
+
+[source, shell]
+----
+export ORG=xxxx
+cd rest-hero
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
+cd ..
+cd rest-villain
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
+cd ..
+cd rest-fight
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
+cd ..
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
+cd ..
+----
 
 [NOTE]
---
-Make sure you change USERNAME with your own
---
+====
+Replace `ORG` with your DockerHub / Quay.io username.
+====
 
-To trigger the build and deployment in a single step, run the following command. Make sure that you are logged and using the `USERNAME-heroes` project.
+== Deploying on Kubernetes
 
-[source, shell]
+This section is going to deploy our microservices on Kubernetes.
+It is required to have access to a Kubernetes or OpenShift cluster.
+
+[IMPORTANT]
+====
+To deploy your microservices, push the built container images to an image registry accessible by your cluster, such as Quay.io or DockerHub.
+====
+
+We recommend using a specific namespace to deploy your system.
+In the following sections, we use the `quarkus-workshop` namespace.
+
+=== Deploying the infrastructure
+
+The first thing to deploy is the required infrastructure:
+
+* 3 PostgreSQL instances
+* Kafka brokers (3 brokers with 3 Zookeeper to follow the recommended approach)
+
+There are many ways to deploy this infrastructure.
+Here, we are going to use two operators:
+
+* PostgreSQL Operator by Dev4Ddevs.com
+* Strimzi Apache Kafka Operator by Red Hat
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+With these operators installed, you can create the required infrastructure with the following custom resource definition (CRD):
+
+[source,yaml]
 ----
-$ oc login
-$ oc project USERNAME-heroes
-$ ./mvnw clean package -Dquarkus.kubernetes.deploy=true
-----
-
-The aforementioned command will build a jar file locally, trigger a container image build and then apply the generated OpenShift resources.
-To confirm the above command has created an image stream, a service resource and has deployed the application (has a pod running), you can run these commands:
-
-[source, shell]
-----
-oc get is
-oc get pods
-oc get svc
-----
-
-If everything went well the URL of the microservice should be logged in the console where you ran the build&deploy command:
-
-----
-[INFO] [io.quarkus.container.image.openshift.deployment.OpenshiftProcessor] Push successful
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Deploying to openshift server: https://api.cluster-2599.2599.example.opentlc.com:6443/ in namespace: user2-heroes.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Applied: Service rest-hero.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Applied: ImageStream openjdk-11.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Applied: ImageStream rest-hero.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Applied: BuildConfig rest-hero.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Applied: DeploymentConfig rest-hero.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] Applied: Route rest-hero.
-[INFO] [io.quarkus.kubernetes.deployment.KubernetesDeployer] The deployed application can be accessed at: http://rest-hero-user2-heroes.apps.cluster-2599.2599.example.opentlc.com
-[INFO] [io.quarkus.deployment.QuarkusAugmentor] Quarkus augmentation completed in 86106ms
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  02:39 min
-[INFO] Finished at: 2020-11-11T12:57:24Z
-[INFO] ------------------------------------------------------------------------
-----
-
-=== Deploying the others microservices
-
-For villain microservice follow the same approach.
-
-==== Fight microservice
-
-* Add the OpenShift extension running the following command in the rest-fights directory:
-
-[source, shell]
-----
-./mvnw quarkus:add-extension -Dextensions="openshift"
-----
-
-* Add the following properties in the rest-fights `application.properties` file:
-
-[source, properties]
---
-quarkus.kubernetes-client.trust-certs=true
-quarkus.kubernetes-client.namespace=${PROJECT_NAME:USERNAME-heroes}
-
-quarkus.openshift.expose=true
---
-
-* Also, we need to configure the new locations of the hero and villain microservice.
-Edit the `application.properties` file and modify the following properties:
-
-[source,properties]
-----
-include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tag=adocOpenShiftRestClient]
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+    name: heroes-database
+    namespace: quarkus-workshop
+spec:
+    databaseCpu: 30m
+    databaseCpuLimit: 60m
+    databaseMemoryLimit: 512Mi
+    databaseMemoryRequest: 128Mi
+    databaseName: heroes-database
+    databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+    databasePassword: superman
+    databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+    databaseStorageRequest: 1Gi
+    databaseUser: superman
+    databaseUserKeyEnvVar: POSTGRESQL_USER
+    image: centos/postgresql-96-centos7
+    size: 1
 ----
 
-Trigger the build and deployment, run the following command. Make sure that you are logged and using the `USERNAME-heroes` project.
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-[source, shell]
+This CRD creates the database for the Hero microservice.
+Duplicate this CRD for the fight and villain databases.
+
+For the Kafka broker, create the following CRD:
+
+[source,yaml]
 ----
-$ oc login
-$ oc project USERNAME-heroes
-$ ./mvnw clean package -Dquarkus.kubernetes.deploy=true
-----
-
-==== UI microservice
-
-* Add the OpenShift extension running the following command in the rest-fights directory:
-
-[source, shell]
-----
-./mvnw quarkus:add-extension -Dextensions="openshift"
-----
-
-* Add the following properties in the ui-super-heroes `application.properties` file:
-
-[source, properties]
---
-quarkus.kubernetes-client.trust-certs=true
-quarkus.kubernetes-client.namespace=${PROJECT_NAME:USERNAME-heroes}
-
-quarkus.openshift.expose=true
-quarkus.openshift.env.vars.BASE_PATH=${FIGHT_ROUTE}
---
-
-The `` property make the UI able to contact the fight microservice. As it depends on an env var, consider to define it using the following command:
-
-[source, properties]
---
-$ export FIGHT_ROUTE=http://$(oc get route -n USERNAME-heroes | grep fight | awk '{ print $2 }')
---
-[NOTE]
---
-Don't forget use your own user
---
-
-Trigger the build and deployment, run the following command. Make sure that you are logged and using the `USERNAME-heroes` project.
-
-[source, shell]
-----
-$ oc login
-$ oc project USERNAME-heroes
-$ ./mvnw clean package -Dquarkus.kubernetes.deploy=true
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: my-kafka
+  namespace: quarkus-workshop
+spec:
+  kafka:
+    version: 2.3.0
+    replicas: 3
+    listeners:
+      plain: {}
+      tls: {}
+    config:
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      log.message.format.version: '2.3'
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
 ----
 
+This CRD creates the brokers and the Zookeeper instances.
 
-Once everything is configured and deployed, your system is now running on OpenShift.
+It's also recommended to create the topic.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+For this, create the following CRD:
+
+[source,yaml]
+----
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: fights
+  labels:
+    strimzi.io/cluster: my-kafka
+  namespace: quarkus-workshop
+spec:
+  partitions: 1
+  replicas: 3
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
+----
+
+Once everything is created, you should have the following resources:
+
+[source,shell]
+----
+$ kubectl get database
+NAME                AGE
+fights-database     16h
+heroes-database     16h
+villains-database   16h
+
+$ kubectl get kafka
+NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
+my-kafka   3
+----
+
+=== Deploying the Hero & Villain microservices
+
+Now that the infrastructure is in place, we can deploy our microservices.
+Let's start with the hero and villain microservices.
+
+For each, we need to override the port and data source URL.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Create a config map with the following content:
+
+[source,yaml]
+.config-hero.yaml
+----
+apiVersion: v1
+data:
+    port: "8080"
+    database: "jdbc:postgresql://heroes-database:5432/heroes-database"
+kind: ConfigMap
+metadata:
+    name: hero-config
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Do the same for the villain microservice.
+Then, apply these resources:
+
+[source,shell]
+----
+$ kubectl -f config-hero.yaml
+$ kubectl -f config-villain.yaml
+----
+
+Once the config maps are created, we can deploy the microservices.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Create a `deployment-hero.yaml` file with the following content:
+
+[source,yaml]
+----
+---
+apiVersion: "v1"
+kind: "List"
+items:
+    - apiVersion: "v1"
+      kind: "Service"
+      metadata:
+          labels:
+              app: "quarkus-workshop-hero"
+              version: "01"
+              group: "$ORG"
+          name: "quarkus-workshop-hero"
+      spec:
+          ports:
+              - name: "http"
+                port: 8080
+                targetPort: 8080
+          selector:
+              app: "quarkus-workshop-hero"
+              version: "01"
+              group: "$ORG"
+          type: "ClusterIP"
+    - apiVersion: "apps/v1"
+      kind: "Deployment"
+      metadata:
+          labels:
+              app: "quarkus-workshop-hero"
+              version: "01"
+              group: "$ORG"
+          name: "quarkus-workshop-hero"
+      spec:
+          replicas: 1
+          selector:
+              matchLabels:
+                  app: "quarkus-workshop-hero"
+                  version: "01"
+                  group: "$ORG"
+          template:
+              metadata:
+                  labels:
+                      app: "quarkus-workshop-hero"
+                      version: "01"
+                      group: "$ORG"
+              spec:
+                  containers:
+                      - image: "$ORG/quarkus-workshop-hero:latest"
+                        imagePullPolicy: "IfNotPresent"
+                        name: "quarkus-workshop-hero"
+                        ports:
+                            - containerPort: 8080
+                              name: "http"
+                              protocol: "TCP"
+                        env:
+                            - name: "KUBERNETES_NAMESPACE"
+                              valueFrom:
+                                  fieldRef:
+                                      fieldPath: "metadata.namespace"
+
+                            - name: QUARKUS_DATASOURCE_URL
+                              valueFrom:
+                                  configMapKeyRef:
+                                      name: hero-config
+                                      key: database
+
+                            - name: QUARKUS_HTTP_PORT
+                              valueFrom:
+                                  configMapKeyRef:
+                                      name: hero-config
+                                      key: port
+
+
+----
+
+This descriptor declares:
+
+1. A service to expose the HTTP endpoint
+2. A deployment that instantiates the application
+
+The deployment declares one container using the container image we built earlier.
+It also overrides the configuration for the HTTP port and database URL.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Don't forget to create the equivalent files for the villain microservice.
+
+Then, deploy the microservice with:
+
+[source,shell]
+----
+$ kubectl apply -f deployment-hero.yaml
+$ kubectl apply -f deployment-villain.yaml
+----
+
+=== Deploying the Fight microservice
+
+Follow the same approach for the fight microservice.
+Note that there are more properties to configure from the config map:
+
+*  the location of the hero and villain microservice
+* the location of the Kafka broker.
+
+Once everything is configured and deployed, your system is now running on Kubernetes.

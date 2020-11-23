@@ -20,6 +20,7 @@ public class FightResult {
     private String loserTeam;
 
     // Getters and Setters
+    // tag::adocSkip[]
     public long getId() {
         return id;
     }
@@ -109,5 +110,6 @@ public class FightResult {
         this.loserTeam = loserTeam;
         return this;
     }
+    // end::adocSkip[]
 }
 // end::adocBean[]

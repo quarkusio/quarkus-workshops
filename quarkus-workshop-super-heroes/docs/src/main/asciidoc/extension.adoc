@@ -1,0 +1,281 @@
+[[extension]]
+= Writing a Quarkus Extension
+
+:icons: font
+
+'''
+
+Most of the Quarkus magic happens inside extensions.
+The goal of an extension is to compute _just enough bytecode_ to start the services that the application requires, and drop everything else.
+
+So, when writing an extension, you need to distinguish the action that:
+
+* Can be done at build time
+* Must be done at runtime
+
+Because of this distinction, extensions are divided into 2 parts: a build time augmentation and a runtime.
+The augmentation part is responsible for all the metadata processing, annotation scanning, XML parsing...
+The output of this augmentation is **recorded bytecode**, which, then, is executed at runtime to instantiate the relevant services.
+
+In this chapter, you are going to implement a _banner_ extension.
+Instead of having to include the bean invoked during the application startup in the application code, you are going to write an extension that does this.
+
+== The extension framework
+
+Quarkus's mission is to transform your entire application, including the libraries it uses, into an artifact that uses significantly fewer resources than traditional approaches.
+These can then be used to build native executables using GraalVM.
+To do this, you need to analyze and understand the full "closed world" of the application.
+Without the full context, the best that can be achieved is partial and limited generic support.
+
+To build an extension, Quarkus provides a framework to:
+
+* read configuration from the `application.properties` file and map it to objects,
+* read metadata from classes without having to load them, this includes classpath and annotation scanning,
+* generate bytecode if needed (for proxies for instance),
+* pass sensible defaults to the application,
+* make the application compatible with GraalVM (resources, reflection, substitutions),
+* implement hot-reload
+
+== Structure of an extension
+
+As stated above, an extension is divided into 2 parts, called `deployment` (augmentation) and `runtime`.
+
+[plantuml,align=center]
+----
+include::plantuml/extension-architecture.puml[]
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+From the directory `extensions/extension-banner` execute the following commands:
+
+[source,shell]
+----
+include::{github-raw}/extensions/extension-banner/bootstrap.sh[tag=adocSnippet]
+----
+
+This script creates the structure for the banner extension:
+
+* one parent `pom.xml` importing the `quarkus-bom`
+* a module for the runtime
+* a module for the deployment, with a dependency on the runtime artifact
+
+The final structure of the extension developed in this section is the following:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+extension-banner
++  deployment
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  banner
+++++++++++  deployment
++++++++++++  BannerConfig.java
++++++++++++  BannerProcessor.java
+++  pom.xml
++  runtime
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  banner
+++++++++++  runtime
++++++++++++  BannerRecorder.java
+++  pom.xml
++  pom.xml
+}
+}
+@endsalt
+----
+
+
+== The  banner extension
+
+The goal of this chapter is to implement an extension that displays a textual _banner_ when the application starts.
+For this, what do we need:
+
+1. The banner itself, in a file - so some configuration,
+2. Some code that would print the banner when the application starts; so some runtime code,
+3. Some augmentation code (build steps) that receives the configuration reads; the content of the banner file and record the runtime invocations,
+4. A way to monitor the content of the file and trigger a hot-reload in dev mode
+
+== The Runtime module
+
+The _runtime_ part of an extension contains only the classes and resources required at runtime.
+For the banner extension, it would be a single class that prints the banner.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+In the runtime module, creates the `io.quarkus.workshop.superheroes.banner.runtime.BannerRecorder` class with the following content:
+
+[source]
+----
+include::{github-raw}/extensions/extension-banner/runtime/src/main/java/io/quarkus/workshop/superheroes/banner/runtime/BannerRecorder.java[]
+----
+
+Simple right?
+But how does it work?
+Look at the `@Recorder` annotation.
+It indicates that this class is a _recorder_ that is used to record actions executed, later, at runtime.
+Indeed, these actions are replayed at runtime.
+We will see how this recorder is used from the _deployment_ module.
+
+== The deployment module
+
+This module contains _build steps_, i.e., methods called during the augmentation phase and computing just enough bytecode to serve the services the application requires.
+For the banner extension, it consists of two build steps:
+
+1. The first build step is going to read the banner file and use the `BannerRecorder`
+2. The second build step is related to the dev mode and triggers a hot-reload when the content of the banner file changes.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+In the deployment module, create the `io.quarkus.workshop.superheroes.banner.deployment.BannerConfig` with the following content:
+
+[source]
+----
+include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/quarkus/workshop/superheroes/banner/deployment/BannerConfig.java[]
+----
+
+This class maps entries from the `application.properties` file to an object.
+It's a convenient mechanism to avoid having to use the low-level configuration API directly.
+The `ConfigRoot` annotation indicates that this class maps properties prefixed with `quarkus.banner`.
+The class declares a single property, `path`, which is the `quarkus.banner.path` user property.
+Instances of this class are created by Quarkus and are used in the second part of the deployment module: the processor.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Create the `io.quarkus.workshop.superheroes.banner.deployment.BannerProcessor` class with the following content:
+
+[source]
+----
+include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/quarkus/workshop/superheroes/banner/deployment/BannerProcessor.java[]
+----
+
+This class is the core of the extension.
+It contains a set of methods annotated with `@BuildStep`.
+
+The `recordBanner` method is responsible for recording the actions that happen at runtime.
+In addition to the `@BuildStep` annotation, it also has the `@Record` annotation allowing to receive a _recorder_ object (`BannerRecorder`) and indicating when the recorded bytecode is replayed.
+Here we are replaying during the runtime initialization, _i.e._ equivalent to the `public static void main(String... args)` method.
+
+The method reads the content of the banner file.
+This file is located using the `path` property from the `BannerConfig` object.
+Once the content is retrieved, it calls the recorder with the content.
+This invocation is going to be replayed at runtime.
+
+[NOTE]
+.Recorder at deployment time
+====
+At deployment time, proxies of recorders are injected into `@BuildStep` methods that have been annotated with `@Record`.
+Any invocations made on these proxies will be  recorded, and bytecode will be written out to be executed at runtime to make the same sequence of invocations with the same parameters on the actual recorder objects.
+====
+
+At this point, the extension is functional, but don't forget one of the pillars of Quarkus: the developer joy.
+The extension is also responsible for implementing hot reload logic.
+It is the role of the `watchBannerChanges` method, which indicates that the banner file must be watched, and the application restarted when this file changes.
+
+== Packaging the extension
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+From the root directory of the extension, run:
+
+[source, shell]
+----
+mvn clean install
+----
+
+== Using the extension
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Go back to the _fight_ microservice, and add the following dependency to the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/pom.xml[tag=banner]
+----
+
+Go to http://patorjk.com/software/taag/ to generate a banner for the fight microservice.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Once you have the content, write it into `src/main/resources/banner.txt`.
+For instance:
+
+[source]
+----
+          .--.            .
+     _.._ |__|  .--./)  .'|
+   .' .._|.--. /.''\\  <  |             .|
+   | '    |  || |  | |  | |           .' |_
+ __| |__  |  | \`-' /   | | .'''-.  .'     |
+|__   __| |  | /("'`    | |/.'''. \'--.  .-'
+   | |    |  | \ '---.  |  /    | |   |  |
+   | |    |__|  /'""'.\ | |     | |   |  |
+   | |         ||     ||| |     | |   |  '.'
+   | |         \'. __// | '.    | '.  |   /
+   |_|          `'---'  '---'   '---' `'-'
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Then, edit the `src/main/resources/application.properties` and add:
+
+[source]
+----
+quarkus.banner.path=banner.txt
+----
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Now, restart the microservice with:
+
+[source, shell]
+----
+mvn quarkus:dev
+----
+
+And the banner will be displayed.
+While keeping the dev mode running, edit the file, save and wait a few seconds.
+Once the change is detected, the application is restarted, and the banner updated.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Let's now check the behavior in native mode.
+Compile the microservice with:
+
+[source, shell]
+----
+mvn package -Pnative
+----
+
+And then start the service with:
+
+[source, shell]
+----
+./target/rest-fight-01-runner
+----
+
+== Conclusion
+
+In this section you have seen how to develop a simple extension for Quarkus.
+Quarkus offers a complete toolbox to implement extensions, from configuration support, tests, bytecode generation...
+The mindset to implement an extension is crucial.
+The distinction between build time and runtime is what makes Quarkus so efficient.
+To go further, check https://quarkus.io/guides/extension-authors-guide.
+
+

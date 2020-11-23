@@ -1,0 +1,16 @@
+[[observability]]
+= Observability (optional)
+
+_This chapter is optional. It covers health checks, metrics and prometheus. You can jump to the <<messaging>> chapter if you want._
+
+
+'''
+
+Now that we have several microservices, observing them starts to be a bit tricky:
+we can't just look at the logs of all the microservices to see if they are up and running or behaving correctly.
+In the following sections you will add health checks and several metrics to the Fight, Hero and Villain APIs and gather them within Promotheus.
+
+[plantuml,align=center]
+----
+include::plantuml/observability-physical-architecture.puml[]
+----

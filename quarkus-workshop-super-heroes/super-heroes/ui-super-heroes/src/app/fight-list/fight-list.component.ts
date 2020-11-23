@@ -10,16 +10,15 @@ import {MatTableDataSource} from "@angular/material";
 export class FightListComponent implements OnInit {
 
   dataSource: MatTableDataSource < Fight > ;
-
   displayedColumns: string[] = ['id', 'fightDate', 'winnerName', 'loserName'];
 
   constructor(private fightService: FightService) {
-      this.dataSource = new MatTableDataSource<Fight>();
-      fightService.emitter.subscribe(fight => {
-        const data = this.dataSource.data;
-        data.unshift(fight);
-        this.dataSource.data = data;
-      })
+    this.dataSource = new MatTableDataSource<Fight>();
+    fightService.emitter.subscribe(fight => {
+      const data = this.dataSource.data;
+      data.unshift(fight);
+      this.dataSource.data = data;
+    })
   }
 
   ngOnInit() {
@@ -27,5 +26,4 @@ export class FightListComponent implements OnInit {
       this.dataSource.data = fights.reverse();
     });
   }
-  
 }

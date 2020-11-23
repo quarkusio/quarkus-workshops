@@ -1,0 +1,178 @@
+[[observability-healthcheck]]
+= Health Check
+
+:icons: font
+
+Quarkus applications can utilize the MicroProfile Health specification through the SmallRye Health extension.
+The MicroProfile Health allows applications to provide information about their state to external viewers which is typically useful in cloud environments where automated processes must be able to determine whether the application should be discarded or restarted.footnote:[MicroProfile Health https://microprofile.io/project/eclipse/microprofile-health]
+
+== Directory Structure
+
+In this module we will add an extra subdirectory with two classes to handle the Health Check.
+You will end-up with the following directory structure:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-hero
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  Hero.java
+++++++++++  HeroApplication.java
+++++++++++  HeroApplicationLifeCycle.java
+++++++++++  HeroResource.java
+++++++++++  HeroService.java
+++++++++++  health
++++++++++++  DatabaseConnectionHealthCheck.java
++++++++++++  PingHeroResourceHealthCheck.java
+++  pom.xml
+}
+}
+@endsalt
+----
+
+While you could add health checks to all our microservices, we are focusing on the **Hero microservice**.
+So don't forget to switch to the Hero microservice code.
+You can apply the same to the other microservices.
+
+== Installing the Health Dependency
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+To install the MicroProfile Health dependency, just run the following command:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="health"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyHealth]
+----
+
+== Running the Default Health Check
+
+Importing the `smallrye-health` extension directly exposes three REST endpoints:
+
+* `/health/live` - The application is up and running.
+* `/health/ready` - The application is ready to serve requests.
+* `/health` - Accumulating all health check procedures in the application.
+
+To check that the `smallrye-health` extension is working as expected, access using your browser or cURL:
+
+* http://localhost:8083/health/live
+* http://localhost:8083/health/ready
+* http://localhost:8083/health
+
+All of the health REST endpoints return a simple JSON object with two fields:
+
+* `status` — the overall result of all the health check procedures
+* `checks` — an array of individual checks
+
+The general `status` of the health check is computed as a logical AND of all the declared health check procedures.
+The checks array is empty as we have not specified any health check procedure yet so let's define some.
+
+== Adding Liveness
+
+To check that our Hero API application is live, we can check that the `HeroResource.hello()` method works.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+For that, this is the `PingHeroResourceHealthCheck` class that we can write under the `io.quarkus.workshop.superheroes.hero.health` sub-package:
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/PingHeroResourceHealthCheck.java[tags=adocPingHero]
+----
+
+As you can see health check procedures are defined as implementations of the `HealthCheck` interface which are defined as CDI beans with the CDI qualifier `@Liveness`.
+The liveness check accessible at `/health/live`.
+`HealthCheck` is a functional interface whose single method `call` returns a `HealthCheckResponse` object which can be easily constructed by the fluent builder API shown in the example.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+As we have started our Quarkus application in dev mode simply repeat the request to http://localhost:8083/health/live by refreshing your browser window or by using curl http://localhost:8083/health/live.
+Because we defined our health check to be a liveness procedure (with `@Liveness` qualifier) the new health check procedure is now present in the checks array.
+
+[source,json]
+----
+{
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Ping Hero REST Endpoint",
+            "status": "UP"
+        }
+    ]
+}
+----
+
+== Adding Readiness
+
+We've just created a simple liveness health check procedure which states whether our application is running or not.
+Here, we will create a readiness health check which will be able to state whether our application is able to process requests.
+
+We will create another health check procedure that accesses our database.
+If the database can be accessed, then we will always return the response indicating the application is ready.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Create the `io.quarkus.workshop.superheroes.hero.health.DatabaseConnectionHealthCheck` class as follow:
+
+[source]
+----
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/DatabaseConnectionHealthCheck.java[tags=adocDatabaseConnection]
+----
+
+If you now rerun the health check at http://localhost:8083/health/live the checks array will contain only the previously defined `PingHeroResourceHealthCheck` as it is the only check defined with the `@Liveness` qualifier.
+However, if you access http://localhost:8083/health/ready (in the browser or with curl http://localhost:8083/health/ready) you will see only the Database connection health check as it is the only health check defined with the `@Readiness` qualifier as the readiness health check procedure.
+If you access http://localhost:8083/health you will get back both checks.
+
+[source,json]
+----
+{
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Hero health check",
+            "status": "UP",
+            "data": {
+                "rows": 951
+            }
+        },
+        {
+            "name": "Database connection(s) health check",
+            "status": "UP"
+        }
+    ]
+}
+----
+
+== Health Check Tests in HeroResourceTest
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Let's add a few extra test methods that would make sure Health Check are available in the application:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocHealth]
+----
+
+[NOTE]
+====
+Here we've just shown you the health check for the Hero API, but you should do the same for Fight and Villain.
+====

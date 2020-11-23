@@ -1,0 +1,56 @@
+[[quarkus]]
+= Quarkus
+
+'''
+
+In the previous chapter, you had a quick peek to Quarkus and how you can build HTTP / REST-based applications with it.
+But that was just the beginning, Quarkus can do a lot more, and this is the purpose of this chapter.
+In this chapter, you are going to see:
+
+* What's Quarkus? and how does it change the Java landscape
+* What are the main Quarkus idea and how it helps in the _cloud native world_
+* The Quarkus build process, in other words, the _secret sauce_
+* Some Quarkus features such as the application lifecycle support
+* How you can use Quarkus to generate native executable
+
+== What's Quarkus?
+
+Java was born more than 20 years ago.
+The world 20 years ago was quite different.
+The software industry has gone through several revolutions over these two decades.
+Java has always been able to reinvent itself to stay relevant.
+
+But a new revolution is happening right now.
+While for years, most applications were running on huge machines, with lots of CPU and memory, they are now running on the Cloud, in constrained environments, in containers, where the resources are shared.
+Density is the new optimization: crank as many mini-apps (or microservices) as possible per node.
+And scale by adding more instances of an app instead of a more powerful single instance.
+
+The Java ergonomics, designed 20 years ago, do not fit well in this new environment.
+Java applications were designed to run 24/7 for months, even years.
+The JIT is optimizing the execution over time; the GC manages the memory efficiently...
+But all these features have a cost, and the memory required to run Java applications and startup times are showstoppers when instead of one application, you deploy 20 or 50 microservices.
+The issue is not the JVM itself; it's also the Java ecosystem that needs to be reinvented.
+
+That's where Quarkus, and other projects, enter the game.
+Quarkus proposes to generalize "Ahead of Time" techniques.footnote:[Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]
+When a Quarkus application is built, some work that usually happens at runtime is moved to the build time.
+Thus, when the application runs, everything has been pre-computed, and all the annotation scanning, XML parsing, and so on won't be executed anymore.
+It has two direct benefits: on the startup time (a lot faster) and on memory consumption (a lot lower).
+
+image::quarkus-augmentation.png[]
+
+So, as depicted on the figure above, Quarkus does bring an infrastructure for frameworks to embrace build time metadata discovery (like annotations), declare which classes need reflection at runtime, boot at build time, and generally offer a lot GraalVM optimization for free (or cheap at least).
+Indeed, thanks to all these metadata, Quarkus can configure native compilers such as the SubstrateVM compiler to generate a native executable for your Java application.
+Thanks to an aggressive dead-code elimination, the final executable is smaller, faster to start and use a ridiculously small amount of memory.
+
+image::quarkus-native-compilation.png[]
+
+Quarkus does not stop there.
+As you have seen in the previous chapter, it proposes a stellar developer experience.
+It also unifies reactive and imperative so that you can mix regular JAX-RS and event-oriented code in the same application.
+Finally, Quarkus is based on many popular framework out there such as Eclipse Vert.x, Apache Camel, Undertow...
+You can already state that you have 5 years of experience with Quarkus.
+
+Ok, but enough talking, time to see this in action.
+
+

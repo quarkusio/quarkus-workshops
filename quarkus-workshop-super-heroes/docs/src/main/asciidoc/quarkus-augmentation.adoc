@@ -1,0 +1,58 @@
+[[quarkus-augmentation]]
+= Quarkus Augmentation
+:icons: font
+
+Let's demystify all this.
+
+So far, you have developed the superheroes microservice.
+This microservice is relatively simple, but it still has database access, ORM support, transaction, JSON serialization, and deserialization.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Let's now package this application using:
+
+[source, shell]
+----
+$ mvn package
+----
+
+In the log, you can see actions happening at build time during what Quarkus call the _augmentation_ phase.
+
+[source, shell]
+----
+[INFO] --- quarkus-maven-plugin:1.2.0.Final:build (default) @ rest-hero ---
+[INFO] [io.quarkus.deployment.QuarkusAugmentor] Beginning quarkus augmentation
+[INFO] [org.jboss.threads] JBoss Threads version 3.0.0.Final
+[INFO] [org.hibernate.jpa.boot.internal.PersistenceXmlParser] HHH000318: Could not find any META-INF/persistence.xml file in the classpath
+[INFO] [org.hibernate.Version] HHH000412: Hibernate Core {5.4.5.Final}
+[INFO] [io.quarkus.deployment.QuarkusAugmentor] Quarkus augmentation completed in 2653ms
+----
+
+In this log, you can see that the Hibernate XML parser has been executed at build time.
+This saves from having to:
+
+1. embed an XML parser at runtime,
+2. Do the actual parsing,
+3. Configure Hibernate based on the content of the file.
+
+With Quarkus, at runtime, almost everything is already configured.
+Only runtime configuration properties are applied at startup (such as database URLs).
+
+Also, during this augmentation, Java classes are generated or extended.
+Remember the `Hero` Panache entity.
+The class is extended during the _augmentation_.
+If you run `javap target/transformed-classes/io/quarkus/workshop/superheroes/hero/Hero.class`, you can see methods prefixed with `$$`, which have been added to the class.
+
+If now you look at the `target/wiring-classes/io/quarkus/workshop/superheroes/hero`, you can see many generated classes.
+
+All these metadata are computed and managed by _extensions_.
+The next figure present some of the extension you already used, but there are a lot more.
+We are going to learn more about extensions later in this workshop, and even build one.
+What's important to understand for now is that the magic is packaged into extension and every time you add a `quarkus-` dependency to your `pom.xml` file, you enable an extension.
+
+image::quarkus-extensions.png[]
+
+
+
+
+

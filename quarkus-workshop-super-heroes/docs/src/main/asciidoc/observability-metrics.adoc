@@ -1,0 +1,117 @@
+[[observability-metrics]]
+= Metrics
+
+:icons: font
+
+MicroProfile Metrics allows applications to gather various metrics and statistics that provide insights into what is happening inside the application.footnote:[MicroProfile Metrics https://microprofile.io/project/eclipse/microprofile-metrics]
+The metrics can be read remotely using JSON format or the OpenMetrics format, so that they can be processed by additional tools such as Prometheus, and stored for analysis and visualisation.footnote:[OpenMetrics https://openmetrics.io]
+
+While you could add add metrics to all our microservices, we are focusing on the Hero microservice.
+You can apply the same to the other microservices.
+
+== Installing the Metrics Dependency
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+To install the MicroProfile Metrics dependency, just run the following command:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="metrics"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyMetrics]
+----
+
+== Adding Metrics to HeroResource
+
+We want now to measure all methods of all our REST resources.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+For that, we need a few annotations to make sure that our desired metrics are calculated over time and can be exported for manual analysis or processing by additional tooling.
+The metrics that we will gather are these:
+
+* `countGetRandomHero`: A counter which is increased by one each time the user gets a random hero.
+* `timeGetRandomHero`: This is a timer, therefore a compound metric that benchmarks how much time the request take.
+
+Below the source code of the `getRandomHero()` method, but make sure to add metrics on all methods:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocMetricsMethods]
+----
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+[NOTE]
+--
+You will need to add the following import statements:
+```
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+```
+--
+
+== Metrics Tests in HeroResourceTest
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Let's add an extra test method that would make sure Metrics are available in the application:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
+----
+
+== Reviewing the Generated Metrics
+
+To view the metrics, execute `curl -H "Accept: application/json" http://localhost:8083/metrics/application`.
+You will receive a response such as:
+
+[source,json]
+----
+{
+  "io.quarkus.workshop.superheroes.hero.HeroResource.countGetRandomHero": 44,
+  "io.quarkus.workshop.superheroes.hero.HeroResource.timeGetRandomHero": {
+    "p99": 16.227182,
+    "min": 2.525987,
+    "max": 16.227182,
+    "mean": 3.202769680486923,
+    "p50": 2.967352,
+    "p999": 16.227182,
+    "stddev": 1.55809730109504,
+    "p95": 3.565725,
+    "p98": 4.157616,
+    "p75": 3.104259,
+    "fiveMinRate": 0.12382047800943181,
+    "fifteenMinRate": 0.04406239601227314,
+    "meanRate": 0.08741866976313094,
+    "count": 44,
+    "oneMinRate": 0.4332024919472982
+  }
+}
+----
+
+Let’s explain the meaning of each metric:
+
+* `countGetRandomHero`: A counter which is increased by one each time the user asks for a random hero.
+* `timeGetRandomHero`: This is a timer, therefore a compound metric that benchmarks how much time the request takes. All durations are measured in milliseconds. It consists of these values:
+** `min`: The shortest duration it took to perform a request.
+** `max`: The longest duration.
+** `mean`: The mean value of the measured durations.
+** `stddev`: The standard deviation.
+** `count`: The number of observations (so it will be the same value as `countGetRandomHero`).
+** `p50`, `p75`, `p95`, `p99`, `p999`: Percentiles of the durations. For example the value in p95 means that 95 % of the measurements were faster than this duration.
+** `meanRate`, `oneMinRate`, `fiveMinRate`, `fifteenMinRate`: Mean throughput and one-, five-, and fifteen-minute exponentially-weighted moving average throughput.
+
+If you prefer an OpenMetrics export rather than the JSON format, remove the `-H "Accept: application/json"` argument from your command line.
+
+[NOTE]
+====
+Again, in this chapter, we've just shown you how to add metrics for the Hero API, but you should do the same for Fight and Villain.
+====

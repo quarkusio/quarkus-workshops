@@ -1,0 +1,19 @@
+[[messaging-conclusion]]
+= Unifying Imperative and Reactive Programming
+
+So, as seen in this chapter, Quarkus is not limited to HTTP microservices, but fits perfectly in an event-driven architecture.
+The secret behind this is to use a single reactive engine for both imperative and reactive code:
+
+[plantuml,align=center]
+----
+include::plantuml/quarkus-http-architecture.puml[]
+----
+
+This unique architecture allows to mix imperative and reactive, but also use the right _model_ for the job.
+To go further on this, we recommend:
+
+* https://quarkus.io/guides/reactive-routes-guide to use reactive routes
+* https://quarkus.io/guides/reactive-sql-clients to access SQL database in a non-blocking fashion
+* https://quarkus.io/guides/kafka-guide to integrate with Kafka
+* https://quarkus.io/guides/amqp-guide to integrate with AMQP 1.0
+* https://quarkus.io/guides/using-vertx to understand how you can use Vert.x directly

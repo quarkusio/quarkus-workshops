@@ -1,0 +1,35 @@
+[[messaging]]
+= Event-driven and Reactive microservices
+
+'''
+
+So far, we have build 3 microservices, all using HTTP to interact.
+However, HTTP has significant flaws, such as temporal coupling between the actors.
+If the service is not there or is slow, the caller is directly impacted.
+Also, it's hard to guess the capacity of the service you call; maybe you should not call it right now because this service is under heavy load.
+
+Fortunately, event-driven microservices are rising and avoid most of these issues.
+By using events (wrapped in messages), the different microservices enforce a looser coupling.
+Depending on the messaging protocol you use, it may handle durability (avoiding the temporal coupling) and back-pressure (avoiding the overload).
+
+In this section, we are going to see how Quarkus let you build event-driven microservices.
+More specially, you are going to see how to:
+
+* send messages and process them
+* connect a Quarkus application to Apache Kafka
+* write Kafka records and read them
+* use reactive programming to compute statistics on the fly
+* how to send messages to the browser using web sockets
+
+Quarkus uses MicroProfile Reactive Messaging to interact with Kafka, and other messaging middleware (such as AMQP).footnote:[MicroProfile Reactive Messaging https://github.com/eclipse/microprofile-reactive-messaging]
+
+In this chapter, we are going to use events as a way for microservices to interact.
+You are going to extend the current system with the `stats` group depicted on the next figure:
+
+[plantuml,align=center]
+----
+include::plantuml/messaging-architecture.puml[]
+----
+
+When the application persists a new fight, in the _fight_ microservice, you are going to send it to a Kafka topic.
+These messages are read in the _statistics_ microservice, processed, and the result is sent to a UI using web sockets.

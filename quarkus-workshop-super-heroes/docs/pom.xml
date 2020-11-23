@@ -31,8 +31,8 @@
         <version.asciidoctorj>2.1.0</version.asciidoctorj>
         <version.asciidoctorj.pdf>1.5.0-alpha.18</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>1.5.18</version.asciidoctorj.diagram>
-        <github.raw>https://raw.githubusercontent.com/bbvahackathon/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
-        <github.url>https://github.com/bbvahackathon/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
+        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
+        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>

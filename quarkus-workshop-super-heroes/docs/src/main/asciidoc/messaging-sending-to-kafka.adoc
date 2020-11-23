@@ -1,0 +1,148 @@
+= Sending Messages to Kafka
+
+:icons: font
+
+In this section, you are going to see how you can send messages to a Kafka topic.footnote:[Kafka Topic https://kafka.apache.org/intro#intro_topics]
+
+== Directory Structure
+
+In this section we are going to extend the **Fight microservice**.
+In the following tree, we are going to edit the marked classes
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-fight
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  fight
+++++++++++  Fight.java
+++++++++++  FightApplication.java
+++++++++++  FightResource.java
+++++++++++  Fighters.java
++++++++++++ client
+++++++++++++ Hero.java
+++++++++++++ HeroService.java  <--
+++++++++++++ Villain.java
+++++++++++++ VillainService.java
++++++++++++ health
+++++++++++++ DatabaseConnectionHealthCheck.java
+++++++++++++ PingFightResourceHealthCheck.java
++++++++++++ kafka
+++++++++++++ KafkaWriter.java <--
+++  pom.xml
+}
+}
+@endsalt
+----
+
+== Adding the Reactive Messaging Dependency
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+To install the Kafka support, just run the following command:
+
+[source, shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="kafka"
+----
+
+The previous command adds the following dependency:
+
+[source,xml,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/pom.xml[tag=kafkaDependency]
+----
+
+[NOTE]
+====
+The extension may already have been added when the fight microservice has been created.
+====
+
+Then, you can restart the microservice, using `mvn compile quarkus:dev`.
+
+[NOTE]
+====
+To execute the application we now need Kafka.
+Make sure the infrastructure is up and running.
+This means that you've executed `docker-compose -f docker-compose.yaml up -d` (or the Linux variant).
+====
+
+== Connecting Imperative and Reactive Using an Emitter
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+Now edit the `FightService` class.
+First, add the following field:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocKafkaEmitter]
+----
+
+[NOTE]
+====
+You will also need to add the following imports:
+```
+import io.smallrye.reactive.messaging.annotations.Channel;
+import io.smallrye.reactive.messaging.annotations.Emitter;
+```
+====
+
+This field is an _emitter_, and lets you send events or messages (here fights) to the _channel_ specified with the `@Channel` annotation.
+A _channel_ is a _virtual_ destination.
+
+In the `persistFight` method, add the following line just before the `return` statement:
+
+[source,indent=0]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocKafka]
+----
+
+With this in place, every time the application persists a `fight`, it also sends the `fight` to the `fights` _channel_.
+
+== Connecting to Kafka
+
+At this point, the serialized fights are sent to the `fights` channel.
+You need to connect this `channel` to a Kafka topic.
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+For this, edit the `application.properties` file and add the following properties:
+
+[source,properties]
+----
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tag=adocKafka]
+----
+
+These properties are structured as follows:
+
+[source,properties]
+----
+mp.messaging.[incoming|outgoing].channel.attribute=value
+----
+
+For example, `mp.messaging.outgoing.fights.connector` configures the connector used for the `outgoing` channel `fights`.
+
+The `mp.messaging.outgoing.fights.value.serializer` configures the serializer used to write the message in Kafka.
+When omitted, the Kafka topic reuses the channel name (`fights`).
+Also, it connects by default to `localhost:9092`.
+You can override this using the `kafka.bootstrap.servers` property.
+
+If you go back to the UI and play some fights, you would see, in the fight microservice log, something like:
+[source,text]
+----
+Message org.eclipse.microprofile.reactive.messaging.Message$$Lambda$1021/763397690@1f6e0af3 sent successfully to Kafka topic 'fights'
+----
+
+Now, you have connected the fight microservice to Kafka, and you are sending new fights to the Kafka topic.
+Let's see how you can read these messages in the `stats` microservice.
