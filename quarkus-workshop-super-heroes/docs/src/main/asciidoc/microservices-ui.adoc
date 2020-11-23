@@ -46,7 +46,7 @@ It's just a matter of running:
 
 [source,shell]
 ----
-$ swagger-codegen generate -i http://localhost:8082/openapi -l typescript-angular -o src/app/shared
+$ swagger-codegen generate -i $(oc get route -n USERNAME-codeready | grep 8082 | awk '{ print $2 }')/openapi -l typescript-angular -o src/app/shared
 ----
 
 Here, you see another advantage of exposing an OpenAPI contract:
@@ -54,11 +54,9 @@ it documents the API which can be read by a human, or processed by tools.
 
 == Installing the Web Application on Quarkus
 
-Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
-
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-Execute `mvn install` and Maven will download and install Node JS and NPM and build the application.
+Execute `npm install` in the `ui-super-heroes` directory for building the application.
 You should now have a `node_modules` directory with all the Angular dependencies.
 At this stage, make sure the following commands work:
 
@@ -93,12 +91,25 @@ This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/no
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
+Set the following env var to allow the ui-super-heroes service contact the rest-fight.
+
+[source, properties]
+--
+$ export BASE_PATH=https://$(oc get route -n USERNAME-codeready | grep 8082 | awk '{ print $2 }')
+--
+
 As usual, use `mvn quarkus:dev` to start the web application.
 
 Be sure you have the hero and villain microservices running (dev mode is enough).
 
-Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).
-It should display the main web page.
+Once the application is started (`mvn quarkus:dev`), open a browser on the ui-super-heroes url it should display the main web page. You can get the `ui-super-heroes` url with this command:
+[source, properties]
+--
+$ oc get route -n USERNAME-codeready | grep 8080 | awk '{ print $2 }'
+--
+Notice that the 8080 is the default Quarkus port as we didn't change it in the `application.properties` this time.
+
+
 
 image::angular-ui.png[]
 

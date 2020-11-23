@@ -115,7 +115,7 @@ include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/
 == Fighters Bean
 
 Now comes a trick.
-The Fight REST API will ultimatelly invoke the Hero and Villain APIs (next sections) to get two random fighters.
+The Fight REST API will ultimately invoke the Hero and Villain APIs (next sections) to get two random fighters.
 The `Fighters` class has one `Hero` and one `Villain`.
 Notice that `Fighters` is not an entity, it is not persisted in the database, just marshalled and unmarshalled to JSon.
 
@@ -216,7 +216,7 @@ In the `application.properties` file add:
 
 [source,properties]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=!adocCORS;!adocRestClient;!adocKafka;!adocBanner]
+include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=!adocCORS;!adocRestClient;!adocOpenShiftRestClient;!adocKafka;!adocBanner]
 ----
 
 Note that the fight service uses the port 8082.

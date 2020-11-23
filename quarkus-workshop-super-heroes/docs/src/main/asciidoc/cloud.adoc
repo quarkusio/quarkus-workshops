@@ -88,18 +88,6 @@ For villain microservice follow the same approach.
 ./mvnw quarkus:add-extension -Dextensions="openshift"
 ----
 
-* Define this env variable to make easier the config of the microservices urls for
-
-[source, properties]
---
-$ export WKSPC_SERVICE_URL="http://$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
---
-
-[NOTE]
---
-Don't forget use your own user
---
-
 * Add the following properties in the rest-fights `application.properties` file:
 
 [source, properties]
@@ -136,7 +124,7 @@ $ ./mvnw clean package -Dquarkus.kubernetes.deploy=true
 ./mvnw quarkus:add-extension -Dextensions="openshift"
 ----
 
-* Add the following properties in the rest-fights `application.properties` file:
+* Add the following properties in the ui-super-heroes `application.properties` file:
 
 [source, properties]
 --
@@ -147,7 +135,7 @@ quarkus.openshift.expose=true
 quarkus.openshift.env.vars.BASE_PATH=${FIGHT_ROUTE}
 --
 
-The `` property make the UI able to contact the fight microservice. As it is dependending on a env var, consider to define it using the following command:
+The `` property make the UI able to contact the fight microservice. As it depends on an env var, consider to define it using the following command:
 
 [source, properties]
 --

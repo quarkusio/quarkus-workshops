@@ -154,11 +154,11 @@ Having this configuration means that all requests performed using `HeroService` 
 Using this configuration, calling the `findRandomHero` method of `HeroService` would result in an HTTP GET request being made to ${rest-hero-url}/api/heroes/random.
 
 This configuration works only for the `dev` profile.
-In order to make it work, you need to set up the `WKSPC_SERVICE_URL` env var. You can do it running the following command:
+In order to make it work, you need to set up the `WKSPC_SERVICE` env var. You can do it running the following command:
 
 [source, shell]
 --
-$ export WKSPC_SERVICE_URL="http://$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
+$ export WKSPC_SERVICE="$(oc get svc -n USERNAME-codeready | grep 8083 |  awk '{ print $1 }')"
 --
 
 Having this configuration means that the default scope of `HeroService` will be `@Singleton`.
@@ -223,4 +223,4 @@ First, make sure the tests pass by executing the command `./mvnw test` (or from 
 
 Now that the tests are green, we are ready to run our application.
 Use `./mvnw compile quarkus:dev` to start it.
-Once the application is started, go to http://localhost:8080 and start fighting (finally !).
+Once the application is started, go to the corresponding url (`$(oc get route -n USERNAME-codeready | grep 8080 | awk '{ print $2 }')`) and start fighting (finally !).
