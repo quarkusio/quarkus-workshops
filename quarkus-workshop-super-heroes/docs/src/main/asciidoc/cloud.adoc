@@ -268,8 +268,8 @@ Then, apply these resources:
 
 [source,shell]
 ----
-$ kubectl -f config-hero.yaml
-$ kubectl -f config-villain.yaml
+$ kubectl apply -f config-hero.yaml
+$ kubectl apply -f config-villain.yaml
 ----
 
 Once the config maps are created, we can deploy the microservices.

@@ -20,7 +20,7 @@ In the log, you can see actions happening at build time during what Quarkus call
 
 [source, shell]
 ----
-[INFO] --- quarkus-maven-plugin:1.2.0.Final:build (default) @ rest-hero ---
+[INFO] --- quarkus-maven-plugin:1.9.2.Final:build (default) @ rest-hero ---
 [INFO] [io.quarkus.deployment.QuarkusAugmentor] Beginning quarkus augmentation
 [INFO] [org.jboss.threads] JBoss Threads version 3.0.0.Final
 [INFO] [org.hibernate.jpa.boot.internal.PersistenceXmlParser] HHH000318: Could not find any META-INF/persistence.xml file in the classpath
