@@ -38,17 +38,17 @@ mvn clean install
 * Run the infrastructure as explained above.
 * In a new terminal, run the heroes microservice
 ```bash
-cd api-hero
+cd rest-hero
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the villains microservice
 ```bash
-cd api-villain
+cd rest-villain
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd api-fight
+cd rest-fight
 mvn clean compile quarkus:dev
 ```
 

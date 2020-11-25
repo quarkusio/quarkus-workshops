@@ -283,7 +283,7 @@ Create the `io.quarkus.workshop.superheroes.hero.DatabaseResource` classes with 
 include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/DatabaseResource.java[]
 ----
 
-This code just starts the database before the application, and set the `quarkus.datasource.url` system property to indicate to the application where is the test database.
+This code just starts the database before the application, and set the `quarkus.datasource.jdbc.url` system property to indicate to the application where is the test database.
 Note that the database would use a random port.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
