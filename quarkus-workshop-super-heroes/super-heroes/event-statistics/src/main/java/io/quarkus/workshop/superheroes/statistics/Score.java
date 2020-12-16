@@ -5,12 +5,11 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
 public class Score {
-    public final String name;
-    public final int score;
+    public String name;
+    public int score;
 
-    public Score(String name, int score) {
-        this.name = name;
-        this.score = score;
+    public Score() {
+        this.score = 0;
     }
 }
 // end::adocBean[]

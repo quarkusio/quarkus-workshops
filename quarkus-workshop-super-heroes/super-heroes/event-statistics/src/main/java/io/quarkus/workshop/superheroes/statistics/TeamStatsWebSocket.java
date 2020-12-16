@@ -3,7 +3,8 @@ package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
-import io.smallrye.reactive.messaging.annotations.Channel;
+import io.smallrye.mutiny.Multi;
+import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -21,12 +22,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @ApplicationScoped
 public class TeamStatsWebSocket {
 
-    @Inject @Channel("team-stats") Flowable<Double> stream;
+    @Inject
+    @Channel("team-stats")
+    Multi<Double> stream;
 
     private static final Logger LOGGER = Logger.getLogger(TeamStatsWebSocket.class);
 
     private List<Session> sessions = new CopyOnWriteArrayList<>();
-    private Disposable subscription;
 
     @OnOpen
     public void onOpen(Session session) {
@@ -40,13 +42,15 @@ public class TeamStatsWebSocket {
 
     @PostConstruct
     public void subscribe() {
-        subscription = stream.subscribe(ratio -> sessions.forEach(session -> write(session, ratio)));
+        stream.subscribe().with(ratio -> sessions.forEach(session -> write(session, ratio)),
+            failure -> System.out.println("Failed with " + failure),
+            () -> System.out.println("Completed"));
     }
 
-    @PreDestroy
-    public void cleanup() {
-        subscription.dispose();
-    }
+//    @PreDestroy
+//    public void cleanup() {
+//        subscription.dispose();
+//    }
 
     private void write(Session session, double ratio) {
         session.getAsyncRemote().sendText(Double.toString(ratio), result -> {

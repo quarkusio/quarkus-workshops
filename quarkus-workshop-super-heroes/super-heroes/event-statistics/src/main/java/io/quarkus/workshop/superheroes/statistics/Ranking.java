@@ -2,6 +2,7 @@
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.reactivex.Maybe;
+import io.smallrye.mutiny.Uni;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,7 +27,7 @@ public class Ranking {
         max = size;
     }
 
-    public synchronized Maybe<Iterable<Score>> onNewScore(Score score) {
+    public synchronized Uni<Iterable<Score>> onNewScore(Score score) {
         // synchronized should not be required if used in a flatMap, as the call needs to be serialized.
 
         // Remove score if already present,
@@ -42,9 +43,11 @@ public class Ranking {
         }
 
         if (top.contains(score)) {
-            return Maybe.just(Collections.unmodifiableList(top));
+//            return Maybe.just(Collections.unmodifiableList(top));
+            return Uni.createFrom().item(Collections.unmodifiableList(top));
         } else {
-            return Maybe.empty();
+//            return Maybe.empty();
+            return Uni.createFrom().nullItem();
         }
     }
 }

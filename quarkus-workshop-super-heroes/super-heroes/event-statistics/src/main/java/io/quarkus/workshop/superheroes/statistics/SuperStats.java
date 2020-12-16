@@ -1,9 +1,9 @@
 // tag::adocBean[]
 package io.quarkus.workshop.superheroes.statistics;
 
-import io.reactivex.Flowable;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
-import io.vertx.core.json.JsonObject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
@@ -15,36 +15,55 @@ public class SuperStats {
     private Ranking topWinners = new Ranking(10);
     private TeamStats stats = new TeamStats();
 
+
     @Incoming("fights")
     @Outgoing("results")
     @Broadcast
-    public Flowable<FightResult> toFightResults(Flowable<JsonObject> stream) {
-        return stream.map(json -> json.mapTo(FightResult.class));
+    public Multi<FightResult> toFightResults(Multi<Fight> fights) {
+         return fights
+            .onItem().scan(
+                FightResult::new,
+                this::compute
+            );
     }
+
+    private FightResult compute(FightResult s, Fight f) {
+        s.setFightDate(f.fightDate);
+        s.setWinnerName(f.winnerName);
+        s.setLoserName(f.loserName);
+        return s;
+    }
+
 
     @Incoming("results")
     @Outgoing("team-stats")
-    public Flowable<Double> computeTeamStats(Flowable<FightResult> results) {
+    public Multi<Double> computeTeamStats(Multi<FightResult> results) {
         return results.map(fr -> stats.add(fr));
     }
 
     @Incoming("results")
     @Outgoing("winner-stats")
-    public Flowable<Iterable<Score>> computeTopWinners(Flowable<FightResult> results) {
-        return results
-            // Create a sub-stream per hero and villain - for each winner, we get a new sub-stream
-            .groupBy(FightResult::getWinnerName)
-            // For each of these sub-stream
-            .flatMap(group ->
-                // Compute the new score (increment the score by one)
-                group.scan(0, (i, s) -> i + 1)
-                    // Skip the initial 0, oddity of the scan operator
-                    .skip(1)
-                    // Creates the Score object
-                    .map(i -> new Score(group.getKey(), i)))
-            // For every Score emitted by the sub-streams, add it to the
-            // ranking object and check if it changes the top 10.
-            .flatMapMaybe(score -> topWinners.onNewScore(score));
+    public Multi<Iterable<Score>> computeTopWinners(Multi<FightResult> results) {
+        // Create a sub-stream per hero and villain - for each winner, we get a new sub-stream
+        Multi<Uni<Iterable<Score>>> uniMulti = results.groupItems().by(FightResult::getWinnerName)
+            .flatMap(group -> group.onItem()
+                // For each of these sub-stream
+                //Compute the new score (increment the score by one) and creates the Score object
+                .scan(Score::new, this::incrementScore)
+                // For every Score emitted by the sub-streams, add it to the
+                // ranking object and check if it changes the top 10.
+                .map(score -> topWinners.onNewScore(score)));
+
+        return uniMulti.flatMap(iterableUni -> iterableUni.toMulti());
+
     }
+
+    private Score incrementScore(Score score,FightResult fightResult){
+        score.name =  fightResult.getWinnerName();
+        score.score = score.score +1;
+        return score;
+
+    }
+
 }
 // end::adocBean[]
