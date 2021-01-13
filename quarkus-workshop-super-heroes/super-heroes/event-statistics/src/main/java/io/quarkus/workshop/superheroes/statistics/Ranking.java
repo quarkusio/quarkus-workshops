@@ -1,9 +1,6 @@
 // tag::adocBean[]
 package io.quarkus.workshop.superheroes.statistics;
 
-import io.reactivex.Maybe;
-import io.smallrye.mutiny.Uni;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -12,29 +9,20 @@ public class Ranking {
 
     private final int max;
 
-    private final Comparator<Score> comparator = (s1, s2) -> {
-        if (s2.score > s1.score) {
-            return 1;
-        } else if (s2.score < s1.score) {
-            return -1;
-        }
-        return 0;
-    };
+    private final Comparator<Score> comparator = Comparator.comparingInt(s -> -1 * s.score);
 
-    private LinkedList<Score> top = new LinkedList<>();
+    private final LinkedList<Score> top = new LinkedList<>();
 
     public Ranking(int size) {
         max = size;
     }
 
-    public synchronized Uni<Iterable<Score>> onNewScore(Score score) {
-        // synchronized should not be required if used in a flatMap, as the call needs to be serialized.
-
+    public Iterable<Score> onNewScore(Score score) {
         // Remove score if already present,
-        // Add the score
-        // Sort
         top.removeIf(s -> s.name.equalsIgnoreCase(score.name));
+        // Add the score
         top.add(score);
+        // Sort
         top.sort(comparator);
 
         // Drop on overflow
@@ -42,13 +30,7 @@ public class Ranking {
             top.remove(top.getLast());
         }
 
-        if (top.contains(score)) {
-//            return Maybe.just(Collections.unmodifiableList(top));
-            return Uni.createFrom().item(Collections.unmodifiableList(top));
-        } else {
-//            return Maybe.empty();
-            return Uni.createFrom().nullItem();
-        }
+        return Collections.unmodifiableList(top);
     }
 }
 // end::adocBean[]

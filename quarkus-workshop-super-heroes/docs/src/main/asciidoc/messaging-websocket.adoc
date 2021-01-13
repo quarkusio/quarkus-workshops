@@ -31,7 +31,7 @@ It handles the `/stats/team` WebSocket.
 When a client (like a browser) connects to the WebSocket, it keeps track of the session.
 This session is released when the client disconnects.
 
-The `TeamStatsWebSocket` also injects a `Flowable` attached to the `team-stats` channel.
+The `TeamStatsWebSocket` also injects a `Multi` attached to the `team-stats` channel.
 After creation, the component subscribes to this stream and broadcasts the fights to the different clients connected to the web socket.
 
 The _subscription_ is an essential part of the stream lifecycle.

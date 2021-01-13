@@ -1,9 +1,8 @@
 // tag::adocWebSocket[]
 package io.quarkus.workshop.superheroes.statistics;
 
-import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.subscription.Cancellable;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.jboss.logging.Logger;
 
@@ -28,7 +27,8 @@ public class TeamStatsWebSocket {
 
     private static final Logger LOGGER = Logger.getLogger(TeamStatsWebSocket.class);
 
-    private List<Session> sessions = new CopyOnWriteArrayList<>();
+    private final List<Session> sessions = new CopyOnWriteArrayList<>();
+    private Cancellable cancellable;
 
     @OnOpen
     public void onOpen(Session session) {
@@ -42,15 +42,13 @@ public class TeamStatsWebSocket {
 
     @PostConstruct
     public void subscribe() {
-        stream.subscribe().with(ratio -> sessions.forEach(session -> write(session, ratio)),
-            failure -> System.out.println("Failed with " + failure),
-            () -> System.out.println("Completed"));
+        cancellable = stream.subscribe().with(ratio -> sessions.forEach(session -> write(session, ratio)));
     }
 
-//    @PreDestroy
-//    public void cleanup() {
-//        subscription.dispose();
-//    }
+    @PreDestroy
+    public void cleanup() {
+        cancellable.cancel();
+    }
 
     private void write(Session session, double ratio) {
         session.getAsyncRemote().sendText(Double.toString(ratio), result -> {
