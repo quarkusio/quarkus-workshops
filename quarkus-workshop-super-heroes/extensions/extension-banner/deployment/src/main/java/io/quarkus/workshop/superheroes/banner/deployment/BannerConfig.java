@@ -10,5 +10,5 @@ public class BannerConfig {
     /**
      * The path of the banner.
      */
-    @ConfigItem public String path;
+    @ConfigItem public String file;
 }

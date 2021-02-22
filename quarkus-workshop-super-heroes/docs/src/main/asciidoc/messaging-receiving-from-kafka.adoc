@@ -27,8 +27,8 @@ super-heroes
 +++++++  workshop
 ++++++++  superheroes
 +++++++++  statistics
-++++++++++ FightResult.java
-++++++++++ FightResult.java
+++++++++++ Fight.java
+++++++++++ FightDeserializer.java
 ++++++++++ Ranking.java
 ++++++++++ Score.java
 ++++++++++ SuperStats.java
@@ -64,21 +64,13 @@ Open the `pom.xml` file to see the result.
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
-This class contains 3 methods annotated with `@Incoming` and `@Outgoing`.
+This class contains 2 methods annotated with `@Incoming` and `@Outgoing`, both consuming the `Fight` coming from Kafka.
 
-The first one (`toFightResults`) is responsible for deserializing the JSON content received from Kafka.
-It gets items from the `fights` channel and produces items sent to the `results` channel.
-It takes a `Flowable` parameter and returns another `Flowable`.
-`Flowable` is a class provided by RX Java 2 and represents a stream of data.
-So, this method is called only once with a `Flowable` representing the incoming channel, and the returned `Flowable` is the outgoing channel.
-In the body of the method, each item from the incoming channel are _mapped_ to `FightResults`.
+The `computeTeamStats` method transform the fight stream into a stream of ratio indicating the amount of victories for heroes and villains.
+It calls `onItem().transform` method for each received fight.
+It sends the computed ratios on the channel `team-stats`.
 
-The `@Broadcast` annotation indicates that several consumers (methods) consume the items produced by the method.
-
-The `computeTeamStats` method follows the same pattern.
-It computes the ratio of victories for heroes and villains.
-
-The `computeTopWinners` method uses more advanced reactive programming constructs such as `groupBy`, `flatMap` and `scan`:
+The `computeTopWinners` method uses more advanced reactive programming constructs such as `group` and `scan`:
 
 [source]
 ----
@@ -87,20 +79,8 @@ include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/wor
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-In addition, create the `io.quarkus.workshop.superheroes.statistics.FightResult`,  `io.quarkus.workshop.superheroes.statistics.Ranking`, `io.quarkus.workshop.superheroes.statistics.Score` and `io.quarkus.workshop.superheroes.statistics.TeamStats` classes with the following contents:
+In addition, create the `io.quarkus.workshop.superheroes.statistics.Ranking`, `io.quarkus.workshop.superheroes.statistics.Score` and `io.quarkus.workshop.superheroes.statistics.TeamStats` classes with the following contents:
 
-The `FightResult` class is used to deserialize the JSON object from the Kafka topic.
-Note the `@RegisterForReflection` annotation indicating to Quarkus that this class is accessed using reflection.footnote:[RegisterForReflection https://quarkus.io/guides/writing-native-applications-tips#alternative-with-registerforreflection]
-This information is required when running the application as a native executable.
-
-[source]
-----
-include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/FightResult.java[tags=adocBean;!adocSkip]
-----
-
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
-
-In `FightResult`, add or generate the getter and setter methods for the `private` fields.
 
 Then, create the `Ranking` class, used to compute a floating top 10, with the following content:
 

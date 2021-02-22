@@ -152,7 +152,7 @@ include::{github-raw}/extensions/extension-banner/deployment/src/main/java/io/qu
 This class maps entries from the `application.properties` file to an object.
 It's a convenient mechanism to avoid having to use the low-level configuration API directly.
 The `ConfigRoot` annotation indicates that this class maps properties prefixed with `quarkus.banner`.
-The class declares a single property, `path`, which is the `quarkus.banner.path` user property.
+The class declares a single property, `file`, which is the `quarkus.banner.file` user property.
 Instances of this class are created by Quarkus and are used in the second part of the deployment module: the processor.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
@@ -237,7 +237,7 @@ Then, edit the `src/main/resources/application.properties` and add:
 
 [source]
 ----
-quarkus.banner.path=banner.txt
+quarkus.banner.file=banner.txt
 ----
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#

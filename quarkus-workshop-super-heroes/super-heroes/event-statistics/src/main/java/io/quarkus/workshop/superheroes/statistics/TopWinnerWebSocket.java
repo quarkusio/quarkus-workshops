@@ -1,9 +1,9 @@
 // tag::adocWebSocket[]
 package io.quarkus.workshop.superheroes.statistics;
 
-import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
-import io.smallrye.reactive.messaging.annotations.Channel;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.subscription.Cancellable;
+import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -26,10 +26,11 @@ public class TopWinnerWebSocket {
     private static final Logger LOGGER = Logger.getLogger(TopWinnerWebSocket.class);
     private Jsonb jsonb;
 
-    @Inject @Channel("winner-stats") Flowable<Iterable<Score>> winners;
+    @Inject @Channel("winner-stats")
+    Multi<Iterable<Score>> winners;
 
-    private List<Session> sessions = new CopyOnWriteArrayList<>();
-    private Disposable subscription;
+    private final List<Session> sessions = new CopyOnWriteArrayList<>();
+    private Cancellable cancellable;
 
     @OnOpen
     public void onOpen(Session session) {
@@ -44,14 +45,14 @@ public class TopWinnerWebSocket {
     @PostConstruct
     public void subscribe() {
         jsonb = JsonbBuilder.create();
-        subscription = winners
+        cancellable = winners
             .map(scores -> jsonb.toJson(scores))
-            .subscribe(serialized -> sessions.forEach(session -> write(session, serialized)));
+            .subscribe().with(serialized -> sessions.forEach(session -> write(session, serialized)));
     }
 
     @PreDestroy
     public void cleanup() throws Exception {
-        subscription.dispose();
+        cancellable.cancel();
         jsonb.close();
     }
 

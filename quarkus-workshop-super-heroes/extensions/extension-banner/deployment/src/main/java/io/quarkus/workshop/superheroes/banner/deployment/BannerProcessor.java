@@ -20,14 +20,14 @@ public class BannerProcessor {
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
     public void recordBanner(BannerRecorder recorder, BannerConfig config) {
-        String content = readBannerFile(config.path);
+        String content = readBannerFile(config.file);
         recorder.print(content);
     }
 
     @BuildStep
     List<HotDeploymentWatchedFileBuildItem> watchBannerChanges(BannerConfig config) {
         List<HotDeploymentWatchedFileBuildItem> watchedFiles = new ArrayList<>();
-        watchedFiles.add(new HotDeploymentWatchedFileBuildItem((config.path)));
+        watchedFiles.add(new HotDeploymentWatchedFileBuildItem((config.file)));
         return watchedFiles;
     }
 

@@ -8,8 +8,8 @@ import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 // end::adocTransactional[]
 import io.quarkus.workshop.superheroes.fight.client.VillainService;
-import io.smallrye.reactive.messaging.annotations.Channel;
-import io.smallrye.reactive.messaging.annotations.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 // tag::adocTransactional[]
