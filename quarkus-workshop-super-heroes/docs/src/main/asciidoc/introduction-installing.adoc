@@ -17,12 +17,20 @@ Instead of the Oracle distribution, you can use AdoptOpenJDK and download the JD
 Follows the instructions from https://adoptopenjdk.net/installation.html to download and install the JDK for your platform.
 
 There is also an easier way to download and install Java if you are on Mac OS X.
-You can use Homebrew to install JDK jdk-version using the following commands.footnote:[Homebrew https://brew.sh]
+You can use Homebrew to install OpenJDK {jdk-version} using the following commands.footnote:[Homebrew https://brew.sh]
 
 [source,shell]
 ----
-$ brew tap caskroom/versions
-$ brew cask install java8
+$ brew install java11
+----
+
+For linux distributions, there are also packaged java installations.
+[source, shell]
+----
+# dnf (rpm-based)
+dnf install java-11-openjdk
+# Debian-based distributions:
+$ apt-get install openjdk-11-jdk
 ----
 
 === Checking for Java Installation
@@ -33,11 +41,11 @@ Check that your system recognises Java by entering `java -version` as well as th
 [source,shell]
 ----
 $ java -version
-java version "1.8.0_201"
-Java(TM) SE Runtime Environment (build 1.8.0_201-b09)
-Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)
+openjdk version "11.0.10" 2021-01-19
+OpenJDK Runtime Environment (build 11.0.10+9)
+OpenJDK 64-Bit Server VM (build 11.0.10+9, mixed mode)
 $ javac -version
-javac 1.8.0_201
+javac 11.0.10
 ----
 
 == GraalVM
@@ -128,13 +136,14 @@ Maven should print its version and the JDK version it uses (which is handy as yo
 [source,shell]
 ----
 $ mvn -version
-Apache Maven 3.6.2
-Maven home: /usr/local/Cellar/maven/3.6.2/libexec
-Java version: 1.8.0_201, vendor: Oracle Corporation
-OS name: "mac os x", version: "10.14.2", arch: "x86_64", family: "mac"
+Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
+Maven home: /usr/local/Cellar/maven/3.8.1/libexec
+Java version: 11.0.10, vendor: Oracle Corporation, runtime: /usr/local/Cellar/openjdk@11/11.0.10/libexec/openjdk.jdk/Contents/Home
+Default locale: en_PT, platform encoding: UTF-8
+OS name: "mac os x", version: "11.2.2", arch: "x86_64", family: "mac"
 ----
 
-Be aware that Maven needs Internet access so it can download plugins and project dependencies from the Maven Central and/or other remote repositories.footnote:[Maven Central https://search.maven.org]
+Be aware that Maven needs Internet access, so it can download plugins and project dependencies from the Maven Central and/or other remote repositories.footnote:[Maven Central https://search.maven.org]
 
 === Some Maven Commands
 
