@@ -162,7 +162,23 @@ docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight L
 ----
 ====
 
-Once all the containers are up and running, you can shut them down with the commands:
+After this, verify the containers are running using the following command:
+[source, shell]
+----
+docker-compose -f docker-compose.yaml ps
+----
+The output should resemble something like this:
+[source, shell]
+----
+     Name                   Command               State           Ports
+--------------------------------------------------------------------------------
+kafka            sh -c bin/kafka-server-sta ...   Up      0.0.0.0:9092->9092/tcp
+super-database   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
+super-visor      /bin/prometheus --config.f ...   Up      0.0.0.0:9090->9090/tcp
+zookeeper        sh -c bin/zookeeper-server ...   Up      0.0.0.0:2181->2181/tcp
+----
+
+Once all the containers are up and running, you can shut them down and remove their volumes with the commands:
 
 [source, shell]
 ----
