@@ -37,9 +37,11 @@ Once you bootstrap the project, you get the following directory structure with a
 T
 super-heroes
 +  rest-hero
+++  .mvn
 ++  src
 +++  main
 ++++  docker
++++++  Dockerfile.fast-jar
 +++++  Dockerfile.jvm
 +++++  Dockerfile.native
 ++++  java
@@ -63,9 +65,12 @@ super-heroes
 +++++++++  hero
 ++++++++++  HeroResourceTest.java
 ++++++++++  NativeHeroResourceIT.java
+++  .dockerignore
+++  .gitignore
 ++  mvnw
 ++  mvnw.cmd
 ++  pom.xml
+++  README.md
 }
 }
 @endsalt
@@ -138,7 +143,7 @@ Now we are ready to run our application.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-Use: `./mvnw quarkus:dev`:
+Use: `./mvnw quarkus:dev` in the `rest-hero` directory:
 
 [source,shell]
 ----
@@ -160,7 +165,7 @@ Listening for transport dt_socket at address: 5005
 
 Then check that the endpoint returns `hello` as expected:
 
-[source,shell]Now we are ready to run our application
+[source,shell]
 ----
 $ curl http://localhost:8080/api/heroes
 hello
@@ -184,7 +189,8 @@ If you don't want the debugger at all you can use `-Ddebug=false`.
 Alright, time to change some code.
 Open your favorite IDE and import the project.
 To check that the hot reload is working, update the method `HeroResource.hello()` by returning the String "hello hero".
-Now, execute the cUrl command again, the output has changed without you to having to stop and restart Quarkus:
+
+Now, execute the cUrl command again:
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
@@ -193,6 +199,8 @@ icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 $ curl http://localhost:8080/api/heroes
 hello hero
 ----
+
+The output has changed without you to having to stop and restart Quarkus!
 
 == Testing the Application
 
@@ -264,7 +272,9 @@ You can run the application using: `java -jar target/rest-hero-1.0-SNAPSHOT-runn
 Before running the application, don't forget to stop the hot reload mode (hit CTRL+C), or you will have a port conflict.
 ====
 
-== Troubleshooting
+[WARNING]
+====
+.Troubleshooting
 
 You might come across the following error while developing:
 
