@@ -120,7 +120,7 @@ $ lsof -i tcp:9092    // Kafka
 
 == Warming up Maven
 
-Now that you have the initial structure in place, navigate to the the root directory and run:
+Now that you have the initial structure in place, navigate to the root directory and run:
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
@@ -137,30 +137,48 @@ By running this command, it downloads all the required dependencies.
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
+
 Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which defines all the needed Docker images.
-Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases and a `monitoring` directory (all that will be explained later).
+Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
+
+Then execute `docker-compose -f docker-compose.yaml up -d`.
+This will download all the Docker images and start the containers.
 
 [WARNING]
-.Linux User
+.Linux Users beware
 ====
-If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose`.yaml
+If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose.yaml`. This linux specific file will allow `prometheus` to fetch metrics from the services running on the host machine.
 ====
-
-Then execute `docker-compose -f docker-compose.yaml up -d` or `docker-compose -f docker-compose-linux.yaml up -d` on Linux.
-This will download all the Docker images and start the containers.
 
 [WARNING]
 ====
 If you have an issue creating the roles for the database with the `initialize-databases.sql` file, you have to execute the following commands:
 
-```
+[source, shell]
+----
 docker exec -it --user postgres super-database psql -c "CREATE ROLE superman LOGIN PASSWORD 'superman' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
 docker exec -it --user postgres super-database psql -c "CREATE ROLE superbad LOGIN PASSWORD 'superbad' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
 docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight LOGIN PASSWORD 'superfight' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
-```
+----
 ====
 
-Once all the containers are up and running, you can shut them down with the commands:
+After this, verify the containers are running using the following command:
+[source, shell]
+----
+docker-compose -f docker-compose.yaml ps
+----
+The output should resemble something like this:
+[source, shell]
+----
+     Name                   Command               State           Ports
+--------------------------------------------------------------------------------
+kafka            sh -c bin/kafka-server-sta ...   Up      0.0.0.0:9092->9092/tcp
+super-database   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
+super-visor      /bin/prometheus --config.f ...   Up      0.0.0.0:9090->9090/tcp
+zookeeper        sh -c bin/zookeeper-server ...   Up      0.0.0.0:2181->2181/tcp
+----
+
+Once all the containers are up and running, you can shut them down and remove their volumes with the commands:
 
 [source, shell]
 ----
@@ -178,5 +196,5 @@ This infrastructure starts all these services, so you don't have to worry about 
 
 == Ready?
 
-Prerequisites has been installed, the different components have been warmed up,  it's now time to write some code!
+After Prerequisites have been installed, and the different components been warmed up,  it's now time to write some code!
 
