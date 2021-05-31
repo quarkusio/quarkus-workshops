@@ -26,11 +26,11 @@
     <name>Quarkus Workshop :: Docs</name>
 
     <properties>
-        <version.asciidoctor.maven.plugin>2.0.0-RC.1</version.asciidoctor.maven.plugin>
-        <version.jruby>9.2.7.0</version.jruby>
-        <version.asciidoctorj>2.1.0</version.asciidoctorj>
-        <version.asciidoctorj.pdf>1.5.0-alpha.18</version.asciidoctorj.pdf>
-        <version.asciidoctorj.diagram>1.5.18</version.asciidoctorj.diagram>
+        <version.asciidoctor.maven.plugin>2.1.0</version.asciidoctor.maven.plugin>
+        <version.jruby>9.2.17.0</version.jruby>
+        <version.asciidoctorj>2.5.1</version.asciidoctorj>
+        <version.asciidoctorj.pdf>1.6.0</version.asciidoctorj.pdf>
+        <version.asciidoctorj.diagram>2.1.2</version.asciidoctorj.diagram>
         <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
         <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
         <maven.compiler.source>11</maven.compiler.source>
