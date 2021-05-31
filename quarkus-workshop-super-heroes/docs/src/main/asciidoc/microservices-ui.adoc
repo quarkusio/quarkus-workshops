@@ -9,7 +9,7 @@ This time you will just download an Angular application, install it, and run it 
 
 == The Web Application
 
-Navigate to the `super-heroes/ui-super-heroes/ui-super-heroes` directory.
+Navigate to the `super-heroes/ui-super-heroes` directory.
 It contains the code of the microservice.
 Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
 Notice that there is a `pom.xml` file.
@@ -49,6 +49,12 @@ It's just a matter of running:
 $ swagger-codegen generate -i http://localhost:8082/openapi -l typescript-angular -o src/app/shared
 ----
 
+[WARNING]
+.Don't skip this step
+====
+Install swagger-codegen, instructions given in its https://github.com/swagger-api/swagger-codegen#prerequisites[readme page]. This is necessary for the following steps, as they rely on this generated typescript code.
+====
+
 Here, you see another advantage of exposing an OpenAPI contract:
 it documents the API which can be read by a human, or processed by tools.
 
@@ -58,7 +64,7 @@ Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can u
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-Execute `mvn install` and Maven will download and install Node JS and NPM and build the application.
+Execute `mvn install -Pbuild-ui` and Maven will download and install Node JS and NPM and build the application.
 You should now have a `node_modules` directory with all the Angular dependencies.
 At this stage, make sure the following commands work:
 
