@@ -298,3 +298,4 @@ Then `sudo vi /etc/hosts` so you have the rights to edit the file and add the fo
 ----
 127.0.0.1 localhost my-node.local
 ----
+====
