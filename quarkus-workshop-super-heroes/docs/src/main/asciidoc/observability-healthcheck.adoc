@@ -73,9 +73,9 @@ Importing the `smallrye-health` extension directly exposes three REST endpoints:
 
 To check that the `smallrye-health` extension is working as expected, access using your browser or cURL:
 
-* http://localhost:8083/health/live
-* http://localhost:8083/health/ready
-* http://localhost:8083/health
+* http://localhost:8083/q/health/live
+* http://localhost:8083/q/health/ready
+* http://localhost:8083/q/health
 
 All of the health REST endpoints return a simple JSON object with two fields:
 
@@ -99,12 +99,12 @@ include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/s
 ----
 
 As you can see health check procedures are defined as implementations of the `HealthCheck` interface which are defined as CDI beans with the CDI qualifier `@Liveness`.
-The liveness check accessible at `/health/live`.
+The liveness check accessible at `/q/health/live`.
 `HealthCheck` is a functional interface whose single method `call` returns a `HealthCheckResponse` object which can be easily constructed by the fluent builder API shown in the example.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
-As we have started our Quarkus application in dev mode simply repeat the request to http://localhost:8083/health/live by refreshing your browser window or by using curl http://localhost:8083/health/live.
+As we have started our Quarkus application in dev mode simply repeat the request to http://localhost:8083/q/health/live by refreshing your browser window or by using curl http://localhost:8083/health/live.
 Because we defined our health check to be a liveness procedure (with `@Liveness` qualifier) the new health check procedure is now present in the checks array.
 
 [source,json]
@@ -137,8 +137,8 @@ Create the `io.quarkus.workshop.superheroes.hero.health.DatabaseConnectionHealth
 include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/DatabaseConnectionHealthCheck.java[tags=adocDatabaseConnection]
 ----
 
-If you now rerun the health check at http://localhost:8083/health/live the checks array will contain only the previously defined `PingHeroResourceHealthCheck` as it is the only check defined with the `@Liveness` qualifier.
-However, if you access http://localhost:8083/health/ready (in the browser or with curl http://localhost:8083/health/ready) you will see only the Database connection health check as it is the only health check defined with the `@Readiness` qualifier as the readiness health check procedure.
+If you now rerun the health check at http://localhost:8083/q/health/live the checks array will contain only the previously defined `PingHeroResourceHealthCheck` as it is the only check defined with the `@Liveness` qualifier.
+However, if you access http://localhost:8083/q/health/ready (in the browser or with curl http://localhost:8083/q/health/ready) you will see only the Database connection health check as it is the only health check defined with the `@Readiness` qualifier as the readiness health check procedure.
 If you access http://localhost:8083/health you will get back both checks.
 
 [source,json]

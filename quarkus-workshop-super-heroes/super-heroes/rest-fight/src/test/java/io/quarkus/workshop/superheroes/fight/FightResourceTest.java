@@ -52,7 +52,7 @@ public class FightResourceTest {
     void shouldPingOpenAPI() {
         given()
             .header(ACCEPT, APPLICATION_JSON)
-            .when().get("/openapi")
+            .when().get("/q/openapi")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -60,7 +60,7 @@ public class FightResourceTest {
     @Test
     void shouldPingSwaggerUI() {
         given()
-            .when().get("/swagger-ui")
+            .when().get("/q/swagger-ui")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -69,7 +69,7 @@ public class FightResourceTest {
     @Test
     void shouldPingLiveness() {
         given()
-            .when().get("/health/live")
+            .when().get("/q/health/live")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -77,7 +77,7 @@ public class FightResourceTest {
     @Test
     void shouldPingReadiness() {
         given()
-            .when().get("/health/ready")
+            .when().get("/q/health/ready")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -88,7 +88,7 @@ public class FightResourceTest {
     void shouldPingMetrics() {
         given()
             .header(ACCEPT, APPLICATION_JSON)
-            .when().get("/metrics/application")
+            .when().get("/q/metrics/application")
             .then()
             .statusCode(OK.getStatusCode());
     }

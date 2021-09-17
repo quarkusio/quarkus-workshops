@@ -46,7 +46,7 @@ public class NativeHeroResourceIT {
     void shouldPingOpenAPI() {
         given()
             .header(ACCEPT, APPLICATION_JSON)
-            .when().get("/openapi")
+            .when().get("/q/openapi")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -57,7 +57,7 @@ public class NativeHeroResourceIT {
     @Test
     void shouldPingLiveness() {
         given()
-            .when().get("/health/live")
+            .when().get("/q/health/live")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -65,7 +65,7 @@ public class NativeHeroResourceIT {
     @Test
     void shouldPingReadiness() {
         given()
-            .when().get("/health/ready")
+            .when().get("/q/health/ready")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -76,7 +76,7 @@ public class NativeHeroResourceIT {
     void shouldPingMetrics() {
         given()
             .header(ACCEPT, APPLICATION_JSON)
-            .when().get("/metrics/application")
+            .when().get("/q/metrics/application")
             .then()
             .statusCode(OK.getStatusCode());
     }

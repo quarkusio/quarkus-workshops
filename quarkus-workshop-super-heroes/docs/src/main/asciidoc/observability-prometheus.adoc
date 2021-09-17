@@ -16,7 +16,7 @@ This is made under our `infrastructure` directory, in the `prometheus.yml` file:
 include::{github-raw}/super-heroes/infrastructure/monitoring/prometheus.yml[tags=adocPrometheus]
 ----
 
-This file contains basic Prometheus configuration, plus a specific `scrape_config` which instructs Prometheus to look for application metrics from both Prometheus itself, and our Quarkus microservices at the `/metrics` endpoint.
+This file contains basic Prometheus configuration, plus a specific `scrape_config` which instructs Prometheus to look for application metrics from both Prometheus itself, and our Quarkus microservices at the `/q/metrics` endpoint.
 
 [NOTE]
 ====

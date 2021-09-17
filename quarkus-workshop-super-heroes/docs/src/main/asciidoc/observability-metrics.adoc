@@ -70,7 +70,7 @@ include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/s
 
 == Reviewing the Generated Metrics
 
-To view the metrics, execute `curl -H "Accept: application/json" http://localhost:8083/metrics/application`.
+To view the metrics, execute `curl -H "Accept: application/json" http://localhost:8083/q/metrics/application`.
 You will receive a response such as:
 
 [source,json]

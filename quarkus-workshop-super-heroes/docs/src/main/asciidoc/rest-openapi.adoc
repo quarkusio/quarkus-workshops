@@ -59,11 +59,11 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyOpenAPI]
 
 == Open API
 
-Now, you _curl_ `http://localhost:8083/openapi` endpoint:
+Now, you _curl_ `http://localhost:8083/q/openapi` endpoint:
 
 [source,shell]
 ----
-$ curl http://localhost:8083/openapi
+$ curl http://localhost:8083/q/openapi
 include::{github-raw}/super-heroes/rest-hero/openapi-origin.yaml[]
 ----
 
@@ -104,7 +104,7 @@ include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/s
 
 === Customized Contract
 
-If you go back to the `http://localhost:8083/openapi` endpoint you will see the following OpenAPI contract:
+If you go back to the `http://localhost:8083/q/openapi` endpoint you will see the following OpenAPI contract:
 
 [source,yaml]
 ----

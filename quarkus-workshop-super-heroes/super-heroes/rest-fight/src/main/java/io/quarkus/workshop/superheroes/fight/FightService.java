@@ -76,7 +76,7 @@ public class FightService {
         fight.fightDate = Instant.now();
         fight.persist(fight);
         // tag::adocKafka[]
-        emitter.send(fight);
+        emitter.send(fight).toCompletableFuture().join();
         // end::adocKafka[]
         return fight;
     }
