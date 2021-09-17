@@ -29,6 +29,6 @@ public class QuackProcessor {
         QuackConfig config,
         VertxWebRouterBuildItem router) {
         feature.produce(new FeatureBuildItem("quack"));
-        recorder.configure(config, router.getRouter());
+        recorder.configure(config, router.getHttpRouter());
     }
 }

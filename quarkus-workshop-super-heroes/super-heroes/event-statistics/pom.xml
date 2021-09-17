@@ -11,7 +11,7 @@
     <properties>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <surefire-plugin.version>2.22.0</surefire-plugin.version>
-        <quarkus.version>1.12.0.Final</quarkus.version>
+        <quarkus.version>2.2.3.Final</quarkus.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -100,6 +100,9 @@
     <profiles>
         <profile>
             <id>native</id>
+            <properties>
+                <quarkus.package.type>native</quarkus.package.type>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -108,9 +111,6 @@
                         <version>${quarkus.version}</version>
                         <executions>
                             <execution>
-                                <goals>
-                                    <goal>native-image</goal>
-                                </goals>
                                 <configuration>
                                     <enableHttpUrlHandler>true</enableHttpUrlHandler>
                                 </configuration>

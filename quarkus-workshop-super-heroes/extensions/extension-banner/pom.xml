@@ -31,7 +31,7 @@
     </modules>
 
     <properties>
-        <quarkus.version>1.12.0.Final</quarkus.version>
+        <quarkus.version>2.2.3.Final</quarkus.version>
         <surefire-plugin.version>2.22.0</surefire-plugin.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
