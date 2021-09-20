@@ -15,11 +15,11 @@ Depending on the messaging protocol you use, it may handle durability (avoiding 
 In this section, we are going to see how Quarkus let you build event-driven microservices.
 More specially, you are going to see how to:
 
-* send messages and process them
-* connect a Quarkus application to Apache Kafka
-* write Kafka records and read them
-* use reactive programming to compute statistics on the fly
-* how to send messages to the browser using web sockets
+* Send messages and process them
+* Connect a Quarkus application to Apache Kafka
+* Write Kafka records and read them
+* Use reactive programming to compute statistics on the fly
+* How to send messages to the browser using web sockets
 
 Quarkus uses MicroProfile Reactive Messaging to interact with Kafka, and other messaging middleware (such as AMQP).footnote:[MicroProfile Reactive Messaging https://github.com/eclipse/microprofile-reactive-messaging]
 

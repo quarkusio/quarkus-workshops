@@ -376,7 +376,7 @@ $ kubectl apply -f deployment-villain.yaml
 Follow the same approach for the fight microservice.
 Note that there are more properties to configure from the config map:
 
-*  the location of the hero and villain microservice
-* the location of the Kafka broker.
+* The location of the hero and villain microservice
+* The location of the Kafka broker
 
 Once everything is configured and deployed, your system is now running on Kubernetes.

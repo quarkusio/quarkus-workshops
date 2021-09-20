@@ -38,10 +38,10 @@ super-heroes
 
 This microservice:
 
-* interacts with a PostGreSQL database - so it needs a driver
-* uses Hibernate with Panache - so need the dependency on it
-* validates payloads and entities - so need a validator
-* consumes and produces JSON - so we need a mapper
+* Interacts with a PostGreSQL database - so it needs a driver
+* Uses Hibernate with Panache - so need the dependency on it
+* Validates payloads and entities - so need a validator
+* Consumes and produces JSON - so we need a mapper
 
 Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
 It makes complex mappings possible, but it does not make simple and common mappings trivial.

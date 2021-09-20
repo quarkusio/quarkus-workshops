@@ -53,8 +53,8 @@ include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/s
 
 Thanks to the CDI `@Observes`, the `HeroApplicationLifeCycle` is invoked:
 
-* on startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
-* on shutdown with the `ShutdownEvent` when the application is terminating
+* On startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
+* On shutdown with the `ShutdownEvent` when the application is terminating
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 

@@ -27,12 +27,12 @@ Without the full context, the best that can be achieved is partial and limited g
 
 To build an extension, Quarkus provides a framework to:
 
-* read configuration from the `application.properties` file and map it to objects,
-* read metadata from classes without having to load them, this includes classpath and annotation scanning,
-* generate bytecode if needed (for proxies for instance),
-* pass sensible defaults to the application,
-* make the application compatible with GraalVM (resources, reflection, substitutions),
-* implement hot-reload
+* Read configuration from the `application.properties` file and map it to objects,
+* Read metadata from classes without having to load them, this includes classpath and annotation scanning,
+* Generate bytecode if needed (for proxies for instance),
+* Pass sensible defaults to the application,
+* Make the application compatible with GraalVM (resources, reflection, substitutions),
+* Implement hot-reload
 
 == Structure of an extension
 
@@ -54,9 +54,9 @@ include::{github-raw}/extensions/extension-banner/bootstrap.sh[tag=adocSnippet]
 
 This script creates the structure for the banner extension:
 
-* one parent `pom.xml` importing the `quarkus-bom`
-* a module for the runtime
-* a module for the deployment, with a dependency on the runtime artifact
+* One parent `pom.xml` importing the `quarkus-bom`
+* A module for the runtime
+* A module for the deployment, with a dependency on the runtime artifact
 
 The final structure of the extension developed in this section is the following:
 

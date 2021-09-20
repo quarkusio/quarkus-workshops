@@ -39,9 +39,10 @@ super-heroes
 ++  src
 +++  main
 ++++  docker
-+++++  Dockerfile.fast-jar
 +++++  Dockerfile.jvm
++++++  Dockerfile.legacy-jar
 +++++  Dockerfile.native
++++++  Dockerfile.native-distroless
 ++++  java
 +++++  io
 ++++++  quarkus
@@ -76,12 +77,12 @@ super-heroes
 
 The Maven archetype generates the following `rest-hero` sub-directory:
 
-* the Maven structure with a `pom.xml`
-* an `io.quarkus.workshop.superheroes.hero.HeroResource` resource exposed on `/api/heroes`
-* an associated unit test `HeroResourceTest`
-* the landing page `index.html` that is accessible on http://localhost:8080 after starting the application
-* example `Dockerfile` files for both native and jvm modes in `src/main/docker`
-* the `application.properties` configuration file
+* The Maven structure with a `pom.xml`
+* An `io.quarkus.workshop.superheroes.hero.HeroResource` resource exposed on `/api/heroes`
+* An associated unit test `HeroResourceTest`
+* The landing page `index.html` that is accessible on http://localhost:8080 after starting the application
+* Example `Dockerfile` files for both native and jvm modes in `src/main/docker`
+* The `application.properties` configuration file
 
 Once generated, look at the `pom.xml`.
 You will find the import of the Quarkus BOM, allowing you to omit the version on the different Quarkus dependencies.
@@ -128,12 +129,12 @@ public class HeroResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return "hello";
+        return "Hello RESTEasy";
     }
 }
 ----
 
-It's a very simple REST endpoint, returning "hello" to requests on `/api/heroes`.
+It's a very simple REST endpoint, returning "Hello RESTEasy" to requests on `/api/heroes`.
 
 == Running the Application
 
@@ -149,14 +150,14 @@ $ ./mvnw quarkus:dev
 [INFO] Scanning for projects...
 [INFO]
 [INFO] -------------< io.quarkus.workshop.super-heroes:rest-hero >-------------
-[INFO] Building rest-hero 1.0-SNAPSHOT
+[INFO] Building rest-hero 1.0.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- quarkus-maven-plugin:1.9.2.Final:dev (default-cli) @ rest-hero ---
+[INFO] --- quarkus-maven-plugin:2.2.3.Final:dev (default-cli) @ rest-hero ---
 [INFO] Changes detected - recompiling the module!
 [INFO] Compiling 1 source file to /Users/clement/Downloads/quarkus-super-heroes-workshop/super-heroes/rest-hero/target/classes
 Listening for transport dt_socket at address: 5005
-2020-01-28 15:09:02,111 INFO  [io.quarkus] (main) rest-hero 1.0-SNAPSHOT (running on Quarkus 1.9.2.Final) started in 2.161s. Listening on: http://0.0.0.0:8080
+2020-01-28 15:09:02,111 INFO  [io.quarkus] (main) rest-hero 1.0-SNAPSHOT (running on Quarkus 2.2.3.Final) started in 2.161s. Listening on: http://0.0.0.0:8080
 2020-01-28 15:09:02,123 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
 2020-01-28 15:09:02,124 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
 ----
@@ -166,7 +167,7 @@ Then check that the endpoint returns `hello` as expected:
 [source,shell]
 ----
 $ curl http://localhost:8080/api/heroes
-hello
+Hello RESTEasy
 ----
 
 Alternatively, you can open http://localhost:8080/api/heroes in your browser.
