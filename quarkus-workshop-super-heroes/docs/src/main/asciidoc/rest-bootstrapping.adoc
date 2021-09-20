@@ -1,8 +1,6 @@
 [[rest-bootstrapping]]
 = Hero Microservice
 
-:icons: font
-
 First thing first, we need a project.
 That's what your are going to see in this section.
 

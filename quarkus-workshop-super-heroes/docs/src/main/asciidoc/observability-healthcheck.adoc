@@ -1,8 +1,6 @@
 [[observability-healthcheck]]
 = Health Check
 
-:icons: font
-
 Quarkus applications can utilize the MicroProfile Health specification through the SmallRye Health extension.
 The MicroProfile Health allows applications to provide information about their state to external viewers which is typically useful in cloud environments where automated processes must be able to determine whether the application should be discarded or restarted.footnote:[MicroProfile Health https://microprofile.io/project/eclipse/microprofile-health]
 

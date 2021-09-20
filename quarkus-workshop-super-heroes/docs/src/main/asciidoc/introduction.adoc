@@ -3,30 +3,30 @@
 
 '''
 
-Let's start from the beginning..​.
+Let's start from the beginning...
 Quarkus.
 What's Quarkus?
 That's a pretty good question, and probably a good start.
-If you go on the https://quarkus.io[Quarkus web site], Quarkus is "_A Kubernetes Native Java stack tailored for OpenJDK HotSpot & GraalVM, crafted from the best of breed Java libraries and standards_".
+If you go to the https://quarkus.io[Quarkus web site], you'll read that Quarkus is "_A Kubernetes Native Java stack tailored for OpenJDK HotSpot & GraalVM, crafted from the best of breed Java libraries and standards_".
 This description is rather unclear, but does a very good job at using bankable keywords, right?
-It's also written: "Supersonic Subatomic Java".
+It's also written: "_Supersonic Subatomic Java_".
 Still very foggy.
 In practice, Quarkus is an Open Source stack to write Java applications, specifically backend applications.
-In this lab, we are going to explain what Quarkus is, and, because the best way to understand Quarkus is to use it, build a set of microservices with it.
+In this workshop, we are going to explain what Quarkus is, and, because the best way to understand Quarkus is to use it, build a set of microservices with it.
 Don't be mistaken, Quarkus is not limited to microservices, and we are going to learn about this in the workshop.
 
 
-This lab offers attendees an intro-level, hands-on session with Quarkus, from the first line of code to making services, to consuming them, and finally to assembling everything in a consistent system.
+This workshop offers attendees an intro-level, hands-on session with Quarkus, from the first line of code to making services, to consuming them, and finally to assembling everything in a consistent system.
 But, what are we going to build?
 Well, it's going to be a set of microservices (we want to be trendy):
 
-* using Quarkus
-* using HTTP and events (Kafka)
-* with some parts of the dark side of microservices (monitoring (Prometheus), resilience)
-* answer the ultimate question: are super heroes stronger than super villains?
+* Using Quarkus
+* Using HTTP and events (Kafka)
+* With some parts of the dark side of microservices (resilience, monitoring with Prometheus)
+* Answer the ultimate question: are super heroes stronger than super villains?
 
-This workshop is a BYOL (Bring Your Own Laptop) session, so bring your Windows, OSX, or Linux laptop.
-You need JDK 8+ on your machine, Apache Maven (3.6+), and Docker.
+This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows, OSX, or Linux laptop.
+You need JDK 11+ on your machine, Apache Maven (3.6+), and Docker.
 On Windows, some parts may be qualified as _experimental_.
 On Mac and Windows, Docker for _x_ is recommended instead of the Docker toolbox setup.
 
@@ -34,14 +34,14 @@ What you are going to learn:
 
 * What is Quarkus and how you can use it
 * How to build an HTTP endpoint (REST API) with Quarkus
-* How to access a database
+* How to access a relational database
 * How you can use Swagger and OpenAPI
 * How you test your microservice
 * How you improve the resilience of your service
 * How to build event-driven and reactive microservices with Kafka
-* How to build native executable
+* How to build a native executable
 * How to extend Quarkus with extensions
-* And many more…​
+* And much more...
 
 Ready? Here we go!
 

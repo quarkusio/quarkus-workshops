@@ -48,7 +48,7 @@ $ javac -version
 javac 11.0.10
 ----
 
-== GraalVM
+== GraalVM {graalvm-version}
 
 GraalVM is an extension of the _Java Virtual Machine_ (JVM) to support more languages and several execution modes.footnote:[GraalVM https://www.graalvm.org]
 It supports a large set of languages:
@@ -104,10 +104,10 @@ Once installed and setup, you should be able to run the following command and ge
 [source,shell]
 ----
 $ $GRAALVM_HOME/bin/native-image --version
-GraalVM Version 19.2.1 CE
+GraalVM Version 21.2.0 CE
 ----
 
-== Maven 3.6.x
+== Maven {maven-version}
 
 All the examples of this workshop are built and tested using Maven.footnote:[Maven https://maven.apache.org]
 Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork and so forth.
@@ -116,7 +116,7 @@ With an extensible architecture based on plugins, Maven can offer many different
 
 === Installing Maven
 
-The examples of this workshop have been developed with Apache Maven 3.6.x.
+The examples of this workshop have been developed with Apache Maven {maven-version}.
 Once you have installed JDK {jdk-version}, make sure the `JAVA_HOME` environment variable is set.
 Then, download Maven from http://maven.apache.org/, unzip the file on your hard drive, and add the `apache-maven/bin` directory to your `PATH` variable.
 More details about the installation process is available on https://maven.apache.org/install.html.

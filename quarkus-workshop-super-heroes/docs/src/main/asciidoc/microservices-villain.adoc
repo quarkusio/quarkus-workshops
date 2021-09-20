@@ -1,8 +1,6 @@
 [[microservices-villain]]
 = Villain Microservice
 
-:icons: font
-
 New microservice, new project!
 In this section we will see the counterpart of the Hero microservice: the Villain microservice!
 The Villain REST Endpoint is *really* similar to the Hero Endpoint.

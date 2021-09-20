@@ -1,8 +1,6 @@
 [[microservices-fight]]
 = Fight Microservice
 
-:icons: font
-
 Ok, let's develop another microservice.
 We have a REST API that returns a random Hero.
 Another REST API that returns a random Villain...

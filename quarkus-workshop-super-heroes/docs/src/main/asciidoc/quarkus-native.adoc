@@ -1,8 +1,6 @@
 [[quarkus-native]]
 = From Java to Native
 
-:icons: font
-
 == Building a Native Executable
 
 Let's now produce a native executable for our application.
@@ -15,7 +13,7 @@ The executable would have everything to run the application including the "JVM" 
 [NOTE]
 --
 Choosing JVM execution vs native executable execution depends on your application needs and environment.
-Discuss with the lab organizers for some insights
+Discuss with the workshop organizers for some insights
 --
 
 To do so, you will find in the `pom.xml` the following profile:

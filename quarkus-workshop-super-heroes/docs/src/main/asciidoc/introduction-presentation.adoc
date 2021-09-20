@@ -13,7 +13,7 @@ Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
 ifdef::give-solution[]
 [NOTE]
 ====
-Get this workshop from https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes
+Get this workshop from {github-url}.
 ====
 endif::give-solution[]
 
@@ -52,7 +52,7 @@ The structure of this workshop is as follow :
 in this section you will install all the tools and code to be able to develop, compile and execute our application
 * _Developing with Quarkus_:
 in this section you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
-* Extending Quarkus:
+* _Extending Quarkus_:
 in this section you will create a Quarkus extension
 
 If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Developing with Quarkus_ and _Extending Quarkus_, and start hacking some code and addons.
@@ -76,9 +76,9 @@ If you are using Mac OS X make sure the version is greater than 10.11.x (Captain
 This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
-* JDK 11
-* GraalVM 19.2.1 or 19.3.1
-* Maven 3.6.x
+* JDK {jdk-version}
+* GraalVM {graalvm-version}
+* Maven {maven-version}
 * Docker
 * cURL (or any other command line HTTP client)
 * Node JS (optional, only if you are in a _frontend_ mood)

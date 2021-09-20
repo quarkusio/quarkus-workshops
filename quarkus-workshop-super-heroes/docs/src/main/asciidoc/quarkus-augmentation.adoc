@@ -1,6 +1,5 @@
 [[quarkus-augmentation]]
 = Quarkus Augmentation
-:icons: font
 
 Let's demystify all this.
 

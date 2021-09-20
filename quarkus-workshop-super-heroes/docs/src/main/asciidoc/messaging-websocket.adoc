@@ -1,7 +1,5 @@
 = Sending Events on WebSockets
 
-:icons: font
-
 At this point, you read the _fights_ from Kafka and computes statistics.
 Actually, even if you start the application, nothing will happen as nobody consumes these statistics.
 

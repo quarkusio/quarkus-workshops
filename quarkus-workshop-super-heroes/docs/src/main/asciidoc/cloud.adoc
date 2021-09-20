@@ -1,8 +1,6 @@
 [[cloud]]
 = Containers & Cloud (optional)
 
-:icons: font
-
 '''
 
 This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.

@@ -1,8 +1,6 @@
 [[microservices-ui]]
 = User Interface
 
-:icons: font
-
 Now that we have the three main microservices, time to have a decent user interface to start fighting.
 The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
 This time you will just download an Angular application, install it, and run it on another Quarkus instance.

@@ -1,8 +1,6 @@
 [[rest-openapi]]
 = Open API
 
-:icons: font
-
 By default, a Quarkus application exposes its API description through an OpenAPI specification.
 Quarkus also lets you test it via a user-friendly UI named Swagger UI.
 

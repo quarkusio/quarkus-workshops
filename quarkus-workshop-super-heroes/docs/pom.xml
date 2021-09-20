@@ -31,8 +31,8 @@
         <version.asciidoctorj>2.5.2</version.asciidoctorj>
         <version.asciidoctorj.pdf>1.6.0</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>2.2.1</version.asciidoctorj.diagram>
-        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/master/quarkus-workshop-super-heroes</github.raw>
-        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/master/quarkus-workshop-super-heroes</github.url>
+        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
+        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/main/quarkus-workshop-super-heroes</github.url>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -70,17 +70,19 @@
                 </dependencies>
                 <configuration>
                     <requires>
-                        <require>asciidoctor-diagram</require>​
+                        <require>asciidoctor-diagram</require>
                     </requires>
                     <relativeBaseDir>true</relativeBaseDir>
                     <attributes>
                         <!-- Allows access to remote files (e.g. code on external GitHub) -->
                         <allow-uri-read/>
+                        <icons>font</icons>
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
                         <give-solution>true</give-solution>
                         <jdk-version>${maven.compiler.source}</jdk-version>
-                        <graalvm-version>19.2.1</graalvm-version>
+                        <graalvm-version>21.2.0</graalvm-version>
+                        <maven-version>3.8.x</maven-version>
                     </attributes>
                 </configuration>
                 <executions>

@@ -23,7 +23,7 @@
     <artifactId>super-parent-root</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <name>Quarkus Workshop :: Super-Heroes - R00T</name>
+    <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
 
     <!--
     This pom file is a convenient way to build the complete workshop. It is not intended to be a parent pom file.

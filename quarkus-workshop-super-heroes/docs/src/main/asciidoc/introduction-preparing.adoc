@@ -1,8 +1,6 @@
 [[introduction-preparing]]
 = Preparing for the Workshop
 
-:icons: font
-
 This workshop needs internet access to download all sorts of Maven artifacts, Docker images and even pictures.
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
 Here are a few commands that you can execute before the workshop.
@@ -43,8 +41,9 @@ The final structure will be the following:
 T
 quarkus-workshop-super-heroes
 + super-heroes
-++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
 ++ event-statistics        | UI and application dealing with fight statistics (you will create it)
+++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
+++ kubernetes              | All the needed files to deploy on Kubernetes
 ++ load-super-heroes       | Stress tool loading heroes, villains and fights
 ++ rest-fight              | REST API allowing super heroes to fight (you will create it)
 ++ rest-hero               | REST API for CRUD operations on Heroes (you will create it)

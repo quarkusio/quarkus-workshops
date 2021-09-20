@@ -1,8 +1,6 @@
 [[observability-metrics]]
 = Metrics
 
-:icons: font
-
 MicroProfile Metrics allows applications to gather various metrics and statistics that provide insights into what is happening inside the application.footnote:[MicroProfile Metrics https://microprofile.io/project/eclipse/microprofile-metrics]
 The metrics can be read remotely using JSON format or the OpenMetrics format, so that they can be processed by additional tools such as Prometheus, and stored for analysis and visualisation.footnote:[OpenMetrics https://openmetrics.io]
 

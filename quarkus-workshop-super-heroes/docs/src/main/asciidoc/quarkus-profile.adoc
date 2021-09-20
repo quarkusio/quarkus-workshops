@@ -1,8 +1,6 @@
 [[quarkus-profile]]
 = Configuration Profiles
 
-:icons: font
-
 Quarkus supports the notion of configuration profiles.
 These allow you to have multiple configuration in the same file and select between them via a profile name.
 

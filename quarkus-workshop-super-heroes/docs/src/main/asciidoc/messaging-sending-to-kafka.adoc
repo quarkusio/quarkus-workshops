@@ -1,7 +1,5 @@
 = Sending Messages to Kafka
 
-:icons: font
-
 In this section, you are going to see how you can send messages to a Kafka topic.footnote:[Kafka Topic https://kafka.apache.org/intro#intro_topics]
 
 == Directory Structure
