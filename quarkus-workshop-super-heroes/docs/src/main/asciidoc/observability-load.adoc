@@ -22,7 +22,7 @@ include::{github-raw}/super-heroes/load-super-heroes/src/main/java/io/quarkus/wo
 
 == Running the Load Application
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 You are all set!
 Time to compile and start the load application using:

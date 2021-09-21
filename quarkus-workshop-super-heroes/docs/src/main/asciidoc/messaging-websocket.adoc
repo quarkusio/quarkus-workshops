@@ -14,7 +14,7 @@ Quarkus uses the http://jcp.org/en/jsr/detail?id=356[JSR 356] providing an annot
 
 == The TeamStats WebSocket
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
 
@@ -41,7 +41,7 @@ Without it, items would not be emitted.
 
 The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
 
@@ -56,7 +56,7 @@ Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also 
 
 Finally, you need a UI to watch these live statistics.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 
 Replace the `META-INF/resources/index.html` file with the following content:
@@ -70,7 +70,7 @@ include::{github-raw}/super-heroes/event-statistics/src/main/resources/META-INF/
 
 You are all set!
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Time to start the application using:
 

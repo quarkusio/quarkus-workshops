@@ -62,13 +62,13 @@ If you look at the code, it's very similar to the hero microservice.
 
 == Running, Testing and Packaging the Application
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 
 Now that the tests are green, we are ready to run our application.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Use `./mvnw quarkus:dev` to start it (notice the nice banner).
 Once the application is started, create a new villain with the following cURL command:

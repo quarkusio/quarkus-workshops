@@ -45,7 +45,7 @@ You can apply the same to the other microservices.
 
 == Installing the Health Dependency
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To install the MicroProfile Health dependency, just run the following command:
 
@@ -87,7 +87,7 @@ The checks array is empty as we have not specified any health check procedure ye
 
 To check that our Hero API application is live, we can check that the `HeroResource.hello()` method works.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, this is the `PingHeroResourceHealthCheck` class that we can write under the `io.quarkus.workshop.superheroes.hero.health` sub-package:
 
@@ -100,7 +100,7 @@ As you can see health check procedures are defined as implementations of the `He
 The liveness check accessible at `/q/health/live`.
 `HealthCheck` is a functional interface whose single method `call` returns a `HealthCheckResponse` object which can be easily constructed by the fluent builder API shown in the example.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 As we have started our Quarkus application in dev mode simply repeat the request to http://localhost:8083/q/health/live by refreshing your browser window or by using curl http://localhost:8083/health/live.
 Because we defined our health check to be a liveness procedure (with `@Liveness` qualifier) the new health check procedure is now present in the checks array.
@@ -126,7 +126,7 @@ Here, we will create a readiness health check which will be able to state whethe
 We will create another health check procedure that accesses our database.
 If the database can be accessed, then we will always return the response indicating the application is ready.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.hero.health.DatabaseConnectionHealthCheck` class as follow:
 
@@ -161,7 +161,7 @@ If you access http://localhost:8083/health you will get back both checks.
 
 == Health Check Tests in HeroResourceTest
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Let's add a few extra test methods that would make sure Health Check are available in the application:
 

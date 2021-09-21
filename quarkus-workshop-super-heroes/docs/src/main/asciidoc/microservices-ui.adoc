@@ -60,7 +60,7 @@ it documents the API which can be read by a human, or processed by tools.
 
 Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Execute `mvn install -Pbuild-ui` and Maven will download and install Node JS and NPM and build the application.
 You should now have a `node_modules` directory with all the Angular dependencies.
@@ -80,7 +80,7 @@ Look at the `package.sh`, that's exactly what it does.
 include::{github-raw}/super-heroes/ui-super-heroes/package.sh[tag=adocShell]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Execute the `package.sh` script.
 You will see all the Javascript files under `resources/META-INF/resources` directory.
@@ -95,7 +95,7 @@ This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/no
 
 == Running the Web Application
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 As usual, use `mvn quarkus:dev` to start the web application.
 

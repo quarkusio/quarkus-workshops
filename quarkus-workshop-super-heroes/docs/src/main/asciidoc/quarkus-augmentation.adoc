@@ -6,7 +6,7 @@ Let's demystify all this.
 So far, you have developed the superheroes microservice.
 This microservice is relatively simple, but it still has database access, ORM support, transaction, JSON serialization, and deserialization.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Let's now package this application using:
 

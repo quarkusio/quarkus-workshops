@@ -43,7 +43,7 @@ As stated above, an extension is divided into 2 parts, called `deployment` (augm
 include::plantuml/extension-architecture.puml[]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 From the directory `extensions/extension-banner` execute the following commands:
 
@@ -114,7 +114,7 @@ For this, what do we need:
 The _runtime_ part of an extension contains only the classes and resources required at runtime.
 For the banner extension, it would be a single class that prints the banner.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In the runtime module, creates the `io.quarkus.workshop.superheroes.banner.runtime.BannerRecorder` class with the following content:
 
@@ -138,7 +138,7 @@ For the banner extension, it consists of two build steps:
 1. The first build step is going to read the banner file and use the `BannerRecorder`
 2. The second build step is related to the dev mode and triggers a hot-reload when the content of the banner file changes.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In the deployment module, create the `io.quarkus.workshop.superheroes.banner.deployment.BannerConfig` with the following content:
 
@@ -153,7 +153,7 @@ The `ConfigRoot` annotation indicates that this class maps properties prefixed w
 The class declares a single property, `file`, which is the `quarkus.banner.file` user property.
 Instances of this class are created by Quarkus and are used in the second part of the deployment module: the processor.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.banner.deployment.BannerProcessor` class with the following content:
 
@@ -187,7 +187,7 @@ It is the role of the `watchBannerChanges` method, which indicates that the bann
 
 == Packaging the extension
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 From the root directory of the extension, run:
 
@@ -198,7 +198,7 @@ mvn clean install
 
 == Using the extension
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Go back to the _fight_ microservice, and add the following dependency to the `pom.xml` file:
 
@@ -209,7 +209,7 @@ include::{github-raw}/super-heroes/rest-fight/pom.xml[tag=banner]
 
 Go to http://patorjk.com/software/taag/ to generate a banner for the fight microservice.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Once you have the content, write it into `src/main/resources/banner.txt`.
 For instance:
@@ -229,7 +229,7 @@ For instance:
    |_|          `'---'  '---'   '---' `'-'
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Then, edit the `src/main/resources/application.properties` and add:
 
@@ -238,7 +238,7 @@ Then, edit the `src/main/resources/application.properties` and add:
 quarkus.banner.file=banner.txt
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now, restart the microservice with:
 
@@ -251,7 +251,7 @@ And the banner will be displayed.
 While keeping the dev mode running, edit the file, save and wait a few seconds.
 Once the change is detected, the application is restarted, and the banner updated.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Let's now check the behavior in native mode.
 Compile the microservice with:

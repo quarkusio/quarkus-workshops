@@ -39,7 +39,7 @@ If the filter is enabled and an HTTP request is identified as cross-origin, the 
 |The duration indicating how long the results of a pre-flight request can be cached. This value will be returned in a Access-Control-Max-Age response header.
 |===
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 So make sure you set the `quarkus.http.cors` property to `true` on the:
 

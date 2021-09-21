@@ -42,7 +42,7 @@ super-heroes
 Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command.
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Open a terminal and run the following command:
 
@@ -59,7 +59,7 @@ Open the `pom.xml` file to see the result.
 
 == Computing Statistics
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
 This class contains 2 methods annotated with `@Incoming` and `@Outgoing`, both consuming the `Fight` coming from Kafka.
@@ -75,7 +75,7 @@ The `computeTopWinners` method uses more advanced reactive programming construct
 include::{github-raw}/super-heroes/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/SuperStats.java[tag=adocBean]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In addition, create the `io.quarkus.workshop.superheroes.statistics.Ranking`, `io.quarkus.workshop.superheroes.statistics.Score` and `io.quarkus.workshop.superheroes.statistics.TeamStats` classes with the following contents:
 
@@ -111,7 +111,7 @@ Without, the serialization/deserialization would not work when running the nativ
 
 It's now time to connect the `fights` channel with the Kafka topic.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Edit the `application.properties` file and add the following content:
 

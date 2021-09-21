@@ -40,7 +40,7 @@ image::fault-tolerance-prometheus-1.png[]
 Out of the box, you get a lot of basic JVM metrics or even metrics of Prometheus itself, which are useful.
 But let's create new graphs with the metrics of our microservices.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Tape `timeGetRandomHero` in the query, and select `application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second` in the box, and click _Execute_.
 

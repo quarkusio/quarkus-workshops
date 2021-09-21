@@ -51,7 +51,7 @@ Because JPA and Bean Validation work well together, we will use Bean Validation 
 
 To add the required dependencies, just run the following command:
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
@@ -78,7 +78,7 @@ You should already have installed the infrastructure into the `infrastructure` d
 Now, just execute `docker-compose -f docker-compose.yaml up -d`.
 You should see a few logs going on and then all the containers get started.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 On Linux, use the `docker-compose-linux.yaml`:
 
@@ -96,7 +96,7 @@ Then, after the workshop, remember to shut them down using: `docker-compose -f d
 
 == Hero Entity
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To define a Panache entity, simply extend `PanacheEntity`, annotate it with `@Entity` and add your columns as public fields (no need to have getters and setters).
 The `Hero` entity should look like this:
@@ -153,7 +153,7 @@ We use `quarkus.hibernate-orm.database.generation=drop-and-create` in conjunctio
 This is best to perfectly control your environment and works magic with Quarkus live reload mode:
 your entity changes or any change to your `import.sql` is immediately picked up and the schema updated without restarting the application!
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, make sure to have the following configuration in your `application.properties` (located in `src/main/resources`):
 
@@ -178,7 +178,7 @@ You can control whether and how the transaction is started with parameters on `@
 * `@Transactional(NOT_SUPPORTED)`: if a transaction was started, suspends it and works with no transaction for the boundary of the method ; otherwise works with no transaction.
 * `@Transactional(NEVER)`: if a transaction was started, raises an exception ; otherwise works with no transaction.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Creates a new `HeroService.java` file in the same package with the following content:
 
@@ -199,7 +199,7 @@ In Quarkus, the out of the box datasource and connection pooling implementation 
 
 This is done in the `src/main/resources/application.properties` file.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Just add the following datasource configuration:
 
@@ -213,7 +213,7 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 The `HeroResource` Endpoint was bootstrapped with only one method `hello()`.
 We need to add extra methods that will allow CRUD operations on heroes.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Here are the new methods to add to the `HeroResource` class:
 
@@ -232,7 +232,7 @@ That's why you were able to use `@Inject` in the `HeroResource` to inject a refe
 
 == Adding Data
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
 It contains SQL statements terminated by a semicolon.
@@ -263,7 +263,7 @@ To test the `HeroResource` endpoint, we will be using a `QuarkusTestResource` th
 The `QuarkusTestResource` is a test extension that can configure the environment before running the application.
 In our context, we will be using TestContainers to start our database.footnote:[TestContainers https://www.testcontainers.org]
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that we will install the TestContainers dependency in our `pom.xml` as well as some extra test dependencies:
 
@@ -273,7 +273,7 @@ include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestCont
 include::{github-raw}/super-heroes/rest-hero/pom.xml[tags=adocDependencyTestREST]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Then, you need to create the `QuarkusTestResource`.
 Create the `io.quarkus.workshop.superheroes.hero.DatabaseResource` classes with the following content:
@@ -286,7 +286,7 @@ include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/s
 This code just starts the database before the application, and set the `quarkus.datasource.jdbc.url` system property to indicate to the application where is the test database.
 Note that the database would use a random port.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Then, in `io.quarkus.workshop.superheroes.hero.HeroResourceTest`, you will add the following test methods to the `HeroResourceTest` class:
 
@@ -315,7 +315,7 @@ However in our case, we just execute HTTP requests to check the result.
 Notice also the `@QuarkusTestResource(DatabaseResource.class)`.
 It is how the `QuarkusTestResource` are attached to a test class.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 With this code written, execute the test using `./mvnw test`.
 The test should pass.

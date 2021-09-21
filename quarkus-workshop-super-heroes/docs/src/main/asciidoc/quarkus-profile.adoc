@@ -12,7 +12,7 @@ By default Quarkus has three profiles, although it is possible to use as many as
 
 Let's change the `HeroApplicationLifeCycle` so it displays the current profile.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, just add a log invoking the `ProfileManager.getActiveProfile()` method:
 
@@ -33,7 +33,7 @@ This indicates that the property `level.multiplier` is set to 1 in the `test` pr
 Now, if you start your application in dev mode with `mvn compile quarkus:dev`, you will get the `dev` profile enabled.
 If you start the tests, the `test` profile is enabled (and so the `multiplier` is set to 1).
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Package your application with `mvn package`, and start it with `java -Dquarkus.profile=foo -jar target/rest-hero-1.0-SNAPSHOT-runner.jar`.
 You will see that the `foo` profile is enabled.

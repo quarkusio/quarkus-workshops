@@ -25,7 +25,7 @@ To simplify making more resilient applications, Quarkus contains an implementati
 
 To install the MicroProfile Fault Tolerance dependency, just run the following command:
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
@@ -43,7 +43,7 @@ include::{github-raw}/super-heroes/rest-fight/pom.xml[tags=adocFaultToleranceDep
 
 Let's make our find random fighters feature better by providing a fallback way of getting a dummy hero or villain in case of failure.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, add two fallback methods to the `FightService` and a `@Fallback` annotation to both `findRandomHero` and `findRandomVillain` methods as follows:
 
@@ -52,7 +52,7 @@ For that, add two fallback methods to the `FightService` and a `@Fallback` annot
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocRestClient,adocFallback]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [NOTE]
 --
@@ -63,7 +63,7 @@ Also add the `import org.eclipse.microprofile.faulttolerance.Fallback;` statemen
 
 Now we are ready to run our application and test the fallbacks.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, kill the Hero (and/or the Villain API) and start playing again.
 You should see the following:

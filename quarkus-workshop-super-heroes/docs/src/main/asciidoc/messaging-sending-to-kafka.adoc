@@ -45,7 +45,7 @@ super-heroes
 
 == Adding the Reactive Messaging Dependency
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To install the Kafka support, just run the following command:
 
@@ -77,7 +77,7 @@ This means that you've executed `docker-compose -f docker-compose.yaml up -d` (o
 
 == Connecting Imperative and Reactive Using an Emitter
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now edit the `FightService` class.
 First, add the following field:
@@ -113,7 +113,7 @@ With this in place, every time the application persists a `fight`, it also sends
 At this point, the serialized fights are sent to the `fights` channel.
 You need to connect this `channel` to a Kafka topic.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For this, edit the `application.properties` file and add the following properties:
 

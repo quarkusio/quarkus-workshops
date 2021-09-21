@@ -42,7 +42,7 @@ super-heroes
 When our application starts, the logs are pretty boring... and lack of a banner (any decent application *must* have a banner nowadays).
 So the first thing that you need to do is to go to the http://patorjk.com/software/taag[following website] and pick up your favourite "Hero API" text banner.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create a new class named `HeroApplicationLifeCycle` (or pick another name, the name does not matter) in the `io.quarkus.workshop.superheroes.hero` package, and copy your banner so you end up with a similar content:
 
@@ -56,7 +56,7 @@ Thanks to the CDI `@Observes`, the `HeroApplicationLifeCycle` is invoked:
 * On startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
 * On shutdown with the `ShutdownEvent` when the application is terminating
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Run the application with: `./mvnw quarkus:dev`, the banner is printed to the console.
 When the application is stopped, the second log message is printed.

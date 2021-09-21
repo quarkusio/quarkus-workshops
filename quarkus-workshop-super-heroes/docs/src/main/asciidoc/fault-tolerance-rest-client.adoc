@@ -59,7 +59,7 @@ We are going to rework the:
 
 == Installing the REST Client Dependency
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To install the MicroProfile REST Client dependency, just run the following command:
 
@@ -81,7 +81,7 @@ Remember that in the previous sections we left the `FightService.findRandomFight
 We have to fix this.
 What we actually want is to invoke both the Hero and Villain APIs, asking for a random hero and a random villain.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, replace the `findRandomFighters` method with the following code to the `FightService` class:
 
@@ -101,7 +101,7 @@ If not done automatically by your IDE, add the following import statement: `impo
 
 Using the MicroProfile REST Client is as simple as creating an interface using the proper JAX-RS and MicroProfile annotations.
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In our case both interfaces should be created under the `client` subpackage and have the following content:
 
@@ -126,7 +126,7 @@ The `VillainService` is very similar and looks like this:
 include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/VillainService.java[tag=adocRestClient]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Once created, go back to the `FightService` class and add the following import statements:
 
@@ -138,7 +138,7 @@ import io.quarkus.workshop.superheroes.fight.client.VillainService;
 
 == Configuring REST Client Invocation
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In order to determine the base URL to which REST calls will be made, the REST Client uses configuration from `application.properties`.
 The name of the property needs to follow a certain convention which is best displayed in the following code:
@@ -166,7 +166,7 @@ To avoid this, we need to Mock the `HeroService` and `VillainService` interfaces
 
 Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.footnote:[Alternatives https://docs.jboss.org/weld/reference/latest/en-US/html/beanscdi.html#_alternatives]
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To use this simply override the bean you wish to mock with a class in the `src/test/java` directory, and put the `@Alternative` and `@Priority(1)` annotations on the bean.
 Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could be used.
@@ -178,7 +178,7 @@ So, to mock the `HeroService` interface we just need to implement the following 
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockHeroService.java[tag=adocTest]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Do the same for the `MockVillainService`:
 
@@ -187,7 +187,7 @@ Do the same for the `MockVillainService`:
 include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockVillainService.java[tag=adocTest]
 ----
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Finally, edit the `FightResourceTest` and add the following method:
 
@@ -207,7 +207,7 @@ import io.quarkus.workshop.superheroes.fight.client.MockVillainService;
 
 == Running and Testing the Application
 
-icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 
