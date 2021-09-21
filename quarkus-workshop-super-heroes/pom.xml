@@ -52,6 +52,8 @@
                 <module>super-heroes/rest-hero</module>
                 <module>super-heroes/rest-fight</module>
                 <module>super-heroes/event-statistics</module>
+
+                <module>docs</module>
             </modules>
         </profile>
     </profiles>
@@ -59,8 +61,9 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.3.0</version>
                 <configuration>
                     <finalName>quarkus-super-heroes-workshop</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
