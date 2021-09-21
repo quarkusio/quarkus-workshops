@@ -106,19 +106,6 @@
                             </attributes>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>output-pdf</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${pdf.skip}</skip>
-                            <sourceDocumentName>spine.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-asciidoc/quarkus-workshop.pdf</outputFile>
-                            <backend>pdf</backend>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
         </plugins>
