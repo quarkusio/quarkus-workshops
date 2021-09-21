@@ -1,5 +1,5 @@
 = Quarkus Workshop
-Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
+Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez
 :data-uri:
 :doctype: book
 :imagesdir: ./images
@@ -17,12 +17,12 @@ Emmanuel Bernard, Clement Escoffier, Antonio Goncalves
 :toc-title: Contents
 
 // Introduction
-include::introduction.adoc[leveloffset=+1]
-include::introduction-presentation.adoc[leveloffset=+2]
+include::0-introduction/introduction.adoc[leveloffset=+1]
+include::0-introduction/introduction-presentation.adoc[leveloffset=+2]
 <<<
-include::introduction-installing.adoc[leveloffset=+2]
+include::0-introduction/introduction-installing.adoc[leveloffset=+2]
 <<<
-include::introduction-preparing.adoc[leveloffset=+2]
+include::0-introduction/introduction-preparing.adoc[leveloffset=+2]
 
 // REST API
 include::rest.adoc[leveloffset=+1]

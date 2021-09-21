@@ -8,13 +8,13 @@ node "Super Hero UI" as ui {
 }
 
 node "Hero" as hero {
-    agent "Quarkus" <<application>> as heroQuarkus
+    agent "Quarkus (reactive)" <<application>> as heroQuarkus
     database "Postgresql" as heroPostgresql
     heroQuarkus .up> heroPostgresql
 }
 
 node "Villain" as villain {
-    agent "Quarkus" <<application>>  as villainQuarkus
+    agent "Quarkus (imperative)" <<application>>  as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }

@@ -1,0 +1,96 @@
+:plantDir: ../plantuml
+:imagesdir: ../images
+
+[[introduction-presentation]]
+= Presenting the Workshop
+
+== What Is This Workshop About?
+
+This workshop should give you a practical introduction to Quarkus.
+You will practice all the needed tools to develop an entire microservice architecture, mixing classical HTTP, reactive and event-based microservices.
+You will finish by extending the capabilities of Quarkus and learn more about the ability to create native executables.
+
+The idea is that you leave this workshop with a good understanding of what Quarkus is, what it is not, and how it can help you in your projects.
+Then, you'll be prepared to investigate a bit more and, hopefully, contribute.
+
+ifdef::give-solution[]
+[NOTE]
+====
+Get this workshop from {github-url}.
+====
+endif::give-solution[]
+
+== What Will You Be Developing?
+
+In this workshop, you will develop an application that allows superheroes to fight against supervillains.
+You will be developing several microservices communicating either synchronously via REST or asynchronously using Kafka:
+
+* _Super Hero UI_: an Angular application to pick up a random superhero, a random supervillain, and makes them fight.
+The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
+* _Villain REST API_: A classical HTTP microservice exposing CRUD operations on Villains, stored in a PostgreSQL database
+* _Hero REST API_: A reactive HTTP microservice exposing CRUD operations on Heroes, stored in a Postgres database
+* _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random superhero and supervillain.
+Each fight is, then, stored in a PostgreSQL database. This microservice can be developed using both the classical (_impreative_) or reactive approach. Invocations to the hero and villain services are protected using resilience patterns (retry, timeout, circuit-breakers)
+* _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
+It has an HTML + JQuery UI displaying all the statistics.
+* _Promotheus_ polls metrics from the three microservices Fight, Hero, and Villain.
+
+[plantuml,align=center]
+----
+include::{plantDir}/introduction-physical-architecture.puml[]
+----
+
+The main UI allows you to pick up one random Hero and Villain by clicking on "New Fighters."
+Then it's just a matter of clicking on "Fight!" to get them to fight.
+The table at the bottom shows the list of the previous fights.
+
+image::angular-ui.png[]
+
+== How Does This Workshop Work?
+
+You have this material in your hands (either electronically or printed), and you can now follow it step by step.
+The structure of this workshop is as follow :
+
+* _Installing all the needed tools_:
+in this section, you will install all the tools and code to be able to develop, compile and execute our application
+* _Developing with Quarkus_:
+in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
+* _Extending Quarkus_:
+in this section, you will create a Quarkus extension
+
+If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Developing with Quarkus_ and _Extending Quarkus_, and start hacking some code and add-ons.
+This "à la carte" mode lets you make the most of this 6-hour long hands-on lab.
+
+== What Do You Have to Do?
+
+This workshop should be as self-explanatory as possible.
+So your job is to follow the instructions by yourself, do what you are supposed to do, and do not hesitate to ask for any clarification or assistance; that's why the team is here.
+Oh, and be ready to have some fun!
+
+== Software Requirements
+
+First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
+
+[WARNING]
+====
+If you are using Mac OS X, make sure the version is greater than 10.11.x (Captain).
+====
+
+This workshop will make use of the following Software, tools, frameworks that you will need to install and now (more or less) how it works:
+
+* Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
+* JDK {jdk-version}
+* GraalVM {graalvm-version}
+* Maven {maven-version}
+* Docker
+* cURL (or any other command line HTTP client)
+* Node JS (optional, only if you are in a _frontend_ mood)
+
+The following section focuses on how to install and set up the needed Software.
+You can skip the next section if you have already installed all the prerequisites.
+
+[WARNING]
+====
+This workshop assumes a bash shell.
+If you run on Windows, in particular, adjust the commands accordingly.
+====
