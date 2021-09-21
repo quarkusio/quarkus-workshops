@@ -33,7 +33,8 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 @Produces(APPLICATION_JSON)
 public class HeroResource {
 
-    private static final Logger LOGGER = Logger.getLogger(HeroResource.class);
+    @Inject
+    Logger LOGGER;
 
     @Inject
     HeroService service;

@@ -89,7 +89,7 @@ include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.prop
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 If you didn't already, start the application with `./mvnw quarkus:dev`.
-Once started, create a new hero with the following cUrl command:
+Once started, create a new hero with the following cURL command:
 
 [source,shell]
 ----
@@ -100,7 +100,7 @@ $ curl -X POST -d  '{"level":5, "name":"Chewbacca", "powers":"Agility, Longevity
 ----
 
 As you can see, we've passed a level of 5 to create this new hero.
-The cUrl command returns the location of the newly created hero.
+The cURL command returns the location of the newly created hero.
 Take this URL and do an HTTP GET on it.
 You will see that the level has been increased.
 

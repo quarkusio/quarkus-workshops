@@ -168,7 +168,7 @@ Each invoke a different phase of the project life cycle (clean, compile, install
 * `mvn install`: Builds and installs the artifacts in your local repository.
 * `mvn clean install`: Cleans and installs (note that you can add several commands separated by a space, like `mvn clean compile test`).
 
-== cUrl
+== cURL
 
 To invoke the REST Web Services described in this workshop, we often use cURL.footnote:[cURL https://curl.haxx.se]
 cURL is a command line tool and library to do reliable data transfers with various protocols, including HTTP.

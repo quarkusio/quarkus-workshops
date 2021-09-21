@@ -71,7 +71,7 @@ Now that the tests are green, we are ready to run our application.
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 
 Use `./mvnw quarkus:dev` to start it (notice the nice banner).
-Once the application is started, create a new villain with the following cUrl command:
+Once the application is started, create a new villain with the following cURL command:
 
 [source,shell]
 ----
@@ -81,7 +81,7 @@ $ curl -X POST -d  '{"level":2, "name":"Darth Vader", "powers":"Darkness, Longev
 < Location: http://localhost:8084/api/villains/582
 ----
 
-The cUrl command returns the location of the newly created villain.
+The cURL command returns the location of the newly created villain.
 Take this URL and do an HTTP GET on it.
 
 [source,shell]

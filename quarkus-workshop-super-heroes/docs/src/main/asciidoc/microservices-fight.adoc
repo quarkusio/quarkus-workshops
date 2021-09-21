@@ -285,7 +285,7 @@ First, make sure the tests pass by executing the command `./mvnw test` (or from 
 
 Now that the tests are green, we are ready to run our application.
 Use `./mvnw quarkus:dev` to start it (notice that there is no banner yet, it will come later).
-Once the application is started, just check that it returns the fights from the database with the following cUrl command:
+Once the application is started, just check that it returns the fights from the database with the following cURL command:
 
 [source,shell]
 ----

@@ -36,7 +36,8 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 @Produces(APPLICATION_JSON)
 public class FightResource {
 
-    private static final Logger LOGGER = Logger.getLogger(FightResource.class);
+    @Inject
+    Logger LOGGER;
 
     @Inject
     FightService service;

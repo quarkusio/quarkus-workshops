@@ -39,7 +39,8 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 @Produces(APPLICATION_JSON)
 public class VillainResource {
 
-    private static final Logger LOGGER = Logger.getLogger(VillainResource.class);
+    @Inject
+    Logger LOGGER;
 
     @Inject
     VillainService service;
