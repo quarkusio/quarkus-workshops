@@ -1,0 +1,39 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+node "Super Hero UI" as ui {
+    agent "Quarkus" <<frontend>> as uiQuarkus
+}
+
+node "Hero" as hero {
+    agent "Quarkus" <<application>> as heroQuarkus
+    database "Postgresql" as heroPostgresql
+    heroQuarkus .up> heroPostgresql
+}
+
+node "Villain" as villain {
+    agent "Quarkus" <<application>>  as villainQuarkus
+    database "Postgresql" as villainPostgresql
+    villainQuarkus .up> villainPostgresql
+}
+
+node "Fight" as fight {
+    agent "Quarkus" <<application>> as fightQuarkus
+    database "Postgresql" as fightPostgresql
+    fightQuarkus .up> fightPostgresql
+}
+
+node "Prometheus" as prometheus {
+}
+
+
+uiQuarkus --> fightQuarkus : HTTP
+fightQuarkus --> heroQuarkus : HTTP
+fightQuarkus --> villainQuarkus : HTTP
+
+prometheus .down.> fight : polling
+prometheus  .> hero : polling
+prometheus .> villain : polling
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+package "banner-deployment" as deployment {
+    class BannerConfig {
+        String path
+    }
+
+    class BannerProcessor {
+        @BuildStep @Record recordBanner()
+        @BuildStep watchBannerChanges()
+    }
+}
+
+package "banner-runtime" as runtime {
+    class BannerRecorder {
+        print(String banner)
+    }
+
+}
+
+
+
+deployment -up-> runtime : Maven dependency
+BannerProcessor <.up. BannerConfig : Mapped from configuration
+BannerProcessor ..> BannerRecorder : Use
+
+@enduml
