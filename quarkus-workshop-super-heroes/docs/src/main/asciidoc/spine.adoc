@@ -1,5 +1,7 @@
 = Quarkus Workshop
-Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez
+Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez
+v2.0, {docdate}: Quarkus {quarkus-version}
+
 :data-uri:
 :doctype: book
 :imagesdir: ./images

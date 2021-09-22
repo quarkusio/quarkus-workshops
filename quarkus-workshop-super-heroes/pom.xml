@@ -21,7 +21,7 @@
 
     <groupId>io.quarkus.workshop.super-heroes</groupId>
     <artifactId>super-parent-root</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
 
@@ -52,6 +52,8 @@
                 <module>super-heroes/rest-hero</module>
                 <module>super-heroes/rest-fight</module>
                 <module>super-heroes/event-statistics</module>
+
+                <module>super-heroes/rest-villains-complete</module>
 
                 <module>docs</module>
             </modules>
