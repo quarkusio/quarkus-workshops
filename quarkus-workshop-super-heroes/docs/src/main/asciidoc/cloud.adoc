@@ -44,7 +44,7 @@ We also copy the UI into the fight service, to simplify the process:
 cd rest-hero
 mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
-cd rest-villain
+cd rest-villains
 mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 cd rest-fight
@@ -90,7 +90,7 @@ export ORG=xxxx
 cd rest-hero
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
 cd ..
-cd rest-villain
+cd rest-villains
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
 cd ..
 cd rest-fight

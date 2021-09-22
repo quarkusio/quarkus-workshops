@@ -47,7 +47,7 @@ quarkus-workshop-super-heroes
 ++ load-super-heroes       | Stress tool loading heroes, villains and fights
 ++ rest-fight              | REST API allowing super heroes to fight (you will create it)
 ++ rest-hero               | Reactive REST API for CRUD operations on Heroes (you will create it)
-++ rest-villain            | REST API for CRUD operations on Villains (you will create it)
+++ rest-villains            | REST API for CRUD operations on Villains (you will create it)
 ++ ui-super-heroes         | Angular application so we can fight visually
 }
 }

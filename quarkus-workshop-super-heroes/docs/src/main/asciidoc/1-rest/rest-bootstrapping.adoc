@@ -44,7 +44,7 @@ Once you bootstrap the project, you get the following directory structure with a
 {
 T
 super-heroes
-+  rest-villain
++  rest-villains
 ++  .mvn
 ++  src
 +++  main
@@ -85,7 +85,7 @@ super-heroes
 @endsalt
 ----
 
-The Maven archetype generates the following `rest-villain` sub-directory:
+The Maven archetype generates the following `rest-villains` sub-directory:
 
 * The Maven structure with a `pom.xml`
 * An `io.quarkus.workshop.superheroes.villain.VillainResource` resource exposed on `/api/villains`
@@ -224,7 +224,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now we are ready to run our application.
 
-Use: `./mvnw quarkus:dev` in the `rest-villain` directory:
+Use: `./mvnw quarkus:dev` in the `rest-villains` directory:
 
 [source,shell,,subs="attributes+"]
 ----
@@ -465,7 +465,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 The application is packaged using the`./mvnw package` command (it also runs the tests).
 That command generates:
 
-* `rest-villain-1.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Maven build;
+* `rest-villains-1.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Maven build;
 * `target/quarkus-app` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
 
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.

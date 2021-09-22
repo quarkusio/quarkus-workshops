@@ -19,7 +19,7 @@ You will end-up with the following directory structure:
 {
 T
 super-heroes
-+  rest-villain
++  rest-villains
 ++  src
 +++  main
 ++++  java
