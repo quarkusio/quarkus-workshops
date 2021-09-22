@@ -1,0 +1,514 @@
+[[rest-bootstrapping]]
+= Villain Microservice
+
+First thing first, we need a project.
+That's what you are going to see in this section.
+
+== Bootstrapping the Villain REST Endpoint
+
+The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
+We have created the project structure earlier, so we will move to the `rest-villain` directory and run the project creation command.
+Open a terminal and run the following command:
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+[source,shell,subs="attributes+"]
+----
+#!/usr/bin/env bash
+cd quarkus-workshop-super-heroes/super-heroes
+mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+    -DprojectGroupId=io.quarkus.workshop.super-heroes \
+    -DprojectArtifactId=rest-villains \
+    -DclassName="io.quarkus.workshop.superheroes.villain.VillainResource" \
+    -Dpath="api/villains"
+    -Dextensions="resteasy-reactive-jackson"
+----
+
+The last line selects the extension we want to use.
+As a start, we only select `resteasy-reactive-jackson`, which will also import `resteasy-reactive`.
+
+[TIP]
+.Preferring Web UI
+====
+Instead of the Maven command, you can use https://code.quarkus.io and select the `resteasy-reactive-jackson` extension.
+====
+
+== Directory Structure
+
+Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villain
+++  .mvn
+++  src
++++  main
+++++  docker
++++++  Dockerfile.jvm
++++++  Dockerfile.legacy-jar
++++++  Dockerfile.native
++++++  Dockerfile.native-distroless
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  VillainResource.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  VillainResourceTest.java
+++++++++++  NativeVillainResourceIT.java
+++  .dockerignore
+++  .gitignore
+++  mvnw
+++  mvnw.cmd
+++  pom.xml
+++  README.md
+}
+}
+@endsalt
+----
+
+The Maven archetype generates the following `rest-villain` sub-directory:
+
+* The Maven structure with a `pom.xml`
+* An `io.quarkus.workshop.superheroes.villain.VillainResource` resource exposed on `/api/villains`
+* An associated unit test `VillainResourceTest`
+* The landing page `index.html` that is accessible on http://localhost:8080 after starting the application
+* Example `Dockerfile` files for both native and jvm modes in `src/main/docker`
+* The `application.properties` configuration file
+
+Once generated, look at the `pom.xml`.
+You will find the import of the Quarkus BOM, allowing you to omit the version on the different Quarkus dependencies.
+In addition, you can see the `quarkus-maven-plugin` responsible for the packaging of the application and providing the development mode.
+
+[source,xml,indent=0,subs="attributes+"]
+----
+<project>
+  <!-- ... -->
+  <properties>
+    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>{quarkus-version}</quarkus.platform.version>
+    <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+  </properties>
+  <!-- ... -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+ <!-- ... -->
+ <build>
+    <plugins>
+      <plugin>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>quarkus-maven-plugin</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build</goal>
+              <goal>generate-code</goal>
+              <goal>generate-code-tests</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+     <!-- ... -->
+    </plugins>
+  </build>
+<!-- ... -->
+</project>
+----
+
+If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (resteasy-reactive and resteasy-reactive-jackson)
+
+[source,xml,indent=0]
+----
+<dependencies>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-arc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-reactive</artifactId>
+    </dependency>
+    <!-- ... -->
+</dependencies>
+----
+
+`quarkus-arc` is the dependency injection framework integrated into Quarkus.
+It's designed to perform build-time injections.
+We will see later why this is essential for Quarkus.
+
+`resteasy-reactive` is the framework we will use to implement our REST API.
+It uses JAX-RS annotations such as `@Path`, `@GET`...
+`reasteasy-reactive-jackson` adds JSON object mapping capabilities to RESTEasy reactive.
+
+[NOTE]
+.What's this Quarkus platform thingy?
+====
+The Quarkus Universe includes Quarkus as well as third-party extensions, like Apache Camel or Kogito.
+====
+
+== The Villain Resource
+
+During the project creation, the `VillainResource.java` file has been created with the following content:
+
+[source]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Path("/api/villains")
+public class VillainResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "Hello RESTEasy Reactive";
+    }
+}
+----
+
+It's a very simple REST endpoint returning "Hello RESTEasy Reactive" to requests on `/api/villains`.
+It uses JAX-RS annotations:
+
+- `@Path` indicates the HTTP path handled by the resource,
+- `@GET` indicates that the method should be called when receiving a `GET` request on `/api/villains`.
+
+NOTE: Method can also have their own `@Path` annotation suffixed to the class one (if any).
+
+== Running the Application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Now we are ready to run our application.
+
+Use: `./mvnw quarkus:dev` in the `rest-villain` directory:
+
+[source,shell,,subs="attributes+"]
+----
+$ ./mvnw quarkus:dev
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -----------< io.quarkus.workshop.super-heroes:rest-villains >-----------
+[INFO] Building rest-villains 1.0.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- quarkus-maven-plugin:{quarkus-version}:dev (default-cli) @ rest-villains ---
+[INFO] Invoking io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:generate-code @ rest-villains
+[INFO] Invoking org.apache.maven.plugins:maven-resources-plugin:2.6:resources @ rest-villains
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Invoking org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile @ rest-villains
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/clement/Downloads/rest-villains/target/classes
+[INFO] Invoking org.apache.maven.plugins:maven-resources-plugin:2.6:testResources @ rest-villains
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/clement/Downloads/rest-villains/src/test/resources
+[INFO] Invoking org.apache.maven.plugins:maven-compiler-plugin:3.8.1:testCompile @ rest-villains
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /Users/clement/Downloads/rest-villains/target/test-classes
+Listening for transport dt_socket at address: 5005
+__  ____  __  _____   ___  __ ____  ______
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+2021-09-21 13:29:16,328 INFO  [io.quarkus] (Quarkus Main Thread) rest-villains 1.0.0-SNAPSHOT on JVM (powered by Quarkus {quarkus-version}) started in 1.553s. Listening on: http://localhost:8080
+2021-09-21 13:29:16,332 INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+2021-09-21 13:29:16,333 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation]
+----
+
+Then check that the endpoint returns `hello` as expected:
+
+[source, shell]
+----
+$ curl http://localhost:8080/api/villains
+Hello RESTEasy Reactive
+----
+
+Alternatively, you can open http://localhost:8080/api/villains in your browser.
+
+== Development Mode
+
+`quarkus:dev` runs Quarkus in development mode.
+It enables hot deployment with background compilation, which means that when you modify your Java files or your resource files and invoke a REST endpoint (i.e., cURL command or refresh your browser), these changes will automatically take effect.
+It works too for resource files like the configuration property and HTML files.
+Refreshing the browser triggers a scan of the workspace, and if any changes are detected, the Java files are recompiled and the application is redeployed;
+your request is then serviced by the redeployed application.
+If there are any issues with compilation or deployment an error page will let you know.
+
+The development mode also allows debugging and listens for a debugger on port 5005.
+If you want to wait for the debugger to attach before running, you can pass `-Dsuspend=true` on the command line.
+If you don't want the debugger at all, you can use `-Ddebug=false`.
+
+Alright, time to change some code.
+Open your favorite IDE and import the project.
+To check that the hot reload is working, update the `VillainResource.hello()` method by returning the String "Hello villain".
+
+Now, execute the cURL command again:
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+[source, shell]
+----
+$ curl http://localhost:8080/api/villains
+Hello villain
+----
+
+The output has changed without you having to stop and restart Quarkus!
+
+== Testing the Application
+
+All right, so far, so good, but wouldn't it be better with a few tests, just in case.
+
+In the generated `pom.xml` file, you can see two test dependencies:
+
+[source,xml,indent=0]
+----
+<dependencies>
+    <!-- ... -->
+    <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-junit5</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+----
+
+So, we will use Junit 5 combined with RESTAssured, which eases the testing of REST applications.
+
+If you look at the `maven-surefire-plugin` configuration in the `pom.xml`, you will see that we set the `java.util.logging` system property to ensure tests will use the correct method log manager.
+
+[source, xml]
+----
+<plugin>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>${surefire-plugin.version}</version>
+    <configuration>
+      <systemPropertyVariables>
+        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+        <maven.home>${maven.home}</maven.home>
+      </systemPropertyVariables>
+    </configuration>
+</plugin>
+----
+
+The generated project contains a simple test in `VillainResourceTest.java`.
+
+[source]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+
+@QuarkusTest
+public class VillainResourceTest {
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+          .when().get("/api/villains")
+          .then()
+             .statusCode(200)
+             .body(is("Hello RESTEasy Reactive"));
+    }
+
+}
+----
+
+By using the `QuarkusTest` runner, the `VillainResourceTest` class instructs JUnit to start the application before the tests.
+Then, the `testHelloEndpoint` method checks the HTTP response status code and content.
+Notice that these tests use RestAssured, but feel free to use your favorite library.footnote:[RestAssured http://rest-assured.io]
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+In the terminal running the application in _dev mode_, you should see at the bottom:
+
+[source, text]
+----
+--
+Tests paused
+Press [r] to resume testing, [o] Toggle test output, [h] for more options>
+----
+
+Hit the `r` key, and watch Quarkus execute your tests automatically and even continuously.
+Unfortunately, this first run didn't end well:
+
+[source, text]
+----
+Running 1/1. Running: io.quarkus.workshop.superheroes.villain.VillainResourceTest#testHelloEndpoint()
+Press [o] Toggle test output, [h] for more options>WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.codehaus.groovy.vmplugin.v9.Java9 (file:/Users/clement/.m2/repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar) to constructor java.lang.AssertionError(java.lang.String)
+2021-09-21 13:39:19,710 ERROR [io.qua.test] (Test runner thread) ==================== TEST REPORT #1 ====================
+2021-09-21 13:39:19,711 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#testHelloEndpoint() failed
+: java.lang.AssertionError: 1 expectation failed.
+Response body doesn't match expectation.
+Expected: is "Hello RESTEasy Reactive"
+  Actual: Hello villain
+
+   at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
+   at io.quarkus.workshop.superheroes.villain.VillainResourceTest.testHelloEndpoint(VillainResourceTest.java:18)
+
+2021-09-21 13:39:19,714 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> 1 TEST FAILED <<<<<<<<<<<<<<<<<<<<
+2021-09-21 13:39:20,030 ERROR [io.qua.test] (Test runner thread) ==================== TEST REPORT #2 ====================
+2021-09-21 13:39:20,030 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#testHelloEndpoint() failed
+: java.lang.AssertionError: 1 expectation failed.
+Response body doesn't match expectation.
+Expected: is "Hello RESTEasy Reactive"
+  Actual: Hello villain
+
+   at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
+   at io.quarkus.workshop.superheroes.villain.VillainResourceTest.testHelloEndpoint(VillainResourceTest.java:18)
+
+2021-09-21 13:39:20,031 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> 1 TEST FAILED <<<<<<<<<<<<<<<<<<<<
+----
+
+It fails! It's expected, you changed the output of `VillainResource.hello()` earlier.
+Adjust the test body condition accordingly:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+
+@QuarkusTest
+public class VillainResourceTest {
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+          .when().get("/api/villains")
+          .then()
+             .statusCode(200)
+             .body(is("Hello villain"));
+    }
+
+}
+----
+
+Save the file, and watch the dev mode automatically rerunning your test:
+
+[source, text]
+----
+2021-09-21 13:40:32,361 INFO  [io.qua.test] (Test runner thread) All tests are now passing
+----
+
+Continuous testing is a big part of Quarkus development.
+Quarkus detects and runs the tests for you.
+
+You can also run the tests from a terminal using:
+
+[source, shell]
+----
+$ ./mvnw test
+----
+
+== Packaging and Running the Application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+The application is packaged using the`./mvnw package` command (it also runs the tests).
+That command generates:
+
+* `rest-villain-1.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Maven build;
+* `target/quarkus-app` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
+
+This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
+
+Stop the application running in dev mode (by hitting `CTRL+C`), and run the application using: `java -jar target/quarkus-app/quarkus-run.jar`.
+
+[NOTE]
+====
+Before running the application, don't forget to stop the hot reload mode (hit CTRL+C), or you will have a port conflict.
+====
+
+[WARNING]
+====
+.Troubleshooting
+
+You might come across the following error while developing:
+
+[source,shell]
+----
+WARN  [io.qu.ne.ru.NettyRecorder] (Thread-48) Localhost lookup took more than one second; you need to add a /etc/hosts entry to improve Quarkus startup time. See https://thoeni.io/post/macos-sierra-java/ for details.
+----
+
+If this is the case, it's just a matter of adding the node name of your machine to the /etc/hosts.
+For that, first, get the name of your node with the following command:
+
+[source,shell]
+----
+$ uname -n
+my-node.local
+----
+
+Then `sudo vi /etc/hosts` so you have the right to edit the file and add the following entry:
+
+[source, shell]
+----
+127.0.0.1 localhost my-node.local
+----
+====
+
+In another terminal, check that the application runs using:
+
+[source, shell]
+----
+curl http://localhost:8080/api/villains
+Hello villain
+----

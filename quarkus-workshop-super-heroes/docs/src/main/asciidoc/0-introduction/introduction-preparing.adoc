@@ -1,8 +1,8 @@
 [[introduction-preparing]]
 = Preparing for the Workshop
 
-This workshop needs internet access to download all sorts of Maven artifacts, Docker images and even pictures.
-Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them prior to the workshop.
+This workshop needs internet access to download all sorts of Maven artifacts, Docker images, and even pictures.
+Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them before the workshop.
 Here are a few commands that you can execute before the workshop.
 
 == Download the workshop scaffolding
@@ -11,7 +11,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
 
-In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹) as well as Quarkus extensions.
+In this workshop, you will be developing an application dealing with Super Heroes (and Super-Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
 
 [plantuml]
@@ -43,18 +43,18 @@ quarkus-workshop-super-heroes
 + super-heroes
 ++ event-statistics        | UI and application dealing with fight statistics (you will create it)
 ++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
-++ kubernetes              | All the needed files to deploy on Kubernetes
+++ kubernetes              | All the files required to deploy on Kubernetes
 ++ load-super-heroes       | Stress tool loading heroes, villains and fights
 ++ rest-fight              | REST API allowing super heroes to fight (you will create it)
-++ rest-hero               | REST API for CRUD operations on Heroes (you will create it)
-++ rest-villain            | REST API for CRUD operations on Villains
+++ rest-hero               | Reactive REST API for CRUD operations on Heroes (you will create it)
+++ rest-villain            | REST API for CRUD operations on Villains (you will create it)
 ++ ui-super-heroes         | Angular application so we can fight visually
 }
 }
 @endsalt
 ----
 
-Most of theses subdirectories are Maven projects and follow the Maven directory structure:
+Most of these subdirectories are Maven projects and follow the Maven directory structure:
 
 [plantuml]
 ----
@@ -64,7 +64,7 @@ Most of theses subdirectories are Maven projects and follow the Maven directory 
 T
 quarkus-workshop-super-heroes
 +  super-heroes
-++ rest-hero
+++ rest-villains
 +++ src
 ++++  main
 +++++  docker
@@ -79,7 +79,7 @@ quarkus-workshop-super-heroes
 
 === Quarkus Extensions
 
-Under the `extensions` directory you will find quarkus extensions.
+Under the `extensions` directory, you will find quarkus extensions.
 By the end of the workshop, you will get:
 
 [plantuml]
@@ -99,18 +99,18 @@ quarkus-workshop-super-heroes
 
 == Checking Ports
 
-During this workshop we will use several ports.
+During this workshop, we will use several ports.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Just make sure the following ports are free so you don't run into any conflicts
+Just make sure the following ports are free, so you don't run into any conflicts.
 
 [source,shell]
 ----
 $ lsof -i tcp:8080    // UI
 $ lsof -i tcp:8082    // Fight REST API
-$ lsof -i tcp:8083    // Hero REST API
 $ lsof -i tcp:8084    // Villain REST API
+$ lsof -i tcp:8083    // Hero REST API
 $ lsof -i tcp:5432    // Postgres
 $ lsof -i tcp:9090    // Prometheus
 $ lsof -i tcp:2181    // Zookeeper
@@ -124,7 +124,7 @@ Now that you have the initial structure in place, navigate to the root directory
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 
-[source,shell]
+[source, shell]
 ----
 mvn clean install
 ----
@@ -137,16 +137,16 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
 
-Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which defines all the needed Docker images.
-Notice that there is a `db-init` directory with a `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
+Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which define all the needed Docker images.
+Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
 
 Then execute `docker-compose -f docker-compose.yaml up -d`.
-This will download all the Docker images and start the containers.
+It will download all the Docker images and start the containers.
 
 [WARNING]
 .Linux Users beware
 ====
-If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose.yaml`. This linux specific file will allow `prometheus` to fetch metrics from the services running on the host machine.
+If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose.yaml`. This Linux specific file will allow Prometheus to fetch metrics from the services running on the host machine.
 ====
 
 [WARNING]
@@ -191,9 +191,11 @@ docker-compose -f docker-compose.yaml rm
 Any microservice system is going to rely on a set of technical services.
 In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
 This infrastructure starts all these services, so you don't have to worry about them.
+
+This infra will only be used when we run our services in _prod_ mode. In _dev_ mode, Quarkus will start everything for us.
 ====
 
 == Ready?
 
-After Prerequisites have been installed, and the different components been warmed up,  it's now time to write some code!
+After the prerequisites have been installed and the different components have been warmed up,  it's now time to write some code!
 

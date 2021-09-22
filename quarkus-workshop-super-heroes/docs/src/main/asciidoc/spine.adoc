@@ -25,15 +25,16 @@ include::0-introduction/introduction-installing.adoc[leveloffset=+2]
 include::0-introduction/introduction-preparing.adoc[leveloffset=+2]
 
 // REST API
-include::rest.adoc[leveloffset=+1]
+include::1-rest/rest.adoc[leveloffset=+1]
 <<<
-include::rest-bootstrapping.adoc[leveloffset=+2]
+include::1-rest/rest-bootstrapping.adoc[leveloffset=+2]
 <<<
-include::rest-transaction-orm.adoc[leveloffset=+2]
+include::1-rest/rest-orm.adoc[leveloffset=+2]
 <<<
-include::rest-configuration.adoc[leveloffset=+2]
+include::1-rest/rest-configuration.adoc[leveloffset=+2]
 <<<
-include::rest-openapi.adoc[leveloffset=+2]
+include::1-rest/rest-openapi.adoc[leveloffset=+2]
+
 
 // Quarkus
 include::quarkus.adoc[leveloffset=+1]
@@ -44,6 +45,10 @@ include::quarkus-lifecycle.adoc[leveloffset=+2]
 include::quarkus-profile.adoc[leveloffset=+2]
 <<<
 include::quarkus-native.adoc[leveloffset=+2]
+
+//TODO Reactive Microservice
+
+// TODO Fight * 2
 
 // Microservices
 include::microservices.adoc[leveloffset=+1]

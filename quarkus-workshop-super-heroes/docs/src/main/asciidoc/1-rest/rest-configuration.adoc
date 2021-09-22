@@ -1,0 +1,176 @@
+[[rest-configuration]]
+= Configuring the Villain Microservice
+
+Hardcoded values in our code are a no go (even if we all did it at some point).
+In this guide, we learn how to configure our Villain API as well as some parts of Quarkus.
+
+== Configuring Logging
+
+In the `VillainResource`, we injected a logger.
+That's very useful to provide meaningful information about the execution.
+But you often need to adjust the configuration, such as the log level.
+
+Runtime configuration of logging is done through the normal `application.properties` file:
+
+[source,properties]
+----
+quarkus.log.console.enable=true
+quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
+quarkus.log.console.level=INFO
+quarkus.log.console.color=true
+----
+
+== Configuring Quarkus Listening Port
+
+Because we will end-up running several microservices, let's configure Quarkus so it listens to a different port than 8080:
+This is quite easy as we just need to add one property in the `application.properties` file:
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+[source,properties]
+----
+## HTTP configuration
+quarkus.http.port=8084
+----
+
+Changing the port is one of the rare configuration that cannot be done while the application is running.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+You would need to restart the application to change the port.
+
+Hit `CTRL+C` to stop the application if it still running and restart it with: `./mvnw quarkus:dev`.
+Then run:
+
+[source, shell]
+----
+$ curl http://localhost:8084/api/villains | jq
+----
+
+== Injecting Configuration Value
+
+When we persist a new villain, we want to multiply the level by a value that can be configured (to reduce the level, so heroes will win the fights more easily).
+For this, Quarkus uses MicroProfile Config to inject the configuration in the application.footnote:[Microprofile Config https://microprofile.io/project/eclipse/microprofile-config]
+The injection uses the `@ConfigProperty` annotation.
+
+[NOTE]
+====
+When injecting a configured value, you can use `@Inject @ConfigProperty` or just `@ConfigProperty`.
+The `@Inject` annotation is not necessary for members annotated with `@ConfigProperty`, a behavior which differs from https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config].
+====
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Edit the `VillainService`, and introduce the following configuration properties:
+
+[source, java, indent=0]
+----
+@ConfigProperty(name = "level.multiplier", defaultValue="1.0") double levelMultiplier;
+----
+
+[NOTE]
+====
+You may need to add the following import statement if your IDE does not do it automatically: `import org.eclipse.microprofile.config.inject.ConfigProperty;`
+====
+
+If you do not provide a value for this property, the application startup fails with `javax.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`.
+To avoid having to configure a value, we configure a default one (property `defaultValue`).
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Now, modify the `VillainService.persistVillain()` method to use the injected properties:
+
+[source, java, indent=0]
+----
+public Villain persistVillain(@Valid Villain villain) {
+        villain.level = (int) Math.round(villain.level * levelMultiplier);
+        villain.persist();
+        return villain;
+}
+----
+
+== Create the Configuration
+
+By default, Quarkus reads `application.properties`.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Edit the `src/main/resources/application.properties` with the following content:
+
+[source,properties]
+----
+level.multiplier=0.5
+----
+
+== Running and Testing the Application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+If you didn't already, start the application with `./mvnw quarkus:dev`.
+Once started, create a new villain with the following cUrl command:
+
+[source,shell]
+----
+$ curl -X POST -d  '{"level":5, "name":"Super Bad", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
+
+< HTTP/1.1 201 Created
+< Location: http://localhost:8084/api/villains/582
+----
+
+As you can see, we've passed a level of 5 to create this new villain.
+The cURL command returns the location of the newly created villain.
+Take this URL and do an HTTP GET on it.
+You will see that the level has been increased.
+
+[source,shell]
+----
+$ curl http://localhost:8084/api/villains/582 | jq
+
+{
+  "id": 582,
+  "level": 3,
+  "name": "Super Bad",
+  "powers": "Agility, Longevity"
+}
+----
+
+[NOTE]
+====
+You may not know `jq`.
+It's an amazing tool to manipulate JSON in the shell.
+More info on: https://stedolan.github.io/jq/
+====
+
+Hey! Wait a minute! It you enabled continuous testing, Quarkus should have warned you:
+
+[source, text]
+----
+--
+Running 2/8. Running: io.quarkus.workshop.superheroes.villain.VillainResourceTest#shouldAddAnItem()
+Press [o] Toggle test output, [h] for more options>WARNING: An illegal reflective access operation has occurred
+2021-09-21 21:02:16,067 ERROR [io.qua.test] (Test runner thread) ==================== TEST REPORT #1 ====================
+2021-09-21 21:02:16,067 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#shouldAddAnItem() failed
+: java.lang.AssertionError: 1 expectation failed.
+JSON path level doesn't match.
+Expected: is <42>
+  Actual: <21>
+
+	at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
+	at io.quarkus.workshop.superheroes.villain.VillainResourceTest.shouldAddAnItem(VillainResourceTest.java:133)
+
+2021-09-21 21:02:16,070 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> 1 TEST FAILED <<<<<<<<<<<<<<<<<<<<
+----
+Tests are failing now!
+Indeed, they don't know the multiplier.
+
+TIP: Press `r` in the dev mode to run the tests.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+In the `application.properties` file, add: `%test.level.multiplier=1` which set the multiplier to 1 when running the tests:
+
+[source, text]
+----
+All 8 tests are passing (0 skipped), 8 tests were run in 1722ms. Tests completed at 21:03:25.
+----
+
