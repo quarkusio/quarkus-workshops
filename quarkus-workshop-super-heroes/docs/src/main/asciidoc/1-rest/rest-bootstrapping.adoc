@@ -7,7 +7,6 @@ That's what you are going to see in this section.
 == Bootstrapping the Villain REST Endpoint
 
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
-We have created the project structure earlier, so we will move to the `rest-villain` directory and run the project creation command.
 Open a terminal and run the following command:
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#

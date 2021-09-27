@@ -1,0 +1,47 @@
+:imagesdir: ../images
+:plantDir: ../plantuml
+
+[[microservices]]
+= One Microservice is no Microservices
+
+'''
+
+So far we've built two microservices: the villains and heroes microservices.
+In the following sections you will develop an extra microservice: a _fight_ microservice where heroes and villains fight.
+We will also add an Angular front-end, so we can fight graphically.
+
+[plantuml,align=center]
+----
+include::{plantDir}/microservices-physical-architecture.puml[]
+----
+
+Each microservice is developed in it's own directory.
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  infrastructure
++  rest-fights
+++  src
++++  main
++++  test
++  rest-heroes
+++  src
++++  main
++++  test
++  rest-villains
+++  src
++++  main
++++  test
++  ui-super-heroes
+++  src
++++  app
++++  main
+}
+}
+@endsalt
+----

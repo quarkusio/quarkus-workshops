@@ -39,29 +39,25 @@ include::1-rest/rest-openapi.adoc[leveloffset=+2]
 
 
 // Quarkus
-include::quarkus.adoc[leveloffset=+1]
-include::quarkus-augmentation.adoc[leveloffset=+2]
-<<<
-include::quarkus-lifecycle.adoc[leveloffset=+2]
-<<<
-include::quarkus-profile.adoc[leveloffset=+2]
-<<<
-include::quarkus-native.adoc[leveloffset=+2]
+include::2-quarkus/quarkus.adoc[leveloffset=+1]
+include::2-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
+include::2-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
+include::2-quarkus/quarkus-profile.adoc[leveloffset=+2]
+include::2-quarkus/quarkus-native.adoc[leveloffset=+2]
 
-//TODO Reactive Microservice
+// Reactive
+include::3-reactive/reactive.adoc[leveloffset=+1]
 
 // TODO Fight * 2
 
 // Microservices
-include::microservices.adoc[leveloffset=+1]
+include::4-microservices/microservices.adoc[leveloffset=+1]
 <<<
-include::microservices-villain.adoc[leveloffset=+2]
+include::4-microservices/microservices-fight.adoc[leveloffset=+2]
 <<<
-include::microservices-fight.adoc[leveloffset=+2]
+include::4-microservices/microservices-ui.adoc[leveloffset=+2]
 <<<
-include::microservices-ui.adoc[leveloffset=+2]
-<<<
-include::microservices-cors.adoc[leveloffset=+2]
+include::4-microservices/microservices-cors.adoc[leveloffset=+2]
 
 // Fault Tolerance
 include::fault-tolerance.adoc[leveloffset=+1]
