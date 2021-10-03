@@ -30,7 +30,7 @@ jobs:
           java-version: 11
       - name: Site generation
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_AUTH_SECRET }}
         run: |  
           sudo apt-get install graphviz
 
