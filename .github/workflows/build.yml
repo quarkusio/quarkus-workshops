@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:  
   build_java11:
@@ -17,8 +17,6 @@ jobs:
           java-version: 11
       - name: Build with Maven
         run: mvn -B clean install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs
-
-        # GITHUB_API_TOKEN
 
   publication:
     needs: [build_java11]
