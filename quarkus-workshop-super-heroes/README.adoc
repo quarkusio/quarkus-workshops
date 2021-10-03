@@ -38,17 +38,22 @@ mvn clean install
 * Run the infrastructure as explained above.
 * In a new terminal, run the heroes microservice
 ```bash
-cd rest-hero
+cd rest-heroes-complete
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the villains microservice
 ```bash
-cd rest-villain
+cd rest-villains-complete
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd rest-fight
+cd rest-fights-complete
+mvn clean compile quarkus:dev
+```
+* In a new terminal, run the fights microservice
+```bash
+cd event-statistics-complete
 mvn clean compile quarkus:dev
 ```
 
@@ -56,7 +61,8 @@ mvn clean compile quarkus:dev
 
 * heroes microservice -> 8083
 * villains microservice -> 8084
-* fights microservice -> 8082, ui on http://localhost:8082/super-heroes
+* fights microservice -> 8082
+* ui -> http://localhost:8080
 * stats microservice -> 8085, ui on http://localhost:8085/
 * Prometheus -> 9090
 
@@ -67,73 +73,3 @@ mvn clean compile quarkus:dev
 * https://forge.jboss.org/document/hands-on-lab
 * https://bit.ly/forge-hol
 
-== Note for ourselves
-
-We can use http://plantuml.com/en/salt[Salt] to generate an image from a `tree` directory structure.
-We need a few search and replaces, but we can easily go from :
-
-[source,text]
-----
-super-heroes/
-+  infrastructure   All the needed infrastructure (Postgres, Kafka...)
-+  rest-fight       REST API allowing super heroes to fight
-│   └── src
-│       +  main
-│       └── test
-+  rest-hero        REST API for CRUD operations on Heroes
-│   └── src
-│       +  main
-│       └── test
-+  rest-villain     REST API for CRUD operations on Villains
-│   └── src
-│       +  main
-│       └── test
-└── ui-super-heroes  Angular application so we can fight visually
-    └── src
-        +  app
-        └── main
-----
-
-to :
-
-[source,text]
-----
-@startsalt
-{
-{
-T
-+ infrastructure
-+ rest-fight
-++ src
-++ main
-++ test
-+ rest-hero
-++ src
-++ main
-++ test
-+ rest-villain
-++ src
-++ main
-++ test
-+ ui-super-heroes
-+ src
-+ app
-+ main
-}
-}
-@endsalt
-----
-
-Here is the sequence of search&replace to easily go from one format to another one:
-
-[source,text]
-----
-// Change the characters with +
-Replace `/` with ``
-Replace `├──` with `+ `
-Replace `└──` with `+ `
-Replace `│` with ` `
-// Might have some special character (replace it with a blank)
-Replace ' ' with ' '
-Replace `    ` with `+`
-----

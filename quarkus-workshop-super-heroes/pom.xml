@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>io.quarkus.workshop.super-heroes</groupId>
-  <artifactId>super-parent-root</artifactId>
-  <version>2.0</version>
-  <packaging>pom</packaging>
-  <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
-  <modules>
-    <module>extensions/extension-fault-injector</module>
-    <module>super-heroes/rest-villain</module>
-    <module>super-heroes/ui-super-heroes</module>
-    <module>super-heroes/load-super-heroes</module>
-    <module>rest-heroes</module>
-  </modules>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <finalName>quarkus-super-heroes-workshop</finalName>
-          <appendAssemblyId>false</appendAssemblyId>
-          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-          <attach>false</attach>
-          <descriptors>
-            <descriptor>assembly.xml</descriptor>
-          </descriptors>
-          <outputDirectory>dist</outputDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <profiles>
-    <profile>
-      <id>full</id>
-      <modules>
-        <module>extensions/extension-banner</module>
-        <module>super-heroes/rest-hero</module>
-        <module>super-heroes/rest-fight</module>
-        <module>super-heroes/event-statistics</module>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.quarkus.workshop.super-heroes</groupId>
+    <artifactId>super-parent-root</artifactId>
+    <version>2.0</version>
+    <packaging>pom</packaging>
+    <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
+    <modules>
+        <module>extensions/extension-fault-injector</module>
+
+        <module>super-heroes/ui-super-heroes</module>
+        <module>super-heroes/load-super-heroes</module>
+
         <module>super-heroes/rest-villains-complete</module>
-        <module>docs</module>
-      </modules>
-    </profile>
-  </profiles>
+        <module>super-heroes/rest-heroes-complete</module>
+        <module>super-heroes/rest-fights-complete</module>
+        <module>super-heroes/event-statistics-complete</module>
+    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <finalName>quarkus-super-heroes-workshop</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+                    <attach>false</attach>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                    <outputDirectory>dist</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>full</id>
+            <modules>
+                <module>extensions/extension-banner</module>
+                <module>docs</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

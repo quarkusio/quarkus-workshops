@@ -38,12 +38,12 @@ That's where Quarkus, and other projects, enter the game.
 Quarkus uses a build time principle.footnote:[Also called Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]
 During the build of the application, tasks that usually happen at runtime are executed at build time.
 
-image::quarkus-build-time.png[]
+image::quarkus-build-time-principle.png[role=half-size]
 
 Thus, when the application runs, everything has been pre-computed, and all the annotation scanning, XML parsing, and so on won't be executed anymore.
 It has two direct benefits: startup time (a lot faster) and memory consumption (a lot lower).
 
-image::quarkus-augmentation.png[]
+image::quarkus-augmentation.png[role=half-size]
 
 So, as depicted in the figure above, Quarkus does bring an infrastructure for frameworks to embrace build time metadata discovery (like annotations), replace proxies with generated classes, pre-configure most frameworks, and handle dependency injection at build time.
 
@@ -51,7 +51,7 @@ Also, during the build, Quarkus detects which class needs to be accessed by refl
 Indeed, thanks to all this metadata, Quarkus can configure native compilers such as the GraalVM compiler to generate a native executable for your Java application.
 Thanks to an aggressive dead-code elimination, the final executable is smaller, faster to start, and uses a ridiculously small amount of memory.
 
-image::quarkus-native-compilation.png[]
+image::quarkus-native-compilation.png[role=half-size]
 
 Quarkus does not stop there.
 As you have seen in the previous chapter, it proposes a stellar developer experience.

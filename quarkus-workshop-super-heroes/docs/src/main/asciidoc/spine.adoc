@@ -1,10 +1,10 @@
-= Quarkus Workshop
+= Quarkus Super-Heroes Workshop
 Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez
 v2.0, {docdate}: Quarkus {quarkus-version}
 
 :data-uri:
 :doctype: book
-:imagesdir: ./images
+:plantDir: ./plantuml
 :source-highlighter: coderay
 :source-language: java
 // Caption and XRef caption
@@ -17,86 +17,73 @@ v2.0, {docdate}: Quarkus {quarkus-version}
 :toc:
 :toclevels: 2
 :toc-title: Contents
+// Images
+:full-width: role=full-width
+:half-width: role=half-width
+:half-size: role=half-size
 
 // Introduction
 include::0-introduction/introduction.adoc[leveloffset=+1]
 include::0-introduction/introduction-presentation.adoc[leveloffset=+2]
-<<<
 include::0-introduction/introduction-installing.adoc[leveloffset=+2]
-<<<
 include::0-introduction/introduction-preparing.adoc[leveloffset=+2]
-
+<<<
 // REST API
 include::1-rest/rest.adoc[leveloffset=+1]
-<<<
 include::1-rest/rest-bootstrapping.adoc[leveloffset=+2]
-<<<
 include::1-rest/rest-orm.adoc[leveloffset=+2]
-<<<
 include::1-rest/rest-configuration.adoc[leveloffset=+2]
-<<<
 include::1-rest/rest-openapi.adoc[leveloffset=+2]
-
-
+<<<
 // Quarkus
 include::2-quarkus/quarkus.adoc[leveloffset=+1]
 include::2-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
 include::2-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
 include::2-quarkus/quarkus-profile.adoc[leveloffset=+2]
 include::2-quarkus/quarkus-native.adoc[leveloffset=+2]
-
+<<<
 // Reactive
 include::3-reactive/reactive.adoc[leveloffset=+1]
-
-// TODO Fight * 2
-
+<<<
 // Microservices
 include::4-microservices/microservices.adoc[leveloffset=+1]
-<<<
 include::4-microservices/microservices-fight.adoc[leveloffset=+2]
-<<<
 include::4-microservices/microservices-ui.adoc[leveloffset=+2]
-<<<
 include::4-microservices/microservices-cors.adoc[leveloffset=+2]
-
-// Fault Tolerance
-include::fault-tolerance.adoc[leveloffset=+1]
 <<<
-include::fault-tolerance-rest-client.adoc[leveloffset=+2]
+// REST Clients and Fault Tolerance
+include::5-rest-client/rest-client.adoc[leveloffset=+1]
+include::5-rest-client/rest-clients.adoc[leveloffset=+2]
+include::5-rest-client/fallbacks.adoc[leveloffset=+2]
+include::5-rest-client/timeout.adoc[leveloffset=+2]
 <<<
-include::fault-tolerance-fallbacks.adoc[leveloffset=+2]
-<<<
-include::fault-tolerance-timeout.adoc[leveloffset=+2]
-
-// Observability
-include::observability.adoc[leveloffset=+1]
-<<<
-include::observability-healthcheck.adoc[leveloffset=+2]
-<<<
-include::observability-metrics.adoc[leveloffset=+2]
-<<<
-include::observability-load.adoc[leveloffset=+2]
-<<<
-include::observability-prometheus.adoc[leveloffset=+2]
+// TODO As optional section - the reactive version of the fight service "API Gateway like"
 
 // Messaging
-include::messaging.adoc[leveloffset=+1]
+include::6-messaging/messaging.adoc[leveloffset=+1]
+include::6-messaging/messaging-sending-to-kafka.adoc[leveloffset=+2]
+include::6-messaging/messaging-receiving-from-kafka.adoc[leveloffset=+2]
+include::6-messaging/messaging-websocket.adoc[leveloffset=+2]
+include::6-messaging/messaging-conclusion.adoc[leveloffset=+2]
 <<<
-include::messaging-sending-to-kafka.adoc[leveloffset=+2]
-<<<
-include::messaging-receiving-from-kafka.adoc[leveloffset=+2]
-<<<
-include::messaging-websocket.adoc[leveloffset=+2]
-<<<
-include::messaging-conclusion.adoc[leveloffset=+2]
+// Observability - TODO Metrics will need advanced edits as it should use micrometer
+//include::observability.adoc[leveloffset=+1]
+//<<<
+//include::observability-healthcheck.adoc[leveloffset=+2]
+//<<<
+//include::observability-metrics.adoc[leveloffset=+2]
+//<<<
+//include::observability-load.adoc[leveloffset=+2]
+//<<<
+//include::observability-prometheus.adoc[leveloffset=+2]
 
-// Extensions
-include::extension.adoc[leveloffset=+1]
+// Extensions - TODO This section needs to be rewritten completely
+//include::extension.adoc[leveloffset=+1]
 
-// Cloud
-include::cloud.adoc[leveloffset=+1]
+// Cloud - TODO This section needs to be rewritten completely
+//include::cloud.adoc[leveloffset=+1]
 
 // Conclusion
-include::conclusion.adoc[leveloffset=+1]
+include::10-conclusion/conclusion.adoc[leveloffset=+1]
+include::10-conclusion/conclusion-references.adoc[leveloffset=+2]
 <<<
-include::conclusion-references.adoc[leveloffset=+2]

@@ -26,6 +26,19 @@ In the following sections, you learn:
 
 IMPORTANT: This service is exposed on the port 8083.
 
+== Why reactive?
+
+"Reactive" is a set of principles to build _better_ distributed systems.
+By following these principles, you create more elastic and resilient systems.
+
+One of the central aspects of being reactive is about using non-blocking I/O to handle remote interactions efficiently.
+With a few threads, your application can handle many concurrent I/Os.
+A consequence of such usage is the need to implement applications that do not block these threads.
+There are multiple approaches to do so, such as callbacks, co-routings, and reactive programming.
+
+Quarkus encourages users to use Mutiny, an intuitive and event-driven reactive programming library.
+In this section, we will cover the basics of Mutiny and implement an entirely reactive microservice.
+
 == Hero Microservice
 
 New microservice, new project!

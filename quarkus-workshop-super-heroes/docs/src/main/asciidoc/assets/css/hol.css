@@ -120,3 +120,18 @@ code + .clipboard {
   outline: 0;
   background-color: #eee9e6;
 }
+
+.half-size {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+span.red.big {
+  vertical-align: top;
+}
+
+pre code, pre pre {
+  font-size: 14px;
+}

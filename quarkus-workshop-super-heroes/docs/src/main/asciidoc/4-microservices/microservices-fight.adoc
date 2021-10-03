@@ -7,6 +7,8 @@ Another REST API that returns a random Villain...
 we need a new REST API that invokes those two, gets one random hero and one random villain and makes them fight.
 Let's call it the Fight API.
 
+IMPORTANT: This microservice uses the imperative development model but use reactive extensions.
+
 == Bootstrapping the Fight REST Endpoint
 
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
@@ -18,52 +20,23 @@ Open a terminal and run the following command:
 
 [source,shell]
 ----
-include::{github-raw}/super-heroes/rest-fight/bootstrap.sh[tag=adocSnippet]
+mvn io.quarkus:quarkus-maven-plugin:2.2.3.Final:create \
+    -DprojectGroupId=io.quarkus.workshop.super-heroes \
+    -DprojectArtifactId=rest-fights \
+    -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
+    -Dpath="api/fights" \
+    -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka"
+cd rest-fights
 ----
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+If you open the `pom.xml` file, you will see that the following extensions have been imported:
 
-Also add Testcontainers and other test-related dependencies to your `pom.xml`.
-
-[source,xml, indent=0]
---
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <scope>test</scope>
-</dependency>
-<dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>junit-jupiter</artifactId>
-    <version>1.12.2</version>
-</dependency>
-<dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>1.12.2</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.datatype</groupId>
-    <artifactId>jackson-datatype-jsr310</artifactId>
-    <scope>test</scope>
-</dependency>
-<dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>kafka</artifactId>
-    <version>1.12.2</version>
-</dependency>
-<dependency>
-    <groupId>org.scala-lang</groupId>
-    <artifactId>scala-library</artifactId>
-    <scope>test</scope>
-</dependency>
---
-
-[TIP]
-.Prefering Web UI
-====
-Instead of the Maven command, you can use https://code.quarkus.io.
-====
+- io.quarkus:quarkus-hibernate-orm-panache
+- io.quarkus:quarkus-hibernate-validator
+- io.quarkus:quarkus-smallrye-openapi
+- io.quarkus:quarkus-smallrye-reactive-messaging-kafka
+- io.quarkus:quarkus-resteasy-reactive-jackson
+- io.quarkus:quarkus-jdbc-postgresql
 
 You can see that beyond the extensions we have used so far, we added the Kafka support which uses Eclipse MicroProfile Reactive Messaging.
 Stay tuned.
@@ -79,12 +52,11 @@ At the end you should have the following directory structure:
 {
 T
 super-heroes
-+  rest-fight
++  rest-fights
 ++  src
 +++  main
 ++++  docker
-+++++  Dockerfile.jvm
-+++++  Dockerfile.native
++++++  ...
 ++++  java
 +++++  io
 ++++++  quarkus
@@ -92,11 +64,9 @@ super-heroes
 ++++++++  superheroes
 +++++++++  fight
 ++++++++++  Fight.java
-++++++++++  FightApplication.java
 ++++++++++  FightResource.java
 ++++++++++  FightService.java
 ++++++++++  Fighters.java
-++++++++++  KafkaWriter.java
 ++++  resources
 +++++  META-INF
 ++++++  resources
@@ -125,102 +95,338 @@ A fight is between a hero and a villain.
 Each time there is a fight, there is a winner and a loser.
 So the `Fight` entity is there to store all these fights.
 
-[source]
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create the `io.quarkus.workshop.superheroes.fight.Fight` class with the following content:
+
+[source, java]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fight.java[tags=adocEntity;!adocSkip]
+package io.quarkus.workshop.superheroes.fight;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
+
+@Entity
+@Schema(description="Each fight has a winner and a loser")
+public class Fight extends PanacheEntity {
+
+    @NotNull
+    public Instant fightDate;
+    @NotNull
+    public String winnerName;
+    @NotNull
+    public int winnerLevel;
+    @NotNull
+    public String winnerPicture;
+    @NotNull
+    public String loserName;
+    @NotNull
+    public int loserLevel;
+    @NotNull
+    public String loserPicture;
+    @NotNull
+    public String winnerTeam;
+    @NotNull
+    public String loserTeam;
+
+}
 ----
 
 == Fighters Bean
 
 Now comes a trick.
-The Fight REST API will ultimatelly invoke the Hero and Villain APIs (next sections) to get two random fighters.
+The Fight REST API will ultimately invoke the Hero and Villain APIs (next sections) to get two random fighters.
 The `Fighters` class has one `Hero` and one `Villain`.
 Notice that `Fighters` is not an entity, it is not persisted in the database, just marshalled and unmarshalled to JSon.
 
-[source]
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create the `io.quarkus.workshop.superheroes.fight.Fighters` class, with the following content:
+
+[source, java]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tags=adocBean;!adocSkip]
+package io.quarkus.workshop.superheroes.fight;
+
+import io.quarkus.workshop.superheroes.fight.client.Hero;
+import io.quarkus.workshop.superheroes.fight.client.Villain;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import javax.validation.constraints.NotNull;
+
+@Schema(description="A fight between one hero and one villain")
+public class Fighters {
+
+    @NotNull
+    public Hero hero;
+    @NotNull
+    public Villain villain;
+
+}
 ----
 
+It does not compile because it needs a `Hero`  class and a `Villain` class.
 The Fight REST API is just interested in the hero's name, level, picture and powers (not the other name as described in the Hero API).
-So the `Hero` bean looks like this (notice the `client` subpackage):
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+So create the `Hero` bean looks like this (notice the `client` subpackage):
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tags=adocBean;!adocSkip]
+package io.quarkus.workshop.superheroes.fight.client;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import javax.validation.constraints.NotNull;
+
+@Schema(description="The hero fighting against the villain")
+public class Hero {
+
+    @NotNull
+    public String name;
+    @NotNull
+    public int level;
+    @NotNull
+    public String picture;
+    public String powers;
+
+}
 ----
 
-`Villain` is pretty similar (also in the `client` subpackage):
+Also create the `Villain` counterpart (also in the `client` subpackage):
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/client/Villain.java[tags=adocBean;!adocSkip]
+package io.quarkus.workshop.superheroes.fight.client;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import javax.validation.constraints.NotNull;
+
+@Schema(description="The villain fighting against the hero")
+public class Villain {
+
+    @NotNull
+    public String name;
+    @NotNull
+    public int level;
+    @NotNull
+    public String picture;
+    public String powers;
+
+}
 ----
 
-So, these classes are just used to map the results from the Hero and Villain microservices.
+So, these classes are just used to map the results from the `Hero` and `Villain` microservices.
 
 == FightService Transactional Service
 
-To _transactionnally_ manipulate the `Fight` entity we need a `FightService`.
+Now, let's create a `FightService` class that orchestrate the fights.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create the `io.quarkus.workshop.superheroes.fight.FightService` class with the following content:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.fight;
+
+import org.jboss.logmanager.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.Random;
+
+import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
+
+@ApplicationScoped
+@Transactional(SUPPORTS)
+public class FightService {
+
+    @Inject Logger logger;
+
+    private final Random random = new Random();
+
+    public List<Fight> findAllFights() {
+        return Fight.listAll();
+    }
+
+    public Fight findFightById(Long id) {
+        return Fight.findById(id);
+    }
+
+    public Fighters findRandomFighters() {
+        // Will be implemented later
+        return null;
+    }
+
+    @Transactional(REQUIRED)
+    public Fight persistFight(Fighters fighters) {
+        // Amazingly fancy logic to determine the winner...
+        Fight fight;
+
+        int heroAdjust = random.nextInt(20);
+        int villainAdjust = random.nextInt(20);
+
+        if ((fighters.hero.level + heroAdjust)
+            > (fighters.villain.level + villainAdjust)) {
+            fight = heroWon(fighters);
+        } else if (fighters.hero.level < fighters.villain.level) {
+            fight = villainWon(fighters);
+        } else {
+            fight = random.nextBoolean() ? heroWon(fighters) : villainWon(fighters);
+        }
+
+        fight.fightDate = Instant.now();
+        fight.persist();
+
+        return fight;
+    }
+
+    private Fight heroWon(Fighters fighters) {
+        logger.info("Yes, Hero won :o)");
+        Fight fight = new Fight();
+        fight.winnerName = fighters.hero.name;
+        fight.winnerPicture = fighters.hero.picture;
+        fight.winnerLevel = fighters.hero.level;
+        fight.loserName = fighters.villain.name;
+        fight.loserPicture = fighters.villain.picture;
+        fight.loserLevel = fighters.villain.level;
+        fight.winnerTeam = "heroes";
+        fight.loserTeam = "villains";
+        return fight;
+    }
+
+    private Fight villainWon(Fighters fighters) {
+        logger.info("Gee, Villain won :o(");
+        Fight fight = new Fight();
+        fight.winnerName = fighters.villain.name;
+        fight.winnerPicture = fighters.villain.picture;
+        fight.winnerLevel = fighters.villain.level;
+        fight.loserName = fighters.hero.name;
+        fight.loserPicture = fighters.hero.picture;
+        fight.loserLevel = fighters.hero.level;
+        fight.winnerTeam = "villains";
+        fight.loserTeam = "heroes";
+        return fight;
+    }
+
+}
+----
+
 Notice the `persistFight` method.
 This method is the one creating a fight between a hero and a villain.
 As you can see the algorithm to determine the winner is a bit random (even though it uses the levels).
 If you are not happy about the way the fight operates, choose your own winning algorithm ;o)
 
-[source]
-----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tags=adocTransactional;!adocRestClient;!adocKafka;!adocKafkaEmitter;!adocFallback]
-----
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
 [NOTE]
 ====
-For now, just implement an empty `Fighters findRandomFighters()` method which returns null.
+For now, the `Fighters findRandomFighters()` method returns null.
 Later, this method will invoke the Hello and Villain API to get a random Hello and random Villain.
-So for now something like the following is enough:
-[source]
---
-public Fighters findRandomFighters() {
-    // Will be implemented later
-    return null;
-}
---
 ====
 
 == FightResource Endpoint
 
 To expose a REST API we also need a `FightResource` (with OpenAPI annotations of course).
 
-[source]
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+
+[source, java]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=adocResource;!adocMetrics;!adocTimeout]
+package io.quarkus.workshop.superheroes.fight;
+
+import org.jboss.logging.Logger;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
+import java.util.List;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+@Path("/api/fights")
+@Produces(APPLICATION_JSON)
+public class FightResource {
+
+    @Inject Logger logger;
+
+    @Inject
+    FightService service;
+
+    @GET
+    @Path("/randomfighters")
+    public Response getRandomFighters() {
+        Fighters fighters = service.findRandomFighters();
+        logger.debug("Get random fighters " + fighters);
+        return Response.ok(fighters).build();
+    }
+
+    @GET
+    public Response getAllFights() {
+        List<Fight> fights = service.findAllFights();
+        logger.debug("Total number of fights " + fights);
+        return Response.ok(fights).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getFight(Long id) {
+        Fight fight = service.findFightById(id);
+        if (fight != null) {
+            logger.debug("Found fight " + fight);
+            return Response.ok(fight).build();
+        } else {
+            logger.debug("No fight found with id " + id);
+            return Response.noContent().build();
+        }
+    }
+
+    @POST
+    public Fight fight(@Valid Fighters fighters, UriInfo uriInfo) {
+        return service.persistFight(fighters);
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "Hello Fight Service";
+    }
+}
 ----
 
-== FightApplication for OpenAPI
-
-The `FightApplication` class is just there to customize the OpenAPI contract.
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-fight/src/main/java/io/quarkus/workshop/superheroes/fight/FightApplication.java[tag=adocApplication]
-----
-
-[NOTE]
-====
-Notice that there is no `FightApplicationLifeCycle` class.
-We will use a Quarkus extension later on to display a banner for Fight.
-====
+NOTE: The OpenAPI annotations have been omitted to keep the service focused on the task.
+Feel free to add them if you want complete OpenAPI descriptors.
 
 == Adding Data
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-To load some SQL statements when Hibernate ORM starts, download the SQL file {github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+To load some SQL statements when Hibernate ORM starts, create the `src/main/resources/import.sql` file with the following content:
 
 [source,sql]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/resources/import.sql[tag=adocSQL]
+INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam, loserTeam)
+VALUES (nextval('hibernate_sequence'), current_timestamp, 'Chewbacca', 5, 'https://www.superherodb.com/pictures2/portraits/10/050/10466.jpg', 'Buuccolo', 3, 'https://www.superherodb.com/pictures2/portraits/11/050/15355.jpg', 'heroes', 'villains');
+INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam ,loserTeam)
+VALUES (nextval('hibernate_sequence'), current_timestamp, 'Galadriel', 10, 'https://www.superherodb.com/pictures2/portraits/11/050/11796.jpg', 'Darth Vader', 8, 'https://www.superherodb.com/pictures2/portraits/10/050/10444.jpg', 'heroes', 'villains');
+INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam ,loserTeam)
+VALUES (nextval('hibernate_sequence'), current_timestamp, 'Annihilus', 23, 'https://www.superherodb.com/pictures2/portraits/10/050/1307.jpg', 'Shikamaru', 1, 'https://www.superherodb.com/pictures2/portraits/10/050/11742.jpg', 'villains', 'heroes');
 ...
 ----
 
@@ -234,10 +440,29 @@ In the `application.properties` file add:
 
 [source,properties]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/main/resources/application.properties[tags=!adocCORS;!adocRestClient;!adocKafka;!adocBanner]
+## HTTP configuration
+quarkus.http.port=8082
+
+# drop and create the database at startup (use `update` to only update the schema)
+quarkus.hibernate-orm.database.generation=drop-and-create
+
+## Logging configuration
+quarkus.log.console.enable=true
+quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
+quarkus.log.console.level=DEBUG
+
+## Production configuration
+%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/fights_database
+%prod.quarkus.datasource.db-kind=postgresql
+%prod.quarkus.datasource.username=superfight
+%prod.quarkus.datasource.password=superfight
+%prod.quarkus.hibernate-orm.sql-load-script=import.sql
+
+%prod.quarkus.log.console.level=INFO
+%prod.quarkus.hibernate-orm.database.generation=update
 ----
 
-Note that the fight service uses the port 8082.
+Note that the fight service uses the port `8082`.
 
 == FightResourceTest Test Class
 
@@ -249,33 +474,156 @@ For that, copy the following `FightResourceTest` class under the `src/test/java/
 
 [source]
 ----
-include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tags=adocResourceTest;!adocHealth;!adocMetrics;!adocRandom]
+package io.quarkus.workshop.superheroes.fight;
+
+import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.workshop.superheroes.fight.client.Hero;
+import io.quarkus.workshop.superheroes.fight.client.Villain;
+import io.restassured.common.mapper.TypeRef;
+import org.hamcrest.core.Is;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+import java.util.List;
+
+import java.util.Random;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.ACCEPT;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@QuarkusTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class FightResourceTest {
+
+    private static final String DEFAULT_WINNER_NAME = "Super Baguette";
+    private static final String DEFAULT_WINNER_PICTURE = "super_baguette.png";
+    private static final int DEFAULT_WINNER_LEVEL = 42;
+    private static final String DEFAULT_LOSER_NAME = "Super Chocolatine";
+    private static final String DEFAULT_LOSER_PICTURE = "super_chocolatine.png";
+    private static final int DEFAULT_LOSER_LEVEL = 6;
+
+    private static final int NB_FIGHTS = 3;
+    private static String fightId;
+
+    @Test
+    void shouldPingOpenAPI() {
+        given()
+            .header(ACCEPT, APPLICATION_JSON)
+            .when().get("/q/openapi")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+            .when().get("/api/fights/hello")
+            .then()
+            .statusCode(200)
+            .body(is("Hello Fight Service"));
+    }
+
+    @Test
+    void shouldNotGetUnknownFight() {
+        Long randomId = new Random().nextLong();
+        given()
+            .pathParam("id", randomId)
+            .when().get("/api/fights/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
+    }
+
+    @Test
+    void shouldNotAddInvalidItem() {
+        Fighters fighters = new Fighters();
+        fighters.hero = null;
+        fighters.villain = null;
+
+        given()
+            .body(fighters)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
+            .when()
+            .post("/api/fights")
+            .then()
+            .statusCode(BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    @Order(1)
+    void shouldGetInitialItems() {
+        List<Fight> fights = get("/api/fights").then()
+            .statusCode(OK.getStatusCode())
+            .extract().body().as(getFightTypeRef());
+        assertEquals(NB_FIGHTS, fights.size());
+    }
+
+    @Test
+    @Order(2)
+    void shouldAddAnItem() {
+        Hero hero = new Hero();
+        hero.name = DEFAULT_WINNER_NAME;
+        hero.picture = DEFAULT_WINNER_PICTURE;
+        hero.level = DEFAULT_WINNER_LEVEL;
+        Villain villain = new Villain();
+        villain.name = DEFAULT_LOSER_NAME;
+        villain.picture = DEFAULT_LOSER_PICTURE;
+        villain.level = DEFAULT_LOSER_LEVEL;
+        Fighters fighters = new Fighters();
+        fighters.hero = hero;
+        fighters.villain = villain;
+
+        fightId = given()
+            .body(fighters)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
+            .when()
+            .post("/api/fights")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .body(containsString("winner"), containsString("loser"))
+            .extract().body().jsonPath().getString("id");
+
+        assertNotNull(fightId);
+
+        given()
+            .pathParam("id", fightId)
+            .when().get("/api/fights/{id}")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .body("winnerName", Is.is(DEFAULT_WINNER_NAME))
+            .body("winnerPicture", Is.is(DEFAULT_WINNER_PICTURE))
+            .body("winnerLevel", Is.is(DEFAULT_WINNER_LEVEL))
+            .body("loserName", Is.is(DEFAULT_LOSER_NAME))
+            .body("loserPicture", Is.is(DEFAULT_LOSER_PICTURE))
+            .body("loserLevel", Is.is(DEFAULT_LOSER_LEVEL))
+            .body("fightDate", Is.is(notNullValue()));
+
+        List<Fight> fights = get("/api/fights").then()
+            .statusCode(OK.getStatusCode())
+            .extract().body().as(getFightTypeRef());
+        assertEquals(NB_FIGHTS + 1, fights.size());
+    }
+
+    private TypeRef<List<Fight>> getFightTypeRef() {
+        return new TypeRef<List<Fight>>() {
+            // Kept empty on purpose
+        };
+    }
+}
 ----
 
-You would also need, not only one but 2 `QuarkusTestResources`, one for the database and one for Kafka.
-We could have merged both in a single class, but we wanted to illustrate the possibility to have more than one resources.
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
-So, create the `DatabaseResource` class in the same package as the `FightResourceTest` class, and add the following content:
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/DatabaseResource.java[]
-----
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
-Then, create the `KafkaResource` class with the following content:
-
-[source]
-----
-include::{github-raw}/super-heroes/rest-fight/src/test/java/io/quarkus/workshop/superheroes/fight/KafkaResource.java[]
-----
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
-Also, delete the generated `NativeFightResourceIT` class, as we won't run native test for this microservice.
+Quarkus automatically starts the PostGreSQL database as well as a Kafka broker.
+Also, delete the generated `NativeFightResourceIT` class, as we won't run native tests.
 
 == Running, Testing and Packaging the Application
 
@@ -292,4 +640,4 @@ Once the application is started, just check that it returns the fights from the 
 $ curl http://localhost:8082/api/fights
 ----
 
-Remember that you can also check Swagger UI by going to http://localhost:8082/swagger-ui.
+Remember that you can also check Swagger UI by going to http://localhost:8082/q/swagger-ui.

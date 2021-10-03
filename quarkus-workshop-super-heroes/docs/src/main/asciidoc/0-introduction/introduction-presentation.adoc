@@ -44,7 +44,7 @@ The main UI allows you to pick up one random Hero and Villain by clicking on "Ne
 Then it's just a matter of clicking on "Fight!" to get them to fight.
 The table at the bottom shows the list of the previous fights.
 
-image::angular-ui.png[]
+image::angular-ui.png[role=half-size]
 
 == How Does This Workshop Work?
 

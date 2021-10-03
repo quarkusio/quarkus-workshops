@@ -1,3 +1,5 @@
+:plantDir: ../plantuml
+
 [[microservices-cors]]
 = CORS
 
@@ -6,14 +8,14 @@ So when we want our heroes and villains to fight, we actually cross several orig
 we go from localhost:8080 (the UI) to localhost:8082 (Fight API) which invokes localhost:8083 (Hero) and localhost:8084 (Villain).
 If you look at the console of your Browser you should see something similar to this:
 
-image::cors.png[]
+image::cors.png[role=half-size]
 
 Quarkus comes with a CORS filter which intercepts all incoming HTTP requests.
 It can be enabled in the Quarkus configuration file:
 
 [source,properties]
 ----
-include::{github-raw}/super-heroes/rest-hero/src/main/resources/application.properties[tags=adocCORS]
+quarkus.http.cors=true
 ----
 
 If the filter is enabled and an HTTP request is identified as cross-origin, the CORS policy and headers defined using the following properties will be applied before passing the request on to its actual target (servlet, JAX-RS resource, etc.):
@@ -52,7 +54,7 @@ The explanation is simple, we forgot another thing:
 
 [plantuml,align=center]
 ----
-include::plantuml/fights-sequence.puml[]
+include::{plantDir}/fights-sequence.puml[]
 ----
 
 Remember the function to retrieve random fighters.

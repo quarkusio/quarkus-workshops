@@ -99,6 +99,7 @@
                             <backend>html</backend>
                             <sourceDocumentName>spine.adoc</sourceDocumentName>
                             <attributes>
+                                <imagesdir>images</imagesdir>
                                 <toc>left</toc>
                                 <linkcss>false</linkcss>
                                 <docinfo1>true</docinfo1>
