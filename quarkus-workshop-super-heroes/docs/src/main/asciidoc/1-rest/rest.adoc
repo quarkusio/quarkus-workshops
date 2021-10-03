@@ -1,0 +1,36 @@
+:plantDir: ../plantuml
+:imagesdir: ../images
+
+[[rest]]
+= Creating a _classical_ REST/HTTP Microservice
+
+'''
+
+At the heart of the Super-Hero application comes Villains!
+You can't have superheroes without super-villains.
+
+We need to expose a REST API allowing CRUD operations on villains.
+This microservice is, let's say, a _classical_ REST microservice.
+It uses HTTP to expose a REST API and internally store data into a database.
+It's using the _imperative_ development model.
+
+The _fight_ microservice will use this service.
+
+[plantuml,align=center,width=300]
+----
+include::{plantDir}/rest-physical-architecture.puml[]
+----
+
+In the following sections, you learn:
+
+* How to create a new Quarkus application
+* How to implement REST API using JAX-RS and the RESTEasy Reactive extensionfootnote:[RESTEasy Reactive support the reactive and imperative development models.]
+* How to compose your application using beans
+* How to access your database using Hibernate ORM with Panache
+* How to use transactions
+* How to enable OpenAPI and Swagger-UI
+
+But first, let's describe our service.
+The Super-Villains microservice manages villains with their names, powers, and so on.
+The REST API allows adding, removing, listing, and picking a random villain from the stored set.
+Nothing outstanding but a good first step to discover Quarkus.

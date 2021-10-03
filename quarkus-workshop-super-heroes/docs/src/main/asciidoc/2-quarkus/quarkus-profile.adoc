@@ -1,0 +1,45 @@
+[[quarkus-profile]]
+= Configuration Profiles
+
+Quarkus supports the notion of configuration profiles.
+These allow you to have multiple configurations in the same file and select between them via a profile name.
+
+Quarkus has three profiles by default, although it is possible to use as many as you like. The default profiles are:
+
+* `dev` - Activated when in development mode (i.e. `quarkus:dev`)
+* `test` - Activated when running tests
+* `prod` - The default profile when not running in development or test mode
+
+Let's change the `VillainApplicationLifeCycle` so it displays the current profile.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+For that, just add a log invoking the `ProfileManager.getActiveProfile()` method:
+
+[source,indent=0]
+----
+LOGGER.info("The application VILLAIN is starting with profile " + ProfileManager.getActiveProfile());
+----
+
+[NOTE]
+--
+If not already done, you need to add the following import statement: `import io.quarkus.runtime.configuration.ProfileManager;`
+--
+
+In the `application.properties` file, you can prefix a property with the profile.
+For example, we did add the `%test.level.multiplier=1` property in the previous chapter.
+It indicates that the property `level.multiplier` is set to 1 in the `test` profile.
+
+Now, you will get the' dev' profile enabled if you start your application in dev mode with `mvn compile quarkus:dev`.
+If you start the tests, the `test` profile is enabled (the `multiplier` is set to 1).
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Package your application with `mvn package`, and start it with `java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar`.
+You will see that the `foo` profile is enabled.
+As not overridden, the `level.multiplier` property has the value 0.5.
+
+Profiles are handy to customize the configuration per environment.
+We are going to see an example of such customization in the next section.
+
+// TODO Native integration tests

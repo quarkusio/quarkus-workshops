@@ -1,0 +1,68 @@
+:imagesdir: ../images
+:plantDir: ../plantuml
+
+[[microservices-ui]]
+= User Interface
+
+Now that we have the three main microservices, time to have a decent user interface to start fighting.
+The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
+This time you will just download an Angular application, install it, and run it on another Quarkus instance.
+
+== The Web Application
+
+Navigate to the `super-heroes/ui-super-heroes` directory.
+It contains the code of the microservice.
+Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
+Notice that there is a `pom.xml` file.
+This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven.
+The `pom.xml` also allows us to package the Angular application into Quarkus.
+
+== Installing the Web Application on Quarkus (optional)
+
+Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Execute `mvn install -Pbuild-ui` and Maven will download and install Node JS and NPM and build the application.
+You should now have a `node_modules` directory with all the Angular dependencies.
+
+To install the Angular application into a Quarkus instance, we just build the app and copy the bundles under the `resources/META-INF/resources` directory.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Run:
+
+[source,shell]
+----
+export DEST=src/main/resources/META-INF/resources
+./node_modules/.bin/ng build --configuration production --base-href "."
+rm -Rf ${DEST}
+cp -R dist/* ${DEST}
+----
+
+You will see all the Javascript files under `resources/META-INF/resources` directory.
+We are now ready to go.
+
+[WARNING]
+====
+If the `ng` command does not work because it can't find `node`, there is a little hack to solve it.
+Open the file `ui-super-heroes/node_modules/.bin/ng` and change the shebang line from `#!/usr/bin/env node` to `#!/usr/bin/env ./node/node`.
+This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/node` directory
+====
+
+== Running the Web Application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+As usual, use `mvn quarkus:dev` to start the web application.
+
+Be sure you have the hero and villain microservices running (dev mode is enough).
+
+Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).
+It should display the main web page.
+
+image::angular-ui.png[role=half-size]
+
+Oups, not working yet!
+Not even the pictures, we must have been forgotten something!
+Let's move on to the next section then and make the application work.

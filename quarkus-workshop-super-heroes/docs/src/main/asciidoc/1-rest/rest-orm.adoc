@@ -1,0 +1,805 @@
+[[rest-transaction-orm]]
+= Transactions and ORM
+
+The Villain API's role is to allow CRUD operations on Super Villains.
+In this module we will create a Villain entity and persist/update/delete/retrieve it from a PostgreSQL database in a transactional way.
+
+This microservice uses an imperative/classic execution model.
+Interactions with the database will uses Hibernate ORM and will block until the responses from the database are retrieved.
+
+== Directory Structure
+
+In this module we will add extra classes to the Villain API project.
+You will end-up with the following directory structure:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villains
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainResource.java (already exists)
+++++++++++  VillainService.java
+++  pom.xml
+}
+}
+@endsalt
+----
+
+== Installing the PostgreSQL Dependency, Hibernate with Panache and Hibernate Validator
+
+This microservice:
+
+* Interacts with a PostGreSQL database - so it needs a driver
+* Uses Hibernate with Panache - so need the extension providing it
+* Validates payloads and entities - so need a validator
+* Consumes and produces JSON - so we need a mapper
+
+Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
+It makes complex mappings possible, but it does not make simple and common mappings trivial.
+Hibernate ORM with Panache focuses on making your entities trivial and fun to write in Quarkus.footnote:[Panache https://quarkus.io/guides/hibernate-orm-panache]
+
+Because JPA and Bean Validation work well together, we will use Bean Validation to constrain our business model.
+
+To add the required dependencies, just run the following command:
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator"
+----
+
+TIP: No need to add an extension for JSON, we already included `resteasy-reactive-jackson`.
+
+This will add the following dependencies in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+<dependencies>
+    <!-- ... -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm-panache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
+    <!-- ... -->
+</dependencies>
+----
+
+From now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
+
+== Villain Entity
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+To define a Panache entity, simply extend `PanacheEntity`, annotate it with `@Entity` and add your columns as public fields (no need to have getters and setters).
+The `Villain` entity should look like this:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+public class Villain extends PanacheEntity {
+
+    @NotNull
+    @Size(min = 3, max = 50)
+    public String name;
+
+    public String otherName;
+
+    @NotNull
+    @Min(1)
+    public int level;
+    public String picture;
+
+    @Column(columnDefinition = "TEXT")
+    public String powers;
+
+    @Override
+    public String toString() {
+        return "Villain{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", otherName='" + otherName + '\'' +
+            ", level=" + level +
+            ", picture='" + picture + '\'' +
+            ", powers='" + powers + '\'' +
+            '}';
+    }
+}
+----
+
+Notice that you can put all your JPA column annotations and Bean Validation constraint annotations on the public fields.
+
+=== Adding Operations
+
+Thanks to Panache, once you have written the `Villain` entity, here are the most common operations you will be able to do:
+
+[source, java]
+----
+// creating a hero
+Villain villain = new Villain();
+villain.name = "Lex Luthor";
+villain.level = 9;
+
+// persist it
+villain.persist();
+
+// getting a list of all Villain entities
+List<Villain> heroes = Villain.listAll();
+
+// finding a specific villain by ID
+villain = Villain.findById(id);
+
+// counting all villains
+long countAll = Villain.count();
+----
+
+
+But we are missing a business method: we need to return a random villain.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+For that it's just a matter to add the following method to our `Villain.java` entity:
+
+[source, java, indent=0]
+----
+public static Villain findRandom() {
+    long countVillains = count();
+    Random random = new Random();
+    int randomVillain = random.nextInt((int) countVillains);
+    return findAll().page(randomVillain, 1).firstResult();
+}
+----
+
+[NOTE]
+====
+You would need to add the following import statement if not done automatically by your IDE `import java.util.Random;`
+====
+
+Picking a random villain is achieved as follows:
+
+1. Gets the number of villains stored in the database (`count()`)
+2. Picks a random number between 0 and `count()`
+3. Asks Hibernate with Panache to find all villains in a paginated way and return the random page containing 1 villain.
+
+== Configuring Hibernate
+
+Quarkus development mode is really useful for applications that mix front end or services and database access.
+We use `quarkus.hibernate-orm.database.generation=drop-and-create` in conjunction with `import.sql` so every change to your app and in particular to your entities, the database schema will be properly recreated and your data (stored in `import.sql`) will be used to repopulate it from scratch.
+This is best to perfectly control your environment and works magic with Quarkus live reload mode:
+your entity changes or any change to your `import.sql` is immediately picked up and the schema updated without restarting the application!
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+For that, make sure to have the following configuration in your `application.properties` (located in `src/main/resources`):
+
+[source,properties]
+----
+# drop and create the database at startup (use `update` to only update the schema)
+quarkus.hibernate-orm.database.generation=drop-and-create
+----
+
+== Villain Service
+
+To manipulate the `Villain` entity we will develop a transactional `VillainService` class.
+The idea is to wrap methods modifying the database (e.g. `entity.persist()`) within a transaction.
+Marking a CDI bean method `@Transactional` will do that for you and make that method a transaction boundary.
+
+`@Transactional` can be used to control transaction boundaries on any bean at the method level or at the class level to ensure every method is transactional.
+You can control whether and how the transaction is started with parameters on `@Transactional`:
+
+* `@Transactional(REQUIRED)` (default): starts a transaction if none was started, stays with the existing one otherwise.
+* `@Transactional(REQUIRES_NEW)`: starts a transaction if none was started ; if an existing one was started, suspends it and starts a new one for the boundary of that method.
+* `@Transactional(MANDATORY)`: fails if no transaction was started ; works within the existing transaction otherwise.
+* `@Transactional(SUPPORTS)`: if a transaction was started, joins it ; otherwise works with no transaction.
+* `@Transactional(NOT_SUPPORTED)`: if a transaction was started, suspends it and works with no transaction for the boundary of the method ; otherwise works with no transaction.
+* `@Transactional(NEVER)`: if a transaction was started, raises an exception ; otherwise works with no transaction.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Creates a new `VillainService.java` file in the same package with the following content:
+
+[source,java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.util.List;
+
+import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
+
+@ApplicationScoped
+@Transactional(REQUIRED)
+public class VillainService {
+
+    @Transactional(SUPPORTS)
+    public List<Villain> findAllVillains() {
+        return Villain.listAll();
+    }
+
+    @Transactional(SUPPORTS)
+    public Villain findVillainById(Long id) {
+        return Villain.findById(id);
+    }
+
+    @Transactional(SUPPORTS)
+    public Villain findRandomVillain() {
+        Villain randomVillain = null;
+        while (randomVillain == null) {
+            randomVillain = Villain.findRandom();
+        }
+        return randomVillain;
+    }
+
+    public Villain persistVillain(@Valid Villain villain) {
+        villain.level = villain.level * levelMultiplier;
+        villain.persist();
+        return villain;
+    }
+
+    public Villain updateVillain(@Valid Villain villain) {
+        Villain entity = Villain.findById(villain.id);
+        entity.name = villain.name;
+        entity.otherName = villain.otherName;
+        entity.level = villain.level;
+        entity.picture = villain.picture;
+        entity.powers = villain.powers;
+        return entity;
+    }
+
+    public void deleteVillain(Long id) {
+        Villain villain = Villain.findById(id);
+        villain.delete();
+    }
+}
+----
+
+The `@ApplicationScoped` annotation declares a _bean_.
+The other component of the application can access this bean.
+Arc, the dependency injection framework integrated in Quarkus, handles the creation and the access to this class.
+
+Notice that both methods that persist and update a hero, pass a `Villain` object as a parameter.
+Thanks to the Bean Validation's `@Valid` annotation, the `Villain` object will be checked to see if it's valid or not.
+If it's not, the transaction will be rolled back.
+
+== Accessing a database in dev mode
+
+Our project now requires a connection to a PostgreSQL database.
+In dev mode, no need to start a database or configure anything.
+Quarkus does that for us.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Start the application in dev mode with `./mvnw quarkus:dev`.
+In the log, you will see the following:
+
+[source, text]
+----
+2021-09-21 15:58:44,640 INFO  [org.tes.doc.DockerClientProviderStrategy] (build-38) Loaded org.testcontainers.dockerclient.UnixSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2021-09-21 15:58:45,068 INFO  [org.tes.doc.DockerClientProviderStrategy] (build-38) Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+2021-09-21 15:58:45,070 INFO  [org.tes.DockerClientFactory] (build-38) Docker host IP address is localhost
+2021-09-21 15:58:45,116 INFO  [org.tes.DockerClientFactory] (build-38) Connected to docker:
+  Server Version: 20.10.8
+  API Version: 1.41
+  Operating System: Docker Desktop
+  Total Memory: 5943 MB
+2021-09-21 15:58:45,118 INFO  [org.tes.uti.ImageNameSubstitutor] (build-38) Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2021-09-21 15:58:45,453 INFO  [org.tes.uti.RegistryAuthLocator] (build-38) Credential helper/store (docker-credential-desktop) does not have credentials for index.docker.io
+2021-09-21 15:58:45,957 INFO  [org.tes.DockerClientFactory] (build-38) Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2021-09-21 15:58:45,958 INFO  [org.tes.DockerClientFactory] (build-38) Checking the system...
+2021-09-21 15:58:45,958 INFO  [org.tes.DockerClientFactory] (build-38) ✔︎ Docker server version should be at least 1.6.0
+2021-09-21 15:58:46,083 INFO  [org.tes.DockerClientFactory] (build-38) ✔︎ Docker environment should have more than 2GB free disk space
+2021-09-21 15:58:46,143 INFO  [🐳 .2]] (build-38) Creating container for image: postgres:13.2
+2021-09-21 15:58:46,217 INFO  [🐳 .2]] (build-38) Starting container with ID: a7fd54795185ab17baf487388c1e3280fdfea3f6ef8670c0336d367dba3e1d9e
+2021-09-21 15:58:46,545 INFO  [🐳 .2]] (build-38) Container postgres:13.2 is starting: a7fd54795185ab17baf487388c1e3280fdfea3f6ef8670c0336d367dba3e1d9e
+2021-09-21 15:58:48,043 INFO  [🐳 .2]] (build-38) Container postgres:13.2 started in PT1.959377S
+2021-09-21 15:58:48,044 INFO  [io.qua.dev.pos.dep.PostgresqlDevServicesProcessor] (build-38) Dev Services for PostgreSQL started.
+----
+
+Quarkus detects the need for a database and starts one using a Docker container.
+It automatically configures the application, which means we are good to go and implement our REST API.
+
+== VillainResource Endpoint
+
+The `VillainResource` was bootstrapped with only one method `hello()`.
+We need to add extra methods that will allow CRUD operations on villains.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Here are the new methods to add to the `VillainResource` class:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.reactive.RestPath;
+
+import javax.validation.Valid;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
+
+@Path("/api/villains")
+public class VillainResource {
+
+    Logger logger;
+    VillainService service;
+
+    public VillainResource(Logger logger, VillainService service) {
+        this.service = service;
+        this.logger = logger;
+    }
+
+    @GET
+    @Path("/random")
+    public Response getRandomVillain() {
+        Villain villain = service.findRandomVillain();
+        logger.debug("Found random villain " + villain);
+        return Response.ok(villain).build();
+    }
+
+    @GET
+    public Response getAllVillains() {
+        List<Villain> villains = service.findAllVillains();
+        logger.debug("Total number of villains " + villains);
+        return Response.ok(villains).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getVillain(@RestPath Long id) {
+        Villain villain = service.findVillainById(id);
+        if (villain != null) {
+            logger.debug("Found villain " + villain);
+            return Response.ok(villain).build();
+        } else {
+            logger.debug("No villain found with id " + id);
+            return Response.noContent().build();
+        }
+    }
+
+    @POST
+    public Response createVillain(@Valid Villain villain, @Context UriInfo uriInfo) {
+        villain = service.persistVillain(villain);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(villain.id));
+        logger.debug("New villain created with URI " + builder.build().toString());
+        return Response.created(builder.build()).build();
+    }
+
+    @PUT
+    public Response updateVillain(@Valid Villain villain) {
+        villain = service.updateVillain(villain);
+        logger.debug("Villain updated with new valued " + villain);
+        return Response.ok(villain).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteVillain(@RestPath Long id) {
+        service.deleteVillain(id);
+        logger.debug("Villain deleted with " + id);
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/hello")
+    public String hello() {
+        return "hello villain";
+    }
+}
+----
+
+Not that we added `@Path("/hello")` to the `hello` method to not conflict with the `getAllVillains()` method.
+
+== Dependency Injection
+
+Dependency injection in Quarkus is based on ArC which is a CDI-based dependency injection solution tailored for Quarkus' architecture.footnote:[ArC https://github.com/quarkusio/quarkus/tree/master/independent-projects/arc]
+You can learn more about it in the Contexts and Dependency Injection guide.footnote:[Quarkus - Contexts and Dependency Injection https://quarkus.io/guides/cdi-reference.html]
+
+ArC handles injected at build time.
+You can use field injection and inject the `VillainService` using:
+
+[source, java]
+----
+@Inject VillainService service;
+----
+
+But in your previous class, we used constructor injection.
+Both the `VillainService` and the `Logger` are injected as constructor parameter:
+
+[source, java]
+----
+public VillainResource(Logger logger, VillainService service) {
+    this.service = service;
+    this.logger = logger;
+}
+----
+
+== Adding Data
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
+It contains SQL statements terminated by a semicolon.
+This is useful to have a data set ready for the tests or demos.
+
+// TODO Copy the right path
+[source,sql]
+----
+INSERT INTO villain(id, name, otherName, picture, powers, level)
+VALUES (nextval('hibernate_sequence'), 'Buuccolo', 'Majin Buu', 'https://www.superherodb.com/pictures2/portraits/11/050/15355.jpg', 'Accelerated Healing, Adaptation, Agility, Flight, Immortality, Intelligence, Invulnerability, Reflexes, Self-Sustenance, Size Changing, Spatial Awareness, Stamina, Stealth, Super Breath, Super Speed, Super Strength, Teleportation', 22);
+INSERT INTO villain(id, name, otherName, picture, powers, level)
+VALUES (nextval('hibernate_sequence'), 'Darth Vader', 'Anakin Skywalker', 'https://www.superherodb.com/pictures2/portraits/10/050/10444.jpg', 'Accelerated Healing, Agility, Astral Projection, Cloaking, Danger Sense, Durability, Electrokinesis, Energy Blasts, Enhanced Hearing, Enhanced Senses, Force Fields, Hypnokinesis, Illusions, Intelligence, Jump, Light Control, Marksmanship, Precognition, Psionic Powers, Reflexes, Stealth, Super Speed, Telekinesis, Telepathy, The Force, Weapons Master', 13);
+INSERT INTO villain(id, name, otherName, picture, powers, level)
+VALUES (nextval('hibernate_sequence'), 'The Rival (CW)', 'Edward Clariss', 'https://www.superherodb.com/pictures2/portraits/11/050/13846.jpg', 'Accelerated Healing, Agility, Bullet Time, Durability, Electrokinesis, Endurance, Enhanced Senses, Intangibility, Marksmanship, Phasing, Reflexes, Speed Force, Stamina, Super Speed, Super Strength', 10);
+----
+
+// TODO Change url here
+Ok, but that's just a few entries.
+Download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+Now, you have more than 500 villains that will be loaded in the database.
+
+If you didn't yet, start the application in dev mode:
+
+[source,shell]
+----
+$./mvnw quarkus:dev
+----
+
+Then, open your browser to http://localhost:8080/api/villains.
+You should see lots of heroes...
+
+== CRUD Tests in VillainResourceTest
+
+To test the `VillainResource` endpoint, we just need to extend the `VillainResourceTest` we already have.
+No need to configure anything, Quarkus will start a test database for you.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+
+In `io.quarkus.workshop.superheroes.villain.VillainResourceTest`, you will add the following test methods to the `VillainResourceTest` class:
+
+* `shouldNotGetUnknownVillain`: giving a random Villain identifier, the `VillainResource` endpoint should return a 204 (No content)
+* `shouldGetRandomVillain`: checks that the `VillainResource` endpoint returns a random villain
+* `shouldNotAddInvalidItem`: passing an invalid `Villain` should fail when creating it (thanks to the `@Valid` annotation)
+* `shouldGetInitialItems`: checks that the `VillainResource` endpoint returns the list of heroes
+* `shouldAddAnItem`: checks that the `VillainResource` endpoint creates a valid `Villain`
+* `shouldUpdateAnItem`: checks that the `VillainResource` endpoint updates a newly created `Villain`
+* `shouldRemoveAnItem`: checks that the `VillainResource` endpoint deletes a villain from the database
+
+The code is as follows:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.common.mapper.TypeRef;
+import org.hamcrest.core.Is;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+import java.util.List;
+import java.util.Random;
+
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.ACCEPT;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.Response.Status.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.*;
+
+@QuarkusTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class VillainResourceTest {
+
+    private static final String JSON = "application/json;charset=UTF-8";
+
+    private static final String DEFAULT_NAME = "Super Chocolatine";
+    private static final String UPDATED_NAME = "Super Chocolatine (updated)";
+    private static final String DEFAULT_OTHER_NAME = "Super Chocolatine chocolate in";
+    private static final String UPDATED_OTHER_NAME = "Super Chocolatine chocolate in (updated)";
+    private static final String DEFAULT_PICTURE = "super_chocolatine.png";
+    private static final String UPDATED_PICTURE = "super_chocolatine_updated.png";
+    private static final String DEFAULT_POWERS = "does not eat pain au chocolat";
+    private static final String UPDATED_POWERS = "does not eat pain au chocolat (updated)";
+    private static final int DEFAULT_LEVEL = 42;
+    private static final int UPDATED_LEVEL = 43;
+
+    private static final int NB_VILLAINS = 581;
+    private static String villainId;
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+            .when().get("/api/villains/hello")
+            .then()
+            .statusCode(200)
+            .body(is("hello villain"));
+    }
+
+    @Test
+    void shouldNotGetUnknownVillain() {
+        Long randomId = new Random().nextLong();
+        given()
+            .pathParam("id", randomId)
+            .when().get("/api/villains/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
+    }
+
+    @Test
+    void shouldGetRandomVillain() {
+        given()
+            .when().get("/api/villains/random")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON);
+    }
+
+    @Test
+    void shouldNotAddInvalidItem() {
+        Villain villain = new Villain();
+        villain.name = null;
+        villain.otherName = DEFAULT_OTHER_NAME;
+        villain.picture = DEFAULT_PICTURE;
+        villain.powers = DEFAULT_POWERS;
+        villain.level = 0;
+
+        given()
+            .body(villain)
+            .header(CONTENT_TYPE, JSON)
+            .header(ACCEPT, JSON)
+            .when()
+            .post("/api/villains")
+            .then()
+            .statusCode(BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    @Order(1)
+    void shouldGetInitialItems() {
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS, villains.size());
+    }
+
+    @Test
+    @Order(2)
+    void shouldAddAnItem() {
+        Villain villain = new Villain();
+        villain.name = DEFAULT_NAME;
+        villain.otherName = DEFAULT_OTHER_NAME;
+        villain.picture = DEFAULT_PICTURE;
+        villain.powers = DEFAULT_POWERS;
+        villain.level = DEFAULT_LEVEL;
+
+        String location = given()
+            .body(villain)
+            .header(CONTENT_TYPE, JSON)
+            .header(ACCEPT, JSON)
+            .when()
+            .post("/api/villains")
+            .then()
+            .statusCode(CREATED.getStatusCode())
+            .extract().header("Location");
+        assertTrue(location.contains("/api/villains"));
+
+        // Stores the id
+        String[] segments = location.split("/");
+        villainId = segments[segments.length - 1];
+        assertNotNull(villainId);
+
+        given()
+            .pathParam("id", villainId)
+            .when().get("/api/villains/{id}")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON)
+            .body("name", Is.is(DEFAULT_NAME))
+            .body("otherName", Is.is(DEFAULT_OTHER_NAME))
+            .body("level", Is.is(DEFAULT_LEVEL))
+            .body("picture", Is.is(DEFAULT_PICTURE))
+            .body("powers", Is.is(DEFAULT_POWERS));
+
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS + 1, villains.size());
+    }
+
+    @Test
+    @Order(3)
+    void testUpdatingAnItem() {
+        Villain villain = new Villain();
+        villain.id = Long.valueOf(villainId);
+        villain.name = UPDATED_NAME;
+        villain.otherName = UPDATED_OTHER_NAME;
+        villain.picture = UPDATED_PICTURE;
+        villain.powers = UPDATED_POWERS;
+        villain.level = UPDATED_LEVEL;
+
+        given()
+            .body(villain)
+            .header(CONTENT_TYPE, JSON)
+            .header(ACCEPT, JSON)
+            .when()
+            .put("/api/villains")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON)
+            .body("name", Is.is(UPDATED_NAME))
+            .body("otherName", Is.is(UPDATED_OTHER_NAME))
+            .body("level", Is.is(UPDATED_LEVEL))
+            .body("picture", Is.is(UPDATED_PICTURE))
+            .body("powers", Is.is(UPDATED_POWERS));
+
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS + 1, villains.size());
+    }
+
+    @Test
+    @Order(4)
+    void shouldRemoveAnItem() {
+        given()
+            .pathParam("id", villainId)
+            .when().delete("/api/villains/{id}")
+            .then()
+            .statusCode(NO_CONTENT.getStatusCode());
+
+        List<Villain> villains = get("/api/villains").then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, JSON)
+            .extract().body().as(getVillainTypeRef());
+        assertEquals(NB_VILLAINS, villains.size());
+    }
+
+    private TypeRef<List<Villain>> getVillainTypeRef() {
+        return new TypeRef<List<Villain>>() {
+            // Kept empty on purpose
+        };
+    }
+
+}
+----
+
+The tests and the application runs in the same JVM, meaning that the test can be injected with application _beans_.
+This feature is very useful to test specific parts of the application.
+However, in our case, we just execute HTTP requests to check the result.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Run the test either in the dev mode or using `./mvnw test`.
+They should pass.
+
+== Building production package
+
+Our service is not completely done yet, but let's run it in _prod_ mode.
+
+=== Configuring the application
+
+In _prod_ mode, the dev services won't be used.
+We need to configure the application to connect to a _real_ database.
+
+The main way of obtaining connections to a database is to use a datasource.
+In Quarkus, the out of the box datasource and connection pooling implementation is Agroal.footnote:[Agroal https://agroal.github.io]
+
+So, we need to configre the database access in the `src/main/resources/application.properties` file,
+but only when the application runs in _prod_ mode.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Add the following datasource configuration:
+
+[source,properties]
+----
+%prod.quarkus.datasource.username=superbad
+%prod.quarkus.datasource.password=superbad
+%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/villains_database
+%prod.quarkus.hibernate-orm.sql-load-script=import.sql
+----
+
+`%prod` indicates that the property is only used when the application runs with the given profile.
+We configure the access to the database, and force the data initialization (which would have been disabled by default in _prod_ mode).
+
+=== Running the Infrastructure
+
+Before going further, be sure to run the infrastructure.
+To execute this service, you need a database (and later on we will need Prometheus and Kafka).
+Let's use Docker and docker compose to ease the installation of such infrastructure.
+
+You should already have installed the infrastructure into the `infrastructure` directory.
+Now, just execute `docker-compose -f docker-compose.yaml up -d`.
+You should see a few logs going on and then all the containers get started.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+On Linux, use the `docker-compose-linux.yaml`:
+
+[source,shell]
+.On Linux
+----
+docker-compose -f docker-compose-linux.yaml up -d
+----
+
+[NOTE]
+====
+During the workshop, just leave all the containers up and running.
+Then, after the workshop, remember to shut them down using: `docker-compose -f docker-compose.yaml down` or  `docker-compose -f docker-compose-linux.yaml down` on Linux.
+====
+
+=== Packaging and running the application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Stop the dev mode, and run:
+
+[source, shell]
+----
+$ ./mvnw package
+----
+
+As previously, you will get your application in `target/quarkus-app`, run it using:
+
+[source, shell]
+----
+$ java -jar target/quarkus-app/quarkus-run.jar
+----
+
+Open your browser to http://localhost:8080/api/villains, and verify it displays the expected content.
+Once done, stop the application using `CTRL+C`.
+
+
+
+

@@ -1,0 +1,16 @@
+:plantDir: ../plantuml
+
+
+[[fault-tolerance]]
+= HTTP communication & Fault Tolerance
+
+'''
+
+So far we've built one Fight microservice which need to invoke the Hero and Villain microservices.
+In the following sections you will develop this invocation thanks to the MicroProfile REST Client.
+We will also deal with fault tolerance thanks to timeouts and circuit breaker.
+
+[plantuml,align=center]
+----
+include::{plantDir}/microservices-physical-architecture.puml[]
+----

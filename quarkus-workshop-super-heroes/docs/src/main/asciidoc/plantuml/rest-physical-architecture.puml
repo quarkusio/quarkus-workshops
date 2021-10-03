@@ -5,12 +5,12 @@ skinparam RankSep 20
 
 left to right direction
 
-node "Hero" as hero {
-    agent "Quarkus" as heroQuarkus <<application>>
-    database "Postgresql" as heroPostgresql
-    heroQuarkus .up> heroPostgresql
+node "Villain" as villain {
+    agent "Quarkus" as villainQuarkus <<application>>
+    database "Postgresql" as villainPostgresql
+    villainQuarkus .up> villainPostgresql
 }
 
-_REST ()-- heroQuarkus
+REST ()-- villainQuarkus
 
 @enduml

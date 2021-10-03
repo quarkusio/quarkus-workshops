@@ -1,0 +1,555 @@
+[[rest-openapi]]
+= Open API
+
+A Quarkus application can expose its API description through an OpenAPI specification.
+Quarkus also lets you test it via a user-friendly UI named Swagger UI.
+
+In this section, we will see how to use OpenAPI with Quarkus and introduce the dev console.
+
+== Directory Structure
+
+In this module we will add extra class (`VillainApplication`) to the Villain API project.
+You will end-up with the following directory structure:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villain
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainApplication.java // We will add it
+++++++++++  VillainResource.java
+++++++++++  VillainService.java
+++  pom.xml
+}
+}
+@endsalt
+----
+
+== Installing the OpenAPI extension
+
+Quarkus proposes a `smallrye-openapi` extension compliant with the MicroProfile OpenAPI specification in order to generate your API OpenAPI v3 specification.footnote:[MicroProfile OpenAPI https://github.com/eclipse/microprofile-open-api]
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+To install the OpenAPI dependency, just run the following command:
+
+[source,shell]
+----
+$ ./mvnw quarkus:add-extension -Dextensions="smallrye-openapi"
+----
+
+This will add the following dependency in the `pom.xml` file:
+
+[source,xml,indent=0]
+----
+<dependency>
+  <groupId>io.quarkus</groupId>
+  <artifactId>quarkus-smallrye-openapi</artifactId>
+</dependency>
+----
+
+== Open API
+
+Now, you _curl_ `http://localhost:8084/q/openapi` endpoint:
+
+[source,shell]
+----
+$ curl http://localhost:8084/q/openapi
+---
+openapi: 3.0.3
+info:
+  title: rest-villains API
+  version: 1.0.0-SNAPSHOT
+paths:
+  /api/villains:
+    get:
+      responses:
+        "200":
+          description: OK
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Villain'
+      responses:
+        "200":
+          description: OK
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Villain'
+      responses:
+        "200":
+          description: OK
+  /api/villains/hello:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/villains/random:
+    get:
+      responses:
+        "200":
+          description: OK
+  /api/villains/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Villain:
+      required:
+      - level
+      - name
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        level:
+          format: int32
+          minimum: 1
+          type: integer
+          nullable: false
+        name:
+          maxLength: 50
+          minLength: 3
+          type: string
+          nullable: false
+        otherName:
+          type: string
+        picture:
+          type: string
+        powers:
+          type: string
+----
+
+This contract lacks of documentation.
+The Eclipse MicroProfile OpenAPI allows you to customize the methods of your REST endpoint as well as the application.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+
+While having the OpenAPI specification is great, it can't be consumed easily by humans.
+In your browser, go to http://localhost:8084/q/dev.
+This is the dev console.
+It provides all the tools you need to develop your Quarkus application.
+We will use it several times in this workshop.
+Note that the dev console is only available in dev mode.
+
+The Dev Console integrates Swagger, a UI to invoke your endpoints from the comfort of your browser.
+Click on the _Swagger UI_ button located in the "SmallRye OpenAPI" widget.
+
+You will see all your endpoints listed.
+Click on the "GET" button for the "/api/villains" path, then click on "Try it out" and finally on "Execute".
+You can see the result immediately.
+
+When developing REST APIs, this UI is very convenient.
+You can test your endpoint and immediately see the outcome.
+If something does not please you, edit the code, go back to the browser, re-execute, and voilà!
+
+
+=== Customizing Methods
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+The MicroProfile OpenAPI has a set of annotations to customize each REST endpoint method so the OpenAPI contract is richer and clearer for consumers:
+
+* `@Operation`: Describes a single API operation on a path.
+* `@APIResponse`: Corresponds to the OpenAPI Response model object which describes a single response from an API Operation
+* `@Parameter`: The name of the parameter.
+* `@RequestBody`: A brief description of the request body.
+
+This is what the `VillainResource` endpoint looks like once annotated:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.reactive.RestPath;
+
+import javax.validation.Valid;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+
+import java.net.URI;
+import java.util.List;
+
+import static javax.ws.rs.core.MediaType.*;
+
+@Path("/api/villains")
+@Tag(name="villains")
+public class VillainResource {
+
+    Logger logger;
+    VillainService service;
+
+    public VillainResource(Logger logger, VillainService service) {
+        this.service = service;
+        this.logger = logger;
+    }
+
+    @Operation(summary = "Returns a random villain")
+    @GET
+    @Path("/random")
+    @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, required = true)))
+    public Response getRandomVillain() {
+        Villain villain = service.findRandomVillain();
+        logger.debug("Found random villain " + villain);
+        return Response.ok(villain).build();
+    }
+
+    @Operation(summary = "Returns all the villains from the database")
+    @GET
+    @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, type = SchemaType.ARRAY)))
+    @APIResponse(responseCode = "204", description = "No villains")
+    public Response getAllVillains() {
+        List<Villain> villains = service.findAllVillains();
+        logger.debug("Total number of villains " + villains);
+        return Response.ok(villains).build();
+    }
+
+    @Operation(summary = "Returns a villain for a given identifier")
+    @GET
+    @Path("/{id}")
+    @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class)))
+    @APIResponse(responseCode = "204", description = "The villain is not found for a given identifier")
+    public Response getVillain(@RestPath Long id) {
+        Villain villain = service.findVillainById(id);
+        if (villain != null) {
+            logger.debug("Found villain " + villain);
+            return Response.ok(villain).build();
+        } else {
+            logger.debug("No villain found with id " + id);
+            return Response.noContent().build();
+        }
+    }
+
+    @Operation(summary = "Creates a valid villain")
+    @POST
+    @APIResponse(responseCode = "201", description = "The URI of the created villain", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class)))
+    public Response createVillain(@Valid Villain villain, @Context UriInfo uriInfo) {
+        villain = service.persistVillain(villain);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(villain.id));
+        logger.debug("New villain created with URI " + builder.build().toString());
+        return Response.created(builder.build()).build();
+    }
+
+    @Operation(summary = "Updates an exiting  villain")
+    @PUT
+    @APIResponse(responseCode = "200", description = "The updated villain", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class)))
+    public Response updateVillain(@Valid Villain villain) {
+        villain = service.updateVillain(villain);
+        logger.debug("Villain updated with new valued " + villain);
+        return Response.ok(villain).build();
+    }
+
+    @Operation(summary = "Deletes an exiting villain")
+    @DELETE
+    @Path("/{id}")
+    @APIResponse(responseCode = "204")
+    public Response deleteVillain(@RestPath Long id) {
+        service.deleteVillain(id);
+        logger.debug("Villain deleted with " + id);
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/hello")
+    @Tag(name="hello")
+    public String hello() {
+        return "hello villain";
+    }
+}
+----
+
+With this new code, go back to the Swagger UI and refresh.
+Your endpoints are organized by tags, and each annotated endpoint is documented.
+
+Documenting REST API is essential when working with different teams.
+You can see OpenAPI as the JavaDoc for REST.
+
+=== Customizing the Application
+
+The previous annotations allow you to customize the contract for a given REST Endpoint.
+But it's also important to document the entire application.
+
+The Microprofile OpenAPI also has a set of annotation to do so.
+The difference is that these annotations cannot be used on the endpoint methodss, but instead on another Java class configuring the entire application.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+For this, you need to create the `src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplication` class with the following content:
+
+[source, java]
+----
+package io.quarkus.workshop.superheroes.villain;
+
+import org.eclipse.microprofile.openapi.annotations.ExternalDocumentation;
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.info.Contact;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.eclipse.microprofile.openapi.annotations.servers.Server;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+@ApplicationPath("/")
+@OpenAPIDefinition(
+    info = @Info(title = "Villain API",
+        description = "This API allows CRUD operations on a villain",
+        version = "1.0",
+        contact = @Contact(name = "Quarkus", url = "https://github.com/quarkusio")),
+    servers = {
+        @Server(url = "http://localhost:8084")
+    },
+    externalDocs = @ExternalDocumentation(url = "https://github.com/quarkusio/quarkus-workshops", description = "All the Quarkus workshops")
+)
+public class VillainApplication extends Application {
+    // Empty body
+}
+----
+
+Go back to the Swagger UI and refresh again.
+At the top of the document, you can see the version and the global API documentation.
+
+=== Customized Contract
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+If you go back to the `http://localhost:8084/q/openapi` endpoint you will see the following OpenAPI contract:
+
+[source,yaml]
+----
+---
+openapi: 3.0.3
+info:
+  title: Villain API
+  description: This API allows CRUD operations on a villain
+  contact:
+    name: Quarkus
+    url: https://github.com/quarkusio
+  version: "1.0"
+externalDocs:
+  description: All the Quarkus workshops
+  url: https://github.com/quarkusio/quarkus-workshops
+servers:
+- url: http://localhost:8084
+tags:
+- name: hello
+- name: villains
+paths:
+  /api/villains:
+    get:
+      tags:
+      - villains
+      summary: Returns all the villains from the database
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Villain'
+        "204":
+          description: No villains
+    put:
+      tags:
+      - villains
+      summary: Updates an exiting  villain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Villain'
+      responses:
+        "200":
+          description: The updated villain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Villain'
+    post:
+      tags:
+      - villains
+      summary: Creates a valid villain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Villain'
+      responses:
+        "201":
+          description: The URI of the created villain
+          content:
+            application/json:
+              schema:
+                format: uri
+                type: string
+  /api/villains/hello:
+    get:
+      tags:
+      - hello
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/villains/random:
+    get:
+      tags:
+      - villains
+      summary: Returns a random villain
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Villain'
+  /api/villains/{id}:
+    get:
+      tags:
+      - villains
+      summary: Returns a villain for a given identifier
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Villain'
+        "204":
+          description: The villain is not found for a given identifier
+    delete:
+      tags:
+      - villains
+      summary: Deletes an exiting villain
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "204": {}
+components:
+  schemas:
+    Villain:
+      required:
+      - level
+      - name
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        level:
+          format: int32
+          minimum: 1
+          type: integer
+          nullable: false
+        name:
+          maxLength: 50
+          minLength: 3
+          type: string
+          nullable: false
+        otherName:
+          type: string
+        picture:
+          type: string
+        powers:
+          type: string
+----
+
+You can expose or exchange this contract to the API consumers, so they now what to expect when using your API.
+
+== OpenAPI Tests in VillainResourceTest
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Let's add an extra test method in `VillainResourceTest` ensuring that the OpenAPI specification is packaged with the application:
+
+[source, java, indent=0]
+----
+@Test
+void shouldPingOpenAPI() {
+    given()
+        .header(ACCEPT, JSON)
+        .when().get("/q/openapi")
+        .then()
+        .statusCode(OK.getStatusCode());
+}
+----
+
+Run the test:
+
+ - From the dev mode, or
+ - By executing the test using `./mvnw test`.
+
+include::../common-solution.adoc[]

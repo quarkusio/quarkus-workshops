@@ -21,7 +21,7 @@
 
     <groupId>io.quarkus.workshop.super-heroes</groupId>
     <artifactId>docs</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Docs</name>
 
@@ -83,6 +83,7 @@
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>21.2.0</graalvm-version>
                         <maven-version>3.8.x</maven-version>
+                        <quarkus-version>2.2.3.Final</quarkus-version>
                     </attributes>
                 </configuration>
                 <executions>
@@ -98,25 +99,13 @@
                             <backend>html</backend>
                             <sourceDocumentName>spine.adoc</sourceDocumentName>
                             <attributes>
+                                <imagesdir>images</imagesdir>
                                 <toc>left</toc>
                                 <linkcss>false</linkcss>
                                 <docinfo1>true</docinfo1>
                                 <icons>font</icons>
                                 <toclevels>3</toclevels>
                             </attributes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>output-pdf</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${pdf.skip}</skip>
-                            <sourceDocumentName>spine.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-asciidoc/quarkus-workshop.pdf</outputFile>
-                            <backend>pdf</backend>
                         </configuration>
                     </execution>
                 </executions>

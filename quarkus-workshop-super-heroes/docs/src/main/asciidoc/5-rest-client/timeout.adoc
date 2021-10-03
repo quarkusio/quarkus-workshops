@@ -1,0 +1,84 @@
+:imagesdir: ../images
+
+[[fault-tolerance-timeout]]
+= Timeout (optional)
+
+_This chapter is optional, you can jump to the <<messaging>> chapter or to the <<observability>> chapter if you already know about fault-tolerance and timeout._
+
+Sometimes invoking a REST API can take a long time.
+In fact, the more microservices invoke other microservices, the more network latency you can have.
+And what happens when a HTTP request takes long?
+Well, if hangs.
+On your browser you can see the request pending if you turn on the dev tools and look at what's the network is doing.
+
+image::fault-tolerance-pending.png[role=half-size]
+
+== Adding Timeouts
+
+Getting random fighters can take longer than expected.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+To simulate a long-running process, add the following code to the `FightResource`:
+
+[source,java,indent=0]
+----
+@ConfigProperty(name = "process.milliseconds", defaultValue = "0")
+long tooManyMilliseconds;
+
+private void veryLongProcess() {
+    try {
+        Thread.sleep(tooManyMilliseconds);
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+    }
+}
+
+@GET
+@Path("/randomfighters")
+@Timeout(250) // <-- Added
+public Response getRandomFighters() {
+    veryLongProcess(); // <-- Added
+    Fighters fighters = service.findRandomFighters();
+    logger.debug("Get random fighters " + fighters);
+    return Response.ok(fighters).build();
+}
+----
+
+[NOTE]
+--
+Don't forget to add the following import: `import org.eclipse.microprofile.config.inject.ConfigProperty;` and `import org.eclipse.microprofile.faulttolerance.Timeout;`
+--
+
+Let's say we've added some new functionality in the `veryLongProcess` method.
+When the process is really too long and the system is overloaded, we would rather time out.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Note that the timeout was configured to 250 ms, and a `Thread.sleep` was introduced and can be configured in the `application.properties`.
+If we set the property to a higher value than the timeout, let's say 10.000, then the request should be interrupted.
+
+[source]
+----
+process.milliseconds=10000
+----
+
+== Running the Application
+
+Now that you have set the number of waiting milliseconds to 10.000, run the application and start fighting again.
+You should see the following:
+
+[source,text]
+----
+18:40:48 ERROR [or.jb.re.re.co.co.AbstractResteasyReactiveContext] (executor-thread-0) Request failed: org.eclipse.microprofile.faulttolerance.exceptions.TimeoutException: Timeout[io.quarkus.workshop.superheroes.fight.FightResource#getRandomFighters] timed out
+	at io.smallrye.faulttolerance.core.timeout.Timeout.timeoutException(Timeout.java:91)
+	at io.smallrye.faulttolerance.core.timeout.Timeout.doApply(Timeout.java:78)
+	at io.smallrye.faulttolerance.core.timeout.Timeout.apply(Timeout.java:30)
+...
+----
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Before going further, set the `process.milliseconds` to 0.
+
+include::../common-solution.adoc[]
