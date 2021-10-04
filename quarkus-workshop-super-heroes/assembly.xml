@@ -27,7 +27,7 @@
             <excludes>
                 <exclude>rest-fights/**</exclude>
                 <exclude>rest-heroes/**</exclude>
-                <exclude>rest-fights/**</exclude>
+                <exclude>rest-villains/**</exclude>
                 <exclude>event-statistics/**</exclude>
                 <exclude>**/target/**</exclude>
                 <exclude>**/node/**</exclude>
