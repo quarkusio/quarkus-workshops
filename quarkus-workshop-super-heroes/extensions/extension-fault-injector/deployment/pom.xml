@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>extension-fault-injector-deployment</artifactId>
-    <name>Quarkus Workshop :: Extensions :: Fault Injector :: Deployment</name>
+    <name>Quarkus Workshop :: Extensions :: Fault Injector Extension :: Deployment</name>
 
     <dependencies>
         <dependency>
