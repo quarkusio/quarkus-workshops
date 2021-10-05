@@ -90,7 +90,7 @@ The Maven archetype generates the following `rest-villains` sub-directory:
 * An `io.quarkus.workshop.superheroes.villain.VillainResource` resource exposed on `/api/villains`
 * An associated unit test `VillainResourceTest`
 * The landing page `index.html` that is accessible on http://localhost:8080 after starting the application
-* Example `Dockerfile` files for both native and jvm modes in `src/main/docker`
+* Example `Dockerfile` files for both native and JVM modes in `src/main/docker`
 * The `application.properties` configuration file
 
 Once generated, look at the `pom.xml`.
