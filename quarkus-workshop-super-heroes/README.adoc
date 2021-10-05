@@ -11,7 +11,16 @@ For that, you just run the Maven command `mvn clean generate-resources` under an
 
 == Generate the zip files
 
-* quarkus-super-heroes-workshop.zip
+To generate the zip files, execute the following command from the root of the project:
+
+```bash
+$ mvn assembly:single -N
+```
+
+This generates the following zip files
+
+* `dist/quarkus-super-heroes-workshop.zip`: contains the bare minimum code to follow up the workshop
+* `dist/quarkus-super-heroes-workshop-complete.zip`: contains all the code (useful if you get lost or want to jump a section of the workshop)
 
 == Start the infrastructure
 
@@ -19,22 +28,22 @@ This workshop requires a couple of extra _technical_ services (databases, kafka.
 Start them using the `docker-compose.yaml` file located in the `infrastructure` directory:
 
 ```
-cd containers
-docker-compose up
+$ cd infrastructure
+$ docker-compose up
 ```
 
 Stop them using:
 
 ```
 CTRL+C
-docker-compose down
-docker-compose rm
+$ docker-compose down
+$ docker-compose rm
 ```
 
 == Build
 
 ```bash
-mvn clean install
+$ mvn clean install
 ```
 
 == Running the full system
@@ -42,23 +51,23 @@ mvn clean install
 * Run the infrastructure as explained above.
 * In a new terminal, run the heroes microservice
 ```bash
-cd rest-heroes
-mvn clean compile quarkus:dev
+$ cd rest-heroes
+$ mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the villains microservice
 ```bash
-cd rest-villains
-mvn clean compile quarkus:dev
+$ cd rest-villains
+$ mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd rest-fights
-mvn clean compile quarkus:dev
+$ cd rest-fights
+$ mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd event-statistics
-mvn clean compile quarkus:dev
+$ cd event-statistics
+$ mvn clean compile quarkus:dev
 ```
 
 == Ports
@@ -76,4 +85,3 @@ mvn clean compile quarkus:dev
 * https://github.com/agoncal/baking-microservice-pie
 * https://forge.jboss.org/document/hands-on-lab
 * https://bit.ly/forge-hol
-
