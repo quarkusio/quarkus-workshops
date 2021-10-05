@@ -455,11 +455,11 @@ $ ./mvnw test
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-The application is packaged using the`./mvnw package` command (it also runs the tests).
+The application is packaged using the `./mvnw package` command (it also runs the tests).
 That command generates:
 
-* `rest-villains-1.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Maven build;
-* `target/quarkus-app` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
+* `target/rest-villains-1.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Maven build (it is not an executable jar);
+* `target/quarkus-app/` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
 
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
 
@@ -502,6 +502,6 @@ In another terminal, check that the application runs using:
 
 [source, shell]
 ----
-curl http://localhost:8080/api/villains
+$ curl http://localhost:8080/api/villains
 Hello villain
 ----
