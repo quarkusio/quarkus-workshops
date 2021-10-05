@@ -179,12 +179,6 @@ We will see later why this is essential for Quarkus.
 It uses JAX-RS annotations such as `@Path`, `@GET`...
 `reasteasy-reactive-jackson` adds JSON object mapping capabilities to RESTEasy reactive.
 
-[NOTE]
-.What's this Quarkus platform thingy?
-====
-The Quarkus Universe includes Quarkus as well as third-party extensions, like Apache Camel or Kogito.
-====
-
 == The Villain Resource
 
 During the project creation, the `VillainResource.java` file has been created with the following content:
