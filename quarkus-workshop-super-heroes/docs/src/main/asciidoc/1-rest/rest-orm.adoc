@@ -42,9 +42,9 @@ super-heroes
 This microservice:
 
 * Interacts with a PostGreSQL database - so it needs a driver
-* Uses Hibernate with Panache - so need the extension providing it
-* Validates payloads and entities - so need a validator
-* Consumes and produces JSON - so we need a mapper
+* Uses Hibernate with Panache - needs the extension providing it
+* Validates payloads and entities - needs a validator
+* Consumes and produces JSON - needs a JSON mapper
 
 Hibernate ORM is the de-facto JPA implementation and offers you the full breadth of an Object Relational Mapper.
 It makes complex mappings possible, but it does not make simple and common mappings trivial.
@@ -266,7 +266,6 @@ public class VillainService {
     }
 
     public Villain persistVillain(@Valid Villain villain) {
-        villain.level = villain.level * levelMultiplier;
         villain.persist();
         return villain;
     }
@@ -292,7 +291,7 @@ The `@ApplicationScoped` annotation declares a _bean_.
 The other component of the application can access this bean.
 Arc, the dependency injection framework integrated in Quarkus, handles the creation and the access to this class.
 
-Notice that both methods that persist and update a hero, pass a `Villain` object as a parameter.
+Notice that both methods that persist and update a villain, pass a `Villain` object as a parameter.
 Thanks to the Bean Validation's `@Valid` annotation, the `Villain` object will be checked to see if it's valid or not.
 If it's not, the transaction will be rolled back.
 
@@ -439,10 +438,11 @@ Dependency injection in Quarkus is based on ArC which is a CDI-based dependency 
 You can learn more about it in the Contexts and Dependency Injection guide.footnote:[Quarkus - Contexts and Dependency Injection https://quarkus.io/guides/cdi-reference.html]
 
 ArC handles injected at build time.
-You can use field injection and inject the `VillainService` using:
+You can use field injection and inject the `VillainService` and the logger using:
 
 [source, java]
 ----
+@Inject Logger logger;
 @Inject VillainService service;
 ----
 
