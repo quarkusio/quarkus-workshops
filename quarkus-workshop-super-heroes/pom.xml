@@ -14,10 +14,10 @@
         <module>super-heroes/ui-super-heroes</module>
         <module>super-heroes/load-super-heroes</module>
 
-        <module>super-heroes/rest-villains-complete</module>
-        <module>super-heroes/rest-heroes-complete</module>
-        <module>super-heroes/rest-fights-complete</module>
-        <module>super-heroes/event-statistics-complete</module>
+        <module>super-heroes/rest-villains</module>
+        <module>super-heroes/rest-heroes</module>
+        <module>super-heroes/rest-fights</module>
+        <module>super-heroes/event-statistics</module>
     </modules>
     <build>
         <plugins>

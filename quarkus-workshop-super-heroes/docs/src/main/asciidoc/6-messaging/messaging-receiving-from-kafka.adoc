@@ -50,7 +50,7 @@ Open a terminal and run the following command:
 ----
 mvn io.quarkus:quarkus-maven-plugin:2.2.3.Final:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
-    -DprojectArtifactId=event-statistics-complete \
+    -DprojectArtifactId=event-statistics \
     -DclassName="io.quarkus.workshop.superheroes.statistics.StatisticResource" \
     -Dpath="api/stats" \
     -Dextensions="kafka, resteasy-reactive-jackson, websockets"

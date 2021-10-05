@@ -25,16 +25,6 @@
             <directory>super-heroes</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <excludes>
-                <exclude>rest-fights/**</exclude>
-                <exclude>rest-heroes/**</exclude>
-                <exclude>rest-villains/**</exclude>
-                <exclude>event-statistics/**</exclude>
-
-                <exclude>rest-fights-complete/**</exclude>
-                <exclude>rest-heroes-complete/**</exclude>
-                <exclude>rest-villains-complete/**</exclude>
-                <exclude>event-statistics-complete/**</exclude>
-
                 <exclude>**/target/**</exclude>
                 <exclude>**/node/**</exclude>
                 <exclude>**/node_modules/**</exclude>

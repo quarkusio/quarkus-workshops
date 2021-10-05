@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/event-statistics-complete .
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/event-statistics .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/event-statistics-complete
+# docker run -i --rm -p 8080:8080 quarkus/event-statistics
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4

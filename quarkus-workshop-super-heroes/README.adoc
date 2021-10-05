@@ -9,6 +9,10 @@ Check https://quarkus.io/quarkus-workshops/super-heros/ to get the workshop inst
 You can either generate the documentation for each exercise or for the entire workshop.
 For that, you just run the Maven command `mvn clean generate-resources` under an `docs` directory.
 
+== Generate the zip files
+
+* quarkus-super-heroes-workshop.zip
+
 == Start the infrastructure
 
 This workshop requires a couple of extra _technical_ services (databases, kafka...).
@@ -38,22 +42,22 @@ mvn clean install
 * Run the infrastructure as explained above.
 * In a new terminal, run the heroes microservice
 ```bash
-cd rest-heroes-complete
+cd rest-heroes
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the villains microservice
 ```bash
-cd rest-villains-complete
+cd rest-villains
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd rest-fights-complete
+cd rest-fights
 mvn clean compile quarkus:dev
 ```
 * In a new terminal, run the fights microservice
 ```bash
-cd event-statistics-complete
+cd event-statistics
 mvn clean compile quarkus:dev
 ```
 
