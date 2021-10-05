@@ -19,7 +19,7 @@ mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-villains \
     -DclassName="io.quarkus.workshop.superheroes.villain.VillainResource" \
-    -Dpath="api/villains"
+    -Dpath="api/villains" \
     -Dextensions="resteasy-reactive-jackson"
 ----
 
