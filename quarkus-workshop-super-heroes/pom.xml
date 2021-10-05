@@ -25,12 +25,13 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <finalName>quarkus-super-heroes-workshop</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>quarkus-super-heroes</finalName>
+                    <appendAssemblyId>true</appendAssemblyId>
                     <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
                     <attach>false</attach>
                     <descriptors>
                         <descriptor>assembly.xml</descriptor>
+                        <descriptor>assembly-complete.xml</descriptor>
                     </descriptors>
                     <outputDirectory>dist</outputDirectory>
                 </configuration>

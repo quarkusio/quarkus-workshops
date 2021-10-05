@@ -1,10 +1,11 @@
 <assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
-    <id>workshop</id>
+    <id>workshop-complete</id>
     <formats>
         <format>zip</format>
     </formats>
+
     <includeBaseDirectory>true</includeBaseDirectory>
 
     <fileSets>
@@ -29,12 +30,6 @@
                 <exclude>rest-heroes/**</exclude>
                 <exclude>rest-villains/**</exclude>
                 <exclude>event-statistics/**</exclude>
-
-                <exclude>rest-fights-complete/**</exclude>
-                <exclude>rest-heroes-complete/**</exclude>
-                <exclude>rest-villains-complete/**</exclude>
-                <exclude>event-statistics-complete/**</exclude>
-
                 <exclude>**/target/**</exclude>
                 <exclude>**/node/**</exclude>
                 <exclude>**/node_modules/**</exclude>

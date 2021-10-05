@@ -3,6 +3,7 @@ ifdef::give-solution[]
 ====
 If you have any problem with the code, don't understand or feel you are running, remember to ask for some help.
 Also, you can get the code of this entire workshop from {github-url}.
-Complete implementation are located in the `-complete` modules.
+Complete implementations are located in the `super-heroes/*-complete` directories.
+You can also download the completed code from {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip.
 ====
 endif::give-solution[]
