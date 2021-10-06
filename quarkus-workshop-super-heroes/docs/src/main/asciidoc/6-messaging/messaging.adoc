@@ -35,3 +35,5 @@ include::{plantDir}/messaging-architecture.puml[]
 
 When the application persists a new fight, in the _fight_ microservice, you are going to send it to a Kafka topic.
 These messages are read in the _statistics_ microservice, processed, and the result is sent to a UI using web sockets.
+
+IMPORTANT: This service is exposed on the port 8085.

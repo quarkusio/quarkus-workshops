@@ -29,9 +29,9 @@ super-heroes
 ++++++++++  Fighters.java
 +++++++++++ client
 ++++++++++++ Hero.java
-++++++++++++ HeroService.java
+++++++++++++ HeroProxy.java
 ++++++++++++ Villain.java
-++++++++++++ VillainService.java
+++++++++++++ VillainProxy.java
 +++++++++++ kafka
 ++++++++++++ KafkaWriter.java <--
 ++  pom.xml
@@ -45,7 +45,7 @@ super-heroes
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 The Kafka extension was already imported during the project creation.
-In doube, you can run:
+In doubt, you can run in the Fight microservice:
 
 [source, shell]
 ----

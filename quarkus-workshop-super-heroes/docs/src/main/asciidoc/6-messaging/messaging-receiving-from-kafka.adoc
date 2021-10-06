@@ -46,7 +46,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Open a terminal and run the following command:
 
-[source,shell]
+[source,shell,subs="attributes+"]
 ----
 mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
@@ -63,13 +63,9 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 <module>super-heroes/event-statistics</module>
 ----
 
-[NOTE]
-====
-As you can see in the command, you can configure the extensions you want using the `-Dextensions` parameter.
-Open the `pom.xml` file to see the result.
-====
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Delete the `io.quarkus.workshop.superheroes.statistics.undertowwebsockets.SupersonicChatSocket` class and the associated test class.
+Delete all the classes under the `io.quarkus.workshop.superheroes.statistics` package as well as the associated test classes.
 There are just examples.
 
 == Consuming Fight
@@ -123,7 +119,7 @@ public class FightDeserializer extends ObjectMapperDeserializer<Fight> {
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
-This class contains 2 methods annotated with `@Incoming` and `@Outgoing`, both consuming the `Fight` coming from Kafka.
+This class contains two methods annotated with `@Incoming` and `@Outgoing`, both consuming the `Fight` coming from Kafka.
 
 The `computeTeamStats` method transform the fight stream into a stream of ratio indicating the amount of victories for heroes and villains.
 It calls `onItem().transform` method for each received fight.
@@ -278,7 +274,6 @@ Edit the `application.properties` file and add the following content:
 
 [source,properties]
 ----
-# tag::adocKafka[]
 quarkus.http.port=8085
 
 ## Kafka configuration
