@@ -3,8 +3,6 @@
 [[fault-tolerance-fallbacks]]
 = Fallbacks
 
-_This chapter is optional, you can jump to the <<fault-tolerance-timeout>> chapter, <<observability>> chapter or to the <<messaging>> chapter if you already know about fault-tolerance and fallback._
-
 So now you've been playing this great Super Heroes Fight for a few hours... and you kill the Hero REST API.
 What happens?
 Well, the Fight REST API cannot invoke the Hero API anymore and breaks with the following exception:
@@ -33,7 +31,7 @@ To simplify making more resilient applications, Quarkus contains an implementati
 
 == Installing the Fault Tolerance Dependency
 
-To install the MicroProfile Fault Tolerance dependency, just run the following command:
+To install the MicroProfile Fault Tolerance dependency, just run the following command in the Fight microservice:
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
@@ -65,12 +63,12 @@ For that, add two fallback methods to the `FightService` and a `@Fallback` annot
 ----
 @Fallback(fallbackMethod = "fallbackRandomHero")
 Hero findRandomHero() {
-    return heroService.findRandomHero();
+    return heroProxy.findRandomHero();
 }
 
 @Fallback(fallbackMethod = "fallbackRandomVillain")
 Villain findRandomVillain() {
-    return villainService.findRandomVillain();
+    return villainProxy.findRandomVillain();
 }
 
 public Hero fallbackRandomHero() {
