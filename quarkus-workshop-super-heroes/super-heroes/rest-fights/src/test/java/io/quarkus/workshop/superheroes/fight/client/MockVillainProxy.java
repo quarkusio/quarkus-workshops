@@ -1,8 +1,6 @@
-package io.quarkus.workshop.superheroes.fight;
+package io.quarkus.workshop.superheroes.fight.client;
 
 import io.quarkus.test.Mock;
-import io.quarkus.workshop.superheroes.fight.client.Villain;
-import io.quarkus.workshop.superheroes.fight.client.VillainService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 @Mock
 @ApplicationScoped
 @RestClient
-public class MockVillainService implements VillainService {
+public class MockVillainProxy implements VillainProxy {
 
     public static final String DEFAULT_VILLAIN_NAME = "Super Chocolatine";
     public static final String DEFAULT_VILLAIN_PICTURE = "super_chocolatine.png";

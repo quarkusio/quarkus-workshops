@@ -1,8 +1,6 @@
-package io.quarkus.workshop.superheroes.fight;
+package io.quarkus.workshop.superheroes.fight.client;
 
 import io.quarkus.test.Mock;
-import io.quarkus.workshop.superheroes.fight.client.Hero;
-import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 @Mock
 @ApplicationScoped
 @RestClient
-public class MockHeroService implements HeroService {
+public class MockHeroProxy implements HeroProxy {
 
     public static final String DEFAULT_HERO_NAME = "Super Baguette";
     public static final String DEFAULT_HERO_PICTURE = "super_baguette.png";

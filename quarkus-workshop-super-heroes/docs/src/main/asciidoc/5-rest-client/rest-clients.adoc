@@ -29,7 +29,9 @@ T
 +++++++++ Fighters.java
 +++++++++ client
 +++++++++++ Hero.java
++++++++++++ HeroProxy.java
 +++++++++++ Villain.java
++++++++++++ VillainProxy.java
 +++ resources
 ++++ META-INF
 +++++ resources
@@ -44,6 +46,9 @@ T
 ++++++++ superheroes
 +++++++++ fight
 ++++++++++ FightResourceTest.java
++++++++++ client
++++++++++++ MockHeroProxy.java
++++++++++++ MockVillainProxy.java
 + pom.xml
 }
 }
@@ -60,7 +65,7 @@ We are going to rework the:
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-To install the Reactive REST Client dependency, just run the following command:
+To install the Reactive REST Client dependency, just run the following command in the Fight microservice:
 
 [source,shell]
 ----
@@ -91,8 +96,8 @@ For that, replace the `findRandomFighters` method with the following code to the
 
 [source, java, indent=0]
 ----
-@RestClient HeroService heroService;
-@RestClient VillainService villainService;
+@RestClient HeroProxy heroProxy;
+@RestClient VillainProxy villainProxy;
 
 // ...
 
@@ -106,11 +111,11 @@ Fighters findRandomFighters() {
 }
 
 Villain findRandomVillain() {
-    return villainService.findRandomVillain();
+    return villainProxy.findRandomVillain();
 }
 
 Hero findRandomHero() {
-   return heroService.findRandomHero();
+   return heroProxy.findRandomHero();
 }
 
 
@@ -147,7 +152,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
 @RegisterRestClient
-public interface HeroService {
+public interface HeroProxy {
 
     @GET
     @Path("/random")
@@ -164,7 +169,7 @@ The purpose of the annotations in the code above is the following:
 * `@Path` and `@GET` are the standard JAX-RS annotations used to define how to access the service
 * `@Produces` defines the expected content-type
 
-The `VillainService` is very similar and looks like this:
+The `VillainProxy` is very similar and looks like this:
 
 [source, java]
 ----
@@ -180,7 +185,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/api/villains")
 @Produces(MediaType.APPLICATION_JSON)
 @RegisterRestClient
-public interface VillainService {
+public interface VillainProxy {
 
     @GET
     @Path("/random")
@@ -194,8 +199,8 @@ Once created, go back to the `FightService` class and add the following import s
 
 [source]
 --
-import io.quarkus.workshop.superheroes.fight.client.HeroService;
-import io.quarkus.workshop.superheroes.fight.client.VillainService;
+import io.quarkus.workshop.superheroes.fight.client.HeroProxy;
+import io.quarkus.workshop.superheroes.fight.client.VillainProxy;
 --
 
 == Configuring REST Client Invocation
@@ -207,16 +212,16 @@ The name of the property needs to follow a certain convention which is best disp
 
 [source,properties]
 ----
-io.quarkus.workshop.superheroes.fight.client.HeroService/mp-rest/url=http://localhost:8083
-io.quarkus.workshop.superheroes.fight.client.HeroService/mp-rest/scope=javax.inject.Singleton
-io.quarkus.workshop.superheroes.fight.client.VillainService/mp-rest/url=http://localhost:8084
-io.quarkus.workshop.superheroes.fight.client.VillainService/mp-rest/scope=javax.inject.Singleton
+io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/url=http://localhost:8083
+io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/scope=javax.inject.Singleton
+io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/url=http://localhost:8084
+io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/scope=javax.inject.Singleton
 ----
 
-Having this configuration means that all requests performed using `HeroService` will use http://localhost:8083 as the base URL.
-Using this configuration, calling the `findRandomHero` method of `HeroService` would result in an HTTP GET request being made to http://localhost:8083/api/heroes/random.
+Having this configuration means that all requests performed using `HeroProxy` will use http://localhost:8083 as the base URL.
+Using this configuration, calling the `findRandomHero` method of `HeroProxy` would result in an HTTP GET request being made to http://localhost:8083/api/heroes/random.
 
-Having this configuration means that the default scope of `HeroService` will be `@Singleton`.
+Having this configuration means that the default scope of `HeroProxy` will be `@Singleton`.
 Supported scope values are `@Singleton`, `@Dependent`, `@ApplicationScoped` and `@RequestScoped`.
 The default scope is `@Dependent`.
 The default scope can also be defined on the interface.
@@ -227,7 +232,7 @@ Now, go back in the UI and refresh, you should see some pictures!
 
 But, now we have another problem.
 To run the tests of the Fight API we need the Hero and Villain REST APIs to be up and running.
-To avoid this, we need to Mock the `HeroService` and `VillainService` interfaces.
+To avoid this, we need to Mock the `HeroProxy` and `VillainProxy` interfaces.
 
 Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.footnote:[Alternatives https://docs.jboss.org/weld/reference/latest/en-US/html/beanscdi.html#_alternatives]
 
@@ -236,15 +241,13 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 To use this simply override the bean you wish to mock with a class in the `src/test/java` directory, and put the `@Alternative` and `@Priority(1)` annotations on the bean.
 Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could be used.
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
-So, to mock the `HeroService` interface we just need to implement the following `MockHeroService` class:
+So, to mock the `HeroProxy` interface we just need to implement the following `MockHeroProxy` class (under the `client` subpackage):
 
 [source, java]
 ----
-package io.quarkus.workshop.superheroes.fight;
+package io.quarkus.workshop.superheroes.fight.client;
 
 import io.quarkus.test.Mock;
-import io.quarkus.workshop.superheroes.fight.client.Hero;
-import io.quarkus.workshop.superheroes.fight.client.HeroService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -252,7 +255,7 @@ import javax.enterprise.context.ApplicationScoped;
 @Mock
 @ApplicationScoped
 @RestClient
-public class MockHeroService implements HeroService {
+public class MockHeroProxy implements HeroProxy {
 
     public static final String DEFAULT_HERO_NAME = "Super Baguette";
     public static final String DEFAULT_HERO_PICTURE = "super_baguette.png";
@@ -273,15 +276,13 @@ public class MockHeroService implements HeroService {
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Do the same for the `MockVillainService`:
+Do the same for the `MockVillainProxy`:
 
 [source, java]
 ----
-package io.quarkus.workshop.superheroes.fight;
+package io.quarkus.workshop.superheroes.fight.client;
 
 import io.quarkus.test.Mock;
-import io.quarkus.workshop.superheroes.fight.client.Villain;
-import io.quarkus.workshop.superheroes.fight.client.VillainService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -289,7 +290,7 @@ import javax.enterprise.context.ApplicationScoped;
 @Mock
 @ApplicationScoped
 @RestClient
-public class MockVillainService implements VillainService {
+public class MockVillainProxy implements VillainProxy {
 
     public static final String DEFAULT_VILLAIN_NAME = "Super Chocolatine";
     public static final String DEFAULT_VILLAIN_PICTURE = "super_chocolatine.png";
@@ -322,23 +323,14 @@ void shouldGetRandomFighters() {
         .then()
         .statusCode(OK.getStatusCode())
         .header(CONTENT_TYPE, APPLICATION_JSON)
-        .body("hero.name", Is.is(MockHeroService.DEFAULT_HERO_NAME))
-        .body("hero.picture", Is.is(MockHeroService.DEFAULT_HERO_PICTURE))
-        .body("hero.level", Is.is(MockHeroService.DEFAULT_HERO_LEVEL))
-        .body("villain.name", Is.is(MockVillainService.DEFAULT_VILLAIN_NAME))
-        .body("villain.picture", Is.is(MockVillainService.DEFAULT_VILLAIN_PICTURE))
-        .body("villain.level", Is.is(MockVillainService.DEFAULT_VILLAIN_LEVEL));
+        .body("hero.name", Is.is(MockHeroProxy.DEFAULT_HERO_NAME))
+        .body("hero.picture", Is.is(MockHeroProxy.DEFAULT_HERO_PICTURE))
+        .body("hero.level", Is.is(MockHeroProxy.DEFAULT_HERO_LEVEL))
+        .body("villain.name", Is.is(MockVillainProxy.DEFAULT_VILLAIN_NAME))
+        .body("villain.picture", Is.is(MockVillainProxy.DEFAULT_VILLAIN_PICTURE))
+        .body("villain.level", Is.is(MockVillainProxy.DEFAULT_VILLAIN_LEVEL));
 }
 --
-
-[NOTE]
-====
-You would need the following import statements:
-```
-import io.quarkus.workshop.superheroes.fight.MockHeroService;
-import io.quarkus.workshop.superheroes.fight.MockVillainService;
-```
-====
 
 Now, run the test form the dev mode, or from your IDE.
 You can shutdown the hero and villain services to verify that the tests still pass.

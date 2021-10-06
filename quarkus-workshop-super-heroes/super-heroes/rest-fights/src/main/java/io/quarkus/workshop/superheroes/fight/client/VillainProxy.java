@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/api/villains")
 @Produces(MediaType.APPLICATION_JSON)
 @RegisterRestClient
-public interface VillainService {
+public interface VillainProxy {
 
     @GET
     @Path("/random")

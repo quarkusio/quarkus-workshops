@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
 @RegisterRestClient
-public interface HeroService {
+public interface HeroProxy {
 
     @GET
     @Path("/random")

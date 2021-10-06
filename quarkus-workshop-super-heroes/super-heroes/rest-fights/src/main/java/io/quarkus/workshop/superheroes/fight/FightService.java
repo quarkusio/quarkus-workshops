@@ -2,9 +2,9 @@ package io.quarkus.workshop.superheroes.fight;
 
 
 import io.quarkus.workshop.superheroes.fight.client.Hero;
-import io.quarkus.workshop.superheroes.fight.client.HeroService;
+import io.quarkus.workshop.superheroes.fight.client.HeroProxy;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
-import io.quarkus.workshop.superheroes.fight.client.VillainService;
+import io.quarkus.workshop.superheroes.fight.client.VillainProxy;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -30,9 +30,9 @@ public class FightService {
     Logger logger;
 
     @RestClient
-    HeroService heroService;
+    HeroProxy heroProxy;
     @RestClient
-    VillainService villainService;
+    VillainProxy villainProxy;
 
     private final Random random = new Random();
 
@@ -57,12 +57,12 @@ public class FightService {
 
     @Fallback(fallbackMethod = "fallbackRandomHero")
     Hero findRandomHero() {
-        return heroService.findRandomHero();
+        return heroProxy.findRandomHero();
     }
 
     @Fallback(fallbackMethod = "fallbackRandomVillain")
     Villain findRandomVillain() {
-        return villainService.findRandomVillain();
+        return villainProxy.findRandomVillain();
     }
 
     public Hero fallbackRandomHero() {
