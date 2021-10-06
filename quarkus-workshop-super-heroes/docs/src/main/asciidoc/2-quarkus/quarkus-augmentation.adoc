@@ -5,7 +5,7 @@
 
 Let's demystify all this.
 
-So far, you have developed the superheroes microservice.
+So far, you have developed the super-villains microservice.
 This microservice is relatively simple.
 It still has database access, ORM support, transaction, JSON serialization, and deserialization.
 

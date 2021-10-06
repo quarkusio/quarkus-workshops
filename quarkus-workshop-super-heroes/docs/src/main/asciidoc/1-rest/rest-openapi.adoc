@@ -316,7 +316,7 @@ public class VillainResource {
 }
 ----
 
-With this new code, go back to the Swagger UI and refresh.
+With this new code, go back to the Swagger UI at http://localhost:8084/q/swagger-ui and refresh.
 Your endpoints are organized by tags, and each annotated endpoint is documented.
 
 Documenting REST API is essential when working with different teams.

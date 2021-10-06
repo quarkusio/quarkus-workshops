@@ -39,7 +39,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Then create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files, the build also produces `target/rest-villains-1.0.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
-You can run it using: `./target/rest-villains-1.0.0-SNAPSHOT-runner`.
+You can run it using `./target/rest-villains-1.0.0-SNAPSHOT-runner` and curl the endpoint with `curl http://localhost:8084/api/villains`.
 
 [WARNING]
 ====

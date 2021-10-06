@@ -14,7 +14,7 @@ Let's change the `VillainApplicationLifeCycle` so it displays the current profil
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-For that, just add a log invoking the `ProfileManager.getActiveProfile()` method:
+For that, just add a log invoking `ProfileManager.getActiveProfile()` in the `onStart()` method:
 
 [source,indent=0]
 ----
@@ -30,12 +30,13 @@ In the `application.properties` file, you can prefix a property with the profile
 For example, we did add the `%test.level.multiplier=1` property in the previous chapter.
 It indicates that the property `level.multiplier` is set to 1 in the `test` profile.
 
-Now, you will get the' dev' profile enabled if you start your application in dev mode with `mvn compile quarkus:dev`.
+Now, you will get the `dev` profile enabled if you start your application in dev mode with `mvn compile quarkus:dev`.
 If you start the tests, the `test` profile is enabled (the `multiplier` is set to 1).
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Package your application with `mvn package`, and start it with `java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar`.
+You can also create your own profiles, and activate them with the `quarkus.profile` property.
+For example, to use a profile called `foo`, package your application with `mvn package`, and start it with `java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar`.
 You will see that the `foo` profile is enabled.
 As not overridden, the `level.multiplier` property has the value 0.5.
 
