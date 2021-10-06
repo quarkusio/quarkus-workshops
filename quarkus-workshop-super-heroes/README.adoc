@@ -42,13 +42,16 @@ $ docker-compose rm
 
 == Build
 
+To build the entire code, you need to activate the `complete` profile:
+
 ```bash
-$ mvn clean install
+$ mvn clean install -Pcomplete
+
 ```
 
-== Running the full system
+== Running the complete system
 
-* Run the infrastructure as explained above.
+* Run the infrastructure and build the complete system as explained above.
 * In a new terminal, run the heroes microservice
 ```bash
 $ cd rest-heroes

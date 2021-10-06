@@ -13,11 +13,6 @@
 
         <module>super-heroes/ui-super-heroes</module>
         <module>super-heroes/load-super-heroes</module>
-
-        <module>super-heroes/rest-villains</module>
-        <module>super-heroes/rest-heroes</module>
-        <module>super-heroes/rest-fights</module>
-        <module>super-heroes/event-statistics</module>
     </modules>
     <build>
         <plugins>
@@ -39,6 +34,15 @@
         </plugins>
     </build>
     <profiles>
+        <profile>
+            <id>complete</id>
+            <modules>
+                <module>super-heroes/rest-villains</module>
+                <module>super-heroes/rest-heroes</module>
+                <module>super-heroes/rest-fights</module>
+                <module>super-heroes/event-statistics</module>
+            </modules>
+        </profile>
         <profile>
             <id>full</id>
             <modules>
