@@ -50,7 +50,7 @@ So make sure you set the `quarkus.http.cors` property to `true` on the:
 3. Villain microservice
 
 But, even with this, the UI is still not working.
-The explanation is simple, we forgot another thing:
+The CORS errors are gone, so that's a good step, but we forgot something else:
 
 [plantuml,align=center]
 ----
