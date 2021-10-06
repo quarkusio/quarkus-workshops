@@ -476,9 +476,8 @@ INSERT INTO villain(id, name, otherName, picture, powers, level)
 VALUES (nextval('hibernate_sequence'), 'The Rival (CW)', 'Edward Clariss', 'https://www.superherodb.com/pictures2/portraits/11/050/13846.jpg', 'Accelerated Healing, Agility, Bullet Time, Durability, Electrokinesis, Endurance, Enhanced Senses, Intangibility, Marksmanship, Phasing, Reflexes, Speed Force, Stamina, Super Speed, Super Strength', 10);
 ----
 
-// TODO Change url here
 Ok, but that's just a few entries.
-Download the SQL file {github-raw}/super-heroes/rest-hero/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+Download the SQL file {github-raw}/super-heroes/rest-villains/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 Now, you have more than 500 villains that will be loaded in the database.
 
 If you didn't yet, start the application in dev mode:
@@ -760,10 +759,11 @@ To execute this service, you need a database (and later on we will need Promethe
 Let's use Docker and docker compose to ease the installation of such infrastructure.
 
 You should already have installed the infrastructure into the `infrastructure` directory.
-Now, just execute `docker-compose -f docker-compose.yaml up -d`.
-You should see a few logs going on and then all the containers get started.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Now, just execute `docker-compose -f docker-compose.yaml up -d`.
+You should see a few logs going on and then all the containers get started.
 
 On Linux, use the `docker-compose-linux.yaml`:
 

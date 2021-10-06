@@ -176,10 +176,10 @@ We will use it several times in this workshop.
 Note that the dev console is only available in dev mode.
 
 The Dev Console integrates Swagger, a UI to invoke your endpoints from the comfort of your browser.
-Click on the _Swagger UI_ button located in the "SmallRye OpenAPI" widget.
+Click on the "_Swagger UI_" button located in the "SmallRye OpenAPI" widget (http://localhost:8084/q/swagger-ui).
 
 You will see all your endpoints listed.
-Click on the "GET" button for the "/api/villains" path, then click on "Try it out" and finally on "Execute".
+Click on the "_GET_" button for the "/api/villains" path, then click on "_Try it out_" and finally on "Execute".
 You can see the result immediately.
 
 When developing REST APIs, this UI is very convenient.
