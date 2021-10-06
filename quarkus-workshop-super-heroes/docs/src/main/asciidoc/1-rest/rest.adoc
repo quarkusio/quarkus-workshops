@@ -30,6 +30,8 @@ In the following sections, you learn:
 * How to use transactions
 * How to enable OpenAPI and Swagger-UI
 
+IMPORTANT: This service is exposed on the port 8084.
+
 But first, let's describe our service.
 The Super-Villains microservice manages villains with their names, powers, and so on.
 The REST API allows adding, removing, listing, and picking a random villain from the stored set.
