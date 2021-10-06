@@ -20,7 +20,7 @@ Open a terminal and run the following command:
 
 [source,shell]
 ----
-mvn io.quarkus:quarkus-maven-plugin:2.2.3.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-fights \
     -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
@@ -31,15 +31,23 @@ cd rest-fights
 
 If you open the `pom.xml` file, you will see that the following extensions have been imported:
 
-- io.quarkus:quarkus-hibernate-orm-panache
-- io.quarkus:quarkus-hibernate-validator
-- io.quarkus:quarkus-smallrye-openapi
-- io.quarkus:quarkus-smallrye-reactive-messaging-kafka
-- io.quarkus:quarkus-resteasy-reactive-jackson
-- io.quarkus:quarkus-jdbc-postgresql
+* `io.quarkus:quarkus-hibernate-orm-panache`
+* `io.quarkus:quarkus-hibernate-validator`
+* `io.quarkus:quarkus-smallrye-openapi`
+* `io.quarkus:quarkus-smallrye-reactive-messaging-kafka`
+* `io.quarkus:quarkus-resteasy-reactive-jackson`
+* `io.quarkus:quarkus-jdbc-postgresql`
 
 You can see that beyond the extensions we have used so far, we added the Kafka support which uses Eclipse MicroProfile Reactive Messaging.
 Stay tuned.
+
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
+
+[source,xml]
+----
+<module>super-heroes/rest-fights</module>
+----
+
 
 == Directory Structure
 

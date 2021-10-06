@@ -48,12 +48,19 @@ Open a terminal and run the following command:
 
 [source,shell]
 ----
-mvn io.quarkus:quarkus-maven-plugin:2.2.3.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=event-statistics \
     -DclassName="io.quarkus.workshop.superheroes.statistics.StatisticResource" \
     -Dpath="api/stats" \
     -Dextensions="kafka, resteasy-reactive-jackson, websockets"
+----
+
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
+
+[source,xml]
+----
+<module>super-heroes/event-statistics</module>
 ----
 
 [NOTE]

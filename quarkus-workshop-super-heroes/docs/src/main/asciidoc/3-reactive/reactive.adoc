@@ -68,6 +68,13 @@ As you can see, we can select multiple extensions during the project creation:
 * `quarkus-hibernate-reactive-panache` provides Panache entity supports using Hibernate Reactive, an ORM using reactive database drivers,
 * `quarkus-reactive-pg-client` provides the reactive database driver used by Hibernate Reactive to interact with PostGreSQL databases.
 
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
+
+[source,xml]
+----
+<module>super-heroes/rest-heroes</module>
+----
+
 === Directory Structure
 
 At the end of this chapter, you will end up with the following directory structure:

@@ -26,6 +26,13 @@ mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
 The last line selects the extension we want to use.
 As a start, we only select `resteasy-reactive-jackson`, which will also import `resteasy-reactive`.
 
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
+
+[source,xml]
+----
+<module>super-heroes/rest-villains</module>
+----
+
 [TIP]
 .Preferring Web UI
 ====
