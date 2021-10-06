@@ -18,15 +18,15 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Open a terminal and run the following command:
 
-[source,shell]
+[source,shell,subs="attributes+"]
 ----
-mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+$ mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-fights \
     -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
     -Dpath="api/fights" \
     -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka"
-cd rest-fights
+$ cd rest-fights
 ----
 
 If you open the `pom.xml` file, you will see that the following extensions have been imported:
@@ -75,6 +75,9 @@ super-heroes
 ++++++++++  FightResource.java
 ++++++++++  FightService.java
 ++++++++++  Fighters.java
++++++++++  client
+++++++++++  Hero.java
+++++++++++  Villain.java
 ++++  resources
 +++++  META-INF
 ++++++  resources
@@ -244,7 +247,7 @@ Create the `io.quarkus.workshop.superheroes.fight.FightService` class with the f
 ----
 package io.quarkus.workshop.superheroes.fight;
 
-import org.jboss.logmanager.Logger;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -435,7 +438,6 @@ INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserNa
 VALUES (nextval('hibernate_sequence'), current_timestamp, 'Galadriel', 10, 'https://www.superherodb.com/pictures2/portraits/11/050/11796.jpg', 'Darth Vader', 8, 'https://www.superherodb.com/pictures2/portraits/10/050/10444.jpg', 'heroes', 'villains');
 INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam ,loserTeam)
 VALUES (nextval('hibernate_sequence'), current_timestamp, 'Annihilus', 23, 'https://www.superherodb.com/pictures2/portraits/10/050/1307.jpg', 'Shikamaru', 1, 'https://www.superherodb.com/pictures2/portraits/10/050/11742.jpg', 'villains', 'heroes');
-...
 ----
 
 == Configuration

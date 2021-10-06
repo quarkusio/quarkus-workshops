@@ -45,3 +45,12 @@ super-heroes
 }
 @endsalt
 ----
+
+In the following sections, you will:
+
+* Create a new Quarkus application
+* Implement REST API using JAX-RS
+* Access your database using Hibernate ORM with Panache
+* Use transactions
+
+IMPORTANT: This service is exposed on the port 8082.

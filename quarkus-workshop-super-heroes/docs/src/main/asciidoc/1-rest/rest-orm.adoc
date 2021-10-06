@@ -465,7 +465,6 @@ To load some SQL statements when Hibernate ORM starts, add the following `import
 It contains SQL statements terminated by a semicolon.
 This is useful to have a data set ready for the tests or demos.
 
-// TODO Copy the right path
 [source,sql]
 ----
 INSERT INTO villain(id, name, otherName, picture, powers, level)
