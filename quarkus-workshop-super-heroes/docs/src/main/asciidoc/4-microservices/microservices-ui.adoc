@@ -6,19 +6,43 @@
 
 Now that we have the three main microservices, time to have a decent user interface to start fighting.
 The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
-This time you will just download an Angular application, install it, and run it on another Quarkus instance.
+This time you will just execute another Quarkus instance with an already developed and packaged Angular application.
+If you want to try to build it yourself, you will have optional steps to follow.
 
 == The Web Application
 
 Navigate to the `super-heroes/ui-super-heroes` directory.
-It contains the code of the microservice.
+It contains the code of the application.
 Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
+All the Angular code (graphical components, model, services) is located under `src/app`.
+But what's really important is the packaged application under `src/main/resources/META-INF/resources`.
+
 Notice that there is a `pom.xml` file.
-This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven.
+This is just a convenient way to install NodeJS and NPM so we can build the Angular application with Maven (optional).
 The `pom.xml` also allows us to package the Angular application into Quarkus.
+
+IMPORTANT: This service is exposed on the port 8080.
+
+== Running the Web Application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+As usual, use `mvn quarkus:dev` to start the web application.
+
+Be sure you have the hero, villain and fights microservices running (dev mode is enough).
+
+Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).
+It should display the main web page.
+
+image::angular-ui.png[role=half-size]
+
+Oups, not working yet!
+Not even the pictures, we must have been forgotten something!
+Let's move on to the next section then and make the application work.
 
 == Installing the Web Application on Quarkus (optional)
 
+If you want to build the Angular application yourself, you can follow these optional steps (otherwise just jump to the next section).
 Thanks to the `frontend-maven-plugin` plugin declared on the `pom.xml`, we can use a good old Maven command to install and build this Angular application.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
@@ -50,19 +74,3 @@ Open the file `ui-super-heroes/node_modules/.bin/ng` and change the shebang line
 This way `ng` knows it has to use NodeJS installed under the `ui-super-heroes/node` directory
 ====
 
-== Running the Web Application
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
-As usual, use `mvn quarkus:dev` to start the web application.
-
-Be sure you have the hero and villain microservices running (dev mode is enough).
-
-Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).
-It should display the main web page.
-
-image::angular-ui.png[role=half-size]
-
-Oups, not working yet!
-Not even the pictures, we must have been forgotten something!
-Let's move on to the next section then and make the application work.
