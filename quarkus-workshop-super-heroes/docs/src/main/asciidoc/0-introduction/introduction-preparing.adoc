@@ -10,6 +10,13 @@ Here are a few commands that you can execute before the workshop.
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+This zip file contains _some_ of the code of the workshop, and you will need to complete it.
+
+[NOTE]
+====
+If you get stuck and need the full code of the workshop, download {github-raw}/dist/quarkus-super-heroes-workshop.zip.
+All the code and documentation of this workshop can be found at {github-url}.
+====
 
 In this workshop, you will be developing an application dealing with Super Heroes (and Super-Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
