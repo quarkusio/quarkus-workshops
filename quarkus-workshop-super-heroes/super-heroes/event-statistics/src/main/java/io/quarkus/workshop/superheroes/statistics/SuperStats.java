@@ -1,7 +1,6 @@
 package io.quarkus.workshop.superheroes.statistics;
 
 import io.smallrye.mutiny.Multi;
-import io.smallrye.reactive.messaging.annotations.Broadcast;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 

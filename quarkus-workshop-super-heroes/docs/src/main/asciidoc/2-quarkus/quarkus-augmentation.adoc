@@ -20,9 +20,9 @@ Let's now package this application using:
 
 In the log, you can see actions happening during what Quarkus calls the _augmentation_ phase.
 
-[source,shell]
+[source,shell,subs="attributes+"]
 ----
-[INFO] --- quarkus-maven-plugin:2.2.3.Final:build (default) @ rest-villains ---
+[INFO] --- quarkus-maven-plugin:{quarkus-version}:build (default) @ rest-villains ---
 [INFO] [org.jboss.threads] JBoss Threads version 3.4.2.Final
 [INFO] [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.5.7.Final
 [INFO] [io.quarkus.deployment.QuarkusAugmentor] Quarkus augmentation completed in 1932ms

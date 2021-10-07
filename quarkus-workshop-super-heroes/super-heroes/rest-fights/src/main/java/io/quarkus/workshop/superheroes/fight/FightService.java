@@ -106,6 +106,7 @@ public class FightService {
         fight.fightDate = Instant.now();
         fight.persist();
 
+        logger.info("Fight sent to statistics");
         emitter.send(fight).toCompletableFuture().join();
 
         return fight;
