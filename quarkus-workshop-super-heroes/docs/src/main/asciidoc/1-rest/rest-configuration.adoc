@@ -17,7 +17,7 @@ Runtime configuration of logging is done through the normal `application.propert
 quarkus.log.console.enable=true
 quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
 quarkus.log.console.level=INFO
-quarkus.log.console.color=true
+quarkus.log.console.darken=1
 ----
 
 == Configuring Quarkus Listening Port
