@@ -1,5 +1,3 @@
-:plantDir: ../plantuml
-
 [[messaging-conclusion]]
 = Unifying Imperative and Reactive Programming
 

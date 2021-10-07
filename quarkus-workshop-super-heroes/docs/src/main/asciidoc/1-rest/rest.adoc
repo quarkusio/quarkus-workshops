@@ -1,6 +1,3 @@
-:plantDir: ../plantuml
-:imagesdir: ../images
-
 [[rest]]
 = Creating a _classical_ REST/HTTP Microservice
 

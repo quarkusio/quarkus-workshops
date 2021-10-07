@@ -1,5 +1,3 @@
-:plantDir: ../plantuml
-
 [[messaging]]
 = Event-driven and Reactive microservices
 

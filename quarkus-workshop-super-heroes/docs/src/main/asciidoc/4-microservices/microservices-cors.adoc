@@ -1,5 +1,3 @@
-:plantDir: ../plantuml
-
 [[microservices-cors]]
 = CORS
 

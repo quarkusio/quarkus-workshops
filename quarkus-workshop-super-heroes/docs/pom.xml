@@ -78,6 +78,8 @@
                         <!-- Allows access to remote files (e.g. code on external GitHub) -->
                         <allow-uri-read/>
                         <icons>font</icons>
+                        <imagesdir>../images</imagesdir>
+                        <plantDir> ../plantuml</plantDir>
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
                         <github-issue>${github.issue}</github-issue>

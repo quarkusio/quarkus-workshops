@@ -4,7 +4,6 @@ v2.0, {docdate}: Quarkus {quarkus-version}
 
 :data-uri:
 :doctype: book
-:plantDir: ./plantuml
 :source-highlighter: coderay
 :source-language: java
 // Caption and XRef caption

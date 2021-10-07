@@ -1,6 +1,3 @@
-:plantDir: ../plantuml
-:imagesdir: ../images
-
 [[introduction-presentation]]
 = Presenting the Workshop
 
