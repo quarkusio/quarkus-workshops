@@ -37,7 +37,7 @@ It has an HTML + JQuery UI displaying all the statistics.
 
 [plantuml,align=center]
 ----
-include::{plantDir}/introduction-physical-architecture.puml[]
+include::{plantDir}/0-introduction-physical-architecture.puml[]
 ----
 
 The main UI allows you to pick up one random Hero and Villain by clicking on "New Fighters."

@@ -9,10 +9,12 @@
 So far we've built two microservices: the villains and heroes microservices.
 In the following sections you will develop an extra microservice: a _fight_ microservice where heroes and villains fight.
 We will also add an Angular front-end, so we can fight graphically.
+But as you can notice in the diagram below, these microservices still not communicate with each other.
+You will have to wait the next chapter for that ;o)
 
 [plantuml,align=center]
 ----
-include::{plantDir}/microservices-physical-architecture.puml[]
+include::{plantDir}/4-microservices-physical-architecture.puml[]
 ----
 
 Each microservice is developed in it's own directory.

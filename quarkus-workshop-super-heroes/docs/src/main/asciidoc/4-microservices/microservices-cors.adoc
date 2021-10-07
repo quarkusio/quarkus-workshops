@@ -54,7 +54,7 @@ The CORS errors are gone, so that's a good step, but we forgot something else:
 
 [plantuml,align=center]
 ----
-include::{plantDir}/fights-sequence.puml[]
+include::{plantDir}/4-microservices-fights-sequence.puml[]
 ----
 
 Remember the function to retrieve random fighters.

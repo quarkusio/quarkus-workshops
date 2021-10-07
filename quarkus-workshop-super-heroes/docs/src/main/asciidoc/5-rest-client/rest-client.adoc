@@ -12,5 +12,5 @@ We will also deal with fault tolerance thanks to timeouts and circuit breaker.
 
 [plantuml,align=center]
 ----
-include::{plantDir}/microservices-physical-architecture.puml[]
+include::{plantDir}/5-rest-client-physical-architecture.puml[]
 ----

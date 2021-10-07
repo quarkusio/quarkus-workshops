@@ -1,9 +1,6 @@
 [[observability]]
 = Observability (optional)
 
-_This chapter is optional. It covers health checks, metrics and prometheus. You can jump to the <<messaging>> chapter if you want._
-
-
 '''
 
 Now that we have several microservices, observing them starts to be a bit tricky:
@@ -12,5 +9,5 @@ In the following sections you will add health checks and several metrics to the 
 
 [plantuml,align=center]
 ----
-include::plantuml/observability-physical-architecture.puml[]
+include::{plantDir}/7-observability-physical-architecture.puml[]
 ----

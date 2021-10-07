@@ -8,13 +8,13 @@ node "Super Hero UI" as ui {
 }
 
 node "Hero" as hero {
-    agent "Quarkus" <<application>> as heroQuarkus
+    agent "Quarkus (reactive)" <<application>> as heroQuarkus
     database "Postgresql" as heroPostgresql
     heroQuarkus .up> heroPostgresql
 }
 
 node "Villain" as villain {
-    agent "Quarkus" <<application>>  as villainQuarkus
+    agent "Quarkus (imperative)" <<application>> as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }
@@ -25,7 +25,7 @@ node "Fight" as fight {
     fightQuarkus .up> fightPostgresql
 }
 
-uiQuarkus --> fightQuarkus : HTTP
-fightQuarkus --> heroQuarkus : HTTP
-fightQuarkus --> villainQuarkus : HTTP
+uiQuarkus -[hidden]-> fightQuarkus : HTTP
+fightQuarkus -[hidden]-> heroQuarkus : HTTP
+fightQuarkus -[hidden]-> villainQuarkus : HTTP
 @enduml

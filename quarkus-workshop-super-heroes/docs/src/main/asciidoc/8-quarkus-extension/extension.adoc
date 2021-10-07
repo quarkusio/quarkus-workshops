@@ -40,7 +40,7 @@ As stated above, an extension is divided into 2 parts, called `deployment` (augm
 
 [plantuml,align=center]
 ----
-include::plantuml/extension-architecture.puml[]
+include::{plantDir}/8-extension-architecture.puml[]
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#

@@ -1,12 +1,10 @@
 @startuml
 !include style.puml
 
-skinparam RankSep 20
-
 left to right direction
 
 node "Villain" as villain {
-    agent "Quarkus" as villainQuarkus <<application>>
+    agent "Quarkus (imperative)" <<application>> as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }

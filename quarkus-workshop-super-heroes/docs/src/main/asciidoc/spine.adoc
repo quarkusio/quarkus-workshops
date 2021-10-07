@@ -57,7 +57,6 @@ include::5-rest-client/rest-clients.adoc[leveloffset=+2]
 include::5-rest-client/fallbacks.adoc[leveloffset=+2]
 include::5-rest-client/timeout.adoc[leveloffset=+2]
 <<<
-// TODO As optional section - the reactive version of the fight service "API Gateway like"
 
 // Messaging
 include::6-messaging/messaging.adoc[leveloffset=+1]
@@ -67,15 +66,11 @@ include::6-messaging/messaging-websocket.adoc[leveloffset=+2]
 include::6-messaging/messaging-conclusion.adoc[leveloffset=+2]
 <<<
 // Observability - TODO Metrics will need advanced edits as it should use micrometer
-//include::observability.adoc[leveloffset=+1]
-//<<<
-//include::observability-healthcheck.adoc[leveloffset=+2]
-//<<<
-//include::observability-metrics.adoc[leveloffset=+2]
-//<<<
-//include::observability-load.adoc[leveloffset=+2]
-//<<<
-//include::observability-prometheus.adoc[leveloffset=+2]
+//include::7-observability/observability.adoc[leveloffset=+1]
+//include::7-observability/observability-healthcheck.adoc[leveloffset=+2]
+//include::7-observability/observability-metrics.adoc[leveloffset=+2]
+//include::7-observability/observability-load.adoc[leveloffset=+2]
+//include::7-observability/observability-prometheus.adoc[leveloffset=+2]
 
 // Extensions - TODO This section needs to be rewritten completely
 //include::extension.adoc[leveloffset=+1]

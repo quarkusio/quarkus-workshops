@@ -14,7 +14,7 @@ The logic of the microservice is the same.
 
 [plantuml,align=center,width=300]
 ----
-include::{plantDir}/hero-physical-architecture.puml[]
+include::{plantDir}/3-reactive-physical-architecture.puml[]
 ----
 
 In the following sections, you learn:
