@@ -33,6 +33,7 @@
         <version.asciidoctorj.diagram>2.2.1</version.asciidoctorj.diagram>
         <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
         <github.url>https://github.com/quarkusio/quarkus-workshops/tree/main/quarkus-workshop-super-heroes</github.url>
+        <github.issue>https://github.com/quarkusio/quarkus-workshops/issues</github.issue>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -79,6 +80,7 @@
                         <icons>font</icons>
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
+                        <github-issue>${github.issue}</github-issue>
                         <give-solution>true</give-solution>
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>21.2.0</graalvm-version>
