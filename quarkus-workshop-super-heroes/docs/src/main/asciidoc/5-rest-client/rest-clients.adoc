@@ -94,7 +94,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For that, replace the `findRandomFighters` method with the following code to the `FightService` class:
 
-[source, java, indent=0]
+[source,java,indent=0]
 ----
 @RestClient HeroProxy heroProxy;
 @RestClient VillainProxy villainProxy;
@@ -138,7 +138,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In our case both interfaces should be created under the `client` subpackage and have the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight.client;
 
@@ -171,7 +171,7 @@ The purpose of the annotations in the code above is the following:
 
 The `VillainProxy` is very similar and looks like this:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight.client;
 
@@ -243,7 +243,7 @@ Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could b
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
 So, to mock the `HeroProxy` interface we just need to implement the following `MockHeroProxy` class (under the `client` subpackage):
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight.client;
 
@@ -278,7 +278,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Do the same for the `MockVillainProxy`:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight.client;
 
@@ -313,7 +313,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Finally, edit the `FightResourceTest` and add the following method:
 
-[source, java]
+[source,java]
 --
 //....
 @Test

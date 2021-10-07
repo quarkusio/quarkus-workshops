@@ -261,9 +261,10 @@ __  ____  __  _____   ___  __ ____  ______
 
 Then check that the endpoint returns `hello` as expected:
 
-[source, shell]
+[source,shell]
 ----
-$ curl http://localhost:8080/api/villains
+curl http://localhost:8080/api/villains
+
 Hello RESTEasy Reactive
 ----
 
@@ -290,9 +291,10 @@ Now, execute the cURL command again:
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-[source, shell]
+[source,shell]
 ----
-$ curl http://localhost:8080/api/villains
+curl http://localhost:8080/api/villains
+
 Hello villain
 ----
 
@@ -325,7 +327,7 @@ So, we will use Junit 5 combined with RESTAssured, which eases the testing of RE
 
 If you look at the `maven-surefire-plugin` configuration in the `pom.xml`, you will see that we set the `java.util.logging` system property to ensure tests will use the correct method log manager.
 
-[source, xml]
+[source,xml]
 ----
 <plugin>
     <artifactId>maven-surefire-plugin</artifactId>
@@ -381,7 +383,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In the terminal running the application in _dev mode_, you should see at the bottom:
 
-[source, text]
+[source,text]
 ----
 --
 Tests paused
@@ -391,7 +393,7 @@ Press [r] to resume testing, [o] Toggle test output, [h] for more options>
 Hit the `r` key, and watch Quarkus execute your tests automatically and even continuously.
 Unfortunately, this first run didn't end well:
 
-[source, text]
+[source,text]
 ----
 Running 1/1. Running: io.quarkus.workshop.superheroes.villain.VillainResourceTest#testHelloEndpoint()
 Press [o] Toggle test output, [h] for more options>WARNING: An illegal reflective access operation has occurred
@@ -423,7 +425,7 @@ Expected: is "Hello RESTEasy Reactive"
 It fails! It's expected, you changed the output of `VillainResource.hello()` earlier.
 Adjust the test body condition accordingly:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.villain;
 
@@ -450,7 +452,7 @@ public class VillainResourceTest {
 
 Save the file, and watch the dev mode automatically rerunning your test:
 
-[source, text]
+[source,text]
 ----
 2021-09-21 13:40:32,361 INFO  [io.qua.test] (Test runner thread) All tests are now passing
 ----
@@ -460,9 +462,9 @@ Quarkus detects and runs the tests for you.
 
 You can also run the tests from a terminal using:
 
-[source, shell]
+[source,shell]
 ----
-$ ./mvnw test
+./mvnw test
 ----
 
 == Packaging and Running the Application
@@ -506,7 +508,7 @@ my-node.local
 
 Then `sudo vi /etc/hosts` so you have the right to edit the file and add the following entry:
 
-[source, shell]
+[source,shell]
 ----
 127.0.0.1 localhost my-node.local
 ----
@@ -514,8 +516,8 @@ Then `sudo vi /etc/hosts` so you have the right to edit the file and add the fol
 
 In another terminal, check that the application runs using:
 
-[source, shell]
+[source,shell]
 ----
-$ curl http://localhost:8080/api/villains
+curl http://localhost:8080/api/villains
 Hello villain
 ----

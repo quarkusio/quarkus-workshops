@@ -77,7 +77,7 @@ So, naturally, we need a fight class.
 
 Create the `io.quarkus.workshop.superheroes.statistics.Fight` class with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -100,7 +100,7 @@ public class Fight {
 We also need to a deserializer that will receive the Kafka recrod and create the `Fight` instances.
 Create the `io.quarkus.workshop.superheroes.statistics.FightDeserializer` class with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -127,7 +127,7 @@ It sends the computed ratios on the channel `team-stats`.
 
 The `computeTopWinners` method uses more advanced reactive programming constructs such as `group` and `scan`:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -178,7 +178,7 @@ In addition, create the `io.quarkus.workshop.superheroes.statistics.Ranking`, `i
 
 Then, create the `Ranking` class, used to compute a floating top 10, with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -218,7 +218,7 @@ public class Ranking {
 
 The `Score` class is a simple structure storing the name of a hero or villain and its actual score, _i.e._ the number of won battles.
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -237,7 +237,7 @@ public class Score {
 
 The `TeamStats` class is an object keeping track of the number of battles won by heroes and villains.
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 

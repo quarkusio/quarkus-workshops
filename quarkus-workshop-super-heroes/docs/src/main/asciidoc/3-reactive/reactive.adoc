@@ -129,7 +129,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.hero.Hero` class in the created project with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.hero;
 
@@ -227,7 +227,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Open the `HeroResource` and update the content to be:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.hero;
 
@@ -364,7 +364,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Open the `application.properties` file and add:
 
-[source, properties]
+[source,properties]
 ----
 ## HTTP configuration
 quarkus.http.port=8083
@@ -387,7 +387,7 @@ We also set the port to be 8083.
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 Create the `src/main/resources/import.sql` and copy the content from {github-raw}/super-heroes/rest-heroes/src/main/resources/import.sql[import.sql].
 
-[source, text]
+[source,text]
 ----
 INSERT INTO hero(id, name, otherName, picture, powers, level)
 VALUES (nextval('hibernate_sequence'), 'Chewbacca', '', 'https://www.superherodb.com/pictures2/portraits/10/050/10466.jpg', 'Agility, Longevity, Marksmanship, Natural Weapons, Stealth, Super Strength, Weapons Master', 5);
@@ -406,7 +406,7 @@ Open the `io.quarkus.workshop.superheroes.hero.HeroResourceTest` class and copy 
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.hero;
 

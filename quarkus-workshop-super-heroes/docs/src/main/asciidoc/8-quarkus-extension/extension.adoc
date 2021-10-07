@@ -191,7 +191,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 From the root directory of the extension, run:
 
-[source, shell]
+[source,shell]
 ----
 mvn clean install
 ----
@@ -242,7 +242,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now, restart the microservice with:
 
-[source, shell]
+[source,shell]
 ----
 mvn quarkus:dev
 ----
@@ -256,14 +256,14 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 Let's now check the behavior in native mode.
 Compile the microservice with:
 
-[source, shell]
+[source,shell]
 ----
 mvn package -Pnative
 ----
 
 And then start the service with:
 
-[source, shell]
+[source,shell]
 ----
 ./target/rest-fight-01-runner
 ----

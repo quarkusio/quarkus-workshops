@@ -18,9 +18,9 @@ So before being able to build a container with our native executable, we need to
 If you are using a Linux 64 bits machine, you are good to go.
 If not, Quarkus comes with a trick to produce these executable:
 
-[source, shell]
+[source,shell]
 ----
-$ mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 ----
 
 The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
@@ -39,7 +39,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 Execute the above command for all our microservices.
 We also copy the UI into the fight service, to simplify the process:
 
-[source, shell]
+[source,shell]
 ----
 cd rest-hero
 mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
@@ -67,7 +67,7 @@ When you create projects, Quarkus generates two `Dockerfiles`:
 We are interested in this second file.
 Open one of these `Dockerfile.native` files:
 
-[source, text]
+[source,text]
 ----
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 WORKDIR /work/
@@ -84,7 +84,7 @@ We need to override this property as well as a few other such as the HTTP client
 
 To build the containers, use the following scripts:
 
-[source, shell]
+[source,shell]
 ----
 export ORG=xxxx
 cd rest-hero

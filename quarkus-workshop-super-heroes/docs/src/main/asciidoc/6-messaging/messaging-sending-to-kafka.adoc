@@ -47,9 +47,9 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 The Kafka extension was already imported during the project creation.
 In doubt, you can run in the Fight microservice:
 
-[source, shell]
+[source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions=" io.quarkus:quarkus-smallrye-reactive-messaging-kafka"
+./mvnw quarkus:add-extension -Dextensions=" io.quarkus:quarkus-smallrye-reactive-messaging-kafka"
 ----
 
 The previous command adds the following dependency:

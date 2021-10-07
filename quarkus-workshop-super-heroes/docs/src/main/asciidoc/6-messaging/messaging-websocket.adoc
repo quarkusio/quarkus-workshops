@@ -18,7 +18,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -103,7 +103,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.statistics;
 
@@ -182,7 +182,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Replace the `META-INF/resources/index.html` file with the following content:
 
-[source, html]
+[source,html]
 ----
 <!DOCTYPE html>
 <html lang="en">
@@ -299,9 +299,9 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Time to start the application using:
 
-[source, shell]
+[source,shell]
 ----
-$ mvn quarkus:dev
+mvn quarkus:dev
 ----
 
 Then, open `http://localhost:8085` in a new browser window.

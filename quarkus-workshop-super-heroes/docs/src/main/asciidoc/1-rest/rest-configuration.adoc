@@ -42,9 +42,9 @@ You would need to restart the application to change the port.
 Hit `CTRL+C` to stop the application if it still running and restart it with: `./mvnw quarkus:dev`.
 Then run:
 
-[source, shell]
+[source,shell]
 ----
-$ curl http://localhost:8084/api/villains | jq
+curl http://localhost:8084/api/villains | jq
 ----
 
 == Injecting Configuration Value
@@ -63,7 +63,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Edit the `VillainService`, and introduce the following configuration properties:
 
-[source, java, indent=0]
+[source,java,indent=0]
 ----
 @ConfigProperty(name = "level.multiplier", defaultValue="1.0") double levelMultiplier;
 ----
@@ -80,7 +80,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now, modify the `VillainService.persistVillain()` method to use the injected properties:
 
-[source, java, indent=0]
+[source,java,indent=0]
 ----
 public Villain persistVillain(@Valid Villain villain) {
         villain.level = (int) Math.round(villain.level * levelMultiplier);
@@ -143,7 +143,7 @@ More info on: https://stedolan.github.io/jq/
 
 Hey! Wait a minute! It you enabled continuous testing, Quarkus should have warned you:
 
-[source, text]
+[source,text]
 ----
 --
 Running 2/8. Running: io.quarkus.workshop.superheroes.villain.VillainResourceTest#shouldAddAnItem()
@@ -169,7 +169,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In the `application.properties` file, add: `%test.level.multiplier=1` which set the multiplier to 1 when running the tests:
 
-[source, text]
+[source,text]
 ----
 All 8 tests are passing (0 skipped), 8 tests were run in 1722ms. Tests completed at 21:03:25.
 ----

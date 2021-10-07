@@ -14,13 +14,13 @@ To install the JDK {jdk-version}, follows the instructions from https://adoptium
 There is also an easier way to download and install Java if you are on Mac OS X.
 You can use Homebrew to install OpenJDK {jdk-version} using the following commands.footnote:[Homebrew https://brew.sh]
 
-[source, shell]
+[source,shell]
 ----
-$ brew install java11
+brew install java11
 ----
 
 For Linux distributions, there are also packaged java installations.
-[source, shell]
+[source,shell]
 ----
 # dnf (rpm-based)
 dnf install java-11-openjdk
@@ -33,12 +33,13 @@ $ apt-get install openjdk-11-jdk
 Once the installation is complete, it is necessary to set the `JAVA_HOME` variable and the `$JAVA_HOME/bin` directory to the `PATH` variable.
 Check that your system recognizes Java by entering `java -version` and the Java compiler with `javac -version`.
 
-[source, shell]
+[source,shell]
 ----
 $ java -version
 openjdk 11.0.11 2021-04-20
 OpenJDK Runtime Environment AdoptOpenJDK-11.0.11+9 (build 11.0.11+9)
 OpenJDK 64-Bit Server VM AdoptOpenJDK-11.0.11+9 (build 11.0.11+9, mixed mode)
+
 $ javac -version
 javac 11.0.11
 ----
@@ -55,7 +56,7 @@ One objective of GraalVM is to improve the performance of Java virtual machine-b
 
 On Linux, you need GCC and the Glibc and zlib headers. Examples for common distributions:
 
-[source, shell]
+[source,shell]
 ----
 # dnf (rpm-based)
 sudo dnf install gcc glibc-devel zlib-devel
@@ -65,7 +66,7 @@ sudo apt-get install build-essential libz-dev zlib1g-dev
 
 On macOS X, XCode provides the required dependencies to build native executables:
 
-[source, shell]
+[source,shell]
 ----
 xcode-select --install
 ----
@@ -97,7 +98,8 @@ It can be done by running `gu install native-image` from your GraalVM `bin` dire
 On Mac OS X Catalina, the installation of the `native-image` executable may fail.
 GraalVM binaries are not (yet) notarized for Catalina.
 To bypass the issue, it is recommended to run the following command instead of disabling macOS Gatekeeper entirely:
-[source, shell]
+
+[source,shell]
 -----
 xattr -r -d com.apple.quarantine ${GRAAL_VM}
 -----
@@ -107,7 +109,7 @@ xattr -r -d com.apple.quarantine ${GRAAL_VM}
 
 Once installed and set up, you should be able to run the following command and get the following output.
 
-[source, shell]
+[source,shell]
 ----
 $ $GRAALVM_HOME/bin/native-image --version
 GraalVM 21.2.0 Java 11 CE (Java Version 11.0.12+6-jvmci-21.2-b08)
@@ -129,9 +131,9 @@ More details about the installation process are available on https://maven.apach
 
 But of course, if you are on Mac OS X and use Homebrew, install Maven with the following command:
 
-[source, shell]
+[source,shell]
 ----
-$ brew install maven
+brew install maven
 ----
 
 === Checking for Maven Installation
@@ -139,7 +141,7 @@ $ brew install maven
 Once you've got Maven installed, open a command line and enter `mvn -version` to validate your installation.
 Maven should print its version and the JDK version it uses (which is handy as you might have different JDK versions installed on the same machine).
 
-[source, shell]
+[source,shell]
 ----
 $ mvn -version
 Apache Maven 3.8.2 (ea98e05a04480131370aa0c110b8c54cf726c06f)
@@ -156,7 +158,7 @@ Be aware that Maven needs Internet access to download plugins and project depend
 Maven is a command-line utility where you can use several parameters and options to build, test, or package your code.
 To get some help on the commands, you can type, use the following command:
 
-[source, shell]
+[source,shell]
 ----
 $ mvn --help
 
@@ -185,9 +187,9 @@ It is free, open-source (available under the MIT Licence), and has been ported t
 If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.footnote:[Homebrew https://brew.sh]
 Open your terminal and install cURL with the following command:
 
-[source, shell]
+[source,shell]
 ----
-$ brew install curl
+brew install curl
 ----
 
 For Windows, download and install curl from https://curl.se/download.html.
@@ -197,7 +199,7 @@ For Windows, download and install curl from https://curl.se/download.html.
 Once installed, check for cURL by running `curl --version` in the terminal.
 It should display cURL version:
 
-[source, shell]
+[source,shell]
 ----
 $ curl --version
 curl 7.64.1 (x86_64-apple-darwin20.0) libcurl/7.64.1 (SecureTransport) LibreSSL/2.8.3 zlib/1.2.11 nghttp2/1.41.0
@@ -235,9 +237,9 @@ Here are some commands you will use to invoke the RESTful web service examples i
 Very often, when using cURL to invoke a RESTful web service, we get some JSON payload.
 cURL does not format this JSON so that you will get a flat String such as:
 
-[source, shell]
+[source,shell]
 ----
-$ curl http://localhost:8083/api/heroes
+curl http://localhost:8083/api/heroes
 [{"id":"1","name":"Chewbacca","level":"14"},{"id":"2","name":"Wonder Woman","level":"15"},{"id":"3","name":"Anakin Skywalker","level":"8"}]
 ----
 
@@ -247,9 +249,10 @@ For that, there is a neat utility tool called `jq` that we could use.
 You can install it on Mac OSX with a simple `brew install jq`.
 Once installed, it's just a matter of piping the cURL output to jq like this:
 
-[source, shell]
+[source,shell]
 ----
-$ curl http://localhost:8083/api/heroes | jq
+curl http://localhost:8083/api/heroes | jq
+
 [
   {
     "id": "1",
@@ -294,7 +297,7 @@ On Linux, don't forget the post-execution steps described on https://docs.docker
 
 Once installed, check that both `docker` and `docker-compose` are available in your `PATH`:
 
-[source, shell]
+[source,shell]
 ----
 $ docker version
 Docker version 20.10.8, build 3967b7d
@@ -312,7 +315,7 @@ Docker Compose version v2.0.0-rc.3
 
 Finally, run your first container as follows:
 
-[source, shell]
+[source,shell]
 ----
 $ docker run hello-world
 
@@ -345,7 +348,7 @@ You invoke `docker` with zero, one, or several command-line options with the con
 Docker comes with several options that are described in the documentation if you need more help.footnote:[Docker commands https://docs.docker.com/engine/reference/commandline/cli]
 To get some help on the commands and options, you can type, use the following command:
 
-[source, shell]
+[source,shell]
 ----
 $ docker help
 
@@ -369,7 +372,7 @@ Here are some commands that you will be using to start/stop containers in this w
 
 Just make sure the following commands work on your machine.
 
-[source, shell]
+[source,shell]
 ----
 $ java -version
 $ $GRAALVM_HOME/bin/native-image --version

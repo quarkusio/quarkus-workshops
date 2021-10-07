@@ -13,14 +13,14 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Let's now package this application using:
 
-[source, shell]
+[source,shell]
 ----
-$ ./mvnw package
+./mvnw package
 ----
 
 In the log, you can see actions happening during what Quarkus calls the _augmentation_ phase.
 
-[source, shell]
+[source,shell]
 ----
 [INFO] --- quarkus-maven-plugin:2.2.3.Final:build (default) @ rest-villains ---
 [INFO] [org.jboss.threads] JBoss Threads version 3.4.2.Final

@@ -111,7 +111,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.fight.Fight` class with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight;
 
@@ -159,7 +159,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.fight.Fighters` class, with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight;
 
@@ -243,7 +243,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.fight.FightService` class with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight;
 
@@ -353,7 +353,7 @@ To expose a REST API we also need a `FightResource` (with OpenAPI annotations of
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight;
 

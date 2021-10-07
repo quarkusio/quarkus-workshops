@@ -201,7 +201,7 @@ The MicroProfile OpenAPI has a set of annotations to customize each REST endpoin
 
 This is what the `VillainResource` endpoint looks like once annotated:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.villain;
 
@@ -335,7 +335,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For this, you need to create the `src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplication` class with the following content:
 
-[source, java]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.villain;
 
@@ -536,7 +536,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Let's add an extra test method in `VillainResourceTest` ensuring that the OpenAPI specification is packaged with the application:
 
-[source, java, indent=0]
+[source,java,indent=0]
 ----
 @Test
 void shouldPingOpenAPI() {
