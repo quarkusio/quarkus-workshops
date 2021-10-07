@@ -6,12 +6,13 @@ import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -39,9 +40,9 @@ public class FightResource {
 
     @GET
     @Path("/randomfighters")
-    @Timeout(250)
+    @Timeout(250) // <-- Added
     public Response getRandomFighters() {
-        veryLongProcess();
+        veryLongProcess(); // <-- Added
         Fighters fighters = service.findRandomFighters();
         logger.debug("Get random fighters " + fighters);
         return Response.ok(fighters).build();

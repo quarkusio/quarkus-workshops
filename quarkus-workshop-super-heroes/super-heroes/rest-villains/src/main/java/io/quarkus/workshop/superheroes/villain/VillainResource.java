@@ -15,16 +15,16 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
-
 import java.net.URI;
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.*;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/villains")
 @Tag(name="villains")
@@ -47,7 +47,7 @@ public class VillainResource {
         logger.debug("Found random villain " + villain);
         return Response.ok(villain).build();
     }
-    
+
     @Operation(summary = "Returns all the villains from the database")
     @GET
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, type = SchemaType.ARRAY)))
@@ -74,7 +74,7 @@ public class VillainResource {
         }
     }
 
-    @Operation(summary = "Creates a valid villain")    
+    @Operation(summary = "Creates a valid villain")
     @POST
     @APIResponse(responseCode = "201", description = "The URI of the created villain", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class)))
     public Response createVillain(@Valid Villain villain, @Context UriInfo uriInfo) {
@@ -104,6 +104,7 @@ public class VillainResource {
     }
 
     @GET
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/hello")
     @Tag(name="hello")
     public String hello() {

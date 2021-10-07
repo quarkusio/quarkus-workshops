@@ -18,7 +18,7 @@ public class Villain extends PanacheEntity {
     public String name;
 
     public String otherName;
-    
+
     @NotNull
     @Min(1)
     public int level;

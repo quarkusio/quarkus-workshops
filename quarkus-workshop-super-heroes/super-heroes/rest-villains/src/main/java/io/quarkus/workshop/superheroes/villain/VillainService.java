@@ -16,7 +16,6 @@ public class VillainService {
 
     @ConfigProperty(name = "level.multiplier", defaultValue="1.0") double levelMultiplier;
 
-
     @Transactional(SUPPORTS)
     public List<Villain> findAllVillains() {
         return Villain.listAll();

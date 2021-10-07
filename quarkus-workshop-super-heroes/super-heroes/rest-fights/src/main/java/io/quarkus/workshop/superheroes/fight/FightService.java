@@ -36,7 +36,8 @@ public class FightService {
 
     private final Random random = new Random();
 
-    @Channel("fights") Emitter<Fight> emitter;
+    @Channel("fights")
+    Emitter<Fight> emitter;
 
     public List<Fight> findAllFights() {
         return Fight.listAll();
@@ -84,7 +85,6 @@ public class FightService {
         villain.level = 42;
         return villain;
     }
-
 
     @Transactional(REQUIRED)
     public Fight persistFight(Fighters fighters) {

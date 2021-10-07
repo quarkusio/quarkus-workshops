@@ -85,6 +85,7 @@ import java.time.Instant;
 
 
 public class Fight {
+
     public Instant fightDate;
     public String winnerName;
     public int winnerLevel;
