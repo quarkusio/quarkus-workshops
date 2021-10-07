@@ -370,6 +370,13 @@ By using the `QuarkusTest` runner, the `VillainResourceTest` class instructs JUn
 Then, the `testHelloEndpoint` method checks the HTTP response status code and content.
 Notice that these tests use RestAssured, but feel free to use your favorite library.footnote:[RestAssured http://rest-assured.io]
 
+[NOTE]
+====
+Quarkus provides a RestAssured integration that updates the default port used by RestAssured before the tests are run.
+So in your RestAssured tests, you don't have to specify the default test port 8081 used by Quarkus.
+You can also configure the ports used by tests by configuring the `quarkus.http.test-port` property in the application.properties.
+====
+
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 In the terminal running the application in _dev mode_, you should see at the bottom:
