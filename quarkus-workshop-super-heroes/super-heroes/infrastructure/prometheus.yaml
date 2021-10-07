@@ -1,0 +1,9 @@
+version: "3"
+services:
+    monitoring:
+        image: "prom/prometheus:v2.30.3"
+        container_name: "super-visor"
+        ports:
+          - 9090:9090
+        volumes:
+          - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml

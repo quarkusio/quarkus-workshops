@@ -11,7 +11,7 @@ services:
             - ./db-init/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
 
     monitoring:
-        image: "prom/prometheus"
+        image: "prom/prometheus:v2.30.3"
         container_name: "super-visor"
         ports:
           - 9090:9090
