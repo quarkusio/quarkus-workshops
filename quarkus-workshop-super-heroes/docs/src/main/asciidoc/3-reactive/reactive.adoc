@@ -50,8 +50,8 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell,subs="attributes+"]
 ----
-#!/usr/bin/env bash
 cd quarkus-workshop-super-heroes/super-heroes
+
 mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-heroes \
@@ -635,7 +635,7 @@ Once the application is started, create a new villain with the following cUrl co
 
 [source,shell]
 ----
-$ curl -X POST -d  '{"level":2, "name":"Super Frog", "powers":"leaping"}'  -H "Content-Type: application/json" http://localhost:8083/api/heroes -v
+curl -X POST -d  '{"level":2, "name":"Super Frog", "powers":"leaping"}'  -H "Content-Type: application/json" http://localhost:8083/api/heroes -v
 
 < HTTP/1.1 201 Created
 < Location: http://localhost:8083/api/heroes/952
@@ -646,7 +646,7 @@ Take this URL and do an HTTP GET on it.
 
 [source,shell]
 ----
-$ curl http://localhost:8083/api/heroes/952 | jq
+curl http://localhost:8083/api/heroes/952 | jq
 
 {
   "id": 952,

@@ -15,7 +15,7 @@ To install the MicroProfile Metrics dependency, just run the following command:
 
 [source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="metrics"
+./mvnw quarkus:add-extension -Dextensions="metrics"
 ----
 
 This will add the following dependency in the `pom.xml` file:

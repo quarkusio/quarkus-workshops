@@ -58,7 +58,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator"
+./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator"
 ----
 
 TIP: No need to add an extension for JSON, we already included `resteasy-reactive-jackson`.
@@ -483,7 +483,7 @@ If you didn't yet, start the application in dev mode:
 
 [source,shell]
 ----
-$./mvnw quarkus:dev
+./mvnw quarkus:dev
 ----
 
 Then, open your browser to http://localhost:8080/api/villains.

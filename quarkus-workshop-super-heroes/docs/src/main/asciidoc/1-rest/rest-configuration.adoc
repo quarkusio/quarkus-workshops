@@ -111,7 +111,7 @@ Once started, create a new villain with the following cUrl command:
 
 [source,shell]
 ----
-$ curl -X POST -d  '{"level":5, "name":"Super Bad", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
+curl -X POST -d  '{"level":5, "name":"Super Bad", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
 
 < HTTP/1.1 201 Created
 < Location: http://localhost:8084/api/villains/582
@@ -124,7 +124,7 @@ You will see that the level has been increased.
 
 [source,shell]
 ----
-$ curl http://localhost:8084/api/villains/582 | jq
+curl http://localhost:8084/api/villains/582 | jq
 
 {
   "id": 582,

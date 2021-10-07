@@ -51,7 +51,7 @@ To install the MicroProfile Health dependency, just run the following command:
 
 [source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="health"
+./mvnw quarkus:add-extension -Dextensions="health"
 ----
 
 This will add the following dependency in the `pom.xml` file:

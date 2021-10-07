@@ -47,7 +47,7 @@ To install the OpenAPI dependency, just run the following command:
 
 [source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="smallrye-openapi"
+./mvnw quarkus:add-extension -Dextensions="smallrye-openapi"
 ----
 
 This will add the following dependency in the `pom.xml` file:
@@ -66,7 +66,8 @@ Now, you _curl_ `http://localhost:8084/q/openapi` endpoint:
 
 [source,shell]
 ----
-$ curl http://localhost:8084/q/openapi
+curl http://localhost:8084/q/openapi
+
 ---
 openapi: 3.0.3
 info:

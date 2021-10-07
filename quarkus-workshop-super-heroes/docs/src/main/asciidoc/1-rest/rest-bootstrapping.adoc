@@ -13,8 +13,8 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell,subs="attributes+"]
 ----
-#!/usr/bin/env bash
 cd quarkus-workshop-super-heroes/super-heroes
+
 mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-villains \

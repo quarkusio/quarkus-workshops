@@ -20,13 +20,13 @@ Open a terminal and run the following command:
 
 [source,shell,subs="attributes+"]
 ----
-$ mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
-    -DprojectGroupId=io.quarkus.workshop.super-heroes \
-    -DprojectArtifactId=rest-fights \
-    -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
-    -Dpath="api/fights" \
-    -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka"
-$ cd rest-fights
+mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+  -DprojectGroupId=io.quarkus.workshop.super-heroes \
+  -DprojectArtifactId=rest-fights \
+  -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
+  -Dpath="api/fights" \
+  -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka"
+cd rest-fights
 ----
 
 If you open the `pom.xml` file, you will see that the following extensions have been imported:
@@ -648,7 +648,7 @@ Once the application is started, just check that it returns the fights from the 
 
 [source,shell]
 ----
-$ curl http://localhost:8082/api/fights
+curl http://localhost:8082/api/fights
 ----
 
 Remember that you can also check Swagger UI by going to http://localhost:8082/q/swagger-ui.

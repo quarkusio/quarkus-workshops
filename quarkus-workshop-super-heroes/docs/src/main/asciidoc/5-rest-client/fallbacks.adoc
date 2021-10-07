@@ -37,7 +37,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
-$ ./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
+./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
 ----
 
 This will add the following dependency in the `pom.xml` file:
