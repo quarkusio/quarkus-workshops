@@ -4,6 +4,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.jboss.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -19,6 +20,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/fights")
 @Produces(APPLICATION_JSON)
+@ApplicationScoped
 public class FightResource {
 
     @Inject
@@ -77,6 +79,6 @@ public class FightResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/hello")
     public String hello() {
-        return "Hello Fight Service";
+        return "Hello Fight Resource";
     }
 }

@@ -11,6 +11,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -21,6 +22,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/heroes")
 @Tag(name = "villains")
+@ApplicationScoped
 public class HeroResource {
 
     Logger logger;
@@ -112,6 +114,6 @@ public class HeroResource {
     @Path("/hello")
     @Tag(name = "hello")
     public String hello() {
-        return "hello hero";
+        return "Hello Hero Resource";
     }
 }

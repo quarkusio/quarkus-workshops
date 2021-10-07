@@ -58,7 +58,7 @@ public class FightResourceTest {
             .when().get("/api/fights/hello")
             .then()
             .statusCode(200)
-            .body(is("Hello Fight Service"));
+            .body(is("Hello Fight Resource"));
     }
 
     @Test

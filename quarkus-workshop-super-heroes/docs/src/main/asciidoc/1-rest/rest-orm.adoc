@@ -348,6 +348,7 @@ package io.quarkus.workshop.superheroes.villain;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -361,6 +362,7 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path("/api/villains")
+@ApplicationScoped
 public class VillainResource {
 
     Logger logger;
@@ -425,7 +427,7 @@ public class VillainResource {
     @GET
     @Path("/hello")
     public String hello() {
-        return "hello villain";
+        return "Hello Villain Resource";
     }
 }
 ----
@@ -558,7 +560,7 @@ public class VillainResourceTest {
             .when().get("/api/villains/hello")
             .then()
             .statusCode(200)
-            .body(is("hello villain"));
+            .body(is("Hello Villain Resource"));
     }
 
     @Test

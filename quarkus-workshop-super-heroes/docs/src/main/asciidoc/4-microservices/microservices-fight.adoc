@@ -416,7 +416,7 @@ public class FightResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/hello")
     public String hello() {
-        return "Hello Fight Service";
+        return "Hello Fight Resource";
     }
 }
 ----
@@ -538,7 +538,7 @@ public class FightResourceTest {
             .when().get("/api/fights/hello")
             .then()
             .statusCode(200)
-            .body(is("Hello Fight Service"));
+            .body(is("Hello Fight Resource"));
     }
 
     @Test

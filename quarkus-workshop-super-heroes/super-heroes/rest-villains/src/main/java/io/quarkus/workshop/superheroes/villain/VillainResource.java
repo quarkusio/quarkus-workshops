@@ -9,6 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,6 +29,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/api/villains")
 @Tag(name="villains")
+@ApplicationScoped
 public class VillainResource {
 
     Logger logger;
@@ -108,6 +110,6 @@ public class VillainResource {
     @Path("/hello")
     @Tag(name="hello")
     public String hello() {
-        return "hello villain";
+        return "Hello Villain Resource";
     }
 }

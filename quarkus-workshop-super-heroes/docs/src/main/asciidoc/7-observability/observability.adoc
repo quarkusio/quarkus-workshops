@@ -1,5 +1,5 @@
 [[observability]]
-= Observability (optional)
+= Observability
 
 '''
 
@@ -11,3 +11,13 @@ In the following sections you will add health checks and several metrics to the 
 ----
 include::{plantDir}/7-observability-physical-architecture.puml[]
 ----
+
+In the following sections, you learn:
+
+* How to add health checks to our microservices
+// TODO once metrics and prometheus are added
+//* How to add metrics
+//* How to use Quarkus and PicoCLI to load our system
+//* Monitor the entire system with Prometheuse
+//
+//IMPORTANT: Prometheus is exposed on the port 9090.

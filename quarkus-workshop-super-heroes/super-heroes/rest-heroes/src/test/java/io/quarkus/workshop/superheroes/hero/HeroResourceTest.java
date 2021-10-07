@@ -60,7 +60,7 @@ public class HeroResourceTest {
             .when().get("/api/heroes/hello")
             .then()
             .statusCode(200)
-            .body(is("hello hero"));
+            .body(is("Hello Hero Resource"));
     }
 
     @Test

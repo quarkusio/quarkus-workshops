@@ -190,7 +190,7 @@ It uses JAX-RS annotations such as `@Path`, `@GET`...
 
 During the project creation, the `VillainResource.java` file has been created with the following content:
 
-[source]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.villain;
 
@@ -199,7 +199,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import javax.enterprise.context.ApplicationScoped;
+
 @Path("/api/villains")
+@ApplicationScoped
 public class VillainResource {
 
     @GET
@@ -444,7 +447,7 @@ public class VillainResourceTest {
           .when().get("/api/villains")
           .then()
              .statusCode(200)
-             .body(is("Hello villain"));
+             .body(is("Hello Villain Resource"));
     }
 
 }

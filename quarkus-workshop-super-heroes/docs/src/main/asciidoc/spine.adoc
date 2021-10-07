@@ -65,9 +65,10 @@ include::6-messaging/messaging-receiving-from-kafka.adoc[leveloffset=+2]
 include::6-messaging/messaging-websocket.adoc[leveloffset=+2]
 include::6-messaging/messaging-conclusion.adoc[leveloffset=+2]
 <<<
-// Observability - TODO Metrics will need advanced edits as it should use micrometer
-//include::7-observability/observability.adoc[leveloffset=+1]
-//include::7-observability/observability-healthcheck.adoc[leveloffset=+2]
+// Observability
+include::7-observability/observability.adoc[leveloffset=+1]
+include::7-observability/observability-healthcheck.adoc[leveloffset=+2]
+// TODO Metrics will need advanced edits as it should use micrometer
 //include::7-observability/observability-metrics.adoc[leveloffset=+2]
 //include::7-observability/observability-load.adoc[leveloffset=+2]
 //include::7-observability/observability-prometheus.adoc[leveloffset=+2]
