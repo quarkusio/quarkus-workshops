@@ -120,7 +120,7 @@ curl -X POST -d  '{"level":5, "name":"Super Bad", "powers":"Agility, Longevity"}
 As you can see, we've passed a level of 5 to create this new villain.
 The cURL command returns the location of the newly created villain.
 Take this URL and do an HTTP GET on it.
-You will see that the level has been increased.
+You will see that the level has been decreased.
 
 [source,shell]
 ----
