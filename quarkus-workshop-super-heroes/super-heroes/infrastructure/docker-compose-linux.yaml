@@ -5,6 +5,8 @@ services:
         container_name: "super-database"
         ports:
             - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: password
         volumes:
             - ./db-init/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
 
@@ -18,7 +20,7 @@ services:
           - ./monitoring/prometheus-linux.yml:/etc/prometheus/prometheus.yml
 
     zookeeper:
-        image: strimzi/kafka:0.19.0-kafka-2.5.0
+        image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
         container_name: "zookeeper"
         command: [
                 "sh", "-c",
@@ -30,7 +32,7 @@ services:
             LOG_DIR: /tmp/logs
 
     kafka:
-        image: strimzi/kafka:0.19.0-kafka-2.5.0
+        image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
         container_name: "kafka"
         command: [
                 "sh", "-c",
