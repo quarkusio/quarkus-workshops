@@ -342,7 +342,7 @@ If you are not happy about the way the fight operates, choose your own winning a
 [NOTE]
 ====
 For now, the `Fighters findRandomFighters()` method returns null.
-Later, this method will invoke the Hello and Villain API to get a random Hello and random Villain.
+Later, this method will invoke the Hello and Villain API to get a random Hero and random Villain.
 ====
 
 == FightResource Endpoint
