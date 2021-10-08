@@ -1,16 +1,5 @@
 package io.quarkus.workshop.superheroes.villain;
 
-import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.common.mapper.TypeRef;
-import org.hamcrest.core.Is;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-
-import java.util.List;
-import java.util.Random;
-
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
@@ -20,10 +9,19 @@ import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.common.mapper.TypeRef;
+import java.util.List;
+import java.util.Random;
+import org.hamcrest.core.Is;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VillainResourceTest {
-
     private static final String JSON = "application/json;charset=UTF-8";
 
     private static final String DEFAULT_NAME = "Super Chocolatine";
@@ -42,31 +40,18 @@ public class VillainResourceTest {
 
     @Test
     public void testHelloEndpoint() {
-        given()
-            .header(ACCEPT, TEXT_PLAIN)
-            .when().get("/api/villains/hello")
-            .then()
-            .statusCode(200)
-            .body(is("Hello Villain Resource"));
+        given().header(ACCEPT, TEXT_PLAIN).when().get("/api/villains/hello").then().statusCode(200).body(is("Hello Villain Resource"));
     }
 
     @Test
     void shouldNotGetUnknownVillain() {
         Long randomId = new Random().nextLong();
-        given()
-            .pathParam("id", randomId)
-            .when().get("/api/villains/{id}")
-            .then()
-            .statusCode(NO_CONTENT.getStatusCode());
+        given().pathParam("id", randomId).when().get("/api/villains/{id}").then().statusCode(NO_CONTENT.getStatusCode());
     }
 
     @Test
     void shouldGetRandomVillain() {
-        given()
-            .when().get("/api/villains/random")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON);
+        given().when().get("/api/villains/random").then().statusCode(OK.getStatusCode()).header(CONTENT_TYPE, JSON);
     }
 
     @Test
@@ -91,10 +76,13 @@ public class VillainResourceTest {
     @Test
     @Order(1)
     void shouldGetInitialItems() {
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = get("/api/villains")
+            .then()
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, JSON)
-            .extract().body().as(getVillainTypeRef());
+            .extract()
+            .body()
+            .as(getVillainTypeRef());
         assertEquals(NB_VILLAINS, villains.size());
     }
 
@@ -116,7 +104,8 @@ public class VillainResourceTest {
             .post("/api/villains")
             .then()
             .statusCode(CREATED.getStatusCode())
-            .extract().header("Location");
+            .extract()
+            .header("Location");
         assertTrue(location.contains("/api/villains"));
 
         // Stores the id
@@ -126,7 +115,8 @@ public class VillainResourceTest {
 
         given()
             .pathParam("id", villainId)
-            .when().get("/api/villains/{id}")
+            .when()
+            .get("/api/villains/{id}")
             .then()
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, JSON)
@@ -136,10 +126,13 @@ public class VillainResourceTest {
             .body("picture", Is.is(DEFAULT_PICTURE))
             .body("powers", Is.is(DEFAULT_POWERS));
 
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = get("/api/villains")
+            .then()
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, JSON)
-            .extract().body().as(getVillainTypeRef());
+            .extract()
+            .body()
+            .as(getVillainTypeRef());
         assertEquals(NB_VILLAINS + 1, villains.size());
     }
 
@@ -169,36 +162,34 @@ public class VillainResourceTest {
             .body("picture", Is.is(UPDATED_PICTURE))
             .body("powers", Is.is(UPDATED_POWERS));
 
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = get("/api/villains")
+            .then()
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, JSON)
-            .extract().body().as(getVillainTypeRef());
+            .extract()
+            .body()
+            .as(getVillainTypeRef());
         assertEquals(NB_VILLAINS + 1, villains.size());
     }
 
     @Test
     @Order(4)
     void shouldRemoveAnItem() {
-        given()
-            .pathParam("id", villainId)
-            .when().delete("/api/villains/{id}")
-            .then()
-            .statusCode(NO_CONTENT.getStatusCode());
+        given().pathParam("id", villainId).when().delete("/api/villains/{id}").then().statusCode(NO_CONTENT.getStatusCode());
 
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = get("/api/villains")
+            .then()
             .statusCode(OK.getStatusCode())
             .header(CONTENT_TYPE, JSON)
-            .extract().body().as(getVillainTypeRef());
+            .extract()
+            .body()
+            .as(getVillainTypeRef());
         assertEquals(NB_VILLAINS, villains.size());
     }
 
     @Test
     void shouldPingOpenAPI() {
-        given()
-            .header(ACCEPT, JSON)
-            .when().get("/q/openapi")
-            .then()
-            .statusCode(OK.getStatusCode());
+        given().header(ACCEPT, JSON).when().get("/q/openapi").then().statusCode(OK.getStatusCode());
     }
 
     private TypeRef<List<Villain>> getVillainTypeRef() {
@@ -206,5 +197,4 @@ public class VillainResourceTest {
             // Kept empty on purpose
         };
     }
-
 }

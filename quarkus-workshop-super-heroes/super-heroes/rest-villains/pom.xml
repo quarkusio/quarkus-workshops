@@ -124,6 +124,33 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+        <plugin>
+            <groupId>com.hubspot.maven.plugins</groupId>
+            <artifactId>prettier-maven-plugin</artifactId>
+            <version>0.14</version>
+<!--            <configuration>-->
+<!--                <prettierJavaVersion>1.3.0</prettierJavaVersion>-->
+<!--                <printWidth>90</printWidth>-->
+<!--                <tabWidth>2</tabWidth>-->
+<!--                <useTabs>false</useTabs>-->
+<!--                <ignoreConfigFile>true</ignoreConfigFile>-->
+<!--                <ignoreEditorConfig>true</ignoreEditorConfig>-->
+<!--                &lt;!&ndash; Use <inputGlobs> to override the default input patterns &ndash;&gt;-->
+<!--                <inputGlobs>-->
+<!--                    &lt;!&ndash; These are the default patterns, you can omit <inputGlobs> entirely unless you want to override them &ndash;&gt;-->
+<!--                    <inputGlob>src/main/java/**/*.java</inputGlob>-->
+<!--                    <inputGlob>src/test/java/**/*.java</inputGlob>-->
+<!--                </inputGlobs>-->
+<!--            </configuration>-->
+            <executions>
+                <execution>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>${plugin.prettier.goal}</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
   <profiles>

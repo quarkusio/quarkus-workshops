@@ -1,20 +1,19 @@
 package io.quarkus.workshop.superheroes.villain;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
 
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.List;
-
-import static javax.transaction.Transactional.TxType.REQUIRED;
-import static javax.transaction.Transactional.TxType.SUPPORTS;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class VillainService {
-
-    @ConfigProperty(name = "level.multiplier", defaultValue="1.0") double levelMultiplier;
+    @ConfigProperty(name = "level.multiplier", defaultValue = "1.0")
+    double levelMultiplier;
 
     @Transactional(SUPPORTS)
     public List<Villain> findAllVillains() {
