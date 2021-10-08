@@ -3,7 +3,7 @@
 
 Now that you know how Quarkus is structured let's continue using various extensions.
 You often need to execute custom actions when the application starts and clean up everything when the application stops.
-In this module, we will display a banner in the logs once the Hero API has started.
+In this module, we will display a banner in the logs once the Villain microservice has started.
 
 == Directory Structure
 
