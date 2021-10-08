@@ -332,7 +332,7 @@ The previous annotations allow you to customize the contract for a given REST En
 But it's also important to document the entire application.
 
 The Microprofile OpenAPI also has a set of annotation to do so.
-The difference is that these annotations cannot be used on the endpoint methodss, but instead on another Java class configuring the entire application.
+The difference is that these annotations cannot be used on the endpoint methods, but instead on another Java class configuring the entire application.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
