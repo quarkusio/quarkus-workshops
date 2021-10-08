@@ -361,6 +361,8 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+import static javax.ws.rs.core.MediaType.*;
+
 @Path("/api/villains")
 @ApplicationScoped
 public class VillainResource {
@@ -426,6 +428,7 @@ public class VillainResource {
 
     @GET
     @Path("/hello")
+    @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return "Hello Villain Resource";
     }

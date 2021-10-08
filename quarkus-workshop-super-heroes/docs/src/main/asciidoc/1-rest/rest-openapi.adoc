@@ -312,6 +312,7 @@ public class VillainResource {
 
     @GET
     @Path("/hello")
+    @Produces(MediaType.TEXT_PLAIN)
     @Tag(name="hello")
     public String hello() {
         return "Hello Villain Resource";

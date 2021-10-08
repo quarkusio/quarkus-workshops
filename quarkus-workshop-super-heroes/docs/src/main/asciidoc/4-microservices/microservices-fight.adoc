@@ -368,7 +368,7 @@ import javax.ws.rs.core.UriInfo;
 
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.*;
 
 @Path("/api/fights")
 @Produces(APPLICATION_JSON)

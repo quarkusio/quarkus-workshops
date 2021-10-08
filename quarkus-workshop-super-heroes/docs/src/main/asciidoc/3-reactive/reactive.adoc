@@ -246,7 +246,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.*;
 
 @Path("/api/heroes")
 @Tag(name = "villains")
@@ -339,6 +339,7 @@ public class HeroResource {
 
     @GET
     @Path("/hello")
+    @Produces(MediaType.TEXT_PLAIN)
     @Tag(name = "hello")
     public String hello() {
         return "Hello Hero Resource";
