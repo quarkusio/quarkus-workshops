@@ -249,7 +249,7 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.*;
 
 @Path("/api/heroes")
-@Tag(name = "villains")
+@Tag(name = "heroes")
 @ApplicationScoped
 public class HeroResource {
 
