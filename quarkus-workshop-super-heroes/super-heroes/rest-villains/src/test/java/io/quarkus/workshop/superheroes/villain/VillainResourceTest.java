@@ -15,6 +15,7 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +43,7 @@ public class VillainResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
+            .header(ACCEPT, TEXT_PLAIN)
             .when().get("/api/villains/hello")
             .then()
             .statusCode(200)

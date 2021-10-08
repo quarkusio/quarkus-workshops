@@ -16,6 +16,7 @@ import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
@@ -57,6 +58,7 @@ public class HeroResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
+            .header(ACCEPT, TEXT_PLAIN)
             .when().get("/api/heroes/hello")
             .then()
             .statusCode(200)
