@@ -12,7 +12,6 @@
             <directory>extensions</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <excludes>
-                <exclude>extension-banner/**</exclude>
                 <exclude>**/target/**</exclude>
                 <exclude>**/.idea/**</exclude>
                 <exclude>*.iml</exclude>

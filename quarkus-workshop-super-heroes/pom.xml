@@ -9,8 +9,6 @@
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
     <modules>
-        <module>extensions/extension-fault-injector</module>
-
         <module>super-heroes/ui-super-heroes</module>
         <module>super-heroes/load-super-heroes</module>
     </modules>
@@ -41,12 +39,12 @@
                 <module>super-heroes/rest-heroes</module>
                 <module>super-heroes/rest-fights</module>
                 <module>super-heroes/event-statistics</module>
+                <module>super-heroes/extension-version</module>
             </modules>
         </profile>
         <profile>
             <id>full</id>
             <modules>
-                <module>extensions/extension-banner</module>
                 <module>docs</module>
             </modules>
         </profile>

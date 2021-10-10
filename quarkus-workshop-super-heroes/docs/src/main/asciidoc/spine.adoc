@@ -72,8 +72,8 @@ include::7-observability/observability-healthcheck.adoc[leveloffset=+2]
 //include::7-observability/observability-load.adoc[leveloffset=+2]
 //include::7-observability/observability-prometheus.adoc[leveloffset=+2]
 
-// Extensions - TODO This section needs to be rewritten completely
-//include::extension.adoc[leveloffset=+1]
+// Extension
+include::8-quarkus-extension/extension.adoc[leveloffset=+1]
 
 // Cloud - TODO This section needs to be rewritten completely
 //include::cloud.adoc[leveloffset=+1]
