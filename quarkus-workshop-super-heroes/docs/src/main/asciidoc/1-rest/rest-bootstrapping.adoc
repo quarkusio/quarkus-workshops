@@ -288,7 +288,7 @@ If you don't want the debugger at all, you can use `-Ddebug=false`.
 
 Alright, time to change some code.
 Open your favorite IDE and import the project.
-To check that the hot reload is working, update the `VillainResource.hello()` method by returning the String "Hello villain".
+To check that the hot reload is working, update the `VillainResource.hello()` method by returning the String "Hello Villain Resource".
 
 Now, execute the cURL command again:
 
@@ -298,7 +298,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 ----
 curl http://localhost:8080/api/villains
 
-Hello villain
+Hello Villain Resource
 ----
 
 The output has changed without you having to stop and restart Quarkus!
@@ -406,7 +406,7 @@ WARNING: Illegal reflective access by org.codehaus.groovy.vmplugin.v9.Java9 (fil
 : java.lang.AssertionError: 1 expectation failed.
 Response body doesn't match expectation.
 Expected: is "Hello RESTEasy Reactive"
-  Actual: Hello villain
+  Actual: Hello Villain Resource
 
    at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
    at io.quarkus.workshop.superheroes.villain.VillainResourceTest.testHelloEndpoint(VillainResourceTest.java:18)
@@ -417,7 +417,7 @@ Expected: is "Hello RESTEasy Reactive"
 : java.lang.AssertionError: 1 expectation failed.
 Response body doesn't match expectation.
 Expected: is "Hello RESTEasy Reactive"
-  Actual: Hello villain
+  Actual: Hello Villain Resource
 
    at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
    at io.quarkus.workshop.superheroes.villain.VillainResourceTest.testHelloEndpoint(VillainResourceTest.java:18)
@@ -522,5 +522,5 @@ In another terminal, check that the application runs using:
 [source,shell]
 ----
 curl http://localhost:8080/api/villains
-Hello villain
+Hello Villain Resource
 ----
