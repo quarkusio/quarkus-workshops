@@ -51,7 +51,7 @@ When the process is really too long and the system is overloaded, we would rathe
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Note that the timeout was configured to 250 ms, and a `Thread.sleep` was introduced and can be configured in the `application.properties`.
+Note that the timeout was configured to 500 ms, and a `Thread.sleep` was introduced and can be configured in the `application.properties`.
 If we set the property to a higher value than the timeout, let's say 10.000, then the request should be interrupted.
 
 [source]
