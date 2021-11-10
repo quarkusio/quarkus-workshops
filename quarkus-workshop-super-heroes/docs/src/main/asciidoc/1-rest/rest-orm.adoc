@@ -348,7 +348,6 @@ package io.quarkus.workshop.superheroes.villain;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -364,7 +363,6 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.*;
 
 @Path("/api/villains")
-@ApplicationScoped
 public class VillainResource {
 
     Logger logger;
