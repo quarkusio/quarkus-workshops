@@ -98,7 +98,7 @@ public class Fight {
 }
 ----
 
-We also need to a deserializer that will receive the Kafka recrod and create the `Fight` instances.
+We also need to a deserializer that will receive the Kafka record and create the `Fight` instances.
 Create the `io.quarkus.workshop.superheroes.statistics.FightDeserializer` class with the following content:
 
 [source,java]

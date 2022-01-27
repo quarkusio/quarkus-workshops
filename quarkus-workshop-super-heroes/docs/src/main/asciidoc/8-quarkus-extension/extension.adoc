@@ -102,16 +102,7 @@ extension-version
 @endsalt
 ----
 
-== The  version extension
-
-The goal of this chapter is to implement an extension that displays the application version on startup.
-For this, what do we need:
-
-1. A way to extract the version (we're lucky, Quarkus provided it)
-2. Some code that would print the version when the application starts; so some runtime code,
-3. Some build steps that extracts the version and records the runtime invocations
-
-== The  version extension
+== The version extension
 
 The goal of this chapter is to implement an extension that displays the application version on startup.
 For this, what do we need:
@@ -127,7 +118,7 @@ For the version extension, it would be a single class that prints the version.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-In the runtime module, creates the `src/main/java` directory, and, in this directory, the `io.quarkus.workshop.superheroes.version.runtime.VersionRecorder` class with the following content:
+In the runtime module, create the `src/main/java` directory, and, in this directory, the `io.quarkus.workshop.superheroes.version.runtime.VersionRecorder` class with the following content:
 
 [source,java]
 ----
