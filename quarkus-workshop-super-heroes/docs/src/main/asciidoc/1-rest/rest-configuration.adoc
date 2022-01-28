@@ -152,8 +152,8 @@ Press [o] Toggle test output, [h] for more options>WARNING: An illegal reflectiv
 2021-09-21 21:02:16,067 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#shouldAddAnItem() failed
 : java.lang.AssertionError: 1 expectation failed.
 JSON path level doesn't match.
-Expected: is <42>
-  Actual: <21>
+Expected: is \<42>
+  Actual: \<21>
 
 	at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
 	at io.quarkus.workshop.superheroes.villain.VillainResourceTest.shouldAddAnItem(VillainResourceTest.java:133)
