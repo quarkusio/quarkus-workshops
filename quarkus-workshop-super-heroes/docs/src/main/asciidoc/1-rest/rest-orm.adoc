@@ -154,7 +154,7 @@ villain.level = 9;
 villain.persist();
 
 // getting a list of all Villain entities
-List<Villain> heroes = Villain.listAll();
+List<Villain> villains = Villain.listAll();
 
 // finding a specific villain by ID
 villain = Villain.findById(id);
