@@ -87,6 +87,7 @@ extension-version
 ++++++++  superheroes
 +++++++++  version
 ++++++++++  deployment
++++++++++++  VersionConfig.java
 +++++++++++  ExtensionVersionProcessor.java
 ++  pom.xml
 +  runtime
@@ -139,7 +140,20 @@ The version extension consists of a single build step that extracts the version 
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Open the `ExtensionVersionProcessor` class, and update the content to be:
+First, let's create the configuration class that will allow users to dynamically configure whether the version should be printed:
+
+Create new class `io.quarkus.workshop.superheroes.version.deployment.VersionConfig` with the following content:
+
+[source,java]
+----
+include::{code-root}/extension-version/deployment/src/main/java/io/quarkus/workshop/superheroes/version/deployment/VersionConfig.java[]
+----
+
+The `@ConfigRoot` annotation declares `VersionConfig` as a configuration class which configuration properties are prefixed with `quarkus.` prefix.
+
+The `@ConfigItem` is used to declare individual configuration properties. By default, the name of the property is derived from the name of the field. In our case, the user-configured property will be `quarkus.version.enabled`.
+
+Next, open the `ExtensionVersionProcessor` class, and update the content to be:
 
 [source, java]
 ----
@@ -162,7 +176,9 @@ The method also receives the `ApplicationInfoBuildItem`.
 Quarkus provides many _build items_ which can be reused.
 `ApplicationInfoBuildItem` contains the version.
 
-The code is straightforward: `enabled` is `true`, calls the recorder with the version.
+The last parameter of the `recordVersion` method is the `VersionConfig` which provides access to the user configuration we created in the previous step.
+
+The code is straightforward: if `enabled` is `true`, the code calls the recorder which prints the version.
 
 [NOTE]
 .Recorder at deployment time
