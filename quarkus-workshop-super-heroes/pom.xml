@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
     <properties>
-        <compiler-plugin.version>3.3.0</compiler-plugin.version>
+        <assembly-plugin.version>3.3.0</assembly-plugin.version>
     </properties>
     <modules>
         <module>super-heroes/ui-super-heroes</module>
@@ -20,7 +20,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
+                <version>${assembly-plugin.version}</version>
                 <configuration>
                     <finalName>quarkus-super-heroes</finalName>
                     <appendAssemblyId>true</appendAssemblyId>
