@@ -29,15 +29,15 @@ Start them using the `docker-compose.yaml` file located in the `infrastructure` 
 
 ```
 $ cd infrastructure
-$ docker-compose up
+$ docker compose up
 ```
 
 Stop them using:
 
 ```
 CTRL+C
-$ docker-compose down
-$ docker-compose rm
+$ docker compose down
+$ docker compose rm
 ```
 
 == Build
