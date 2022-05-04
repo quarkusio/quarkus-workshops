@@ -20,6 +20,9 @@ import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+/**
+ * JAX-RS API endpoints with <code>/api/heroes</code> as the base URI for all endpoints
+ */
 @Path("/api/heroes")
 @Tag(name = "heroes")
 @ApplicationScoped
