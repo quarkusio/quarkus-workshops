@@ -26,6 +26,9 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 
+/**
+ * JAX-RS API endpoints with <code>/api/villains</code> as the base URI for all endpoints
+ */
 @Path("/api/villains")
 @Tag(name = "villains")
 @ApplicationScoped
