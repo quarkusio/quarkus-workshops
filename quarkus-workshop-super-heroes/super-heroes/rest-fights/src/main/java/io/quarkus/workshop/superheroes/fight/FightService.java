@@ -22,6 +22,9 @@ import java.util.Random;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
+/**
+ * Business logic for the Fight service
+ */
 @ApplicationScoped
 @Transactional(SUPPORTS)
 public class FightService {
