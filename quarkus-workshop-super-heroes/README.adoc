@@ -7,7 +7,8 @@ Check https://quarkus.io/quarkus-workshops/super-heros/ to get the workshop inst
 == Generate the documentation
 
 You can either generate the documentation for each exercise or for the entire workshop.
-For that, you just run the Maven command `mvn clean generate-resources` under an `docs` directory.
+For that, you just run the Maven command `mvn clean generate-resources` under the `docs` directory.
+You can then open the `docs/target/generated-asciidoc/spine.html` page and read the entire documentation of the workshop.
 
 == Generate the zip files
 
