@@ -7,6 +7,9 @@ import org.eclipse.microprofile.health.Liveness;
 
 import javax.inject.Inject;
 
+/**
+ * {@link HealthCheck} to ping the Hero service
+ */
 @Liveness
 public class PingHeroResourceHealthCheck implements HealthCheck {
 

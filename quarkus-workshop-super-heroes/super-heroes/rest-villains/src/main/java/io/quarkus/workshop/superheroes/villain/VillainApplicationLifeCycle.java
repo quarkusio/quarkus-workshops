@@ -7,6 +7,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import org.jboss.logging.Logger;
 
+/**
+ * Demonstrates how to use Quarkus {@link StartupEvent}s and {@link ShutdownEvent}s as well as how to gain access to the {@link ProfileManager}.
+ */
 @ApplicationScoped
 public class VillainApplicationLifeCycle {
     private static final Logger LOGGER = Logger.getLogger(VillainApplicationLifeCycle.class);

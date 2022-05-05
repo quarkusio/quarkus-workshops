@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Random;
 
+/**
+ * JPA entity class for a Hero. Re-used in the API layer.
+ */
 @Entity
 public class Hero extends PanacheEntity {
 

@@ -9,6 +9,9 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+/**
+ * Service class containing business methods for the application.
+ */
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class VillainService {

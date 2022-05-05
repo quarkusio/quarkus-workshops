@@ -16,6 +16,12 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * WebSocket endpoint for the {@code /stats/team} endpoint. Exposes the {@code team-stats} channel over the socket to anyone listening.
+ * <p>
+ *   Uses field injection via {@link Inject @Inject} over construction injection to show how it is done
+ * </p>
+ */
 @ServerEndpoint("/stats/team")
 @ApplicationScoped
 public class TeamStatsWebSocket {
