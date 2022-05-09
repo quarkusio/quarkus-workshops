@@ -42,11 +42,11 @@ $ docker compose rm
 
 == Build
 
-To build the entire code, you need to activate the `complete` profile:
+To build the entire code, you need to run the following commands from the root project (also see how we activate the `complete` profile):
 
 ```bash
+$ mvn clean install -f super-heroes/extension-version
 $ mvn clean install -Pcomplete
-
 ```
 
 == Running the complete system
