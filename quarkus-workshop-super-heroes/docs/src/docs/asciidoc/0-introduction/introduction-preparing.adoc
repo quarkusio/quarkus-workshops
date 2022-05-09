@@ -185,12 +185,11 @@ So, if you are stuck, feel free to check the solution.
 
 In addition, you can {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[download] the full code of the workshop .
 
-To build the completed workshop, you need to run:
+To build the completed workshop, you need to run the following commands from the root project:
 
 [source, shell]
 ----
-cd super-heroes
-> mvn clean install -f extension-version
+> mvn clean install -f super-heroes/extension-version
 > mvn clean install -Pcomplete
 ----
 
