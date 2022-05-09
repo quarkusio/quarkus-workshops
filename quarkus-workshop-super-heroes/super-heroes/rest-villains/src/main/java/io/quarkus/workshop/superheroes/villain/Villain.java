@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Random;
 
+/**
+ * JPA entity class for a Villain. Re-used in the API layer.
+ */
 @Entity
 public class Villain extends PanacheEntity {
     @NotNull
