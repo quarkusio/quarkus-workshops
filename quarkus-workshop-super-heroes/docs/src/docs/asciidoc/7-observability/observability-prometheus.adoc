@@ -20,7 +20,7 @@ This file contains basic Prometheus configuration, plus a specific `scrape_confi
 ====
 To execute the application we now need Prometheus.
 Make sure the infrastructure is up and running.
-This means that you've executed `docker-compose -f docker-compose.yaml up -d`.
+This means that you've executed `docker compose -f docker-compose.yaml up -d`.
 ====
 
 [NOTE]
