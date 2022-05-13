@@ -58,7 +58,7 @@ super-heroes
 +++++  Dockerfile.jvm
 +++++  Dockerfile.legacy-jar
 +++++  Dockerfile.native
-+++++  Dockerfile.native-distroless
++++++  Dockerfile.native-micro
 ++++  java
 +++++  io
 ++++++  quarkus
