@@ -15,64 +15,65 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.quarkus.workshop.super-heroes</groupId>
+  <artifactId>ui-super-heroes</artifactId>
+  <version>01</version>
+  <name>Quarkus Workshop :: Super-Heroes :: Super Heroes UI</name>
 
-    <groupId>io.quarkus.workshop.super-heroes</groupId>
-    <artifactId>ui-super-heroes</artifactId>
-    <version>01</version>
-    <name>Quarkus Workshop :: Super-Heroes :: Super Heroes UI</name>
-
-    <properties>
-        <quarkus.version>2.3.0.Final</quarkus.version>
-        <surefire-plugin.version>2.22.0</surefire-plugin.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <node.version>v10.16.3</node.version>
-        <npm.version>6.11.3</npm.version>
-        <frontend-maven-plugin.version>1.8.0</frontend-maven-plugin.version>
-    </properties>
-
+  <properties>
+    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <failsafe.useModulePath>false</failsafe.useModulePath>
+    <maven.compiler.release>11</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>2.9.0.Final</quarkus.platform.version>
+    <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+    <node.version>v10.16.3</node.version>
+    <npm.version>6.11.3</npm.version>
+    <frontend-maven-plugin.version>1.8.0</frontend-maven-plugin.version>
+  </properties>
+  <dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-reactive</artifactId>
-        </dependency>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-bom</artifactId>
-                <version>${quarkus.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-reactive</artifactId>
+    </dependency>
+  </dependencies>
     <build>
         <plugins>
             <plugin>
-                <groupId>io.quarkus</groupId>
+                <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus.version}</version>
+                <version>${quarkus.platform.version}</version>
+                <extensions>true</extensions>
                 <executions>
                     <execution>
                         <goals>
                             <goal>build</goal>
+                            <goal>generate-code</goal>
+                            <goal>generate-code-tests</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>build-ui</id>
