@@ -1,0 +1,44 @@
+[[introduction-installing-jdk]]
+
+= JDK {jdk-version}
+
+Essential for the development and execution of this workshop is the _Java Development Kit_ (JDK).footnote:[Java http://www.oracle.com/technetwork/java/javase]
+The JDK includes several tools such as a compiler (`javac`), a virtual machine, a documentation generator (`JavaDoc), monitoring tools (Visual VM) and so onfootnote:[Visual VM https://visualvm.github.io].
+The code in this workshop uses JDK {jdk-version}.
+
+== Installing the JDK
+
+To install the JDK {jdk-version}, follows the instructions from https://adoptium.net/installation.html to download and install the JDK for your platform.
+
+There is also an easier way to download and install Java if you are on Mac OS X.
+You can use Homebrew to install OpenJDK {jdk-version} using the following commands.footnote:[Homebrew https://brew.sh]
+
+[source,shell]
+----
+brew install java11
+----
+
+For Linux distributions, there are also packaged java installations.
+[source,shell]
+----
+# dnf (rpm-based)
+dnf install java-11-openjdk
+# Debian-based distributions:
+$ apt-get install openjdk-11-jdk
+----
+
+== Checking for Java Installation
+
+Once the installation is complete, it is necessary to set the `JAVA_HOME` variable and the `$JAVA_HOME/bin` directory to the `PATH` variable.
+Check that your system recognizes Java by entering `java -version` and the Java compiler with `javac -version`.
+
+[source,shell]
+----
+$ java -version
+openjdk version "11.0.15" 2022-04-19
+OpenJDK Runtime Environment Temurin-11.0.15+10 (build 11.0.15+10)
+OpenJDK 64-Bit Server VM Temurin-11.0.15+10 (build 11.0.15+10, mixed mode)
+
+$ javac -version
+javac 11.0.15
+----
