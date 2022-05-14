@@ -36,12 +36,12 @@ Check that your system recognizes Java by entering `java -version` and the Java 
 [source,shell]
 ----
 $ java -version
-openjdk 11.0.11 2021-04-20
-OpenJDK Runtime Environment AdoptOpenJDK-11.0.11+9 (build 11.0.11+9)
-OpenJDK 64-Bit Server VM AdoptOpenJDK-11.0.11+9 (build 11.0.11+9, mixed mode)
+openjdk version "11.0.15" 2022-04-19
+OpenJDK Runtime Environment Temurin-11.0.15+10 (build 11.0.15+10)
+OpenJDK 64-Bit Server VM Temurin-11.0.15+10 (build 11.0.15+10, mixed mode)
 
 $ javac -version
-javac 11.0.11
+javac 11.0.15
 ----
 
 == GraalVM {graalvm-version}
@@ -79,7 +79,7 @@ Check the https://www.graalvm.org/docs/getting-started/windows/#prerequisites-fo
 GraalVM installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
 
 Version {graalvm-version} is required.
-Select the {java-version} version.
+Select the {jdk-version} version.
 
 Follows the installation instructions:
 
@@ -87,7 +87,7 @@ Follows the installation instructions:
 - Windows - https://www.graalvm.org/docs/getting-started/windows/
 - MacOS - https://www.graalvm.org/docs/getting-started/macos/
 
-Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it will be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home).
+Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home).
 
 The `native-image` tool must be installed.
 It can be done by running `gu install native-image` from your GraalVM `bin` directory.
@@ -112,7 +112,7 @@ Once installed and set up, you should be able to run the following command and g
 [source,shell]
 ----
 $ $GRAALVM_HOME/bin/native-image --version
-GraalVM 21.2.0 Java 11 CE (Java Version 11.0.12+6-jvmci-21.2-b08)
+GraalVM 22.0.0.2 Java 11 CE (Java Version 11.0.15+10-jvmci-22.0-b05)
 ----
 
 == Apache Maven {maven-version}
@@ -144,9 +144,9 @@ Maven should print its version and the JDK version it uses (which is handy as yo
 [source,shell]
 ----
 $ mvn -version
-Apache Maven 3.8.2 (ea98e05a04480131370aa0c110b8c54cf726c06f)
-Maven home: /usr/local/Cellar/maven/3.8.2/libexec
-Java version: 11.0.11, vendor: AdoptOpenJDK, runtime: /Users/clement/.sdkman/candidates/java/11.0.11.hs-adpt
+Apache Maven 3.8.4 (ea98e05a04480131370aa0c110b8c54cf726c06f)
+Maven home: /usr/local/Cellar/maven/3.8.4/libexec
+Java version: 11.0.15, vendor: AdoptOpenJDK, runtime: /Users/clement/.sdkman/candidates/java/11.0.15.hs-adpt
 Default locale: en_FR, platform encoding: UTF-8
 OS name: "mac os x", version: "11.5", arch: "x86_64", family: "mac"
 ----
@@ -281,7 +281,7 @@ they can communicate with each other through well-defined channels.
 === Installing Docker
 
 Our infrastructure will use Docker to ease the installation of the different technical services (database, monitoring...).
-So for this, we need to install `docker` and `docker-compose`
+So for this, we need to install `docker` and `docker compose`
 Installation instructions are available on the following page:
 
 * Mac OS X - https://docs.docker.com/docker-for-mac/install/ (version 20+)
@@ -295,22 +295,18 @@ On Linux, don't forget the post-execution steps described on https://docs.docker
 
 === Checking for Docker Installation
 
-Once installed, check that both `docker` and `docker-compose` are available in your `PATH`:
+Once installed, check that both `docker` and `docker compose` are available in your `PATH`:
 
 [source,shell]
 ----
 $ docker version
 Docker version 20.10.8, build 3967b7d
+Cloud integration: v1.0.24
+Version:           20.10.14
+API version:       1.41
 
-$ docker-compose version
-docker-compose version 1.29.2, build 5becea4c
-docker-py version: 5.0.0
-CPython version: 3.9.0
-OpenSSL version: OpenSSL 1.1.1h  22 Sep 2020
-
-# Alternatively, on recent Docker versions:
 $ docker compose version
-Docker Compose version v2.0.0-rc.3
+Docker Compose version v2.5.0
 ----
 
 Finally, run your first container as follows:
@@ -365,8 +361,8 @@ Here are some commands that you will be using to start/stop containers in this w
 
 * `docker container ls`: Lists containers.
 * `docker container start CONTAINER`: Starts one or more stopped containers.
-* `docker-compose -f docker-compose.yaml up -d`: Starts all containers defined in a Docker Compose file.
-* `docker-compose -f docker-compose.yaml down`: Stops all containers defined in a Docker Compose file.
+* `docker compose -f docker-compose.yaml up -d`: Starts all containers defined in a Docker Compose file.
+* `docker compose -f docker-compose.yaml down`: Stops all containers defined in a Docker Compose file.
 
 == Recap
 
@@ -379,5 +375,5 @@ $ $GRAALVM_HOME/bin/native-image --version
 $ mvn -version
 $ curl --version
 $ docker version
-$ docker-compose version
+$ docker compose version
 ----

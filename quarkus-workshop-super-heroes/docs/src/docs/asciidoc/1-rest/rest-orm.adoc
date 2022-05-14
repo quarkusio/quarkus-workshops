@@ -765,7 +765,7 @@ You should already have installed the infrastructure into the `infrastructure` d
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Now, just execute `docker-compose -f docker-compose.yaml up -d`.
+Now, just execute `docker compose -f docker-compose.yaml up -d`.
 You should see a few logs going on and then all the containers get started.
 
 On Linux, use the `docker-compose-linux.yaml`:
@@ -773,13 +773,13 @@ On Linux, use the `docker-compose-linux.yaml`:
 [source,shell]
 .On Linux
 ----
-docker-compose -f docker-compose-linux.yaml up -d
+docker compose -f docker-compose-linux.yaml up -d
 ----
 
 [NOTE]
 ====
 During the workshop, just leave all the containers up and running.
-Then, after the workshop, remember to shut them down using: `docker-compose -f docker-compose.yaml down` or  `docker-compose -f docker-compose-linux.yaml down` on Linux.
+Then, after the workshop, remember to shut them down using: `docker compose -f docker-compose.yaml down` or  `docker compose -f docker-compose-linux.yaml down` on Linux.
 ====
 
 === Packaging and running the application

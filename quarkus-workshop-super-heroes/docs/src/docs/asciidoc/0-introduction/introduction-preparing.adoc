@@ -120,7 +120,7 @@ To warm up your Docker image repository, navigate to the `quarkus-workshop-super
 Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which define all the needed Docker images.
 Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
 
-Then execute `docker-compose -f docker-compose.yaml up -d`.
+Then execute `docker compose -f docker-compose.yaml up -d`.
 It will download all the Docker images and start the containers.
 
 [WARNING]
@@ -145,7 +145,7 @@ After this, verify the containers are running using the following command:
 
 [source,shell]
 ----
-docker-compose -f docker-compose.yaml ps
+docker compose -f docker-compose.yaml ps
 ----
 
 The output should resemble something like this:
@@ -164,8 +164,8 @@ Once all the containers are up and running, you can shut them down and remove th
 
 [source,shell]
 ----
-docker-compose -f docker-compose.yaml down
-docker-compose -f docker-compose.yaml rm
+docker compose -f docker-compose.yaml down
+docker compose -f docker-compose.yaml rm
 ----
 
 [NOTE]

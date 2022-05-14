@@ -40,6 +40,11 @@ If you open the `pom.xml` file, you will see that the following extensions have 
 You can see that beyond the extensions we have used so far, we added the Kafka support which uses Eclipse MicroProfile Reactive Messaging.
 Stay tuned.
 
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+The Quarkus Maven plugin has generated some code that we won't be using.
+You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
+
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
 [source,xml]
