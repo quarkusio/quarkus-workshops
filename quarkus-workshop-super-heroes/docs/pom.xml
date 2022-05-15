@@ -112,6 +112,27 @@
                             </attributes>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>output-html-azure</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <preserveDirectories>true</preserveDirectories>
+                            <outputDirectory>${project.build.directory}/generated-asciidoc</outputDirectory>
+                            <backend>html</backend>
+                            <sourceDocumentName>spine-azure.adoc</sourceDocumentName>
+                            <attributes>
+                                <imagesdir>images</imagesdir>
+                                <toc>left</toc>
+                                <linkcss>false</linkcss>
+                                <docinfo1>true</docinfo1>
+                                <icons>font</icons>
+                                <toclevels>3</toclevels>
+                            </attributes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

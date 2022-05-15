@@ -1,0 +1,29 @@
+= Deploy to Azure Container Apps Workshop
+Antonio Goncalves
+v1.0, {docdate}: Quarkus {quarkus-version}
+
+:data-uri:
+:doctype: book
+:source-highlighter: coderay
+:source-language: java
+// Caption and XRef caption
+:appendix-caption: Appendix
+:listing-caption: Listing
+:figure-caption: Figure
+:table-caption: Table
+:xrefstyle: short
+// TOC
+:toc:
+:toclevels: 2
+:toc-title: Contents
+// Images
+:full-width: role=full-width
+:half-width: role=half-width
+:half-size: role=half-size
+
+// Introduction
+include::A-azure-container-apps/azure.adoc[leveloffset=+1]
+include::A-azure-container-apps/azure-presentation.adoc[leveloffset=+2]
+include::A-azure-container-apps/azure-installing.adoc[leveloffset=+2]
+include::A-azure-container-apps/azure-preparing.adoc[leveloffset=+2]
+<<<
