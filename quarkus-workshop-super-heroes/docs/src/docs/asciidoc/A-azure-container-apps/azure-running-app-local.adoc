@@ -1,0 +1,3 @@
+[[azure-running-app-local]]
+= Running the Application From Local Containers
+

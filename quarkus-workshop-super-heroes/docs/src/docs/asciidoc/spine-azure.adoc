@@ -27,3 +27,14 @@ include::A-azure-container-apps/azure-presentation.adoc[leveloffset=+2]
 include::A-azure-container-apps/azure-installing.adoc[leveloffset=+2]
 include::A-azure-container-apps/azure-preparing.adoc[leveloffset=+2]
 <<<
+include::A-azure-container-apps/azure-running-app-local.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-running-app-remote.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-aca.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-aca-deploying-env.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-aca-deploying-app.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-aca-monitoring.adoc[leveloffset=+1]

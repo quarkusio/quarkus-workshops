@@ -1,6 +1,8 @@
 [[azure-installing]]
 = Installing Software
 
+include::azure-installing-azure-cli.adoc[leveloffset=+1]
+
 include::../0-introduction/introduction-installing-jdk.adoc[leveloffset=+1]
 
 include::../0-introduction/introduction-installing-quarkus-cli.adoc[leveloffset=+1]
@@ -15,7 +17,9 @@ Just make sure the following commands work on your machine.
 
 [source,shell]
 ----
+$ az -version
 $ java -version
+$ quarkus --version
 $ curl --version
 $ docker version
 $ docker compose version

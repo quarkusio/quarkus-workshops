@@ -1,0 +1,9 @@
+[[azure-installing-azure-cli]]
+
+= Azure CLI
+
+== Installing Azure CLI
+
+== Checking for Azure CLI Installation
+
+== Some Azure CLI Commands
