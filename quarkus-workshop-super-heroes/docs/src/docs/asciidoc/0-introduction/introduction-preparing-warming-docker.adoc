@@ -1,15 +1,18 @@
 [[introduction-preparing-warming-docker]]
 = Warming up Docker images
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
 To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
-
 Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which define all the needed Docker images.
 Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
 
-Then execute `docker compose -f docker-compose.yaml up -d`.
-It will download all the Docker images and start the containers.
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Then execute the following command which will download all the Docker images and start the containers:
+
+[source,shell]
+----
+docker compose -f docker-compose.yaml up -d
+----
 
 [WARNING]
 .Linux Users beware
