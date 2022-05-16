@@ -1,9 +1,41 @@
 [[azure-intro-installing-azure-cli]]
-
 = Azure CLI
+
+The Azure command-line interface (https://docs.microsoft.com/en-us/cli/azure[Azure CLI)] is a set of commands used to create and manage Azure resources.
+The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation.
+For this workshop you need to have Azure CLI installed locally on your machine.
 
 == Installing Azure CLI
 
+The https://docs.microsoft.com/cli/azure/install-azure-cli[Azure CLI is available to install] in Windows, macOS and Linux environments.
+It can also be run in a Docker container and Azure Cloud Shell.
+On Mac OS X, the easiest way to install Azure CLI is by executing the following command:
+
+[source,shell]
+----
+brew install azure-cli
+----
+
 == Checking for Azure CLI Installation
 
+Once the installation is complete, you can execute a few commands to be sure the Azure CLI is correctly installed:
+
+[source,shell]
+----
+az version
+az --version
+----
+
 == Some Azure CLI Commands
+
+Azure CLI is a command-line utility where you can use several parameters and options to create, query, or delete Azure resources.
+To get some help on the commands, you can type:
+
+[source,shell]
+----
+az help
+az --help
+az vm --help
+az vm disk --help
+az vm disk attach --help
+----

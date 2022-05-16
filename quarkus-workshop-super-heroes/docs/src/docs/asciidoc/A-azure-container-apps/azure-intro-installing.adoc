@@ -17,7 +17,7 @@ Just make sure the following commands work on your machine.
 
 [source,shell]
 ----
-$ az -version
+$ az --version
 $ java -version
 $ quarkus --version
 $ curl --version
