@@ -23,18 +23,17 @@ v1.0, {docdate}: Quarkus {quarkus-version}
 
 // Introduction
 include::A-azure-container-apps/azure.adoc[leveloffset=+1]
-include::A-azure-container-apps/azure-presentation.adoc[leveloffset=+2]
-include::A-azure-container-apps/azure-installing.adoc[leveloffset=+2]
-include::A-azure-container-apps/azure-preparing.adoc[leveloffset=+2]
+include::A-azure-container-apps/azure-intro-presenting.adoc[leveloffset=+2]
+include::A-azure-container-apps/azure-intro-installing.adoc[leveloffset=+2]
+include::A-azure-container-apps/azure-intro-preparing.adoc[leveloffset=+2]
 <<<
-include::A-azure-container-apps/azure-running-app-local.adoc[leveloffset=+1]
-<<<
-include::A-azure-container-apps/azure-running-app-remote.adoc[leveloffset=+1]
+include::A-azure-container-apps/azure-local-running-app.adoc[leveloffset=+1]
 <<<
 include::A-azure-container-apps/azure-aca.adoc[leveloffset=+1]
 <<<
-include::A-azure-container-apps/azure-aca-deploying-env.adoc[leveloffset=+1]
-<<<
-include::A-azure-container-apps/azure-aca-deploying-app.adoc[leveloffset=+1]
+include::A-azure-container-apps/azure-aca-running-app.adoc[leveloffset=+1]
 <<<
 include::A-azure-container-apps/azure-aca-monitoring.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-conclusion.adoc[leveloffset=+1]
+include::A-azure-container-apps/azure-conclusion-references.adoc[leveloffset=+1]

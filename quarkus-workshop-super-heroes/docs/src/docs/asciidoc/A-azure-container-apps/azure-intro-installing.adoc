@@ -1,7 +1,7 @@
 [[azure-installing]]
 = Installing Software
 
-include::azure-installing-azure-cli.adoc[leveloffset=+1]
+include::azure-intro-installing-azure-cli.adoc[leveloffset=+1]
 
 include::../0-introduction/introduction-installing-jdk.adoc[leveloffset=+1]
 

@@ -1,3 +1,0 @@
-[[azure-running-app-remote]]
-= Running the Application From Remote Containers
-

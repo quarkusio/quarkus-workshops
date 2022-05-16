@@ -1,0 +1,111 @@
+[[azure-running-app-local]]
+= Running the Application Locally
+
+'''
+
+This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
+There are many different approaches to achieve these deployments.
+In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.
+
+== From bare metal to containers
+
+In this section, we are going to package our microservices into containers.
+In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+The native compilation uses the OS and architecture of the host system.
+
+And... Linux Containers are ... _Linux_.
+So before being able to build a container with our native executable, we need to produce compatible native executables.
+If you are using a Linux 64 bits machine, you are good to go.
+If not, Quarkus comes with a trick to produce these executable:
+
+[source,shell]
+----
+mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+----
+
+The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
+The result is a Linux 64 bits executable.
+
+[TIP]
+====
+Building a native executable takes time, CPU, and memory.
+It's even more accurate in the container.
+So, first, be sure that your container system has enough memory to build the executable.
+It requires at least 6Gb of memory, 8Gb is recommended.
+====
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Execute the above command for all our microservices.
+We also copy the UI into the fight service, to simplify the process:
+
+[source,shell]
+----
+cd rest-hero
+mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd rest-villains
+mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd rest-fight
+cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
+mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd event-statistics
+mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+----
+
+== Building containers
+
+Now that we have the native executables, we can build containers.
+When you create projects, Quarkus generates two `Dockerfiles`:
+
+1. `Dockerfile.jvm` - A `Dockerfile` for running the application in JVM mode
+2. `Dockerfile.native` - A `Dockerfile` for running the application in native mode
+
+We are interested in this second file.
+Open one of these `Dockerfile.native` files:
+
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /work/
+COPY target/*-runner /work/application
+RUN chmod 775 /work
+EXPOSE 8080
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
+It also exposes the port 8080.
+Wait, our microservices are not configured to run on the port 8080.
+We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.
+
+To build the containers, use the following scripts:
+
+[source,shell]
+----
+export ORG=xxxx
+cd rest-hero
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
+cd ..
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
+cd ..
+cd rest-fight
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
+cd ..
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
+cd ..
+----
+
+[NOTE]
+====
+Replace `ORG` with your DockerHub / Quay.io username.
+====
+
+== Pushing containers to Azure Registry
+
+== Executing the containers Locally
