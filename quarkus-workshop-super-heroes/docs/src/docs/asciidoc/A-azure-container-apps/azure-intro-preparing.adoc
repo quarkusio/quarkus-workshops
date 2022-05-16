@@ -1,15 +1,19 @@
 [[azure-intro-preparing]]
 = Preparing for the Workshop
 
-This workshop needs internet access to download all sorts of Maven artifacts, Docker images, and even pictures.
+This workshop needs internet access Azure of course, but also to download all sorts of Maven artifacts, Docker images, and even pictures.
 Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them before the workshop.
 Here are a few commands that you can execute before the workshop.
 
-== Download the workshop scaffolding
+== Clone the GitHub repository of the application
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+First, clone the GitHub repository of the Super Heroes application located at https://github.com/quarkusio/quarkus-workshops by executing the following command:
+
+https://github.com/quarkusio/quarkus-workshops.git
+
+{github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 
 In this workshop, you will be developing an application dealing with Super Heroes (and Super-Villains 🦹) as well as Quarkus extensions.
