@@ -1,4 +1,4 @@
-[[azure-running-app-local]]
+[[azure-local-running-app]]
 = Running the Application Locally
 
 '''

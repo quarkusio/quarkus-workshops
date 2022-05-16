@@ -1,4 +1,4 @@
-[[azure-installing-azure-cli]]
+[[azure-intro-installing-azure-cli]]
 
 = Azure CLI
 

@@ -1,4 +1,4 @@
-[[introduction-preparing]]
+[[azure-intro-preparing]]
 = Preparing for the Workshop
 
 This workshop needs internet access to download all sorts of Maven artifacts, Docker images, and even pictures.

@@ -1,4 +1,4 @@
-[[conclusion-references]]
+[[azure-conclusion-references]]
 = References
 
 * https://quarkus.io/quarkus-workshops/super-heroes

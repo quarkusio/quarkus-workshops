@@ -27,13 +27,13 @@ include::A-azure-container-apps/azure-intro-presenting.adoc[leveloffset=+2]
 include::A-azure-container-apps/azure-intro-installing.adoc[leveloffset=+2]
 include::A-azure-container-apps/azure-intro-preparing.adoc[leveloffset=+2]
 <<<
-include::A-azure-container-apps/azure-local-running-app.adoc[leveloffset=+1]
-<<<
 include::A-azure-container-apps/azure-aca.adoc[leveloffset=+1]
+<<<
+include::A-azure-container-apps/azure-local-running-app.adoc[leveloffset=+1]
 <<<
 include::A-azure-container-apps/azure-aca-running-app.adoc[leveloffset=+1]
 <<<
-include::A-azure-container-apps/azure-aca-monitoring.adoc[leveloffset=+1]
+include::A-azure-container-apps/azure-aca-administrating.adoc[leveloffset=+1]
 <<<
 include::A-azure-container-apps/azure-conclusion.adoc[leveloffset=+1]
 include::A-azure-container-apps/azure-conclusion-references.adoc[leveloffset=+1]

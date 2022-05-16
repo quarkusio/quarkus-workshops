@@ -1,4 +1,4 @@
-[[azure-installing]]
+[[azure-intro-installing]]
 = Installing Software
 
 include::azure-intro-installing-azure-cli.adoc[leveloffset=+1]
