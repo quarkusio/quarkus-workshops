@@ -28,7 +28,8 @@ To do so, you will find in the `pom.xml` the following profile:
   </activation>
   <properties>
     <!-- ... -->
-<properties>    <quarkus.package.type>native</quarkus.package.type>
+  <properties>
+    <quarkus.package.type>native</quarkus.package.type>
   </properties>
 </profile>
 ----
