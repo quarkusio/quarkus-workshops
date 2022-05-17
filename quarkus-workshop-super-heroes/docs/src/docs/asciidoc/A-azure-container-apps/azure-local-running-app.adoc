@@ -7,7 +7,7 @@ This chapter explores how you can deploy Quarkus applications in containers and 
 There are many different approaches to achieve these deployments.
 In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.
 
-== From bare metal to containers
+== Building containers
 
 In this section, we are going to package our microservices into containers.
 In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
@@ -20,11 +20,15 @@ If not, Quarkus comes with a trick to produce these executable:
 
 [source,shell]
 ----
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
 ----
 
-The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
-The result is a Linux 64 bits executable.
+The result of this command is a Linux 64 bits executable packaged in a Docker container.
+That's because the previous command has different parameters that are worth explaining:
+
+* `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
+* `-Dquarkus.container-image.build=true` creates a Docker image
+* `-DskipTests` does not run the tests to save time
 
 [TIP]
 ====
@@ -36,27 +40,30 @@ It requires at least 6Gb of memory, 8Gb is recommended.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Execute the above command for all our microservices.
-We also copy the UI into the fight service, to simplify the process:
+Execute the above command for all our microservices and the UI:
 
 [source,shell]
 ----
 cd rest-hero
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
 cd ..
+
 cd rest-villains
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
 cd ..
-cd rest-fight
-cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+
+cd rest-fights
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
 cd ..
+
 cd event-statistics
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+cd ..
+
+cd ui-super-heroes
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
 cd ..
 ----
-
-== Building containers
 
 Now that we have the native executables, we can build containers.
 When you create projects, Quarkus generates two `Dockerfiles`:
