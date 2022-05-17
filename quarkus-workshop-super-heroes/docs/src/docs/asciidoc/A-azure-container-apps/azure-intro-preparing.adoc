@@ -102,4 +102,4 @@ az provider register --namespace Microsoft.App --wait
 == Ready?
 
 After the prerequisites have been installed and the different components have been warmed up, it's now time to deploy some code!
-
+But before, let us introduce Azure Container Apps and Quarkus.

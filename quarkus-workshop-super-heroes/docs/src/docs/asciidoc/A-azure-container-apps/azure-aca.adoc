@@ -1,5 +1,5 @@
 [[azure-aca]]
-= Quarkus and Azure Container Apps
+= Azure Container Apps and Quarkus
 
 '''
 
@@ -7,13 +7,34 @@ In the previous chapter, you had a quick peek at Quarkus and how you can build H
 But that was just the beginning; Quarkus can do a lot more, which is the purpose of this chapter.
 In this chapter, you are going to see:
 
+* What's Azure Container Apps?
+* How does Azure Container Apps fit in the long list of Azure services?
+* Pros and cons of using Azure Container Apps
 * What's Quarkus? and how does it change the Java landscape
 * What are the main Quarkus idea, and how it helps in the _cloud native world_
-* The Quarkus build process, in other words, the _secret sauce number 1_
-* The Quarkus reactive nature, in other words, the _secret sauce number 2_
-* Some Quarkus features such as the application lifecycle support
-* How you can use Quarkus to generate native executable
+
+== What's Azure Container Apps?
+
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
+TODO.
 
 include::../2-quarkus/quarkus-definition.adoc[leveloffset=+1]
-
-include::azure-aca-definition.adoc[leveloffset=+1]

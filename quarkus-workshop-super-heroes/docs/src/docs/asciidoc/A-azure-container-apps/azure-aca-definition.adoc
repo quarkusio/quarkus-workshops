@@ -1,4 +1,0 @@
-[[azure-aca-definition]]
-
-= What's Azure Container Apps?
-
