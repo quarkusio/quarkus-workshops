@@ -9,77 +9,110 @@ In this chapter, we are focusing on the creation of containers using Quarkus nat
 
 == Deploying the Infrastructure
 
-=== Create a resource group
-
-All the resources in Azure have to belong to a resource group.
-Execute the following command to create a resource group:
+Before deploying our microservices to Azure Container Apps, we need to create the infrastructure.
 
 === Create a Container Apps environment
 
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
+First, let's create the container apps environment.
 A container apps environment acts as a boundary for our containers.
 Containers deployed on the same environment use the same virtual network and the same Log Analytics workspace.
 Create the container apps environment with the following command:
 
-````shell
+[source,shell]
+----
 az containerapp env create \
   --resource-group "$RESOURCE_GROUP" \
   --location "$LOCATION" \
-  --tags system="$TAG_SYSTEM" \
+  --tags system="$TAG" \
   --name "$CONTAINERAPPS_ENVIRONMENT" \
   --logs-workspace-id "$LOG_ANALYTICS_WORKSPACE_CLIENT_ID" \
   --logs-workspace-key "$LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET"
-````
+----
 
 === Create the managed Postgres Databases
 
-We need to create two PostgreSQL databases so the Heroes and Villains microservice can store data.
-Because we also want to access these database from external SQL client, we make them available to the outside world thanks to the `-public all` parameter.
-Create the two databases with the following commands:
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-```shell
+We need to create three PostgreSQL databases so the Heroes, Villains and Fights microservice can store data.
+Because we also want to access these database from external SQL client, we make them available to the outside world thanks to the `-public all` parameter.
+Create the databases with the following commands:
+
+[source,shell]
+----
 az postgres flexible-server create \
   --resource-group "$RESOURCE_GROUP" \
   --location "$LOCATION" \
-  --tags system="$TAG_SYSTEM" application="$HEROES_APP" \
+  --tags system="$TAG" application="$HEROES_APP" \
   --name "$HEROES_DB" \
   --admin-user "$POSTGRES_DB_ADMIN" \
   --admin-password "$POSTGRES_DB_PWD" \
   --public all \
-  --sku-name "Standard_$POSTGRES_SKU" \
+  --sku-name "$POSTGRES_SKU" \
   --storage-size 4096 \
   --version "$POSTGRES_DB_VERSION"
-```
+----
 
-```shell
+[source,shell]
+----
 az postgres flexible-server create \
   --resource-group "$RESOURCE_GROUP" \
   --location "$LOCATION" \
-  --tags system="$TAG_SYSTEM" application="$VILLAINS_APP" \
-  --name $VILLAINS_DB \
+  --tags system="$TAG" application="$VILLAINS_APP" \
+  --name "$VILLAINS_DB" \
   --admin-user "$POSTGRES_DB_ADMIN" \
   --admin-password "$POSTGRES_DB_PWD" \
   --public all \
-  --sku-name "Standard_$POSTGRES_SKU" \
+  --sku-name "$POSTGRES_SKU" \
   --storage-size 4096 \
   --version "$POSTGRES_DB_VERSION"
-```
+----
 
-Then, we create two database schemas, one for Heroes, another one for Villains
+[source,shell]
+----
+az postgres flexible-server create \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG" application="$FIGHTS_APP" \
+  --name "$FIGHTS_DB" \
+  --admin-user "$POSTGRES_DB_ADMIN" \
+  --admin-password "$POSTGRES_DB_PWD" \
+  --public all \
+  --sku-name "$POSTGRES_SKU" \
+  --storage-size 4096 \
+  --version "$POSTGRES_DB_VERSION"
+----
 
-```shell
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Then, we create the database schemas, one for each database:
+
+[source,shell]
+----
 az postgres flexible-server db create \
     --resource-group "$RESOURCE_GROUP" \
     --server-name "$HEROES_DB" \
     --database-name "$HEROES_DB_SCHEMA"
-```
+----
 
-```shell
+[source,shell]
+----
 az postgres flexible-server db create \
     --resource-group "$RESOURCE_GROUP" \
     --server-name "$VILLAINS_DB" \
     --database-name "$VILLAINS_DB_SCHEMA"
-```
+----
+
+[source,shell]
+----
+az postgres flexible-server db create \
+    --resource-group "$RESOURCE_GROUP" \
+    --server-name "$FIGHTS_DB" \
+    --database-name "$FIGHTS_DB_SCHEMA"
+----
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Add data to both databases using the following commands:
 
@@ -147,69 +180,34 @@ az postgres flexible-server show-connection-string \
 >
 > These commands are just here for your own examination purposes.
 
-=== Create the managed MongoDB Database
-
-We need to create a MongoDB so the Fight microservice can store data.
-Create a database in the region where it's available:
-
-```shell
-az cosmosdb create \
-  --resource "$RESOURCE_GROUP" \
-  --locations regionName="$LOCATION" failoverPriority=0 \
-  --tags system="$TAG_SYSTEM" application="$FIGHTS_APP" \
-  --name "$MONGO_DB" \
-  --kind MongoDB \
-  --server-version "$MONGO_DB_VERSION"
-```
-
-Create the Fight collection:
-
-````shell
-az cosmosdb mongodb database create \
-  --resource-group "$RESOURCE_GROUP" \
-  --account-name "$MONGO_DB" \
-  --name "$FIGHTS_DB_SCHEMA"
-````
-
-To configure the Fight microservice we will need to set the MongoDB connection string.
-To get this connection string use the following command:
-
-```shell
-MONGO_COLLECTION_CONNECT_STRING=$(az cosmosdb keys list \
-  --resource-group "$RESOURCE_GROUP" \
-  --name "$MONGO_DB" \
-  --type connection-strings \
-  --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString" \
-  --output tsv)
-
-echo $MONGO_CONNECTION_STRING
-```
-
 === Create the Managed Kafka
 
 The Fight microservice communicates with the Statistics microservice through Kafka.
 We need to create an Azure event hub for that.
 
-```shell
+[source,shell]
+----
 az eventhubs namespace create \
   --resource-group "$RESOURCE_GROUP" \
   --location "$LOCATION" \
-  --tags system="$TAG_SYSTEM" application="$FIGHTS_APP" \
+  --tags system="$TAG" application="$FIGHTS_APP" \
   --name "$KAFKA_NAMESPACE"
-```
+----
 
 Then, create the Kafka topic where the messages will be sent to and consumed from:
 
-```shell
+[source,shell]
+----
 az eventhubs eventhub create \
   --resource-group "$RESOURCE_GROUP" \
   --name "$KAFKA_TOPIC" \
   --namespace-name "$KAFKA_NAMESPACE"
-```
+----
 
 To configure Kafka in the Fight and Statistics microservices, get the connection string with the following commands:
 
-```shell
+[source,shell]
+----
 KAFKA_CONNECTION_STRING=$(az eventhubs namespace authorization-rule keys list \
   --resource-group "$RESOURCE_GROUP" \
   --namespace-name "$KAFKA_NAMESPACE" \
@@ -221,7 +219,11 @@ KAFKA_JAAS_CONFIG="${JAAS_CONFIG}${KAFKA_CONNECTION_STRING}\";"
 
 echo $KAFKA_CONNECTION_STRING
 echo $KAFKA_JAAS_CONFIG
-```
+----
+
+If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
+
+image::azure-portal-3.png[]
 
 == Deploying the Applications
 
