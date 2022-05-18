@@ -163,7 +163,7 @@ FIGHTS_DB_CONNECT_STRING="jdbc:postgresql://${FIGHTS_DB}.postgres.database.azure
 
 # Statistics
 STATISTICS_APP="event-statistics"
-STATISTICS_IMAGE="${SUPERHEROES_IMAGES_BASE}/${STATISTICS_APP}:${IMAGES_TAG}"
+STATISTICS_IMAGE="${REGISTRY}/${STATISTICS_APP}:${IMAGES_TAG}"
 
 # UI
 UI_APP="ui-super-heroes"
