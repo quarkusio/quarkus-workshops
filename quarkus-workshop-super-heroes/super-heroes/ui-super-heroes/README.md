@@ -4,19 +4,43 @@ This project was generated with [Angular CLI](https://cli.angular.io/) version 8
 
 ## Setup
 
-Make sure you have [Node JS](https://nodejs.org) installed and [Angular CLI](https://github.com/angular/angular-cli)
+Make sure you have [Node JS](https://nodejs.org) installed and [Angular CLI](https://github.com/angular/angular-cli).
+Make sure you have the correct versions of Node JS and NPM
 
 ```
-$ ng version
+$ node -v
+v16.15.0
 
-Angular CLI: 8.3.5
-Node: 12.10.0
+$ npm -v
+7.24.2
 ```
 
 If you need to update the version of Angular CLI you can run
 
 ``` 
 npm install -g @angular/cli
+```
+
+## Build
+
+Build the project with 
+
+``` 
+npm run build
+``` 
+
+Run the application with the following command and then go to http://localhost:4200/:
+
+``` 
+npm start
+```
+
+## Build for Production
+
+For production, build your code with the following options: 
+
+```
+npm run build --prod
 ```
 
 ## Angular CLI commands
