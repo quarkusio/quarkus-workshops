@@ -178,8 +178,6 @@ For that, we first need to log in to the registry:
 ----
 az acr login \
   --name "$REGISTRY"
-
-docker login "$REGISTRY_URL"
 ----
 
 You should see the prompt _Login Succeeded_.
@@ -199,11 +197,11 @@ Then, push all the images with the following commands:
 
 [source,shell]
 ----
-docker push $REGISTRY/ui-super-heroes:1.0.0-SNAPSHOT
-docker push $REGISTRY/event-statistics:1.0.0-SNAPSHOT
-docker push $REGISTRY/rest-fights:1.0.0-SNAPSHOT
-docker push $REGISTRY/rest-villains:1.0.0-SNAPSHOT
-docker push $REGISTRY/rest-heroes:1.0.0-SNAPSHOT
+docker push $HEROES_IMAGE
+docker push $STATISTICS_IMAGE
+docker push $FIGHTS_IMAGE
+docker push $VILLAINS_IMAGE
+docker push $HEROES_IMAGE
 ----
 
 [source,shell]
