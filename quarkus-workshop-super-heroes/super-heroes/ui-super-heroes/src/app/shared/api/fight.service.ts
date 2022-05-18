@@ -27,7 +27,7 @@ import {Configuration} from '../configuration';
 @Injectable()
 export class FightService {
 
-  protected basePath = (window as any).NG_CONFIG.API_BASE_URL;
+  protected basePath;
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 

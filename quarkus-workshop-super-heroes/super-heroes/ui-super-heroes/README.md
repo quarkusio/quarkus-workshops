@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://cli.angular.io/) version 8
 ## Setup
 
 Make sure you have [Node JS](https://nodejs.org) installed and [Angular CLI](https://github.com/angular/angular-cli).
-Make sure you have the correct versions of Node JS and NPM
+Make sure you have the correct versions of Node JS and NPM (use `nvm use 16` to change versions of Node)
 
 ```
 $ node -v
@@ -26,6 +26,7 @@ npm install -g @angular/cli
 Build the project with 
 
 ``` 
+npm install
 npm run build
 ``` 
 
