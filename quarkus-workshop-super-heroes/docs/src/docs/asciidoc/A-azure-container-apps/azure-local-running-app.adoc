@@ -188,11 +188,11 @@ Tag the image using the `docker tag` commands (replace `ORG` with your Docker id
 
 [source,shell]
 ----
-docker tag ORG/ui-super-heroes:1.0.0-SNAPSHOT  $REGISTRY/ui-super-heroes:1.0.0-SNAPSHOT
-docker tag ORG/event-statistics:1.0.0-SNAPSHOT  $REGISTRY/event-statistics:1.0.0-SNAPSHOT
-docker tag ORG/rest-fights:1.0.0-SNAPSHOT  $REGISTRY/rest-fights:1.0.0-SNAPSHOT
-docker tag ORG/rest-villains:1.0.0-SNAPSHOT  $REGISTRY/rest-villains:1.0.0-SNAPSHOT
-docker tag ORG/rest-heroes:1.0.0-SNAPSHOT  $REGISTRY/rest-heroes:1.0.0-SNAPSHOT
+docker tag ORG/ui-super-heroes:1.0.0-SNAPSHOT  $HEROES_IMAGE
+docker tag ORG/event-statistics:1.0.0-SNAPSHOT  $STATISTICS_IMAGE
+docker tag ORG/rest-fights:1.0.0-SNAPSHOT  $FIGHTS_IMAGE
+docker tag ORG/rest-villains:1.0.0-SNAPSHOT  $VILLAINS_IMAGE
+docker tag ORG/rest-heroes:1.0.0-SNAPSHOT  $HEROES_IMAGE
 ----
 
 Then, push all the images with the following commands:
