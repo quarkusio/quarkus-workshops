@@ -75,31 +75,171 @@ include::../0-introduction/introduction-preparing-warming-docker.adoc[leveloffse
 
 == Setting Up Azure
 
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
 To be able to deploy the application to Azure, you first need an Azure subscription.
 If you don't have one, go to https://signup.azure.com and register.
 Then, sign in to Azure from the CLI:
 
-```shell
+[source,shell]
+----
 az login
-```
+----
 
 === Setting Up the Azure Environment
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Azure CLI is extensible and you can install as many extensions as you need.
 For this workshop, install the Azure Container Apps and Database extensions for the Azure CLI:
 
-```shell
+[source,shell]
+----
 az extension add --name containerapp
 az extension add --name rdbms-connect
-```
+----
 
 Then, register the `Microsoft.App` namespace
 
-```shell
+[source,shell]
+----
 az provider register --namespace Microsoft.App --wait
-```
+----
+
+== Setting Up the Environment Variables
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+The Super Heroes environment and application will be created and deployed using a set of Azure CLI commands.
+For that, we need to set the following environment variables:
+
+[source,shell]
+----
+# Azure
+RESOURCE_GROUP="super-heroes"
+LOCATION="eastus2"
+REGISTRY="superheroesregistry"
+TAG="super-heroes"
+LOG_ANALYTICS_WORKSPACE="super-heroes-logs"
+# Need this because some Azure services need to have unique names in a region
+UNIQUE_IDENTIFIER=$(whoami)
+
+# Container Apps
+CONTAINERAPPS_ENVIRONMENT="super-heroes-env"
+
+# Postgres
+POSTGRES_DB_ADMIN="superheroesadmin"
+POSTGRES_DB_PWD="super-heroes-p#ssw0rd-12046"
+POSTGRES_DB_VERSION="13"
+POSTGRES_SKU="D2s_v3"
+POSTGRES_TIER="GeneralPurpose"
+
+# MongoDB
+MONGO_DB="fights-db-$UNIQUE_IDENTIFIER"
+MONGO_DB_VERSION="4.0"
+
+# Kafka
+KAFKA_NAMESPACE="fights-kafka-$UNIQUE_IDENTIFIER"
+KAFKA_TOPIC="fights"
+KAFKA_BOOTSTRAP_SERVERS="$KAFKA_NAMESPACE.servicebus.windows.net:9093"
+
+# Apicurio
+APICURIO_APP="apicurio"
+APICURIO_IMAGE="apicurio/apicurio-registry-mem:2.2.0.Final"
+
+# Heroes
+HEROES_APP="rest-heroes"
+HEROES_DB="heroes-db-$UNIQUE_IDENTIFIER"
+HEROES_IMAGE="${SUPERHEROES_IMAGES_BASE}/${HEROES_APP}:${IMAGES_TAG}"
+HEROES_DB_SCHEMA="heroes"
+HEROES_DB_CONNECT_STRING="postgresql://${HEROES_DB}.postgres.database.azure.com:5432/${HEROES_DB_SCHEMA}?ssl=true&sslmode=require"
+
+# Villains
+VILLAINS_APP="rest-villains"
+VILLAINS_DB="villains-db-$UNIQUE_IDENTIFIER"
+VILLAINS_IMAGE="${SUPERHEROES_IMAGES_BASE}/${VILLAINS_APP}:${IMAGES_TAG}"
+VILLAINS_DB_SCHEMA="villains"
+VILLAINS_DB_CONNECT_STRING="jdbc:postgresql://${VILLAINS_DB}.postgres.database.azure.com:5432/${VILLAINS_DB_SCHEMA}?ssl=true&sslmode=require"
+
+# Fights
+FIGHTS_APP="rest-fights"
+FIGHTS_DB_SCHEMA="fights"
+FIGHTS_IMAGE="${SUPERHEROES_IMAGES_BASE}/${FIGHTS_APP}:${IMAGES_TAG}"
+
+# Statistics
+STATISTICS_APP="event-statistics"
+STATISTICS_IMAGE="${SUPERHEROES_IMAGES_BASE}/${STATISTICS_APP}:${IMAGES_TAG}"
+
+# UI
+UI_APP="ui-super-heroes"
+UI_IMAGE="${SUPERHEROES_IMAGES_BASE}/${UI_APP}:latest"
+----
+
+== Creating Azure Resources
+
+=== Resource Group
+
+A https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal[resource group] is a container that holds related resources for an Azure solution.
+The resource group can include all the resources for the solution, or only those resources that you want to manage as a group.
+In our workshop, all the databases, all the microservices, etc. will be grouped into a single resource group.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Execute the following command to create the Super Hero resource group:
+
+[source,shell]
+----
+az group create \
+  --name "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG"
+----
+
+=== Log Analytics Workspace
+
+https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace[Log Analytics workspace] is the environment for Azure Monitor log data.
+Each workspace has its own data repository and configuration, and data sources and solutions are configured to store their data in a particular workspace.
+We will use the same workspace for most of the Azure resources we will be creating.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create a Log Analytics workspace with the following command:
+
+[source,shell]
+----
+az monitor log-analytics workspace create \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG" \
+  --workspace-name "$LOG_ANALYTICS_WORKSPACE"
+----
+
+Let's also retrieve the Log Analytics Client ID and client secret and store them in environment variables:
+
+[source,shell]
+----
+LOG_ANALYTICS_WORKSPACE_CLIENT_ID=`az monitor log-analytics workspace show  \
+  --resource-group "$RESOURCE_GROUP" \
+  --workspace-name "$LOG_ANALYTICS_WORKSPACE" \
+  --query customerId  \
+  --output tsv | tr -d '[:space:]'`
+
+echo $LOG_ANALYTICS_WORKSPACE_CLIENT_ID
+
+LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=`az monitor log-analytics workspace get-shared-keys \
+  --resource-group "$RESOURCE_GROUP" \
+  --workspace-name "$LOG_ANALYTICS_WORKSPACE" \
+  --query primarySharedKey \
+  --output tsv | tr -d '[:space:]'`
+
+echo $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET
+----
+
+If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
+
+image::azure-portal-1.png[]
 
 == Ready?
 
-After the prerequisites have been installed and the different components have been warmed up, it's now time to deploy some code!
+After the prerequisites have been installed and the different components have been warmed up, and some Azure resource created, it's now time to deploy some code!
 But before, let us introduce Azure Container Apps and Quarkus.

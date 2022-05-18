@@ -14,9 +14,29 @@ In particular, we are going to produce Linux 64 bits native executables and runs
 The native compilation uses the OS and architecture of the host system.
 
 And... Linux Containers are ... _Linux_.
-So before being able to build a container with our native executable, we need to produce compatible native executables.
-If you are using a Linux 64 bits machine, you are good to go.
-If not, Quarkus comes with a trick to produce these executable:
+So to build a container with a Linux native executable (even if you are on Windows or Mac), Quarkus comes with a trick to produce these executable.
+First, Quarkus comes with a set of `Dockerfiles`.
+The `Dockerfile.native` file is for running the application in native mode.
+It looks like this:
+
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+WORKDIR /work/
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
+Then, to build the containers with a Linux native executable, Quarkus comes with a set of options:
+
 
 [source,shell]
 ----
@@ -40,7 +60,8 @@ It requires at least 6Gb of memory, 8Gb is recommended.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Execute the above command for all our microservices and the UI:
+Execute the above command for all our microservices and the UI.
+This will build Docker images out of Linux native executables:
 
 [source,shell]
 ----
@@ -65,47 +86,16 @@ cd ui-super-heroes
 cd ..
 ----
 
-Now that we have the native executables, we can build containers.
-When you create projects, Quarkus generates two `Dockerfiles`:
-
-1. `Dockerfile.jvm` - A `Dockerfile` for running the application in JVM mode
-2. `Dockerfile.native` - A `Dockerfile` for running the application in native mode
-
-We are interested in this second file.
-Open one of these `Dockerfile.native` files:
-
-[source,text]
-----
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
-----
-
-It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
-It also exposes the port 8080.
-Wait, our microservices are not configured to run on the port 8080.
-We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.
-
-To build the containers, use the following scripts:
+Check that you have all the Docker images installed locally:
 
 [source,shell]
 ----
-export ORG=xxxx
-cd rest-hero
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
-cd ..
-cd rest-villains
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
-cd ..
-cd rest-fight
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
-cd ..
-cd event-statistics
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
-cd ..
+$ docker image ls | grep ORG
+ORG/ui-super-heroes       1.0.0-SNAPSHOT  141MB
+ORG/event-statistics      1.0.0-SNAPSHOT  161MB
+ORG/rest-fights           1.0.0-SNAPSHOT  187MB
+ORG/rest-villains         1.0.0-SNAPSHOT  167MB
+ORG/rest-heroes           1.0.0-SNAPSHOT  165MB
 ----
 
 [NOTE]
@@ -113,6 +103,37 @@ cd ..
 Replace `ORG` with your DockerHub / Quay.io username.
 ====
 
-== Pushing containers to Azure Registry
+== Pushing containers to Azure Container Registry
+
+https://azure.microsoft.com/services/container-registry[Azure Container Registry] is a private registry for hosting container images.
+Using the Azure Container Registry, you can store Docker-formatted images for all types of container deployments.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+[source,shell]
+----
+az acr create \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG" \
+  --name "$REGISTRY" \
+  --workspace "$LOG_ANALYTICS_WORKSPACE" \
+  --sku Standard
+----
+
+If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
+
+image::azure-portal-2.png[]
+
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Now, let's push these Docker images to Azure Registry.
+
+
+[NOTE]
+====
+Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group.
+====
 
 == Executing the containers Locally
