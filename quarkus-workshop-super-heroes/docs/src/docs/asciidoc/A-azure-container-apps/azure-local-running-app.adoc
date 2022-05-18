@@ -103,12 +103,39 @@ ORG/rest-heroes           1.0.0-SNAPSHOT  165MB
 Replace `ORG` with your DockerHub / Quay.io username.
 ====
 
+== Running local containers
+
+Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Under `super-heroes/infrastructure` you will find the`docker-compose-app.yaml` file.
+It declares all the needed infratructure (databases, Kafka) as well as our microservices.
+Make sure you edit the file and change the name `ORG` with your own Docker login, and execute it with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app.yaml up
+----
+
+Go to http://localhost:8080.
+You should see the user interface and you should be able to fight super heroes against super villains.
+Then, make sure you shutdown the entire application with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app.yaml down
+----
+
 == Pushing containers to Azure Container Registry
 
+Now that we have all our Docker containers running locally, let's push them to Azure Container Registry.
 https://azure.microsoft.com/services/container-registry[Azure Container Registry] is a private registry for hosting container images.
 Using the Azure Container Registry, you can store Docker-formatted images for all types of container deployments.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+First, let's created an Azure Container Registry with the following command:
 
 [source,shell]
 ----
@@ -118,22 +145,97 @@ az acr create \
   --tags system="$TAG" \
   --name "$REGISTRY" \
   --workspace "$LOG_ANALYTICS_WORKSPACE" \
-  --sku Standard
+  --sku Standard \
+  --admin-enabled true
 ----
 
-If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
+Get the URL of the Azure Container Registry and set it to the `REGISTRY_URL` variable with the following command:
 
-image::azure-portal-2.png[]
-
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
-Now, let's push these Docker images to Azure Registry.
-
+[source,shell]
+----
+REGISTRY_URL=$(az acr show \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --query "loginServer" \
+  --output tsv)
+----
 
 [NOTE]
 ====
 Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group.
 ====
 
-== Executing the containers Locally
+If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
+
+image::azure-portal-2.png[]
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Now, let's push these Docker images to Azure Registry.
+For that, we first need to log in to the registry:
+
+[source,shell]
+----
+az acr login \
+  --name "$REGISTRY"
+
+docker login "$REGISTRY_URL"
+----
+
+You should see the prompt _Login Succeeded_.
+Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY` variable).
+Tag the image using the `docker tag` commands (replace `ORG` with your Docker id):
+
+[source,shell]
+----
+docker tag ORG/ui-super-heroes:1.0.0-SNAPSHOT  $REGISTRY/ui-super-heroes:1.0.0-SNAPSHOT
+docker tag ORG/event-statistics:1.0.0-SNAPSHOT  $REGISTRY/event-statistics:1.0.0-SNAPSHOT
+docker tag ORG/rest-fights:1.0.0-SNAPSHOT  $REGISTRY/rest-fights:1.0.0-SNAPSHOT
+docker tag ORG/rest-villains:1.0.0-SNAPSHOT  $REGISTRY/rest-villains:1.0.0-SNAPSHOT
+docker tag ORG/rest-heroes:1.0.0-SNAPSHOT  $REGISTRY/rest-heroes:1.0.0-SNAPSHOT
+----
+
+Then, push all the images with the following commands:
+
+[source,shell]
+----
+docker push $REGISTRY/ui-super-heroes:1.0.0-SNAPSHOT
+docker push $REGISTRY/event-statistics:1.0.0-SNAPSHOT
+docker push $REGISTRY/rest-fights:1.0.0-SNAPSHOT
+docker push $REGISTRY/rest-villains:1.0.0-SNAPSHOT
+docker push $REGISTRY/rest-heroes:1.0.0-SNAPSHOT
+----
+
+[source,shell]
+----
+az acr repository list \
+  --name "$REGISTRY" \
+  --output table
+----
+
+az acr repository list --name <registry-name> --output table
+
+== Running local remote containers
+
+Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Let's go back to the `docker-compose-app.yaml` file under `super-heroes/infrastructure`.
+Edit the file and change the name `ORG` with the value of the `$REGISTRY` variable, and then execute it with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app.yaml up
+----
+
+Go to http://localhost:8080.
+You should see the user interface and everything should work.
+Remember to shutdown the entire application with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app.yaml down
+----
+
+Ok, enough running these containers locally, let's push them to Azure Container Apps!

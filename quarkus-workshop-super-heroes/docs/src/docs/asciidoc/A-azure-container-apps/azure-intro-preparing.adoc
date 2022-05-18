@@ -118,11 +118,11 @@ For that, we need to set the following environment variables:
 # Azure
 RESOURCE_GROUP="super-heroes"
 LOCATION="eastus2"
-REGISTRY="superheroesregistry"
 TAG="super-heroes"
 LOG_ANALYTICS_WORKSPACE="super-heroes-logs"
 # Need this because some Azure services need to have unique names in a region
 UNIQUE_IDENTIFIER=$(whoami)
+REGISTRY="superheroesregistry"$UNIQUE_IDENTIFIER
 
 # Container Apps
 CONTAINERAPPS_ENVIRONMENT="super-heroes-env"
