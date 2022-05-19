@@ -230,9 +230,42 @@ LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=`az monitor log-analytics workspace get-sh
 echo $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET
 ----
 
+=== Azure Container Registry
+
+In the next chapters we will be creating Docker containers and pushing them to the Azure Container Registry.
+https://azure.microsoft.com/services/container-registry[Azure Container Registry] is a private registry for hosting container images.
+Using the Azure Container Registry, you can store Docker-formatted images for all types of container deployments.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+First, let's created an Azure Container Registry with the following command:
+
+[source,shell]
+----
+az acr create \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG" \
+  --name "$REGISTRY" \
+  --workspace "$LOG_ANALYTICS_WORKSPACE" \
+  --sku Standard \
+  --admin-enabled true
+----
+
+Get the URL of the Azure Container Registry and set it to the `REGISTRY_URL` variable with the following command:
+
+[source,shell]
+----
+REGISTRY_URL=$(az acr show \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --query "loginServer" \
+  --output tsv)
+----
+
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
 
-image::azure-portal-1.png[]
+image::azure-portal-2.png[]
 
 == Ready?
 
