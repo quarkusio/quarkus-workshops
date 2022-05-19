@@ -77,7 +77,7 @@ Check that you have all the Docker images installed locally:
 
 [source,shell]
 ----
-$ docker image ls | grep ORG
+$ docker image ls | grep quarkus
 quarkus/ui-super-heroes       latest    141MB
 quarkus/event-statistics      latest    161MB
 quarkus/rest-fights           latest    187MB
@@ -100,13 +100,19 @@ Execute it with:
 docker compose -f docker-compose-app-local.yaml up
 ----
 
-Once all the containers are started, go to http://localhost:8080.
+Once all the containers are started, you can:
+
+* Go to http://localhost:8080 to check the UI
+* curl http://localhost:8084/api/villains | jq
+* curl http://localhost:8083/api/heroes | jq
+* curl http://localhost:8082/api/fights/randomfighters | jq
+
 You should see the user interface, and you should be able to fight super heroes against super villains.
 Then, make sure you shut down the entire application with:
 
 [source,shell]
 ----
-docker compose -f docker-compose-app.yaml down
+docker compose -f docker-compose-app-local.yaml down
 ----
 
 == Pushing containers to Azure Container Registry
@@ -130,6 +136,9 @@ az acr login \
 
 You should see the prompt _Login Succeeded_.
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
 Tag the image using the `docker tag` commands:
 
 [source,shell]
@@ -140,6 +149,8 @@ docker tag quarkus/rest-fights:latest  $FIGHTS_IMAGE
 docker tag quarkus/rest-villains:latest  $VILLAINS_IMAGE
 docker tag quarkus/rest-heroes:latest  $HEROES_IMAGE
 ----
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Then, push all the images with the following commands:
 
@@ -152,6 +163,8 @@ docker push $VILLAINS_IMAGE
 docker push $HEROES_IMAGE
 ----
 
+You can check that the images have been pushed to Azure Container Registry by executing the following command:
+
 [source,shell]
 ----
 az acr repository list \
@@ -159,9 +172,11 @@ az acr repository list \
   --output table
 ----
 
-az acr repository list --name <registry-name> --output table
+You can also visualize the content of the registry on the https://portal.azure.com[Azure Portal].
 
-== Running local remote containers
+image::azure-portal-4.png[]
+
+== Running remote containers
 
 Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them.
 
