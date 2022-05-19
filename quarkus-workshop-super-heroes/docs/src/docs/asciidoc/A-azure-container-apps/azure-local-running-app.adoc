@@ -57,7 +57,7 @@ docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-heroes .
 cd ..
 
 cd rest-villains
-docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains .
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains ../..
 cd ..
 
 cd rest-fights

@@ -114,6 +114,9 @@ Before creating the infrastructure for the Super Heroes application and deployin
 === Setting Up the Azure environment variables
 
 Let's first set a few environment variables that will help us in creating the Azure infrastructure.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
 Set the following variables:
 
 [source,shell]
