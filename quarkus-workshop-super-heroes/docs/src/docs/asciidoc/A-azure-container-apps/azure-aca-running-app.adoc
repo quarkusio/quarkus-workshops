@@ -114,76 +114,114 @@ az postgres flexible-server db create \
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Add data to both databases using the following commands:
+Now that we have all our databases setup, time to create the tables and add some data to them.
+Each microservice comes with a set of database initialization files as well as some insert statements.
+Thanks to Azure CLI we can execute these SQL scripts.
+Create the tables using the following commands (make sure you are under `quarkus-workshop-super-heroes/super-heroes` to execute them):
 
-```shell
+[source,shell]
+----
 az postgres flexible-server execute \
     --name "$HEROES_DB" \
     --admin-user "$POSTGRES_DB_ADMIN" \
     --admin-password "$POSTGRES_DB_PWD" \
     --database-name "$HEROES_DB_SCHEMA" \
-    --file-path "rest-heroes/deploy/db-init/initialize-tables.sql"
-```
+    --file-path "infrastructure/db-init/initialize-tables-heroes.sql"
+----
 
-```shell
+[source,shell]
+----
 az postgres flexible-server execute \
     --name "$VILLAINS_DB" \
     --admin-user "$POSTGRES_DB_ADMIN" \
     --admin-password "$POSTGRES_DB_PWD" \
     --database-name "$VILLAINS_DB_SCHEMA" \
-    --file-path "rest-villains/deploy/db-init/initialize-tables.sql"
-```
+    --file-path "infrastructure/db-init/initialize-tables-villains.sql"
+----
+
+[source,shell]
+----
+az postgres flexible-server execute \
+    --name "$FIGHTS_DB" \
+    --admin-user "$POSTGRES_DB_ADMIN" \
+    --admin-password "$POSTGRES_DB_PWD" \
+    --database-name "$FIGHTS_DB_SCHEMA" \
+    --file-path "infrastructure/db-init/initialize-tables-fights.sql"
+----
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Now, let's add some super heroes and super villains to these databases:
+
+[source,shell]
+----
+az postgres flexible-server execute \
+    --name "$HEROES_DB" \
+    --admin-user "$POSTGRES_DB_ADMIN" \
+    --admin-password "$POSTGRES_DB_PWD" \
+    --database-name "$HEROES_DB_SCHEMA" \
+    --file-path "rest-heroes/src/main/resources/import.sql"
+----
+
+[source,shell]
+----
+az postgres flexible-server execute \
+    --name "$VILLAINS_DB" \
+    --admin-user "$POSTGRES_DB_ADMIN" \
+    --admin-password "$POSTGRES_DB_PWD" \
+    --database-name "$VILLAINS_DB_SCHEMA" \
+    --file-path "rest-villains/src/main/resources/import.sql"
+----
+
+[source,shell]
+----
+az postgres flexible-server execute \
+    --name "$FIGHTS_DB" \
+    --admin-user "$POSTGRES_DB_ADMIN" \
+    --admin-password "$POSTGRES_DB_PWD" \
+    --database-name "$FIGHTS_DB_SCHEMA" \
+    --file-path "rest-fights/src/main/resources/import.sql"
+----
+
 
 You can check the content of the tables with the following commands:
 
-```shell
+[source,shell]
+----
 az postgres flexible-server execute \
     --name "$HEROES_DB" \
     --admin-user "$POSTGRES_DB_ADMIN" \
     --admin-password "$POSTGRES_DB_PWD" \
     --database-name "$HEROES_DB_SCHEMA" \
     --querytext "select * from hero"
-```
+----
 
-```shell
+[source,shell]
+----
 az postgres flexible-server execute \
     --name "$VILLAINS_DB" \
     --admin-user "$POSTGRES_DB_ADMIN" \
     --admin-password "$POSTGRES_DB_PWD" \
     --database-name "$VILLAINS_DB_SCHEMA" \
     --querytext "select * from villain"
-```
+----
 
-If you'd like to see the connection strings to the databases (so you can access your database from an external SQL client), use the following commands:
-
-```shell
-az postgres flexible-server show-connection-string \
-  --database-name "$HEROES_DB_SCHEMA" \
-  --server-name "$HEROES_DB" \
-  --admin-user "$POSTGRES_DB_ADMIN" \
-  --admin-password "$POSTGRES_DB_PWD" \
-  --query "connectionStrings.jdbc" \
-  --output tsv
-
-az postgres flexible-server show-connection-string \
-  --database-name "$VILLAINS_DB_SCHEMA" \
-  --server-name "$VILLAINS_DB" \
-  --admin-user "$POSTGRES_DB_ADMIN" \
-  --admin-password "$POSTGRES_DB_PWD" \
-  --query "connectionStrings.jdbc" \
-  --output tsv
-```
-
-> **NOTE:** These aren't the actual connection strings used, especially in the heroes service, which does not use JDBC.
->
-> You also need to append `ssl=true&sslmode=require` to the end of each connect string to force the driver to use ssl.
->
-> These commands are just here for your own examination purposes.
+[source,shell]
+----
+az postgres flexible-server execute \
+    --name "$FIGHTS_DB" \
+    --admin-user "$POSTGRES_DB_ADMIN" \
+    --admin-password "$POSTGRES_DB_PWD" \
+    --database-name "$FIGHTS_DB_SCHEMA" \
+    --querytext "select * from fight"
+----
 
 === Create the Managed Kafka
 
 The Fight microservice communicates with the Statistics microservice through Kafka.
 We need to create an Azure event hub for that.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
