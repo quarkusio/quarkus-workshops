@@ -224,6 +224,25 @@ REGISTRY_URL=$(az acr show \
   --output tsv)
 ----
 
+[source,shell]
+----
+ACR_PULL_SERVICE_PRINCIPAL_NAME=acr-pull-$UNIQUE_IDENTIFIER
+
+ACR_ID=$(az acr show --name $REGISTRY --resource-group $RESOURCE_GROUP --query id --output tsv)
+
+ACR_PULL_SERVICE_PRINCIPAL_PASSWORD=$(az ad sp create-for-rbac \
+--name $ACR_PULL_SERVICE_PRINCIPAL_NAME \
+--scopes $ACR_ID \
+--role acrpull \
+--query password \
+--output tsv)
+
+ACR_PULL_SERVICE_PRINCIPAL_ID=$(az ad sp list \
+--display-name $ACR_PULL_SERVICE_PRINCIPAL_NAME \
+--query [].appId \
+--output tsv)
+----
+
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
 
 image::azure-portal-2.png[]

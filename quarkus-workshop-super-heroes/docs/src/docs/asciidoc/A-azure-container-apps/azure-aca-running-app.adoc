@@ -270,15 +270,21 @@ So let's create an instance of Container Apps for each of our microservices and 
 
 === Heroes Microservice
 
+First, the Heroes microservice.
 The Heroes microservice needs to access the managed Postgres database.
 Therefore, we need to set the right properties using our environment variables.
 Notice that the Heroes microservice has a `--min-replicas` set to 0.
-That means it can scale down to zero if not used.
+That means it can scale down to zero if not used (more on that later).
 
-```shell
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create the Heroes container app with the following command:
+
+[source,shell]
+----
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG_SYSTEM" application="$HEROES_APP" \
+  --tags system="$TAG" application="$HEROES_APP" \
   --image "$HEROES_IMAGE" \
   --name "$HEROES_APP" \
   --environment "$CONTAINERAPPS_ENVIRONMENT" \
@@ -290,7 +296,7 @@ az containerapp create \
              QUARKUS_DATASOURCE_USERNAME="$POSTGRES_DB_ADMIN" \
              QUARKUS_DATASOURCE_PASSWORD="$POSTGRES_DB_PWD" \
              QUARKUS_DATASOURCE_REACTIVE_URL="$HEROES_DB_CONNECT_STRING"
-```
+----
 
 The following command sets the URL of the deployed application to the `HEROES_URL` variable:
 
@@ -326,7 +332,7 @@ Notice the minimum of replicas is also set to 0:
 ```shell
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG_SYSTEM" application="$VILLAINS_APP" \
+  --tags system="$TAG" application="$VILLAINS_APP" \
   --image "$VILLAINS_IMAGE" \
   --name "$VILLAINS_APP" \
   --environment "$CONTAINERAPPS_ENVIRONMENT" \
@@ -375,7 +381,7 @@ Notice that we use the value of the `$$KAFKA_JAAS_CONFIG` in the `password`.
 ```shell
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG_SYSTEM" application="$STATISTICS_APP" \
+  --tags system="$TAG" application="$STATISTICS_APP" \
   --image "$STATISTICS_IMAGE" \
   --name "$STATISTICS_APP" \
   --environment "$CONTAINERAPPS_ENVIRONMENT" \
@@ -425,7 +431,7 @@ As for the microservice invocations, you need to set the URLs of both Heroes and
 ```shell
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG_SYSTEM" application="$FIGHTS_APP" \
+  --tags system="$TAG" application="$FIGHTS_APP" \
   --image "$FIGHTS_IMAGE" \
   --name "$FIGHTS_APP" \
   --environment "$CONTAINERAPPS_ENVIRONMENT" \
@@ -485,7 +491,7 @@ If you are interested in this approach, you can check https://azure.microsoft.co
 ```shell
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG_SYSTEM" application="$UI_APP" \
+  --tags system="$TAG" application="$UI_APP" \
   --image "$UI_IMAGE" \
   --name "$UI_APP" \
   --environment "$CONTAINERAPPS_ENVIRONMENT" \
