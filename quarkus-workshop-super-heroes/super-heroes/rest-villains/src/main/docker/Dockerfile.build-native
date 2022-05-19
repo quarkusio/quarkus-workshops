@@ -6,7 +6,8 @@
 #
 # Build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains .
+# Make sure you are in the rest-villains directory
+# docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains ../..
 #
 # Then run the container using:
 #
@@ -16,14 +17,12 @@
 
 ## Stage 1 : build with maven builder image with native capabilities
 FROM quay.io/quarkus/ubi-quarkus-native-image:22.0-java11 AS build
-COPY --chown=quarkus:quarkus mvnw /code/mvnw
-COPY --chown=quarkus:quarkus .mvn /code/.mvn
-COPY --chown=quarkus:quarkus pom.xml /code/
 USER quarkus
 WORKDIR /code
-RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
-COPY src /code/src
-RUN ./mvnw package -Pnative -Dmaven.test.skip=true
+COPY --chown=quarkus:quarkus . ${WORKDIR}
+
+RUN ./mvnw -B clean install -DskipTests -Pcomplete -pl :extension-version-parent -amd
+RUN ./mvnw -B clean package -f super-heroes/rest-villains -DskipTests -Pnative
 
 ## Stage 2 : create the docker final image
 FROM quay.io/quarkus/quarkus-micro-image:1.0
