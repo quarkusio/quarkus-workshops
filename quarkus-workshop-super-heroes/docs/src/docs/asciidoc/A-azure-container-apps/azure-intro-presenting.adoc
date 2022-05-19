@@ -11,7 +11,7 @@ Then, you'll be prepared to investigate a bit more on your own.
 == What Will You Be Deploying?
 
 In this workshop, you will deploy an existing application that allows superheroes to fight against supervillains.
-You will be building and deploying several microservices communicating either synchronously via REST or asynchronously using Kafka:
+You will be containerizing and deploying several microservices communicating either synchronously via REST or asynchronously using Kafka:
 
 * _Super Hero UI_: an Angular application to pick up a random superhero, a random supervillain, and makes them fight.
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API.
@@ -33,7 +33,7 @@ The main UI allows you to pick up one random Hero and Villain by clicking on "Ne
 Then it's just a matter of clicking on "Fight!" to get them to fight.
 The table at the bottom shows the list of the previous fights.
 
-image::angular-ui.png[role=half-size]
+image::angular-ui.png[]
 
 == How Does This Workshop Work?
 
@@ -41,17 +41,17 @@ You have this material in your hands (either electronically or printed), and you
 The structure of this workshop is as follow :
 
 * _Installing all the needed tools_:
-in this section, you will install all the tools and code to be able to develop, compile and execute our application
-* _Quarkus and Azure Container Apps_:
+in this section, you will install all the tools and code to be able to bundle, package and deploy our application
+* _Azure Container Apps and Quarkus_:
 this section introduces Quarkus and Azure Container Apps to make sure you have all the needed vocabulary to follow along
 * _Running the Application Locally_:
-in this section, you will build Docker images out of Quarkus microservices, execute them locally with Docker compose, push them to Azure Registry, all that using the Quarkus and Azure CLI
+in this section, you will build Docker images out of Quarkus microservices, execute them locally with Docker compose, push them to Azure Registry, all that using Docker and Azure CLI
 * _Running the Application on Azure Container Apps_:
-in this section, you will create and entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps
+in this section, you will create an entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps
 * _Administrating_:
 in this section, you will add some load to your microservices, monitor them, scale them, check the logs, etc.
 
-If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Quarkus and Azure Container Apps_ or _Running the Application Locally_ (if you already know Quarkus and Azure Container Apps), and start hacking on the command lines.
+If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Azure Container Apps and Quarkus_ or straight to _Running the Application Locally_ (if you already know Quarkus and Azure Container Apps), and start hacking on the command lines.
 This "à la carte" mode lets you make the most of this 2 to 4-hour long hands-on lab.
 
 == What Do You Have to Do?
@@ -64,7 +64,7 @@ Oh, and be ready to have some fun!
 
 == Software Requirements
 
-First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
+First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 16Gb of RAM (as some tools need a few resources).
 
 [WARNING]
 ====
@@ -74,11 +74,9 @@ If you are using Mac OS X, make sure the version is greater than 10.11.x (Captai
 This workshop will make use of the following Software, tools, frameworks that you will need to install and now (more or less) how it works:
 
 * Azure CLI
-* Quarkus CLI
-* Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
-* JDK {jdk-version}
 * Docker
 * cURL (or any other command line HTTP client)
+* (optionally) Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
 
 The following section focuses on how to install and set up the needed Software.
 You can skip the next section if you have already installed all the prerequisites.

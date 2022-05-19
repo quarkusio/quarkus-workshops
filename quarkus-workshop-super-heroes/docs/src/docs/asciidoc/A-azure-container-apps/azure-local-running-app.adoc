@@ -35,20 +35,6 @@ CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
 ----
 
 It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
-Then, to build the containers with a Linux native executable, Quarkus comes with a set of options:
-
-
-[source,shell]
-----
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
-----
-
-The result of this command is a Linux 64 bits executable packaged in a Docker container.
-That's because the previous command has different parameters that are worth explaining:
-
-* `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
-* `-Dquarkus.container-image.build=true` creates a Docker image
-* `-DskipTests` does not run the tests to save time
 
 [TIP]
 ====
@@ -60,9 +46,9 @@ It requires at least 6Gb of memory, 8Gb is recommended.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Execute the above command for all our microservices and the UI.
+Execute the following commands to build all our microservices and the UI.
 This will build Docker images out of Linux native executables:
-Under the `quarkus-workshop-super-heroes/super-heroes` directory
+Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the following Docker commands:
 
 [source,shell]
 ----
@@ -92,17 +78,12 @@ Check that you have all the Docker images installed locally:
 [source,shell]
 ----
 $ docker image ls | grep ORG
-ORG/ui-super-heroes       1.0.0-SNAPSHOT  141MB
-ORG/event-statistics      1.0.0-SNAPSHOT  161MB
-ORG/rest-fights           1.0.0-SNAPSHOT  187MB
-ORG/rest-villains         1.0.0-SNAPSHOT  167MB
-ORG/rest-heroes           1.0.0-SNAPSHOT  165MB
+quarkus/ui-super-heroes       latest    141MB
+quarkus/event-statistics      latest    161MB
+quarkus/rest-fights           latest    187MB
+quarkus/rest-villains         latest    167MB
+quarkus/rest-heroes           latest    165MB
 ----
-
-[NOTE]
-====
-Replace `ORG` with your DockerHub / Quay.io username.
-====
 
 == Running local containers
 
@@ -110,18 +91,18 @@ Now that we have all our Docker containers created, let's execute them all to be
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Under `super-heroes/infrastructure` you will find the`docker-compose-app.yaml` file.
-It declares all the needed infratructure (databases, Kafka) as well as our microservices.
-Make sure you edit the file and change the name `ORG` with your own Docker login, and execute it with:
+Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
+It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
+Execute it with:
 
 [source,shell]
 ----
-docker compose -f docker-compose-app.yaml up
+docker compose -f docker-compose-app-local.yaml up
 ----
 
-Go to http://localhost:8080.
-You should see the user interface and you should be able to fight super heroes against super villains.
-Then, make sure you shutdown the entire application with:
+Once all the containers are started, go to http://localhost:8080.
+You should see the user interface, and you should be able to fight super heroes against super villains.
+Then, make sure you shut down the entire application with:
 
 [source,shell]
 ----
@@ -134,13 +115,12 @@ Now that we have all our Docker containers running locally, let's push them to A
 
 [NOTE]
 ====
-Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group.
+Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group and the Azure Container Registry.
 ====
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Now, let's push these Docker images to Azure Registry.
-For that, we first need to log in to the registry:
+To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
 
 [source,shell]
 ----
@@ -149,16 +129,16 @@ az acr login \
 ----
 
 You should see the prompt _Login Succeeded_.
-Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY` variable).
-Tag the image using the `docker tag` commands (replace `ORG` with your Docker id):
+Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
+Tag the image using the `docker tag` commands:
 
 [source,shell]
 ----
-docker tag ORG/ui-super-heroes:1.0.0-SNAPSHOT  $HEROES_IMAGE
-docker tag ORG/event-statistics:1.0.0-SNAPSHOT  $STATISTICS_IMAGE
-docker tag ORG/rest-fights:1.0.0-SNAPSHOT  $FIGHTS_IMAGE
-docker tag ORG/rest-villains:1.0.0-SNAPSHOT  $VILLAINS_IMAGE
-docker tag ORG/rest-heroes:1.0.0-SNAPSHOT  $HEROES_IMAGE
+docker tag quarkus/ui-super-heroes:latest  $HEROES_IMAGE
+docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
+docker tag quarkus/rest-fights:latest  $FIGHTS_IMAGE
+docker tag quarkus/rest-villains:latest  $VILLAINS_IMAGE
+docker tag quarkus/rest-heroes:latest  $HEROES_IMAGE
 ----
 
 Then, push all the images with the following commands:

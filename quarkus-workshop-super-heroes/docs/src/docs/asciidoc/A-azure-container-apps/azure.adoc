@@ -1,16 +1,17 @@
 [[azure]]
 = Welcome
 
-Let's say you are a (Java) developer, and you are interested in deploying your applications to the cloud.
-You know some Docker, you don't know anything about Kubernetes (and don't want to learn), but you have heard of https://azure.microsoft.com[Microsoft Azure] and https://quarkus.io[Quarkus].
+Let's say you are not a (Java) developer, and you are interested in deploying your applications to the cloud.
+You know some Docker, you don't know anything about Kubernetes (and don't want to learn), but you have heard of https://azure.microsoft.com[Microsoft Azure].
 This workshop is for you.
 
 This workshop offers attendees an intro-level, hands-on session with https://azure.microsoft.com/services/container-apps[Azure Container Apps], from pushing containerized microservices, to deploying an entire infrastructure, to execute microservices and consuming them.
 But, what are we going to deploy to Azure Container Apps?
 Well, it's going to be a set of microservices:
 
-* Developed with Quarkus
-* Using HTTP and events (with Apache Kafka)
+* Developed with https://quarkus.io[Quarkus] (the microservices are already developed, and you don't need to know Quarkus)
+* Exposing HTTP APIs
+* Exchanging events with Apache Kafka
 * Storing data in databases
 * With some parts of the dark side of microservices (resilience, health, monitoring)
 * Answer the ultimate question: are super-heroes stronger than super-villains?

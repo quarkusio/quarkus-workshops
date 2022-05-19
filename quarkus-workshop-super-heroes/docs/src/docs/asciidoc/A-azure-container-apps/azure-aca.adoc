@@ -3,8 +3,8 @@
 
 '''
 
-In the previous chapter, you had a quick peek at Quarkus and how you can build HTTP / REST-based applications with it.
-But that was just the beginning; Quarkus can do a lot more, which is the purpose of this chapter.
+Even if you won't be developing any Quarkus code, you might want to discover why this Java runtime is perfect for developing containerized applications, and why it makes with Azure Container Apps.
+And if you don't know Azure Container Apps, this chapter is the right time to take a breath and discover this Azure service.
 In this chapter, you are going to see:
 
 * What's Azure Container Apps?
