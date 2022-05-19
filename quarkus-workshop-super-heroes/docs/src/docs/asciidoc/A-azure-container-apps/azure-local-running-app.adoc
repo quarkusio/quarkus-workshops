@@ -62,27 +62,28 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Execute the above command for all our microservices and the UI.
 This will build Docker images out of Linux native executables:
+Under the `quarkus-workshop-super-heroes/super-heroes` directory
 
 [source,shell]
 ----
-cd rest-hero
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+cd rest-heroes
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-heroes .
 cd ..
 
 cd rest-villains
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains .
 cd ..
 
 cd rest-fights
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-fights .
 cd ..
 
 cd event-statistics
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/event-statistics .
 cd ..
 
 cd ui-super-heroes
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/ui-super-heroes .
 cd ..
 ----
 
