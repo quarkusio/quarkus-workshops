@@ -1,0 +1,290 @@
+[[azure-intro-preparing]]
+= Preparing for the Workshop
+
+This workshop needs internet to access Azure of course, but also to download all sorts of Maven artifacts, Docker images, and even pictures.
+Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them before the workshop.
+Here are a few commands that you can execute before the workshop.
+
+== Clone the GitHub repository of the application
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+First, clone the GitHub repository of the Super Heroes application located at https://github.com/quarkusio/quarkus-workshops by executing the following command:
+
+[source,shell]
+----
+git clone https://github.com/quarkusio/quarkus-workshops.git
+----
+
+The code of this Super Heroes application is separated into two different directories:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+quarkus-workshop-super-heroes
++ super-heroes         | The entire Super Hero application
+}
+}
+@endsalt
+----
+
+Under the `super-heroes` directory you will find the entire Super Hero application spread throughout a set of subdirectories, each one containing a microservice or some tooling.
+The final structure will be the following:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+quarkus-workshop-super-heroes
++ super-heroes
+++ event-statistics        | UI and application dealing with fight statistics (you will create it)
+++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
+++ kubernetes              | All the files required to deploy on Kubernetes
+++ load-super-heroes       | Stress tool loading heroes, villains and fights
+++ rest-fight              | REST API allowing super heroes to fight (you will create it)
+++ rest-hero               | Reactive REST API for CRUD operations on Heroes (you will create it)
+++ rest-villains            | REST API for CRUD operations on Villains (you will create it)
+++ ui-super-heroes         | Angular application so we can fight visually
+}
+}
+@endsalt
+----
+
+include::../0-introduction/introduction-preparing-checking-ports.adoc[leveloffset=+1]
+
+//== Warming up the Java dependencies
+//
+//Now that you have the initial structure in place, navigate to the root directory and run:
+//
+//icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+//
+//[source,shell]
+//----
+//quarkus build
+//----
+//
+//By running this command, it downloads all the required Java dependencies.
+
+include::../0-introduction/introduction-preparing-warming-docker.adoc[leveloffset=+1]
+
+== Setting Up Azure
+
+To be able to deploy the application to Azure, you first need an Azure subscription.
+If you don't have one, go to https://signup.azure.com and register.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Then, sign in to Azure from the CLI:
+
+[source,shell]
+----
+az login
+----
+
+=== Setting Up the Azure Environment
+
+Azure CLI is extensible and you can install as many extensions as you need.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+For this workshop, install the Azure Container Apps and Database extensions for the Azure CLI:
+
+[source,shell]
+----
+az extension add --name containerapp
+az extension add --name rdbms-connect
+----
+
+Then, register the `Microsoft.App` namespace
+
+[source,shell]
+----
+az provider register --namespace Microsoft.App --wait
+----
+
+== Creating Azure Resources
+
+Before creating the infrastructure for the Super Heroes application and deploying the microservices to Azure Container Apps, we need to create some Azure resources.
+
+=== Setting Up the Azure environment variables
+
+Let's first set a few environment variables that will help us in creating the Azure infrastructure.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Set the following variables:
+
+[source,shell]
+----
+# Azure
+RESOURCE_GROUP="super-heroes"
+LOCATION="eastus2"
+TAG="super-heroes"
+LOG_ANALYTICS_WORKSPACE="super-heroes-logs"
+UNIQUE_IDENTIFIER=$(whoami)
+REGISTRY="superheroesregistry"$UNIQUE_IDENTIFIER
+IMAGES_TAG="1.0"
+----
+
+Now let's create the Azure resources.
+
+=== Resource Group
+
+A https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal[resource group] is a container that holds related resources for an Azure solution.
+The resource group can include all the resources for the solution, or only those resources that you want to manage as a group.
+In our workshop, all the databases, all the microservices, etc. will be grouped into a single resource group.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Execute the following command to create the Super Hero resource group:
+
+[source,shell]
+----
+az group create \
+  --name "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG"
+----
+
+=== Log Analytics Workspace
+
+https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace[Log Analytics workspace] is the environment for Azure Monitor log data.
+Each workspace has its own data repository and configuration, and data sources and solutions are configured to store their data in a particular workspace.
+We will use the same workspace for most of the Azure resources we will be creating.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create a Log Analytics workspace with the following command:
+
+[source,shell]
+----
+az monitor log-analytics workspace create \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG" \
+  --workspace-name "$LOG_ANALYTICS_WORKSPACE"
+----
+
+Let's also retrieve the Log Analytics Client ID and client secret and store them in environment variables:
+
+[source,shell]
+----
+LOG_ANALYTICS_WORKSPACE_CLIENT_ID=`az monitor log-analytics workspace show  \
+  --resource-group "$RESOURCE_GROUP" \
+  --workspace-name "$LOG_ANALYTICS_WORKSPACE" \
+  --query customerId  \
+  --output tsv | tr -d '[:space:]'`
+
+echo $LOG_ANALYTICS_WORKSPACE_CLIENT_ID
+
+LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=`az monitor log-analytics workspace get-shared-keys \
+  --resource-group "$RESOURCE_GROUP" \
+  --workspace-name "$LOG_ANALYTICS_WORKSPACE" \
+  --query primarySharedKey \
+  --output tsv | tr -d '[:space:]'`
+
+echo $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET
+----
+
+=== Azure Container Registry
+
+In the next chapters we will be creating Docker containers and pushing them to the Azure Container Registry.
+https://azure.microsoft.com/services/container-registry[Azure Container Registry] is a private registry for hosting container images.
+Using the Azure Container Registry, you can store Docker-formatted images for all types of container deployments.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+First, let's created an Azure Container Registry with the following command:
+
+[source,shell]
+----
+az acr create \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG" \
+  --name "$REGISTRY" \
+  --workspace "$LOG_ANALYTICS_WORKSPACE" \
+  --sku Standard \
+  --admin-enabled true
+----
+
+Get the URL of the Azure Container Registry and set it to the `REGISTRY_URL` variable with the following command:
+
+[source,shell]
+----
+REGISTRY_URL=$(az acr show \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --query "loginServer" \
+  --output tsv)
+----
+
+If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
+
+image::azure-portal-2.png[]
+
+== Setting Up the Environment Variables
+
+The Super Heroes environment and application will be created and deployed using a set of Azure CLI commands.
+Each of these commands need a set of parameters, and some of these parameters can be set of environment variables.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Set the following environment variables, there will be needed in the Azure CLI commands:
+
+[source,shell]
+----
+# Container Apps
+CONTAINERAPPS_ENVIRONMENT="super-heroes-env"
+
+# Postgres
+POSTGRES_DB_ADMIN="superheroesadmin"
+POSTGRES_DB_PWD="super-heroes-p#ssw0rd-12046"
+POSTGRES_DB_VERSION="13"
+POSTGRES_SKU="Standard_D2s_v3"
+POSTGRES_TIER="GeneralPurpose"
+
+# Kafka
+KAFKA_NAMESPACE="fights-kafka-$UNIQUE_IDENTIFIER"
+KAFKA_TOPIC="fights"
+KAFKA_BOOTSTRAP_SERVERS="$KAFKA_NAMESPACE.servicebus.windows.net:9093"
+
+# Heroes
+HEROES_APP="heroes-app"
+HEROES_DB="heroes-db-$UNIQUE_IDENTIFIER"
+HEROES_IMAGE="${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}"
+HEROES_DB_SCHEMA="heroes"
+HEROES_DB_CONNECT_STRING="postgresql://${HEROES_DB}.postgres.database.azure.com:5432/${HEROES_DB_SCHEMA}?ssl=true&sslmode=require"
+
+# Villains
+VILLAINS_APP="villains-app"
+VILLAINS_DB="villains-db-$UNIQUE_IDENTIFIER"
+VILLAINS_IMAGE="${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}"
+VILLAINS_DB_SCHEMA="villains"
+VILLAINS_DB_CONNECT_STRING="jdbc:postgresql://${VILLAINS_DB}.postgres.database.azure.com:5432/${VILLAINS_DB_SCHEMA}?ssl=true&sslmode=require"
+
+# Fights
+FIGHTS_APP="fights-app"
+FIGHTS_DB="fights-db-$UNIQUE_IDENTIFIER"
+FIGHTS_IMAGE="${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}"
+FIGHTS_DB_SCHEMA="fights"
+FIGHTS_DB_CONNECT_STRING="jdbc:postgresql://${FIGHTS_DB}.postgres.database.azure.com:5432/${FIGHTS_DB_SCHEMA}?ssl=true&sslmode=require"
+
+# Statistics
+STATISTICS_APP="event-statistics"
+STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
+
+# UI
+UI_APP="super-heroes-ui"
+UI_IMAGE="${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}"
+----
+
+== Ready?
+
+After the prerequisites have been installed and the different components have been warmed up, and some Azure resource created, it's now time to deploy some code!
+But before, let us introduce Azure Container Apps and Quarkus.

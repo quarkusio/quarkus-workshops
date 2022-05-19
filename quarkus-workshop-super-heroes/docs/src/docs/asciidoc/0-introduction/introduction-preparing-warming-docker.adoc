@@ -1,0 +1,70 @@
+[[introduction-preparing-warming-docker]]
+= Warming up Docker images
+
+To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
+Here, you will find a `docker-compose.yaml`/`docker-compose-linux.yaml` files which define all the needed Docker images.
+Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Then execute the following command which will download all the Docker images and start the containers:
+
+[source,shell]
+----
+docker compose -f docker-compose.yaml up -d
+----
+
+[WARNING]
+.Linux Users beware
+====
+If you are on Linux, use `docker-compose-linux.yaml` instead of `docker-compose.yaml`. This Linux specific file will allow Prometheus to fetch metrics from the services running on the host machine.
+====
+
+[WARNING]
+====
+If you have an issue creating the roles for the database with the `initialize-databases.sql` file, you have to execute the following commands:
+
+[source,shell]
+----
+docker exec -it --user postgres super-database psql -c "CREATE ROLE superman LOGIN PASSWORD 'superman' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+docker exec -it --user postgres super-database psql -c "CREATE ROLE superbad LOGIN PASSWORD 'superbad' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+docker exec -it --user postgres super-database psql -c "CREATE ROLE superfight LOGIN PASSWORD 'superfight' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION"
+----
+====
+
+After this, verify the containers are running using the following command:
+
+[source,shell]
+----
+docker compose -f docker-compose.yaml ps
+----
+
+The output should resemble something like this:
+
+[source,shell]
+----
+     Name                   Command               State           Ports
+--------------------------------------------------------------------------------
+kafka            sh -c bin/kafka-server-sta ...   Up      0.0.0.0:9092->9092/tcp
+super-database   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
+super-visor      /bin/prometheus --config.f ...   Up      0.0.0.0:9090->9090/tcp
+zookeeper        sh -c bin/zookeeper-server ...   Up      0.0.0.0:2181->2181/tcp
+----
+
+Once all the containers are up and running, you can shut them down and remove their volumes with the commands:
+
+[source,shell]
+----
+docker compose -f docker-compose.yaml down
+docker compose -f docker-compose.yaml rm
+----
+
+[NOTE]
+====
+.What's this infra?
+Any microservice system is going to rely on a set of technical services.
+In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
+This infrastructure starts all these services, so you don't have to worry about them.
+
+This infra will only be used when we run our services in _prod_ mode. In _dev_ mode, Quarkus will start everything for us.
+====

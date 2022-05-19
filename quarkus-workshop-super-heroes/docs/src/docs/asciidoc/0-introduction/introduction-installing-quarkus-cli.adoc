@@ -1,4 +1,4 @@
-[[installing-cli]]
+[[introduction-installing-cli]]
 
 = Quarkus CLI
 

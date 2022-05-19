@@ -24,28 +24,28 @@ import {URI} from '../model/uRI';
 import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
 
-
 @Injectable()
 export class FightService {
 
-  protected basePath = 'http://localhost:8082';
+  protected basePath;
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
   @Output() emitter = new EventEmitter<Fight>();
 
-
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
     if (basePath) {
       this.basePath = basePath;
-    }
-    if (!window.location.host.includes("localhost")) {
-      this.basePath = window.location.protocol + "//" + window.location.host;
     }
 
     if (configuration) {
       this.configuration = configuration;
       this.basePath = basePath || configuration.basePath || this.basePath;
+    }
+
+    // Fallback to localhost
+    if (!this.basePath) {
+      this.basePath =  'http://localhost:8082';
     }
   }
 

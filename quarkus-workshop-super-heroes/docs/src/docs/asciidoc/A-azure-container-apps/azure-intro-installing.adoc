@@ -1,0 +1,27 @@
+[[azure-intro-installing]]
+= Installing Software
+
+include::azure-intro-installing-azure-cli.adoc[leveloffset=+1]
+
+//include::../0-introduction/introduction-installing-jdk.adoc[leveloffset=+1]
+
+//include::../0-introduction/introduction-installing-quarkus-cli.adoc[leveloffset=+1]
+
+include::../0-introduction/introduction-installing-docker.adoc[leveloffset=+1]
+
+include::../0-introduction/introduction-installing-curl.adoc[leveloffset=+1]
+
+include::../0-introduction/introduction-installing-git.adoc[leveloffset=+1]
+
+== Recap
+
+Just make sure the following commands work on your machine.
+
+[source,shell]
+----
+$ az --version
+$ docker version
+$ docker compose version
+$ curl --version
+$ git --version
+----

@@ -1,0 +1,202 @@
+[[azure-local-running-app]]
+= Running the Application Locally
+
+'''
+
+This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
+There are many different approaches to achieve these deployments.
+In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.
+
+== Building containers
+
+In this section, we are going to package our microservices into containers.
+In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+The native compilation uses the OS and architecture of the host system.
+
+And... Linux Containers are ... _Linux_.
+So to build a container with a Linux native executable (even if you are on Windows or Mac), Quarkus comes with a trick to produce these executable.
+First, Quarkus comes with a set of `Dockerfiles`.
+The `Dockerfile.native` file is for running the application in native mode.
+It looks like this:
+
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+WORKDIR /work/
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
+
+[TIP]
+====
+Building a native executable takes time, CPU, and memory.
+It's even more accurate in the container.
+So, first, be sure that your container system has enough memory to build the executable.
+It requires at least 6Gb of memory, 8Gb is recommended.
+====
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Execute the following commands to build all our microservices and the UI.
+This will build Docker images out of Linux native executables:
+Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the following Docker commands:
+
+[source,shell]
+----
+cd rest-heroes
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-heroes .
+cd ..
+
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains ../..
+cd ..
+
+cd rest-fights
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-fights .
+cd ..
+
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/event-statistics .
+cd ..
+
+cd ui-super-heroes
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/ui-super-heroes .
+cd ..
+----
+
+Check that you have all the Docker images installed locally:
+
+[source,shell]
+----
+$ docker image ls | grep quarkus
+quarkus/ui-super-heroes       latest    141MB
+quarkus/event-statistics      latest    161MB
+quarkus/rest-fights           latest    187MB
+quarkus/rest-villains         latest    167MB
+quarkus/rest-heroes           latest    165MB
+----
+
+== Running local containers
+
+Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
+It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
+Execute it with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app-local.yaml up
+----
+
+Once all the containers are started, you can:
+
+* Go to http://localhost:8080 to check the UI
+* curl http://localhost:8084/api/villains | jq
+* curl http://localhost:8083/api/heroes | jq
+* curl http://localhost:8082/api/fights/randomfighters | jq
+
+You should see the user interface, and you should be able to fight super heroes against super villains.
+Then, make sure you shut down the entire application with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app-local.yaml down
+----
+
+== Pushing containers to Azure Container Registry
+
+Now that we have all our Docker containers running locally, let's push them to Azure Container Registry.
+
+[NOTE]
+====
+Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group and the Azure Container Registry.
+====
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
+
+[source,shell]
+----
+az acr login \
+  --name "$REGISTRY"
+----
+
+You should see the prompt _Login Succeeded_.
+Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Tag the image using the `docker tag` commands:
+
+[source,shell]
+----
+docker tag quarkus/ui-super-heroes:latest  $HEROES_IMAGE
+docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
+docker tag quarkus/rest-fights:latest  $FIGHTS_IMAGE
+docker tag quarkus/rest-villains:latest  $VILLAINS_IMAGE
+docker tag quarkus/rest-heroes:latest  $HEROES_IMAGE
+----
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Then, push all the images with the following commands:
+
+[source,shell]
+----
+docker push $HEROES_IMAGE
+docker push $STATISTICS_IMAGE
+docker push $FIGHTS_IMAGE
+docker push $VILLAINS_IMAGE
+docker push $HEROES_IMAGE
+----
+
+You can check that the images have been pushed to Azure Container Registry by executing the following command:
+
+[source,shell]
+----
+az acr repository list \
+  --name "$REGISTRY" \
+  --output table
+----
+
+You can also visualize the content of the registry on the https://portal.azure.com[Azure Portal].
+
+image::azure-portal-4.png[]
+
+== Running remote containers
+
+Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Let's go back to the `docker-compose-app.yaml` file under `super-heroes/infrastructure`.
+Edit the file and change the name `ORG` with the value of the `$REGISTRY` variable, and then execute it with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app.yaml up
+----
+
+Go to http://localhost:8080.
+You should see the user interface and everything should work.
+Remember to shutdown the entire application with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app.yaml down
+----
+
+Ok, enough running these containers locally, let's push them to Azure Container Apps!

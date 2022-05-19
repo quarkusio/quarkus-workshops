@@ -17,6 +17,7 @@ cd $old
 mkdir -p /tmp/quarkus-workshops/super-heroes/${version}
 rsync -avz ./target/generated-asciidoc/ /tmp/quarkus-workshops/super-heroes/${version}
 cp /tmp/quarkus-workshops/super-heroes/${version}/spine.html /tmp/quarkus-workshops/super-heroes/${version}/index.html
+cp /tmp/quarkus-workshops/super-heroes/${version}/spine-azure.html /tmp/quarkus-workshops/super-heroes/${version}/index-azure.html
 cd /tmp/quarkus-workshops
 git add .
 git commit -m "update Quarkus workshop ${version}"

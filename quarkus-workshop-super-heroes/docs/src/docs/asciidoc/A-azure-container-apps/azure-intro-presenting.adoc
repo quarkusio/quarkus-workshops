@@ -1,0 +1,88 @@
+[[azure-intro-presenting]]
+= Presenting the Workshop
+
+This workshop should give you a practical introduction to Azure Container Apps.
+You will practice all the needed tools to deploy an entire microservice architecture, mixing classical HTTP, reactive and event-based microservices.
+You will finish by monitoring and scaling the microservices so they can handle the load.
+
+The idea is that you leave this workshop with a good understanding of what Azure Container Apps is, what it is not, and how it can help you in your projects.
+Then, you'll be prepared to investigate a bit more on your own.
+
+== What Will You Be Deploying?
+
+In this workshop, you will deploy an existing application that allows superheroes to fight against supervillains.
+You will be containerizing and deploying several microservices communicating either synchronously via REST or asynchronously using Kafka:
+
+* _Super Hero UI_: an Angular application to pick up a random superhero, a random supervillain, and makes them fight.
+The Super Hero UI is exposed via Quarkus and invokes the Fight REST API.
+* _Villain REST API_: A classical HTTP microservice exposing CRUD operations on Villains, stored in a PostgreSQL database.
+* _Hero REST API_: A reactive HTTP microservice exposing CRUD operations on Heroes, stored in a Postgres database.
+* _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random superhero and supervillain.
+Each fight is, then, stored in a PostgreSQL database.
+This microservice can be developed using both the classical (_imperative_) or reactive approach.
+Invocations to the hero and villain services are protected using resilience patterns (retry, timeout, circuit-breakers).
+* _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
+It has an HTML + JQuery UI displaying all the statistics.
+
+[plantuml,align=center]
+----
+include::{plantDir}/0-introduction-physical-architecture.puml[]
+----
+
+The main UI allows you to pick up one random Hero and Villain by clicking on "New Fighters."
+Then it's just a matter of clicking on "Fight!" to get them to fight.
+The table at the bottom shows the list of the previous fights.
+
+image::angular-ui.png[]
+
+== How Does This Workshop Work?
+
+You have this material in your hands (either electronically or printed), and you can now follow it step by step.
+The structure of this workshop is as follow :
+
+* _Installing all the needed tools_:
+in this section, you will install all the tools and code to be able to bundle, package and deploy our application
+* _Azure Container Apps and Quarkus_:
+this section introduces Quarkus and Azure Container Apps to make sure you have all the needed vocabulary to follow along
+* _Running the Application Locally_:
+in this section, you will build Docker images out of Quarkus microservices, execute them locally with Docker compose, push them to Azure Registry, all that using Docker and Azure CLI
+* _Running the Application on Azure Container Apps_:
+in this section, you will create an entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps
+* _Administrating_:
+in this section, you will add some load to your microservices, monitor them, scale them, check the logs, etc.
+
+If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Azure Container Apps and Quarkus_ or straight to _Running the Application Locally_ (if you already know Quarkus and Azure Container Apps), and start hacking on the command lines.
+This "à la carte" mode lets you make the most of this 2 to 4-hour long hands-on lab.
+
+== What Do You Have to Do?
+
+This workshop should be as self-explanatory as possible.
+So your job is to follow the instructions by yourself, do what you are supposed to do, and do not hesitate to ask for any clarification or assistance;
+that's why the team is here.
+
+Oh, and be ready to have some fun!
+
+== Software Requirements
+
+First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 16Gb of RAM (as some tools need a few resources).
+
+[WARNING]
+====
+If you are using Mac OS X, make sure the version is greater than 10.11.x (Captain).
+====
+
+This workshop will make use of the following Software, tools, frameworks that you will need to install and now (more or less) how it works:
+
+* Azure CLI
+* Docker
+* cURL (or any other command line HTTP client)
+* (optionally) Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
+
+The following section focuses on how to install and set up the needed Software.
+You can skip the next section if you have already installed all the prerequisites.
+
+[WARNING]
+====
+This workshop assumes a bash shell.
+If you run on Windows, in particular, adjust the commands accordingly.
+====

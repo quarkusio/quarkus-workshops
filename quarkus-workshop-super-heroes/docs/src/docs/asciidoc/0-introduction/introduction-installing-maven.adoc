@@ -1,0 +1,62 @@
+[[introduction-installing-maven]]
+
+= Apache Maven {maven-version}
+
+All the examples of this workshop are built and tested using Maven.footnote:[Maven https://maven.apache.org]
+Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork, and so forth.
+Based on the "convention over configuration" principle, Maven brings a standard project description and a number of conventions such as a standard directory structure.
+With an extensible architecture based on plugins, Maven can offer many different services.
+
+== Installing Maven
+
+The examples of this workshop have been developed with Apache Maven {maven-version}.
+Once you have installed JDK {jdk-version}, make sure the `JAVA_HOME` environment variable is set.
+Then, download Maven from http://maven.apache.org/, unzip the file on your hard drive and add the `apache-maven/bin` directory to your `PATH` variable.
+More details about the installation process are available on https://maven.apache.org/install.html.
+
+But of course, if you are on Mac OS X and use Homebrew, install Maven with the following command:
+
+[source,shell]
+----
+brew install maven
+----
+
+== Checking for Maven Installation
+
+Once you've got Maven installed, open a command line and enter `mvn -version` to validate your installation.
+Maven should print its version and the JDK version it uses (which is handy as you might have different JDK versions installed on the same machine).
+
+[source,shell]
+----
+$ mvn -version
+Apache Maven 3.8.4 (ea98e05a04480131370aa0c110b8c54cf726c06f)
+Maven home: /usr/local/Cellar/maven/3.8.4/libexec
+Java version: 11.0.15, vendor: AdoptOpenJDK, runtime: /Users/clement/.sdkman/candidates/java/11.0.15.hs-adpt
+Default locale: en_FR, platform encoding: UTF-8
+OS name: "mac os x", version: "11.5", arch: "x86_64", family: "mac"
+----
+
+Be aware that Maven needs Internet access to download plugins and project dependencies from the Maven Central and other remote repositories.footnote:[Maven Central https://search.maven.org]
+
+== Some Maven Commands
+
+Maven is a command-line utility where you can use several parameters and options to build, test, or package your code.
+To get some help on the commands, you can type, use the following command:
+
+[source,shell]
+----
+$ mvn --help
+
+usage: mvn [options] [<goal(s)>] [<phase(s)>]
+----
+
+Here are some commands that you will be using to run the examples in the workshop.
+Each invokes a different phase of the project life cycle (clean, compile, install, etc.) and use the `pom.xml` to download libraries, customize the compilation, or extend some behaviors with plugins:
+
+* `mvn clean`: Deletes all generated files (compiled classes, generated code, artifacts etc.).
+* `mvn compile`: Compiles the main Java classes.
+* `mvn test-compile`: Compiles the test classes.
+* `mvn test`: Compiles the main Java classes as well as the test classes and executes the tests.
+* `mvn package`: Compiles, executes the tests, and packages the code into an archive.
+* `mvn install`: Builds and installs the artifacts in your local repository.
+* `mvn clean install`: Cleans and installs (note that you can add several commands separated by a space, like `mvn clean compile test`).
