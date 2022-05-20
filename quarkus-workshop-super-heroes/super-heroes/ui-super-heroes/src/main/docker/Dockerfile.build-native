@@ -1,8 +1,5 @@
 ####
-# This Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode.
-# It uses a micro base image, tuned for Quarkus native executables.
-# It reduces the size of the resulting container image.
-# Check https://quarkus.io/guides/quarkus-runtime-base-image for further information about this image.
+# This Dockerfile is used in order to build a container that runs the NodeJS application.
 #
 # Build the image with:
 #
@@ -12,31 +9,36 @@
 #
 # docker run -i --rm -p 8080:8080 quarkus/ui-super-heroes
 #
-###
+## Stage 1 : Builds the application
+FROM registry.access.redhat.com/ubi8/nodejs-16:1 as builder
 
-## Stage 1 : build with maven builder image with native capabilities
-FROM quay.io/quarkus/ubi-quarkus-native-image:22.0-java11 AS build
-COPY --chown=quarkus:quarkus mvnw /code/mvnw
-COPY --chown=quarkus:quarkus .mvn /code/.mvn
-COPY --chown=quarkus:quarkus pom.xml /code/
-USER quarkus
-WORKDIR /code
-RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
-COPY src /code/src
-RUN ./mvnw package -Pnative -Dmaven.test.skip=true
+# Add dependencies
+COPY --chown=1001:1001 package*.json $HOME
 
-## Stage 2 : create the docker final image
-FROM quay.io/quarkus/quarkus-micro-image:1.0
-WORKDIR /work/
-COPY --from=build /code/target/*-runner /work/application
+# Install dependencies
+RUN npm install
 
-# set up permissions for user `1001`
-RUN chmod 775 /work /work/application \
-  && chown -R 1001 /work \
-  && chmod -R "g+rwX" /work \
-  && chown -R 1001:root /work
+# Add application sources
+COPY --chown=1001:1001 . $HOME
 
-EXPOSE 8080
-USER 1001
+# Run build
+RUN npm run build && \
+    npm prune --production
 
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+## Stage 2 : Copies the application to the minimal image
+FROM registry.access.redhat.com/ubi8/nodejs-16-minimal:1
+
+# ENV variables
+# API_BASE_URL: URL of service to connect to
+# HTTP_PORT: The http port this service listens on
+ENV HTTP_PORT=8080 \
+    NODE_ENV=production
+
+# Copy the application source and build artifacts from the builder image to this one
+COPY --chown=1001:1001 --from=builder $HOME $HOME
+
+# Expose the http port
+EXPOSE $HTTP_PORT
+
+# Run script uses standard ways to run the application
+CMD npm start

@@ -27,7 +27,8 @@ import {Configuration} from '../configuration';
 @Injectable()
 export class FightService {
 
-  protected basePath;
+  protected basePath = (window as any).NG_CONFIG.API_BASE_URL;
+  protected calculateApiBaseUrl = (window as any).NG_CONFIG.CALCULATE_API_BASE_URL;
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
@@ -43,9 +44,14 @@ export class FightService {
       this.basePath = basePath || configuration.basePath || this.basePath;
     }
 
-    // Fallback to localhost
+    if (this.calculateApiBaseUrl) {
+      // If calculateApiBaseUrl then just replace "ui-super-heroes" with "rest-fights" in the current URL
+      this.basePath = window.location.protocol + "//" + window.location.host.replace('ui-super-heroes', 'rest-fights');
+    }
+
+    // Fallback to whatever is in the browser if basePath isn't set
     if (!this.basePath) {
-      this.basePath =  'http://localhost:8082';
+      this.basePath = window.location.protocol + "//" + window.location.host;
     }
   }
 
