@@ -32,8 +32,8 @@ include::A-azure-container-apps/azure-aca.adoc[leveloffset=+1]
 include::A-azure-container-apps/azure-local-running-app.adoc[leveloffset=+1]
 <<<
 include::A-azure-container-apps/azure-aca-running-app.adoc[leveloffset=+1]
-<<<
-include::A-azure-container-apps/azure-aca-administrating.adoc[leveloffset=+1]
+//<<<
+//include::A-azure-container-apps/azure-aca-administrating.adoc[leveloffset=+1]
 <<<
 include::A-azure-container-apps/azure-conclusion.adoc[leveloffset=+1]
 include::A-azure-container-apps/azure-conclusion-references.adoc[leveloffset=+1]

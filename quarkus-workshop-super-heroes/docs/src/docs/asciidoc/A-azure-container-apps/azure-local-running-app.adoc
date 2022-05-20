@@ -78,11 +78,12 @@ Check that you have all the Docker images installed locally:
 [source,shell]
 ----
 $ docker image ls | grep quarkus
-quarkus/ui-super-heroes       latest    141MB
-quarkus/event-statistics      latest    161MB
-quarkus/rest-fights           latest    187MB
-quarkus/rest-villains         latest    167MB
-quarkus/rest-heroes           latest    165MB
+
+quarkus/ui-super-heroes         latest      266MB
+quarkus/event-statistics        latest      145MB
+quarkus/rest-fights             latest      198MB
+quarkus/rest-villains           latest      158MB
+quarkus/rest-heroes             latest      154MB
 ----
 
 == Running local containers
@@ -102,7 +103,8 @@ docker compose -f docker-compose-app-local.yaml up
 
 Once all the containers are started, you can:
 
-* Go to http://localhost:8080 to check the UI
+* Go to http://localhost:8080 to check the main UI
+* Go to http://localhost:8085 to check the statistics UI
 * curl http://localhost:8084/api/villains | jq
 * curl http://localhost:8083/api/heroes | jq
 * curl http://localhost:8082/api/fights/randomfighters | jq
@@ -126,19 +128,7 @@ Make sure you've set all the environment variables defined in the previous chapt
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
-
-[source,shell]
-----
-az acr login \
-  --name superheroesregistry
-----
-
-You should see the prompt _Login Succeeded_.
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
 Tag the image using the `docker tag` commands:
 
 [source,shell]
@@ -151,6 +141,16 @@ docker tag quarkus/rest-heroes:latest       $HEROES_IMAGE
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
+
+[source,shell]
+----
+az acr login \
+  --name "$REGISTRY"
+----
+
+You should see the prompt _Login Succeeded_.
 
 Then, push all the images with the following commands:
 
@@ -181,13 +181,6 @@ az acr repository show \
   --repository "$HEROES_APP"
 ----
 
-[source,shell]
-----
-az acr repository show \
-  --name "$REGISTRY" \
-  --image "$HEROES_APP:$IMAGES_TAG"
-----
-
 You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].
 
 image::azure-portal-4.png[]
@@ -198,21 +191,26 @@ Now that we have all our Docker containers pushed to Azure Container Registry, l
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Let's go back to the `docker-compose-app.yaml` file under `super-heroes/infrastructure`.
-Edit the file and change the name `ORG` with the value of the `$REGISTRY` variable, and then execute it with:
+Edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `superheroesregistry` with the value of the `$REGISTRY` variable.
+Then execute it with:
 
 [source,shell]
 ----
-docker compose -f docker-compose-app.yaml up
+docker compose -f docker-compose-app-remote.yaml up
 ----
 
-Go to http://localhost:8080.
+Once all the containers are started, go back to:
+
+* http://localhost:8080
+* http://localhost:8085
+
 You should see the user interface and everything should work.
 Remember to shutdown the entire application with:
 
 [source,shell]
 ----
-docker compose -f docker-compose-app.yaml down
+docker compose -f docker-compose-app-remote.yaml down
 ----
 
-Ok, enough running these containers locally, let's push them to Azure Container Apps!
+Ok, enough running these containers locally!
+In the next chapter we will take these remote containers, configure them, and make them work remotely on Azure Container Apps.
