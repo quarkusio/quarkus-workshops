@@ -57,19 +57,6 @@ quarkus-workshop-super-heroes
 
 include::../0-introduction/introduction-preparing-checking-ports.adoc[leveloffset=+1]
 
-//== Warming up the Java dependencies
-//
-//Now that you have the initial structure in place, navigate to the root directory and run:
-//
-//icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-//
-//[source,shell]
-//----
-//quarkus build
-//----
-//
-//By running this command, it downloads all the required Java dependencies.
-
 include::../0-introduction/introduction-preparing-warming-docker.adoc[leveloffset=+1]
 
 == Setting Up Azure
@@ -96,15 +83,16 @@ For this workshop, install the Azure Container Apps and Database extensions for 
 
 [source,shell]
 ----
-az extension add --name containerapp
-az extension add --name rdbms-connect
+az extension add --name containerapp  --upgrade
+az extension add --name rdbms-connect --upgrade
 ----
 
-Then, register the `Microsoft.App` namespace
+Then, register the needed Azure namespaces:
 
 [source,shell]
 ----
-az provider register --namespace Microsoft.App --wait
+az provider register --namespace Microsoft.App
+az provider register --namespace Microsoft.OperationalInsights
 ----
 
 == Creating Azure Resources
@@ -213,6 +201,16 @@ az acr create \
   --admin-enabled true
 ----
 
+Update the repository to allow anonymous users to pull the images:
+
+[source,shell]
+----
+az acr update \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --anonymous-pull-enabled true
+----
+
 Get the URL of the Azure Container Registry and set it to the `REGISTRY_URL` variable with the following command:
 
 [source,shell]
@@ -222,25 +220,6 @@ REGISTRY_URL=$(az acr show \
   --name "$REGISTRY" \
   --query "loginServer" \
   --output tsv)
-----
-
-[source,shell]
-----
-ACR_PULL_SERVICE_PRINCIPAL_NAME=acr-pull-$UNIQUE_IDENTIFIER
-
-ACR_ID=$(az acr show --name $REGISTRY --resource-group $RESOURCE_GROUP --query id --output tsv)
-
-ACR_PULL_SERVICE_PRINCIPAL_PASSWORD=$(az ad sp create-for-rbac \
---name $ACR_PULL_SERVICE_PRINCIPAL_NAME \
---scopes $ACR_ID \
---role acrpull \
---query password \
---output tsv)
-
-ACR_PULL_SERVICE_PRINCIPAL_ID=$(az ad sp list \
---display-name $ACR_PULL_SERVICE_PRINCIPAL_NAME \
---query [].appId \
---output tsv)
 ----
 
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.

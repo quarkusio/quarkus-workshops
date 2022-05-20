@@ -300,36 +300,44 @@ az containerapp create \
 
 The following command sets the URL of the deployed application to the `HEROES_URL` variable:
 
-```shell
+[source,shell]
+----
 HEROES_URL="https://$(az containerapp ingress show \
     --resource-group $RESOURCE_GROUP \
     --name $HEROES_APP \
     --output json | jq -r .fqdn)"
 
 echo $HEROES_URL
-```
+----
+
 You can now invoke the Hero microservice APIs with:
 
-```shell
+[source,shell]
+----
 curl "$HEROES_URL/api/heroes/hello"
 curl "$HEROES_URL/api/heroes" | jq
-```
+----
 
 To access the logs of the Heroes microservice, you can write the following query:
 
-````shell
+[source,shell]
+----
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
   --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$HEROES_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
   --output table
-````
+----
 
 === Villains Microservice
 
 The Villain microservice also needs to access the managed Postgres database, so we need to set the right variables.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
 Notice the minimum of replicas is also set to 0:
 
-```shell
+[source,shell]
+----
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
   --tags system="$TAG" application="$VILLAINS_APP" \
@@ -344,41 +352,48 @@ az containerapp create \
              QUARKUS_DATASOURCE_USERNAME="$POSTGRES_DB_ADMIN" \
              QUARKUS_DATASOURCE_PASSWORD="$POSTGRES_DB_PWD" \
              QUARKUS_DATASOURCE_JDBC_URL="$VILLAINS_DB_CONNECT_STRING"
-```
+----
 
 The following command sets the URL of the deployed application to the `VILLAINS_URL` variable:
 
-```shell
+[source,shell]
+----
 VILLAINS_URL="https://$(az containerapp ingress show \
     --resource-group $RESOURCE_GROUP \
     --name $VILLAINS_APP \
     --output json | jq -r .fqdn)"
 
 echo $VILLAINS_URL
-```
+----
+
 You can now invoke the Hero microservice APIs with:
 
-```shell
+[source,shell]
+----
 curl "$VILLAINS_URL/api/villains/hello"
 curl "$VILLAINS_URL/api/villains" | jq
-```
+----
 
 To access the logs of the Villain microservice, you can write the following query:
 
-````shell
+[source,shell]
+----
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
   --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$VILLAINS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
   --output table
-````
+----
 
 === Statistics Microservice
 
 The Statistics microservice listens to a Kafka topics and consumes all the fights.
-The fight messages are defined by an Avro schema stored in Apicurio (`APICURIO_URL` and we append `/apis/registry/v2`):.
-Notice that we use the value of the `$$KAFKA_JAAS_CONFIG` in the `password`.
 
-```shell
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create the Statistics container application with the following command:
+
+[source,shell]
+----
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
   --tags system="$TAG" application="$STATISTICS_APP" \
@@ -392,43 +407,49 @@ az containerapp create \
              KAFKA_SECURITY_PROTOCOL=SASL_SSL \
              KAFKA_SASL_MECHANISM=PLAIN \
              KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG" \
-             MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_APICURIO_REGISTRY_URL="${APICURIO_URL}/apis/registry/v2"
-```
+----
 
 The following command sets the URL of the deployed application to the `STATISTICS_URL` variable:
 
-
-```shell
+[source,shell]
+----
 STATISTICS_URL="https://$(az containerapp ingress show \
     --resource-group $RESOURCE_GROUP \
     --name $STATISTICS_APP \
     --output json | jq -r .fqdn)"
 
 echo $STATISTICS_URL
-```
+----
 
 You can now display the Statistics UI with:
 
-```shell
+[source,shell]
+----
 open "$STATISTICS_URL"
-```
+----
 
 To access the logs of the Statistics microservice, you can write the following query:
 
-````shell
+[source,shell]
+----
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
   --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$STATISTICS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
   --output table
-````
+----
 
 === Fights Microservice
 
 The Fight microservice invokes the Heroes and Villains microserivces, sends fight messages to a Kafka topics and stores the fights into a MongoDB database.
-We need to configure Kafka (same connection string as the one used by the Statistics microservice) as well as Mongo and Apicurio (variable `APICURIO_URL` and append `apis/registry/v2`).
+We need to configure Kafka (same connection string as the one used by the Statistics microservice) as well as the Postgres database.
 As for the microservice invocations, you need to set the URLs of both Heroes and Villains microservices.
 
-```shell
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Create the Fights container application with the following command:
+
+[source,shell]
+----
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
   --tags system="$TAG" application="$FIGHTS_APP" \
@@ -437,50 +458,55 @@ az containerapp create \
   --environment "$CONTAINERAPPS_ENVIRONMENT" \
   --ingress external \
   --target-port 8082 \
-  --min-replicas 1 \
-  --env-vars KAFKA_BOOTSTRAP_SERVERS="$KAFKA_BOOTSTRAP_SERVERS" \
+  --min-replicas 0 \
+  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
+             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
+             QUARKUS_DATASOURCE_USERNAME="$POSTGRES_DB_ADMIN" \
+             QUARKUS_DATASOURCE_PASSWORD="$POSTGRES_DB_PWD" \
+             QUARKUS_DATASOURCE_JDBC_URL="$FIGHTS_DB_CONNECT_STRING" \
+             KAFKA_BOOTSTRAP_SERVERS="$KAFKA_BOOTSTRAP_SERVERS" \
              KAFKA_SECURITY_PROTOCOL=SASL_SSL \
              KAFKA_SASL_MECHANISM=PLAIN \
              KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG" \
-             MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_APICURIO_REGISTRY_URL="${APICURIO_URL}/apis/registry/v2" \
-             QUARKUS_LIQUIBASE_MONGODB_MIGRATE_AT_START=false \
-             QUARKUS_MONGODB_CONNECTION_STRING="$MONGO_COLLECTION_CONNECT_STRING" \
              QUARKUS_REST_CLIENT_HERO_CLIENT_URL="$HEROES_URL" \
              FIGHT_VILLAIN_CLIENT_BASE_URL="$VILLAINS_URL"
-```
+----
 
 The following command sets the URL of the deployed application to the `FIGHTS_URL` variable:
 
-```shell
+[source,shell]
+----
 FIGHTS_URL="https://$(az containerapp ingress show \
     --resource-group $RESOURCE_GROUP \
     --name $FIGHTS_APP \
     --output json | jq -r .fqdn)"
 
 echo $FIGHTS_URL
-```
+----
 
 Use the following curl commands to access the Fight microservice.
 Remember that we've set the minimum replicas to 0.
 That means that pinging the Hero and Villain microservices might fallback (you will get a _That means that pinging the Hero and Villain microservices might fallback (you will get a That means that pinging the Hero and Villain microservices might fallback (you will get a _Could not invoke the Villains microservice_ message).
 Execute several times the same curl commands so Azure Containers Apps has time to instantiate one replica and process the requests:
 
-```shell
+[source,shell]
+----
 curl "$FIGHTS_URL/api/fights/hello"
 curl "$FIGHTS_URL/api/fights/hello/villains"
 curl "$FIGHTS_URL/api/fights/hello/heroes"
 curl "$FIGHTS_URL/api/fights" | jq
 curl "$FIGHTS_URL/api/fights/randomfighters" | jq
-```
+----
 
 To access the logs of the Fight microservice, you can write the following query:
 
-````shell
+[source,shell]
+----
 az monitor log-analytics query \
   --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
   --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$FIGHTS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
   --output table
-````
+----
 
 === Super Hero UI
 
@@ -488,7 +514,12 @@ Like for the previous microservices, we will be deploying the UI as Docker image
 But we could have also deployed the Super Hero UI using Azure Static Webapps witch is suited for Angular applications.
 If you are interested in this approach, you can check https://azure.microsoft.com/en-us/services/app-service/static/[Azure Static Webapps].
 
-```shell
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+For now, let's continue with Azure Container Apps and deploy the UI as a Docker image with the following command:
+
+[source,shell]
+----
 az containerapp create \
   --resource-group "$RESOURCE_GROUP" \
   --tags system="$TAG" application="$UI_APP" \
@@ -498,19 +529,55 @@ az containerapp create \
   --ingress external \
   --target-port 8080 \
   --env-vars API_BASE_URL="$FIGHTS_URL"
-```
+----
 
-```shell
+[source,shell]
+----
 UI_URL="https://$(az containerapp ingress show \
     --resource-group $RESOURCE_GROUP \
     --name $UI_APP \
     --output json | jq -r .fqdn)"
 
 echo $UI_URL
-```
+----
 
-```shell
+[source,shell]
+----
 open "$UI_URL"
-```
+----
 
 == Running the Application
+
+Now that the entire infrastructure is created and the microservices deployed, you can use all the following commands to either, directly invoke the APIs, or use the user interfaces:
+
+[source,shell]
+----
+curl "$HEROES_URL/api/heroes/hello"
+curl "$HEROES_URL/api/heroes" | jq
+----
+
+[source,shell]
+----
+curl "$VILLAINS_URL/api/villains/hello"
+curl "$VILLAINS_URL/api/villains" | jq
+----
+
+[source,shell]
+----
+curl "$FIGHTS_URL/api/fights/hello"
+curl "$FIGHTS_URL/api/fights/hello/villains"
+curl "$FIGHTS_URL/api/fights/hello/heroes"
+curl "$FIGHTS_URL/api/fights" | jq
+curl "$FIGHTS_URL/api/fights/randomfighters" | jq
+----
+
+[source,shell]
+----
+open "$STATISTICS_URL"
+----
+
+[source,shell]
+----
+open "$UI_URL"
+----
+

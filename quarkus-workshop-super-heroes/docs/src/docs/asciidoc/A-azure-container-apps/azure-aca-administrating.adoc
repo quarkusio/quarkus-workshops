@@ -34,9 +34,3 @@ az containerapp update \
   --name $FIGHTS_APP
 ```
 
-```shell
-az containerapp update \
-  --resource-group $RESOURCE_GROUP \
-  --name $APICURIO_APP \
-  --set-env-vars QUARKUS_LOG_LEVEL=DEBUG
-```
