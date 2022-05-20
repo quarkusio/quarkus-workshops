@@ -131,7 +131,7 @@ To be able to push these Docker images to Azure Registry, we first need to log i
 [source,shell]
 ----
 az acr login \
-  --name "$REGISTRY"
+  --name superheroesregistry
 ----
 
 You should see the prompt _Login Succeeded_.
@@ -143,11 +143,11 @@ Tag the image using the `docker tag` commands:
 
 [source,shell]
 ----
-docker tag quarkus/ui-super-heroes:latest  $HEROES_IMAGE
+docker tag quarkus/ui-super-heroes:latest   $UI_IMAGE
 docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
-docker tag quarkus/rest-fights:latest  $FIGHTS_IMAGE
-docker tag quarkus/rest-villains:latest  $VILLAINS_IMAGE
-docker tag quarkus/rest-heroes:latest  $HEROES_IMAGE
+docker tag quarkus/rest-fights:latest       $FIGHTS_IMAGE
+docker tag quarkus/rest-villains:latest     $VILLAINS_IMAGE
+docker tag quarkus/rest-heroes:latest       $HEROES_IMAGE
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
@@ -156,7 +156,7 @@ Then, push all the images with the following commands:
 
 [source,shell]
 ----
-docker push $HEROES_IMAGE
+docker push $UI_IMAGE
 docker push $STATISTICS_IMAGE
 docker push $FIGHTS_IMAGE
 docker push $VILLAINS_IMAGE
@@ -172,7 +172,23 @@ az acr repository list \
   --output table
 ----
 
-You can also visualize the content of the registry on the https://portal.azure.com[Azure Portal].
+You can also get some information on a particular repository or image if needed:
+
+[source,shell]
+----
+az acr repository show \
+  --name "$REGISTRY" \
+  --repository "$HEROES_APP"
+----
+
+[source,shell]
+----
+az acr repository show \
+  --name "$REGISTRY" \
+  --image "$HEROES_APP:$IMAGES_TAG"
+----
+
+You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].
 
 image::azure-portal-4.png[]
 

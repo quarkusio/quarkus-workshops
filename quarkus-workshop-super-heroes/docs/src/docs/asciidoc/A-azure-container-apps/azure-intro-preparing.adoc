@@ -57,19 +57,6 @@ quarkus-workshop-super-heroes
 
 include::../0-introduction/introduction-preparing-checking-ports.adoc[leveloffset=+1]
 
-//== Warming up the Java dependencies
-//
-//Now that you have the initial structure in place, navigate to the root directory and run:
-//
-//icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-//
-//[source,shell]
-//----
-//quarkus build
-//----
-//
-//By running this command, it downloads all the required Java dependencies.
-
 include::../0-introduction/introduction-preparing-warming-docker.adoc[leveloffset=+1]
 
 == Setting Up Azure
@@ -96,15 +83,16 @@ For this workshop, install the Azure Container Apps and Database extensions for 
 
 [source,shell]
 ----
-az extension add --name containerapp
-az extension add --name rdbms-connect
+az extension add --name containerapp  --upgrade
+az extension add --name rdbms-connect --upgrade
 ----
 
-Then, register the `Microsoft.App` namespace
+Then, register the needed Azure namespaces:
 
 [source,shell]
 ----
-az provider register --namespace Microsoft.App --wait
+az provider register --namespace Microsoft.App
+az provider register --namespace Microsoft.OperationalInsights
 ----
 
 == Creating Azure Resources
@@ -211,6 +199,16 @@ az acr create \
   --workspace "$LOG_ANALYTICS_WORKSPACE" \
   --sku Standard \
   --admin-enabled true
+----
+
+Update the repository to allow anonymous users to pull the images:
+
+[source,shell]
+----
+az acr update \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --anonymous-pull-enabled true
 ----
 
 Get the URL of the Azure Container Registry and set it to the `REGISTRY_URL` variable with the following command:
