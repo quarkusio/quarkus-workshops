@@ -406,7 +406,7 @@ az containerapp create \
   --env-vars KAFKA_BOOTSTRAP_SERVERS="$KAFKA_BOOTSTRAP_SERVERS" \
              KAFKA_SECURITY_PROTOCOL=SASL_SSL \
              KAFKA_SASL_MECHANISM=PLAIN \
-             KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG" \
+             KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG"
 ----
 
 The following command sets the URL of the deployed application to the `STATISTICS_URL` variable:
@@ -468,8 +468,8 @@ az containerapp create \
              KAFKA_SECURITY_PROTOCOL=SASL_SSL \
              KAFKA_SASL_MECHANISM=PLAIN \
              KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG" \
-             QUARKUS_REST_CLIENT_HERO_CLIENT_URL="$HEROES_URL" \
-             FIGHT_VILLAIN_CLIENT_BASE_URL="$VILLAINS_URL"
+             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_HEROPROXY_MP_REST_URL="$HEROES_URL" \
+             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_VILLAINPROXY_MP_REST_URL="$VILLAINS_URL"
 ----
 
 The following command sets the URL of the deployed application to the `FIGHTS_URL` variable:
@@ -492,8 +492,6 @@ Execute several times the same curl commands so Azure Containers Apps has time t
 [source,shell]
 ----
 curl "$FIGHTS_URL/api/fights/hello"
-curl "$FIGHTS_URL/api/fights/hello/villains"
-curl "$FIGHTS_URL/api/fights/hello/heroes"
 curl "$FIGHTS_URL/api/fights" | jq
 curl "$FIGHTS_URL/api/fights/randomfighters" | jq
 ----
@@ -552,32 +550,10 @@ Now that the entire infrastructure is created and the microservices deployed, yo
 
 [source,shell]
 ----
-curl "$HEROES_URL/api/heroes/hello"
 curl "$HEROES_URL/api/heroes" | jq
-----
-
-[source,shell]
-----
-curl "$VILLAINS_URL/api/villains/hello"
 curl "$VILLAINS_URL/api/villains" | jq
-----
-
-[source,shell]
-----
-curl "$FIGHTS_URL/api/fights/hello"
-curl "$FIGHTS_URL/api/fights/hello/villains"
-curl "$FIGHTS_URL/api/fights/hello/heroes"
-curl "$FIGHTS_URL/api/fights" | jq
 curl "$FIGHTS_URL/api/fights/randomfighters" | jq
-----
-
-[source,shell]
-----
 open "$STATISTICS_URL"
-----
-
-[source,shell]
-----
 open "$UI_URL"
 ----
 

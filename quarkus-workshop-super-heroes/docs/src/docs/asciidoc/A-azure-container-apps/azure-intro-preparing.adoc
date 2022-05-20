@@ -273,7 +273,7 @@ FIGHTS_DB_SCHEMA="fights"
 FIGHTS_DB_CONNECT_STRING="jdbc:postgresql://${FIGHTS_DB}.postgres.database.azure.com:5432/${FIGHTS_DB_SCHEMA}?ssl=true&sslmode=require"
 
 # Statistics
-STATISTICS_APP="event-statistics"
+STATISTICS_APP="statistics-app"
 STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
 
 # UI

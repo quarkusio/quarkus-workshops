@@ -181,13 +181,6 @@ az acr repository show \
   --repository "$HEROES_APP"
 ----
 
-[source,shell]
-----
-az acr repository show \
-  --name "$REGISTRY" \
-  --image "$HEROES_APP:$IMAGES_TAG"
-----
-
 You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].
 
 image::azure-portal-4.png[]
@@ -206,7 +199,11 @@ Then execute it with:
 docker compose -f docker-compose-app-remote.yaml up
 ----
 
-Go to http://localhost:8080.
+Once all the containers are started, go back to:
+
+* http://localhost:8080
+* http://localhost:8085
+
 You should see the user interface and everything should work.
 Remember to shutdown the entire application with:
 
@@ -215,4 +212,5 @@ Remember to shutdown the entire application with:
 docker compose -f docker-compose-app-remote.yaml down
 ----
 
-Ok, enough running these containers locally, let's push them to Azure Container Apps!
+Ok, enough running these containers locally!
+In the next chapter we will take these remote containers, configure them, and make them work remotely on Azure Container Apps.
