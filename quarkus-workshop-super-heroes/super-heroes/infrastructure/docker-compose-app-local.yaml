@@ -34,17 +34,25 @@ services:
             QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://database:5432/fights_database
             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_HEROPROXY_MP_REST_URL: http://rest-heroes:8083
             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_VILLAINPROXY_MP_REST_URL: http://rest-villains:8084
-            KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+            KAFKA_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
 
-# TODO   ui-super-heroes:
-#        image: quarkus/ui-super-heroes:latest
-#        container_name: "ui-super-heroes"
-#        depends_on:
-#            - rest-fights
-#        ports:
-#            - "8080:8080"
-#        environment:
-#            API_BASE_URL: http://rest-fights:8082
+    event-statistics:
+        image: quarkus/event-statistics:latest
+        container_name: "event-statistics"
+        ports:
+            - "8085:8085"
+        environment:
+            KAFKA_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
+
+    ui-super-heroes:
+        image: quarkus/ui-super-heroes:latest
+        container_name: "ui-super-heroes"
+        depends_on:
+            - rest-fights
+        ports:
+            - "8080:8080"
+        environment:
+            API_BASE_URL: http://localhost:8082
 
     database:
         image: "postgres:13.4"
@@ -56,7 +64,7 @@ services:
         volumes:
             - ./db-init/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            test: [ "CMD-SHELL", "pg_isready -U postgres" ]
             interval: 5s
             timeout: 5s
             retries: 5
@@ -65,16 +73,16 @@ services:
         image: "prom/prometheus:v2.30.3"
         container_name: "super-visor"
         ports:
-          - 9090:9090
+            - 9090:9090
         volumes:
-          - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
 
     zookeeper:
         image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
         container_name: "zookeeper"
         command: [
-                "sh", "-c",
-                "bin/zookeeper-server-start.sh config/zookeeper.properties"
+            "sh", "-c",
+            "bin/zookeeper-server-start.sh config/zookeeper.properties"
         ]
         ports:
             - "2181:2181"
@@ -85,8 +93,8 @@ services:
         image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
         container_name: "kafka"
         command: [
-                "sh", "-c",
-                "bin/kafka-server-start.sh config/server.properties --override listeners=$${KAFKA_LISTENERS} --override advertised.listeners=$${KAFKA_ADVERTISED_LISTENERS} --override zookeeper.connect=$${KAFKA_ZOOKEEPER_CONNECT}"
+            "sh", "-c",
+            "bin/kafka-server-start.sh config/server.properties --override listeners=$${KAFKA_LISTENERS} --override advertised.listeners=$${KAFKA_ADVERTISED_LISTENERS} --override zookeeper.connect=$${KAFKA_ZOOKEEPER_CONNECT}"
         ]
         depends_on:
             - zookeeper

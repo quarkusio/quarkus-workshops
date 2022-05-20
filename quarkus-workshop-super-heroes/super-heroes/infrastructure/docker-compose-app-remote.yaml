@@ -36,15 +36,23 @@ services:
             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_VILLAINPROXY_MP_REST_URL: http://rest-villains:8084
             KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
-# TODO   ui-super-heroes:
-#        image: superheroesregistry.azurecr.io/ui-super-heroes:1.0
-#        container_name: "ui-super-heroes"
-#        depends_on:
-#            - rest-fights
-#        ports:
-#            - "8080:8080"
-#        environment:
-#            API_BASE_URL: http://rest-fights:8082
+    event-statistics:
+        image: superheroesregistry.azurecr.io/event-statistics:1.0
+        container_name: "event-statistics"
+        ports:
+            - "8085:8085"
+        environment:
+            KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+    ui-super-heroes:
+        image: superheroesregistry.azurecr.io/ui-super-heroes:1.0
+        container_name: "ui-super-heroes"
+        depends_on:
+            - rest-fights
+        ports:
+            - "8080:8080"
+        environment:
+            API_BASE_URL: http://localhost:8082
 
     database:
         image: "postgres:13.4"
