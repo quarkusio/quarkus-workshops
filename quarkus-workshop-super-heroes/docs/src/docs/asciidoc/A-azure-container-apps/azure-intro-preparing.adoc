@@ -109,7 +109,6 @@ Set the following variables:
 
 [source,shell]
 ----
-# Azure
 RESOURCE_GROUP="super-heroes"
 LOCATION="eastus2"
 TAG="super-heroes"
