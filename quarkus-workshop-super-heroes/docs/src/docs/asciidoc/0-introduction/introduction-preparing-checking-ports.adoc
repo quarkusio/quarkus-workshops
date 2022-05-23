@@ -9,12 +9,12 @@ Just make sure the following ports are free, so you don't run into any conflicts
 
 [source,shell]
 ----
-$ lsof -i tcp:8080    // UI
-$ lsof -i tcp:8082    // Fight REST API
-$ lsof -i tcp:8084    // Villain REST API
-$ lsof -i tcp:8083    // Hero REST API
-$ lsof -i tcp:5432    // Postgres
-$ lsof -i tcp:9090    // Prometheus
-$ lsof -i tcp:2181    // Zookeeper
-$ lsof -i tcp:9092    // Kafka
+lsof -i tcp:8080    # UI
+lsof -i tcp:8082    # Fight REST API
+lsof -i tcp:8084    # Villain REST API
+lsof -i tcp:8083    # Hero REST API
+lsof -i tcp:5432    # Postgres
+lsof -i tcp:9090    # Prometheus
+lsof -i tcp:2181    # Zookeeper
+lsof -i tcp:9092    # Kafka
 ----

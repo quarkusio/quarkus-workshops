@@ -129,6 +129,12 @@ az postgres flexible-server execute \
     --file-path "infrastructure/db-init/initialize-tables-heroes.sql"
 ----
 
+[NOTE]
+====
+If you get the error `No module named 'psycopg2._psycopg'` that means that some of your Azure CLI dependencies are not correctly installed.
+Check https://github.com/Azure/azure-cli/issues/21998 for help.
+====
+
 [source,shell]
 ----
 az postgres flexible-server execute \
@@ -303,8 +309,8 @@ The following command sets the URL of the deployed application to the `HEROES_UR
 [source,shell]
 ----
 HEROES_URL="https://$(az containerapp ingress show \
-    --resource-group $RESOURCE_GROUP \
-    --name $HEROES_APP \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$HEROES_APP" \
     --output json | jq -r .fqdn)"
 
 echo $HEROES_URL
@@ -327,6 +333,12 @@ az monitor log-analytics query \
   --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$HEROES_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
   --output table
 ----
+
+[WARNING]
+====
+You might have to wait to be able to get the logs.
+Log analytics can take some time to get initialized.
+====
 
 === Villains Microservice
 
@@ -359,8 +371,8 @@ The following command sets the URL of the deployed application to the `VILLAINS_
 [source,shell]
 ----
 VILLAINS_URL="https://$(az containerapp ingress show \
-    --resource-group $RESOURCE_GROUP \
-    --name $VILLAINS_APP \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$VILLAINS_APP" \
     --output json | jq -r .fqdn)"
 
 echo $VILLAINS_URL
@@ -414,8 +426,8 @@ The following command sets the URL of the deployed application to the `STATISTIC
 [source,shell]
 ----
 STATISTICS_URL="https://$(az containerapp ingress show \
-    --resource-group $RESOURCE_GROUP \
-    --name $STATISTICS_APP \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$STATISTICS_APP" \
     --output json | jq -r .fqdn)"
 
 echo $STATISTICS_URL
@@ -477,8 +489,8 @@ The following command sets the URL of the deployed application to the `FIGHTS_UR
 [source,shell]
 ----
 FIGHTS_URL="https://$(az containerapp ingress show \
-    --resource-group $RESOURCE_GROUP \
-    --name $FIGHTS_APP \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$FIGHTS_APP" \
     --output json | jq -r .fqdn)"
 
 echo $FIGHTS_URL
@@ -532,8 +544,8 @@ az containerapp create \
 [source,shell]
 ----
 UI_URL="https://$(az containerapp ingress show \
-    --resource-group $RESOURCE_GROUP \
-    --name $UI_APP \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$UI_APP" \
     --output json | jq -r .fqdn)"
 
 echo $UI_URL

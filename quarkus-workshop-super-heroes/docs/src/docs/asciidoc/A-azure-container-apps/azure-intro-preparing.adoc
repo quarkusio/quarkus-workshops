@@ -73,6 +73,13 @@ Then, sign in to Azure from the CLI:
 az login
 ----
 
+Make sure you are using the right subscription with:
+
+[source,shell]
+----
+az account show
+----
+
 === Setting Up the Azure Environment
 
 Azure CLI is extensible and you can install as many extensions as you need.
@@ -85,7 +92,42 @@ For this workshop, install the Azure Container Apps and Database extensions for 
 ----
 az extension add --name containerapp  --upgrade
 az extension add --name rdbms-connect --upgrade
+az extension add --name log-analytics --upgrade
 ----
+
+You can then check the extensions that are installed in your system with the following command:
+
+[source,shell]
+----
+az extension list
+----
+
+You should see the extensions that have been installed:
+
+[WARNING]
+====
+If you are on Windows and using WSL, the extensions should be installed under `/home/<user>/.azure/cliextensions/`.
+If it's not the case, and instead extensions are installed under `C:\\Users\\<user>\\.azure\\cliextensions`, you should reboot your computer.
+====
+
+[source,json]
+----
+[
+  ...
+  {
+    "experimental": false,
+    "extensionType": "whl",
+    "name": "containerapp",
+    "path": "/Users/agoncal/.azure/cliextensions/containerapp",
+    "preview": true,
+    "version": "0.3.4"
+  },
+  ...
+]
+----
+
+
+
 
 Then, register the needed Azure namespaces:
 

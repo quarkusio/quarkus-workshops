@@ -15,26 +15,46 @@ In this chapter, you are going to see:
 
 == What's Azure Container Apps?
 
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
+https://azure.microsoft.com/services/container-apps[Azure Container Apps] is a fully managed serverless container service on Azure.
+It allows you to run containerized applications without worrying about orchestration or managing complex infrastructure such as Kubernetes.
+You write code using your preferred programming language or framework (in this workshop it's Java and Quarkus, but it can be anything), and build microservices with full support for Distributed Application Runtime (https://dapr.io[Dapr]).
+Then, your containers will scale dynamically based on HTTP traffic or events powered by Kubernetes Event-Driven Autoscaling (https://keda.sh[KEDA]).
 
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
-TODO.
+There are already a few compute resources on Azure: from IAAS to FAAS.
+Azure Container Apps sits between PAAS and FAAS.
+On one hand, it feels more PaaS, because you are not forced into a specific programming model and you can control the rules on which to scale out / scale in.
+On the other hand, it has quite some serverless characteristics like scaling to zero, event-driven scaling, per second pricing and the ability to leverage Dapr's event-based bindings.
+
+image::azure-aca-compute.png[]
+
+Container Apps is built on top of Azure Kubernetes Service, including a deep integration with KEDA (event-driven auto scaling for Kubernetes), Dapr (distributed application runtime) and Envoy (a service proxy designed for cloud-native applications).
+The underlying complexity is completely abstracted for the end-user.
+So no need to configure your K8S service, deployment, ingress, volume manifests…
+You get a very simple API and user interface to configure the desired configuration for your containerized application.
+This simplification means also less control, hence the difference with AKS.
+
+image::azure-aca-intro.png[]
+
+Azure Container Apps has the following features:
+
+* _Revisions_: automatic versioning that helps to manage the application lifecycle of your container apps
+* _Traffic control_: split incoming HTTP traffic across multiple revisions for Blue/Green deployments and A/B testing
+* _Ingress_: simple HTTPS ingress configuration, without the need to worry about DNS and certificates
+* _Autoscaling_: leverage all KEDA-supported scale triggers to scale your app based on external metrics
+* _Secrets_: deploy secrets that are securely shared between containers, scale rules and Dapr sidecars
+* _Monitoring_: the standard output and error streams are automatically written to Log Analytics
+* _Dapr_: through a simple flag, you can enable native Dapr integration for your Container Apps
+
+Azure Container Apps https://yourazurecoach.com/2021/11/03/container-apps-the-missing-piece-in-the-azure-compute-puzzle[introduce the following concepts]:
+
+* _Environment_: this is a secure boundary around a group of Container Apps.
+They are deployed in the same virtual network, these apps can easily intercommunicate easily with each other and they write logs to the same Log Analytics workspace.
+An environment can be compared with a Kubernetes namespace.
+* _Container App_: this is a group of containers (pod) that is deployed and scale together.
+They share the same disk space and network.
+* _Revision_: this is an immutable snapshot of a Container App.
+New revisions are automatically created and are valuable for HTTP traffic redirection strategies, such as A/B testing.
+
+image::azure-aca-concepts.png[]
 
 include::../2-quarkus/quarkus-definition.adoc[leveloffset=+1]

@@ -9,7 +9,7 @@ The application is an Angular application served via Node.js.
 ```
 npm run build
 npm run dev
-export API_BASE_URL=http://localhost:8082 
+export API_BASE_URL=http://localhost:8082
 npm start
 ```
 

@@ -6,6 +6,8 @@ All the Java code will be build with multistage Dockerfile builds.
 So only Docker is needed to build, deploy and execute the application.
 As for deploying the infrastructure and the application to Azure, we will use Azure CLI.
 
+include::azure-intro-installing-wsl.adoc[leveloffset=+1]
+
 include::azure-intro-installing-azure-cli.adoc[leveloffset=+1]
 
 include::../0-introduction/introduction-installing-docker.adoc[leveloffset=+1]

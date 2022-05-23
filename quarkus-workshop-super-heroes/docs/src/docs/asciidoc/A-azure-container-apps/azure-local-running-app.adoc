@@ -77,8 +77,13 @@ Check that you have all the Docker images installed locally:
 
 [source,shell]
 ----
-$ docker image ls | grep quarkus
+docker image ls | grep quarkus
+----
 
+The output should look like this:
+
+[source,shell]
+----
 quarkus/ui-super-heroes         latest      266MB
 quarkus/event-statistics        latest      145MB
 quarkus/rest-fights             latest      198MB
@@ -101,6 +106,27 @@ Execute it with:
 docker compose -f docker-compose-app-local.yaml up
 ----
 
+To know that all your containers are started, you can use the following command:
+
+[source,shell]
+----
+docker compose -f docker-compose-app-local.yaml ps
+----
+
+You should get something similar to the following list.
+Make sure all your containers are in _running_ status:
+
+[source,shell]
+----
+event-statistics    "./application -Dqua…"   running
+kafka               "sh -c 'export CLUST…"   running
+rest-fights         "./application -Dqua…"   running
+rest-heroes         "./application -Dqua…"   running
+rest-villains       "./application -Dqua…"   running
+super-database      "docker-entrypoint.s…"   running (healthy)
+ui-super-heroes     "/bin/sh -c 'npm sta…"   running
+----
+
 Once all the containers are started, you can:
 
 * Go to http://localhost:8080 to check the main UI
@@ -109,7 +135,16 @@ Once all the containers are started, you can:
 * curl http://localhost:8083/api/heroes | jq
 * curl http://localhost:8082/api/fights/randomfighters | jq
 
-You should see the user interface, and you should be able to fight super heroes against super villains.
+On http://localhost:8080 you should see the user interface, and you should be able to fight super heroes against super villains:
+
+image::angular-ui.png[]
+
+On http://localhost:8085 you should see the statistics of the fights.
+When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.
+The UI is automatically updated at each fight:
+
+image::angular-ui-stats.png[]
+
 Then, make sure you shut down the entire application with:
 
 [source,shell]
