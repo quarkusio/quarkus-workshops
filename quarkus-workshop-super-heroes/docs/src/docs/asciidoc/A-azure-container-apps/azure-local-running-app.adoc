@@ -3,11 +3,16 @@
 
 '''
 
-This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
-There are many different approaches to achieve these deployments.
-In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.
+In this chapter we will build containers out of our Quarkus microservices and execute them locally thanks to Docker Compose.
+Then, we will push the containers to Azure Container Registry so we can still run them locally, and later on Azure Container Apps.
 
-== Building containers
+[NOTE]
+====
+Building containers locally and pushing them to Azure Container Registry can take from 15 to 30 minutes (depending on your CPU and bandwith).
+If you think you will not have enough time to complete the Workshop, you can skip the next optional sections and go straight to _Running remote containers_.
+====
+
+== (Optional) Building containers
 
 In this section, we are going to package our microservices into containers.
 In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
@@ -91,7 +96,7 @@ quarkus/rest-villains           latest      158MB
 quarkus/rest-heroes             latest      154MB
 ----
 
-== Running local containers
+== (Optional) Running local containers
 
 Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
 
@@ -135,16 +140,6 @@ Once all the containers are started, you can:
 * curl http://localhost:8083/api/heroes | jq
 * curl http://localhost:8082/api/fights/randomfighters | jq
 
-On http://localhost:8080 you should see the user interface, and you should be able to fight super heroes against super villains:
-
-image::angular-ui.png[]
-
-On http://localhost:8085 you should see the statistics of the fights.
-When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.
-The UI is automatically updated at each fight:
-
-image::angular-ui-stats.png[]
-
 Then, make sure you shut down the entire application with:
 
 [source,shell]
@@ -152,7 +147,7 @@ Then, make sure you shut down the entire application with:
 docker compose -f docker-compose-app-local.yaml down
 ----
 
-== Pushing containers to Azure Container Registry
+== (Optional) Pushing containers to Azure Container Registry
 
 Now that we have all our Docker containers running locally, let's push them to Azure Container Registry.
 
@@ -222,22 +217,39 @@ image::azure-portal-4.png[]
 
 == Running remote containers
 
-Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them.
+[NOTE]
+====
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+If you haven't skipped the previous optional sections and built the containers your self, you should edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `superheroesregistry` with the value of the `$REGISTRY` variable.
+====
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `superheroesregistry` with the value of the `$REGISTRY` variable.
-Then execute it with:
+Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them with:
 
 [source,shell]
 ----
 docker compose -f docker-compose-app-remote.yaml up
 ----
 
-Once all the containers are started, go back to:
+Once all the containers are started, you can:
 
-* http://localhost:8080
-* http://localhost:8085
+* Go to http://localhost:8080 to check the main UI
+* Go to http://localhost:8085 to check the statistics UI
+* curl http://localhost:8084/api/villains | jq
+* curl http://localhost:8083/api/heroes | jq
+* curl http://localhost:8082/api/fights/randomfighters | jq
+
+On http://localhost:8080 you should see the user interface, and you should be able to fight super heroes against super villains:
+
+image::angular-ui.png[]
+
+On http://localhost:8085 you should see the statistics of the fights.
+When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.
+The UI is automatically updated at each fight:
+
+image::angular-ui-stats.png[]
 
 You should see the user interface and everything should work.
 Remember to shutdown the entire application with:
