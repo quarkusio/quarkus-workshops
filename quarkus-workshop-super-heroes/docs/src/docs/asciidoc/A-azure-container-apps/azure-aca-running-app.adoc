@@ -3,9 +3,8 @@
 
 '''
 
-This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
-There are many different approaches to achieve these deployments.
-In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.
+Now that we have containerized our application, push it to Azure Container Registry and execute it locally, time to execute it on Azure Container Apps.
+In this chapter we will create the needed infrastructure in Azure Container Apps (database, Kafka, etc.) and then deploy the containers so we can execute our application.
 
 == Deploying the Infrastructure
 

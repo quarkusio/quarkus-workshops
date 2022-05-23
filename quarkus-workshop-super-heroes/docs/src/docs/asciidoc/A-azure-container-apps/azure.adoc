@@ -30,3 +30,5 @@ What you are going to learn:
 * And much more!
 
 Ready? Here we go!
+
+image::azure-aca-qrcode.png[]
