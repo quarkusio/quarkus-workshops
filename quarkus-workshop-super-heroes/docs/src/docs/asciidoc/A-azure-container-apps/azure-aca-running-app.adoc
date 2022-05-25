@@ -273,6 +273,30 @@ image::azure-portal-3.png[]
 Now that the Azure Container Apps environment is all set, we need to deploy our microservices to Azure Container Apps.
 So let's create an instance of Container Apps for each of our microservices and User Interface.
 
+[NOTE]
+====
+If you haven't built the containers and push them to your own Azure Container Registry, you need to change some environment variables.
+That means, that instead of having `REGISTRY="superheroesregistry"$UNIQUE_IDENTIFIER`, you need to change it to `REGISTRY="superheroesregistry` (so it uses the common registry).
+
+[source,shell]
+----
+REGISTRY="superheroesregistry"
+
+REGISTRY_URL=$(az acr show \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --query "loginServer" \
+  --output tsv)
+
+HEROES_IMAGE="${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}"
+VILLAINS_IMAGE="${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}"
+FIGHTS_IMAGE="${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}"
+STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
+UI_IMAGE="${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}"
+----
+
+====
+
 === Heroes Microservice
 
 First, the Heroes microservice.
@@ -521,7 +545,7 @@ az monitor log-analytics query \
 
 Like for the previous microservices, we will be deploying the UI as Docker image as we did for the previous microservices.
 But we could have also deployed the Super Hero UI using Azure Static Webapps witch is suited for Angular applications.
-If you are interested in this approach, you can check https://azure.microsoft.com/en-us/services/app-service/static/[Azure Static Webapps].
+If you are interested in this approach, you can check https://azure.microsoft.com/services/app-service/static/[Azure Static Webapps].
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 

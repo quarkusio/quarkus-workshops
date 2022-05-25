@@ -1,7 +1,7 @@
 [[azure-intro-installing-wsl]]
 = WSL
 
-https://docs.microsoft.com/en-us/windows/wsl[Windows Subsystem for Linux] (WSL) lets developers run a GNU/Linux environment -- including most command-line tools, utilities, and applications -- directly on Windows, unmodified, without the overhead of a traditional virtual machine or dual-boot setup.
+https://docs.microsoft.com/windows/wsl[Windows Subsystem for Linux] (WSL) lets developers run a GNU/Linux environment -- including most command-line tools, utilities, and applications -- directly on Windows, unmodified, without the overhead of a traditional virtual machine or dual-boot setup.
 
 [WARNING]
 ====

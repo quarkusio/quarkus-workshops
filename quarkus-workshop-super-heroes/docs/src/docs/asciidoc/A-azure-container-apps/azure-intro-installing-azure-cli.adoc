@@ -1,7 +1,7 @@
 [[azure-intro-installing-azure-cli]]
 = Azure CLI
 
-The Azure command-line interface (https://docs.microsoft.com/en-us/cli/azure[Azure CLI)] is a set of commands used to create and manage Azure resources.
+The Azure command-line interface (https://docs.microsoft.com/cli/azure[Azure CLI)] is a set of commands used to create and manage Azure resources.
 The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation.
 For this workshop you need to have Azure CLI installed locally on your machine.
 

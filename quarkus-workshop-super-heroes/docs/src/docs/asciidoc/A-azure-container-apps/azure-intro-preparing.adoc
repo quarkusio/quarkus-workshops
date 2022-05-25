@@ -13,7 +13,7 @@ First, clone the GitHub repository of the Super Heroes application located at ht
 
 [source,shell]
 ----
-git clone https://github.com/quarkusio/quarkus-workshops.git
+git clone https://github.com/quarkusio/quarkus-workshops.git --depth 1
 ----
 
 The code of this Super Heroes application is separated into two different directories:
