@@ -12,7 +12,7 @@ You will develop, from scratch, a set of microservices accessing databases, Kafk
 Check https://quarkus.io/quarkus-workshops/super-heroes/index.html to get the workshop instructions.
 * _Deploy the Super Heroes to Azure Container Apps_:
 If you are interested in deploying an already made application to Azure Container Apps, then this workshop is for you.
-You will not develop any Quarkus (you don't even need Java tools), but you will be pushing Docker containers, creating managed services on Azure (databases, Kafka) and monitoring the entire system.
+You will not develop any Quarkus (you don't even need Java tools), but you will be pushing Docker containers, creating managed services on Azure (databases, Kafka) and monitoring the entire system (https://docs.microsoft.com/en-us/events/jdconf-2022/quarkus-superheroes-on-azure[watch a video presenting the workshop]).
 Check https://quarkus.io/quarkus-workshops/super-heroes/index-azure.html to get the workshop instructions.
 
 == Generate the documentation
