@@ -81,7 +81,7 @@ public class HeroResourceTest {
             .when().get("/api/heroes/random")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON);
+            .contentType(APPLICATION_JSON);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class HeroResourceTest {
     void shouldGetInitialItems() {
         List<Hero> heroes = get("/api/heroes").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
         assertEquals(NB_HEROES, heroes.size());
     }
@@ -175,7 +175,7 @@ public class HeroResourceTest {
             .put("/api/heroes")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .body("name", Is.is(UPDATED_NAME))
             .body("otherName", Is.is(UPDATED_OTHER_NAME))
             .body("level", Is.is(UPDATED_LEVEL))
@@ -184,7 +184,7 @@ public class HeroResourceTest {
 
         List<Hero> heroes = get("/api/heroes").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
         assertEquals(NB_HEROES + 1, heroes.size());
     }
@@ -200,7 +200,7 @@ public class HeroResourceTest {
 
         List<Hero> heroes = get("/api/heroes").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
         assertEquals(NB_HEROES, heroes.size());
     }

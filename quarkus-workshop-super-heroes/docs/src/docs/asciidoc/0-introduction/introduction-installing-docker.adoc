@@ -21,6 +21,8 @@ Installation instructions are available on the following page:
 
 On Linux, don't forget the post-execution steps described on https://docs.docker.com/install/linux/linux-postinstall/.
 
+NOTE: If you are on the latest versions of Fedora, you might prefer `podman` (https://podman.io/) instead of `docker`. To install `podman` and `podman-compose` on Fedora please follow the instructions at https://fedoramagazine.org/manage-containers-with-podman-compose/. You will also need to configure testcontainers library used in Dev Services later in the workshop like mentioned in https://quarkus.io/blog/quarkus-devservices-testcontainers-podman/#tldr.
+
 == Checking for Docker Installation
 
 Once installed, check that both `docker` and `docker compose` are available in your `PATH`:

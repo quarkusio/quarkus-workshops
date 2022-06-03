@@ -6,7 +6,7 @@
 Quarkus combines the build time principle with a reactive core.
 The combination of these two characteristics improve the application concurrency and use resources more efficiently.
 In this chapter, we will see the counterpart of the Villain microservice: the Hero microservice!
-Instead of the imperative approach uses for the villains, we will use reactive programming and Hibernate Reactive.
+Instead of the imperative approach used for the villains, we will use reactive programming and Hibernate Reactive.
 The logic of the microservice is the same.
 
 [plantuml,align=center,width=300]
@@ -484,7 +484,7 @@ public class HeroResourceTest {
             .when().get("/api/heroes/random")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON);
+            .contentType(APPLICATION_JSON);
     }
 
     @Test
@@ -511,7 +511,7 @@ public class HeroResourceTest {
     void shouldGetInitialItems() {
         List<Hero> heroes = get("/api/heroes").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
         assertEquals(NB_HEROES, heroes.size());
     }
@@ -578,7 +578,7 @@ public class HeroResourceTest {
             .put("/api/heroes")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .body("name", Is.is(UPDATED_NAME))
             .body("otherName", Is.is(UPDATED_OTHER_NAME))
             .body("level", Is.is(UPDATED_LEVEL))
@@ -587,7 +587,7 @@ public class HeroResourceTest {
 
         List<Hero> heroes = get("/api/heroes").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
         assertEquals(NB_HEROES + 1, heroes.size());
     }
@@ -603,7 +603,7 @@ public class HeroResourceTest {
 
         List<Hero> heroes = get("/api/heroes").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getHeroTypeRef());
         assertEquals(NB_HEROES, heroes.size());
     }
