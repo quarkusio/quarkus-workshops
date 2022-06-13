@@ -4,7 +4,7 @@
 [NOTE]
 ----
 This section is optional and demonstrates how to ask Quarkus to create a container and deploy it to Kubernetes.
-You will need a running Kubernetes.
+We will need a running Kubernetes.
 We will use Rancher Desktop as indicated in the prerequisites.
 ----
 
