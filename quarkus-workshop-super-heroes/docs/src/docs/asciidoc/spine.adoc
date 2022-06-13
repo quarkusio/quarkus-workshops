@@ -40,6 +40,7 @@ include::2-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
 include::2-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
 include::2-quarkus/quarkus-profile.adoc[leveloffset=+2]
 include::2-quarkus/quarkus-native.adoc[leveloffset=+2]
+include::2-quarkus/quarkus-kubernetes.adoc[leveloffset=+2]
 <<<
 // Reactive
 include::3-reactive/reactive.adoc[leveloffset=+1]
