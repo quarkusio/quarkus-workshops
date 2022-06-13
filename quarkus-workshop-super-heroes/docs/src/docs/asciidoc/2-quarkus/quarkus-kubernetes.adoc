@@ -22,7 +22,7 @@ The resulting image follows the container good practices such as the usage of la
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Add the `quarkus-jib` extension using the following command:
+Add the `quarkus-container-image-jib` extension using the following command:
 
 [source, shell]
 ----
