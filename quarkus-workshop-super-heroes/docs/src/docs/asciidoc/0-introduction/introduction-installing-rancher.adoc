@@ -32,7 +32,7 @@ Client Version: version.Info{Major:"1", Minor:"23", GitVersion:"v1.23.3", GitCom
 Server Version: version.Info{Major:"1", Minor:"23", GitVersion:"v1.23.3+k3s1", GitCommit:"5fb370e53e0014dc96183b8ecb2c25a61e891e76", GitTreeState:"clean", BuildDate:"2022-01-27T02:12:21Z", GoVersion:"go1.17.5", Compiler:"gc", Platform:"linux/amd64"}
 ----
 
-TIP: Rancher Desktop installs its own _docker_ CLI too in `±/.rd/bin
+TIP: Rancher Desktop installs its own _docker_ CLI too in `~/.rd/bin
 
 Finally, run your first container as follows:
 
