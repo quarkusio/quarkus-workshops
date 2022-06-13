@@ -2,6 +2,14 @@
 
 = Docker
 
+[NOTE]
+----
+Instead of Docker, you can use Rancher Desktop which provide the same capabilities but also lets you run Kubernetes locally.
+If you plan to deploy your applications to Kubernetes, we recommend Rancher Desktop.
+
+Instructions to install Rancher Desktop are available in <<introduction-installing-rancher>>.
+----
+
 Docker is a set of utilities that use OS-level virtualization to deliver software in packages called containers.
 Containers are isolated from one another and bundle their software, libraries, and configuration files;
 they can communicate with each other through well-defined channels.
