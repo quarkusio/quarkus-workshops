@@ -1,5 +1,5 @@
 = Quarkus Super-Heroes Workshop
-Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez
+Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; Georgios Andrianakis
 v2.0, {docdate}: Quarkus {quarkus-version}
 
 :data-uri:
