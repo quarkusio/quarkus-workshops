@@ -490,7 +490,7 @@ If you didn't yet, start the application in dev mode:
 ./mvnw quarkus:dev
 ----
 
-Then, open your browser to http://localhost:8080/api/villains.
+Then, open your browser to http://localhost:8084/api/villains.
 You should see lots of heroes...
 
 == CRUD Tests in VillainResourceTest
@@ -800,7 +800,7 @@ As previously, you will get your application in `target/quarkus-app`, run it usi
 java -jar target/quarkus-app/quarkus-run.jar
 ----
 
-Open your browser to http://localhost:8080/api/villains, and verify it displays the expected content.
+Open your browser to http://localhost:8084/api/villains, and verify it displays the expected content.
 Once done, stop the application using `CTRL+C`.
 
 
