@@ -332,6 +332,20 @@ In the log, you will see the following:
 Quarkus detects the need for a database and starts one using a Docker container.
 It automatically configures the application, which means we are good to go and implement our REST API.
 
+[NOTE]
+====
+If the application fails to start properly and the logs contain something like
+
+[source,text]
+----
+WARN  [or.te.ut.RyukResourceReaper] (testcontainers-ryuk) Can not connect to Ryuk at localhost:49153: java.net.ConnectException: Connection refused (Connection refused)
+----
+
+try launching the application again
+after having the `TESTCONTAINERS_RYUK_DISABLED` environment variable to `true`.
+This setting will likely also be needed **throughout** the workshop.
+====
+
 == VillainResource Endpoint
 
 The `VillainResource` was bootstrapped with only one method `hello()`.
