@@ -153,4 +153,4 @@ Enable port-forwarding either from the rancher desktop UI (preferences -> port f
 $ kubectl port-forward pods/rest-villains-7c7479b959-7fn64 8080:8080
 ----
 
-Now, you can access the application from your browser using: http://localhost:$PORT/api/villains
+Now, you can access the application from your browser using: http://localhost:8080/api/villains
