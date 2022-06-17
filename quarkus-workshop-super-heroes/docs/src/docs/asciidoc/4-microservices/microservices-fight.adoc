@@ -614,7 +614,7 @@ public class FightResourceTest {
             .when().get("/api/fights/{id}")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
             .body("winnerName", Is.is(DEFAULT_WINNER_NAME))
             .body("winnerPicture", Is.is(DEFAULT_WINNER_PICTURE))
             .body("winnerLevel", Is.is(DEFAULT_WINNER_LEVEL))

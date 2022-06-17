@@ -322,7 +322,7 @@ void shouldGetRandomFighters() {
         .when().get("/api/fights/randomfighters")
         .then()
         .statusCode(OK.getStatusCode())
-        .header(CONTENT_TYPE, APPLICATION_JSON)
+        .contentType(APPLICATION_JSON)
         .body("hero.name", Is.is(MockHeroProxy.DEFAULT_HERO_NAME))
         .body("hero.picture", Is.is(MockHeroProxy.DEFAULT_HERO_PICTURE))
         .body("hero.level", Is.is(MockHeroProxy.DEFAULT_HERO_LEVEL))

@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.is;
@@ -51,7 +52,7 @@ public class VillainResourceTest {
 
     @Test
     void shouldGetRandomVillain() {
-        given().when().get("/api/villains/random").then().statusCode(OK.getStatusCode()).header(CONTENT_TYPE, JSON);
+        given().when().get("/api/villains/random").then().statusCode(OK.getStatusCode()).contentType(APPLICATION_JSON);
     }
 
     @Test
@@ -79,7 +80,7 @@ public class VillainResourceTest {
         List<Villain> villains = get("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract()
             .body()
             .as(getVillainTypeRef());
@@ -119,7 +120,7 @@ public class VillainResourceTest {
             .get("/api/villains/{id}")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .body("name", Is.is(DEFAULT_NAME))
             .body("otherName", Is.is(DEFAULT_OTHER_NAME))
             .body("level", Is.is(DEFAULT_LEVEL))
@@ -129,7 +130,7 @@ public class VillainResourceTest {
         List<Villain> villains = get("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract()
             .body()
             .as(getVillainTypeRef());
@@ -155,7 +156,7 @@ public class VillainResourceTest {
             .put("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .body("name", Is.is(UPDATED_NAME))
             .body("otherName", Is.is(UPDATED_OTHER_NAME))
             .body("level", Is.is(UPDATED_LEVEL))
@@ -165,7 +166,7 @@ public class VillainResourceTest {
         List<Villain> villains = get("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract()
             .body()
             .as(getVillainTypeRef());
@@ -180,7 +181,7 @@ public class VillainResourceTest {
         List<Villain> villains = get("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract()
             .body()
             .as(getVillainTypeRef());
