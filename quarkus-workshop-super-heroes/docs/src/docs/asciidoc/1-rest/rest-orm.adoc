@@ -547,6 +547,7 @@ import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.HttpHeaders.ACCEPT;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.Response.Status.*;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -595,7 +596,7 @@ public class VillainResourceTest {
             .when().get("/api/villains/random")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON);
+            .contentType(APPLICATION_JSON);
     }
 
     @Test
@@ -622,7 +623,7 @@ public class VillainResourceTest {
     void shouldGetInitialItems() {
         List<Villain> villains = get("/api/villains").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
         assertEquals(NB_VILLAINS, villains.size());
     }
@@ -658,7 +659,7 @@ public class VillainResourceTest {
             .when().get("/api/villains/{id}")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .body("name", Is.is(DEFAULT_NAME))
             .body("otherName", Is.is(DEFAULT_OTHER_NAME))
             .body("level", Is.is(DEFAULT_LEVEL))
@@ -667,7 +668,7 @@ public class VillainResourceTest {
 
         List<Villain> villains = get("/api/villains").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
         assertEquals(NB_VILLAINS + 1, villains.size());
     }
@@ -691,7 +692,7 @@ public class VillainResourceTest {
             .put("/api/villains")
             .then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .body("name", Is.is(UPDATED_NAME))
             .body("otherName", Is.is(UPDATED_OTHER_NAME))
             .body("level", Is.is(UPDATED_LEVEL))
@@ -700,7 +701,7 @@ public class VillainResourceTest {
 
         List<Villain> villains = get("/api/villains").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
         assertEquals(NB_VILLAINS + 1, villains.size());
     }
@@ -716,7 +717,7 @@ public class VillainResourceTest {
 
         List<Villain> villains = get("/api/villains").then()
             .statusCode(OK.getStatusCode())
-            .header(CONTENT_TYPE, JSON)
+            .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
         assertEquals(NB_VILLAINS, villains.size());
     }
