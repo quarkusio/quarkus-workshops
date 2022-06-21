@@ -106,6 +106,8 @@ Add the `quarkus-kubernetes` extension using the following command:
 $ mvn quarkus:add-extension -Dextensions="kubernetes"
 ----
 
+TIP: If you are behind a proxy, check the https://quarkus.io/guides/extension-registry-user#how-to-register-as-a-nexus-repository-proxy[Quarkus Registry] proxy documentation.
+
 Alternatively, you can add the following dependency to the `pom.xml` file directly:
 
 [source, xml]
