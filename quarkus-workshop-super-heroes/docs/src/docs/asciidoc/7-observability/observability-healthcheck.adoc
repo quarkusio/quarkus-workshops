@@ -150,7 +150,7 @@ The liveness check accessible at `/q/health/live`.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-As we have started our Quarkus application in dev mode simply repeat the request to http://localhost:8083/q/health/live by refreshing your browser window or by using curl http://localhost:8083/health/live.
+As we have started our Quarkus application in dev mode simply repeat the request to http://localhost:8083/q/health/live by refreshing your browser window or by using curl http://localhost:8083/q/health/live.
 Because we defined our health check to be a liveness procedure (with `@Liveness` qualifier) the new health check procedure is now present in the checks array.
 
 [source,json]
