@@ -106,6 +106,16 @@ Add the `quarkus-kubernetes` extension using the following command:
 $ mvn quarkus:add-extension -Dextensions="kubernetes"
 ----
 
+Alternatively, you can add the following dependency to the `pom.xml` file directly:
+
+[source, xml]
+----
+<dependency>
+  <groupId>io.quarkus</groupId>
+  <artifactId>quarkus-kubernetes</artifactId>
+</dependency>
+----
+
 Rancher Desktop authentication use elliptic algorithms not supported by default in Java.
 So, we also need to add the following dependency to the project:
 
