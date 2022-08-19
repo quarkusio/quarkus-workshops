@@ -93,6 +93,14 @@ extension-version
 +  runtime
 ++  src
 +++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  version
+++++++++++  runtime
++++++++++++  VersionRecorder.java
 ++++  resources
 +++++  META-INF
 ++++++  quarkus-extension.yaml

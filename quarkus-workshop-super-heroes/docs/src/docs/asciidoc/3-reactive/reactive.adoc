@@ -383,6 +383,7 @@ We also set the port to be 8083.
 === Importing heroes
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
 Create the `src/main/resources/import.sql` and copy the content from {github-raw}/super-heroes/rest-heroes/src/main/resources/import.sql[import.sql].
 
 [source,text]

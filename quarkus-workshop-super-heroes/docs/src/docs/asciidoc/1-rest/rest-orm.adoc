@@ -375,7 +375,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.*;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 @Path("/api/villains")
 public class VillainResource {
@@ -441,7 +441,7 @@ public class VillainResource {
 
     @GET
     @Path("/hello")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(TEXT_PLAIN)
     public String hello() {
         return "Hello Villain Resource";
     }

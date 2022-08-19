@@ -11,7 +11,7 @@ We will use Rancher Desktop as indicated in the prerequisites.
 == Prerequisites
 
 1. Make sure that Docker Desktop (if installed) is turned off
-2. Make sure Rancher Desktop is started. The container runtime must be _dockerd_ (Preferences -> Kubernetes Settings).
+2. Make sure Rancher Desktop is started. The container runtime must be _dockerd_ (Preferences -> Container Runtime -> dockerd (moby)).
 
 == Building a container
 
