@@ -14,7 +14,7 @@ You will have to wait the next chapter for that ;o)
 include::{plantDir}/4-microservices-physical-architecture.puml[]
 ----
 
-Each microservice is developed in it's own directory.
+Each microservice is developed in its own directory.
 
 [plantuml]
 ----

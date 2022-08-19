@@ -479,7 +479,7 @@ That command generates:
 
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
 
-Stop the application running in dev mode (by hitting `CTRL+C`), and run the application using: `java -jar target/quarkus-app/quarkus-run.jar`.
+Stop the application running in dev mode (by hitting `q` or `CTRL+C`), and run the application using: `java -jar target/quarkus-app/quarkus-run.jar`.
 
 [NOTE]
 ====

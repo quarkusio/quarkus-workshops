@@ -93,6 +93,14 @@ extension-version
 +  runtime
 ++  src
 +++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  version
+++++++++++  runtime
++++++++++++  VersionRecorder.java
 ++++  resources
 +++++  META-INF
 ++++++  quarkus-extension.yaml
@@ -112,7 +120,7 @@ For this, what do we need:
 2. Some code that would print the version when the application starts; so some runtime code,
 3. Some build steps that extracts the version and records the runtime invocations
 
-== The Runtime module
+== The runtime module
 
 The _runtime_ part of an extension contains only the classes and resources required at runtime.
 For the version extension, it would be a single class that prints the version.
@@ -213,7 +221,7 @@ If not yet started, start the microservice with:
 
 [source,shell]
 ----
-mvn quarkus:dev
+./mvnw quarkus:dev
 ----
 
 And the version will be displayed:

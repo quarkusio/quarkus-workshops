@@ -375,7 +375,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.*;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 @Path("/api/villains")
 public class VillainResource {
@@ -441,7 +441,7 @@ public class VillainResource {
 
     @GET
     @Path("/hello")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(TEXT_PLAIN)
     public String hello() {
         return "Hello Villain Resource";
     }
@@ -455,7 +455,7 @@ Not that we added `@Path("/hello")` to the `hello` method to not conflict with t
 Dependency injection in Quarkus is based on ArC which is a CDI-based dependency injection solution tailored for Quarkus' architecture.footnote:[ArC https://github.com/quarkusio/quarkus/tree/master/independent-projects/arc]
 You can learn more about it in the Contexts and Dependency Injection guide.footnote:[Quarkus - Contexts and Dependency Injection https://quarkus.io/guides/cdi-reference.html]
 
-ArC handles injected at build time.
+ArC handles injection at build time.
 You can use field injection and inject the `VillainService` and the logger using:
 
 [source,java]
@@ -752,7 +752,7 @@ We need to configure the application to connect to a _real_ database.
 The main way of obtaining connections to a database is to use a datasource.
 In Quarkus, the out of the box datasource and connection pooling implementation is Agroal.footnote:[Agroal https://agroal.github.io]
 
-So, we need to configre the database access in the `src/main/resources/application.properties` file,
+So, we need to configure the database access in the `src/main/resources/application.properties` file,
 but only when the application runs in _prod_ mode.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
