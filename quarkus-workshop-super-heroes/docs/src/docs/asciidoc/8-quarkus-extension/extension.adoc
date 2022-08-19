@@ -221,7 +221,7 @@ If not yet started, start the microservice with:
 
 [source,shell]
 ----
-mvn quarkus:dev
+./mvnw quarkus:dev
 ----
 
 And the version will be displayed:
