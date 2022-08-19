@@ -19,7 +19,7 @@ More specially, you are going to see how to:
 * Connect a Quarkus application to Apache Kafka
 * Write Kafka records and read them
 * Use reactive programming to compute statistics on the fly
-* How to send messages to the browser using web sockets
+* Send messages to the browser using web sockets
 
 Quarkus uses MicroProfile Reactive Messaging to interact with Apache Kafka, and other messaging middleware (such as AMQP).footnote:[MicroProfile Reactive Messaging https://github.com/eclipse/microprofile-reactive-messaging]
 

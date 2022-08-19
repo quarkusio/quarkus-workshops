@@ -122,7 +122,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 Now, create the `io.quarkus.workshop.superheroes.statistics.SuperStats` class with the following content.
 This class contains two methods annotated with `@Incoming` and `@Outgoing`, both consuming the `Fight` coming from Kafka.
 
-The `computeTeamStats` method transform the fight stream into a stream of ratio indicating the amount of victories for heroes and villains.
+The `computeTeamStats` method transforms the fight stream into a stream of ratio indicating the amount of victories for heroes and villains.
 It calls `onItem().transform` method for each received fight.
 It sends the computed ratios on the channel `team-stats`.
 

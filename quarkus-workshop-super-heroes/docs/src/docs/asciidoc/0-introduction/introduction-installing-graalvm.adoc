@@ -37,7 +37,7 @@ GraalVM installed from the GraalVM project.footnote:[GraalVM Download https://gi
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
 
-Follows the installation instructions:
+Follow the installation instructions:
 
 - Linux - https://www.graalvm.org/docs/getting-started/linux/
 - Windows - https://www.graalvm.org/docs/getting-started/windows/

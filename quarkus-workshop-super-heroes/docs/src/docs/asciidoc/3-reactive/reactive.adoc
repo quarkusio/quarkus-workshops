@@ -4,7 +4,7 @@
 '''
 
 Quarkus combines the build time principle with a reactive core.
-The combination of these two characteristics improve the application concurrency and use resources more efficiently.
+The combination of these two characteristics improves the application concurrency and makes use of resources more efficiently.
 In this chapter, we will see the counterpart of the Villain microservice: the Hero microservice!
 Instead of the imperative approach used for the villains, we will use reactive programming and Hibernate Reactive.
 The logic of the microservice is the same.
@@ -14,7 +14,7 @@ The logic of the microservice is the same.
 include::{plantDir}/3-reactive-physical-architecture.puml[]
 ----
 
-In the following sections, you learn:
+In the following sections, you will learn:
 
 * How to create a new reactive Quarkus application
 * How to implement REST API using JAX-RS and the RESTEasy Reactive extension using a reactive development model
@@ -346,9 +346,9 @@ public class HeroResource {
 ----
 
 The resource implements the same HTTP API as the villain counterpart.
-It does not use a transactional service, but use Panache method directly.
+It does not use a transactional service, but uses Panache method directly.
 
-As you can see instead of returning the result directly, it returns `Uni<T>`.
+As you can see, instead of returning the result directly, it returns `Uni<T>`.
 Quarkus retrieves the `Uni` and _waits_ for the outcome to be available before writing the response.
 During that time, it can handle other requests.
 

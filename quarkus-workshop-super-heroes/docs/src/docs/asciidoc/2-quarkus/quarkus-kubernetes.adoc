@@ -66,7 +66,7 @@ $ mvn clean package -Dquarkus.container-image.build=true -Pnative -Dquarkus.nati
 ----
 
 `-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
-This option is not required is you use Linux.
+This option is not required if you use Linux.
 
 
 == Deploying to Kubernetes
