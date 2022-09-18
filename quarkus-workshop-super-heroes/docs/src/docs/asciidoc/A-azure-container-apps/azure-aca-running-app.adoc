@@ -475,7 +475,7 @@ az monitor log-analytics query \
 
 === Fights Microservice
 
-The Fight microservice invokes the Heroes and Villains microserivces, sends fight messages to a Kafka topics and stores the fights into a MongoDB database.
+The Fight microservice invokes the Heroes and Villains microservices, sends fight messages to a Kafka topics and stores the fights into a MongoDB database.
 We need to configure Kafka (same connection string as the one used by the Statistics microservice) as well as the Postgres database.
 As for the microservice invocations, you need to set the URLs of both Heroes and Villains microservices.
 
@@ -544,7 +544,7 @@ az monitor log-analytics query \
 === Super Hero UI
 
 Like for the previous microservices, we will be deploying the UI as Docker image as we did for the previous microservices.
-But we could have also deployed the Super Hero UI using Azure Static Webapps witch is suited for Angular applications.
+But we could have also deployed the Super Hero UI using Azure Static Webapps which is suited for Angular applications.
 If you are interested in this approach, you can check https://azure.microsoft.com/services/app-service/static/[Azure Static Webapps].
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
