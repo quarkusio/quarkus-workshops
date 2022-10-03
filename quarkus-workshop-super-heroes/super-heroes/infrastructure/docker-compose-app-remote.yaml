@@ -1,6 +1,6 @@
 services:
     rest-villains:
-        image: superheroesregistry.azurecr.io/villains-app:1.0
+        image: registrysuperheroesagoncal.azurecr.io/villains-app:1.0
         container_name: "rest-villains"
         depends_on:
             database:
@@ -11,7 +11,7 @@ services:
             QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://database:5432/villains_database
 
     rest-heroes:
-        image: superheroesregistry.azurecr.io/heroes-app:1.0
+        image: registrysuperheroesagoncal.azurecr.io/heroes-app:1.0
         container_name: "rest-heroes"
         depends_on:
             database:
@@ -22,7 +22,7 @@ services:
             QUARKUS_DATASOURCE_REACTIVE_URL: postgresql://database:5432/heroes_database
 
     rest-fights:
-        image: superheroesregistry.azurecr.io/fights-app:1.0
+        image: registrysuperheroesagoncal.azurecr.io/fights-app:1.0
         container_name: "rest-fights"
         depends_on:
             - rest-villains
@@ -36,7 +36,7 @@ services:
             KAFKA_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
 
     event-statistics:
-        image: superheroesregistry.azurecr.io/statistics-app:1.0
+        image: registrysuperheroesagoncal.azurecr.io/statistics-app:1.0
         container_name: "event-statistics"
         ports:
             - "8085:8085"
@@ -44,7 +44,7 @@ services:
             KAFKA_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
 
     ui-super-heroes:
-        image: superheroesregistry.azurecr.io/super-heroes-ui:1.0
+        image: registrysuperheroesagoncal.azurecr.io/super-heroes-ui:1.0
         container_name: "ui-super-heroes"
         depends_on:
             - rest-fights
@@ -54,7 +54,7 @@ services:
             API_BASE_URL: http://localhost:8082
 
     database:
-        image: "postgres:13.4"
+        image: "postgres:14"
         container_name: "super-database"
         ports:
             - "5432:5432"

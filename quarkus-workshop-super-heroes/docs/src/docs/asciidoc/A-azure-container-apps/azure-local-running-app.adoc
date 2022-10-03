@@ -55,27 +55,13 @@ Execute the following commands to build all our microservices and the UI.
 This will build Docker images out of Linux native executables:
 Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the following Docker commands:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-cd rest-heroes
-docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-heroes .
-cd ..
-
-cd rest-villains
-docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-villains ../..
-cd ..
-
-cd rest-fights
-docker build -f src/main/docker/Dockerfile.build-native -t quarkus/rest-fights .
-cd ..
-
-cd event-statistics
-docker build -f src/main/docker/Dockerfile.build-native -t quarkus/event-statistics .
-cd ..
-
-cd ui-super-heroes
-docker build -f src/main/docker/Dockerfile.build-native -t quarkus/ui-super-heroes .
-cd ..
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocCompiling]
+----
+[source,shell,indent=0]
+----
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocBuilding]
 ----
 
 Check that you have all the Docker images installed locally:
@@ -161,54 +147,41 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
 Tag the image using the `docker tag` commands:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-docker tag quarkus/ui-super-heroes:latest   $UI_IMAGE
-docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
-docker tag quarkus/rest-fights:latest       $FIGHTS_IMAGE
-docker tag quarkus/rest-villains:latest     $VILLAINS_IMAGE
-docker tag quarkus/rest-heroes:latest       $HEROES_IMAGE
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocTagging]
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az acr login \
-  --name "$REGISTRY"
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocLogging]
 ----
 
 You should see the prompt _Login Succeeded_.
 
 Then, push all the images with the following commands:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-docker push $UI_IMAGE
-docker push $STATISTICS_IMAGE
-docker push $FIGHTS_IMAGE
-docker push $VILLAINS_IMAGE
-docker push $HEROES_IMAGE
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocPushing]
 ----
 
 You can check that the images have been pushed to Azure Container Registry by executing the following command:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az acr repository list \
-  --name "$REGISTRY" \
-  --output table
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocListing]
 ----
 
 You can also get some information on a particular repository or image if needed:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az acr repository show \
-  --name "$REGISTRY" \
-  --repository "$HEROES_APP"
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocShowing]
 ----
 
 You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].

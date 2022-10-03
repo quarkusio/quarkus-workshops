@@ -19,15 +19,9 @@ A container apps environment acts as a boundary for our containers.
 Containers deployed on the same environment use the same virtual network and the same Log Analytics workspace.
 Create the container apps environment with the following command:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az containerapp env create \
-  --resource-group "$RESOURCE_GROUP" \
-  --location "$LOCATION" \
-  --tags system="$TAG" \
-  --name "$CONTAINERAPPS_ENVIRONMENT" \
-  --logs-workspace-id "$LOG_ANALYTICS_WORKSPACE_CLIENT_ID" \
-  --logs-workspace-key "$LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateACAEnv]
 ----
 
 === Create the managed Postgres Databases
@@ -38,77 +32,38 @@ We need to create three PostgreSQL databases so the Heroes, Villains and Fights 
 Because we also want to access these database from external SQL client, we make them available to the outside world thanks to the `-public all` parameter.
 Create the databases with the following commands:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server create \
-  --resource-group "$RESOURCE_GROUP" \
-  --location "$LOCATION" \
-  --tags system="$TAG" application="$HEROES_APP" \
-  --name "$HEROES_DB" \
-  --admin-user "$POSTGRES_DB_ADMIN" \
-  --admin-password "$POSTGRES_DB_PWD" \
-  --public all \
-  --sku-name "$POSTGRES_SKU" \
-  --storage-size 4096 \
-  --version "$POSTGRES_DB_VERSION"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresH]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server create \
-  --resource-group "$RESOURCE_GROUP" \
-  --location "$LOCATION" \
-  --tags system="$TAG" application="$VILLAINS_APP" \
-  --name "$VILLAINS_DB" \
-  --admin-user "$POSTGRES_DB_ADMIN" \
-  --admin-password "$POSTGRES_DB_PWD" \
-  --public all \
-  --sku-name "$POSTGRES_SKU" \
-  --storage-size 4096 \
-  --version "$POSTGRES_DB_VERSION"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresV]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server create \
-  --resource-group "$RESOURCE_GROUP" \
-  --location "$LOCATION" \
-  --tags system="$TAG" application="$FIGHTS_APP" \
-  --name "$FIGHTS_DB" \
-  --admin-user "$POSTGRES_DB_ADMIN" \
-  --admin-password "$POSTGRES_DB_PWD" \
-  --public all \
-  --sku-name "$POSTGRES_SKU" \
-  --storage-size 4096 \
-  --version "$POSTGRES_DB_VERSION"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresF]
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Then, we create the database schemas, one for each database:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server db create \
-    --resource-group "$RESOURCE_GROUP" \
-    --server-name "$HEROES_DB" \
-    --database-name "$HEROES_DB_SCHEMA"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaH]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server db create \
-    --resource-group "$RESOURCE_GROUP" \
-    --server-name "$VILLAINS_DB" \
-    --database-name "$VILLAINS_DB_SCHEMA"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaV]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server db create \
-    --resource-group "$RESOURCE_GROUP" \
-    --server-name "$FIGHTS_DB" \
-    --database-name "$FIGHTS_DB_SCHEMA"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaF]
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
@@ -118,14 +73,9 @@ Each microservice comes with a set of database initialization files as well as s
 Thanks to Azure CLI we can execute these SQL scripts.
 Create the tables using the following commands (make sure you are under `quarkus-workshop-super-heroes/super-heroes` to execute them):
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$HEROES_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$HEROES_DB_SCHEMA" \
-    --file-path "infrastructure/db-init/initialize-tables-heroes.sql"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableH]
 ----
 
 [NOTE]
@@ -134,91 +84,51 @@ If you get the error `No module named 'psycopg2._psycopg'` that means that some 
 Check https://github.com/Azure/azure-cli/issues/21998 for help.
 ====
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$VILLAINS_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$VILLAINS_DB_SCHEMA" \
-    --file-path "infrastructure/db-init/initialize-tables-villains.sql"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableV]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$FIGHTS_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$FIGHTS_DB_SCHEMA" \
-    --file-path "infrastructure/db-init/initialize-tables-fights.sql"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableF]
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Now, let's add some super heroes and super villains to these databases:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$HEROES_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$HEROES_DB_SCHEMA" \
-    --file-path "rest-heroes/src/main/resources/import.sql"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataH]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$VILLAINS_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$VILLAINS_DB_SCHEMA" \
-    --file-path "rest-villains/src/main/resources/import.sql"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataV]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$FIGHTS_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$FIGHTS_DB_SCHEMA" \
-    --file-path "rest-fights/src/main/resources/import.sql"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataF]
 ----
 
 
 You can check the content of the tables with the following commands:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$HEROES_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$HEROES_DB_SCHEMA" \
-    --querytext "select * from hero"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataH]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$VILLAINS_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$VILLAINS_DB_SCHEMA" \
-    --querytext "select * from villain"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataV]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az postgres flexible-server execute \
-    --name "$FIGHTS_DB" \
-    --admin-user "$POSTGRES_DB_ADMIN" \
-    --admin-password "$POSTGRES_DB_PWD" \
-    --database-name "$FIGHTS_DB_SCHEMA" \
-    --querytext "select * from fight"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataF]
 ----
 
 === Create the Managed Kafka
@@ -228,40 +138,23 @@ We need to create an Azure event hub for that.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az eventhubs namespace create \
-  --resource-group "$RESOURCE_GROUP" \
-  --location "$LOCATION" \
-  --tags system="$TAG" application="$FIGHTS_APP" \
-  --name "$KAFKA_NAMESPACE"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateEventHub]
 ----
 
 Then, create the Kafka topic where the messages will be sent to and consumed from:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az eventhubs eventhub create \
-  --resource-group "$RESOURCE_GROUP" \
-  --name "$KAFKA_TOPIC" \
-  --namespace-name "$KAFKA_NAMESPACE"
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateEventHubTopic]
 ----
 
 To configure Kafka in the Fight and Statistics microservices, get the connection string with the following commands:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-KAFKA_CONNECTION_STRING=$(az eventhubs namespace authorization-rule keys list \
-  --resource-group "$RESOURCE_GROUP" \
-  --namespace-name "$KAFKA_NAMESPACE" \
-  --name RootManageSharedAccessKey \
-  --output json | jq -r .primaryConnectionString)
-
-JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="'
-KAFKA_JAAS_CONFIG="${JAAS_CONFIG}${KAFKA_CONNECTION_STRING}\";"
-
-echo $KAFKA_CONNECTION_STRING
-echo $KAFKA_JAAS_CONFIG
+include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocEventHubConnection]
 ----
 
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
@@ -280,7 +173,7 @@ That means, that instead of having `REGISTRY="superheroesregistry"$UNIQUE_IDENTI
 
 [source,shell]
 ----
-REGISTRY="superheroesregistry"
+REGISTRY="registrysuperheroesagoncal"
 
 REGISTRY_URL=$(az acr show \
   --resource-group "$RESOURCE_GROUP" \
@@ -309,34 +202,16 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the Heroes container app with the following command:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az containerapp create \
-  --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG" application="$HEROES_APP" \
-  --image "$HEROES_IMAGE" \
-  --name "$HEROES_APP" \
-  --environment "$CONTAINERAPPS_ENVIRONMENT" \
-  --ingress external \
-  --target-port 8083 \
-  --min-replicas 0 \
-  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
-             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
-             QUARKUS_DATASOURCE_USERNAME="$POSTGRES_DB_ADMIN" \
-             QUARKUS_DATASOURCE_PASSWORD="$POSTGRES_DB_PWD" \
-             QUARKUS_DATASOURCE_REACTIVE_URL="$HEROES_DB_CONNECT_STRING"
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppHero]
 ----
 
 The following command sets the URL of the deployed application to the `HEROES_URL` variable:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-HEROES_URL="https://$(az containerapp ingress show \
-    --resource-group "$RESOURCE_GROUP" \
-    --name "$HEROES_APP" \
-    --output json | jq -r .fqdn)"
-
-echo $HEROES_URL
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroURL]
 ----
 
 You can now invoke the Hero microservice APIs with:
@@ -349,12 +224,9 @@ curl "$HEROES_URL/api/heroes" | jq
 
 To access the logs of the Heroes microservice, you can write the following query:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az monitor log-analytics query \
-  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$HEROES_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
-  --output table
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroLogs]
 ----
 
 [WARNING]
@@ -371,34 +243,16 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Notice the minimum of replicas is also set to 0:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az containerapp create \
-  --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG" application="$VILLAINS_APP" \
-  --image "$VILLAINS_IMAGE" \
-  --name "$VILLAINS_APP" \
-  --environment "$CONTAINERAPPS_ENVIRONMENT" \
-  --ingress external \
-  --target-port 8084 \
-  --min-replicas 0 \
-  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
-             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
-             QUARKUS_DATASOURCE_USERNAME="$POSTGRES_DB_ADMIN" \
-             QUARKUS_DATASOURCE_PASSWORD="$POSTGRES_DB_PWD" \
-             QUARKUS_DATASOURCE_JDBC_URL="$VILLAINS_DB_CONNECT_STRING"
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppVillain]
 ----
 
 The following command sets the URL of the deployed application to the `VILLAINS_URL` variable:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-VILLAINS_URL="https://$(az containerapp ingress show \
-    --resource-group "$RESOURCE_GROUP" \
-    --name "$VILLAINS_APP" \
-    --output json | jq -r .fqdn)"
-
-echo $VILLAINS_URL
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainURL]
 ----
 
 You can now invoke the Hero microservice APIs with:
@@ -411,12 +265,9 @@ curl "$VILLAINS_URL/api/villains" | jq
 
 To access the logs of the Villain microservice, you can write the following query:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az monitor log-analytics query \
-  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$VILLAINS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
-  --output table
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainLogs]
 ----
 
 === Statistics Microservice
@@ -427,33 +278,16 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the Statistics container application with the following command:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az containerapp create \
-  --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG" application="$STATISTICS_APP" \
-  --image "$STATISTICS_IMAGE" \
-  --name "$STATISTICS_APP" \
-  --environment "$CONTAINERAPPS_ENVIRONMENT" \
-  --ingress external \
-  --target-port 8085 \
-  --min-replicas 0 \
-  --env-vars KAFKA_BOOTSTRAP_SERVERS="$KAFKA_BOOTSTRAP_SERVERS" \
-             KAFKA_SECURITY_PROTOCOL=SASL_SSL \
-             KAFKA_SASL_MECHANISM=PLAIN \
-             KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG"
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppStatistics]
 ----
 
 The following command sets the URL of the deployed application to the `STATISTICS_URL` variable:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-STATISTICS_URL="https://$(az containerapp ingress show \
-    --resource-group "$RESOURCE_GROUP" \
-    --name "$STATISTICS_APP" \
-    --output json | jq -r .fqdn)"
-
-echo $STATISTICS_URL
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsURL]
 ----
 
 You can now display the Statistics UI with:
@@ -465,12 +299,9 @@ open "$STATISTICS_URL"
 
 To access the logs of the Statistics microservice, you can write the following query:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az monitor log-analytics query \
-  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$STATISTICS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
-  --output table
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsLogs]
 ----
 
 === Fights Microservice
@@ -483,40 +314,16 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Create the Fights container application with the following command:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az containerapp create \
-  --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG" application="$FIGHTS_APP" \
-  --image "$FIGHTS_IMAGE" \
-  --name "$FIGHTS_APP" \
-  --environment "$CONTAINERAPPS_ENVIRONMENT" \
-  --ingress external \
-  --target-port 8082 \
-  --min-replicas 0 \
-  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
-             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
-             QUARKUS_DATASOURCE_USERNAME="$POSTGRES_DB_ADMIN" \
-             QUARKUS_DATASOURCE_PASSWORD="$POSTGRES_DB_PWD" \
-             QUARKUS_DATASOURCE_JDBC_URL="$FIGHTS_DB_CONNECT_STRING" \
-             KAFKA_BOOTSTRAP_SERVERS="$KAFKA_BOOTSTRAP_SERVERS" \
-             KAFKA_SECURITY_PROTOCOL=SASL_SSL \
-             KAFKA_SASL_MECHANISM=PLAIN \
-             KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG" \
-             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_HEROPROXY_MP_REST_URL="$HEROES_URL" \
-             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_VILLAINPROXY_MP_REST_URL="$VILLAINS_URL"
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppFight]
 ----
 
 The following command sets the URL of the deployed application to the `FIGHTS_URL` variable:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-FIGHTS_URL="https://$(az containerapp ingress show \
-    --resource-group "$RESOURCE_GROUP" \
-    --name "$FIGHTS_APP" \
-    --output json | jq -r .fqdn)"
-
-echo $FIGHTS_URL
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppFightURL]
 ----
 
 Use the following curl commands to access the Fight microservice.
@@ -533,12 +340,9 @@ curl "$FIGHTS_URL/api/fights/randomfighters" | jq
 
 To access the logs of the Fight microservice, you can write the following query:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az monitor log-analytics query \
-  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
-  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$FIGHTS_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
-  --output table
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppFightLogs]
 ----
 
 === Super Hero UI
@@ -551,32 +355,26 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For now, let's continue with Azure Container Apps and deploy the UI as a Docker image with the following command:
 
-[source,shell]
+[source,shell,indent=0]
 ----
-az containerapp create \
-  --resource-group "$RESOURCE_GROUP" \
-  --tags system="$TAG" application="$UI_APP" \
-  --image "$UI_IMAGE" \
-  --name "$UI_APP" \
-  --environment "$CONTAINERAPPS_ENVIRONMENT" \
-  --ingress external \
-  --target-port 8080 \
-  --env-vars API_BASE_URL="$FIGHTS_URL"
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppUI]
 ----
 
-[source,shell]
+[source,shell,indent=0]
 ----
-UI_URL="https://$(az containerapp ingress show \
-    --resource-group "$RESOURCE_GROUP" \
-    --name "$UI_APP" \
-    --output json | jq -r .fqdn)"
-
-echo $UI_URL
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppUIURL]
 ----
 
 [source,shell]
 ----
 open "$UI_URL"
+----
+
+To access the UI logs, you can write the following query:
+
+[source,shell,indent=0]
+----
+include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppUILogs]
 ----
 
 == Running the Application
