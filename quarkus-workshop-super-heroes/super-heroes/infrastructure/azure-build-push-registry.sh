@@ -1,0 +1,142 @@
+#!/bin/bash -e
+
+# This script builds all the docker images and pushes them to Azure Registry
+# See https://quarkus.io/quarkus-workshops/super-heroes/index-azure.html for details
+
+source ./azure-setup-env-var.sh
+
+cd ..
+
+
+echo ">>> Compiling the microservices..."
+
+# tag::adocCompiling[]
+cd extension-version
+mvn clean install
+cd ..
+
+cd rest-heroes
+mvn package -Pnative
+cd ..
+
+cd rest-villains
+mvn package -Pnative
+cd ..
+
+cd rest-fights
+mvn package -Pnative
+cd ..
+
+cd event-statistics
+mvn package -Pnative
+cd ..
+# end::adocCompiling[]
+
+
+echo ">>> Building the microservices Docker images..."
+
+# tag::adocBuilding[]
+cd rest-heroes
+docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-heroes .
+cd ..
+
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-villains ../..
+cd ..
+
+cd rest-fights
+docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-fights .
+cd ..
+
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native -t quarkus/event-statistics .
+cd ..
+
+cd ui-super-heroes
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/ui-super-heroes .
+cd ..
+# end::adocBuilding[]
+
+
+echo ">>> Tagging the Docker images..."
+
+REGISTRY_URL=$(az acr show \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$REGISTRY" \
+  --query "loginServer" \
+  --output tsv)
+
+HEROES_IMAGE="${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}"
+VILLAINS_IMAGE="${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}"
+FIGHTS_IMAGE="${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}"
+STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
+UI_IMAGE="${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}"
+
+echo "> Tagging UI..." $UI_IMAGE
+echo "> Tagging Statistics..." $STATISTICS_IMAGE
+echo "> Tagging Fights..." $FIGHTS_IMAGE
+echo "> Tagging Villains..." $VILLAINS_IMAGE
+echo "> Tagging Heroes..." $HEROES_IMAGE
+
+# tag::adocTagging[]
+docker tag quarkus/ui-super-heroes:latest   $UI_IMAGE
+docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
+docker tag quarkus/rest-fights:latest       $FIGHTS_IMAGE
+docker tag quarkus/rest-villains:latest     $VILLAINS_IMAGE
+docker tag quarkus/rest-heroes:latest       $HEROES_IMAGE
+# end::adocTagging[]
+
+
+echo ">>> Logging into Container Registry..."
+
+# tag::adocLogging[]
+az acr login \
+  --name "$REGISTRY"
+# end::adocLogging[]
+
+
+echo ">>> Pushing images into Container Registry..."
+
+# tag::adocPushing[]
+docker push $UI_IMAGE
+docker push $STATISTICS_IMAGE
+docker push $FIGHTS_IMAGE
+docker push $VILLAINS_IMAGE
+docker push $HEROES_IMAGE
+# end::adocPushing[]
+
+
+echo ">>> Listing images from the Container Registry..."
+
+# tag::adocListing[]
+az acr repository list \
+  --name "$REGISTRY" \
+  --output table
+# end::adocListing[]
+
+
+echo ">>> Showing images from the Container Registry..."
+
+echo "> Showing Heroes..."
+# tag::adocShowing[]
+az acr repository show \
+  --name "$REGISTRY" \
+  --repository "$HEROES_APP"
+# end::adocShowing[]
+
+echo "> Showing Villains..."
+az acr repository show \
+  --name "$REGISTRY" \
+  --repository "$VILLAINS_APP"
+echo "> Showing Fights..."
+az acr repository show \
+  --name "$REGISTRY" \
+  --repository "$FIGHTS_APP"
+echo "> Showing Statistics..."
+az acr repository show \
+  --name "$REGISTRY" \
+  --repository "$STATISTICS_APP"
+echo "> Showing UI..."
+az acr repository show \
+  --name "$REGISTRY" \
+  --repository "$UI_APP"
