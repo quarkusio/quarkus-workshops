@@ -57,11 +57,11 @@ Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the fol
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocCompiling]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocCompiling]
 ----
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocBuilding]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocBuilding]
 ----
 
 Check that you have all the Docker images installed locally:
@@ -149,7 +149,7 @@ Tag the image using the `docker tag` commands:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocTagging]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocTagging]
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
@@ -158,7 +158,7 @@ To be able to push these Docker images to Azure Registry, we first need to log i
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocLogging]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocLogging]
 ----
 
 You should see the prompt _Login Succeeded_.
@@ -167,21 +167,21 @@ Then, push all the images with the following commands:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocPushing]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocPushing]
 ----
 
 You can check that the images have been pushed to Azure Container Registry by executing the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocListing]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocListing]
 ----
 
 You can also get some information on a particular repository or image if needed:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry[tags=adocShowing]
+include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocShowing]
 ----
 
 You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].
