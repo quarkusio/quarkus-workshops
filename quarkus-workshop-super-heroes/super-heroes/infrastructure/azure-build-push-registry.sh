@@ -16,19 +16,19 @@ mvn clean install
 cd ..
 
 cd rest-heroes
-mvn package -Pnative
+mvn clean package
 cd ..
 
 cd rest-villains
-mvn package -Pnative
+mvn clean package
 cd ..
 
 cd rest-fights
-mvn package -Pnative
+mvn clean package
 cd ..
 
 cd event-statistics
-mvn package -Pnative
+mvn clean package
 cd ..
 # end::adocCompiling[]
 
@@ -37,19 +37,19 @@ echo ">>> Building the microservices Docker images..."
 
 # tag::adocBuilding[]
 cd rest-heroes
-docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-heroes .
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-heroes .
 cd ..
 
 cd rest-villains
-docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-villains ../..
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-villains ../..
 cd ..
 
 cd rest-fights
-docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-fights .
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-fights .
 cd ..
 
 cd event-statistics
-docker build -f src/main/docker/Dockerfile.native -t quarkus/event-statistics .
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/event-statistics .
 cd ..
 
 cd ui-super-heroes
