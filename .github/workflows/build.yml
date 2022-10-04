@@ -22,36 +22,23 @@ jobs:
     needs: [build_java11]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Install JDK 11
         uses: actions/setup-java@v2
         with:
           distribution: temurin
           java-version: 11
       - name: Site generation
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_AUTH_SECRET }}
         run: |  
           sudo apt-get install graphviz
 
-          git config --global user.email "clement@apache.org"
-          git config --global user.name "Clement Escoffier"
-
           cd quarkus-workshop-super-heroes/docs      
-          export old=`pwd`
           mvn install
-          cd /tmp
-          rm -fR /tmp/quarkus-workshops
-          git clone https://cescoffier:${GITHUB_TOKEN}@github.com/quarkusio/quarkus-workshops.git
-          cd quarkus-workshops
-          git checkout gh-pages
-          cd $old
-          rm -fR /tmp/quarkus-workshops/super-heroes
-          rsync -avz ./target/generated-asciidoc/ /tmp/quarkus-workshops/super-heroes
-          cp /tmp/quarkus-workshops/super-heroes/spine.html /tmp/quarkus-workshops/super-heroes/index.html
-          cp /tmp/quarkus-workshops/super-heroes/spine-azure.html /tmp/quarkus-workshops/super-heroes/index-azure.html
-          cd /tmp/quarkus-workshops
-          git add .
-          git commit -m "update Quarkus workshop"
-          git push origin gh-pages      
-
+          
+          # make an index.html
+          cp target/generated-asciidoc/spine.html target/generated-asciidoc/index.html
+      - name: Publication
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./quarkus-workshop-super-heroes/docs/target/generated-asciidoc/
