@@ -14,7 +14,7 @@ IMPORTANT: This microservice uses the imperative development model but use react
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 Open a terminal and run the following command:
 
@@ -40,7 +40,7 @@ If you open the `pom.xml` file, you will see that the following extensions have 
 You can see that beyond the extensions we have used so far, we added the Kafka support which uses Eclipse MicroProfile Reactive Messaging.
 Stay tuned.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 The Quarkus Maven plugin has generated some code that we won't be using.
 You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
@@ -51,7 +51,6 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 ----
 <module>super-heroes/rest-fights</module>
 ----
-
 
 == Directory Structure
 
@@ -110,8 +109,7 @@ A fight is between a hero and a villain.
 Each time there is a fight, there is a winner and a loser.
 So the `Fight` entity is there to store all these fights.
 
-
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.fight.Fight` class with the following content:
 
@@ -159,7 +157,7 @@ The Fight REST API will ultimately invoke the Hero and Villain APIs (next sectio
 The `Fighters` class has one `Hero` and one `Villain`.
 Notice that `Fighters` is not an entity, it is not persisted in the database, just marshalled and unmarshalled to JSon.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.fight.Fighters` class, with the following content:
 
@@ -187,7 +185,7 @@ public class Fighters {
 It does not compile because it needs a `Hero`  class and a `Villain` class.
 The Fight REST API is just interested in the hero's name, level, picture and powers (not the other name as described in the Hero API).
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 So create the `Hero` bean looks like this (notice the `client` subpackage):
 
@@ -243,7 +241,7 @@ So, these classes are just used to map the results from the `Hero` and `Villain`
 
 Now, let's create a `FightService` class that orchestrate the fights.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 Create the `io.quarkus.workshop.superheroes.fight.FightService` class with the following content:
 
@@ -354,8 +352,7 @@ Later, this method will invoke the Hello and Villain API to get a random Hero an
 
 To expose a REST API we also need a `FightResource` (with OpenAPI annotations of course).
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 [source,java]
 ----
@@ -431,7 +428,7 @@ Feel free to add them if you want complete OpenAPI descriptors.
 
 == Adding Data
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 To load some SQL statements when Hibernate ORM starts, create the `src/main/resources/import.sql` file with the following content:
 
@@ -449,7 +446,7 @@ VALUES (nextval('hibernate_sequence'), current_timestamp, 'Annihilus', 23, 'http
 
 As usual, we need to configure the application.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 In the `application.properties` file add:
 
@@ -483,7 +480,7 @@ Note that the fight service uses the port `8082`.
 
 We need to test our REST API.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 For that, copy the following `FightResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/fight` directory.
 
@@ -639,7 +636,7 @@ public class FightResourceTest {
 
 == Running, Testing and Packaging the Application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 First, delete the generated `FightResourceIT` native test class, as we won't run native tests.
 Then, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).

@@ -1,0 +1,166 @@
+
+
+== The first contract test
+
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+
+Add the Quarkus extension to the `pom.xml` of the Fights service:
+
+[source,xml]
+----
+        <dependency>
+            <groupId>io.quarkiverse.pact</groupId>
+            <artifactId>quarkus-pact-consumer</artifactId>
+            <version>{quarkus-pact-version}</version>
+            <scope>test</scope>
+        </dependency>
+----
+
+
+The Pact framework will stand up a server which listens on a port.
+To avoid port conflicts between the real services and the Pact stubs, let's use a different port for the contract instances.
+Open the fight service's `application.properties` and add the following
+
+----
+%test.io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/url=http://localhost:8093
+----
+
+The `%test` scopes the updated property to only apply in the test mode.
+
+We will be using the https://docs.pact.io/implementation_guides/jvm/consumer/junit5[junit 5 pact libraries].
+
+Create a class called `FightResourceConsumerTest.java`.
+
+[source,java]
+----
+package io.quarkus.workshop.superheroes.fight;
+
+import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
+import au.com.dius.pact.core.model.V4Pact;
+import au.com.dius.pact.core.model.annotations.Pact;
+import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.workshop.superheroes.fight.client.DefaultTestVillain;
+import org.hamcrest.core.Is;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.util.Map;
+
+import static au.com.dius.pact.consumer.dsl.LambdaDsl.newJsonBody;
+import static io.quarkus.workshop.superheroes.fight.client.DefaultTestHero.DEFAULT_HERO_LEVEL;
+import static io.quarkus.workshop.superheroes.fight.client.DefaultTestHero.DEFAULT_HERO_NAME;
+import static io.quarkus.workshop.superheroes.fight.client.DefaultTestHero.DEFAULT_HERO_PICTURE;
+import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.OK;
+
+@QuarkusTest
+@ExtendWith(PactConsumerTestExt.class)
+@PactTestFor(
+    providerName = "rest-heroes",
+    // Hard-code the Pact MockServer to what we defined in application.properties
+    port = "8093"
+)
+public class FightResourceConsumerTest {
+
+    protected static final String HERO_API_BASE_URI = "/api/heroes";
+    protected static final String HERO_RANDOM_URI = HERO_API_BASE_URI + "/random";
+
+    @Pact(consumer = "rest-fights")
+    public V4Pact randomHeroFoundPact(PactDslWithProvider builder) {
+        return builder
+            .uponReceiving("A request for a random hero")
+            .path(HERO_RANDOM_URI)
+            .method(HttpMethod.GET)
+            .headers(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+            .willRespondWith()
+            .status(Response.Status.OK.getStatusCode())
+            .headers(Map.of(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+            .body(newJsonBody(body ->
+                    body
+                        .stringType("name", DEFAULT_HERO_NAME)
+                        .integerType("level", DEFAULT_HERO_LEVEL)
+                        .stringType("picture", DEFAULT_HERO_PICTURE)
+                ).build()
+            )
+            .toPact(V4Pact.class);
+    }
+}
+----
+
+Here we are setting up a test to run with Pact and telling Pact what ports it should stand up the mock server on.
+We also define how the mock should behave.
+
+[WARNING]
+Because of the complexities of Kotlin classloading, Pact does not work with continuous testing.
+
+You will need to run tests the old-fashioned way, with
+
+[shell]
+----
+mvn verify
+----
+
+
+Run the build (using `mvn verify`).
+You should see a failure, because we have a mock, but nothing is using it.
+
+
+Add in a test method.
+You'll notice this is very similar to the one in `FightResourceTest`; you could even copy and paste from that class.
+
+[source,java]
+----
+     @Test
+    @PactTestFor(pactMethod = "randomHeroFoundPact")
+    void randomHeroFound() {
+        given()
+            .when().get("/api/fights/randomfighters")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .contentType(APPLICATION_JSON)
+            .body("hero.name", Is.is(DEFAULT_HERO_NAME))
+            .body("hero.picture", Is.is(DEFAULT_HERO_PICTURE))
+            .body("hero.level", Is.is(DEFAULT_HERO_LEVEL))
+            .body("villain.name", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_NAME))
+            .body("villain.picture", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_PICTURE))
+            .body("villain.level", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_LEVEL));
+    }
+----
+
+Run the tests.
+They should all pass.
+
+Note that we're only testing heroes here. If we were to test getting villains, the test would fail. Can you think why that might be?
+
+[TIP]
+When we use Pact, the Pact framework stands up a server which acts as a mock. Remember that we defined a global `@Mock` for the `VillainProxy`.
+That mock would interfere with the Pact mock.
+
+=== The contract
+Look in `target/pacts`.
+You should find a json contract.
+Inspect it to see how the contents of the `@Pact` method have been turned into json.
+
+What we want to be testing when we use Pact in our tests is the behaviour of our own code.
+Here, although we check the value of the hero fields, we're trying to make sure that the *fights service* is doing the right thing.
+Our expectation for the fights service is pretty low: it just has to pass through what it gets from the heroes service.
+
+[WARNING]
+This test is just on the edge of falling into a common Pact anti-pattern, testing the mock.
+We do *not* need to do detailed validation of what comes back from the pact server, because it's a mock that we define.
+
+A more interesting contract test would exercise some of the more complex fights functionality, while using the mock we've defined.
+Can you write one?
+(You might also need to define a villain pact.)
+

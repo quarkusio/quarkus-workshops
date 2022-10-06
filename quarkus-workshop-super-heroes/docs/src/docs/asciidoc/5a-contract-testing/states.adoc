@@ -1,0 +1,55 @@
+== States
+
+One of the advantages of Pact over simpler contract verification methods, such as syntax-checking, is that a pact can include a range of expected responses, depending on what was passed in, and external state.
+
+This allows for a richer set of checks.
+For example, it can exercise more interesting logic on the consumer side, and it can act as a proper functional test for the provider.
+
+Let's exercise some error-handling.
+What happens if no heroes can be found?
+In that case, we expect that the heroes server will return a 404. Let's get that into the contract, and exercise the fight service's error handling.
+
+Add a new pact.
+We use the `given()` to identify the state.
+[source,java]
+
+----
+@Pact(consumer = "rest-fights")
+    public V4Pact randomHeroNotFoundPact(PactDslWithProvider builder) {
+        return builder
+            .given("No random hero found")
+            .uponReceiving("A request for a random hero")
+            .path(HERO_RANDOM_URI)
+            .method(HttpMethod.GET)
+            .headers(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+            .willRespondWith()
+            .status(Status.NOT_FOUND.getStatusCode())
+            .toPact(V4Pact.class);
+    }
+----
+
+Then, we can define another test method, which exercises our service, given this unhappy state.
+If the hero service returns 404, we want to check that the fallback instances we defined earlier are used.
+We also want to check that things work as normal for the villain part of the response.
+
+[source,java]
+----
+    @Test
+    @PactTestFor(pactMethod = "randomHeroNotFoundPact")
+    void shouldGetRandomFighters() {
+        given()
+            .when().get("/api/fights/randomfighters")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .contentType(APPLICATION_JSON)
+            .body("hero.name", Is.is("Fallback hero"))
+            .body("hero.picture", Is.is("https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero"))
+            .body("hero.level", Is.is(1))
+            .body("villain.name", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_NAME))
+            .body("villain.picture", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_PICTURE))
+            .body("villain.level", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_LEVEL));
+    }
+----
+
+So far, we've only defined a contract for the hero service?
+Can you apply the same techniques to make a contract for the villain service?
