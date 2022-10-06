@@ -1,6 +1,5 @@
 <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
-<meta name="description" content="A hand's on lab about Quarkus">
-
+<meta name="description" content="A hands on lab about Quarkus">
 
 <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
 <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
@@ -14,9 +13,9 @@
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         hljs.initHighlightingOnLoad();
-        $('pre.highlight code').each(function(i, block) {
+        $('pre.highlight code').each(function (i, block) {
             hljs.highlightBlock(block);
         });
 
@@ -34,17 +33,17 @@
             pre[i].appendChild(b);
         }
         var clipboard = new ClipboardJS('.clipboard', {
-            target: function(b) {
+            target: function (b) {
                 var p = b.parentNode;
                 return p.getElementsByClassName("code")[0]
                     ? p.getElementsByClassName("code")[0]
                     : p.childNodes[0];
             }
         });
-        clipboard.on('success', function(e) {
+        clipboard.on('success', function (e) {
             e.clearSelection();
             e.trigger.textContent = 'Copied';
-            setTimeout(function() {
+            setTimeout(function () {
                 e.trigger.textContent = 'Copy';
             }, 2000);
         });
