@@ -1,9 +1,12 @@
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";
 @import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
 
+html, body {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
 
 body {
-    margin: 10px;
+  margin: 10px;
 }
 
 p,
@@ -11,40 +14,40 @@ blockquote,
 dt,
 td.content,
 span.alt {
-    font-size: medium;
+  font-size: medium;
 }
 
 #header,
 #content,
 #footnotes,
 #footer {
-    max-width: 90.5em;
+  max-width: 90.5em;
 }
 
 .quoteblock blockquote,
 .quoteblock blockquote,
 td.content {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 .assignment pre code {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .sidebarblock p,
 .sidebarblock dt,
 .sidebarblock td.content,
 p.tableblock {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 a[data-toggle='collapse'] {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 h1 {
-    font-size: 46px;
-    font-weight: bold;
+  font-size: 46px;
+  font-weight: bold;
 }
 
 #toctitle,
@@ -60,9 +63,9 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: inherit;
-    line-height: 1.1;
-    color: darkblue;
+  font-family: inherit;
+  line-height: 1.1;
+  color: darkblue;
 }
 
 h3, h4, .h3, .h4 {
@@ -71,27 +74,27 @@ h3, h4, .h3, .h4 {
 }
 
 h1 {
-    margin: .67em 0;
-    font-size: 1.5em;
+  margin: .67em 0;
+  font-size: 1.5em;
 }
 
 li p {
-    font-size: medium;
+  font-size: medium;
 }
 
 code {
-    color: #c7254e;
+  color: #c7254e;
 }
 
 code,
 kbd,
 pre,
 samp {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .quoteblock blockquote:before {
-    vertical-align: baseline;
+  vertical-align: baseline;
 }
 
 .listingblock:hover .clipboard {
