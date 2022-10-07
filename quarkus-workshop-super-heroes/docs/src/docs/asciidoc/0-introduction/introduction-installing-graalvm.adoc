@@ -1,16 +1,16 @@
 [[introduction-installing-graalvm]]
-
 == GraalVM {graalvm-version}
 
 GraalVM extends the _Java Virtual Machine_ (JVM) to support more languages and several execution modes.footnote:[GraalVM https://www.graalvm.org]
 It supports a large set of languages:
-Java of course, other JVM-based languages (such as Groovy, Kotlin etc.) but also JavaScript, Ruby, Python, R and  C/C++.
+Java of course, other JVM-based languages (such as Groovy, Kotlin etc.) but also JavaScript, Ruby, Python, R and C/C++.
 It includes a high-performance Java compiler, which can be used in a _Just-In-Time_ (JIT) configuration on the HotSpot VM or in an _Ahead-Of-Time_ (AOT) configuration with the GraalVM native compiler.
 One objective of GraalVM is to improve the performance of Java virtual machine-based languages to match the performance of native languages.
 
 === Prerequisites for GraalVM
 
-On Linux, you need GCC and the Glibc and zlib headers. Examples for common distributions:
+On Linux, you need GCC and the Glibc and zlib headers.
+Examples for common distributions:
 
 [source,shell]
 ----
@@ -46,7 +46,14 @@ Follow the installation instructions:
 Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home).
 
 The `native-image` tool must be installed.
-It can be done by running `gu install native-image` from your GraalVM `bin` directory.
+It can be done by running
+
+[source,shell]
+----
+gu install native-image
+----
+
+from your GraalVM `bin` directory.
 
 [NOTE]
 .Mac OS X - Catalina
