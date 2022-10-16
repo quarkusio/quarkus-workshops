@@ -184,7 +184,7 @@ The method also receives the `ApplicationInfoBuildItem`.
 Quarkus provides many _build items_ which can be reused.
 `ApplicationInfoBuildItem` contains the version.
 
-The last parameter of the `recordVersion` method is the `VersionConfig` which provides access to the user configuration we created in the previous step.
+The second parameter of the `recordVersion` method is the `VersionConfig` which provides access to the user configuration we created in the previous step.
 
 The code is straightforward: if `enabled` is `true`, the code calls the recorder which prints the version.
 
