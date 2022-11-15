@@ -2,11 +2,11 @@
 = From Java to Kubernetes
 
 [NOTE]
-----
+====
 This section is optional and demonstrates how to ask Quarkus to create a container and deploy it to Kubernetes.
 We will need a running Kubernetes.
 We will use Rancher Desktop as indicated in the prerequisites.
-----
+====
 
 == Prerequisites
 
@@ -75,13 +75,13 @@ Quarkus can also run our application in Kubernetes and compute the Kubernetes de
 In addition to allow customizing any part of the descriptor, it is possible to configure config maps, secrets...
 
 [IMPORTANT]
-----
+====
 As mentioned above, we will use Rancher Desktop.
 Adapt the instructions for your Kubernetes:
 
 1. Make sure you are logged in
 2. Make sure you use the correct namespace
-----
+====
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
