@@ -111,6 +111,13 @@ extension-version
 @endsalt
 ----
 
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section
+
+[source,xml]
+----
+<module>super-heroes/extension-version</module>
+----
+
 == The version extension
 
 The goal of this chapter is to implement an extension that displays the application version on startup.
@@ -150,7 +157,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 First, let's create the configuration class that will allow users to dynamically configure whether the version should be printed:
 
-Create new class `io.quarkus.workshop.superheroes.version.deployment.VersionConfig` with the following content:
+Under the `deployment` module, create new class `io.quarkus.workshop.superheroes.version.deployment.VersionConfig` with the following content:
 
 [source,java]
 ----
