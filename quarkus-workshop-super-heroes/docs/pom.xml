@@ -34,8 +34,8 @@
         <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
         <github.url>https://github.com/quarkusio/quarkus-workshops/tree/main/quarkus-workshop-super-heroes</github.url>
         <github.issue>https://github.com/quarkusio/quarkus-workshops/issues</github.issue>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -87,7 +87,7 @@
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>22.0</graalvm-version>
                         <maven-version>3.8.x</maven-version>
-                        <quarkus-version>2.9.2.Final</quarkus-version>
+                        <quarkus-version>2.14.0.Final</quarkus-version>
                     </attributes>
                 </configuration>
                 <executions>
