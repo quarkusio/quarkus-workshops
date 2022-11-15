@@ -35,6 +35,10 @@ The table at the bottom shows the list of the previous fights.
 
 image::angular-ui.png[]
 
+The Statistics UI shows the number of fights per hero and villain.
+
+image::angular-ui-stats.png[role=half-size]
+
 == How Does This Workshop Work?
 
 You have this material in your hands (either electronically or printed), and you can now follow it step by step.
