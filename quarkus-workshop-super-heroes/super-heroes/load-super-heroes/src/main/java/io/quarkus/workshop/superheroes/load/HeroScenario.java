@@ -35,7 +35,7 @@ import static javax.ws.rs.client.Entity.json;
 
 public class HeroScenario extends ScenarioInvoker {
 
-    private static final int NB_HEROES = 951;
+    private static final int NB_HEROES = 941;
 
     @Override
     protected String getTargetUrl() {

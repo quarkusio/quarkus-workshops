@@ -35,7 +35,7 @@ import static javax.ws.rs.client.Entity.json;
 
 public class VillainScenario extends ScenarioInvoker {
 
-    private static final int NB_VILLAINS = 581;
+    private static final int NB_VILLAINS = 570;
 
     private static final String targetUrl = "http://localhost:8084";
 
