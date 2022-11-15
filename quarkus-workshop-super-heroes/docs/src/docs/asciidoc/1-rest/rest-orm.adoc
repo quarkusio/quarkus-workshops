@@ -299,7 +299,7 @@ If it's not, the transaction will be rolled back.
 
 Our project now requires a connection to a PostgreSQL database.
 In dev mode, no need to start a database or configure anything.
-Quarkus does that for us.
+Quarkus does that for us (just make sure you have Docker up and running).
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
@@ -326,7 +326,8 @@ In the log, you will see the following:
 2021-09-21 15:58:46,217 INFO  [🐳 .2]] (build-38) Starting container with ID: a7fd54795185ab17baf487388c1e3280fdfea3f6ef8670c0336d367dba3e1d9e
 2021-09-21 15:58:46,545 INFO  [🐳 .2]] (build-38) Container postgres:13.2 is starting: a7fd54795185ab17baf487388c1e3280fdfea3f6ef8670c0336d367dba3e1d9e
 2021-09-21 15:58:48,043 INFO  [🐳 .2]] (build-38) Container postgres:13.2 started in PT1.959377S
-2021-09-21 15:58:48,044 INFO  [io.qua.dev.pos.dep.PostgresqlDevServicesProcessor] (build-38) Dev Services for PostgreSQL started.
+
+2021-09-21 15:58:48,044 INFO  [io.qua.dev.pos.dep.PostgresqlDevServicesProcessor] (build-38) Dev Services for the default datasource (postgresql) started
 ----
 
 Quarkus detects the need for a database and starts one using a Docker container.
@@ -568,7 +569,7 @@ public class VillainResourceTest {
     private static final int DEFAULT_LEVEL = 42;
     private static final int UPDATED_LEVEL = 43;
 
-    private static final int NB_VILLAINS = 581;
+    private static final int NB_VILLAINS = 570;
     private static String villainId;
 
     @Test

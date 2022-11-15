@@ -1,7 +1,7 @@
 version: "3"
 services:
     database:
-        image: "postgres:13.4"
+        image: "postgres:14"
         container_name: "super-database"
         ports:
             - "5432:5432"
@@ -46,3 +46,4 @@ services:
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
             KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+

@@ -106,8 +106,8 @@ To build the completed workshop, you need to run the following commands from the
 
 [source, shell]
 ----
-> mvn clean install -f super-heroes/extension-version
-> mvn clean install -Pcomplete
+$ mvn clean install -f super-heroes/extension-version
+$ mvn clean install -Pcomplete
 ----
 
 == Ready?

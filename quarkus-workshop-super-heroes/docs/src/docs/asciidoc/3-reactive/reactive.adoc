@@ -448,7 +448,7 @@ public class HeroResourceTest {
     private static final int DEFAULT_LEVEL = 42;
     private static final int UPDATED_LEVEL = 43;
 
-    private static final int NB_HEROES = 951;
+    private static final int NB_HEROES = 941;
     private static String heroId;
 
     @Test
@@ -661,6 +661,7 @@ Remember that you can also check Swagger UI by going to the dev console: http://
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-Then, build the application using: `./mvnw package`, and run the application using `java -jar target/quarkus-app/quarkus-run.jar`
+Then, build the application using: `./mvnw package`, and run the application using `java -jar target/quarkus-app/quarkus-run.jar`.
+Open your browser and go to http://localhost:8083/api/heroes.
 
 

@@ -2,11 +2,11 @@
 
 = Rancher Desktop
 
-.NOTE
-----
+[NOTE]
+====
 You only need Rancher Desktop if you didn't install Docker or if you want to deploy the applications to a local
 Kubernetes instance. You can also use https://minikube.sigs.k8s.io/docs/start/[minikube] for the latter.
-----
+====
 
 Rancher Desktop runs Kubernetes and container management on your desktop.
 You can choose the version of Kubernetes you want to run.

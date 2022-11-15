@@ -47,7 +47,7 @@ You can apply the same to the other microservices.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-To install the MicroProfile Health dependency, just run the following command:
+To install the MicroProfile Health dependency, just run the following command under the Hero microservice directory (`super-heroes/rest-heroes`):
 
 [source,shell]
 ----
@@ -90,24 +90,20 @@ The JSON output looks like this:
 [source,json]
 ----
 {
-  "status": "UP",
-  "checks": [
-    {
-      "name": "SmallRye Reactive Messaging - liveness check",
-      "status": "UP",
-      "data": {
-        "fights": "[OK]"
-      }
-    },
-    {
-      "name": "Database connections health check",
-      "status": "UP"
-    }
-  ]
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Reactive PostgreSQL connections health check",
+            "status": "UP",
+            "data": {
+                "<default>": "UP"
+            }
+        }
+    ]
 }
 ----
 
-You can also have a nicer graphical representation by going to `/q/health-ui`.
+You can also have a nicer graphical representation by going to http://localhost:8083/q/health-ui.
 If you check the health of our microservices, you will notice that Quarkus had automatically defined common health checks.
 But let's define some specific to our microservices.
 
@@ -155,17 +151,18 @@ Because we defined our health check to be a liveness procedure (with `@Liveness`
 
 [source,json]
 ----
+
 {
-  "status": "UP",
-  "checks": [
-    {
-      "name": "Ping Hero REST Endpoint",
-      "status": "UP",
-      "data": {
-        "Response": "Hello Hero Resource"
-      }
-    }
-  ]
+    "status": "UP",
+    "checks": [
+        {
+            "name": "Ping Hero REST Endpoint",
+            "status": "UP",
+            "data": {
+                "Response": "Hello Hero Resource"
+            }
+        }
+    ]
 }
 ----
 
