@@ -1,7 +1,7 @@
 version: "3"
 services:
     database:
-        image: "postgres:13.4"
+        image: "postgres:14"
         container_name: "super-database"
         ports:
             - "5432:5432"
