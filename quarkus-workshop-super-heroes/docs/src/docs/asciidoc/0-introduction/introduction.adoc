@@ -41,3 +41,6 @@ What you are going to learn:
 * And much more!
 
 Ready? Here we go!
+Check the workshop at https://quarkus.io/quarkus-workshops/super-heroes/index.html of flash the QR Code if you don’t want to type.
+
+image::qrcode.png[]
