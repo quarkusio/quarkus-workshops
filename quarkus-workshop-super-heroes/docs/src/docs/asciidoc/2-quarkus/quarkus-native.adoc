@@ -27,8 +27,7 @@ To do so, you will find in the `pom.xml` the following profile:
     </property>
   </activation>
   <properties>
-    <!-- ... -->
-  <properties>
+    <skipITs>false</skipITs>
     <quarkus.package.type>native</quarkus.package.type>
   </properties>
 </profile>
