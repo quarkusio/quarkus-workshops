@@ -637,14 +637,13 @@ public class FightResourceTest {
 }
 ----
 
-Quarkus automatically starts the PostGreSQL database as well as a Kafka broker.
-Also, delete the generated `FightResourceIT` native test class, as we won't run native tests.
-
 == Running, Testing and Packaging the Application
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+First, delete the generated `FightResourceIT` native test class, as we won't run native tests.
+Then, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+Quarkus automatically starts the PostGreSQL database as well as a Kafka broker.
 
 Now that the tests are green, we are ready to run our application.
 Use `./mvnw quarkus:dev` to start it (notice that there is no banner yet, it will come later).
