@@ -332,7 +332,7 @@ void shouldGetRandomFighters() {
 }
 --
 
-Now, run the test form the dev mode, or from your IDE.
+Now, run the test from the dev mode, or from your IDE.
 You can shutdown the hero and villain services to verify that the tests still pass.
 
 Don't forger to restart them before going further.
