@@ -478,8 +478,6 @@ public VillainResource(Logger logger, VillainService service) {
 
 == Adding Data
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
 To load some SQL statements when Hibernate ORM starts, add the following `import.sql` in the root of the `resources` directory.
 It contains SQL statements terminated by a semicolon.
 This is useful to have a data set ready for the tests or demos.
@@ -493,6 +491,8 @@ VALUES (nextval('hibernate_sequence'), 'Darth Vader', 'Anakin Skywalker', 'https
 INSERT INTO villain(id, name, otherName, picture, powers, level)
 VALUES (nextval('hibernate_sequence'), 'The Rival (CW)', 'Edward Clariss', 'https://www.superherodb.com/pictures2/portraits/11/050/13846.jpg', 'Accelerated Healing, Agility, Bullet Time, Durability, Electrokinesis, Endurance, Enhanced Senses, Intangibility, Marksmanship, Phasing, Reflexes, Speed Force, Stamina, Super Speed, Super Strength', 10);
 ----
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 Ok, but that's just a few entries.
 Download the SQL file {github-raw}/super-heroes/rest-villains/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
