@@ -25,6 +25,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
+import org.jboss.resteasy.reactive.RestResponse;
 
 /**
  * JAX-RS API endpoints with <code>/api/villains</code> as the base URI for all endpoints
@@ -48,10 +49,10 @@ public class VillainResource {
         responseCode = "200",
         content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, required = true))
     )
-    public Response getRandomVillain() {
+    public RestResponse<Villain> getRandomVillain() {
         Villain villain = service.findRandomVillain();
         logger.debug("Found random villain " + villain);
-        return Response.ok(villain).build();
+        return RestResponse.ok(villain);
     }
 
     @Operation(summary = "Returns all the villains from the database")
@@ -61,10 +62,10 @@ public class VillainResource {
         content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, type = SchemaType.ARRAY))
     )
     @APIResponse(responseCode = "204", description = "No villains")
-    public Response getAllVillains() {
+    public RestResponse<List<Villain>> getAllVillains() {
         List<Villain> villains = service.findAllVillains();
         logger.debug("Total number of villains " + villains);
-        return Response.ok(villains).build();
+        return RestResponse.ok(villains);
     }
 
     @Operation(summary = "Returns a villain for a given identifier")
@@ -72,14 +73,14 @@ public class VillainResource {
     @Path("/{id}")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class)))
     @APIResponse(responseCode = "204", description = "The villain is not found for a given identifier")
-    public Response getVillain(@RestPath Long id) {
+    public RestResponse<Villain> getVillain(@RestPath Long id) {
         Villain villain = service.findVillainById(id);
         if (villain != null) {
             logger.debug("Found villain " + villain);
-            return Response.ok(villain).build();
+            return RestResponse.ok(villain);
         } else {
             logger.debug("No villain found with id " + id);
-            return Response.noContent().build();
+            return RestResponse.noContent();
         }
     }
 
@@ -90,11 +91,11 @@ public class VillainResource {
         description = "The URI of the created villain",
         content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class))
     )
-    public Response createVillain(@Valid Villain villain, @Context UriInfo uriInfo) {
+    public RestResponse<Void> createVillain(@Valid Villain villain, @Context UriInfo uriInfo) {
         villain = service.persistVillain(villain);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(villain.id));
         logger.debug("New villain created with URI " + builder.build().toString());
-        return Response.created(builder.build()).build();
+        return RestResponse.created(builder.build());
     }
 
     @Operation(summary = "Updates an exiting  villain")
@@ -104,20 +105,20 @@ public class VillainResource {
         description = "The updated villain",
         content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class))
     )
-    public Response updateVillain(@Valid Villain villain) {
+    public RestResponse<Villain> updateVillain(@Valid Villain villain) {
         villain = service.updateVillain(villain);
         logger.debug("Villain updated with new valued " + villain);
-        return Response.ok(villain).build();
+        return RestResponse.ok(villain);
     }
 
     @Operation(summary = "Deletes an exiting villain")
     @DELETE
     @Path("/{id}")
     @APIResponse(responseCode = "204")
-    public Response deleteVillain(@RestPath Long id) {
+    public RestResponse<Void> deleteVillain(@RestPath Long id) {
         service.deleteVillain(id);
         logger.debug("Villain deleted with " + id);
-        return Response.noContent().build();
+        return RestResponse.noContent();
     }
 
     @GET
