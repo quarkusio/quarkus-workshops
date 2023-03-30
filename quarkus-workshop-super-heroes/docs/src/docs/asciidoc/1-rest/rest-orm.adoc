@@ -145,7 +145,7 @@ Thanks to Panache, once you have written the `Villain` entity, here are the most
 
 [source,java]
 ----
-// creating a hero
+// creating a villain
 Villain villain = new Villain();
 villain.name = "Lex Luthor";
 villain.level = 9;
