@@ -622,7 +622,7 @@ public class VillainResourceTest {
     @Test
     @Order(1)
     void shouldGetInitialItems() {
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = given().when().get("/api/villains").then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
@@ -667,7 +667,7 @@ public class VillainResourceTest {
             .body("picture", Is.is(DEFAULT_PICTURE))
             .body("powers", Is.is(DEFAULT_POWERS));
 
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = given().when().get("/api/villains").then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
@@ -700,7 +700,7 @@ public class VillainResourceTest {
             .body("picture", Is.is(UPDATED_PICTURE))
             .body("powers", Is.is(UPDATED_POWERS));
 
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = given().when().get("/api/villains").then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
@@ -716,7 +716,7 @@ public class VillainResourceTest {
             .then()
             .statusCode(NO_CONTENT.getStatusCode());
 
-        List<Villain> villains = get("/api/villains").then()
+        List<Villain> villains = given().when().get("/api/villains").then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON)
             .extract().body().as(getVillainTypeRef());
