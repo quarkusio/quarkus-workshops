@@ -362,6 +362,7 @@ package io.quarkus.workshop.superheroes.villain;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
@@ -371,7 +372,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
@@ -394,11 +394,11 @@ public class VillainResource {
     public RestResponse<Villain> getRandomVillain() {
         Villain villain = service.findRandomVillain();
         logger.debug("Found random villain " + villain);
-        return Response.ok(villain);
+        return RestResponse.ok(villain);
     }
 
     @GET
-    public RestResponse<Villain> getAllVillains() {
+    public RestResponse<List<Villain>> getAllVillains() {
         List<Villain> villains = service.findAllVillains();
         logger.debug("Total number of villains " + villains);
         return RestResponse.ok(villains);
