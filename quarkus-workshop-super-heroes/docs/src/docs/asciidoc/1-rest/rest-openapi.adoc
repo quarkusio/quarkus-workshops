@@ -213,6 +213,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
@@ -223,7 +224,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -248,17 +248,17 @@ public class VillainResource {
     @GET
     @Path("/random")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, required = true)))
-    public Response getRandomVillain() {
+    public RestResponse<Villain> getRandomVillain() {
         Villain villain = service.findRandomVillain();
         logger.debug("Found random villain " + villain);
-        return Response.ok(villain).build();
+        return RestResponse.ok(villain);
     }
 
     @Operation(summary = "Returns all the villains from the database")
     @GET
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, type = SchemaType.ARRAY)))
     @APIResponse(responseCode = "204", description = "No villains")
-    public RestResponse<Villain> getAllVillains() {
+    public RestResponse<List<Villain>> getAllVillains() {
         List<Villain> villains = service.findAllVillains();
         logger.debug("Total number of villains " + villains);
         return RestResponse.ok(villains);
