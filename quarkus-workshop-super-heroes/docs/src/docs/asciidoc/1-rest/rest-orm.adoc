@@ -400,7 +400,7 @@ public class VillainResource {
     @GET
     public RestResponse<List<Villain>> getAllVillains() {
         List<Villain> villains = service.findAllVillains();
-        logger.debug("Total number of villains " + villains);
+        logger.debug("Total number of villains " + villains.size());
         return RestResponse.ok(villains);
     }
 

@@ -61,10 +61,9 @@ public class VillainResource {
         responseCode = "200",
         content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class, type = SchemaType.ARRAY))
     )
-    @APIResponse(responseCode = "204", description = "No villains")
     public RestResponse<List<Villain>> getAllVillains() {
         List<Villain> villains = service.findAllVillains();
-        logger.debug("Total number of villains " + villains);
+        logger.debug("Total number of villains " + villains.size());
         return RestResponse.ok(villains);
     }
 
