@@ -234,7 +234,7 @@ But, now we have another problem.
 To run the tests of the Fight API we need the Hero and Villain REST APIs to be up and running.
 To avoid this, we need to Mock the `HeroProxy` and `VillainProxy` interfaces.
 
-Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.footnote:[Alternatives https://docs.jboss.org/weld/reference/latest/en-US/html/beanscdi.html#_alternatives]
+Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.footnote:[Alternatives https://docs.jboss.org/weld/reference/latest/en-US/html/specialization.html#_using_alternative_stereotypes]
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
