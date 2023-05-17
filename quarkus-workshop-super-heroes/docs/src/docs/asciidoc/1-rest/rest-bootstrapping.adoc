@@ -215,7 +215,7 @@ It uses JAX-RS annotations:
 - `@Path` indicates the HTTP path handled by the resource,
 - `@GET` indicates that the method should be called when receiving a `GET` request on `/api/villains`.
 
-NOTE: Method can also have their own `@Path` annotation suffixed to the class one (if any).
+NOTE: Methods can also have their own `@Path` annotation suffixed to the class one (if any).
 
 == Running the Application
 
@@ -277,8 +277,7 @@ Alternatively, you can open http://localhost:8080/api/villains in your browser.
 `quarkus:dev` runs Quarkus in development mode.
 It enables hot deployment with background compilation, which means that when you modify your Java files or your resource files and invoke a REST endpoint (i.e., cURL command or refresh your browser), these changes will automatically take effect.
 It works too for resource files like the configuration property and HTML files.
-Refreshing the browser triggers a scan of the workspace, and if any changes are detected, the Java files are recompiled and the application is redeployed;
-your request is then serviced by the redeployed application.
+Refreshing the browser triggers a scan of the workspace, and if any changes are detected, the Java files are recompiled and the application is redeployed; your request is then serviced by the redeployed application.
 If there are any issues with compilation or deployment an error page will let you know.
 
 The development mode also allows debugging and listens for a debugger on port 5005.
