@@ -10,6 +10,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
+import org.jboss.resteasy.reactive.RestResponse;
+
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
@@ -46,7 +48,6 @@ public class HeroResource {
     @Operation(summary = "Returns all the heroes from the database")
     @GET
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class, type = SchemaType.ARRAY)))
-    @APIResponse(responseCode = "204", description = "No Heroes")
     public Uni<List<Hero>> getAllHeroes() {
         return Hero.listAll();
     }
@@ -56,14 +57,14 @@ public class HeroResource {
     @Path("/{id}")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
     @APIResponse(responseCode = "204", description = "The hero is not found for a given identifier")
-    public Uni<Response> getHero(@RestPath Long id) {
+    public Uni<RestResponse<Hero>> getHero(@RestPath Long id) {
         return Hero.<Hero>findById(id)
             .map(hero -> {
                 if (hero != null) {
-                    return Response.ok(hero).build();
+                    return RestResponse.ok(hero);
                 }
                 logger.debugf("No Hero found with id %d", id);
-                return Response.noContent().build();
+                return RestResponse.noContent();
             });
     }
 
@@ -71,12 +72,12 @@ public class HeroResource {
     @POST
     @APIResponse(responseCode = "201", description = "The URI of the created hero", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class)))
     @ReactiveTransactional
-    public Uni<Response> createHero(@Valid Hero hero, @Context UriInfo uriInfo) {
+    public Uni<RestResponse<URI>> createHero(@Valid Hero hero, @Context UriInfo uriInfo) {
         return hero.<Hero>persist()
             .map(h -> {
                 UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(h.id));
                 logger.debug("New Hero created with URI " + builder.build().toString());
-                return Response.created(builder.build()).build();
+                return RestResponse.created(builder.build());
             });
     }
 
@@ -84,7 +85,7 @@ public class HeroResource {
     @PUT
     @APIResponse(responseCode = "200", description = "The updated hero", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
     @ReactiveTransactional
-    public Uni<Response> updateHero(@Valid Hero hero) {
+    public Uni<Hero> updateHero(@Valid Hero hero) {
         return Hero.<Hero>findById(hero.id)
             .map(retrieved -> {
                 retrieved.name = hero.name;
@@ -96,7 +97,7 @@ public class HeroResource {
             })
             .map(h -> {
                 logger.debugf("Hero updated with new valued %s", h);
-                return Response.ok(h).build();
+                return h;
             });
 
     }
@@ -106,10 +107,10 @@ public class HeroResource {
     @Path("/{id}")
     @APIResponse(responseCode = "204")
     @ReactiveTransactional
-    public Uni<Response> deleteHero(@RestPath Long id) {
+    public Uni<RestResponse<Void>> deleteHero(@RestPath Long id) {
         return Hero.deleteById(id)
             .invoke(() -> logger.debugf("Hero deleted with %d", id))
-            .replaceWith(Response.noContent().build());
+            .replaceWith(RestResponse.noContent());
     }
 
     @GET
