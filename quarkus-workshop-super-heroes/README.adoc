@@ -15,25 +15,6 @@ If you are interested in deploying an already made application to Azure Containe
 You will not develop any Quarkus (you don't even need Java tools), but you will be pushing Docker containers, creating managed services on Azure (databases, Kafka) and monitoring the entire system (https://docs.microsoft.com/en-us/events/jdconf-2022/quarkus-superheroes-on-azure[watch a video presenting the workshop]).
 Check https://quarkus.io/quarkus-workshops/super-heroes/index-azure.html to get the workshop instructions.
 
-== Generate the documentation
-
-You can either generate the documentation for each exercise or for the entire workshop.
-For that, you just run the Maven command `mvn clean generate-resources` under the `docs` directory.
-You can then open the `docs/target/generated-asciidoc/spine.html` page and read the entire documentation of the workshop.
-
-== Generate the zip files
-
-To generate the zip files, execute the following command from the root of the project:
-
-```bash
-$ mvn assembly:single -N
-```
-
-This generates the following zip files
-
-* `dist/quarkus-super-heroes-workshop.zip`: contains the bare minimum code to follow up the workshop
-* `dist/quarkus-super-heroes-workshop-complete.zip`: contains all the code (useful if you get lost or want to jump a section of the workshop)
-
 == Start the infrastructure
 
 This workshop requires a couple of extra _technical_ services (databases, kafka...).
@@ -93,6 +74,32 @@ $ mvn clean compile quarkus:dev
 * ui -> http://localhost:8080
 * stats microservice -> 8085, ui on http://localhost:8085/
 * Prometheus -> 9090
+
+== Running without CI
+
+The GitHub actions take care of publishing a site with the workshop instructions,
+and also generating source zips. It's also possible to do these steps locally.
+
+
+=== Generate the documentation
+
+You can either generate the documentation for each exercise or for the entire workshop.
+For that, you just run the Maven command `mvn clean generate-resources` under the `docs` directory.
+You can then open the `docs/target/generated-asciidoc/spine.html` page and read the entire documentation of the workshop.
+
+=== Generate the zip files
+
+To generate the zip files, execute the following command from the root of the project:
+
+```bash
+$ mvn assembly:single -N
+```
+
+This generates the following zip files
+
+* `dist/quarkus-super-heroes-workshop.zip`: contains the bare minimum code to follow up the workshop
+* `dist/quarkus-super-heroes-workshop-complete.zip`: contains all the code (useful if you get lost or want to jump a section of the workshop)
+
 
 == References
 
