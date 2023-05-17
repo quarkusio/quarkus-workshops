@@ -31,9 +31,11 @@
         <version.asciidoctorj>2.5.3</version.asciidoctorj>
         <version.asciidoctorj.pdf>1.6.2</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>2.2.1</version.asciidoctorj.diagram>
-        <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
-        <github.url>https://github.com/quarkusio/quarkus-workshops/tree/main/quarkus-workshop-super-heroes</github.url>
-        <github.issue>https://github.com/quarkusio/quarkus-workshops/issues</github.issue>
+        <!-- If building docs locally and urls matter, set environment variables for these values -->
+        <github.raw>https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.raw>
+        <github.url>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
+        <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
+        <github.issue>${github.repo}/issues</github.issue>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -79,9 +81,10 @@
                         <allow-uri-read/>
                         <icons>font</icons>
                         <imagesdir>../images</imagesdir>
-                        <plantDir> ../plantuml</plantDir>
+                        <plantDir>../plantuml</plantDir>
                         <github-raw>${github.raw}</github-raw>
                         <github-url>${github.url}</github-url>
+                        <github-repo>${github.repo}</github-repo>
                         <github-issue>${github.issue}</github-issue>
                         <give-solution>true</give-solution>
                         <jdk-version>${maven.compiler.source}</jdk-version>

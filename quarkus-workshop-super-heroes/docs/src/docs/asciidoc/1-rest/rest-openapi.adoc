@@ -337,7 +337,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 For this, you need to create the `src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplication` class with the following content:
 
-[source,java]
+[source,java,subs="attributes+"]
 ----
 package io.quarkus.workshop.superheroes.villain;
 
@@ -359,7 +359,7 @@ import javax.ws.rs.core.Application;
     servers = {
         @Server(url = "http://localhost:8084")
     },
-    externalDocs = @ExternalDocumentation(url = "https://github.com/quarkusio/quarkus-workshops", description = "All the Quarkus workshops")
+    externalDocs = @ExternalDocumentation(url = "{github-repo}", description = "All the Quarkus workshops")
 )
 public class VillainApplication extends Application {
     // Empty body
@@ -375,7 +375,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 If you go back to the `http://localhost:8084/q/openapi` endpoint you will see the following OpenAPI contract:
 
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 ---
 openapi: 3.0.3
@@ -388,7 +388,7 @@ info:
   version: "1.0"
 externalDocs:
   description: All the Quarkus workshops
-  url: https://github.com/quarkusio/quarkus-workshops
+  url: {github-repo}
 servers:
 - url: http://localhost:8084
 tags:

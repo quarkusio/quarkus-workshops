@@ -9,11 +9,11 @@ Here are a few commands that you can execute before the workshop.
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-First, clone the GitHub repository of the Super Heroes application located at https://github.com/quarkusio/quarkus-workshops by executing the following command:
+First, clone the GitHub repository of the Super Heroes application located at {github-url} by executing the following command:
 
-[source,shell]
+[source,shell,subs="attributes+"]
 ----
-git clone https://github.com/quarkusio/quarkus-workshops.git --depth 1
+git clone {github-repo}.git --depth 1
 ----
 
 The code of this Super Heroes application is separated into two different directories:
