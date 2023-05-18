@@ -1,10 +1,10 @@
-== Provider tests
+= Provider tests
 
 So far, we've done good work and set up tests for the fight service, to extend our testing of the fight service, and also encode its expectations for the hero service into a json contract.
 
 The next step is to actually make sure the contract matches what the hero service is producing!
 
-=== Sharing the contract
+== Sharing the contract
 
 There are a few possibilities for sharing the contract.
 A self-hosted or https://pactflow.io/[managed] pact broker can host all of the contracts, as well as providing extra services such as metrics about when tests were run and compatibility dashboards.
@@ -15,11 +15,13 @@ Note that Pact is consumer-driven contract system; the consumer has responsibili
 The simplest sharing mechanism is copying on a filesystem, so that's what we'll do.
 From the fights service, copy the contract to the heroes service.
 
-[shell]
+[source,bash]
 ----
 mkdir -p ../rest-heroes/src/test/resources
 cp -r target/pacts ../rest-heroes/src/test/resources
 ----
+
+== Writing the test
 
 The great thing about the provider Pact tests is that the provider doesn't have to do much.
 The Pact framework will generate a test for each expectation in the contract and run them, based on just a small amount of boilerplate code.

@@ -1,10 +1,14 @@
 
+= Consumer tests
 
-== The first contract test
+Pact is a consumer-driven contract testing framework,
+which means that we begin by writing tests for the API consumer.
+
+== Writing the first contract test
 
 icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
-Add the Quarkus extension to the `pom.xml` of the Fights service:
+Add the Pact Quarkus extension to the `pom.xml` of the Fights service:
 
 [source,xml]
 ----
@@ -106,7 +110,7 @@ Because of the complexities of Kotlin classloading, Pact does not work with cont
 
 You will need to run tests the old-fashioned way, with
 
-[shell]
+[source,bash]
 ----
 mvn verify
 ----
@@ -147,7 +151,7 @@ Note that we're only testing heroes here. If we were to test getting villains, t
 When we use Pact, the Pact framework stands up a server which acts as a mock. Remember that we defined a global `@Mock` for the `VillainProxy`.
 That mock would interfere with the Pact mock.
 
-=== The contract
+== The contract
 Look in `target/pacts`.
 You should find a json contract.
 Inspect it to see how the contents of the `@Pact` method have been turned into json.

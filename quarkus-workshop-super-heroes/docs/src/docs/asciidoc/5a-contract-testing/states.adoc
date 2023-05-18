@@ -1,4 +1,4 @@
-== States
+= States
 
 One of the advantages of Pact over simpler contract verification methods, such as syntax-checking, is that a pact can include a range of expected responses, depending on what was passed in, and external state.
 
