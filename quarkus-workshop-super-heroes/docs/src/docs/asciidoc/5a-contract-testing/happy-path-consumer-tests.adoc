@@ -37,68 +37,7 @@ Create a class called `FightResourceConsumerTest.java`.
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.fight;
-
-import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
-import au.com.dius.pact.consumer.junit5.PactTestFor;
-import au.com.dius.pact.core.model.PactSpecVersion;
-import au.com.dius.pact.core.model.V4Pact;
-import au.com.dius.pact.core.model.annotations.Pact;
-import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.workshop.superheroes.fight.client.DefaultTestVillain;
-import org.hamcrest.core.Is;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import java.util.Map;
-
-import static au.com.dius.pact.consumer.dsl.LambdaDsl.newJsonBody;
-import static io.quarkus.workshop.superheroes.fight.client.DefaultTestHero.DEFAULT_HERO_LEVEL;
-import static io.quarkus.workshop.superheroes.fight.client.DefaultTestHero.DEFAULT_HERO_NAME;
-import static io.quarkus.workshop.superheroes.fight.client.DefaultTestHero.DEFAULT_HERO_PICTURE;
-import static io.restassured.RestAssured.given;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.Response.Status.OK;
-
-@QuarkusTest
-@ExtendWith(PactConsumerTestExt.class)
-@PactTestFor(
-    providerName = "rest-heroes",
-    // Hard-code the Pact MockServer to what we defined in application.properties
-    port = "8093"
-)
-public class FightResourceConsumerTest {
-
-    protected static final String HERO_API_BASE_URI = "/api/heroes";
-    protected static final String HERO_RANDOM_URI = HERO_API_BASE_URI + "/random";
-
-    @Pact(consumer = "rest-fights")
-    public V4Pact randomHeroFoundPact(PactDslWithProvider builder) {
-        return builder
-            .uponReceiving("A request for a random hero")
-            .path(HERO_RANDOM_URI)
-            .method(HttpMethod.GET)
-            .headers(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
-            .willRespondWith()
-            .status(Response.Status.OK.getStatusCode())
-            .headers(Map.of(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-            .body(newJsonBody(body ->
-                    body
-                        .stringType("name", DEFAULT_HERO_NAME)
-                        .integerType("level", DEFAULT_HERO_LEVEL)
-                        .stringType("picture", DEFAULT_HERO_PICTURE)
-                ).build()
-            )
-            .toPact(V4Pact.class);
-    }
+include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=skeleton]
 }
 ----
 
@@ -107,6 +46,7 @@ We also define how the mock should behave.
 
 [WARNING]
 Because of the complexities of Kotlin classloading, Pact does not work with continuous testing.
+This limitation is resolved with Quarkus 3 and 1.x versions of the Pact extension.
 
 You will need to run tests the old-fashioned way, with
 
@@ -125,35 +65,23 @@ You'll notice this is very similar to the one in `FightResourceTest`; you could 
 
 [source,java]
 ----
-     @Test
-    @PactTestFor(pactMethod = "randomHeroFoundPact")
-    void randomHeroFound() {
-        given()
-            .when().get("/api/fights/randomfighters")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .body("hero.name", Is.is(DEFAULT_HERO_NAME))
-            .body("hero.picture", Is.is(DEFAULT_HERO_PICTURE))
-            .body("hero.level", Is.is(DEFAULT_HERO_LEVEL))
-            .body("villain.name", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_NAME))
-            .body("villain.picture", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_PICTURE))
-            .body("villain.level", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_LEVEL));
-    }
+include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroFound]
 ----
 
 Run the tests.
 They should all pass.
 
-Note that we're only testing heroes here. If we were to test getting villains, the test would fail. Can you think why that might be?
+Note that we're only setting up contracts for heroes here. If we were to make contracts for getting villains, the test would fail. Can you think why that might be?
 
 [TIP]
-When we use Pact, the Pact framework stands up a server which acts as a mock. Remember that we defined a global `@Mock` for the `VillainProxy`.
-That mock would interfere with the Pact mock.
+When we use Pact, the Pact framework stands up a server which acts as a mock.
+Remember that we defined a global `@Mock` for the `VillainProxy`.
+Because `@Mocks` are global, that mock would be used instead of the Pact mock service we want the class under test to be talking to.
+This is an example of why a local `@InjectMock` is often preferable to a global `@Mock`.
 
 == The contract
 Look in `target/pacts`.
-You should find a json contract.
+You should find a json contract, `rest-fights-rest-heroes.json`.
 Inspect it to see how the contents of the `@Pact` method have been turned into json.
 
 What we want to be testing when we use Pact in our tests is the behaviour of our own code.
@@ -167,4 +95,8 @@ We do *not* need to do detailed validation of what comes back from the pact serv
 A more interesting contract test would exercise some of the more complex fights functionality, while using the mock we've defined.
 Can you write one?
 (You might also need to define a villain pact.)
+
+If you get stuck, you can look at the consumer contract tests in the https://github.com/quarkusio/quarkus-super-heroes[Quarkus Superheroes sample]
+for inspiration. Have a look at https://github.com/quarkusio/quarkus-super-heroes/blob/main/rest-fights/src/test/java/io/quarkus/sample/superheroes/fight/service/FightServiceConsumerContractTests.java[FightServiceConsumerContractTests.java].
+The code in that application is similar to this workshop, but not exactly the same.
 

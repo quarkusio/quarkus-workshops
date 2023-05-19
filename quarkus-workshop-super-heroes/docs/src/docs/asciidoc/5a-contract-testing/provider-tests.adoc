@@ -2,12 +2,12 @@
 
 So far, we've done good work and set up tests for the fight service, to extend our testing of the fight service, and also encode its expectations for the hero service into a json contract.
 
-The next step is to actually make sure the contract matches what the hero service is producing!
+The next step is to make sure the Hero service actually produces what the contract says it should!
 
 == Sharing the contract
 
 There are a few possibilities for sharing the contract.
-A self-hosted or https://pactflow.io/[managed] pact broker can host all of the contracts, as well as providing extra services such as metrics about when tests were run and compatibility dashboards.
+A self-hosted or https://pactflow.io/[managed] https://docs.pact.io/getting_started/sharing_pacts[pact broker] can host all of the contracts, as well as providing extra services such as metrics about when tests were run and compatibility dashboards.
 
 Alternatively, some teams check the json contract into the provider's source control after a successful run.
 Note that Pact is consumer-driven contract system; the consumer has responsibility for defining the contract, and therefore also has responsibility for sharing it.
@@ -24,7 +24,7 @@ cp -r target/pacts ../rest-heroes/src/test/resources
 == Writing the test
 
 The great thing about the provider Pact tests is that the provider doesn't have to do much.
-The Pact framework will generate a test for each expectation in the contract and run them, based on just a small amount of boilerplate code.
+The Pact framework will generate a test for each expectation in the contract and run them, based on just a small amount of boilerplate code:
 
 [source,java]
 ----
@@ -35,7 +35,9 @@ The Pact framework will generate a test for each expectation in the contract and
         }
 ----
 
-Add the Pact dependency to the heroes service `pom.xml:
+(No need to put that snippet anywhere yet, we will see how it fits into a test class in a moment.)
+
+Add the Pact dependency to the heroes service `pom.xml`:
 
 [source,xml]
 ----
@@ -52,111 +54,37 @@ Add the Pact dependency to the heroes service `pom.xml:
         </dependency>
 ----
 
-Create a `HeroContractVerificationTest` in the `rest-heroes` project.
+We also add the https://quarkus.io/guides/hibernate-orm-panache#mocking[Panache Mock dependency], which allows us to which allows use Mockito to mock all provided static methods.
+That will come in handy at various points in the provider testing.
 
-The test would be tiny, except we need to do some mocking to ensure that in the 'no hero' state, the hero entity comes back with null.
-We have to do this mocking in the `BeforeEach`
-method rather than the more normal `@State` method, because the `QuarkusTest` classloading is creating two instances and Pact is catching the one we don't want it to catch on the `@State` callback.
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+
+Create a `io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java` class in the `rest-heroes` project.
+It doesn't need to do much except tell Pact what port the Hero provider is listening on,
+and create a JUnit test template, which will be expanded into the full set of tests
+needed to verify the contract.
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.hero;
-
-import au.com.dius.pact.provider.junit5.HttpTestTarget;
-import au.com.dius.pact.provider.junit5.PactVerificationContext;
-import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
-import au.com.dius.pact.provider.junitsupport.Provider;
-import au.com.dius.pact.provider.junitsupport.State;
-import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
-import io.quarkus.panache.mock.PanacheMock;
-import io.quarkus.test.junit.QuarkusTest;
-import io.smallrye.mutiny.Uni;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.when;
-
 @QuarkusTest
 @Provider("rest-heroes")
 @PactFolder("pacts")
 public class HeroContractVerificationTest {
-private static final String NO_RANDOM_HERO_FOUND_STATE = "No random hero found";
-
     @ConfigProperty(name = "quarkus.http.test-port")
     int quarkusPort;
 
+
+    @BeforeEach
+    void beforeEach(PactVerificationContext context) {
+        context.setTarget(new HttpTestTarget("localhost", this.quarkusPort));
+    }
 
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider.class)
     void pactVerificationTestTemplate(PactVerificationContext context) {
         context.verifyInteraction();
     }
-
-    @BeforeEach
-    void beforeEach(PactVerificationContext context) {
-        context.setTarget(new HttpTestTarget("localhost", this.quarkusPort));
-
-        // Have to do this here because the CDI context doesn't seem to be available
-        // in the @State method below
-        var isNoRandomHeroFoundState = Optional.ofNullable(context.getInteraction().getProviderStates())
-            .orElseGet(List::of)
-            .stream()
-            .filter(state -> NO_RANDOM_HERO_FOUND_STATE.equals(state.getName()))
-            .count() > 0;
-
-        if (isNoRandomHeroFoundState) {
-            PanacheMock.mock(Hero.class);
-            when(Hero.findRandom())
-                .thenReturn(Uni.createFrom().nullItem());
-
-        }
-    }
-
-    @State(NO_RANDOM_HERO_FOUND_STATE)
-    public void clearData() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        // Already handled in beforeEach
-        // See https://github.com/quarkusio/quarkus/issues/22611
-    }
-
 }
 ----
 
-What's going on?
-The consumer expects a 404 if there are no heroes, but the provider is returning a 204.
-The reasoning from the consumer is that if a caller asks for a resource the server doesn't have, it should be a 404, the same way if a user types in an invalid URL into the browser.
-This is a more pure interpretation of REST than what was inplemented by the `HeroResource`.
-
-There are arguments for both 404 (not found) and 204 (no content).
-Feel free to debate with your neighbour about which you prefer – but it doesn't really matter which is correct.
-What matters is that the provider and consumer had different preferences.
-If the provider returns 204 rather than 404, the fallback logic on the provider (as implemented) is not triggered.
-(You can try this out for yourself by changing the contract in the `FightResourceConsumerTest`.)
-
-At this point, the consumer and provider need to have a conversation to decide whether the expectations or implementation should be updated.
-To make the fallback logic simplest, we will update the provider.
-Edit the `HeroResource` and update the `getRandomHere` method to explicitly handle the null case.
-
-[source,java]
-----
-    @Operation(summary = "Returns a random hero")
-    @GET
-    @Path("/random")
-    @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class, required = true)))
-    public Uni<Response> getRandomHero() {
-        return Hero.findRandom()
-            .onItem().ifNotNull().transform(h -> {
-                this.logger.debugf("Found random hero: %s", h);
-                return Response.ok(h).build();
-            })
-            .onItem().ifNull().continueWith(() -> {
-                this.logger.debug("No random villain found");
-                return Response.status(Response.Status.NOT_FOUND).build();
-            });
-    }
-----
+When you run the tests they should pass.

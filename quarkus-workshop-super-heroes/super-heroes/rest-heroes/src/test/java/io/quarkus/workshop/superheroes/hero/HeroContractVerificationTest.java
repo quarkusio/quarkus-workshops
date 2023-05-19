@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @Provider("rest-heroes")
 @PactFolder("pacts")
 public class HeroContractVerificationTest {
-    private static final String NO_RANDOM_HERO_FOUND_STATE = "No random hero found";
+    private static final String NO_HERO_FOUND_STATE = "No random hero found";
 
     @ConfigProperty(name = "quarkus.http.test-port")
     int quarkusPort;
@@ -36,32 +36,37 @@ public class HeroContractVerificationTest {
         context.verifyInteraction();
     }
 
+    // tag::states[]
     @BeforeEach
     void beforeEach(PactVerificationContext context) {
         context.setTarget(new HttpTestTarget("localhost", this.quarkusPort));
 
-        // Have to do this here because the CDI context doesn't seem to be available
+        // We have to do this here because the CDI context isn't available
         // in the @State method below
-        var isNoRandomHeroFoundState = Optional.ofNullable(context.getInteraction().getProviderStates())
-            .orElseGet(List::of)
-            .stream()
-            .filter(state -> NO_RANDOM_HERO_FOUND_STATE.equals(state.getName()))
-            .count() > 0;
+        var noHeroState = Optional.ofNullable(context.getInteraction()
+                                                     .getProviderStates())
+                                  .orElseGet(List::of)
+                                  .stream()
+                                  .filter(
+                                      state -> NO_HERO_FOUND_STATE.equals(state.getName()))
+                                  .count() > 0;
 
-        if (isNoRandomHeroFoundState) {
+        if (noHeroState) {
             PanacheMock.mock(Hero.class);
-            when(Hero.findRandom())
-                .thenReturn(Uni.createFrom().nullItem());
+            when(Hero.findRandom()).thenReturn(Uni.createFrom()
+                                                  .nullItem());
 
         }
     }
 
 
-    @State(NO_RANDOM_HERO_FOUND_STATE)
-    public void clearData() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    @State(NO_HERO_FOUND_STATE)
+    public void clearData() throws NoSuchMethodException, InvocationTargetException,
+        IllegalAccessException {
         // Already handled in beforeEach
         // See https://github.com/quarkusio/quarkus/issues/22611
     }
+    // end::states[]
 
 }
 

@@ -34,7 +34,8 @@ public class Hero extends PanacheEntity {
         Random random = new Random();
         return count()
             .map(count -> random.nextInt(count.intValue()))
-            .chain(randomHero -> findAll().page(randomHero, 1).firstResult());
+            .chain(randomHero -> findAll().page(randomHero, 1)
+                                          .firstResult());
     }
 
     @Override

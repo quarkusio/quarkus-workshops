@@ -99,16 +99,13 @@ public class FightResourceTest {
         fighters.hero = null;
         fighters.villain = null;
 
-        given()
-            .body(fighters)
-            .header(CONTENT_TYPE,
-                APPLICATION_JSON)
-            .header(ACCEPT,
-                APPLICATION_JSON)
-            .when()
-            .post("/api/fights")
-            .then()
-            .statusCode(BAD_REQUEST.getStatusCode());
+        given().body(fighters)
+               .header(CONTENT_TYPE, APPLICATION_JSON)
+               .header(ACCEPT, APPLICATION_JSON)
+               .when()
+               .post("/api/fights")
+               .then()
+               .statusCode(BAD_REQUEST.getStatusCode());
     }
 
     @Test
@@ -119,8 +116,7 @@ public class FightResourceTest {
                                                .extract()
                                                .body()
                                                .as(getFightTypeRef());
-        assertEquals(NB_FIGHTS,
-            fights.size());
+        assertEquals(NB_FIGHTS, fights.size());
     }
 
     @Test
@@ -140,10 +136,8 @@ public class FightResourceTest {
 
         fightId = given()
             .body(fighters)
-            .header(CONTENT_TYPE,
-                APPLICATION_JSON)
-            .header(ACCEPT,
-                APPLICATION_JSON)
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .header(ACCEPT, APPLICATION_JSON)
             .when()
             .post("/api/fights")
             .then()
@@ -157,59 +151,51 @@ public class FightResourceTest {
 
         assertNotNull(fightId);
 
-        given()
-            .pathParam("id",
-                fightId)
-            .when()
-            .get("/api/fights/{id}")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .body("winnerName",
-                Is.is(DEFAULT_WINNER_NAME))
-            .body("winnerPicture",
-                Is.is(DEFAULT_WINNER_PICTURE))
-            .body("winnerLevel",
-                Is.is(DEFAULT_WINNER_LEVEL))
-            .body("loserName",
-                Is.is(DEFAULT_LOSER_NAME))
-            .body("loserPicture",
-                Is.is(DEFAULT_LOSER_PICTURE))
-            .body("loserLevel",
-                Is.is(DEFAULT_LOSER_LEVEL))
-            .body("fightDate",
-                Is.is(notNullValue()));
+        given().pathParam("id", fightId)
+               .when()
+               .get("/api/fights/{id}")
+               .then()
+               .statusCode(OK.getStatusCode())
+               .contentType(APPLICATION_JSON)
+               .body("winnerName", Is.is(DEFAULT_WINNER_NAME))
+               .body("winnerPicture", Is.is(DEFAULT_WINNER_PICTURE))
+               .body("winnerLevel", Is.is(DEFAULT_WINNER_LEVEL))
+               .body("loserName", Is.is(DEFAULT_LOSER_NAME))
+               .body("loserPicture", Is.is(DEFAULT_LOSER_PICTURE))
+               .body("loserLevel", Is.is(DEFAULT_LOSER_LEVEL))
+               .body("fightDate", Is.is(notNullValue()));
 
         List<Fight> fights = get("/api/fights").then()
                                                .statusCode(OK.getStatusCode())
                                                .extract()
                                                .body()
                                                .as(getFightTypeRef());
-        assertEquals(NB_FIGHTS + 1,
-            fights.size());
+        assertEquals(NB_FIGHTS + 1, fights.size());
     }
 
+    // tag::shouldGetRandomFighters[]
     @Test
     void shouldGetRandomFighters() {
-        given()
+        Fighters fighters = given()
             .when()
             .get("/api/fights/randomfighters")
             .then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON)
-            .body("hero.name",
-                Is.is(DefaultTestHero.DEFAULT_HERO_NAME))
-            .body("hero.picture",
-                Is.is(DefaultTestHero.DEFAULT_HERO_PICTURE))
-            .body("hero.level",
-                Is.is(DefaultTestHero.DEFAULT_HERO_LEVEL))
-            .body("villain.name",
-                Is.is(DefaultTestVillain.DEFAULT_VILLAIN_NAME))
-            .body("villain.picture",
-                Is.is(DefaultTestVillain.DEFAULT_VILLAIN_PICTURE))
-            .body("villain.level",
-                Is.is(DefaultTestVillain.DEFAULT_VILLAIN_LEVEL));
+            .extract()
+            .as(Fighters.class);
+
+        Hero hero = fighters.hero;
+        assertEquals(hero.name, DefaultTestHero.DEFAULT_HERO_NAME);
+        assertEquals(hero.picture, DefaultTestHero.DEFAULT_HERO_PICTURE);
+        assertEquals(hero.level, DefaultTestHero.DEFAULT_HERO_LEVEL);
+
+        Villain villain = fighters.villain;
+        assertEquals(villain.name, DefaultTestVillain.DEFAULT_VILLAIN_NAME);
+        assertEquals(villain.picture, DefaultTestVillain.DEFAULT_VILLAIN_PICTURE);
+        assertEquals(villain.level, DefaultTestVillain.DEFAULT_VILLAIN_LEVEL);
     }
+    // end::shouldGetRandomFighters[]
 
     private TypeRef<List<Fight>> getFightTypeRef() {
         return new TypeRef<List<Fight>>() {

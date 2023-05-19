@@ -243,6 +243,9 @@ icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 To use this simply override the bean you wish to mock with a class in the `src/test/java` directory, and put the `@Alternative` and `@Priority(1)` annotations on the bean.
 Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could be used.
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
+
+=== Mocking a Villain service
+
 So, to mock the `VillainProxy` interface we just need to implement the following `MockVillainProxy` class (under the `client` subpackage):
 
 
@@ -252,24 +255,34 @@ include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/worksh
 ----
 
 We are using some common classes for the test data.
-Let your IDE create the classes for you, and then fill in the following contents:
+They don't exist yet, so the IDE will complain!
+Let your IDE's quick fix create the classes for you, or create them
+manually, and then fill in the following contents:
 
-[source,java]
-----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestHero.java[]
-----
 
 [source,java]
 ----
 include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestVillain.java[]
 ----
 
-We could do the same for the `HeroProxy`, but there are some drawbacks to using `@Mock`. Any class defined by `@Mock`
+=== Mocking a Hero service
+
+We could create a `@Mock` for the `HeroProxy`, as we did for the Villain, but there are some drawbacks to using `@Mock`:
+
+- Any class defined by `@Mock`
 is global in scope, and can't be isolated to individual tests. That can result in unwanted cross-talk between tests.
-Because of how the mock is defined,
+- Because of how the mock is defined,
 it's also harder to use https://site.mockito.org/[Mockito] to generate the mock instance.
 
 Let's try a different approach.
+
+We'll still want a class which holds test data for the hero. Create the following:
+
+[source,java]
+----
+include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestHero.java[]
+----
+
 
 Add the extended Quarkus Mockito support to the `fight` service's `pom.xml`:
 
@@ -292,7 +305,8 @@ Now we can add the following to the top of the `FightResourceTest`:
 
     @BeforeEach
     public void setup() {
-        when(heroProxy.findRandomHero()).thenReturn(defaultHero);
+    public void setup() {
+        when(heroProxy.findRandomHero()).thenReturn(DefaultTestHero.INSTANCE);
     }
 ----
 
@@ -306,21 +320,7 @@ Finally, edit the `FightResourceTest` and add the following method:
 
 [source,java]
 --
-//....
-    @Test
-    void shouldGetRandomFighters() {
-        given()
-            .when().get("/api/fights/randomfighters")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .body("hero.name", Is.is(DefaultTestHero.DEFAULT_HERO_NAME))
-            .body("hero.picture", Is.is(DefaultTestHero.DEFAULT_HERO_PICTURE))
-            .body("hero.level", Is.is(DefaultTestHero.DEFAULT_HERO_LEVEL))
-            .body("villain.name", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_NAME))
-            .body("villain.picture", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_PICTURE))
-            .body("villain.level", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_LEVEL));
-    }
+include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=shouldGetRandomFighters]
 --
 
 Now, run the test from the dev mode, or from your IDE.
