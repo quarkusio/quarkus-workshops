@@ -30,7 +30,7 @@ The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
 Each fight is, then, stored in a PostgreSQL database. This microservice can be developed using both the classical (_imperative_) or reactive approach. Invocations to the hero and villain services are protected using resilience patterns (retry, timeout, circuit-breakers)
 * _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
 It has an HTML + JQuery UI displaying all the statistics.
-* _Promotheus_ polls metrics from the three microservices Fight, Hero, and Villain.
+* _Prometheus_ polls metrics from the three microservices Fight, Hero, and Villain.
 
 [plantuml,align=center]
 ----
