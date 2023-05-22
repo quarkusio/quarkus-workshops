@@ -23,7 +23,8 @@ What happens if we do some refactoring?
 icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 In the `rest-heroes` project, let's do some searching and replacing.
-(We do search and replace so we catch all of the SQL in our refactoring.) Change "level" to "maturity".
+(We do search and replace so we catch both Java and SQL in our refactoring.)
+Change "level" to "maturity".
 Make sure to only do search within the rest-heroes directory.
 (Normally this project would be in its own repository, but we've grouped everything together into one repository for convenience.)
 

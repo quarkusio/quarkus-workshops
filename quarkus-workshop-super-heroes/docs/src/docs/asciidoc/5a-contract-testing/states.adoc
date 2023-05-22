@@ -14,18 +14,7 @@ We use the `given()` to identify the state.
 [source,java]
 
 ----
-@Pact(consumer = "rest-fights")
-    public V4Pact randomHeroNotFoundPact(PactDslWithProvider builder) {
-        return builder
-            .given("No random hero found")
-            .uponReceiving("A request for a random hero")
-            .path(HERO_RANDOM_URI)
-            .method(HttpMethod.GET)
-            .headers(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
-            .willRespondWith()
-            .status(Status.NOT_FOUND.getStatusCode())
-            .toPact(V4Pact.class);
-    }
+include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundPact]
 ----
 
 Then, we can define another test method, which exercises our service, given this unhappy state.
@@ -34,21 +23,7 @@ We also want to check that things work as normal for the villain part of the res
 
 [source,java]
 ----
-    @Test
-    @PactTestFor(pactMethod = "randomHeroNotFoundPact")
-    void shouldGetRandomFighters() {
-        given()
-            .when().get("/api/fights/randomfighters")
-            .then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .body("hero.name", Is.is("Fallback hero"))
-            .body("hero.picture", Is.is("https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero"))
-            .body("hero.level", Is.is(1))
-            .body("villain.name", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_NAME))
-            .body("villain.picture", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_PICTURE))
-            .body("villain.level", Is.is(DefaultTestVillain.DEFAULT_VILLAIN_LEVEL));
-    }
+include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundTest]
 ----
 
 Run the tests. They should pass. Then copy them to the hero service, using `cp -r target/pacts ../rest-heroes/src/test/resources`.

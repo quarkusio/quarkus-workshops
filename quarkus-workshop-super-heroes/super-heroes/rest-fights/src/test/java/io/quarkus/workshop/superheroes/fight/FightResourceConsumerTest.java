@@ -12,7 +12,6 @@ import io.quarkus.workshop.superheroes.fight.client.DefaultTestHero;
 import io.quarkus.workshop.superheroes.fight.client.DefaultTestVillain;
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
-import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -92,7 +91,7 @@ public class FightResourceConsumerTest {
     }
     // end::randomHeroFound[]
 
-    // tag::randomHeroNotFound[]
+    // tag::randomHeroNotFoundPact[]
     @Pact(consumer = "rest-fights")
     public V4Pact randomHeroNotFoundPact(PactDslWithProvider builder) {
         return builder
@@ -105,20 +104,27 @@ public class FightResourceConsumerTest {
             .status(Status.NOT_FOUND.getStatusCode())
             .toPact(V4Pact.class);
     }
+    // end::randomHeroNotFoundPact[]
 
+    // tag::randomHeroNotFoundTest[]
     @Test
     @PactTestFor(pactMethod = "randomHeroNotFoundPact")
     void shouldGetRandomFighters() {
-        given()
+        Fighters fighters = given()
             .when()
             .get("/api/fights/randomfighters")
             .then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON)
-            .body("hero.name", Is.is("Fallback hero"))
-            .body("hero.picture",
-                Is.is("https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero"))
-            .body("hero.level", Is.is(1));
+            .extract()
+            .as(Fighters.class);
+
+        Hero hero = fighters.hero;
+
+        assertEquals(hero.name, "Fallback hero");
+        assertEquals(hero.picture,
+            "https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero");
+        assertEquals(hero.level, 1);
     }
-    // end::randomHeroNotFound[]
+    // end::randomHeroNotFoundTest[]
 }

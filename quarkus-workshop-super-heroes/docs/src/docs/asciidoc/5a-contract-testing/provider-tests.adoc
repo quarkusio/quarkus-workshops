@@ -37,6 +37,8 @@ The Pact framework will generate a test for each expectation in the contract and
 
 (No need to put that snippet anywhere yet, we will see how it fits into a test class in a moment.)
 
+icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+
 Add the Pact dependency to the heroes service `pom.xml`:
 
 [source,xml,subs="attributes+"]
@@ -56,8 +58,6 @@ Add the Pact dependency to the heroes service `pom.xml`:
 
 We also add the https://quarkus.io/guides/hibernate-orm-panache#mocking[Panache Mock dependency], which allows us to which allows use Mockito to mock all provided static methods.
 That will come in handy at various points in the provider testing.
-
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 Create a `io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java` class in the `rest-heroes` project.
 It doesn't need to do much except tell Pact what port the Hero provider is listening on,
