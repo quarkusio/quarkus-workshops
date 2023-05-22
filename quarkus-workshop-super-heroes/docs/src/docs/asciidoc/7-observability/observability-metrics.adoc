@@ -111,5 +111,5 @@ If you prefer an OpenMetrics export rather than the JSON format, remove the `-H 
 
 [NOTE]
 ====
-Again, in this chapter, we've just shown you how to add metrics for the Hero API, but you should do the same for Fight and Villain.
+Again, in this chapter, we've just shown you how to add metrics for the Hero API, but you should do the same for Fight, Villain, and the UI.
 ====
