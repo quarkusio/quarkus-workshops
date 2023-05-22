@@ -50,7 +50,8 @@ public class HeroResourceTest {
     void shouldPingOpenAPI() {
         given()
             .header(ACCEPT, APPLICATION_JSON)
-            .when().get("/q/openapi")
+            .when()
+            .get("/q/openapi")
             .then()
             .statusCode(OK.getStatusCode());
     }
@@ -59,7 +60,8 @@ public class HeroResourceTest {
     public void testHelloEndpoint() {
         given()
             .header(ACCEPT, TEXT_PLAIN)
-            .when().get("/api/heroes/hello")
+            .when()
+            .get("/api/heroes/hello")
             .then()
             .statusCode(200)
             .body(is("Hello Hero Resource"));
@@ -70,7 +72,8 @@ public class HeroResourceTest {
         Long randomId = new Random().nextLong();
         given()
             .pathParam("id", randomId)
-            .when().get("/api/heroes/{id}")
+            .when()
+            .get("/api/heroes/{id}")
             .then()
             .statusCode(NO_CONTENT.getStatusCode());
     }
@@ -78,7 +81,8 @@ public class HeroResourceTest {
     @Test
     void shouldGetRandomHero() {
         given()
-            .when().get("/api/heroes/random")
+            .when()
+            .get("/api/heroes/random")
             .then()
             .statusCode(OK.getStatusCode())
             .contentType(APPLICATION_JSON);
@@ -107,9 +111,11 @@ public class HeroResourceTest {
     @Order(1)
     void shouldGetInitialItems() {
         List<Hero> heroes = get("/api/heroes").then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .extract().body().as(getHeroTypeRef());
+                                              .statusCode(OK.getStatusCode())
+                                              .contentType(APPLICATION_JSON)
+                                              .extract()
+                                              .body()
+                                              .as(getHeroTypeRef());
         assertEquals(NB_HEROES, heroes.size());
     }
 
@@ -131,7 +137,8 @@ public class HeroResourceTest {
             .post("/api/heroes")
             .then()
             .statusCode(CREATED.getStatusCode())
-            .extract().header("Location");
+            .extract()
+            .header("Location");
         assertTrue(location.contains("/api/heroes"));
 
         // Stores the id
@@ -141,7 +148,8 @@ public class HeroResourceTest {
 
         given()
             .pathParam("id", heroId)
-            .when().get("/api/heroes/{id}")
+            .when()
+            .get("/api/heroes/{id}")
             .then()
             .statusCode(OK.getStatusCode())
             .body("name", Is.is(DEFAULT_NAME))
@@ -151,8 +159,10 @@ public class HeroResourceTest {
             .body("powers", Is.is(DEFAULT_POWERS));
 
         List<Hero> heroes = get("/api/heroes").then()
-            .statusCode(OK.getStatusCode())
-            .extract().body().as(getHeroTypeRef());
+                                              .statusCode(OK.getStatusCode())
+                                              .extract()
+                                              .body()
+                                              .as(getHeroTypeRef());
         assertEquals(NB_HEROES + 1, heroes.size());
     }
 
@@ -183,9 +193,11 @@ public class HeroResourceTest {
             .body("powers", Is.is(UPDATED_POWERS));
 
         List<Hero> heroes = get("/api/heroes").then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .extract().body().as(getHeroTypeRef());
+                                              .statusCode(OK.getStatusCode())
+                                              .contentType(APPLICATION_JSON)
+                                              .extract()
+                                              .body()
+                                              .as(getHeroTypeRef());
         assertEquals(NB_HEROES + 1, heroes.size());
     }
 
@@ -194,14 +206,17 @@ public class HeroResourceTest {
     void shouldRemoveAnItem() {
         given()
             .pathParam("id", heroId)
-            .when().delete("/api/heroes/{id}")
+            .when()
+            .delete("/api/heroes/{id}")
             .then()
             .statusCode(NO_CONTENT.getStatusCode());
 
         List<Hero> heroes = get("/api/heroes").then()
-            .statusCode(OK.getStatusCode())
-            .contentType(APPLICATION_JSON)
-            .extract().body().as(getHeroTypeRef());
+                                              .statusCode(OK.getStatusCode())
+                                              .contentType(APPLICATION_JSON)
+                                              .extract()
+                                              .body()
+                                              .as(getHeroTypeRef());
         assertEquals(NB_HEROES, heroes.size());
     }
 

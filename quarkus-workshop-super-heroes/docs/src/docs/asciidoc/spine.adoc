@@ -57,6 +57,12 @@ include::5-rest-client/rest-clients.adoc[leveloffset=+2]
 include::5-rest-client/fallbacks.adoc[leveloffset=+2]
 include::5-rest-client/timeout.adoc[leveloffset=+2]
 <<<
+// Contract testing
+include::5a-contract-testing/pact.adoc[leveloffset=+1]
+include::5a-contract-testing/happy-path-consumer-tests.adoc[leveloffset=+2]
+include::5a-contract-testing/provider-tests.adoc[leveloffset=+2]
+include::5a-contract-testing/states.adoc[leveloffset=+2]
+
 
 // Messaging
 include::6-messaging/messaging.adoc[leveloffset=+1]
@@ -82,4 +88,5 @@ include::8-quarkus-extension/extension.adoc[leveloffset=+1]
 // Conclusion
 include::10-conclusion/conclusion.adoc[leveloffset=+1]
 include::10-conclusion/conclusion-references.adoc[leveloffset=+2]
+
 <<<

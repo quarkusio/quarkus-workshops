@@ -15,8 +15,17 @@ import org.jboss.resteasy.reactive.RestResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
@@ -40,9 +49,16 @@ public class HeroResource {
     @GET
     @Path("/random")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class, required = true)))
-    public Uni<Hero> getRandomHero() {
+    public Uni<Response> getRandomHero() {
         return Hero.findRandom()
-            .invoke(h -> logger.debugf("Found random hero: %s", h));
+            .onItem().ifNotNull().transform(h -> {
+                this.logger.debugf("Found random hero: %s", h);
+                return Response.ok(h).build();
+            })
+            .onItem().ifNull().continueWith(() -> {
+                this.logger.debug("No random villain found");
+                return Response.status(Response.Status.NOT_FOUND).build();
+            });
     }
 
     @Operation(summary = "Returns all the heroes from the database")

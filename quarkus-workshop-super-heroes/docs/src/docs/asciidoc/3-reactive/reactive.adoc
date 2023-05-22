@@ -640,7 +640,7 @@ Once the application is started, create a new hero with the following cUrl comma
 
 [source,shell]
 ----
-curl -X POST -d  '{"level":2, "name":"Super Frog", "powers":"leaping"}'  -H "Content-Type: application/json" http://localhost:8083/api/heroes -v
+curl -X POST -d  '{"level":2, "name":"Super level", "powers":"leaping"}'  -H "Content-Type: application/json" http://localhost:8083/api/heroes -v
 
 < HTTP/1.1 201 Created
 < Location: http://localhost:8083/api/heroes/952
@@ -655,7 +655,7 @@ curl http://localhost:8083/api/heroes/952 | jq
 
 {
   "id": 952,
-  "name": "Super Frog",
+  "name": "Super level",
   "otherName": null,
   "level": 2,
   "picture": null,

@@ -463,7 +463,7 @@ public class VillainResourceTest {
 }
 ----
 
-Save the file, and watch the dev mode automatically rerunning your test:
+Save the file, and watch the dev mode automatically rerunning your test (and passing)
 
 [source,text]
 ----
