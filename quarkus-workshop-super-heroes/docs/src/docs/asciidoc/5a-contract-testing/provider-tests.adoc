@@ -39,7 +39,7 @@ The Pact framework will generate a test for each expectation in the contract and
 
 Add the Pact dependency to the heroes service `pom.xml`:
 
-[source,xml]
+[source,xml,subs="attributes+"]
 ----
         <dependency>
             <groupId>io.quarkiverse.pact</groupId>

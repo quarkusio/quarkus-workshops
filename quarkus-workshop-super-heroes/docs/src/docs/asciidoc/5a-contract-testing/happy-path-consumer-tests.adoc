@@ -10,7 +10,7 @@ icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
 
 Add the Pact Quarkus extension to the `pom.xml` of the Fights service:
 
-[source,xml]
+[source,xml,subs="attributes+"]
 ----
         <dependency>
             <groupId>io.quarkiverse.pact</groupId>
