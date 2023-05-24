@@ -73,7 +73,7 @@ Edit the `VillainService`, and introduce the following configuration properties:
 You may need to add the following import statement if your IDE does not do it automatically: `import org.eclipse.microprofile.config.inject.ConfigProperty;`
 ====
 
-If you do not provide a value for this property, the application startup fails with `javax.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`.
+If you do not provide a value for this property, the application startup fails with `jakarta.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`.
 To avoid having to configure a value, we configure a default one (property `defaultValue`).
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#

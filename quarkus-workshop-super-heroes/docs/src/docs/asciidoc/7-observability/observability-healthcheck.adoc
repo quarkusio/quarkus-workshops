@@ -124,7 +124,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @Liveness
 public class PingHeroResourceHealthCheck implements HealthCheck {

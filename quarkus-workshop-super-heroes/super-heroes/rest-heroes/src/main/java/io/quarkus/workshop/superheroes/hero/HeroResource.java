@@ -1,6 +1,6 @@
 package io.quarkus.workshop.superheroes.hero;
 
-import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -13,23 +13,23 @@ import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.validation.Valid;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
  * JAX-RS API endpoints with <code>/api/heroes</code> as the base URI for all endpoints
@@ -87,7 +87,7 @@ public class HeroResource {
     @Operation(summary = "Creates a valid hero")
     @POST
     @APIResponse(responseCode = "201", description = "The URI of the created hero", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class)))
-    @ReactiveTransactional
+    @WithTransaction
     public Uni<RestResponse<URI>> createHero(@Valid Hero hero, @Context UriInfo uriInfo) {
         return hero.<Hero>persist()
             .map(h -> {
@@ -100,7 +100,7 @@ public class HeroResource {
     @Operation(summary = "Updates an exiting hero")
     @PUT
     @APIResponse(responseCode = "200", description = "The updated hero", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
-    @ReactiveTransactional
+    @WithTransaction
     public Uni<Hero> updateHero(@Valid Hero hero) {
         return Hero.<Hero>findById(hero.id)
             .map(retrieved -> {
@@ -122,7 +122,7 @@ public class HeroResource {
     @DELETE
     @Path("/{id}")
     @APIResponse(responseCode = "204")
-    @ReactiveTransactional
+    @WithTransaction
     public Uni<RestResponse<Void>> deleteHero(@RestPath Long id) {
         return Hero.deleteById(id)
             .invoke(() -> logger.debugf("Hero deleted with %d", id))
