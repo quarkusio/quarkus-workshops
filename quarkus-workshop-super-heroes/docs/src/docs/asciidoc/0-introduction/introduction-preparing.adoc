@@ -31,7 +31,7 @@ quarkus-workshop-super-heroes
 === Super Heroes Application
 
 Under the `super-heroes` directory you will find the entire Super Hero application spread throughout a set of subdirectories, each one containing a microservice or some tooling.
-The final structure will be the following:
+The final structure will be the following (don't worry if you don't have all this yet, this is what we're aiming towards):
 
 [plantuml]
 ----
