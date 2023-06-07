@@ -82,3 +82,19 @@ Check localhost:8080, and your new content should appear.
 
 You can also change the javascript code.
 For example, try updating the text in `src/main/webui/src/app/app.component.ts`.
+
+== Native compilation and Quinoa
+
+You can compile the UI application as a native binary, just like other Quarkus applications.
+
+icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+
+Try compiling natively with
+
+----
+./mvnw package -Pnative
+./target/ui-super-heroes-1.0.0-SNAPSHOT-runner
+----
+
+The native compilation will take a while, but once it's done, the UI will start in around 0.02s.
+You can confirm it's working by checking http://localhost:8080.
