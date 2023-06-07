@@ -1,5 +1,7 @@
 package io.quarkus.workshop.superheroes.ui;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /*
@@ -7,6 +9,7 @@ Why do we need to register this for reflection? Normally this would be automatic
 we return it from a REST endpoint, but because we're handling our own
 object mapping, we need to do our own registering.
  */
+@JsonNaming(PropertyNamingStrategies.UpperSnakeCaseStrategy.class)
 @RegisterForReflection
-public record Config(String API_BASE_URL, boolean CALCULATE_API_BASE_URL) {
+public record Config(String apiBaseUrl, boolean calculateApiBaseUrl) {
 }
