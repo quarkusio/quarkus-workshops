@@ -146,10 +146,10 @@ package io.quarkus.workshop.superheroes.fight.client;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
@@ -179,10 +179,10 @@ package io.quarkus.workshop.superheroes.fight.client;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/api/villains")
 @Produces(MediaType.APPLICATION_JSON)
@@ -215,9 +215,9 @@ The name of the property needs to follow a certain convention which is best disp
 [source,properties]
 ----
 io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/url=http://localhost:8083
-io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/scope=javax.inject.Singleton
+io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/scope=jakarta.inject.Singleton
 io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/url=http://localhost:8084
-io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/scope=javax.inject.Singleton
+io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/scope=jakarta.inject.Singleton
 ----
 
 Having this configuration means that all requests performed using `HeroProxy` will use http://localhost:8083 as the base URL.

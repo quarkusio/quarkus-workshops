@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS Villain;
-DROP SEQUENCE IF EXISTS hibernate_sequence;
+DROP SEQUENCE IF EXISTS villain_seq;
 
-CREATE SEQUENCE hibernate_sequence START 1 INCREMENT 1;
+CREATE SEQUENCE villain_seq START 1 INCREMENT 50;
 
 create table Villain
 (

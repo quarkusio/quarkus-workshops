@@ -1,7 +1,7 @@
 package io.quarkus.workshop.superheroes.villain.health;
 
 import io.quarkus.workshop.superheroes.villain.VillainResource;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;

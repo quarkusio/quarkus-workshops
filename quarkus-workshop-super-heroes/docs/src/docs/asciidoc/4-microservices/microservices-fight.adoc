@@ -120,8 +120,8 @@ package io.quarkus.workshop.superheroes.fight;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 
 @Entity
@@ -169,7 +169,7 @@ import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(description="A fight between one hero and one villain")
 public class Fighters {
@@ -195,7 +195,7 @@ package io.quarkus.workshop.superheroes.fight.client;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(description="The hero fighting against the villain")
 public class Hero {
@@ -219,7 +219,7 @@ package io.quarkus.workshop.superheroes.fight.client;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(description="The villain fighting against the hero")
 public class Villain {
@@ -251,16 +251,16 @@ package io.quarkus.workshop.superheroes.fight;
 
 import org.jboss.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 
-import static javax.transaction.Transactional.TxType.REQUIRED;
-import static javax.transaction.Transactional.TxType.SUPPORTS;
+import static jakarta.transaction.Transactional.TxType.REQUIRED;
+import static jakarta.transaction.Transactional.TxType.SUPPORTS;
 
 @ApplicationScoped
 @Transactional(SUPPORTS)
@@ -360,17 +360,17 @@ package io.quarkus.workshop.superheroes.fight;
 
 import org.jboss.logging.Logger;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.inject.Inject;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.util.List;
 
-import static javax.ws.rs.core.MediaType.*;
+import static jakarta.ws.rs.core.MediaType.*;
 
 @Path("/api/fights")
 @Produces(APPLICATION_JSON)
@@ -434,12 +434,23 @@ To load some SQL statements when Hibernate ORM starts, create the `src/main/reso
 
 [source,sql]
 ----
-INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam, loserTeam)
-VALUES (nextval('hibernate_sequence'), current_timestamp, 'Chewbacca', 5, 'https://www.superherodb.com/pictures2/portraits/10/050/10466.jpg', 'Buuccolo', 3, 'https://www.superherodb.com/pictures2/portraits/11/050/15355.jpg', 'heroes', 'villains');
-INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam ,loserTeam)
-VALUES (nextval('hibernate_sequence'), current_timestamp, 'Galadriel', 10, 'https://www.superherodb.com/pictures2/portraits/11/050/11796.jpg', 'Darth Vader', 8, 'https://www.superherodb.com/pictures2/portraits/10/050/10444.jpg', 'heroes', 'villains');
-INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture, winnerTeam ,loserTeam)
-VALUES (nextval('hibernate_sequence'), current_timestamp, 'Annihilus', 23, 'https://www.superherodb.com/pictures2/portraits/10/050/1307.jpg', 'Shikamaru', 1, 'https://www.superherodb.com/pictures2/portraits/10/050/11742.jpg', 'villains', 'heroes');
+ALTER SEQUENCE fight_seq RESTART WITH 50;
+
+INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture,
+                  winnerTeam, loserTeam)
+VALUES (nextval('fight_seq'), current_timestamp, 'Chewbacca', 5,
+        'https://www.superherodb.com/pictures2/portraits/10/050/10466.jpg', 'Buuccolo', 3,
+        'https://www.superherodb.com/pictures2/portraits/10/050/15355.jpg', 'heroes', 'villains');
+INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture,
+                  winnerTeam, loserTeam)
+VALUES (nextval('fight_seq'), current_timestamp, 'Galadriel', 10,
+        'https://www.superherodb.com/pictures2/portraits/10/050/11796.jpg', 'Darth Vader', 8,
+        'https://www.superherodb.com/pictures2/portraits/10/050/10444.jpg', 'heroes', 'villains');
+INSERT INTO fight(id, fightDate, winnerName, winnerLevel, winnerPicture, loserName, loserLevel, loserPicture,
+                  winnerTeam, loserTeam)
+VALUES (nextval('fight_seq'), current_timestamp, 'Annihilus', 23,
+        'https://www.superherodb.com/pictures2/portraits/10/050/1307.jpg', 'Shikamaru', 1,
+        'https://www.superherodb.com/pictures2/portraits/10/050/11742.jpg', 'villains', 'heroes');
 ----
 
 == Configuration
@@ -503,10 +514,10 @@ import java.util.List;
 import java.util.Random;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-import static javax.ws.rs.core.HttpHeaders.ACCEPT;
-import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.Response.Status.*;
+import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
+import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.Response.Status.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

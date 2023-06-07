@@ -48,6 +48,8 @@ If you don't have Node installed, Quinoa will install it during the start proces
 ----
 
 You should see console output like the following
+
+[source,shell,subs="attributes+"]
 ----
 2023-05-18 14:22:02,745 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-5) Quinoa package manager live coding is up and running on port: 4200 (in 18118ms)
 2023-05-18 14:22:02,749 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-40) Quinoa is forwarding unhandled requests to port: 4200
@@ -55,7 +57,7 @@ __  ____  __  _____   ___  __ ____  ______
  --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
  -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
 --\___\_\____/_/ |_/_/|_/_/|_|\____/___/
-2023-05-18 14:22:03,237 INFO  [io.quarkus] (Quarkus Main Thread) ui-super-heroes 1.0.0-SNAPSHOT on JVM (powered by Quarkus 2.15.3.Final) started in 24.765s. Listening on: http://localhost:8080
+2023-05-18 14:22:03,237 INFO  [io.quarkus] (Quarkus Main Thread) ui-super-heroes 1.0.0-SNAPSHOT on JVM (powered by Quarkus {quarkus-version}) started in 24.765s. Listening on: http://localhost:8080
 ----
 
 Once the application is started, go to http://localhost:8080 (8080 is the default Quarkus port as we didn't change it in the `application.properties` this time).

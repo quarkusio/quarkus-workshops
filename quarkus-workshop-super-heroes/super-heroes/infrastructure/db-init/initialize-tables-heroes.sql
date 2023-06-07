@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS Hero;
-DROP SEQUENCE IF EXISTS hibernate_sequence;
+DROP SEQUENCE IF EXISTS hero_seq;
 
-CREATE SEQUENCE hibernate_sequence START 1 INCREMENT 1;
+CREATE SEQUENCE hero_seq START 1 INCREMENT 50;
 
 create table Hero
 (
