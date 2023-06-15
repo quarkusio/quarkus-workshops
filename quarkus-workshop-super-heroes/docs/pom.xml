@@ -33,8 +33,9 @@
         <version.asciidoctorj.diagram>2.2.1</version.asciidoctorj.diagram>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.raw>
-        <github.url>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
         <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
+        <github.url>${github.repo}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
+        <base.url>${env.BASE_URL}</base.url>
         <github.issue>${github.repo}/issues</github.issue>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -45,6 +46,27 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>dev.jbang</groupId>
+                <artifactId>jbang-maven-plugin</artifactId>
+                <version>0.0.7</version>
+                <executions>
+                    <execution>
+                        <id>run</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <script>src/resource-generation/qrcode.java</script>
+                            <args>
+                                <arg>${base.url}quarkus-workshops/super-heroes/</arg>
+                                <arg>src/docs/asciidoc/images/qrcode.png</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -86,6 +108,7 @@
                         <github-url>${github.url}</github-url>
                         <github-repo>${github.repo}</github-repo>
                         <github-issue>${github.issue}</github-issue>
+                        <github-issue>${base.url}</github-issue>
                         <give-solution>true</give-solution>
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>22.3</graalvm-version>
@@ -141,4 +164,19 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>env-undefined</id>
+            <activation>
+                <property>
+                    <name>!env.BASE_URL</name>
+                </property>
+            </activation>
+            <properties>
+                <base.url>http://quarkus.io/</base.url>
+                <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
+                <github.repo>http://github.com/quarkusio/quarkus-workshops</github.repo>
+            </properties>
+        </profile>
+    </profiles>
 </project>
