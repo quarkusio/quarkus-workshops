@@ -32,7 +32,7 @@ class qrcode {
             System.exit(1);
         } else {
             String text = args[0];
-            String filePath = args[1];
+            String filePath = args.length>1?args[1]:"qrcode.png";
             int width = 640;
             writeQrCode(text, filePath, width);
         }
@@ -87,6 +87,7 @@ class qrcode {
         g.drawImage(overlay, woffset, hoffset,
             null);
 
+        System.out.println("Writing QR code to " + filePath);
         ImageIO.write(combined, "png", new File(filePath));
     }
 
