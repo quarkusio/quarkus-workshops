@@ -36,6 +36,8 @@ jobs:
       - name: Site generation
         run: |
           sudo apt-get install graphviz
+          
+          export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
 
           cd quarkus-workshop-super-heroes/docs      
           mvn install
