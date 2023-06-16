@@ -292,7 +292,7 @@ public class VillainResource {
     @Operation(summary = "Updates an exiting  villain")
     @PUT
     @APIResponse(responseCode = "200", description = "The updated villain", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Villain.class)))
-    public RestResponse<Void> updateVillain(@Valid Villain villain) {
+    public RestResponse<Villain> updateVillain(@Valid Villain villain) {
         villain = service.updateVillain(villain);
         logger.debug("Villain updated with new valued " + villain);
         return RestResponse.ok(villain);
