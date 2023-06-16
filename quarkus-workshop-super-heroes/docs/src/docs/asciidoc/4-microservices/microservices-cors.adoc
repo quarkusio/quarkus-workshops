@@ -41,7 +41,7 @@ If the filter is enabled and an HTTP request is identified as cross-origin, the 
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
-So make sure you set the `quarkus.http.cors` property to `true` on the:
+So make sure you set `quarkus.http.cors=true` and `%dev.quarkus.http.cors.origins=/.*/` properties on the:
 
 1. Fight microservice,
 2. Hero microservice,
