@@ -305,7 +305,7 @@ Now we can add the following to the top of the `FightResourceTest`:
 
     @BeforeEach
     public void setup() {
-        when(heroProxy.findRandomHero()).thenReturn(DefaultTestHero.INSTANCE);
+        Mockito.when(heroProxy.findRandomHero()).thenReturn(DefaultTestHero.INSTANCE);
     }
 ----
 

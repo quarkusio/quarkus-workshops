@@ -13,22 +13,18 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
-
 @QuarkusTest
 @Provider("rest-heroes")
 @PactFolder("pacts")
 public class HeroContractVerificationTest {
-    private static final String NO_HERO_FOUND_STATE = "No random hero found";
-
     @ConfigProperty(name = "quarkus.http.test-port")
     int quarkusPort;
-
 
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider.class)
@@ -37,6 +33,8 @@ public class HeroContractVerificationTest {
     }
 
     // tag::states[]
+    private static final String NO_HERO_FOUND_STATE = "No random hero found";
+
     @BeforeEach
     void beforeEach(PactVerificationContext context) {
         context.setTarget(new HttpTestTarget("localhost", this.quarkusPort));
@@ -53,7 +51,7 @@ public class HeroContractVerificationTest {
 
         if (noHeroState) {
             PanacheMock.mock(Hero.class);
-            when(Hero.findRandom()).thenReturn(Uni.createFrom()
+            Mockito.when(Hero.findRandom()).thenReturn(Uni.createFrom()
                                                   .nullItem());
 
         }
