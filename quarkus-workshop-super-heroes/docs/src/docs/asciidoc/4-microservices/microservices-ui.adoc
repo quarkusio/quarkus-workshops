@@ -26,7 +26,7 @@ It contains the code of the application.
 
 The Angular application is in `src/main/webui`.
 Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
-All the Angular code (graphical components, model, services) is located under `src/main/webui/app`.
+All the Angular code (graphical components, model, services) is located under `src/main/webui/src/app`.
 
 == Running the Web Application
 
