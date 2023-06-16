@@ -484,18 +484,23 @@ This is useful to have a data set ready for the tests or demos.
 
 [source,sql]
 ----
-ALTER SEQUENCE hero_seq RESTART WITH 50;
+ALTER SEQUENCE villain_seq RESTART WITH 50;
 
-INSERT INTO hero(id, name, otherName, picture, powers, level)
-VALUES (nextval('hero_seq'), 'Chewbacca', '', 'https://www.superherodb.com/pictures2/portraits/10/050/10466.jpg',
-        'Agility, Longevity, Marksmanship, Natural Weapons, Stealth, Super Strength, Weapons Master', 5);
-INSERT INTO hero(id, name, otherName, picture, powers, level)
-VALUES (nextval('hero_seq'), 'Angel Salvadore', 'Angel Salvadore Bohusk',
-        'https://www.superherodb.com/pictures2/portraits/10/050/1406.jpg',
-        'Animal Attributes, Animal Oriented Powers, Flight, Regeneration, Toxin and Disease Control', 4);
-INSERT INTO hero(id, name, otherName, picture, powers, level)
-VALUES (nextval('hero_seq'), 'Bill Harken', '', 'https://www.superherodb.com/pictures2/portraits/10/050/1527.jpg',
-        'Super Speed, Super Strength, Toxin and Disease Resistance', 6);
+INSERT INTO villain(id, name, otherName, picture, powers, level)
+VALUES (nextval('villain_seq'), 'Buuccolo', 'Majin Buu',
+        'https://www.superherodb.com/pictures2/portraits/10/050/15355.jpg',
+        'Accelerated Healing, Adaptation, Agility, Flight, Immortality, Intelligence, Invulnerability, Reflexes, Self-Sustenance, Size Changing, Spatial Awareness, Stamina, Stealth, Super Breath, Super Speed, Super Strength, Teleportation',
+        22);
+INSERT INTO villain(id, name, otherName, picture, powers, level)
+VALUES (nextval('villain_seq'), 'Darth Vader', 'Anakin Skywalker',
+        'https://www.superherodb.com/pictures2/portraits/10/050/10444.jpg',
+        'Accelerated Healing, Agility, Astral Projection, Cloaking, Danger Sense, Durability, Electrokinesis, Energy Blasts, Enhanced Hearing, Enhanced Senses, Force Fields, Hypnokinesis, Illusions, Intelligence, Jump, Light Control, Marksmanship, Precognition, Psionic Powers, Reflexes, Stealth, Super Speed, Telekinesis, Telepathy, The Force, Weapons Master',
+        13);
+INSERT INTO villain(id, name, otherName, picture, powers, level)
+VALUES (nextval('villain_seq'), 'The Rival (CW)', 'Edward Clariss',
+        'https://www.superherodb.com/pictures2/portraits/10/050/13846.jpg',
+        'Accelerated Healing, Agility, Bullet Time, Durability, Electrokinesis, Endurance, Enhanced Senses, Intangibility, Marksmanship, Phasing, Reflexes, Speed Force, Stamina, Super Speed, Super Strength',
+        10);
 ----
 
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
