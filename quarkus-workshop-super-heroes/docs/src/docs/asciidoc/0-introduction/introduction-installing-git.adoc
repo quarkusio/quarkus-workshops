@@ -6,6 +6,7 @@ Git{wj}footnote:[Git https://git-scm.com] is a free and open source distributed 
 It is primarily used for source code management in software development, but it can be used to keep track of changes in any set of files.
 Git was created by Linus Torvalds in 2005 for the development of the Linux kernel, with other kernel developers contributing to its initial development.
 
+ifdef::use-mac[]
 == Installing Git
 
 On Mac, if you have installed Homebrew, then installing Git is just a matter of a single command.
@@ -15,6 +16,7 @@ Open your terminal and install Git with the following command:
 ----
 $ brew install git
 ----
+endif::use-mac[]
 
 == Checking for Git Installation
 

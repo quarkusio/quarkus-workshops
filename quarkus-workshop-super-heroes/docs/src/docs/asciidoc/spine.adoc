@@ -21,6 +21,11 @@ v2.0, {docdate}: Quarkus {quarkus-version}
 :half-width: role=half-width
 :half-size: role=half-size
 
+// Conditional includes - can be overridden in the build to generate tailored docs
+:use-mac: true
+:use-linux: true
+:use-windows: true
+
 // Introduction
 include::0-introduction/introduction.adoc[leveloffset=+1]
 include::0-introduction/introduction-presentation.adoc[leveloffset=+2]

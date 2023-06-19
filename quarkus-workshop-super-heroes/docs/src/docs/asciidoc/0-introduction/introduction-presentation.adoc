@@ -76,10 +76,12 @@ Oh, and be ready to have some fun!
 
 First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
 
+ifdef::use-mac[]
 [WARNING]
 ====
-If you are using Mac OS X, make sure the version is greater than 10.11.x (Captain).
+If you are using Mac OS X, make sure the version is greater than 10.11.x (El Capitan).
 ====
+endif::use-mac[]
 
 This workshop will make use of the following Software, tools, frameworks that you will need to install and now (more or less) how it works:
 
@@ -97,5 +99,5 @@ You can skip the next section if you have already installed all the prerequisite
 [WARNING]
 ====
 This workshop assumes a bash shell.
-If you run on Windows, in particular, adjust the commands accordingly.
+ifdef::use-windows[If you run on Windows, in particular, adjust the commands accordingly.]
 ====

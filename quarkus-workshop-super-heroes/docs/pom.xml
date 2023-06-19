@@ -141,6 +141,51 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>output-html-linux</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-asciidoc/linux</outputDirectory>
+                            <attributes>
+                                <imagesdir>images</imagesdir>
+                                <use-windows>false</use-windows>
+                                <use-mac>false</use-mac>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>output-html-mac</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-asciidoc/mac</outputDirectory>
+                            <attributes>
+                                <imagesdir>images</imagesdir>
+                                <use-windows>false</use-windows>
+                                <use-linux>false</use-linux>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>output-html-windows</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-asciidoc/windows</outputDirectory>
+                            <attributes>
+                                <imagesdir>images</imagesdir>
+                                <use-mac>false</use-mac>
+                                <use-linux>false</use-linux>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>output-html-azure</id>
                         <phase>generate-resources</phase>
                         <goals>

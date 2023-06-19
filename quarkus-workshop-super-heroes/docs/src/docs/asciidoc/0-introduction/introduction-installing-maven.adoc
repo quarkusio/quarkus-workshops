@@ -14,12 +14,14 @@ Once you have installed JDK {jdk-version}, make sure the `JAVA_HOME` environment
 Then, download Maven from http://maven.apache.org/, unzip the file on your hard drive and add the `apache-maven/bin` directory to your `PATH` variable.
 More details about the installation process are available on https://maven.apache.org/install.html.
 
+ifdef::use-mac[]
 But of course, if you are on Mac OS X and use Homebrew, install Maven with the following command:
 
 [source,shell]
 ----
 brew install maven
 ----
+endif::use-mac[]
 
 == Checking for Maven Installation
 
