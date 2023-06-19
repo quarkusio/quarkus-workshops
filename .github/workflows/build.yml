@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'quarkus-workshop-super-heroes/**'
-      - '.github/**'
+  pull_request:
+
 jobs:
   build_java17:
     runs-on: ubuntu-latest
@@ -17,10 +16,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Skeleton build with Maven
-        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pcomplete
+      - name: Native build with Maven
+        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs
       - name: Extension build with Maven
         run: mvn -B install -f quarkus-workshop-super-heroes/super-heroes/extension-version/pom.xml
   publication:
@@ -51,8 +50,20 @@ jobs:
           cp -R target/generated-asciidoc/* target/site/super-heroes
           # Move the redirect.html page to the root
           cp target/generated-asciidoc/redirect.html target/site/index.html
+      - name: Store PR id
+        if: "github.event_name == 'pull_request'"
+        run: echo ${{ github.event.number }} > ./quarkus-workshop-super-heroes/docs/target/site/pr-id.txt
+
+      - name: Publishing directory for PR preview
+        if: "github.event_name == 'pull_request'"
+        uses: actions/upload-artifact@v2
+        with:
+          name: site
+          path: ./quarkus-workshop-super-heroes/docs/target/site
+          retention-days: 3
 
       - name: Publication
+        if: "github.repository == 'quarkus/quarkus-workshops' && github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
