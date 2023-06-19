@@ -1,0 +1,46 @@
+name: Surge PR Preview
+
+on:
+  workflow_run:
+    workflows: [ "Pull Request" ]
+    types:
+      - completed
+
+jobs:
+  preview:
+    runs-on: ubuntu-20.04
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Download PR Artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+          workflow_conclusion: success
+          name: site
+      - name: Store PR id as variable
+        id: pr
+        run: |
+          echo "id=$(<pr-id.txt)" >> $GITHUB_OUTPUT
+          rm -f pr-id.txt
+      - name: Publishing to surge for preview
+        id: deploy
+        run: npx surge ./ --domain https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+      - name: Update PR status comment on success
+        uses: actions-cool/maintain-one-comment@v3.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh
+            <!-- Sticky Pull Request Comment -->
+          body-include: '<!-- Sticky Pull Request Comment -->'
+          number: ${{ steps.pr.outputs.id }}
+      - name: Update PR status comment on failure
+        if: ${{ failure() }}
+        uses: actions-cool/maintain-one-comment@v3.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            😭 Deploy PR Preview failed.
+            <!-- Sticky Pull Request Comment -->
+          body-include: '<!-- Sticky Pull Request Comment -->'
+          number: ${{ steps.pr.outputs.id }}
