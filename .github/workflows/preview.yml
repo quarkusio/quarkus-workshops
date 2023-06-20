@@ -2,7 +2,7 @@ name: Surge PR Preview
 
 on:
   workflow_run:
-    workflows: [ "Pull Request" ]
+    workflows: [ "Build" ]
     types:
       - completed
 
