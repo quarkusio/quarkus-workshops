@@ -89,7 +89,7 @@ This workshop will make use of the following Software, tools, frameworks that yo
 * Maven {maven-version}
 * Docker
 * cURL (or any other command line HTTP client)
-* Node JS (optional, only if you are in a _frontend_ mood)
+* Angular (optional, only if you are in a _frontend_ mood)
 
 The following section focuses on how to install and set up the needed Software.
 You can skip the next section if you have already installed all the prerequisites.
