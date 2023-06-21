@@ -88,7 +88,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 [source,shell]
 ----
-mvn clean install
+./mvnw clean install
 ----
 
 By running this command, it downloads all the required dependencies.
@@ -106,8 +106,8 @@ To build the completed workshop, you need to run the following commands from the
 
 [source, shell]
 ----
-$ mvn clean install -f super-heroes/extension-version
-$ mvn clean install -Pcomplete
+$ ./mvnw clean install -f super-heroes/extension-version
+$ ./mvnw clean install -Pcomplete
 ----
 
 == Ready?

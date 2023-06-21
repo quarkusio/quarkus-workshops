@@ -9,6 +9,20 @@
 
     <fileSets>
         <fileSet>
+            <outputDirectory>./</outputDirectory>
+            <directory>${basedir}/target/temp-project</directory>
+            <includes>
+                <include>mvnw*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>./super-heroes</outputDirectory>
+            <directory>${basedir}/target/temp-project</directory>
+            <includes>
+                <include>mvnw*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>extensions</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <excludes>

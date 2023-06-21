@@ -74,7 +74,7 @@ Oh, and be ready to have some fun!
 
 == Software Requirements
 
-First of all, make sure you have a 64bits computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
+First of all, make sure you have a 64-bit computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
 
 ifdef::use-mac[]
 [WARNING]
@@ -83,15 +83,19 @@ If you are using Mac OS X, make sure the version is greater than 10.11.x (El Cap
 ====
 endif::use-mac[]
 
-This workshop will make use of the following Software, tools, frameworks that you will need to install and now (more or less) how it works:
+This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
 * JDK {jdk-version}
 * GraalVM {graalvm-version}
-* Maven {maven-version}
 * Docker
 * cURL (or any other command line HTTP client)
 * Angular (optional, only if you are in a _frontend_ mood)
+
+We will also be using Maven {maven-version}, but there is no
+need to install it. Instead, the workshop scaffolding includes
+a maven wrapper, `mvnw`. If you'd prefer to install your own Maven and don't already have it,
+ xref:appendix-installing-maven[see the instructions at the end of the workshop].
 
 The following section focuses on how to install and set up the needed Software.
 You can skip the next section if you have already installed all the prerequisites.

@@ -35,7 +35,7 @@ We don't need to worry too much about the Angular code.
 icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 
 From the `ui-super-heroes`
-directory, use `mvn quarkus:dev` to start the web application.
+directory, use `./mvnw quarkus:dev` to start the web application.
 
 Be sure you have the hero, villain and fights microservices running (dev mode is enough).
 

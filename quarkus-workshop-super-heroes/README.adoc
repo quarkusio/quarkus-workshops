@@ -92,7 +92,7 @@ You can then open the `docs/target/generated-asciidoc/spine.html` page and read 
 To generate the zip files, execute the following command from the root of the project:
 
 ```bash
-$ mvn assembly:single -N
+$ mvn package -N
 ```
 
 This generates the following zip files

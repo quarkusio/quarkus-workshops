@@ -15,13 +15,16 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 ----
 cd quarkus-workshop-super-heroes/super-heroes
 
-mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-villains \
     -DclassName="io.quarkus.workshop.superheroes.villain.VillainResource" \
     -Dpath="api/villains" \
     -Dextensions="resteasy-reactive-jackson"
 ----
+
+Remember that `mvnw` is the maven wrapper. It behaves like `mvn`,
+but allows a project's build dependencies to be encapsulated.
 
 The last line selects the extension we want to use.
 As a start, we only select `resteasy-reactive-jackson`, which will also import `resteasy-reactive`.

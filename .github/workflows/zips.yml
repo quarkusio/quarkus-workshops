@@ -36,7 +36,7 @@ jobs:
       - name: Generate zips
         run: |
           cd quarkus-workshop-super-heroes/
-          mvn assembly:single -N
+          mvn package -N
       - name: Commit zips
         run: |
           git config --global user.name 'Github Actions'

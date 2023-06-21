@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.quarkus.workshop.super-heroes</groupId>
@@ -17,6 +16,62 @@
     </modules>
     <build>
         <plugins>
+            <!-- We want to include a wrapper in the zip, and it should be for the
+            right version of Quarkus, not the one this build is running with.
+            We can invoke the quarkus maven plugin, but it won't let us overwrite,
+            so we need to do a bit of cleaning as part of the default lifecycle.-->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>tidy-generated-project</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>temp-project/**</includes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Now that we've cleared away old executions, let's make a project
+            so that we can copy its wrapper. -->
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>3.0.3.Final</version>
+                <executions>
+                    <execution>
+                        <id>get-wrapper</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <projectGroupId>io.quarkus.workshop.super-heroes</projectGroupId>
+                    <projectArtifactId>temp-project</projectArtifactId>
+                    <noCode>true</noCode>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <!--  Pass in a new project so it doesn't try and update this pom and make a mess-->
+                    <project>
+                        <groupId>temp</groupId>
+                        <artifactId>org.acme</artifactId>
+                        <version>2.0</version>
+                        <packaging>pom</packaging>
+                        <name>Throwaway project</name>
+                    </project>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -32,6 +87,15 @@
                     </descriptors>
                     <outputDirectory>dist</outputDirectory>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
