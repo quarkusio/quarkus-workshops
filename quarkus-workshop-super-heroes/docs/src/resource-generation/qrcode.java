@@ -51,15 +51,6 @@ class qrcode {
         // Load QR image
         BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(bitMatrix, getMatrixConfig());
 
-        // Load logo image
-        BufferedImage overlay = getOverlay(LOGO_URL);
-
-        // Calculate the delta height and width between QR code and the logo
-        // Note that we don't do any scaling, so the sizes need to kind of
-        // work together without obscuring too much logo
-        int deltaHeight = qrImage.getHeight() - overlay.getHeight();
-        int deltaWidth = qrImage.getWidth() - overlay.getWidth();
-
         // Initialize combined image
         BufferedImage combined = new BufferedImage(qrImage.getHeight(), qrImage.getWidth(),
             BufferedImage.TYPE_INT_ARGB);
@@ -69,23 +60,37 @@ class qrcode {
         g.drawImage(qrImage, 0, 0, null);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
-        // The Quarkus logo is transparent and it doesn't look great over the QR code,
-        // so blank out some of the middle
-        int woffset = Math.round(deltaWidth / 2);
-        int hoffset = Math.round(deltaHeight / 2);
+        try {
+            // Load logo image
+            BufferedImage overlay = getOverlay(LOGO_URL);
 
-        // shrink the blanking panel a bit so it looks better
-        int shrinking = 4;
+            // Calculate the delta height and width between QR code and the logo
+            // Note that we don't do any scaling, so the sizes need to kind of
+            // work together without obscuring too much logo
+            int deltaHeight = qrImage.getHeight() - overlay.getHeight();
+            int deltaWidth = qrImage.getWidth() - overlay.getWidth();
+            // The Quarkus logo is transparent and it doesn't look great over the QR code,
+            // so blank out some of the middle
+            int woffset = Math.round(deltaWidth / 2);
+            int hoffset = Math.round(deltaHeight / 2);
 
-        g.setColor(new Color(255, 255, 255));
-        g.fillRect(woffset + 2, hoffset + 2, overlay.getWidth() - 2 * shrinking,
-            overlay.getHeight() - 2 * shrinking);
+            // shrink the blanking panel a bit so it looks better
+            int shrinking = 4;
 
-        // Write the logo into the combines image at position (deltaWidth / 2) and
-        // (deltaHeight / 2). Background: Left/Right and Top/Bottom must be
-        // the same space for the logo to be centered
-        g.drawImage(overlay, woffset, hoffset,
-            null);
+            g.setColor(new Color(255, 255, 255));
+            g.fillRect(woffset + 2, hoffset + 2, overlay.getWidth() - 2 * shrinking,
+                overlay.getHeight() - 2 * shrinking);
+
+            // Write the logo into the combines image at position (deltaWidth / 2) and
+            // (deltaHeight / 2). Background: Left/Right and Top/Bottom must be
+            // the same space for the logo to be centered
+            g.drawImage(overlay, woffset, hoffset,
+                null);
+        } catch (IOException e) {
+            System.err.println(
+                "Could not download " + LOGO_URL + ". Will generate a QR code without an embedded" +
+                    " logo.");
+        }
 
         ImageIO.write(combined, "png", new File(filePath));
     }
