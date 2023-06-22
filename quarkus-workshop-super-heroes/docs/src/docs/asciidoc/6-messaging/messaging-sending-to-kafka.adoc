@@ -62,7 +62,7 @@ The previous command adds the following dependency:
 </dependency>
 ----
 
-If not yet started, start the microservice using `mvn quarkus:dev`.
+If not yet started, start the microservice using `./mvnw quarkus:dev`.
 
 [NOTE]
 ====

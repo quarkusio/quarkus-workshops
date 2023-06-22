@@ -5,8 +5,6 @@ include::introduction-installing-jdk.adoc[leveloffset=+1]
 
 include::introduction-installing-graalvm.adoc[leveloffset=+1]
 
-include::introduction-installing-maven.adoc[leveloffset=+1]
-
 include::introduction-installing-curl.adoc[leveloffset=+1]
 
 include::introduction-installing-docker.adoc[leveloffset=+1]
@@ -21,7 +19,6 @@ Just make sure the following commands work on your machine.
 ----
 $ java -version
 $ $GRAALVM_HOME/bin/native-image --version
-$ mvn -version
 $ curl --version
 $ docker version
 $ docker compose version
