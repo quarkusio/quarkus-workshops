@@ -42,7 +42,6 @@ jobs:
           mvn install
           
           # make an index.html
-          cp target/generated-asciidoc/spine.html target/generated-asciidoc/index.html
           cp target/generated-asciidoc/spine-azure.html target/generated-asciidoc/index-azure.html
 
           # Move things around to preserve the super-heroes structure

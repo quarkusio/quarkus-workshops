@@ -10,6 +10,7 @@ The code in this workshop uses JDK {jdk-version}.
 
 To install the JDK {jdk-version}, follows the instructions from https://adoptium.net/installation.html to download and install the JDK for your platform.
 
+ifdef::use-mac[]
 There is also an easier way to download and install Java if you are on Mac OS X.
 You can use Homebrew to install OpenJDK {jdk-version} using the following commands.footnote:[Homebrew https://brew.sh]
 
@@ -17,7 +18,9 @@ You can use Homebrew to install OpenJDK {jdk-version} using the following comman
 ----
 brew install java17
 ----
+endif::use-mac[]
 
+ifdef::use-linux[]
 For Linux distributions, there are also packaged java installations.
 [source,shell]
 ----
@@ -26,6 +29,7 @@ dnf install java-17-openjdk
 # Debian-based distributions:
 $ apt-get install openjdk-17-jdk
 ----
+endif::use-linux[]
 
 == Checking for Java Installation
 

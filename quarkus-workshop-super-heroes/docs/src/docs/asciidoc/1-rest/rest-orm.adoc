@@ -795,6 +795,7 @@ icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
 Now, just execute `docker compose -f docker-compose.yaml up -d`.
 You should see a few logs going on and then all the containers get started.
 
+ifdef::use-linux[]
 On Linux, use the `docker-compose-linux.yaml`:
 
 [source,shell]
@@ -802,11 +803,16 @@ On Linux, use the `docker-compose-linux.yaml`:
 ----
 docker compose -f docker-compose-linux.yaml up -d
 ----
+ifdef::use-linux[]
 
 [NOTE]
 ====
 During the workshop, just leave all the containers up and running.
-Then, after the workshop, remember to shut them down using: `docker compose -f docker-compose.yaml down` or  `docker compose -f docker-compose-linux.yaml down` on Linux.
+Then, after the workshop, remember to shut them down using: `docker compose -f docker-compose.yaml down`
+ifdef::use-linux[]
+ or  `docker compose -f docker-compose-linux.yaml down` on Linux
+endif::use-linux[]
+.
 ====
 
 === Packaging and running the application

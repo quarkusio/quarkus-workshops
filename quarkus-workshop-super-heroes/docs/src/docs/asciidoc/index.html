@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quarkus Super-Heroes Workshop</title>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+        <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+        <meta name="description" content="A hands on lab about Quarkus">
+
+        <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+        <link href="assets/css/hol.css" media="screen" rel="stylesheet">
+        <link href="assets/css/github.css" media="screen" rel="stylesheet">
+        <script src="assets/js/jquery-3.1.1.js"></script>
+        <script src="assets/js/bootstrap.js"></script>
+    </head>
+    <title>Workshop configurator</title>
+    <script>
+        // Use relative URLs
+        const baseUrl = "./";
+        const filename = "spine.html"
+
+        function generateDefaultURL() {
+            const url = baseUrl + filename
+            window.location.href = url;
+        }
+
+        function generateURL() {
+            const selectedOptions = [];
+
+            // Get the selected build option
+            const osOption = document.querySelector('input[name="osOption"]:checked');
+
+            const osValue = osOption.value;
+
+            selectedOptions.push(osValue);
+
+            // Generate the URL based on selected options
+            const url = baseUrl + selectedOptions.join("/") + "/" + filename;
+            window.location.href = url;
+
+        }
+    </script>
+</head>
+<body>
+<h1>Quarkus Workshop Configurator</h1>
+
+<button onclick="generateDefaultURL()">Just take me to the default workshop</button>
+
+<h2>What kind of workshop would you like?</h2>
+
+<h3>What operating system are you using?</h3>
+<ul class="configurator">
+    <li>
+        <label for="macRadio">
+            <input type="radio" name="osOption" id="macRadio" value="mac"> MacOS
+        </label>
+    </li>
+    <li>
+        <label for="windowsRadio">
+            <input type="radio" name="osOption" id="windowsRadio" value="windows"> Windows
+        </label>
+    </li>
+    <li>
+        <label for="linuxRadio">
+            <input type="radio" name="osOption" id="linuxRadio" value="linux"> Linux
+        </label></li>
+</ul>
+<br>
+
+<button onclick="generateURL()">Customise my workshop</button>
+<br/>
+
+</body>
+</html>

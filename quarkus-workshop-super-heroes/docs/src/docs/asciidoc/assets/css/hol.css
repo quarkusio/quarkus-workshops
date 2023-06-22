@@ -138,3 +138,7 @@ span.red.big {
 pre code, pre pre {
   font-size: 14px;
 }
+
+ul.configurator {
+  list-style-type: none;
+}

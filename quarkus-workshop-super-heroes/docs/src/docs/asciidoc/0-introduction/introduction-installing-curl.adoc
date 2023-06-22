@@ -8,6 +8,7 @@ It is free, open-source (available under the MIT Licence), and has been ported t
 
 == Installing cURL
 
+ifdef::use-mac[]
 If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.footnote:[Homebrew https://brew.sh]
 Open your terminal and install cURL with the following command:
 
@@ -15,8 +16,11 @@ Open your terminal and install cURL with the following command:
 ----
 brew install curl
 ----
+endif::use-mac[]
 
+ifdef::use-windows[]
 For Windows, download and install curl from https://curl.se/download.html.
+endif::use-windows[]
 
 == Checking for cURL Installation
 
@@ -70,7 +74,7 @@ curl http://localhost:8083/api/heroes
 But what we want is to format the JSON payload, so it is easier to read.
 For that, there is a neat utility tool called `jq` that we could use.
 `jq` is a tool for processing JSON inputs, applying the given filter to its JSON text inputs, and producing the filter's results as JSON on standard output.footnote:[jq https://stedolan.github.io/jq]
-You can install it on Mac OSX with a simple `brew install jq`.
+ifdef::use-mac[You can install it on Mac OSX with a simple `brew install jq`.]
 Once installed, it's just a matter of piping the cURL output to jq like this:
 
 [source,shell]

@@ -9,6 +9,7 @@ One objective of GraalVM is to improve the performance of Java virtual machine-b
 
 === Prerequisites for GraalVM
 
+ifdef::use-linux[]
 On Linux, you need GCC and the Glibc and zlib headers.
 Examples for common distributions:
 
@@ -19,16 +20,21 @@ sudo dnf install gcc glibc-devel zlib-devel
 # Debian-based distributions:
 sudo apt-get install build-essential libz-dev zlib1g-dev
 ----
+endif::use-linux[]
 
+ifdef::use-mac[]
 On macOS X, XCode provides the required dependencies to build native executables:
 
 [source,shell]
 ----
 xcode-select --install
 ----
+endif::use-mac[]
 
+ifdef::use-windows[]
 On Windows, you need the _Developer Command Prompt for Microsoft Visual C++_.
 Check the https://www.graalvm.org/docs/getting-started/windows/#prerequisites-for-using-native-image-on-windows[Windows prerequisites page] for details.
+endif::use-windows[]
 
 === Installing GraalVM
 
@@ -39,9 +45,15 @@ Select the {jdk-version} version.
 
 Follow the installation instructions:
 
+ifdef::use-linux[]
 - Linux - https://www.graalvm.org/docs/getting-started/linux/
+endif::use-linux[]
+ifdef::use-windows[]
 - Windows - https://www.graalvm.org/docs/getting-started/windows/
+endif::use-windows[]
+ifdef::use-mac[]
 - MacOS - https://www.graalvm.org/docs/getting-started/macos/
+endif::use-mac[]
 
 Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home).
 
@@ -55,6 +67,7 @@ gu install native-image
 
 from your GraalVM `bin` directory.
 
+ifdef::use-mac[]
 [NOTE]
 .Mac OS X - Catalina
 ====
@@ -67,6 +80,7 @@ To bypass the issue, it is recommended to run the following command instead of d
 xattr -r -d com.apple.quarantine ${GRAAL_VM}
 -----
 ====
+endif::use-mac[]
 
 === Checking for GraalVM Installation
 
