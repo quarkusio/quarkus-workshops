@@ -1,0 +1,20 @@
+@startuml
+skinparam dpi 300
+skinparam useBetaStyle true
+skinparam handwritten true
+
+skinparam participant {
+    backgroundColor<<frontend>> #D2B4DE
+    backgroundColor<<application>> #FAE5D3
+}
+
+participant UI as UI <<frontend>>
+participant "Fight Microservice" as Fight <<application>>
+participant "Villain Microservice" as Villain <<application>>
+participant "Hero Microservice" as Hero <<application>>
+
+UI -> Fight: GET /api/fights/randomfighters
+Fight x--> Hero: GET /api/hero/randomhero
+Fight x--> Villain: GET /api/hero/randomvillain
+Fight ->x UI : null
+@enduml
