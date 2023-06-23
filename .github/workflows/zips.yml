@@ -10,6 +10,7 @@ on:
 jobs:
   build_java17:
     runs-on: ubuntu-latest
+    concurrency: zip-generation
     steps:
       - uses: actions/checkout@v3
       - name: Install JDK 17
@@ -26,6 +27,7 @@ jobs:
   publication:
     needs: [ build_java17 ]
     runs-on: ubuntu-latest
+    concurrency: zip-generation
     steps:
       - uses: actions/checkout@v3
       - name: Install JDK 17
