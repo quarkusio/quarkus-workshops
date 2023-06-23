@@ -12,7 +12,8 @@ Quarkus has three profiles by default, although it is possible to use as many as
 
 Let's change the `VillainApplicationLifeCycle` so it displays the current profile.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 For that, just add a log invoking `ProfileManager.getActiveProfile()` in the `onStart()` method:
 
@@ -20,6 +21,7 @@ For that, just add a log invoking `ProfileManager.getActiveProfile()` in the `on
 ----
 LOGGER.info("The application VILLAIN is starting with profile " + ProfileManager.getActiveProfile());
 ----
+--
 
 [NOTE]
 --

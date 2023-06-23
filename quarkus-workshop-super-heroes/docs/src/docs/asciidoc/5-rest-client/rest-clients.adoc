@@ -65,7 +65,8 @@ We are going to rework the:
 
 == Installing the Reactive REST Client Dependency
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 To install the Reactive REST Client dependency, just run the following command in the Fight microservice:
 
@@ -73,6 +74,7 @@ To install the Reactive REST Client dependency, just run the following command i
 ----
 ./mvnw quarkus:add-extension -Dextensions="io.quarkus:quarkus-rest-client-reactive-jackson"
 ----
+--
 
 This will add the following dependency in the `pom.xml` file:
 
@@ -92,8 +94,8 @@ Remember that in the previous sections we left the `FightService.findRandomFight
 We have to fix this.
 What we actually want is to invoke both the Hero and Villain APIs, asking for a random hero and a random villain.
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 For that, replace the `findRandomFighters` method with the following code to the `FightService` class:
 
 [source,java,indent=0]
@@ -126,6 +128,7 @@ Hero findRandomHero() {
 Note the Rest client injection.
 They use the `@RestClient` qualifier, i.e. a bean selector.
 With Quarkus, when you use a qualifier, you can omit `@Inject`.
+--
 
 [NOTE]
 --
@@ -136,7 +139,8 @@ If not done automatically by your IDE, add the following import statement: `impo
 
 Using the MicroProfile REST Client is as simple as creating an interface using the proper JAX-RS and MicroProfile annotations.
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 In our case both interfaces should be created under the `client` subpackage and have the following content:
 
@@ -164,6 +168,7 @@ public interface HeroProxy {
 
 The `findRandomHero` method gives our code the ability to query a random hero from the Hero REST API.
 The client will handle all the networking and marshalling leaving our code clean of such technical details.
+--
 
 The purpose of the annotations in the code above is the following:
 
@@ -195,19 +200,22 @@ public interface VillainProxy {
 }
 ----
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Once created, go back to the `FightService` class and add the following import statements:
 
 [source]
---
+----
 import io.quarkus.workshop.superheroes.fight.client.HeroProxy;
 import io.quarkus.workshop.superheroes.fight.client.VillainProxy;
+----
 --
 
 == Configuring REST Client Invocation
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 In order to determine the base URL to which REST calls will be made, the REST Client uses configuration from `application.properties`.
 The name of the property needs to follow a certain convention which is best displayed in the following code:
@@ -219,6 +227,7 @@ io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/scope=jakarta.inj
 io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/url=http://localhost:8084
 io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/scope=jakarta.inject.Singleton
 ----
+--
 
 Having this configuration means that all requests performed using `HeroProxy` will use http://localhost:8083 as the base URL.
 Using this configuration, calling the `findRandomHero` method of `HeroProxy` would result in an HTTP GET request being made to http://localhost:8083/api/heroes/random.
@@ -238,11 +247,13 @@ To avoid this, we need to Mock the `HeroProxy` and `VillainProxy` interfaces.
 
 Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.footnote:[Alternatives https://docs.jboss.org/weld/reference/latest/en-US/html/specialization.html#_using_alternative_stereotypes]
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 To use this simply override the bean you wish to mock with a class in the `src/test/java` directory, and put the `@Alternative` and `@Priority(1)` annotations on the bean.
 Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could be used.
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
+
 
 === Mocking a Villain service
 
@@ -264,6 +275,7 @@ manually, and then fill in the following contents:
 ----
 include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestVillain.java[]
 ----
+--
 
 === Mocking a Hero service
 
@@ -313,8 +325,8 @@ The `when` call is a static import of `Mockito.when`. The
 https://quarkus.io/guides/getting-started-testing#further-simplification-with-injectmock[`@InjectMock`] annotation results in a mock being created and made available in test methods of the test class.
 Importantly, other test classes are not affected by this.
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Finally, edit the `FightResourceTest` and add the following method:
 
 [source,java]
@@ -326,3 +338,4 @@ Now, run the test from the dev mode, or from your IDE.
 You can shutdown the hero and villain services to verify that the tests still pass.
 
 Don't forget to restart them before going further.
+--

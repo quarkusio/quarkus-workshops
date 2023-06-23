@@ -3,8 +3,8 @@
 
 During this workshop, we will use several ports.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Just make sure the following ports are free, so you don't run into any conflicts.
 
 [source,shell]
@@ -18,3 +18,4 @@ lsof -i tcp:9090    # Prometheus
 lsof -i tcp:2181    # Zookeeper
 lsof -i tcp:9092    # Kafka
 ----
+--

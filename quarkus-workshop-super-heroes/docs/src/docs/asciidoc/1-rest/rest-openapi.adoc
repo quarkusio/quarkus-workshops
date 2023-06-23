@@ -41,7 +41,8 @@ super-heroes
 
 Quarkus proposes a `smallrye-openapi` extension compliant with the MicroProfile OpenAPI specification in order to generate your API OpenAPI v3 specification.footnote:[MicroProfile OpenAPI https://github.com/eclipse/microprofile-open-api]
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 To install the OpenAPI dependency, just run the following command:
 
@@ -49,6 +50,7 @@ To install the OpenAPI dependency, just run the following command:
 ----
 ./mvnw quarkus:add-extension -Dextensions="smallrye-openapi"
 ----
+--
 
 This will add the following dependency in the `pom.xml` file:
 
@@ -163,11 +165,11 @@ components:
           type: string
 ----
 
-This contract lacks of documentation.
+This contract lacks documentation.
 The Eclipse MicroProfile OpenAPI allows you to customize the methods of your REST endpoint as well as the application.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 
 While having the OpenAPI specification is great, it can't be consumed easily by humans.
 In your browser, go to http://localhost:8084/q/dev.
@@ -182,6 +184,7 @@ Click on the "_Swagger UI_" button located in the "SmallRye OpenAPI" widget (htt
 You will see all your endpoints listed.
 Click on the "_GET_" button for the "/api/villains" path, then click on "_Try it out_" and finally on "Execute".
 You can see the result immediately.
+--
 
 When developing REST APIs, this UI is very convenient.
 You can test your endpoint and immediately see the outcome.
@@ -190,8 +193,6 @@ If something does not please you, edit the code, go back to the browser, re-exec
 
 === Customizing Methods
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
 The MicroProfile OpenAPI has a set of annotations to customize each REST endpoint method so the OpenAPI contract is richer and clearer for consumers:
 
 * `@Operation`: Describes a single API operation on a path.
@@ -199,7 +200,9 @@ The MicroProfile OpenAPI has a set of annotations to customize each REST endpoin
 * `@Parameter`: The name of the parameter.
 * `@RequestBody`: A brief description of the request body.
 
-This is what the `VillainResource` endpoint looks like once annotated:
+[example, role="cta"]
+--
+This is what the `VillainResource` endpoint should look like once you have annotated it:
 
 [source,java]
 ----
@@ -320,6 +323,7 @@ public class VillainResource {
 
 With this new code, go back to the Swagger UI at http://localhost:8084/q/swagger-ui and refresh.
 Your endpoints are organized by tags, and each annotated endpoint is documented.
+--
 
 Documenting REST API is essential when working with different teams.
 You can see OpenAPI as the JavaDoc for REST.
@@ -332,7 +336,8 @@ But it's also important to document the entire application.
 The Microprofile OpenAPI also has a set of annotation to do so.
 The difference is that these annotations cannot be used on the endpoint methods, but instead on another Java class configuring the entire application.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 For this, you need to create the `src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplication` class with the following content:
 
@@ -367,10 +372,12 @@ public class VillainApplication extends Application {
 
 Go back to the Swagger UI and refresh again.
 At the top of the document, you can see the version and the global API documentation.
+--
 
 === Customized Contract
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 If you go back to the `http://localhost:8084/q/openapi` endpoint you will see the following OpenAPI contract:
 
@@ -530,10 +537,12 @@ components:
 ----
 
 You can expose or exchange this contract to the API consumers, so they now what to expect when using your API.
+--
 
 == OpenAPI Tests in VillainResourceTest
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Let's add an extra test method in `VillainResourceTest` ensuring that the OpenAPI specification is packaged with the application:
 
@@ -553,5 +562,7 @@ Run the test:
 
  - From the dev mode, or
  - By executing the test using `./mvnw test`.
+--
 
 include::../common-solution.adoc[]
+

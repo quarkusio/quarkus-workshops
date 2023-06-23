@@ -39,13 +39,15 @@ If the filter is enabled and an HTTP request is identified as cross-origin, the 
 |The duration indicating how long the results of a pre-flight request can be cached. This value will be returned in a Access-Control-Max-Age response header.
 |===
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 So make sure you set `quarkus.http.cors=true` and `%dev.quarkus.http.cors.origins=/.*/` properties on the:
 
 1. Fight microservice,
 2. Hero microservice,
 3. Villain microservice
+--
 
 But, even with this, the UI is still not working.
 The CORS errors are gone, so that's a good step, but we forgot something else:

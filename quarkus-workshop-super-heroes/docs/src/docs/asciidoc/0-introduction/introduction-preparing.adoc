@@ -7,7 +7,8 @@ Here are a few commands that you can execute before the workshop.
 
 == Download the workshop scaffolding
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
@@ -27,6 +28,7 @@ quarkus-workshop-super-heroes
 }
 @endsalt
 ----
+--
 
 === Super Heroes Application
 
@@ -81,15 +83,17 @@ include::introduction-preparing-checking-ports.adoc[leveloffset=+1]
 
 == Warming up Maven
 
-Now that you have the initial structure in place, navigate to the root directory and run:
+[example, role="cta"]
+--
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+Now that you have the initial structure in place, navigate to the root directory and run:
 
 
 [source,shell]
 ----
 ./mvnw clean install
 ----
+--
 
 By running this command, it downloads all the required dependencies.
 

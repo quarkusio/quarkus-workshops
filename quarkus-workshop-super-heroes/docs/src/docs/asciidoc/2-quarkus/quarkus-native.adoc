@@ -35,11 +35,12 @@ To do so, you will find in the `pom.xml` the following profile:
 
 Make sure you have the `GRAALVM_HOME` environment variable defined and pointing to where you installed GraalVM.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Then create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files, the build also produces `target/rest-villains-1.0.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
 You can run it using `./target/rest-villains-1.0.0-SNAPSHOT-runner` and curl the endpoint with `curl http://localhost:8084/api/villains`.
+--
 
 [WARNING]
 ====

@@ -20,14 +20,15 @@ It proposes multiple approaches to do so, but we recommend using https://github.
 
 The resulting image follows the container good practices such as the usage of layers, avoiding the `root` user...
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Add the `quarkus-container-image-jib` extension using the following command:
 
 [source, shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="jib"
 ----
+--
 
 It adds the following dependency to the `pom.xml` file:
 
@@ -39,6 +40,8 @@ It adds the following dependency to the `pom.xml` file:
 </dependency>
 ----
 
+[example, role="cta"]
+--
 Then, launch the following command to build the application and create the container image:
 
 [source, shell]
@@ -53,6 +56,7 @@ Once done, verify that the container image has been created using:
 docker images | grep villains
 .../rest-villains              1.0.0-SNAPSHOT         1298cad04f5e   About a minute ago   388MB
 ----
+--
 
 == Building a container running a native executable
 
@@ -83,7 +87,8 @@ Adapt the instructions for your Kubernetes:
 2. Make sure you use the correct namespace
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Edit the `src/main/resources/application.properties` to add the following lines:
 
@@ -105,6 +110,7 @@ Add the `quarkus-kubernetes` extension using the following command:
 ----
 ./mvnw quarkus:add-extension -Dextensions="kubernetes"
 ----
+--
 
 TIP: If you are behind a proxy, check the https://quarkus.io/guides/extension-registry-user#how-to-register-as-a-nexus-repository-proxy[Quarkus Registry] proxy documentation.
 

@@ -41,7 +41,8 @@ super-heroes
 
 When our application starts, the logs are dull and lack a banner (any decent application *must* have a banner nowadays).
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 So the first thing that you need to do is to go to the http://patorjk.com/software/taag[following website] and pick up your favorite "Villain API" text banner.
 
@@ -76,14 +77,17 @@ public class VillainApplicationLifeCycle {
     }
 }
 ----
+--
 
 Thanks to the CDI `@Observes`, the `VillainApplicationLifeCycle` is invoked.
 On startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Run the application with: `./mvnw quarkus:dev`, the banner is printed to the console.
 When the application is stopped, the second log message is printed.
+--
 
 [NOTE]
 ====
@@ -94,10 +98,11 @@ The method is called by ArC, the dependency injection framework used by Quarkus.
 Arc embraces the build-time principle, meaning that injection happens at build time.
 In addition, Arc can detect and remove unused beans at runtime, saving memory.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 With the application running in dev mode, open your browser to http://localhost:8084/q/dev/.
 In the ArC widget, you can see the number of beans that have been removed ("Removed Beans"), and if you click on the link, see the list.
 If you click on the "Observers" link, you will see the two methods we added.
 In the "Fired Events" view, you can see which event has been fired and when.
-
+--

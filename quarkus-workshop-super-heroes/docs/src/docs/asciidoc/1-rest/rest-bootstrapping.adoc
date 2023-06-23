@@ -9,7 +9,8 @@ That's what you are going to see in this section.
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
 Open a terminal and run the following command:
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 [source,shell,subs="attributes+"]
 ----
@@ -35,9 +36,9 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 ----
 <module>super-heroes/rest-villains</module>
 ----
-
+--
 [TIP]
-.Preferring Web UI
+.Prefer a Web UI?
 ====
 Instead of the Maven command, you can use https://code.quarkus.io and select the `resteasy-reactive-jackson` extension.
 ====
@@ -222,7 +223,8 @@ NOTE: Methods can also have their own `@Path` annotation suffixed to the class o
 
 == Running the Application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Now we are ready to run our application.
 
@@ -274,6 +276,7 @@ Hello from RESTEasy Reactive
 ----
 
 Alternatively, you can open http://localhost:8080/api/villains in your browser.
+--
 
 == Development Mode
 
@@ -293,7 +296,8 @@ To check that the hot reload is working, update the `VillainResource.hello()` me
 
 Now, execute the cURL command again:
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 [source,shell]
 ----
@@ -303,6 +307,7 @@ Hello Villain Resource
 ----
 
 The output has changed without you having to stop and restart Quarkus!
+--
 
 == Testing the Application
 
@@ -383,16 +388,18 @@ So in your RestAssured tests, you don't have to specify the default test port 80
 You can also configure the ports used by tests by configuring the `quarkus.http.test-port` property in the application.properties.
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 In the terminal running the application in _dev mode_, you should see at the bottom:
 
 [source,text]
 ----
---
 Tests paused
 Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options>
 ----
+
+--
 
 Hit the `r` key, and watch Quarkus execute your tests automatically and even continuously.
 Unfortunately, this first run didn't end well:
@@ -489,7 +496,8 @@ You can also run the tests from a terminal using:
 
 == Packaging and Running the Application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 The application is packaged using the `./mvnw package` command (it also runs the tests).
 That command generates:
@@ -500,6 +508,7 @@ That command generates:
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
 
 Stop the application running in dev mode (by hitting `q` or `CTRL+C`), and run the application using: `java -jar target/quarkus-app/quarkus-run.jar`.
+--
 
 [NOTE]
 ====
@@ -532,6 +541,7 @@ Then `sudo vi /etc/hosts` so you have the right to edit the file and add the fol
 ----
 127.0.0.1 localhost my-node.local
 ----
+
 ====
 
 In another terminal, check that the application runs using:

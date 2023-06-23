@@ -31,12 +31,14 @@ To simplify making more resilient applications, Quarkus contains an implementati
 
 To install the MicroProfile Fault Tolerance dependency, just run the following command in the Fight microservice:
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
 ----
+--
 
 This will add the following dependency in the `pom.xml` file:
 
@@ -52,7 +54,8 @@ This will add the following dependency in the `pom.xml` file:
 
 Let's make our find random fighters feature better by providing a fallback way of getting a dummy hero or villain in case of failure.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 For that, add two fallback methods to the `FightService` and a `@Fallback` annotation to both `findRandomHero` and `findRandomVillain` methods as follows:
 
@@ -89,6 +92,7 @@ public Villain fallbackRandomVillain() {
     return villain;
 }
 ----
+--
 
 [NOTE]
 --
@@ -99,8 +103,8 @@ Also add the `import org.eclipse.microprofile.faulttolerance.Fallback;` statemen
 
 Now we are ready to run our application and test the fallbacks.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 For that, kill the Hero (and/or the Villain API) and start playing again.
 You should see the following:
 
@@ -108,3 +112,4 @@ image::fault-tolerance-fallback.png[role=half-size]
 
 Restart the Hero REST API... and keep on playing.
 Super-heroes are back to the fight!
+--

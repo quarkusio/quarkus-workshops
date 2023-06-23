@@ -34,7 +34,8 @@ So, first, be sure that your container system has enough memory to build the exe
 It requires at least 6Gb of memory, 8Gb is recommended.
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Execute the above command for all our microservices.
 We also copy the UI into the fight service, to simplify the process:
@@ -55,6 +56,7 @@ cd event-statistics
 mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 ----
+--
 
 == Building containers
 
@@ -132,7 +134,8 @@ Here, we are going to use two operators:
 * PostgreSQL Operator by Dev4Ddevs.com
 * Strimzi Apache Kafka Operator by Red Hat
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 With these operators installed, you can create the required infrastructure with the following custom resource definition (CRD):
 
@@ -158,8 +161,10 @@ spec:
     image: centos/postgresql-96-centos7
     size: 1
 ----
+--
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 This CRD creates the database for the Hero microservice.
 Duplicate this CRD for the fight and villain databases.
@@ -195,12 +200,14 @@ spec:
     topicOperator: {}
     userOperator: {}
 ----
+--
 
 This CRD creates the brokers and the Zookeeper instances.
 
 It's also recommended to create the topic.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 For this, create the following CRD:
 
@@ -243,7 +250,8 @@ Let's start with the hero and villain microservices.
 
 For each, we need to override the port and data source URL.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create a config map with the following content:
 
@@ -258,8 +266,10 @@ kind: ConfigMap
 metadata:
     name: hero-config
 ----
+--
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Do the same for the villain microservice.
 Then, apply these resources:
@@ -269,10 +279,12 @@ Then, apply these resources:
 $ kubectl apply -f config-hero.yaml
 $ kubectl apply -f config-villain.yaml
 ----
+--
 
 Once the config maps are created, we can deploy the microservices.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create a `deployment-hero.yaml` file with the following content:
 
@@ -350,6 +362,7 @@ items:
 
 
 ----
+--
 
 This descriptor declares:
 
@@ -359,8 +372,8 @@ This descriptor declares:
 The deployment declares one container using the container image we built earlier.
 It also overrides the configuration for the HTTP port and database URL.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Don't forget to create the equivalent files for the villain microservice.
 
 Then, deploy the microservice with:
@@ -370,6 +383,7 @@ Then, deploy the microservice with:
 $ kubectl apply -f deployment-hero.yaml
 $ kubectl apply -f deployment-villain.yaml
 ----
+--
 
 === Deploying the Fight microservice
 

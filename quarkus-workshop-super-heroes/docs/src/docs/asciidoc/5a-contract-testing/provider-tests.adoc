@@ -37,7 +37,8 @@ The Pact framework will generate a test for each expectation in the contract and
 
 (No need to put that snippet anywhere yet, we will see how it fits into a test class in a moment.)
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Add the Pact dependency to the heroes service `pom.xml`:
 
@@ -88,3 +89,4 @@ public class HeroContractVerificationTest {
 ----
 
 When you run the tests they should pass.
+--

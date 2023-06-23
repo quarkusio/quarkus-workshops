@@ -14,7 +14,8 @@ Quarkus uses the http://jcp.org/en/jsr/detail?id=356[JSR 356] providing an annot
 
 == The TeamStats WebSocket
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create the `io.quarkus.workshop.superheroes.statistics.TeamStatsWebSocket` class with the following content:
 
@@ -80,6 +81,7 @@ public class TeamStatsWebSocket {
     }
 }
 ----
+--
 
 This component is a WebSocket as specified by the `@ServerEndpoint("/stats/team")` annotation.
 It handles the `/stats/team` WebSocket.
@@ -99,9 +101,10 @@ Without it, items would not be emitted.
 
 The `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` follows the same pattern but subscribes to the `winner-stats` channel.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
-Creates the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
+Create the `io.quarkus.workshop.superheroes.statistics.TopWinnerWebSocket` with the following content:
 
 [source,java]
 ----
@@ -170,6 +173,7 @@ public class TopWinnerWebSocket {
     }
 }
 ----
+--
 
 Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also use Jackson to transform the object into a serialized form.
 
@@ -177,8 +181,8 @@ Because the items (top 10) need to be serialized, the `TopWinnerWebSocket` also 
 
 Finally, you need a UI to watch these live statistics.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 
 Replace the `META-INF/resources/index.html` file with the following content:
 
@@ -290,12 +294,14 @@ Replace the `META-INF/resources/index.html` file with the following content:
 </body>
 </html>
 ----
+--
 
 == Running the Application
 
 You are all set!
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Time to start the application using:
 
@@ -306,6 +312,7 @@ Time to start the application using:
 
 Then, open `http://localhost:8085` in a new browser window.
 Trigger some fights, and you should see the live statistics moving.
+--
 
 Quarkus automatically reuse the Kafka broker from the fight service.
 So, make sure the fight service is started.

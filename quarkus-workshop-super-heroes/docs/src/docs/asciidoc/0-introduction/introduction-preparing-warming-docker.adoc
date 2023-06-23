@@ -9,7 +9,8 @@ ifdef::use-linux[`docker-compose-linux.yaml`]
 file which defines all the needed Docker images.
 Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Then execute the following command which will download all the Docker images and start the containers:
 
@@ -22,6 +23,7 @@ ifndef::use-mac,use-windows[]
 docker compose -f docker-compose-linux.yaml up -d
 endif::use-mac,use-windows[]
 ----
+--
 
 ifdef::use-linux[]
 [WARNING]

@@ -42,8 +42,8 @@ image::fault-tolerance-prometheus-1.png[role=half-size]
 Out of the box, you get a lot of basic JVM metrics or even metrics of Prometheus itself, which are useful.
 But let's create new graphs with the metrics of our microservices.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Tape `timeGetRandomHero` in the query, and select `application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second` in the box, and click _Execute_.
 
 image::fault-tolerance-prometheus-2.png[role=half-size]
@@ -51,6 +51,7 @@ image::fault-tolerance-prometheus-2.png[role=half-size]
 This will fetch the values from our metric showing the number of checks performed:
 
 image::fault-tolerance-prometheus-3.png[role=half-size]
+--
 
 include::common-solution.adoc[]
 

@@ -7,14 +7,15 @@ So far, you have developed the super-villains microservice.
 This microservice is relatively simple.
 It still has database access, ORM support, transaction, JSON serialization, and deserialization.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Let's now package this application using:
 
 [source,shell]
 ----
 ./mvnw package
 ----
+--
 
 In the log, you can see actions happening during what Quarkus calls the _augmentation_ phase.
 

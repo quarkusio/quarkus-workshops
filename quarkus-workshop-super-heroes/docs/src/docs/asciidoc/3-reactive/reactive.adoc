@@ -43,7 +43,8 @@ New microservice, new project!
 The easiest way to create this new Quarkus project is to use the Quarkus Maven plugin.
 Open a terminal and run the following command:
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 [source,shell,subs="attributes+"]
 ----
@@ -56,6 +57,7 @@ mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -Dpath="api/heroes" \
     -Dextensions="resteasy-reactive-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client"
 ----
+--
 
 As you can see, we can select multiple extensions during the project creation:
 
@@ -122,7 +124,8 @@ super-heroes
 
 Let's start with the `Hero` entity class.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create the `io.quarkus.workshop.superheroes.hero.Hero` class in the created project with the following content:
 
@@ -177,6 +180,7 @@ public class Hero extends PanacheEntity {
     }
 }
 ----
+--
 
 First, note that we are extending `io.quarkus.hibernate.reactive.panache.PanacheEntity`.
 It's the reactive variant of `import io.quarkus.hibernate.orm.panache.PanacheEntity`.
@@ -220,8 +224,8 @@ However, most of the time, Quarkus handles the subscription for us.
 Unlike the `VillainResource`, the `HeroResource` uses the reactive development model.
 It returns asynchronous structures (`Uni`)footnote:[There is another structure `Multi` to represent asynchronous streams of items. We will see `Multi` examples later].
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Open the `HeroResource` and update the content to be:
 
 [source,java]
@@ -350,6 +354,7 @@ public class HeroResource {
     }
 }
 ----
+--
 
 The resource implements the same HTTP API as the villain counterpart.
 It does not use a transactional service, but uses Panache method directly.
@@ -364,8 +369,8 @@ Notice also the `@ReactiveTransactional`, which is the reactive variant of `@Tra
 
 Configuring the reactive access to the database is relatively similar to configuring the JDBC url.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Open the `application.properties` file and add:
 
 [source,properties]
@@ -381,6 +386,7 @@ quarkus.hibernate-orm.database.generation=drop-and-create
 %prod.quarkus.datasource.reactive.url=postgresql://localhost:5432/heroes_database
 %prod.quarkus.hibernate-orm.sql-load-script=import.sql
 ----
+--
 
 The _prod_ profile contains the `%prod.quarkus.datasource.reactive.url` which configure the access to the database.
 
@@ -388,7 +394,8 @@ We also set the port to be 8083.
 
 === Importing heroes
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create the `src/main/resources/import.sql` and copy the content from {github-raw}/super-heroes/rest-heroes/src/main/resources/import.sql[import.sql].
 
@@ -408,13 +415,15 @@ VALUES (nextval('hero_seq'), 'Bill Harken', '', 'https://www.superherodb.com/pic
         'Super Speed, Super Strength, Toxin and Disease Resistance', 6);
 ...
 ----
+--
 
 === Testing the heroes
 
 Time for some tests!
 Open the `io.quarkus.workshop.superheroes.hero.HeroResourceTest` class and copy the following content:
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 [source,java]
 ----
@@ -627,18 +636,21 @@ public class HeroResourceTest {
     }
 }
 ----
+--
 
 The tests are very similar to the ones from the villain service.
 
 == Running, Testing and Packaging the Application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+--
 
 Now that the tests are green, we are ready to run our application.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Use `./mvnw quarkus:dev` to start it.
 Once the application is started, create a new hero with the following cUrl command:
@@ -650,6 +662,7 @@ curl -X POST -d  '{"level":2, "name":"Super level", "powers":"leaping"}'  -H "Co
 < HTTP/1.1 201 Created
 < Location: http://localhost:8083/api/heroes/952
 ----
+--
 
 The cUrl command returns the location of the newly created hero.
 Take this URL and do an HTTP GET on it.
@@ -670,9 +683,10 @@ curl http://localhost:8083/api/heroes/952 | jq
 
 Remember that you can also check Swagger UI by going to the dev console: http://localhost:8083/q/dev.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Then, build the application using: `./mvnw package`, and run the application using `java -jar target/quarkus-app/quarkus-run.jar`.
 Open your browser and go to http://localhost:8083/api/heroes.
-
+--
 
