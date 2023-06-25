@@ -96,4 +96,4 @@ include::10-conclusion/conclusion-references.adoc[leveloffset=+2]
 
 <<<
 // Extra content
-include::B-detailed-prereqs/appendix.adoc[leveloffset=+2]
+include::B-extended-prereqs/appendix.adoc[leveloffset=+2]

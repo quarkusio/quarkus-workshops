@@ -1,4 +1,5 @@
-[[introduction-preparing-warming-docker]]
+[[appendix-preparing-warming-docker]]
+
 = Warming up Docker images
 
 To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
