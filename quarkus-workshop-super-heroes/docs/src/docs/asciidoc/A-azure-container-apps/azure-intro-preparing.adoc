@@ -7,14 +7,15 @@ Here are a few commands that you can execute before the workshop.
 
 == Clone the GitHub repository of the application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 First, clone the GitHub repository of the Super Heroes application located at {github-url} by executing the following command:
 
 [source,shell,subs="attributes+"]
 ----
 git clone {github-repo}.git --depth 1
 ----
+--
 
 The code of this Super Heroes application is separated into two different directories:
 
@@ -64,7 +65,8 @@ include::../0-introduction/introduction-preparing-warming-docker.adoc[leveloffse
 To be able to deploy the application to Azure, you first need an Azure subscription.
 If you don't have one, go to https://signup.azure.com and register.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Then, sign in to Azure from the CLI:
 
@@ -79,12 +81,14 @@ Make sure you are using the right subscription with:
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocAzAccountShow]
 ----
+--
 
 === Setting Up the Azure Environment
 
 Azure CLI is extensible and you can install as many extensions as you need.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 For this workshop, install the Azure Container Apps and Database extensions for the Azure CLI:
 
@@ -134,6 +138,7 @@ az provider register --namespace Microsoft.App
 az provider register --namespace Microsoft.OperationalInsights
 az provider register --namespace Microsoft.Insights
 ----
+--
 
 == Creating Azure Resources
 
@@ -143,7 +148,8 @@ Before creating the infrastructure for the Super Heroes application and deployin
 
 Let's first set a few environment variables that will help us in creating the Azure infrastructure.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Set the following variables:
 
@@ -153,6 +159,7 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-env-var.sh[tags=ad
 ----
 
 Now let's create the Azure resources.
+--
 
 === Resource Group
 
@@ -160,7 +167,8 @@ A https://docs.microsoft.com/azure/azure-resource-manager/management/manage-reso
 The resource group can include all the resources for the solution, or only those resources that you want to manage as a group.
 In our workshop, all the databases, all the microservices, etc. will be grouped into a single resource group.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Execute the following command to create the Super Hero resource group:
 
@@ -168,6 +176,7 @@ Execute the following command to create the Super Hero resource group:
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocCreateResourceGroup]
 ----
+--
 
 === Log Analytics Workspace
 
@@ -175,8 +184,8 @@ https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace[Log A
 Each workspace has its own data repository and configuration, and data sources and solutions are configured to store their data in a particular workspace.
 We will use the same workspace for most of the Azure resources we will be creating.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Create a Log Analytics workspace with the following command:
 
 [source,shell,indent=0]
@@ -190,6 +199,7 @@ Let's also retrieve the Log Analytics Client ID and client secret and store them
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocLogAnalyticsSecrets]
 ----
+--
 
 === Azure Container Registry
 
@@ -197,7 +207,8 @@ In the next chapters we will be creating Docker containers and pushing them to t
 https://azure.microsoft.com/services/container-registry[Azure Container Registry] is a private registry for hosting container images.
 Using the Azure Container Registry, you can store Docker-formatted images for all types of container deployments.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 First, let's created an Azure Container Registry with the following command:
 
@@ -223,13 +234,15 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
 
 image::azure-portal-2.png[]
+--
 
 == Setting Up the Environment Variables
 
 The Super Heroes environment and application will be created and deployed using a set of Azure CLI commands.
 Each of these commands need a set of parameters, and some of these parameters can be set of environment variables.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Set the following environment variables, there will be needed in the Azure CLI commands:
 
@@ -237,6 +250,7 @@ Set the following environment variables, there will be needed in the Azure CLI c
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariables2]
 ----
+--
 
 == Ready?
 

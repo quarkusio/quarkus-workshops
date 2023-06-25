@@ -49,7 +49,8 @@ As stated above, an extension is divided into two parts, called `deployment` (au
 include::{plantDir}/8-extension-architecture.puml[]
 ----
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 From the directory `super-heroes` execute the following commands:
 
@@ -61,6 +62,7 @@ mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create-extension 
     -DgroupId=io.quarkus.workshop.super-heroes \
     -DpackageName=io.quarkus.workshop.superheroes.version
 ----
+--
 
 This command creates the structure for the version extension:
 
@@ -132,7 +134,8 @@ For this, what do we need:
 The _runtime_ part of an extension contains only the classes and resources required at runtime.
 For the version extension, it would be a single class that prints the version.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 In the runtime module, create the `src/main/java` directory, and, in this directory, the `io.quarkus.workshop.superheroes.version.runtime.VersionRecorder` class with the following content:
 
@@ -140,6 +143,7 @@ In the runtime module, create the `src/main/java` directory, and, in this direct
 ----
 include::{code-root}/extension-version/runtime/src/main/java/io/quarkus/workshop/superheroes/version/runtime/VersionRecorder.java[]
 ----
+--
 
 Simple right?
 But how does it work?
@@ -153,8 +157,8 @@ We will see how this recorder is used from the _deployment_ module.
 This module contains _build steps_, i.e., methods called during the augmentation phase and computing just enough bytecode to serve the services the application requires.
 The version extension consists of a single build step that extracts the version and uses the `VersionRecorder`.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 First, let's create the configuration class that will allow users to dynamically configure whether the version should be printed:
 
 Under the `deployment` module, create new class `io.quarkus.workshop.superheroes.version.deployment.VersionConfig` with the following content:
@@ -163,6 +167,7 @@ Under the `deployment` module, create new class `io.quarkus.workshop.superheroes
 ----
 include::{code-root}/extension-version/deployment/src/main/java/io/quarkus/workshop/superheroes/version/deployment/VersionConfig.java[]
 ----
+--
 
 The `@ConfigRoot` annotation declares `VersionConfig` as a configuration class which configuration properties are prefixed with `quarkus.` prefix.
 
@@ -204,7 +209,8 @@ Any invocations made on these proxies will be recorded, and bytecode will be wri
 
 == Packaging the extension
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 From the root directory of the extension, run:
 
@@ -212,10 +218,12 @@ From the root directory of the extension, run:
 ----
 mvn clean install
 ----
+--
 
 == Using the extension
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Go back to the _villain_ microservice, and add the following dependency to the `pom.xml` file:
 
@@ -230,6 +238,7 @@ If not yet started, start the microservice with:
 ----
 ./mvnw quarkus:dev
 ----
+--
 
 And the version will be displayed:
 

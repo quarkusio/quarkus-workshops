@@ -22,8 +22,8 @@ include::{github-raw}/super-heroes/load-super-heroes/src/main/java/io/quarkus/wo
 
 == Running the Load Application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 You are all set!
 Time to compile and start the load application using:
 
@@ -32,6 +32,7 @@ Time to compile and start the load application using:
 mvn compile
 mvn exec:java
 ----
+--
 
 You will see the following logs:
 

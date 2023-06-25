@@ -49,8 +49,8 @@ So, first, be sure that your container system has enough memory to build the exe
 It requires at least 6Gb of memory, 8Gb is recommended.
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Execute the following commands to build all our microservices and the UI.
 This will build Docker images out of Linux native executables:
 Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the following Docker commands:
@@ -81,13 +81,14 @@ quarkus/rest-fights             latest      198MB
 quarkus/rest-villains           latest      158MB
 quarkus/rest-heroes             latest      154MB
 ----
+--
 
 == (Optional) Running local containers
 
 Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
 It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
 Execute it with:
@@ -132,6 +133,7 @@ Then, make sure you shut down the entire application with:
 ----
 docker compose -f docker-compose-app-local.yaml down
 ----
+--
 
 == (Optional) Pushing containers to Azure Container Registry
 
@@ -142,8 +144,8 @@ Now that we have all our Docker containers running locally, let's push them to A
 Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group and the Azure Container Registry.
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
 Tag the image using the `docker tag` commands:
 
@@ -151,9 +153,10 @@ Tag the image using the `docker tag` commands:
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[tags=adocTagging]
 ----
+--
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
 
 [source,shell,indent=0]
@@ -187,25 +190,29 @@ include::{github-raw}/super-heroes/infrastructure/azure-build-push-registry.sh[t
 You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].
 
 image::azure-portal-4.png[]
+--
 
 == Running remote containers
 
 [NOTE]
 ====
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 If you haven't skipped the previous optional sections and built the containers your self, you should edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `superheroesregistry` with the value of the `$REGISTRY` variable.
+--
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them with:
 
 [source,shell]
 ----
 docker compose -f docker-compose-app-remote.yaml up
 ----
-
+--
+s
 Once all the containers are started, you can:
 
 * Go to http://localhost:8080 to check the main UI

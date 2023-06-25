@@ -12,8 +12,8 @@ Before deploying our microservices to Azure Container Apps, we need to create th
 
 === Create a Container Apps environment
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 First, let's create the container apps environment.
 A container apps environment acts as a boundary for our containers.
 Containers deployed on the same environment use the same virtual network and the same Log Analytics workspace.
@@ -23,10 +23,12 @@ Create the container apps environment with the following command:
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateACAEnv]
 ----
+--
 
 === Create the managed Postgres Databases
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 We need to create three PostgreSQL databases so the Heroes, Villains and Fights microservice can store data.
 Because we also want to access these database from external SQL client, we make them available to the outside world thanks to the `-public all` parameter.
@@ -46,8 +48,10 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=ad
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresF]
 ----
+--
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Then, we create the database schemas, one for each database:
 
@@ -65,8 +69,10 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=ad
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaF]
 ----
+--
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Now that we have all our databases setup, time to create the tables and add some data to them.
 Each microservice comes with a set of database initialization files as well as some insert statements.
@@ -77,6 +83,7 @@ Create the tables using the following commands (make sure you are under `quarkus
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableH]
 ----
+--
 
 [NOTE]
 ====
@@ -94,7 +101,8 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=ad
 include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableF]
 ----
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Now, let's add some super heroes and super villains to these databases:
 
@@ -130,13 +138,15 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=ad
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataF]
 ----
+--
 
 === Create the Managed Kafka
 
 The Fight microservice communicates with the Statistics microservice through Kafka.
 We need to create an Azure event hub for that.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 [source,shell,indent=0]
 ----
@@ -160,6 +170,7 @@ include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=ad
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
 
 image::azure-portal-3.png[]
+--
 
 == Deploying the Applications
 
@@ -198,7 +209,8 @@ Therefore, we need to set the right properties using our environment variables.
 Notice that the Heroes microservice has a `--min-replicas` set to 0.
 That means it can scale down to zero if not used (more on that later).
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create the Heroes container app with the following command:
 
@@ -206,6 +218,7 @@ Create the Heroes container app with the following command:
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppHero]
 ----
+
 
 The following command sets the URL of the deployed application to the `HEROES_URL` variable:
 
@@ -228,6 +241,7 @@ To access the logs of the Heroes microservice, you can write the following query
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroLogs]
 ----
+--
 
 [WARNING]
 ====
@@ -239,7 +253,8 @@ Log analytics can take some time to get initialized.
 
 The Villain microservice also needs to access the managed Postgres database, so we need to set the right variables.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Notice the minimum of replicas is also set to 0:
 
@@ -269,12 +284,14 @@ To access the logs of the Villain microservice, you can write the following quer
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainLogs]
 ----
+--
 
 === Statistics Microservice
 
 The Statistics microservice listens to a Kafka topics and consumes all the fights.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create the Statistics container application with the following command:
 
@@ -303,6 +320,7 @@ To access the logs of the Statistics microservice, you can write the following q
 ----
 include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsLogs]
 ----
+--
 
 === Fights Microservice
 
@@ -310,7 +328,8 @@ The Fight microservice invokes the Heroes and Villains microservices, sends figh
 We need to configure Kafka (same connection string as the one used by the Statistics microservice) as well as the Postgres database.
 As for the microservice invocations, you need to set the URLs of both Heroes and Villains microservices.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 Create the Fights container application with the following command:
 
@@ -337,6 +356,7 @@ curl "$FIGHTS_URL/api/fights/hello"
 curl "$FIGHTS_URL/api/fights" | jq
 curl "$FIGHTS_URL/api/fights/randomfighters" | jq
 ----
+--
 
 To access the logs of the Fight microservice, you can write the following query:
 
@@ -351,7 +371,8 @@ Like for the previous microservices, we will be deploying the UI as Docker image
 But we could have also deployed the Super Hero UI using Azure Static Webapps which is suited for Angular applications.
 If you are interested in this approach, you can check https://azure.microsoft.com/services/app-service/static/[Azure Static Webapps].
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 For now, let's continue with Azure Container Apps and deploy the UI as a Docker image with the following command:
 
@@ -369,6 +390,7 @@ include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocA
 ----
 open "$UI_URL"
 ----
+--
 
 To access the UI logs, you can write the following query:
 

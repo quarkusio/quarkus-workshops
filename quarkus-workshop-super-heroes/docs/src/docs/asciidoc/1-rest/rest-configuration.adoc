@@ -25,17 +25,19 @@ quarkus.log.console.darken=1
 Because we will end-up running several microservices, let's configure Quarkus so it listens to a different port than 8080:
 This is quite easy as we just need to add one property in the `application.properties` file:
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 [source,properties]
 ----
 ## HTTP configuration
 quarkus.http.port=8084
 ----
+--
 
 Changing the port is one of the rare configuration that cannot be done while the application is running.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 You would need to restart the application to change the port.
 
@@ -46,6 +48,7 @@ Then run:
 ----
 curl http://localhost:8084/api/villains | jq
 ----
+--
 
 == Injecting Configuration Value
 
@@ -59,14 +62,15 @@ When injecting a configured value, you can use `@Inject @ConfigProperty` or just
 The `@Inject` annotation is not necessary for members annotated with `@ConfigProperty`, a behavior which differs from https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config].
 ====
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Edit the `VillainService`, and introduce the following configuration properties:
 
 [source,java,indent=0]
 ----
 @ConfigProperty(name = "level.multiplier", defaultValue="1.0") double levelMultiplier;
 ----
+--
 
 [NOTE]
 ====
@@ -76,8 +80,8 @@ You may need to add the following import statement if your IDE does not do it au
 If you do not provide a value for this property, the application startup fails with `jakarta.enterprise.inject.spi.DeploymentException: No config value of type [int] exists for: level.multiplier`.
 To avoid having to configure a value, we configure a default one (property `defaultValue`).
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Now, modify the `VillainService.persistVillain()` method to use the injected properties:
 
 [source,java,indent=0]
@@ -88,24 +92,26 @@ public Villain persistVillain(@Valid Villain villain) {
         return villain;
 }
 ----
+--
 
 == Create the Configuration
 
 By default, Quarkus reads `application.properties`.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 Edit the `src/main/resources/application.properties` with the following content:
 
 [source,properties]
 ----
 level.multiplier=0.5
 ----
+--
 
 == Running and Testing the Application
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 If you didn't already, start the application with `./mvnw quarkus:dev`.
 Once started, create a new villain with the following cUrl command:
 
@@ -133,6 +139,7 @@ curl http://localhost:8084/api/villains/582 | jq
   "powers": "Agility, Longevity"
 }
 ----
+--
 
 [NOTE]
 ====
@@ -165,12 +172,12 @@ Indeed, they don't know the multiplier.
 
 TIP: Press `r` in the dev mode to run the tests.
 
-icon:hand-point-right[role="red", size=2x] [red big]#Call to action#
-
+[example, role="cta"]
+--
 In the `application.properties` file, add: `%test.level.multiplier=1` which set the multiplier to 1 when running the tests:
 
 [source,text]
 ----
 All 8 tests are passing (0 skipped), 8 tests were run in 1722ms. Tests completed at 21:03:25.
 ----
-
+--

@@ -20,7 +20,8 @@ However, the fields in the two classes should be roughly the same.
 
 What happens if we do some refactoring?
 
-icon:hand-point-right[role="red",size=2x] [red big]#Call to action#
+[example, role="cta"]
+--
 
 In the `rest-heroes` project, let's do some searching and replacing.
 (We do search and replace so we catch both Java and SQL in our refactoring.)
@@ -31,6 +32,7 @@ Make sure to only do search within the rest-heroes directory.
 Check all of your tests.
 The heroes, villains, and fights tests should all be running clean.
 A successful refactoring!
+--
 
 Now visit the UI at http://localhost:4200/.
 What's going on?
