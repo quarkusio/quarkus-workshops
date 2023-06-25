@@ -101,6 +101,31 @@ samp {
   display: block;
 }
 
+.cta > .content {
+  /*We could set a background or other styling for the CTA blocks here,
+  but we also need to undo the default 'example' styling */
+  background-color: white;
+  border: 0px solid white;
+  box-shadow: none;
+  padding: 0;
+}
+
+/*See here for the list of unicode codes for fontawesome*/
+/*https://fontawesome.com/v5/cheatsheet*/
+
+.cta::before {
+  color: #bf0000;
+  vertical-align: top;
+  font-size: larger;
+  font-family: "Font Awesome 5 Free", 'Open Sans', Arial, sans-serif;
+  content: "\f0a4" " Call to action";
+  display: inline-block;
+  padding-right: 3px;
+  padding-top: 7px;
+  padding-bottom: 1.25em;
+  font-weight: 400;
+}
+
 .clipboard {
   display: none;
   border: 0;

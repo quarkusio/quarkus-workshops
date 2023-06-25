@@ -499,7 +499,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author4" class="author">Aurea Munoz Hernandez</span><br>
 <span id="author5" class="author">Georgios Andrianakis</span><br>
 <span id="revnumber">version 2.0,</span>
-<span id="revdate">2023-06-23</span>
+<span id="revdate">2023-06-25</span>
 <br><span id="revremark">Quarkus 3.0.3.Final</span>
 </div>
 <div id="toc" class="toc2">
@@ -1446,9 +1446,8 @@ Here are a few commands that you can execute before the workshop.</p>
 </div>
 <div class="sect3">
 <h4 id="_download_the_workshop_scaffolding">Download the workshop scaffolding</h4>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>First, download the zip file  <a href="https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/dist/quarkus-super-heroes-workshop.zip" class="bare">https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/dist/quarkus-super-heroes-workshop.zip</a>, and unzip it wherever you want.
 This zip file contains <em>some</em> of the code of the workshop, and you will need to complete it.</p>
@@ -1460,6 +1459,8 @@ The code will be separated into two different directories:</p>
 <div class="imageblock">
 <div class="content">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbUAAAAmCAIAAADMTZLTAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAEOaVRYdHBsYW50dW1sAAEAAAB4nE2OT0/CQBDF75P0O8wRYkpKo6T2BBYMqRAJLdzXdmw3LLt1/9QY9bu7xRCdvMvMvJn3mxvLtDVM2AA+LyoDeHNMn5wJ35U+mVZ1oXEd6bAlrcgEcIP/e7zWF5YtIUnLNWExOHDtHci6TvCKWa5kAN8XzUnWv5mwE0zaw3aDPWnjLTidxFE8nSSjglnMncR4hlGSxlF6d4+HMsNhPYbRYrfI1is0yumKsObGav7ihpQx5KxnuHce5UwpPnck8+XTdYAr2XOt5NmjQn7c/hlmt+EDt1iQ9jB43MKSXpkT1l9UquayST3AY5jAhsnGscb/JgmZ8n/1R4rSCQE/jfNrXsSexGsAAAjZSURBVHhe7ZzbS1RdFMCnJCil7II4ltnFibSHQuhBEMyc7AKRhRAU9RD0oNUUFES3qezGRyVYZBY9JfQWXegGGv4BdqGo7G4XkzGkzK52Mb/V7L7d+vZZ63icZqYZW7+HWHudtdfaa++zdvtMtF3dgiAIAoXLVAiCIAhBZH8UBEGgkf1REASBRvZHQRAEGtkfBUEQaGR/FARBoInq/uhyRTVcjzgfj3PL2Kcv5SIIESWqpRJrlel8PM4tY5++lIsgRJSolkqsVabz8Ti3jH36Ui6CEFHoUvn8+fOKFSuGDx+emZl5+PBhXVFGaenm/fv3S0pKwD45OXnBggVtbW3a4NixY+np6f369cP2V69eHTlyZGVlJVbqLkq4fPlyTk7OoEGDsrOzT5w4gW0Aj8dz7949EF68eAHOW1paQG5sbJwwYQIInZ2da9ascbvdqampIEBT9XIyHjIuWNbU1EyaNCkxMTE3N/fWrVtKbxOoqqpq/PjxI0aMWLlyJcyn0mO4QNgGzzzpsKura+fOnWPHjh02bNiyZcvev3+v7XGmGC4Xh664lLnuZJqCEBe4/gliaLdt2zZjxgzYepqbm6dPn46rFJvp5uTJk+vr6z9+/PjmzZtVq1YtX75cGxQXF6vNS9ufO3cuJSXlzJkzWKnRzbS0tJMnT3769Onu3buLFi3CNoDP5zty5AgIsH0PHDjw6NGjSl69ejUIfr8fxt8cBMa/detW1cvJeMi4YDl//vwnT55A2ZeXl+fl5Sm9TSA1gQAI27dvV3oMFwjb4JknHVZUVHi93qamptevXy9ZsmTt2rXaHmeK4XJx6IpLmetOpikIccGP8rPuj3BsvHPnjpLhfIGr9JeRpano6OiAs4aSweDp06f6ETQPHToEJ7WGhgas1DJujh49+uDBg8+fP8dPNRcvXlTFNmfOnPXr18+dOxfkhQsXXrp0CQQ4Z+HxQzpKdjIeMi5YBgIBJX/48AFOQ0q2CaT1t2/f1noMF4hscg6zsrLUORpobW0dM2aMko1MMVwuDl1xKXPdyTQFIS6gz49wIoO/8JUMAq7SX0aoeeXKlcLCQviwcgVJSEjQBt+/f8f2UF0bN27UGqUkm9euXYNjDnxOwicz7Ib6qQLOquAKTkAQtL29HT7todTh4w703ZbxQ1N373E8XFxso5s2gTi9oruXgTiHsLslBOnfvz98/8Kf2t7IVMflQjh0xaXMdSfTFIS44Mf+aOqC58fGxkYlw2lFlxAUA2xDSoYziNaD/fHjx1+9evXt2zf4vMJVrQTdhI8yj8ezd+9ereR8KqAyz58/73a7sVIxe/ZsGPzMmTNBLioqAhnOkuoRd8ZxMh6FEdfaUQk2gfQEggF5flQYgbjZ4BxOnDgRvpSVjDEGjOFyceiKS5nrrrBZR0GIWej90e/3z5o1S//apSskLy+vvLwcTm1NTU3z5s3TenjvT58+3dnZ+fjx45KSElzVSsDNlpYWqKU9e/YoJeezuLj4+vXrcEKBukpLS9NONAcOHEhOTt6/fz/I+/btAxm+49SjzZs369/I4GC7ZcsWpXcyHjIu2bHbNpCeQNjB9Y90GDIQNxucw8rKShgAbJ2wqzY0NEAXba8EK1wuDl1xKXPdyTQFIS6g90fY6UpLS+GjFQ4L1dXVukLgvJCbm5uYmJidnV1TU6P1Fy5cgC1mwIABGRkZsEnhqlaC0YSTEXjYsWNHN+/z1KlTU6ZMga+2nJyc+vp67UTz4MEDML558ybIN27cAPnhw4fqEVSjz+dLDQKC/h50Mh4yLtfRJlBVVdW4ceNgDsvKyvQ/8mLIQNxscA67urpgwrOysqDL1KlTz549q+2VYIXLxaErLmWuO5mmIMQF9P5oYFNsAknYZyzsDgVB6BHZHyNC2Gcs7A4FQegR2R8jQthnLOwOBUHoEUf7oyAIwl9IPO2Pcob6m5HV79vE5vrK/ijEFi4KpTdNI4YR63dCBwKBpUuXut3uIUOGeL3euro60yJiWIdt1cQOemyhDTKMS4aR/VGIUSL0xjshjLGKiorWrVvX2tra0dFRW1tbWFhoWkQMaxZWTezwm2P7ze4coeyP5I0s3NvskotnhJCwvlG9Wn0MZ0P6dCG0mRbwG8W5xSQlJb17987UUtlpIYz1wmkceuNKBmNzdxeZiI3eEL5+/er3+zMyMmAA0EUpyXDBtfqJ4YRLwUUtvZVQ9kfyRhY9IKPpkotnhJCwvlG9Wn0MZ8P5tIbWAn6jOLeY/Px8n8+n/+eCxiZEGOuF0zj0xpUMxubuLjIRG70h7Nq1q6Cg4NGjR4FAoKysTCltwinBaHIpuJilN/h5PwWJafsf5I0s3PhccvGMEBLWN6pXq4/hbDif1tBawG8U5xYD+tLS0lGjRsF5Z/HixcbdepoI1YsV9cihN65kOIy7u8hEbPSG4PF4uGOdwgiHH+kml4KLWXqD/zl1CHkjCzc+l1w8I4QEt9xGk1s+DGfD+bTR4zeKc0vy8uVLOKZNmzZNNW1C9OotNYaEMUJgjUNvXMlgbO7uIvva6A0BR9fYhMNmpBMyHNnU0FonyMUzQkThltto2i+fgrPhfBq/5eGXGes5txxv375NSkpScvTrBWsceuNKBpPJ391FJmKjNwQ4l1jPj1w4bsm4FIxMrXOloLX2kDeyyMUzQnjhlttocsuH4Ww4nykpKbqGsd6w59xi4E2rra1tb29va2vbsGFDfn6+0ke/XrDGoTeuZDA2d3eRidjoDWH37t0FBQXgFv/+yIXjloxLwcjUOlcKWmsPeSOLXDwjhBduuY0mt3wYzobzWVFRMXToUPwOG4KCc4upq6vzer2DBw+GAoZ6fvbsmdJHv16wxqE3rmQwNnd3kYnY6A3hy5cvmzZtSk9Ph9NJdXW1UnLhuCXjUjAytc6VgtaGES6wIAhW+ky9cIlw+tgk4mONr+kQhD9Ln6kXLhFOH5tEfKzxNR2C8GfpM/XCJcLpY5N4GqsgCEI0kf1REASBRvZHQRAEGtkfBUEQaP4FzOdEHVdMEFYAAAAASUVORK5CYII=" alt="Diagram" width="437" height="38">
+</div>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -1488,9 +1489,8 @@ The final structure will be the following (don&#8217;t worry if you don&#8217;t 
 <div class="paragraph">
 <p>During this workshop, we will use several ports.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Just make sure the following ports are free, so you don&#8217;t run into any conflicts.</p>
 </div>
@@ -1507,17 +1507,20 @@ lsof -i tcp:9092    # Kafka</code></pre>
 </div>
 </div>
 </div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_warming_up_maven">Warming up Maven</h4>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Now that you have the initial structure in place, navigate to the root directory and run:</p>
-</div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-shell" data-lang="shell">./mvnw clean install</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -1533,15 +1536,16 @@ Here, you will find a
 file which defines all the needed Docker images.
 Notice that there is a <code>db-init</code> directory with an <code>initialize-databases.sql</code> script which sets up our databases, and a <code>monitoring</code> directory (all that will be explained later).</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Then execute the following command which will download all the Docker images and start the containers:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-shell" data-lang="shell">docker compose -f docker-compose.yaml up -d</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -1722,9 +1726,8 @@ That&#8217;s what you are going to see in this section.</p>
 <p>The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
 Open a terminal and run the following command:</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-shell" data-lang="shell">cd quarkus-workshop-super-heroes/super-heroes
@@ -1753,6 +1756,8 @@ As a start, we only select <code>resteasy-reactive-jackson</code>, which will al
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;module&gt;super-heroes/rest-villains&lt;/module&gt;</code></pre>
 </div>
 </div>
+</div>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1760,7 +1765,7 @@ As a start, we only select <code>resteasy-reactive-jackson</code>, which will al
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="title">Preferring Web UI</div>
+<div class="title">Prefer a Web UI?</div>
 <div class="paragraph">
 <p>Instead of the Maven command, you can use <a href="https://code.quarkus.io" class="bare">https://code.quarkus.io</a> and select the <code>resteasy-reactive-jackson</code> extension.</p>
 </div>
@@ -1948,9 +1953,8 @@ Methods can also have their own <code>@Path</code> annotation suffixed to the cl
 </div>
 <div class="sect3">
 <h4 id="_running_the_application">Running the Application</h4>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Now we are ready to run our application.</p>
 </div>
@@ -2007,6 +2011,8 @@ Hello from RESTEasy Reactive</code></pre>
 <p>Alternatively, you can open <a href="http://localhost:8080/api/villains" class="bare">http://localhost:8080/api/villains</a> in your browser.</p>
 </div>
 </div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_development_mode">Development Mode</h4>
 <div class="paragraph">
@@ -2029,9 +2035,8 @@ To check that the hot reload is working, update the <code>VillainResource.hello(
 <div class="paragraph">
 <p>Now, execute the cURL command again:</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-shell" data-lang="shell">curl http://localhost:8080/api/villains
@@ -2041,6 +2046,8 @@ Hello Villain Resource</code></pre>
 </div>
 <div class="paragraph">
 <p>The output has changed without you having to stop and restart Quarkus!</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2137,17 +2144,17 @@ You can also configure the ports used by tests by configuring the <code>quarkus.
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>In the terminal running the application in <em>dev mode</em>, you should see at the bottom:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">--
-Tests paused
+<pre class="highlight"><code class="language-text" data-lang="text">Tests paused
 Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -2251,9 +2258,8 @@ Quarkus detects and runs the tests for you.</p>
 </div>
 <div class="sect3">
 <h4 id="_packaging_and_running_the_application">Packaging and Running the Application</h4>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>The application is packaged using the <code>./mvnw package</code> command (it also runs the tests).
 That command generates:</p>
@@ -2273,6 +2279,8 @@ That command generates:</p>
 </div>
 <div class="paragraph">
 <p>Stop the application running in dev mode (by hitting <code>q</code> or <code>CTRL+C</code>), and run the application using: <code>java -jar target/quarkus-app/quarkus-run.jar</code>.</p>
+</div>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2391,12 +2399,13 @@ Hibernate ORM with Panache focuses on making your entities trivial and fun to wr
 <div class="paragraph">
 <p>To add the required dependencies, just run the following command:</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-shell" data-lang="shell">./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator"</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2440,9 +2449,8 @@ No need to add an extension for JSON, we already included <code>resteasy-reactiv
 </div>
 <div class="sect3">
 <h4 id="_villain_entity">Villain Entity</h4>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>To define a Panache entity, simply extend <code>PanacheEntity</code>, annotate it with <code>@Entity</code> and add your columns as public fields (no need to have getters and setters).
 The <code>Villain</code> entity should look like this:</p>
@@ -2490,6 +2498,8 @@ public class Villain extends PanacheEntity {
 }</code></pre>
 </div>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>Notice that you can put all your JPA column annotations and Bean Validation constraint annotations on the public fields.</p>
 </div>
@@ -2521,9 +2531,8 @@ long countAll = Villain.count();</code></pre>
 <div class="paragraph">
 <p>But we are missing a business method: we need to return a random villain.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>For that it&#8217;s just a matter to add the following method to our <code>Villain.java</code> entity:</p>
 </div>
@@ -2535,6 +2544,8 @@ long countAll = Villain.count();</code></pre>
     int randomVillain = random.nextInt((int) countVillains);
     return findAll().page(randomVillain, 1).firstResult();
 }</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2577,9 +2588,8 @@ We use <code>quarkus.hibernate-orm.database.generation=drop-and-create</code> in
 This is best to perfectly control your environment and works magic with Quarkus live reload mode:
 your entity changes or any change to your <code>import.sql</code> is immediately picked up and the schema updated without restarting the application!</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>For that, make sure to have the following configuration in your <code>application.properties</code> (located in <code>src/main/resources</code>):</p>
 </div>
@@ -2587,6 +2597,8 @@ your entity changes or any change to your <code>import.sql</code> is immediately
 <div class="content">
 <pre class="highlight"><code class="language-properties" data-lang="properties"># drop and create the database at startup (use `update` to only update the schema)
 quarkus.hibernate-orm.database.generation=drop-and-create</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2623,9 +2635,8 @@ You can control whether and how the transaction is started with parameters on <c
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Creates a new <code>VillainService.java</code> file in the same package with the following content:</p>
 </div>
@@ -2688,6 +2699,8 @@ public class VillainService {
 }</code></pre>
 </div>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>The <code>@ApplicationScoped</code> annotation declares a <em>bean</em>.
 The other component of the application can access this bean.
@@ -2706,9 +2719,8 @@ If it&#8217;s not, the transaction will be rolled back.</p>
 In dev mode, no need to start a database or configure anything.
 Quarkus does that for us (just make sure you have Docker up and running).</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Start the application in dev mode with <code>./mvnw quarkus:dev</code>.
 In the log, you will see the following:</p>
@@ -2735,6 +2747,8 @@ In the log, you will see the following:</p>
 2021-09-21 15:58:48,043 INFO  [🐳 .2]] (build-38) Container postgres:13.2 started in PT1.959377S
 
 2021-09-21 15:58:48,044 INFO  [io.qua.dev.pos.dep.PostgresqlDevServicesProcessor] (build-38) Dev Services for the default datasource (postgresql) started</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -2772,9 +2786,8 @@ This setting will likely also be needed <strong>throughout</strong> the workshop
 <p>The <code>VillainResource</code> was bootstrapped with only one method <code>hello()</code>.
 We need to add extra methods that will allow CRUD operations on villains.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Here are the new methods to add to the <code>VillainResource</code> class:</p>
 </div>
@@ -2872,7 +2885,9 @@ public class VillainResource {
 </div>
 </div>
 <div class="paragraph">
-<p>Not that we added <code>@Path("/hello")</code> to the <code>hello</code> method to not conflict with the <code>getAllVillains()</code> method.</p>
+<p>Note that we added <code>@Path("/hello")</code> to the <code>hello</code> method to not conflict with the <code>getAllVillains()</code> method.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2932,9 +2947,8 @@ VALUES (nextval('villain_seq'), 'The Rival (CW)', 'Edward Clariss',
         10);</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Ok, but that&#8217;s just a few entries.
 Download the SQL file <a href="https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/super-heroes/rest-villains/src/main/resources/import.sql">import.sql</a> and copy it under <code>src/main/resources</code>.
@@ -2953,15 +2967,16 @@ Now, you have more than 500 villains that will be loaded in the database.</p>
 You should see lots of heroes&#8230;&#8203;</p>
 </div>
 </div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_crud_tests_in_villainresourcetest">CRUD Tests in VillainResourceTest</h4>
 <div class="paragraph">
 <p>To test the <code>VillainResource</code> endpoint, we just need to extend the <code>VillainResourceTest</code> we already have.
 No need to configure anything, Quarkus will start a test database for you.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>In <code>io.quarkus.workshop.superheroes.villain.VillainResourceTest</code>, you will add the following test methods to the <code>VillainResourceTest</code> class:</p>
 </div>
@@ -3197,17 +3212,20 @@ public class VillainResourceTest {
 }</code></pre>
 </div>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>The tests and the application runs in the same JVM, meaning that the test can be injected with application <em>beans</em>.
 This feature is very useful to test specific parts of the application.
 However, in our case, we just execute HTTP requests to check the result.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Run the test either in the dev mode or using <code>./mvnw test</code>.
 They should pass.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -3229,9 +3247,8 @@ In Quarkus, the out of the box datasource and connection pooling implementation 
 <p>So, we need to configure the database access in the <code>src/main/resources/application.properties</code> file,
 but only when the application runs in <em>prod</em> mode.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Add the following datasource configuration:</p>
 </div>
@@ -3241,6 +3258,8 @@ but only when the application runs in <em>prod</em> mode.</p>
 %prod.quarkus.datasource.password=superbad
 %prod.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/villains_database
 %prod.quarkus.hibernate-orm.sql-load-script=import.sql</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -3258,12 +3277,13 @@ Let&#8217;s use Docker and docker compose to ease the installation of such infra
 <div class="paragraph">
 <p>You should already have installed the infrastructure into the <code>infrastructure</code> directory.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon red"><i class="fa fa-hand-point-right fa-2x"></i></span> <span class="red big">Call to action</span></p>
-</div>
+<div class="exampleblock cta">
+<div class="content">
 <div class="paragraph">
 <p>Now, just execute <code>docker compose -f docker-compose.yaml up -d</code>.
 You should see a few logs going on and then all the containers get started.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3328,7 +3348,7 @@ You should see a few logs going on and then all the containers get started.</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0<br>
-Last updated 2023-06-23 12:01:52 UTC
+Last updated 2023-06-25 11:34:39 UTC
 </div>
 </div>
 </body>
