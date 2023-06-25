@@ -1,0 +1,7 @@
+= Installing extra software
+
+include::appendix-installing-maven.adoc[leveloffset=+1]
+
+include::appendix-installing-curl.adoc[leveloffset=+1]
+
+include::appendix-preparing-warming-caches.adoc[leveloffset=+0]

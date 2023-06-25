@@ -1,10 +1,11 @@
-[[introduction-installing-curl]]
+[[appendix-installing-curl]]
 
 = cURL
 
 To invoke the REST Web Services described in this workshop, we often use cURL.footnote:[cURL https://curl.haxx.se]
 cURL is a command-line tool and library to do reliable data transfers with various protocols, including HTTP.
 It is free, open-source (available under the MIT Licence), and has been ported to several operating systems.
+If your operating system does not already include cURL (most do), here is how to install it.
 
 == Installing cURL
 

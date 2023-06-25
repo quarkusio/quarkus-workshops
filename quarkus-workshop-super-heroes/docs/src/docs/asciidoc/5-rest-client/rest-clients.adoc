@@ -253,7 +253,7 @@ Quarkus supports the use of mock objects using the CDI `@Alternative` mechanism.
 To use this simply override the bean you wish to mock with a class in the `src/test/java` directory, and put the `@Alternative` and `@Priority(1)` annotations on the bean.
 Alternatively, a convenient `io.quarkus.test.Mock` stereotype annotation could be used.
 This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent`.
-
+--
 
 === Mocking a Villain service
 
@@ -275,7 +275,7 @@ manually, and then fill in the following contents:
 ----
 include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestVillain.java[]
 ----
---
+
 
 === Mocking a Hero service
 

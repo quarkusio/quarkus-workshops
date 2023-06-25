@@ -1,6 +1,7 @@
 [[quarkus-kubernetes]]
 = From Java to Kubernetes
 
+ifdef::use-local-kubernetes[]
 [NOTE]
 ====
 This section is optional and demonstrates how to ask Quarkus to create a container and deploy it to Kubernetes.
@@ -12,6 +13,7 @@ We will use Rancher Desktop as indicated in the prerequisites.
 
 1. Make sure that Docker Desktop (if installed) is turned off
 2. Make sure Rancher Desktop is started. The container runtime must be _dockerd_ (Preferences -> Container Runtime -> dockerd (moby)).
+endif::use-local-kubernetes[]
 
 == Building a container
 
@@ -72,7 +74,7 @@ To do this, runs the following command:
 `-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
 This option is not required if you use Linux.
 
-
+ifdef::use-local-kubernetes[]
 == Deploying to Kubernetes
 
 Quarkus can also run our application in Kubernetes and compute the Kubernetes descriptor.
@@ -172,3 +174,5 @@ kubectl port-forward pods/rest-villains-7c7479b959-7fn64 8080:8080
 ----
 
 Now, you can access the application from your browser using: http://localhost:8080/api/villains
+
+endif::use-local-kubernetes[]

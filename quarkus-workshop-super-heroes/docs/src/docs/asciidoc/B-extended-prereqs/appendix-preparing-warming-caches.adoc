@@ -1,0 +1,13 @@
+[[appendix-preparing-warming-caches]]
+= Warming the caches
+
+This workshop needs internet access to download all sorts of Maven artifacts, Docker images, and even pictures.
+Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them before the workshop.
+
+If you're getting ready for a workshop, you might find it helpful to pre-download some Docker images.
+This can save strain on shared bandwidth. If, however, you're already attending a workshop, don't
+worry about warming anything up.
+
+include::appendix-preparing-warming-maven.adoc[leveloffset=+1]
+
+include::appendix-preparing-warming-docker.adoc[leveloffset=+1]

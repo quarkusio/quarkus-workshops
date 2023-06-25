@@ -5,7 +5,7 @@ During this workshop, we will use several ports.
 
 [example, role="cta"]
 --
-Just make sure the following ports are free, so you don't run into any conflicts.
+Use `lsof` to make sure the following ports are free, so you don't run into any conflicts.
 
 [source,shell]
 ----

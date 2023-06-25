@@ -1,18 +1,6 @@
 [[introduction-preparing]]
 = Preparing for the Workshop
 
-This workshop needs internet access to download all sorts of Maven artifacts, Docker images, and even pictures.
-Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them before the workshop.
-Here are a few commands that you can execute before the workshop.
-
-== Download the workshop scaffolding
-
-[example, role="cta"]
---
-
-First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
-This zip file contains _some_ of the code of the workshop, and you will need to complete it.
-
 In this workshop, you will be developing an application dealing with Super Heroes (and Super-Villains 🦹) as well as Quarkus extensions.
 The code will be separated into two different directories:
 
@@ -28,6 +16,15 @@ quarkus-workshop-super-heroes
 }
 @endsalt
 ----
+
+== Download the workshop scaffolding
+
+[example, role="cta"]
+--
+
+We've done some of the layout for you. First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+This zip file contains _some_ of the code of the workshop, along with assets you will need to complete it.
+
 --
 
 === Super Heroes Application
@@ -81,40 +78,7 @@ quarkus-workshop-super-heroes
 
 include::introduction-preparing-checking-ports.adoc[leveloffset=+1]
 
-== Warming up Maven
-
-[example, role="cta"]
---
-
-Now that you have the initial structure in place, navigate to the root directory and run:
-
-
-[source,shell]
-----
-./mvnw clean install
-----
---
-
-By running this command, it downloads all the required dependencies.
-
-include::introduction-preparing-warming-docker.adoc[leveloffset=+1]
-
-== The completed workshop
-
-You can find the completed code on {github-url}.
-So, if you are stuck, feel free to check the solution.
-
-In addition, you can {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[download] the full code of the workshop .
-
-To build the completed workshop, you would run the following commands from the root project:
-
-[source, shell]
-----
-$ ./mvnw clean install -f super-heroes/extension-version
-$ ./mvnw clean install -Pcomplete
-----
-
 == Ready?
 
-After the prerequisites have been installed and the different components have been warmed up,  it's now time to write some code!
+After the prerequisites have been installed and the environment has been checked,  it's now time to write some code!
 

@@ -68,9 +68,21 @@ This workshop should be as self-explanatory as possible.
 So your job is to follow the instructions by yourself, do what you are supposed to do, and do not hesitate to ask for any clarification or assistance; that's why the team is here.
 
 You will download a zip file ({github-raw}/dist/quarkus-super-heroes-workshop.zip[`quarkus-super-heroes-workshop.zip`]) containing _some_ of the code and you will need to complete it.
-If you are stuck, you can always look at the final code in the GitHub repository, or download another zip file ({github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`]) that contains _all_ the code of the workshop.
+If you are stuck, you can always look at the final code in the {github-url}[GitHub repository], or download another zip file ({github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`]) that contains _all_ the code of the workshop.
 
 Oh, and be ready to have some fun!
+
+
+=== The completed workshop
+
+To build the completed workshop, you would need to run the following commands from the root project:
+
+[source, shell]
+----
+$ ./mvnw clean install -f super-heroes/extension-version
+$ ./mvnw clean install -Pcomplete
+----
+
 
 == Software Requirements
 

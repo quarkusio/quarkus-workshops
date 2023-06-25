@@ -12,8 +12,6 @@ include::azure-intro-installing-azure-cli.adoc[leveloffset=+1]
 
 include::../0-introduction/introduction-installing-docker.adoc[leveloffset=+1]
 
-include::../0-introduction/introduction-installing-curl.adoc[leveloffset=+1]
-
 include::../0-introduction/introduction-installing-git.adoc[leveloffset=+1]
 
 == Recap

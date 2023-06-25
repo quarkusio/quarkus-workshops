@@ -1,14 +1,6 @@
 [[introduction-installing-docker]]
 
-= Docker
-
-[NOTE]
-====
-Instead of Docker, you can use Rancher Desktop which provide the same capabilities but also lets you run Kubernetes locally.
-If you plan to deploy your applications to Kubernetes, we recommend Rancher Desktop.
-
-Instructions to install Rancher Desktop are available in <<introduction-installing-rancher>>.
-====
+= Docker or Podman
 
 Docker is a set of utilities that use OS-level virtualization to deliver software in packages called containers.
 Containers are isolated from one another and bundle their software, libraries, and configuration files;
@@ -16,7 +8,8 @@ they can communicate with each other through well-defined channels.
 
 == Installing Docker
 
-Our infrastructure will use Docker to ease the installation of the different technical services (database, monitoring...).
+Quarkus use Testcontainers, and therefore also Docker, to ease the management of different technical services (database, monitoring...) during development.
+Our workshop also uses Docker to manage these services in a production-style deployment.
 So for this, we need to install `docker` and `docker compose`
 Installation instructions are available on the following page:
 
@@ -35,7 +28,7 @@ ifdef::use-linux[]
 On Linux, don't forget the post-execution steps described on https://docs.docker.com/install/linux/linux-postinstall/.
 endif::use-linux[]
 
-NOTE: If you do not have a Docker licence, you might prefer `podman` (https://podman.io/) instead of `docker`. To install `podman` and `podman-compose` on Fedora please follow the instructions at https://fedoramagazine.org/manage-containers-with-podman-compose/. You will also need to configure testcontainers library used in Dev Services later in the workshop like mentioned in https://quarkus.io/blog/quarkus-devservices-testcontainers-podman/#tldr.
+NOTE: If you do not have a Docker licence, you might prefer `podman` (https://podman.io/) instead of `docker`. To install `podman` and `podman-compose` please follow the instructions at https://quarkus.io/guides/podman. Do not forget the extra steps to configure the testcontainers library. As a convenience you can even alias `docker` to `podman`.
 
 == Checking for Docker Installation
 

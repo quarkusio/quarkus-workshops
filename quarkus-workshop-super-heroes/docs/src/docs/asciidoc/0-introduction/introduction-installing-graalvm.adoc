@@ -1,5 +1,6 @@
 [[introduction-installing-graalvm]]
-== GraalVM {graalvm-version}
+
+= GraalVM {graalvm-version}
 
 GraalVM extends the _Java Virtual Machine_ (JVM) to support more languages and several execution modes.footnote:[GraalVM https://www.graalvm.org]
 It supports a large set of languages:
@@ -7,7 +8,7 @@ Java of course, other JVM-based languages (such as Groovy, Kotlin etc.) but also
 It includes a high-performance Java compiler, which can be used in a _Just-In-Time_ (JIT) configuration on the HotSpot VM or in an _Ahead-Of-Time_ (AOT) configuration with the GraalVM native compiler.
 One objective of GraalVM is to improve the performance of Java virtual machine-based languages to match the performance of native languages.
 
-=== Prerequisites for GraalVM
+== Prerequisites for GraalVM
 
 ifdef::use-linux[]
 On Linux, you need GCC and the Glibc and zlib headers.
@@ -36,9 +37,9 @@ On Windows, you need the _Developer Command Prompt for Microsoft Visual C++_.
 Check the https://www.graalvm.org/docs/getting-started/windows/#prerequisites-for-using-native-image-on-windows[Windows prerequisites page] for details.
 endif::use-windows[]
 
-=== Installing GraalVM
+== Installing GraalVM
 
-GraalVM installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
+GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
 
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
@@ -55,7 +56,7 @@ ifdef::use-mac[]
 - MacOS - https://www.graalvm.org/docs/getting-started/macos/
 endif::use-mac[]
 
-Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home).
+Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `/Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home`).
 
 The `native-image` tool must be installed.
 It can be done by running
@@ -82,7 +83,7 @@ xattr -r -d com.apple.quarantine ${GRAAL_VM}
 ====
 endif::use-mac[]
 
-=== Checking for GraalVM Installation
+== Checking for GraalVM Installation
 
 Once installed and set up, you should be able to run the following command and get the following output.
 
