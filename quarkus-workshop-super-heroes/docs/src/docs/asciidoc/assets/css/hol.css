@@ -24,6 +24,12 @@ span.alt {
   max-width: 90.5em;
 }
 
+/*There's a font override on these, which we need to de-override*/
+.admonitionblock .title {
+  font-size: 1rem !important;
+  font-family: 'Open Sans', Arial, sans-serif !important;
+}
+
 .quoteblock blockquote,
 .quoteblock blockquote,
 td.content {
