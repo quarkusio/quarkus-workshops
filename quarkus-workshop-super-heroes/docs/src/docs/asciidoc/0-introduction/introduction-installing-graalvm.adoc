@@ -39,7 +39,7 @@ endif::use-windows[]
 
 == Installing GraalVM
 
-GraalVM installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
+GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
 
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
@@ -56,7 +56,7 @@ ifdef::use-mac[]
 - MacOS - https://www.graalvm.org/docs/getting-started/macos/
 endif::use-mac[]
 
-Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be /Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home).
+Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `/Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home`).
 
 The `native-image` tool must be installed.
 It can be done by running
