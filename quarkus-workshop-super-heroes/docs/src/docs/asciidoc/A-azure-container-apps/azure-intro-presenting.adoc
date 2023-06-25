@@ -82,7 +82,7 @@ This workshop will make use of the following software, tools, frameworks that yo
 * cURL (or any other command line HTTP client)
 * (optionally) Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
 
-The following section focuses on how to install and set up the needed Software.
+The following section focuses on how to install and set up the needed software.
 You can skip the next section if you have already installed all the prerequisites.
 
 [WARNING]
