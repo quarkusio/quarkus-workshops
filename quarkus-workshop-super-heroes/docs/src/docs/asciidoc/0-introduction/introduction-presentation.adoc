@@ -97,7 +97,7 @@ need to install it. Instead, the workshop scaffolding includes
 a maven wrapper, `mvnw`. If you'd prefer to install your own Maven and don't already have it,
  xref:appendix-installing-maven[see the instructions at the end of the workshop].
 
-The following section focuses on how to install and set up the needed Software.
+The following section focuses on how to install and set up the needed software.
 You can skip the next section if you have already installed all the prerequisites.
 
 [WARNING]
