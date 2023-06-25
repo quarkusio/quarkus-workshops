@@ -31,7 +31,7 @@ Based on a https://github.com/quarkusio/quarkus-workshops[workshop] by Emmanuel 
 :use-mac: true
 :use-linux: true
 :use-windows: true
-:use-local-kubernetes: true
+//:use-local-kubernetes: true
 
 // Introduction
 include::0-introduction/introduction.adoc[leveloffset=+1]
