@@ -1,3 +1,5 @@
+image::quarkus-logo.png[]
+
 = Quarkus Super-Heroes Workshop
 
 Holly Cummins
