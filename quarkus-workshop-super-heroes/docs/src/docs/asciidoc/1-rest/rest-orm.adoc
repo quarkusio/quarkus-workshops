@@ -820,7 +820,7 @@ On Linux, use the `docker-compose-linux.yaml`:
 ----
 docker compose -f docker-compose-linux.yaml up -d
 ----
-ifdef::use-linux[]
+endif::use-linux[]
 --
 
 [NOTE]
