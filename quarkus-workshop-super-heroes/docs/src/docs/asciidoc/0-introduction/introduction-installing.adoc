@@ -20,7 +20,9 @@ $GRAALVM_HOME/bin/native-image --version
 curl --version
 docker version
 docker compose version
+ifdef::use-local-kubernetes[]
 kubectl version # If you used Rancher Desktop and plan to use Kubernetes
+endif::use-local-kubernetes[]
 ----
 
 We have not mentioned cURL up to now, because most modern operating systems ship

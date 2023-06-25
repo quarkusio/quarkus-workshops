@@ -1,10 +1,12 @@
+ifdef::use-local-kubernetes[]
+
 [[introduction-installing-rancher]]
 
 = Rancher Desktop
 
 [NOTE]
 ====
-You only need Rancher Desktop if you didn't install Docker or if you want to deploy the applications to a local
+You only need Rancher Desktop if you want to deploy the applications to a local
 Kubernetes instance. You can also use https://minikube.sigs.k8s.io/docs/start/[minikube] for the latter.
 ====
 
@@ -110,3 +112,4 @@ Stop the port forwarding using `CTRL+C`, and delete the pod:
 (CTRL+C)
 $ kubectl delete pod hello-ngnix
 ----
+endif::use-local-kubernetes[]

@@ -25,6 +25,7 @@ v2.0, {docdate}: Quarkus {quarkus-version}
 :use-mac: true
 :use-linux: true
 :use-windows: true
+:use-local-kubernetes: true
 
 // Introduction
 include::0-introduction/introduction.adoc[leveloffset=+1]
