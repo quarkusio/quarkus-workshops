@@ -1,6 +1,12 @@
+image::quarkus-logo.png[]
+
 = Quarkus Super-Heroes Workshop
-Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; Georgios Andrianakis
-v2.0, {docdate}: Quarkus {quarkus-version}
+
+Holly Cummins
+
+{docdate}: Quarkus {quarkus-version}
+
+Based on a https://github.com/quarkusio/quarkus-workshops[workshop] by Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; Georgios Andrianakis v2.0,
 
 :data-uri:
 :doctype: book
@@ -25,7 +31,7 @@ v2.0, {docdate}: Quarkus {quarkus-version}
 :use-mac: true
 :use-linux: true
 :use-windows: true
-:use-local-kubernetes: true
+//:use-local-kubernetes: true
 
 // Introduction
 include::0-introduction/introduction.adoc[leveloffset=+1]
