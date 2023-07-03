@@ -57,6 +57,7 @@
             <includes>
                 <include>pom.xml</include>
                 <include>.editorconfig</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
             </includes>
         </fileSet>
     </fileSets>
