@@ -17,6 +17,7 @@ Open a terminal and run the following command:
 cd quarkus-workshop-super-heroes/super-heroes
 
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+    -DplatformVersion={quarkus-version} \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-villains \
     -DclassName="io.quarkus.workshop.superheroes.villain.VillainResource" \

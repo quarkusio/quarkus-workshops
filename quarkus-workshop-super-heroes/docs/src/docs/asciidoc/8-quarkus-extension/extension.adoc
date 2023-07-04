@@ -57,6 +57,7 @@ From the directory `super-heroes` execute the following commands:
 [source,shell,subs="attributes+"]
 ----
 mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create-extension -N \
+    -DplatformVersion={quarkus-version} \
     -DwithoutTests \
     -DextensionId=extension-version \
     -DgroupId=io.quarkus.workshop.super-heroes \

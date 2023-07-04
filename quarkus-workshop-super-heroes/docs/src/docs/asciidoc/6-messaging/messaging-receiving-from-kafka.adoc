@@ -50,6 +50,7 @@ Open a terminal and run the following command:
 [source,shell,subs="attributes+"]
 ----
 mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+    -DplatformVersion={quarkus-version} \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=event-statistics \
     -DclassName="io.quarkus.workshop.superheroes.statistics.StatisticResource" \
