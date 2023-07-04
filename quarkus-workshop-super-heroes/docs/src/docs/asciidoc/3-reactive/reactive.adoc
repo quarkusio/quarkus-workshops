@@ -666,6 +666,13 @@ curl -X POST -d  '{"level":2, "name":"Super level", "powers":"leaping"}'  -H "Co
 The cUrl command returns the location of the newly created hero.
 Take this URL and do an HTTP GET on it.
 
+[NOTE]
+====
+The example shows a newly created Hero with id `952`.
+But this id could be different on your machine.
+Just make sure to use the correct id in the next command.
+====
+
 [source,shell]
 ----
 curl http://localhost:8083/api/heroes/952 | jq
