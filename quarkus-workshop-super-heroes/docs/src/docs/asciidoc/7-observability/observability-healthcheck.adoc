@@ -79,6 +79,7 @@ To check that the `smallrye-health` extension is working as expected, access usi
 * http://localhost:8083/q/health/live
 * http://localhost:8083/q/health/ready
 * http://localhost:8083/q/health
+* http://localhost:8083/q/health-ui
 
 All of the health REST endpoints return a simple JSON object with two fields:
 
