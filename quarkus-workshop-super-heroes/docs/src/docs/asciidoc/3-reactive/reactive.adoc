@@ -233,7 +233,7 @@ Open the `HeroResource` and update the content to be:
 ----
 package io.quarkus.workshop.superheroes.hero;
 
-import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -302,7 +302,7 @@ public class HeroResource {
     @Operation(summary = "Creates a valid hero")
     @POST
     @APIResponse(responseCode = "201", description = "The URI of the created hero", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = URI.class)))
-    @ReactiveTransactional
+    @WithTransaction
     public Uni<RestResponse<URI>> createHero(@Valid Hero hero, @Context UriInfo uriInfo) {
         return hero.<Hero>persist()
             .map(h -> {
@@ -315,7 +315,7 @@ public class HeroResource {
     @Operation(summary = "Updates an exiting hero")
     @PUT
     @APIResponse(responseCode = "200", description = "The updated hero", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class)))
-    @ReactiveTransactional
+    @WithTransaction
     public Uni<Hero> updateHero(@Valid Hero hero) {
         return Hero.<Hero>findById(hero.id)
             .map(retrieved -> {
@@ -337,7 +337,7 @@ public class HeroResource {
     @DELETE
     @Path("/{id}")
     @APIResponse(responseCode = "204")
-    @ReactiveTransactional
+    @WithTransaction
     public Uni<RestResponse<Void>> deleteHero(@RestPath Long id) {
         return Hero.deleteById(id)
             .invoke(() -> logger.debugf("Hero deleted with %d", id))
@@ -362,7 +362,7 @@ As you can see, instead of returning the result directly, it returns `Uni<T>`.
 Quarkus retrieves the `Uni` and _waits_ for the outcome to be available before writing the response.
 During that time, it can handle other requests.
 
-Notice also the `@ReactiveTransactional`, which is the reactive variant of `@Transactional`.
+Notice also the `@WithTransaction`, which is the reactive variant of `@Transactional`.
 
 === Configuring the reactive access to the database
 
