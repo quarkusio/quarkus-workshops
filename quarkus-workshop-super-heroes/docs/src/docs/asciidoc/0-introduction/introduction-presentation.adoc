@@ -75,7 +75,7 @@ Oh, and be ready to have some fun!
 
 === The completed workshop
 
-To build the completed workshop, you would need to run the following commands from the root project:
+If you want to build the completed workshop, after you've unzipped the {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`] file, you would need to run the following commands from the root project:
 
 [source, shell]
 ----
