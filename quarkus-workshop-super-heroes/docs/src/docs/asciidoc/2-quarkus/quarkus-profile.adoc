@@ -15,17 +15,17 @@ Let's change the `VillainApplicationLifeCycle` so it displays the current profil
 [example, role="cta"]
 --
 
-For that, just add a log invoking `ProfileManager.getActiveProfile()` in the `onStart()` method:
+For that, just add a log invoking `ConfigUtils.getProfiles()` in the `onStart()` method:
 
 [source,indent=0]
 ----
-LOGGER.info("The application VILLAIN is starting with profile " + ProfileManager.getActiveProfile());
+LOGGER.info("The application VILLAIN is starting with profile " + ConfigUtils.getProfiles());
 ----
 --
 
 [NOTE]
 --
-If not already done, you need to add the following import statement: `import io.quarkus.runtime.configuration.ProfileManager;`
+If not already done, you need to add the following import statement: `import io.quarkus.runtime.configuration.ConfigUtils;`
 --
 
 In the `application.properties` file, you can prefix a property with the profile.
