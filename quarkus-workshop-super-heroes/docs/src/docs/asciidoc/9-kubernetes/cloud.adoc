@@ -20,7 +20,7 @@ If not, Quarkus comes with a trick to produce these executable:
 
 [source,shell]
 ----
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 ----
 
 The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
@@ -43,17 +43,17 @@ We also copy the UI into the fight service, to simplify the process:
 [source,shell]
 ----
 cd rest-hero
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 cd rest-villains
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 cd rest-fight
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 cd event-statistics
-mvn clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 ----
 --

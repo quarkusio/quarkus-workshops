@@ -29,8 +29,8 @@ Time to compile and start the load application using:
 
 [source,shell]
 ----
-mvn compile
-mvn exec:java
+./mvnw compile
+./mvnw exec:java
 ----
 --
 
