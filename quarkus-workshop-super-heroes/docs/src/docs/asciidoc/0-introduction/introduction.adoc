@@ -25,7 +25,7 @@ Well, it's going to be a set of microservices:
 * Answer the ultimate question: are super-heroes stronger than super-villains?
 
 This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows, OSX, or Linux laptop.
-You need JDK {jdk-version} on your machine, Apache Maven ({maven-version}), and Docker.
+You just need JDK {jdk-version} on your machine and Docker (having Apache Maven {maven-version} installed is optional as you will rely on the Apache Maven Wrapper).
 ifdef::use-mac,use-windows[]
 On Mac and Windows, Docker for _x_ is recommended instead of the Docker toolbox setup.
 endif::[]
