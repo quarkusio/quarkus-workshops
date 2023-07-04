@@ -444,6 +444,8 @@ Notice that most of the REST endpoints that you've seen so far produce or consum
 JSON being the default media type in Quarkus, we could have omitted the `@Produces` or `@Consume` annotation.
 ====
 
+--
+
 == Adding Data
 
 [example, role="cta"]

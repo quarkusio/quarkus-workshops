@@ -330,9 +330,9 @@ Importantly, other test classes are not affected by this.
 Finally, edit the `FightResourceTest` and add the following method:
 
 [source,java]
---
+----
 include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=shouldGetRandomFighters]
---
+----
 
 Now, run the test from the dev mode, or from your IDE.
 You can shutdown the hero and villain services to verify that the tests still pass.
