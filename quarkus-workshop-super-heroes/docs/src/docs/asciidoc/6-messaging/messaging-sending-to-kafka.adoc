@@ -69,9 +69,8 @@ If not yet started, start the microservice using `./mvnw quarkus:dev`.
 [NOTE]
 ====
 Quarkus starts a Kafka broker automatically.
+You can check that by executing the `docker container ls` command.
 ====
-
-// TODO HERE
 
 == Connecting Imperative and Reactive Using an Emitter
 
