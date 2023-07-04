@@ -24,6 +24,12 @@ cd quarkus-workshop-super-heroes/super-heroes
     -Dextensions="resteasy-reactive-jackson"
 ----
 
+[NOTE]
+====
+Notice that we scaffold the project with a reactive implementation of RestEasy (`resteasy-reactive-jackson`).
+This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.
+====
+
 Remember that `mvnw` is the maven wrapper. It behaves like `mvn`,
 but allows a project's build dependencies to be encapsulated.
 
