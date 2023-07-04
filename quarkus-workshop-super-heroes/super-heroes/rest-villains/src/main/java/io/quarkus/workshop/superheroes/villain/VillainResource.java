@@ -32,7 +32,6 @@ import org.jboss.resteasy.reactive.RestResponse;
  */
 @Path("/api/villains")
 @Tag(name = "villains")
-@ApplicationScoped
 public class VillainResource {
     Logger logger;
     VillainService service;

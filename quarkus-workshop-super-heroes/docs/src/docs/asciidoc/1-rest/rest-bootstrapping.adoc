@@ -299,7 +299,7 @@ If you don't want the debugger at all, you can use `-Ddebug=false`.
 
 Alright, time to change some code.
 Open your favorite IDE and import the project.
-To check that the hot reload is working, update the `VillainResource.hello()` method by returning the String "Hello Villain Resource".
+To check that the hot reload is working, update the `VillainResource.hello()` method by returning the String "_Hello Villain Resource_".
 
 Now, execute the cURL command again:
 
