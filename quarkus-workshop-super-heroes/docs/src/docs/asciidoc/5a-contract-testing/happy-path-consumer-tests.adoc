@@ -53,11 +53,11 @@ You will need to run tests the old-fashioned way, with
 
 [source,bash]
 ----
-mvn verify
+./mvnw verify
 ----
 
 
-Run the build (using `mvn verify`).
+Run the build (using `./mvnw verify`).
 You should see a failure, because we have a mock, but nothing is using it.
 
 

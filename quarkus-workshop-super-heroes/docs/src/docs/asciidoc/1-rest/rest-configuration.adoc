@@ -128,6 +128,13 @@ The cURL command returns the location of the newly created villain.
 Take this URL and do an HTTP GET on it.
 You will see that the level has been decreased.
 
+[NOTE]
+====
+The example shows a newly created Villain with id `582`.
+But this id could be different on your machine.
+Just make sure to use the correct id in the next command.
+====
+
 [source,shell]
 ----
 curl http://localhost:8084/api/villains/582 | jq

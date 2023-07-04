@@ -4,7 +4,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.net.URI;
 import java.util.List;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -32,7 +31,6 @@ import org.jboss.resteasy.reactive.RestResponse;
  */
 @Path("/api/villains")
 @Tag(name = "villains")
-@ApplicationScoped
 public class VillainResource {
     Logger logger;
     VillainService service;

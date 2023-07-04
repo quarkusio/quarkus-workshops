@@ -21,7 +21,8 @@ Open a terminal and run the following command:
 
 [source,shell,subs="attributes+"]
 ----
-mvn io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+  -DplatformVersion={quarkus-version} \
   -DprojectGroupId=io.quarkus.workshop.super-heroes \
   -DprojectArtifactId=rest-fights \
   -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
@@ -433,10 +434,17 @@ public class FightResource {
     }
 }
 ----
---
-s
-NOTE: The OpenAPI annotations have been omitted to keep the service focused on the task.
+
+[NOTE]
+====
+The OpenAPI annotations have been omitted to keep the service focused on the task.
 Feel free to add them if you want complete OpenAPI descriptors.
+
+Notice that most of the REST endpoints that you've seen so far produce or consume JSON.
+JSON being the default media type in Quarkus, we could have omitted the `@Produces` or `@Consume` annotation.
+====
+
+--
 
 == Adding Data
 

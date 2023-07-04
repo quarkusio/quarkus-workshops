@@ -13,7 +13,6 @@ import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -36,7 +35,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
  */
 @Path("/api/heroes")
 @Tag(name = "heroes")
-@ApplicationScoped
 public class HeroResource {
 
     Logger logger;

@@ -24,12 +24,8 @@ sudo apt-get install build-essential libz-dev zlib1g-dev
 endif::use-linux[]
 
 ifdef::use-mac[]
-On macOS X, XCode provides the required dependencies to build native executables:
-
-[source,shell]
-----
-xcode-select --install
-----
+On macOS X there are several ways to install GraalVM.
+But using SDKMAN! is the preferred option, as it allows you to easily switch between different versions of GraalVM if needed.
 endif::use-mac[]
 
 ifdef::use-windows[]
@@ -39,6 +35,7 @@ endif::use-windows[]
 
 == Installing GraalVM
 
+ifndef::use-mac[]
 GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
 
 Version {graalvm-version} is required.
@@ -52,18 +49,66 @@ endif::use-linux[]
 ifdef::use-windows[]
 - Windows - https://www.graalvm.org/docs/getting-started/windows/
 endif::use-windows[]
-ifdef::use-mac[]
-- MacOS - https://www.graalvm.org/docs/getting-started/macos/
 endif::use-mac[]
 
-Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `/Library/Java/JavaVirtualMachines/graalvm-ce-{graalvm-version}/Contents/Home`).
+
+ifdef::use-mac[]
+=== Listing GraalVM Versions
+
+First of all, check if you already have the GraalVM Candidates installed on your machine.
+To list the available versions of GraalVM, use the SDKMAN! `list java` command.
+The result is a table of entries grouped by the vendor and sorted by version.
+GraalVM has its own group and is listed under the `GraalVM` vendor:
+
+[source,term]
+----
+$ sdk list java
+
+=======================================================================
+Available Java Versions for macOS ARM 64bit
+=======================================================================
+Vendor        | Use | Version      | Dist    | Status  | Identifier
+-----------------------------------------------------------------------
+GraalVM       |     | 22.3.r19     | grl     |         | 22.3.r19-grl
+              |     | 22.3.r17     | grl     |         | 22.3.r17-grl
+              |     | 22.3.r11     | grl     |         | 22.3.r11-grl
+              |     | 22.2.r17     | grl     |         | 22.2.r17-grl
+              |     | 22.2.r11     | grl     |         | 22.2.r11-grl
+              |     | 22.1.0.r17   | grl     |         | 22.1.0.r17-grl
+              |     | 22.1.0.r11   | grl     |         | 22.1.0.r11-grl
+=======================================================================
+----
+
+If you have any GraalVM candidate installed, you should see `installed` in the `Status` column.
+If you don't have any GraalVM candidate installed, use SDKMAN! to install one or several.
+
+=== Installing a GraalVM Version
+
+There are several versions of GraalVM available for different versions of the JDK.
+Because we are using Java {jdk-version} in this fascicle, we will install the version of GraalVM that is compatible with Java {jdk-version} (the versions finishing with `r{jdk-version}-grl`).
+Let's install GraalVM {graalvm-version}.
+
+[source,term,subs="attributes+"]
+----
+$ sdk install java {graalvm-version}.r{jdk-version}-grl
+
+Downloading: java {graalvm-version}.r{jdk-version}-grl
+Repackaging Java {graalvm-version}.r{jdk-version}-grl...
+Installing: java {graalvm-version}.r{jdk-version}-grl
+Done installing!
+
+Do you want java {graalvm-version}.r{jdk-version}-grl to be set as default? (Y/n):
+----
+endif::use-mac[]
+
+Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `~/.sdkman/candidates/java/{graalvm-version}.r{jdk-version}-grl`).
 
 The `native-image` tool must be installed.
-It can be done by running
+It can be done by running the following command under `$GRAALVM_HOME/bin`
 
 [source,shell]
 ----
-gu install native-image
+./gu install native-image
 ----
 
 from your GraalVM `bin` directory.
