@@ -434,10 +434,15 @@ public class FightResource {
     }
 }
 ----
---
-s
-NOTE: The OpenAPI annotations have been omitted to keep the service focused on the task.
+
+[NOTE]
+====
+The OpenAPI annotations have been omitted to keep the service focused on the task.
 Feel free to add them if you want complete OpenAPI descriptors.
+
+Notice that most of the REST endpoints that you've seen so far produce or consume JSON.
+JSON being the default media type in Quarkus, we could have omitted the `@Produces` or `@Consume` annotation.
+====
 
 == Adding Data
 
