@@ -123,7 +123,7 @@
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>22.3</graalvm-version>
                         <maven-version>3.8.x</maven-version>
-                        <quarkus-version>3.0.3.Final</quarkus-version>
+                        <quarkus-version>3.3.0</quarkus-version>
                         <quarkus-pact-version>1.0.1.Final</quarkus-pact-version>
                     </attributes>
                 </configuration>

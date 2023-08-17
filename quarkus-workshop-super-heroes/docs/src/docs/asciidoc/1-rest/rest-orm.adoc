@@ -809,7 +809,7 @@ You should already have installed the infrastructure into the `infrastructure` d
 
 [example, role="cta"]
 --
-Now, just execute `docker compose -f docker-compose.yaml up -d`.
+Now, just execute `docker compose -f docker-compose.yaml up -d` under the `infrastructure` directory.
 You should see a few logs going on and then all the containers get started.
 
 ifdef::use-linux[]

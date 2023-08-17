@@ -214,9 +214,9 @@ Replace the `META-INF/resources/index.html` file with the following content:
 </head>
 <body>
 <div class="container">
-<div class="row">
-    <div class="col"><h1 class="page-title">Super Stats</h1></div>
-</div>
+    <div class="row">
+        <div class="col"><h1 class="page-title">Super Stats</h1></div>
+    </div>
 </div>
 <div class="container container-cards-pf">
     <div class="row row-cards-pf">
@@ -266,12 +266,13 @@ Replace the `META-INF/resources/index.html` file with the following content:
 <script>
     $(document).ready(function() {
         var host = window.location.host;
+        var protocol = (window.location.protocol == "https:") ? "wss" : "ws";
 
-        var top = new WebSocket("ws://" + host + "/stats/winners");
+        var top = new WebSocket(protocol + "://" + host + "/stats/winners");
         top.onmessage = function (event) {
             updateTop(event.data);
         };
-        var team = new WebSocket("ws://" + host + "/stats/team");
+        var team = new WebSocket(protocol + "://" + host + "/stats/team");
         team.onmessage = function(event) {
             console.log(event.data);
             updateRatio(event.data);
