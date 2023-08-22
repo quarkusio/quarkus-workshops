@@ -40,7 +40,7 @@ directory, use `./mvnw quarkus:dev` to start the web application.
 Be sure you have the hero, villain and fights microservices running (dev mode is enough).
 --
 
-If you don't have Node installed, Quinoa will install it during the start process.
+If you don't have Node installed, Quinoa will install it during the start process (under the `.quinoa` directory).
 
 ----
 2023-05-18 14:21:38,896 INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installing node version v16.16.0

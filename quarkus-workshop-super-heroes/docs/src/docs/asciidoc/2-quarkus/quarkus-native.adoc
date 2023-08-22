@@ -40,6 +40,7 @@ Make sure you have the `GRAALVM_HOME` environment variable defined and pointing 
 Then create a native executable using: `./mvnw package -Pnative`.
 In addition to the regular files, the build also produces `target/rest-villains-1.0.0-SNAPSHOT-runner` (notice that there is no `.jar` file extension).
 You can run it using `./target/rest-villains-1.0.0-SNAPSHOT-runner` and curl the endpoint with `curl http://localhost:8084/api/villains`.
+Remember that this is using the `prod` profile, meaning that the infrastructure needs to be up and running (`docker compose -f docker-compose.yaml up -d`).
 --
 
 [WARNING]
