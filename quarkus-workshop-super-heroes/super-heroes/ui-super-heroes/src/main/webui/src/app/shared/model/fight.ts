@@ -20,9 +20,11 @@ export interface Fight {
     fightDate: FightFightDate;
     winnerName: string;
     winnerLevel: number;
+    winnerPowers: string;
     winnerPicture: string;
     loserName: string;
     loserLevel: number;
+    loserPowers: string;
     loserPicture: string;
 }
 // end::adocModel[]

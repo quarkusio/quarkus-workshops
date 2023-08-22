@@ -187,6 +187,10 @@ export class FightService {
     this.emitter.emit(fight);
   }
 
+  public onNewFightNarration(narration: Narration) {
+    this.emitter.emit(narration);
+  }
+
   /**
    * Creates a fight between two fighters
    *

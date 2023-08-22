@@ -121,9 +121,11 @@ public class FightService {
         fight.winnerName = fighters.hero.name;
         fight.winnerPicture = fighters.hero.picture;
         fight.winnerLevel = fighters.hero.level;
+        fight.winnerPowers = fighters.hero.powers;
         fight.loserName = fighters.villain.name;
         fight.loserPicture = fighters.villain.picture;
         fight.loserLevel = fighters.villain.level;
+        fight.loserPowers = fighters.villain.powers;
         fight.winnerTeam = "heroes";
         fight.loserTeam = "villains";
         return fight;
@@ -135,9 +137,11 @@ public class FightService {
         fight.winnerName = fighters.villain.name;
         fight.winnerPicture = fighters.villain.picture;
         fight.winnerLevel = fighters.villain.level;
+        fight.winnerPowers = fighters.villain.powers;
         fight.loserName = fighters.hero.name;
         fight.loserPicture = fighters.hero.picture;
         fight.loserLevel = fighters.hero.level;
+        fight.loserPowers = fighters.hero.powers;
         fight.winnerTeam = "villains";
         fight.loserTeam = "heroes";
         return fight;

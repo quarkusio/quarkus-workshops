@@ -26,6 +26,14 @@ export class FightComponent implements OnInit {
     );
   }
 
+  narrate() {
+    this.fightService.apiNarrateFightsPost(this.fighters).subscribe(
+      narration => {
+        this.fightService.onNewFightNarration(narration);
+      }
+    );
+  }
+
   newFighters() {
     this.winner = null;
     this.fightService.apiFightsRandomfightersGet().subscribe(fighters => this.fighters = fighters);

@@ -42,9 +42,11 @@ public class FightResourceTest {
     private static final String DEFAULT_WINNER_NAME = "Super Baguette";
     private static final String DEFAULT_WINNER_PICTURE = "super_baguette.png";
     private static final int DEFAULT_WINNER_LEVEL = 42;
+    private static final String DEFAULT_WINNER_POWERS = "Eats baguette in less than a second";
     private static final String DEFAULT_LOSER_NAME = "Super Chocolatine";
     private static final String DEFAULT_LOSER_PICTURE = "super_chocolatine.png";
     private static final int DEFAULT_LOSER_LEVEL = 6;
+    private static final String DEFAULT_LOSER_POWERS = "Transforms chocolatine into pain au chocolat";
 
     private static final int NB_FIGHTS = 3;
     private static String fightId;
@@ -126,10 +128,12 @@ public class FightResourceTest {
         hero.name = DEFAULT_WINNER_NAME;
         hero.picture = DEFAULT_WINNER_PICTURE;
         hero.level = DEFAULT_WINNER_LEVEL;
+        hero.powers = DEFAULT_WINNER_POWERS;
         Villain villain = new Villain();
         villain.name = DEFAULT_LOSER_NAME;
         villain.picture = DEFAULT_LOSER_PICTURE;
         villain.level = DEFAULT_LOSER_LEVEL;
+        villain.powers = DEFAULT_LOSER_POWERS;
         Fighters fighters = new Fighters();
         fighters.hero = hero;
         fighters.villain = villain;
@@ -160,9 +164,11 @@ public class FightResourceTest {
                .body("winnerName", Is.is(DEFAULT_WINNER_NAME))
                .body("winnerPicture", Is.is(DEFAULT_WINNER_PICTURE))
                .body("winnerLevel", Is.is(DEFAULT_WINNER_LEVEL))
+               .body("winnerPowers", Is.is(DEFAULT_WINNER_POWERS))
                .body("loserName", Is.is(DEFAULT_LOSER_NAME))
                .body("loserPicture", Is.is(DEFAULT_LOSER_PICTURE))
                .body("loserLevel", Is.is(DEFAULT_LOSER_LEVEL))
+               .body("loserPowers", Is.is(DEFAULT_LOSER_POWERS))
                .body("fightDate", Is.is(notNullValue()));
 
         List<Fight> fights = get("/api/fights").then()
@@ -189,11 +195,13 @@ public class FightResourceTest {
         assertEquals(hero.name, DefaultTestHero.DEFAULT_HERO_NAME);
         assertEquals(hero.picture, DefaultTestHero.DEFAULT_HERO_PICTURE);
         assertEquals(hero.level, DefaultTestHero.DEFAULT_HERO_LEVEL);
+        assertEquals(hero.powers, DefaultTestHero.DEFAULT_HERO_POWERS);
 
         Villain villain = fighters.villain;
         assertEquals(villain.name, DefaultTestVillain.DEFAULT_VILLAIN_NAME);
         assertEquals(villain.picture, DefaultTestVillain.DEFAULT_VILLAIN_PICTURE);
         assertEquals(villain.level, DefaultTestVillain.DEFAULT_VILLAIN_LEVEL);
+        assertEquals(villain.powers, DefaultTestVillain.DEFAULT_VILLAIN_POWERS);
     }
     // end::shouldGetRandomFighters[]
 
