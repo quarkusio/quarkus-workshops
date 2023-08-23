@@ -1,13 +1,16 @@
 package io.quarkus.workshop.superheroes.narration;
 
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-import static jakarta.ws.rs.core.MediaType.*;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 import static jakarta.ws.rs.core.Response.Status.CREATED;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.CoreMatchers.is;
@@ -22,11 +25,26 @@ public class NarrationResourceTest {
     private static final int VILLAIN_LEVEL = 43;
     private static final String VILLAIN_POWERS = "Transforms chocolatine into pain au chocolat";
 
+    @InjectMock
+    NarrationService narrationService;
+
+    private static Fight getFight() {
+        Fight fight = new Fight();
+        fight.winnerName = VILLAIN_NAME;
+        fight.winnerLevel = VILLAIN_LEVEL;
+        fight.winnerPowers = VILLAIN_POWERS;
+        fight.loserName = HERO_NAME;
+        fight.loserLevel = HERO_LEVEL;
+        fight.loserPowers = HERO_POWERS;
+        fight.winnerTeam = "villains";
+        fight.loserTeam = "heroes";
+        return fight;
+    }
 
     @BeforeEach
-//    public void setup() {
-//        Mockito.when(heroProxy.findRandomHero()).thenReturn(DefaultTestHero.INSTANCE);
-//    }
+    public void setup() throws Exception {
+        Mockito.when(narrationService.narrate(getFight())).thenReturn("Lorem ipsum dolor sit amet");
+    }
 
     @Test
     void shouldPingOpenAPI() {
@@ -48,24 +66,14 @@ public class NarrationResourceTest {
 
     @Test
     void shouldNarrateAFight() {
-        Fight fight = new Fight();
-        fight.winnerName = VILLAIN_NAME;
-        fight.winnerLevel = VILLAIN_LEVEL;
-        fight.winnerPowers = VILLAIN_POWERS;
-        fight.loserName = HERO_NAME;
-        fight.loserLevel = HERO_LEVEL;
-        fight.loserPowers = HERO_POWERS;
-        fight.winnerTeam = "villains";
-        fight.loserTeam = "heroes";
-
-        String narration = given().log().all()
-            .body(fight)
+        given().log().all()
+            .body(getFight())
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .header(ACCEPT, TEXT_PLAIN)
             .when()
             .post("/api/narration")
             .then()
-            .statusCode(CREATED.getStatusCode())
-            .extract().body().as(String.class);
+            .statusCode(CREATED.getStatusCode());
+//            .body(startsWith("Lorem ipsum dolor sit amet"));
     }
 }

@@ -14,7 +14,6 @@
 /**
  * Each fight has a winner and a loser
  */
-// tag::adocModel[]
 export interface Fight {
     id?: number;
     fightDate: FightFightDate;
@@ -27,4 +26,3 @@ export interface Fight {
     loserPowers: string;
     loserPicture: string;
 }
-// end::adocModel[]

@@ -14,12 +14,9 @@ public class NarrationResource {
     NarrationService service;
 
     @POST
-    public Response fight(Fight fight) throws Exception {
+    public Response narrate(Fight fight) throws Exception {
         String narration = service.narrate(fight);
-        if (narration.startsWith("Lorem ipsum dolor sit amet"))
-            return Response.status(203).entity(narration).build();
-        else
-            return Response.status(Response.Status.CREATED).entity(narration).build();
+        return Response.status(Response.Status.CREATED).entity(narration).build();
     }
 
     @GET

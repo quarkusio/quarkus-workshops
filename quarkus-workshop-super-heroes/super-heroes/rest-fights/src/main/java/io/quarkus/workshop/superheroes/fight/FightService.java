@@ -1,10 +1,7 @@
 package io.quarkus.workshop.superheroes.fight;
 
 
-import io.quarkus.workshop.superheroes.fight.client.Hero;
-import io.quarkus.workshop.superheroes.fight.client.HeroProxy;
-import io.quarkus.workshop.superheroes.fight.client.Villain;
-import io.quarkus.workshop.superheroes.fight.client.VillainProxy;
+import io.quarkus.workshop.superheroes.fight.client.*;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -36,6 +33,8 @@ public class FightService {
     HeroProxy heroProxy;
     @RestClient
     VillainProxy villainProxy;
+    @RestClient
+    NarrationProxy narrationProxy;
 
     private final Random random = new Random();
 
@@ -147,4 +146,7 @@ public class FightService {
         return fight;
     }
 
+    public String narrateFight(Fight fight) {
+        return narrationProxy.narrate(fight);
+    }
 }

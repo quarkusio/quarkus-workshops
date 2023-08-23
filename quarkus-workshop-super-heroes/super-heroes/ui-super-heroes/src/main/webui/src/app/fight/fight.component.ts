@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Fighters, FightService} from '../shared';
+import {Fight, Fighters, FightService} from '../shared';
 
 @Component({
   selector: 'hero-fight',
@@ -8,6 +8,7 @@ import {Fighters, FightService} from '../shared';
 export class FightComponent implements OnInit {
 
   fighters: Fighters = new Fighters();
+  wonFight: Fight;
   winner: String;
 
   constructor(private fightService: FightService) {
@@ -22,14 +23,15 @@ export class FightComponent implements OnInit {
       fight => {
         this.fightService.onNewFight(fight);
         this.winner = fight.winnerName;
+        this.wonFight = fight;
       }
     );
   }
 
   narrate() {
-    this.fightService.apiNarrateFightsPost(this.fighters).subscribe(
-      narration => {
-        this.fightService.onNewFightNarration(narration);
+    this.fightService.apiNarrateFightPost(this.wonFight).subscribe(
+      fight => {
+        this.fightService.onNewFightNarration(fight);
       }
     );
   }
