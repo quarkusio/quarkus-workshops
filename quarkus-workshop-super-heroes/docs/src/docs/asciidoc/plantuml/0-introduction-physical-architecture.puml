@@ -19,6 +19,14 @@ node "Villain" as villain {
     villainQuarkus .up> villainPostgresql
 }
 
+node "Narration" as narration {
+    agent "Quarkus" <<application>> as narrationQuarkus
+    hexagon "Semantic Kernel" as sk
+    narrationQuarkus .up> sk
+}
+
+cloud "Open AI \n AzureAI" as openai
+
 node "Fight" as fight {
     agent "Quarkus" <<application>> as fightQuarkus
     database "Postgresql" as fightPostgresql
@@ -47,6 +55,9 @@ node "Prometheus" as prometheus {
 uiQuarkus --> fightQuarkus : HTTP
 fightQuarkus --> heroQuarkus : HTTP
 fightQuarkus --> villainQuarkus : HTTP
+fightQuarkus --> narrationQuarkus : HTTP
+
+sk --> openai : HTTP
 
 fightQuarkus ..> kafka : Message
 stat <.. kafka : Message

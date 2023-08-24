@@ -1,0 +1,95 @@
+[[introduction-installing-ai]]
+
+= OpenAI or AzureAI Subscriptions
+
+The "Narration" microservice needs to access an AI service to generate the text narrating the fight.
+You can choose between OpenAI or AzureAI.
+
+== OpenAI
+
+== AzureAI
+
+If you already have an Azure subscription, you can use it to create an AzureAI resource.
+Otherwise, you can create a https://azure.microsoft.com/free[free Azure subscription] and use it to create an AzureAI resource.
+Then, you need to use the AzureAI service to generate the API key and endpoint URL.
+You can either do that using the https://portal.azure.com/[Azure Portal] or the https://learn.microsoft.com/cli/azure/[Azure CLI].
+
+The easiest being use the Azure CLI, we recommand that you https://learn.microsoft.com/cli/azure/install-azure-cli[install it] and use it to create the AzureAI resource and generate the API key and endpoint URL.
+Once Azure CLI is installed and you have your Azure subscription, you can run the following command shell script:
+
+[source,bash]
+----
+#!/usr/bin/env bash
+
+echo "Seting up environment variables..."
+echo "----------------------------------"
+PROJECT="<give-your-project-a-name>"
+RESOURCE_GROUP="rg-$PROJECT"
+COGNITIVE_SERVICE="cognit-$PROJECT"
+COGNITIVE_DEPLOYMENT="deploy-$PROJECT"
+LOCATION="eastus"
+TAG="$PROJECT"
+
+
+echo "Creating the resource group..."
+echo "------------------------------"
+az group create \
+  --name "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --tags system="$TAG"
+
+
+echo "Creating the Cognitive Service..."
+echo "---------------------------------"
+az cognitiveservices account create \
+  --name "$COGNITIVE_SERVICE" \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION" \
+  --custom-domain "$COGNITIVE_SERVICE" \
+  --tags system="$TAG" \
+  --kind "OpenAI" \
+  --sku "S0"
+
+echo "Deploying the model..."
+echo "----------------------"
+az cognitiveservices account deployment create \
+  --name "$COGNITIVE_SERVICE" \
+  --resource-group "$RESOURCE_GROUP" \
+  --deployment-name "$COGNITIVE_DEPLOYMENT" \
+  --model-name "gpt-35-turbo" \
+  --model-version "0301"  \
+  --model-format "OpenAI" \
+  --scale-settings-scale-type "Standard"
+----
+
+This script will create the AzureAI resource and deploy the model.
+Once the script is done, you can use the following command to get the API key and endpoint URL:
+
+[source,bash]
+----
+#!/usr/bin/env bash
+
+echo "Storing the key and endpoint in environment variables..."
+echo "--------------------------------------------------------"
+AZUREOPENAI_KEY=$(
+  az cognitiveservices account keys list \
+  --name "$COGNITIVE_SERVICE" \
+  --resource-group "$RESOURCE_GROUP" \
+  | jq -r .key1
+)
+AZUREOPENAI_ENDPOINT=$(
+  az cognitiveservices account show \
+  --name "$COGNITIVE_SERVICE" \
+  --resource-group "$RESOURCE_GROUP" \
+  | jq -r .properties.endpoint
+)
+
+# Set the properties
+echo "--------------------------------------------------"
+echo "The following properties can be copied either to the ./conf.properties or to the ~/.sk/conf.properties file:"
+echo "--------------------------------------------------"
+echo "client.azureopenai.key=$AZUREOPENAI_KEY"
+echo "client.azureopenai.endpoint=$AZUREOPENAI_ENDPOINT"
+echo "client.azureopenai.deploymentname=$COGNITIVE_DEPLOYMENT"
+----
+

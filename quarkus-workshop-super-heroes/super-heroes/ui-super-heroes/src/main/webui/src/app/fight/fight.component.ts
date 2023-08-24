@@ -10,6 +10,7 @@ export class FightComponent implements OnInit {
   fighters: Fighters = new Fighters();
   wonFight: Fight;
   winner: String;
+  narration: String;
 
   constructor(private fightService: FightService) {
   }
@@ -30,8 +31,9 @@ export class FightComponent implements OnInit {
 
   narrate() {
     this.fightService.apiNarrateFightPost(this.wonFight).subscribe(
-      fight => {
-        this.fightService.onNewFightNarration(fight);
+      narration => {
+        this.fightService.onNewFightNarration(narration);
+        this.narration = narration;
       }
     );
   }

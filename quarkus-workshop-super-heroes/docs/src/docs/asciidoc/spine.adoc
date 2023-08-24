@@ -72,8 +72,10 @@ include::5a-contract-testing/pact.adoc[leveloffset=+1]
 include::5a-contract-testing/happy-path-consumer-tests.adoc[leveloffset=+2]
 include::5a-contract-testing/provider-tests.adoc[leveloffset=+2]
 include::5a-contract-testing/states.adoc[leveloffset=+2]
-
-
+<<<
+// Artificial Intelligence
+include::5b-ai/ai.adoc[leveloffset=+1]
+<<<
 // Messaging
 include::6-messaging/messaging.adoc[leveloffset=+1]
 include::6-messaging/messaging-sending-to-kafka.adoc[leveloffset=+2]

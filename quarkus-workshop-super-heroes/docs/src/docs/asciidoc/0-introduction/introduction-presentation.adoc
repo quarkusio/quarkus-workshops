@@ -26,8 +26,12 @@ You will be developing several microservices communicating either synchronously 
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
 * _Villain REST API_: A classical HTTP microservice exposing CRUD operations on Villains, stored in a PostgreSQL database
 * _Hero REST API_: A reactive HTTP microservice exposing CRUD operations on Heroes, stored in a Postgres database
+* _Narration REST API_: This microservice talks to OpenAI/AzureAI to generate a random narration of the fight.
 * _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random superhero and supervillain.
-Each fight is, then, stored in a PostgreSQL database. This microservice can be developed using both the classical (_imperative_) or reactive approach. Invocations to the hero and villain services are protected using resilience patterns (retry, timeout, circuit-breakers)
+It also invokes the Narration API to get a random narration of the fight.
+Each fight is, then, stored in a PostgreSQL database (not the narration).
+This microservice can be developed using both the classical (_imperative_) or reactive approach.
+Invocations to the hero, villain and narration services are protected using resilience patterns (retry, timeout, circuit-breakers)
 * _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
 It has an HTML + JQuery UI displaying all the statistics.
 * _Prometheus_ polls metrics from the three microservices Fight, Hero, and Villain.
@@ -39,6 +43,7 @@ include::{plantDir}/0-introduction-physical-architecture.puml[]
 
 The main UI allows you to pick up one random Hero and Villain by clicking on "New Fighters."
 Then it's just a matter of clicking on "Fight!" to get them to fight.
+If you click on "Narrate the Fight", you will have some AI-generated text describing the fight.
 The table at the bottom shows the list of the previous fights.
 
 image::angular-ui.png[role=half-size]
@@ -50,7 +55,7 @@ image::angular-ui-stats.png[role=half-size]
 == How Does This Workshop Work?
 
 You have this material in your hands (either electronically or printed), and you can now follow it step by step.
-The structure of this workshop is as follow :
+The structure of this workshop is as follows:
 
 * _Installing all the needed tools_:
 in this section, you will install all the tools and code to be able to develop, compile and execute our application
@@ -102,6 +107,7 @@ This workshop will make use of the following software, tools, frameworks that yo
 * GraalVM {graalvm-version}
 * Docker
 * cURL (or any other command line HTTP client)
+* OpenAI or AzureAI keys (optional, only if you want to use the narration feature)
 * Angular (optional, only if you are in a _frontend_ mood)
 
 We will also be using Maven {maven-version}, but there is no

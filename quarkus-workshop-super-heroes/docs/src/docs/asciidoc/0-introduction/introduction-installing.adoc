@@ -9,6 +9,8 @@ include::introduction-installing-graalvm.adoc[leveloffset=+1]
 
 include::introduction-installing-rancher.adoc[leveloffset=+1]
 
+include::introduction-installing-ai.adoc[leveloffset=+1]
+
 == Recap
 
 Before going further, make sure the following commands work on your machine.
@@ -25,6 +27,7 @@ kubectl version # If you used Rancher Desktop and plan to use Kubernetes
 endif::use-local-kubernetes[]
 ----
 
-We have not mentioned cURL up to now, because most modern operating systems ship
-with it pre-installed. If your system is missing cURL,
-the appendix includes xref:appendix-installing-curl[instructions for installing cURL].
+We have not mentioned cURL up to now, because most modern operating systems ship with it pre-installed.
+If your system is missing cURL, the appendix includes xref:appendix-installing-curl[instructions for installing cURL].
+
+And also make sure to have your OpenAI or Azure credentials ready if you want to develop the "Narration" microservice.
