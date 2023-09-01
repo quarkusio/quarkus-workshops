@@ -17,7 +17,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 public class NarrationResource {
 
     @Inject
-    NarrationService service
+    NarrationService service;
 
     @POST
     public Response narrate(Fight fight) throws Exception {

@@ -34,7 +34,7 @@ public class SemanticKernelNarrationService implements NarrationService {
     public String narrate(Fight fight) throws Exception {
 
         // Creates an Azure OpenAI client
-        OpenAIAsyncClient client = OpenAIClientProvider.getClient();
+        OpenAIAsyncClient client = getClient();
         // OpenAIAsyncClient client = OpenAIClientProvider.getClient();
 
         // Creates an instance of the TextCompletion service
@@ -76,14 +76,14 @@ public class SemanticKernelNarrationService implements NarrationService {
     }
 
     private OpenAIAsyncClient getClient() throws ConfigurationException {
-        String propertiesFile = "application.properties";
+        String propertiesFile = "conf.properties";
 
         try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(propertiesFile)) {
 
             Properties properties = new Properties();
             properties.load(is);
 
-            OpenAIClientProvider provider = new OpenAIClientProvider((Map) properties, ClientType.OPEN_AI);
+            OpenAIClientProvider provider = new OpenAIClientProvider((Map) properties, null);
 
             return provider.getAsyncClient();
         } catch (IOException e) {

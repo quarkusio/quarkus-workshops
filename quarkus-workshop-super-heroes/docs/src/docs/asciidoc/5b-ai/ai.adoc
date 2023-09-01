@@ -183,10 +183,10 @@ include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/wor
 ----
 --
 
-=== The Narration Resource
+=== The Narration REST Resource
 
-Unlike the `VillainResource`, the `HeroResource` uses the reactive development model.
-It returns asynchronous structures (`Uni`)footnote:[There is another structure `Multi` to represent asynchronous streams of items. We will see `Multi` examples later].
+The `NarrationResource` only has one HTTP POST method to create a new narration.
+Given a fight, it will invoke the `NarrationService` to return a fight narration.
 
 [example, role="cta"]
 --
@@ -198,11 +198,11 @@ include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/wor
 ----
 --
 
-== Semantic Kernel
-
-=== Semantic Kernel API in 2 minutes
-
 === The Semantic Kernel Narration service
+
+Now it's time to implement the `NarrationService` that will use the Semantic Kernel to generate the narration.
+First of all, let's create an interface that will be implemented by the `SemanticKernelNarrationService` but could also be implemented by other AI frameworks:
+Create the `io.quarkus.workshop.superheroes.narration.NarrationService` interface in the created project with the following content:
 
 [example, role="cta"]
 --
@@ -213,23 +213,42 @@ Open the `NarrationResource` and update the content to be:
 include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationService.java[]
 ----
 
+Then, create the `io.quarkus.workshop.superheroes.narration.SemanticKernelNarrationService` that implements the `NarrationService` interface.
+This class has the following methods:
+
+* `narrate`: the main method that will use the Semantic Kernel to generate the narration
+* `fallbackNarrate`: the fallback method that will be invoked if the `narrate` method fails (due to a timeout for example)
+* `getClient`: a method that returns the Semantic Kernel client configured by the `conf.properties` file
+
 [source,java]
 ----
 include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/SemanticKernelNarrationService.java[]
 ----
 --
 
-==== The Semantic Kernel Narration plugin (a.k.a. skill)
+=== The Narration skill
 
+With skills, you can encapsulate AI capabilities into a single unit of functionality.
+Semantic Kernel skills implement the https://platform.openai.com/docs/plugins/getting-started/plugin-manifest[OpenAI Plugin specification] also known as "skills".
+To narrate a fight, we need to create a `NarrateFight` function.
+For that, you need to create a set of directories unders `rest-narration/src/main/resources/NarrationSkill/NarrateFight`.
 
 [example, role="cta"]
 --
-Open the `NarrationResource` and update the content to be:
+Under the `NarrationSkill/NarrateFight` directory, create the following files:
+
+* `skprompt.txt`: the prompt that will be sent to OpenAI/AzureAI
+* `config.json`: the configuration of the skill
+
+Under `src/main/resources/NarrationSkill/NarrateFight/`, create the `skprompt.txt` file with the following content.
+Notice that the prompt uses expression language to get the fight data (e.g., `{{$winner_name}}`).
 
 [source,text]
 ----
 include::../../../../../super-heroes/rest-narration/src/main/resources/NarrationSkill/NarrateFight/skprompt.txt[]
 ----
+
+Under `src/main/resources/NarrationSkill/NarrateFight/`, create the `config.json` file with the following content:
 
 [source,json]
 ----
@@ -237,13 +256,14 @@ include::../../../../../super-heroes/rest-narration/src/main/resources/Narration
 ----
 --
 
-=== Configuring the access to OpenAI/Azure OpenAI
+=== Configuring OpenAI/AzureAI access
 
-Configuring the reactive access to the database is relatively similar to configuring the JDBC url.
+Configuring the OpenAI/AzureAI access is made thanks to the `conf.properties`.
+Depending if you have chosen OpenAI or AzureAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys:
 
 [example, role="cta"]
 --
-Create the `resources/conf.properties` file and add:
+If you use OpenAI, create the `rest-narration/src/main/resources/conf.properties` file and add the following configuration:
 
 [source,properties]
 ----
@@ -252,7 +272,16 @@ client.azureopenai.endpoint=
 client.azureopenai.deploymentname=
 ----
 
-We also set the port to be 8086 by adding the following configuration to the `application.properties` file:
+For AzureAI, use the following configuration in the `rest-narration/src/main/resources/conf.properties` file:
+
+[source,properties]
+----
+client.openai.key=
+client.openai.endpoint=
+client.openai.deploymentname=
+----
+
+We also set the port of the Narration microservice to be 8086 by adding the following configuration to the Quarkus `application.properties` file:
 
 [source,properties]
 ----
@@ -261,8 +290,7 @@ quarkus.http.port=8086
 ----
 --
 
-
-== Testing the Narration Microservice
+=== Testing the Narration Microservice
 
 Time for some tests!
 Open the `io.quarkus.workshop.superheroes.narration.NarrationResourceTest` class and copy the following content:
@@ -281,7 +309,7 @@ include::../../../../../super-heroes/rest-narration/src/test/java/io/quarkus/wor
 Make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
 --
 
-== Running the Narration Microservice
+=== Running the Narration Microservice
 
 Now that the tests are green, we are ready to run our Narration microservice.
 
@@ -289,12 +317,18 @@ Now that the tests are green, we are ready to run our Narration microservice.
 --
 
 Use `./mvnw quarkus:dev` to start it.
-Once the application is started, create a new narration with the following cUrl command:
+Once the Narration microservice is started, create a new narration with the following cUrl command:
 
 [source,shell]
 ----
 curl -X POST -d  '{"winnerName":"Super winner", "winnerLevel":42, "winnerPowers":"jumping", "loserName":"Super loser", "loserLevel":2, "loserPowers":"leaping", "winnerTeam":"heroes", "loserTeam":"villains" }'  -H "Content-Type: application/json" http://localhost:8086/api/narration -v
+----
 
+You should get something similar to the following response:
+
+[source,shell]
+----
+curl -X POST -d  '{"winnerName":"Super winner", "winnerLevel":42, "winnerPowers":"jumping", "loserName":"Super loser", "loserLevel":2, "loserPowers":"leaping", "winnerTeam":"heroes", "loserTeam":"villains" }'  -H "Content-Type: application/json" http://localhost:8086/api/narration -v
 < HTTP/1.1 201 Created
 < Content-Type: text/plain;charset=UTF-8
 
@@ -304,38 +338,9 @@ Despite Chewbacca's valiant efforts, it was clear that Vader was the superior fi
 ----
 --
 
-The cUrl command returns the location of the newly created hero.
-Take this URL and do an HTTP GET on it.
+The cUrl command returns the narration of the fight as `text/plain`.
 
-[NOTE]
-====
-The example shows a newly created Hero with id `952`.
-But this id could be different on your machine.
-Just make sure to use the correct id in the next command.
-====
-
-[source,shell]
-----
-curl http://localhost:8083/api/heroes/952 | jq
-
-{
-  "id": 952,
-  "name": "Super level",
-  "otherName": null,
-  "level": 2,
-  "picture": null,
-  "powers": "leaping"
-}
-----
-
-Remember that you can also check Swagger UI by going to the dev console: http://localhost:8083/q/dev.
-
-[example, role="cta"]
---
-
-Then, build the application using: `./mvnw package`, and run the application using `java -jar target/quarkus-app/quarkus-run.jar`.
-Open your browser and go to http://localhost:8083/api/heroes.
---
+Remember that you can also check Swagger UI by going to the dev console: http://localhost:8086/q/dev.
 
 == Invoking the Narration Microservice from the Fight Microservice
 
@@ -346,11 +351,15 @@ Now that we have a narration microservice up and running, we can invoke it from 
 include::{plantDir}/5a-ai-physical-architecture.puml[]
 ----
 
+=== Adding narration to the Fight Microservice
+
+We now need to add a new endpoint to the Fight microservice to invoke the Narration microservice.
+Because it uses a remote call, we need to use the `@RegisterRestClient` annotation to register the `NarrationProxy` as a REST client.
+
 [example, role="cta"]
 --
-
 Go back to the `io.quarkus.workshop.superheroes.fight.FightResource` class and add the new `narrateFight` method:
-/Users/agoncal/Documents/Code/Agoncal/quarkus-workshops/quarkus-workshop-super-heroes/
+
 [source,java,indent=0]
 ----
 include::../../../../../super-heroes/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tag=adocNarrate]
@@ -359,12 +368,12 @@ include::../../../../../super-heroes/rest-fights/src/main/java/io/quarkus/worksh
 The `FightResource` invokes a new method of the `FightService`.
 Add the following method to the `io.quarkus.workshop.superheroes.fight.FightService` class and make sure to inject the `NarrationProxy`:
 
-[source,java]
+[source,java,indent=0]
 ----
 include::../../../../../super-heroes/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocNarrate]
 ----
 
-
+Under the `client` package, where all the other proxies are already located, create a new `NarrationProxy` class:
 
 [source,java]
 ----
@@ -382,7 +391,6 @@ include::../../../../../super-heroes/rest-fights/src/main/resources/application.
 === Test and mock the Narration microservice invocation
 
 Like the other dependencies, the Narration microservice needs to be mocked so we can test the Fight microservice in isolation.
-
 
 [example, role="cta"]
 --
@@ -402,6 +410,15 @@ include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/worksh
 ----
 --
 
+Now execute `./mvnw test` and make sure that all the tests pass.
+
 == Running, Testing and Packaging the Application
+
+Time to run the entire application!
+For that, start all the microservices (Heroes, Villains, Fight and Narration) as well as the frontend.
+When all the microservices are started, access the frontend at http://localhost:8080 and click on the `Fight` button.
+The result of the fight is displayed, and below, you have a "Narrate the fight" button.
+Click on it, wait a few seconds (remember that the Narration microservice access a remote AI service that takes time) and the narration of the fight is displayed.
+Being _Generative AI_, you can click several times on the button and you will get different narrations.
 
 image::angular-ui.png[role=half-size]
