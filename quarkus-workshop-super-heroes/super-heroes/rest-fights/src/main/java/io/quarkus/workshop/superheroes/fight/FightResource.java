@@ -3,6 +3,7 @@ package io.quarkus.workshop.superheroes.fight;
 import jakarta.ws.rs.*;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -79,10 +80,12 @@ public class FightResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/hello")
+    @Tag(name = "hello")
     public String hello() {
         return "Hello Fight Resource";
     }
 
+    // tag::adocNarrate[]
     @POST
     @Path("/narrate")
     @Consumes(APPLICATION_JSON)
@@ -92,4 +95,5 @@ public class FightResource {
         return Response.status(Response.Status.CREATED).entity(narration).build();
 
     }
+    // end::adocNarrate[]
 }

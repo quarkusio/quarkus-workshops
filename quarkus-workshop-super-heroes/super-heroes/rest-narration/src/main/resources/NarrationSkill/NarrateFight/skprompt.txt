@@ -10,25 +10,25 @@ NO SEXISM, RACISM OR OTHER BIAS/BIGOTRY
 
 BE CREATIVE.
 
-HERE IS THE DATA YOU WILL USE FOR THE SUPER VILLAIN:
+HERE IS THE DATA YOU WILL USE FOR THE WINNER:
 
 +++++
-name:   {{$villain_name}}
-powers: {{$villain_powers}}
-level:  {{$villain_level}}
+name:   {{$winner_name}}
+powers: {{$winner_powers}}
+level:  {{$winner_level}}
 +++++
 
-HERE IS THE DATA YOU WILL USE FOR THE SUPER HERO:
+HERE IS THE DATA YOU WILL USE FOR THE LOSER:
 
 +++++
-name:   {{$hero_name}}
-powers: {{$hero_powers}}
-level:  {{$hero_level}}
+name:   {{$loser_name}}
+powers: {{$loser_powers}}
+level:  {{$loser_level}}
 +++++
 
 HERE IS THE DATA YOU WILL USE FOR THE FIGHT:
 
 +++++
-THE SUPER VILLAIN HAS WON THE FIGHT
+{{$winner_name}} WHO IS A {{$winner_team}} HAS WON THE FIGHT AGAINST {{$loser_name}} WHO IS A {{$loser_team}}.
 +++++
 

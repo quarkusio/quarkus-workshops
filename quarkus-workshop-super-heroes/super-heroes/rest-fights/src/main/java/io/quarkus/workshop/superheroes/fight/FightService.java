@@ -33,8 +33,11 @@ public class FightService {
     HeroProxy heroProxy;
     @RestClient
     VillainProxy villainProxy;
+
+    // tag::adocNarrate[]
     @RestClient
     NarrationProxy narrationProxy;
+    // end::adocNarrate[]
 
     private final Random random = new Random();
 
@@ -146,7 +149,10 @@ public class FightService {
         return fight;
     }
 
+    // tag::adocNarrate[]
+
     public String narrateFight(Fight fight) {
         return narrationProxy.narrate(fight);
     }
+    // end::adocNarrate[]
 }

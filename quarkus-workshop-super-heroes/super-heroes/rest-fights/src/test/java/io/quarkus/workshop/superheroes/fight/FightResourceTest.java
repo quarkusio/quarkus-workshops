@@ -194,6 +194,7 @@ public class FightResourceTest {
     }
     // end::shouldGetRandomFighters[]
 
+    // tag::adocNarrate[]
     @Test
     void shouldNarrate() {
         Fight fight = new Fight();
@@ -217,6 +218,7 @@ public class FightResourceTest {
             .then()
             .statusCode(CREATED.getStatusCode());
     }
+    // end::adocNarrate[]
 
     private TypeRef<List<Fight>> getFightTypeRef() {
         return new TypeRef<List<Fight>>() {

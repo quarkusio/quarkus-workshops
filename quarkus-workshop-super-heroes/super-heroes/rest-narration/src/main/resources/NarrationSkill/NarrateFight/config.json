@@ -18,7 +18,7 @@
       },
       {
         "name": "villain_powers",
-        "description": "The coma separated list of powers of the Super Villain",
+        "description": "The comma separated list of powers of the Super Villain",
         "defaultValue": "Accelerated Healing, Agility, Astral Projection, Cloaking, Danger Sense, Durability, Electrokinesis, Energy Blasts, Enhanced Hearing, Enhanced Senses, Force Fields, Hypnokinesis, Illusions, Intelligence, Jump, Light Control, Marksmanship, Precognition, Psionic Powers, Reflexes, Stealth, Super Speed, Telekinesis, Telepathy, The Force, Weapons Master"
       },
       {
@@ -33,7 +33,7 @@
       },
       {
         "name": "hero_powers",
-        "description": "The coma separated list of powers of the Super Hero",
+        "description": "The comma separated list of powers of the Super Hero",
         "defaultValue": "Agility, Longevity, Marksmanship, Natural Weapons, Stealth, Super Strength, Weapons Master"
       },
       {

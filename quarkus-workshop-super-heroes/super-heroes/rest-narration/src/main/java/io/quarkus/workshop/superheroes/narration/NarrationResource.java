@@ -4,14 +4,20 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+/**
+ * JAX-RS API endpoints with <code>/api/narration</code> as the base URI for all endpoints
+ */
 
 @Path("/api/narration")
 @Produces(MediaType.TEXT_PLAIN)
 @Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = "narration")
 public class NarrationResource {
 
     @Inject
-    NarrationService service;
+    NarrationService service
 
     @POST
     public Response narrate(Fight fight) throws Exception {
@@ -21,6 +27,7 @@ public class NarrationResource {
 
     @GET
     @Path("/hello")
+    @Tag(name = "hello")
     public String hello() {
         return "Hello Narration Resource";
     }

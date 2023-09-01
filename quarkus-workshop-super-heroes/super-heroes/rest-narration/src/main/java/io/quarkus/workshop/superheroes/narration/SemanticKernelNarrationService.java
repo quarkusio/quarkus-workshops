@@ -3,7 +3,9 @@ package io.quarkus.workshop.superheroes.narration;
 import com.azure.ai.openai.OpenAIAsyncClient;
 import com.microsoft.semantickernel.Kernel;
 import com.microsoft.semantickernel.SKBuilders;
+import com.microsoft.semantickernel.connectors.ai.openai.util.ClientType;
 import com.microsoft.semantickernel.connectors.ai.openai.util.OpenAIClientProvider;
+import com.microsoft.semantickernel.exceptions.ConfigurationException;
 import com.microsoft.semantickernel.orchestration.SKContext;
 import com.microsoft.semantickernel.skilldefinition.ReadOnlyFunctionCollection;
 import com.microsoft.semantickernel.textcompletion.CompletionSKFunction;
@@ -14,6 +16,11 @@ import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.jboss.logging.Logger;
 import reactor.core.publisher.Mono;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
 
 @ApplicationScoped
 public class SemanticKernelNarrationService implements NarrationService {
@@ -28,6 +35,7 @@ public class SemanticKernelNarrationService implements NarrationService {
 
         // Creates an Azure OpenAI client
         OpenAIAsyncClient client = OpenAIClientProvider.getClient();
+        // OpenAIAsyncClient client = OpenAIClientProvider.getClient();
 
         // Creates an instance of the TextCompletion service
         TextCompletion textCompletion = SKBuilders.chatCompletion().withOpenAIClient(client).setModelId("deploy-semantic-kernel").build();
@@ -41,12 +49,14 @@ public class SemanticKernelNarrationService implements NarrationService {
 
         // Ask for a Joke
         SKContext fightContext = SKBuilders.context().build();
-        fightContext.setVariable("villain_name", "Darth Vader");
-        fightContext.setVariable("villain_powers", "Accelerated Healing, Agility, Astral Projection, Cloaking, Danger Sense, Durability, Electrokinesis, Energy Blasts, Enhanced Hearing, Enhanced Senses, Force Fields, Hypnokinesis, Illusions, Intelligence, Jump, Light Control, Marksmanship, Precognition, Psionic Powers, Reflexes, Stealth, Super Speed, Telekinesis, Telepathy, The Force, Weapons Master");
-        fightContext.setVariable("villain_level", "13");
-        fightContext.setVariable("hero_name", "Chewbacca");
-        fightContext.setVariable("hero_powers", "Agility, Longevity, Marksmanship, Natural Weapons, Stealth, Super Strength, Weapons Master");
-        fightContext.setVariable("hero_level", "5");
+        fightContext.setVariable("winner_team", fight.winnerTeam);
+        fightContext.setVariable("winner_name", fight.winnerName);
+        fightContext.setVariable("winner_powers", fight.winnerPowers);
+        fightContext.setVariable("winner_level", String.valueOf(fight.winnerLevel));
+        fightContext.setVariable("loser_team", fight.loserTeam);
+        fightContext.setVariable("loser_name", fight.loserName);
+        fightContext.setVariable("loser_powers", fight.loserPowers);
+        fightContext.setVariable("loser_level", String.valueOf(fight.loserLevel));
         Mono<SKContext> result = fightFunction.invokeAsync(fightContext);
 
         String narration = result.block().getResult();
@@ -63,5 +73,21 @@ public class SemanticKernelNarrationService implements NarrationService {
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             """;
+    }
+
+    private OpenAIAsyncClient getClient() throws ConfigurationException {
+        String propertiesFile = "application.properties";
+
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(propertiesFile)) {
+
+            Properties properties = new Properties();
+            properties.load(is);
+
+            OpenAIClientProvider provider = new OpenAIClientProvider((Map) properties, ClientType.OPEN_AI);
+
+            return provider.getAsyncClient();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
