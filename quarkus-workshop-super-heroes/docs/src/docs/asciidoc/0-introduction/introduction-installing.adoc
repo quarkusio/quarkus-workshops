@@ -9,7 +9,9 @@ include::introduction-installing-graalvm.adoc[leveloffset=+1]
 
 include::introduction-installing-rancher.adoc[leveloffset=+1]
 
+ifdef::use-ai[]
 include::introduction-installing-ai.adoc[leveloffset=+1]
+endif::use-ai[]
 
 == Recap
 
@@ -30,4 +32,6 @@ endif::use-local-kubernetes[]
 We have not mentioned cURL up to now, because most modern operating systems ship with it pre-installed.
 If your system is missing cURL, the appendix includes xref:appendix-installing-curl[instructions for installing cURL].
 
+ifdef::use-ai[]
 And also make sure to have your OpenAI or Azure credentials ready if you want to develop the "Narration" microservice.
+endif::use-ai[]

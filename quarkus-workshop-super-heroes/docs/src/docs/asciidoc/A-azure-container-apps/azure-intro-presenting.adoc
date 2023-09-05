@@ -33,7 +33,12 @@ The main UI allows you to pick up one random Hero and Villain by clicking on "Ne
 Then it's just a matter of clicking on "Fight!" to get them to fight.
 The table at the bottom shows the list of the previous fights.
 
+ifdef::use-ai[]
+image::angular-ui-ai.png[]
+endif::use-ai[]
+ifndef::use-ai[]
 image::angular-ui.png[]
+endif::use-ai[]
 
 The Statistics UI shows the number of fights per hero and villain.
 

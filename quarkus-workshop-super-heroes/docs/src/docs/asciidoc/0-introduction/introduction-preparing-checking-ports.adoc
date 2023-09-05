@@ -14,7 +14,9 @@ lsof -i tcp:8082    # Fight REST API
 lsof -i tcp:8083    # Hero REST API
 lsof -i tcp:8084    # Villain REST API
 lsof -i tcp:8085    # Statistics REST API
+ifdef::use-ai[]
 lsof -i tcp:8086    # Narration REST API
+endif::use-ai[]
 lsof -i tcp:5432    # Postgres
 lsof -i tcp:9090    # Prometheus
 lsof -i tcp:2181    # Zookeeper

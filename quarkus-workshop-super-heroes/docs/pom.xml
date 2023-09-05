@@ -153,6 +153,7 @@
                                 <imagesdir>images</imagesdir>
                                 <use-windows>false</use-windows>
                                 <use-mac>false</use-mac>
+                                <use-ai>true</use-ai>
                             </attributes>
                         </configuration>
                     </execution>
@@ -168,6 +169,7 @@
                                 <imagesdir>images</imagesdir>
                                 <use-windows>false</use-windows>
                                 <use-linux>false</use-linux>
+                                <use-ai>true</use-ai>
                             </attributes>
                         </configuration>
                     </execution>
@@ -183,6 +185,7 @@
                                 <imagesdir>images</imagesdir>
                                 <use-mac>false</use-mac>
                                 <use-linux>false</use-linux>
+                                <use-ai>true</use-ai>
                             </attributes>
                         </configuration>
                     </execution>
