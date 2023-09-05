@@ -237,7 +237,7 @@ For that, you need to create a set of directories unders `rest-narration/src/mai
 --
 Under the `NarrationSkill/NarrateFight` directory, create the following files:
 
-* `skprompt.txt`: the prompt that will be sent to OpenAI/AzureAI
+* `skprompt.txt`: the prompt that will be sent to OpenAI/Azure OpenAI
 * `config.json`: the configuration of the skill
 
 Under `src/main/resources/NarrationSkill/NarrateFight/`, create the `skprompt.txt` file with the following content.
@@ -256,10 +256,10 @@ include::../../../../../super-heroes/rest-narration/src/main/resources/Narration
 ----
 --
 
-=== Configuring OpenAI/AzureAI access
+=== Configuring OpenAI/Azure OpenAI access
 
-Configuring the OpenAI/AzureAI access is made thanks to the `conf.properties`.
-Depending if you have chosen OpenAI or AzureAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys:
+Configuring the OpenAI/Azure OpenAI access is made thanks to the `conf.properties`.
+Depending if you have chosen OpenAI or Azure OpenAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys:
 
 [example, role="cta"]
 --
@@ -272,7 +272,7 @@ client.azureopenai.endpoint=
 client.azureopenai.deploymentname=
 ----
 
-For AzureAI, use the following configuration in the `rest-narration/src/main/resources/conf.properties` file:
+For Azure OpenAI, use the following configuration in the `rest-narration/src/main/resources/conf.properties` file:
 
 [source,properties]
 ----

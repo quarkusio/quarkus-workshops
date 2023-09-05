@@ -1,9 +1,11 @@
 [[introduction-installing-ai]]
 
-= OpenAI or AzureAI Subscriptions
+= OpenAI or Azure OpenAI Subscriptions
 
 The Narration microservice needs to access an AI service to generate the text narrating the fight.
-You can choose between OpenAI or AzureAI.
+You can choose between OpenAI or Azure OpenAI.
+Azure OpenAI, or "OpenAI on Azure" is a service that provides REST API access to OpenAI's models, including the GPT-4, GPT-3, Codex and Embeddings series.
+The difference between OpenAI and Azure OpenAI is that it runs on Azure global infrastructure, which meets your production needs for critical enterprise security, compliance, and regional availability.
 
 == OpenAI
 
@@ -16,14 +18,14 @@ TODO
 TODO
 TODO
 
-== AzureAI
+== Azure OpenAI
 
-If you already have an Azure subscription, you can use it to create an AzureAI resource.
-Otherwise, you can create a https://azure.microsoft.com/free[free Azure subscription] and use it to create an AzureAI resource.
-Then, you need to use the AzureAI service to generate the API key and endpoint URL.
+If you already have an Azure subscription, you can use it to create an Azure OpenAI resource.
+Otherwise, you can create a https://azure.microsoft.com/free[free Azure subscription] and use it to create an Azure OpenAI resource.
+Then, you need to use the Azure OpenAI service to generate the API key and endpoint URL.
 You can either do that using the https://portal.azure.com/[Azure Portal] or the https://learn.microsoft.com/cli/azure/[Azure CLI].
 
-The easiest being use the Azure CLI, we recommend that you https://learn.microsoft.com/cli/azure/install-azure-cli[install it] and use it to create the AzureAI resource and generate the API key and endpoint URL.
+The easiest being use the Azure CLI, we recommend that you https://learn.microsoft.com/cli/azure/install-azure-cli[install it] and use it to create the Azure OpenAI resource and generate the API key and endpoint URL.
 Once Azure CLI is installed and you have your Azure subscription, sign in to your Azure account:
 
 [source,shell]
@@ -44,14 +46,14 @@ az account show
 ----
 ====
 
-Then, execute the following command to create the AzureAI resources:
+Then, execute the following command to create the Azure OpenAI resources:
 
 [source,bash]
 ----
 include::../../../../../super-heroes/infrastructure/ai-azure-openai-create.sh[tags=adocSetup;!adocSkip]
 ----
 
-This script will create the AzureAI resource and deploy the model.
+This script will create the Azure OpenAI resource and deploy the model.
 Once the script has executed, you can use the following command to get the API key and endpoint URL.
 You will need these properties later one when you will configure the Narration microservice:
 
@@ -60,7 +62,7 @@ You will need these properties later one when you will configure the Narration m
 include::../../../../../super-heroes/infrastructure/ai-azure-openai-create.sh[tag=adocProperties]
 ----
 
-Once you've finished the workshop, remember to delete the AzureAI resources to avoid being charged for it:
+Once you've finished the workshop, remember to delete the Azure OpenAI resources to avoid being charged for it:
 
 [source,bash]
 ----

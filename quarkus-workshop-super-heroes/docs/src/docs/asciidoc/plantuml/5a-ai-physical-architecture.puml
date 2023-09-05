@@ -25,7 +25,7 @@ node "Narration" as narration {
     narrationQuarkus .up> sk
 }
 
-cloud "Open AI \n AzureAI" as openai
+cloud "Open AI \n Azure OpenAI" as openai
 
 node "Fight" as fight {
     agent "Quarkus" <<application>> as fightQuarkus

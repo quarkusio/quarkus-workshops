@@ -26,7 +26,7 @@ You will be developing several microservices communicating either synchronously 
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
 * _Villain REST API_: A classical HTTP microservice exposing CRUD operations on Villains, stored in a PostgreSQL database
 * _Hero REST API_: A reactive HTTP microservice exposing CRUD operations on Heroes, stored in a Postgres database
-* _Narration REST API_: This microservice talks to OpenAI/AzureAI to generate a random narration of the fight.
+* _Narration REST API_: This microservice talks to OpenAI/Azure OpenAI to generate a random narration of the fight.
 * _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random superhero and supervillain.
 It also invokes the Narration API to get a random narration of the fight.
 Each fight is, then, stored in a PostgreSQL database (not the narration).
@@ -107,7 +107,7 @@ This workshop will make use of the following software, tools, frameworks that yo
 * GraalVM {graalvm-version}
 * Docker
 * cURL (or any other command line HTTP client)
-* OpenAI or AzureAI keys (optional, only if you want to use the narration feature)
+* OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)
 * Angular (optional, only if you are in a _frontend_ mood)
 
 We will also be using Maven {maven-version}, but there is no

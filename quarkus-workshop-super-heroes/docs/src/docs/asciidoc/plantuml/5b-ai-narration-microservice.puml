@@ -9,7 +9,7 @@ node "Narration" as hero {
     narrationQuarkus .up> sk
 }
 
-cloud "Open AI \n AzureAI" as openai
+cloud "Open AI \n Azure OpenAI" as openai
 
 REST ()-- narrationQuarkus
 sk --> openai : HTTP
