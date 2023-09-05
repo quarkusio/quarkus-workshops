@@ -27,7 +27,6 @@ public class NarrationResource {
 
     @GET
     @Path("/hello")
-    @Tag(name = "hello")
     public String hello() {
         return "Hello Narration Resource";
     }
