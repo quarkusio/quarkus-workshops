@@ -7,16 +7,16 @@ You can choose between OpenAI or Azure OpenAI.
 Azure OpenAI, or "OpenAI on Azure" is a service that provides REST API access to OpenAI's models, including the GPT-4, GPT-3, Codex and Embeddings series.
 The difference between OpenAI and Azure OpenAI is that it runs on Azure global infrastructure, which meets your production needs for critical enterprise security, compliance, and regional availability.
 
-== OpenAI
-
-TODO
-TODO
-TODO
-TODO
-TODO
-TODO
-TODO
-TODO
+// == OpenAI
+//
+// TODO
+// TODO
+// TODO
+// TODO
+// TODO
+// TODO
+// TODO
+// TODO
 
 == Azure OpenAI
 
