@@ -47,7 +47,7 @@ public class SemanticKernelNarrationService implements NarrationService {
         ReadOnlyFunctionCollection skill = kernel.importSkillFromDirectory("NarrationSkill", "src/main/resources", "NarrationSkill");
         CompletionSKFunction fightFunction = skill.getFunction("NarrateFight", CompletionSKFunction.class);
 
-        // Ask for a Joke
+        // Ask to narrate a fight
         SKContext fightContext = SKBuilders.context().build();
         fightContext.setVariable("winner_team", fight.winnerTeam);
         fightContext.setVariable("winner_name", fight.winnerName);
