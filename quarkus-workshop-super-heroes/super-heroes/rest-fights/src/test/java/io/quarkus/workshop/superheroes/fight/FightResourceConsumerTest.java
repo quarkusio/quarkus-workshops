@@ -12,7 +12,6 @@ import io.quarkus.workshop.superheroes.fight.client.DefaultTestHero;
 import io.quarkus.workshop.superheroes.fight.client.DefaultTestVillain;
 import io.quarkus.workshop.superheroes.fight.client.Hero;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -39,7 +38,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
     // I don't like it but couldn't figure out any other way without using dynamic config
     port = "8093"
 )
-@Disabled("Pact tests are not working and I don't know why")
 public class FightResourceConsumerTest {
 
     private static final String HERO_API_BASE_URI = "/api/heroes";
