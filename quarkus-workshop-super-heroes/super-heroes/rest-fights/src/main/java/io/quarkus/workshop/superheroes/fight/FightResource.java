@@ -1,5 +1,7 @@
 package io.quarkus.workshop.superheroes.fight;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.ws.rs.*;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -88,10 +90,12 @@ public class FightResource {
     @POST
     @Path("/narrate")
     @Consumes(APPLICATION_JSON)
-    @Produces(TEXT_PLAIN)
+    @Produces(APPLICATION_JSON)
     public Response narrateFight(@Valid Fight fight) {
+        logger.debug("Narrate the fight " + fight);
         String narration = service.narrateFight(fight);
-        return Response.status(Response.Status.CREATED).entity(narration).build();
+        JsonObject jsonNarration = Json.createObjectBuilder().add("narration", narration).build();
+        return Response.status(Response.Status.CREATED).entity(jsonNarration).build();
 
     }
     // end::adocNarrate[]

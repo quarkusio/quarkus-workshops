@@ -33,7 +33,7 @@ export class FightService {
   public configuration = new Configuration();
 
   @Output() emitter = new EventEmitter<Fight>();
-  @Output() narrationEmitter = new EventEmitter<string>();
+  @Output() narrationEmitter = new EventEmitter<JSON>();
 
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
     if (basePath) {
@@ -188,7 +188,7 @@ export class FightService {
     this.emitter.emit(fight);
   }
 
-  public onNewFightNarration(narration: string) {
+  public onNewFightNarration(narration: JSON) {
     this.narrationEmitter.emit(narration);
   }
 
@@ -283,7 +283,7 @@ export class FightService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public apiNarrateFightPost(body: Fight, observe?: 'body', reportProgress?: boolean): Observable<string>;
+  public apiNarrateFightPost(body: Fight, observe?: 'body', reportProgress?: boolean): Observable<JSON>;
   public apiNarrateFightPost(body: Fight, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<URI>>;
   public apiNarrateFightPost(body: Fight, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<URI>>;
   public apiNarrateFightPost(body: Fight, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
@@ -296,7 +296,7 @@ export class FightService {
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
-      'text/plain'
+        'application/json'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
     if (httpHeaderAcceptSelected != undefined) {

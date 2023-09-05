@@ -328,7 +328,6 @@ You should get something similar to the following response:
 
 [source,shell]
 ----
-curl -X POST -d  '{"winnerName":"Super winner", "winnerLevel":42, "winnerPowers":"jumping", "loserName":"Super loser", "loserLevel":2, "loserPowers":"leaping", "winnerTeam":"heroes", "loserTeam":"villains" }'  -H "Content-Type: application/json" http://localhost:8086/api/narration -v
 < HTTP/1.1 201 Created
 < Content-Type: text/plain;charset=UTF-8
 
