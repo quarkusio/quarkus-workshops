@@ -22,7 +22,7 @@ Well, it's going to be a set of microservices:
 * Using Quarkus
 * Using HTTP and events (with Apache Kafka)
 * With some parts of the dark side of microservices (resilience, health, monitoring with Prometheus)
-* Use OpenAI to get some artificial intelligence
+* Use OpenAI to introduce some artificial intelligence
 * Answer the ultimate question: are super-heroes stronger than super-villains?
 
 This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows, OSX, or Linux laptop.
