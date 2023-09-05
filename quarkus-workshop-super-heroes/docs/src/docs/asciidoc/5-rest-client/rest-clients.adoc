@@ -191,7 +191,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/api/villains")
 @Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient
+@RegisterRestClient(configKey = "villain")
 public interface VillainProxy {
 
     @GET
@@ -222,20 +222,13 @@ The name of the property needs to follow a certain convention which is best disp
 
 [source,properties]
 ----
-io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/url=http://localhost:8083
-io.quarkus.workshop.superheroes.fight.client.HeroProxy/mp-rest/scope=jakarta.inject.Singleton
-io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/url=http://localhost:8084
-io.quarkus.workshop.superheroes.fight.client.VillainProxy/mp-rest/scope=jakarta.inject.Singleton
+quarkus.rest-client.hero.url=http://localhost:8083
+quarkus.rest-client.villain.url=http://localhost:8084
 ----
 --
 
 Having this configuration means that all requests performed using `HeroProxy` will use http://localhost:8083 as the base URL.
 Using this configuration, calling the `findRandomHero` method of `HeroProxy` would result in an HTTP GET request being made to http://localhost:8083/api/heroes/random.
-
-Having this configuration means that the default scope of `HeroProxy` will be `@Singleton`.
-Supported scope values are `@Singleton`, `@Dependent`, `@ApplicationScoped` and `@RequestScoped`.
-The default scope is `@Dependent`.
-The default scope can also be defined on the interface.
 
 Now, go back in the UI and refresh, you should see some pictures!
 
