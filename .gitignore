@@ -34,3 +34,7 @@ node/
 .classpath
 .settings
 .factorypath
+
+
+# Semantic Kernel
+conf.properties

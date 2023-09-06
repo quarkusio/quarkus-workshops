@@ -44,9 +44,10 @@ quarkus-workshop-super-heroes
 ++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
 ++ kubernetes              | All the files required to deploy on Kubernetes
 ++ load-super-heroes       | Stress tool loading heroes, villains and fights
-++ rest-fight              | REST API allowing super heroes to fight (you will create it)
-++ rest-hero               | Reactive REST API for CRUD operations on Heroes (you will create it)
-++ rest-villains            | REST API for CRUD operations on Villains (you will create it)
+++ rest-fights             | REST API allowing super heroes to fight (you will create it)
+++ rest-heroes             | Reactive REST API for CRUD operations on Heroes (you will create it)
+++ rest-narration          | REST API invoking an AI to narrate the fight (you will create it)
+++ rest-villains           | REST API for CRUD operations on Villains (you will create it)
 ++ ui-super-heroes         | Angular application so we can fight visually
 }
 }

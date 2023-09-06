@@ -1,10 +1,7 @@
 package io.quarkus.workshop.superheroes.fight;
 
 
-import io.quarkus.workshop.superheroes.fight.client.Hero;
-import io.quarkus.workshop.superheroes.fight.client.HeroProxy;
-import io.quarkus.workshop.superheroes.fight.client.Villain;
-import io.quarkus.workshop.superheroes.fight.client.VillainProxy;
+import io.quarkus.workshop.superheroes.fight.client.*;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -36,6 +33,11 @@ public class FightService {
     HeroProxy heroProxy;
     @RestClient
     VillainProxy villainProxy;
+
+    // tag::adocNarrate[]
+    @RestClient
+    NarrationProxy narrationProxy;
+    // end::adocNarrate[]
 
     private final Random random = new Random();
 
@@ -121,9 +123,11 @@ public class FightService {
         fight.winnerName = fighters.hero.name;
         fight.winnerPicture = fighters.hero.picture;
         fight.winnerLevel = fighters.hero.level;
+        fight.winnerPowers = fighters.hero.powers;
         fight.loserName = fighters.villain.name;
         fight.loserPicture = fighters.villain.picture;
         fight.loserLevel = fighters.villain.level;
+        fight.loserPowers = fighters.villain.powers;
         fight.winnerTeam = "heroes";
         fight.loserTeam = "villains";
         return fight;
@@ -135,12 +139,20 @@ public class FightService {
         fight.winnerName = fighters.villain.name;
         fight.winnerPicture = fighters.villain.picture;
         fight.winnerLevel = fighters.villain.level;
+        fight.winnerPowers = fighters.villain.powers;
         fight.loserName = fighters.hero.name;
         fight.loserPicture = fighters.hero.picture;
         fight.loserLevel = fighters.hero.level;
+        fight.loserPowers = fighters.hero.powers;
         fight.winnerTeam = "villains";
         fight.loserTeam = "heroes";
         return fight;
     }
 
+    // tag::adocNarrate[]
+
+    public String narrateFight(Fight fight) {
+        return narrationProxy.narrate(fight);
+    }
+    // end::adocNarrate[]
 }

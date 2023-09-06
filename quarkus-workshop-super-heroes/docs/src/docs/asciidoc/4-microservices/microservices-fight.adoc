@@ -140,11 +140,17 @@ public class Fight extends PanacheEntity {
     @NotNull
     public int winnerLevel;
     @NotNull
+    @Column(columnDefinition = "TEXT")
+    public String winnerPowers;
+    @NotNull
     public String winnerPicture;
     @NotNull
     public String loserName;
     @NotNull
     public int loserLevel;
+    @NotNull
+    @Column(columnDefinition = "TEXT")
+    public String loserPowers;
     @NotNull
     public String loserPicture;
     @NotNull
@@ -322,9 +328,11 @@ public class FightService {
         fight.winnerName = fighters.hero.name;
         fight.winnerPicture = fighters.hero.picture;
         fight.winnerLevel = fighters.hero.level;
+        fight.winnerPowers = fighters.hero.powers;
         fight.loserName = fighters.villain.name;
         fight.loserPicture = fighters.villain.picture;
         fight.loserLevel = fighters.villain.level;
+        fight.loserPowers = fighters.villain.powers;
         fight.winnerTeam = "heroes";
         fight.loserTeam = "villains";
         return fight;
@@ -336,9 +344,11 @@ public class FightService {
         fight.winnerName = fighters.villain.name;
         fight.winnerPicture = fighters.villain.picture;
         fight.winnerLevel = fighters.villain.level;
+        fight.winnerPowers = fighters.villain.powers;
         fight.loserName = fighters.hero.name;
         fight.loserPicture = fighters.hero.picture;
         fight.loserLevel = fighters.hero.level;
+        fight.loserPowers = fighters.hero.powers;
         fight.winnerTeam = "villains";
         fight.loserTeam = "heroes";
         return fight;
@@ -520,7 +530,7 @@ We need to test our REST API.
 
 For that, copy the following `FightResourceTest` class under the `src/test/java/io/quarkus/workshop/superheroes/fight` directory.
 
-[source]
+[source,java]
 ----
 package io.quarkus.workshop.superheroes.fight;
 
@@ -554,9 +564,11 @@ public class FightResourceTest {
     private static final String DEFAULT_WINNER_NAME = "Super Baguette";
     private static final String DEFAULT_WINNER_PICTURE = "super_baguette.png";
     private static final int DEFAULT_WINNER_LEVEL = 42;
+    private static final String DEFAULT_WINNER_POWERS = "Eats baguette in less than a second";
     private static final String DEFAULT_LOSER_NAME = "Super Chocolatine";
     private static final String DEFAULT_LOSER_PICTURE = "super_chocolatine.png";
     private static final int DEFAULT_LOSER_LEVEL = 6;
+    private static final String DEFAULT_LOSER_POWERS = "Transforms chocolatine into pain au chocolat";
 
     private static final int NB_FIGHTS = 3;
     private static String fightId;

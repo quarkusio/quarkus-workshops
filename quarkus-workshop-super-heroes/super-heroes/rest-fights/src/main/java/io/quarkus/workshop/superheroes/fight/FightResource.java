@@ -1,22 +1,21 @@
 package io.quarkus.workshop.superheroes.fight;
 
+import jakarta.ws.rs.*;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
 /**
  * JAX-RS API endpoints with {@code /api/fights} as the base URI for all endpoints
@@ -84,4 +83,17 @@ public class FightResource {
     public String hello() {
         return "Hello Fight Resource";
     }
+
+    // tag::adocNarrate[]
+    @POST
+    @Path("/narrate")
+    @Consumes(APPLICATION_JSON)
+    @Produces(TEXT_PLAIN)
+    public Response narrateFight(@Valid Fight fight) {
+        logger.debug("Narrate the fight " + fight);
+        String narration = service.narrateFight(fight);
+        return Response.status(Response.Status.CREATED).entity(narration).build();
+
+    }
+    // end::adocNarrate[]
 }

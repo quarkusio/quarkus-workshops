@@ -33,6 +33,7 @@ export class FightService {
   public configuration = new Configuration();
 
   @Output() emitter = new EventEmitter<Fight>();
+  @Output() narrationEmitter = new EventEmitter<string>();
 
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
     if (basePath) {
@@ -187,6 +188,10 @@ export class FightService {
     this.emitter.emit(fight);
   }
 
+  public onNewFightNarration(narration: string) {
+    this.narrationEmitter.emit(narration);
+  }
+
   /**
    * Creates a fight between two fighters
    *
@@ -271,4 +276,51 @@ export class FightService {
     );
   }
 
+  /**
+   * Creates a fight between two fighters
+   *
+   * @param body The two fighters fighting
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public apiNarrateFightPost(body: Fight, observe?: 'body', reportProgress?: boolean): Observable<string>;
+  public apiNarrateFightPost(body: Fight, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<URI>>;
+  public apiNarrateFightPost(body: Fight, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<URI>>;
+  public apiNarrateFightPost(body: Fight, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling apiNarrateFightPost.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'text/plain'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post(`${this.basePath}/api/fights/narrate`,
+      body,
+      {
+        responseType: 'text' as const,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    );
+  }
 }

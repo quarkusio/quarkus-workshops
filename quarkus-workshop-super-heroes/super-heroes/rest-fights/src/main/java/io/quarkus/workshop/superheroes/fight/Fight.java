@@ -1,6 +1,7 @@
 package io.quarkus.workshop.superheroes.fight;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Column;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import jakarta.persistence.Entity;
@@ -21,11 +22,17 @@ public class Fight extends PanacheEntity {
     @NotNull
     public int winnerLevel;
     @NotNull
+    @Column(columnDefinition = "TEXT")
+    public String winnerPowers;
+    @NotNull
     public String winnerPicture;
     @NotNull
     public String loserName;
     @NotNull
     public int loserLevel;
+    @NotNull
+    @Column(columnDefinition = "TEXT")
+    public String loserPowers;
     @NotNull
     public String loserPicture;
     @NotNull

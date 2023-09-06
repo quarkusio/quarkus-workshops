@@ -223,7 +223,13 @@ Once all the containers are started, you can:
 
 On http://localhost:8080 you should see the user interface, and you should be able to fight super heroes against super villains:
 
+ifdef::use-ai[]
+image::angular-ui-ai.png[]
+endif::use-ai[]
+ifndef::use-ai[]
 image::angular-ui.png[]
+endif::use-ai[]
+
 
 On http://localhost:8085 you should see the statistics of the fights.
 When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.

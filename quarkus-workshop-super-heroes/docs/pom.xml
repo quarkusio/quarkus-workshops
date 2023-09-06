@@ -125,6 +125,7 @@
                         <maven-version>3.8.x</maven-version>
                         <quarkus-version>3.3.0</quarkus-version>
                         <quarkus-pact-version>1.0.1.Final</quarkus-pact-version>
+                        <semantic-kernel-version>0.2.8-alpha</semantic-kernel-version>
                     </attributes>
                 </configuration>
                 <executions>
@@ -152,6 +153,7 @@
                                 <imagesdir>images</imagesdir>
                                 <use-windows>false</use-windows>
                                 <use-mac>false</use-mac>
+                                <use-ai>true</use-ai>
                             </attributes>
                         </configuration>
                     </execution>
@@ -167,6 +169,7 @@
                                 <imagesdir>images</imagesdir>
                                 <use-windows>false</use-windows>
                                 <use-linux>false</use-linux>
+                                <use-ai>true</use-ai>
                             </attributes>
                         </configuration>
                     </execution>
@@ -182,6 +185,7 @@
                                 <imagesdir>images</imagesdir>
                                 <use-mac>false</use-mac>
                                 <use-linux>false</use-linux>
+                                <use-ai>true</use-ai>
                             </attributes>
                         </configuration>
                     </execution>

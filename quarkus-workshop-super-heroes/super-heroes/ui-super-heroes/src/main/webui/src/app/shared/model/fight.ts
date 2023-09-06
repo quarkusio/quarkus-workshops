@@ -14,15 +14,15 @@
 /**
  * Each fight has a winner and a loser
  */
-// tag::adocModel[]
 export interface Fight {
     id?: number;
     fightDate: FightFightDate;
     winnerName: string;
     winnerLevel: number;
+    winnerPowers: string;
     winnerPicture: string;
     loserName: string;
     loserLevel: number;
+    loserPowers: string;
     loserPicture: string;
 }
-// end::adocModel[]
