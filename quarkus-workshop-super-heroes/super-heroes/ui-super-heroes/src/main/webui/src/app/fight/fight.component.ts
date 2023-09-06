@@ -10,7 +10,7 @@ export class FightComponent implements OnInit {
   fighters: Fighters = new Fighters();
   wonFight: Fight;
   winner: String;
-  narration: JSON;
+  narration: String;
 
   constructor(private fightService: FightService) {
   }
@@ -25,6 +25,7 @@ export class FightComponent implements OnInit {
         this.fightService.onNewFight(fight);
         this.winner = fight.winnerName;
         this.wonFight = fight;
+        this.narration = "";
       }
     );
   }
