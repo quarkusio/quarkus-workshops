@@ -1,0 +1,17 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+node "Narration" as hero {
+    agent "Quarkus" <<application>> as narrationQuarkus
+    hexagon "Semantic Kernel" as sk
+    narrationQuarkus .up> sk
+}
+
+cloud "Open AI \n Azure OpenAI" as openai
+
+REST ()-- narrationQuarkus
+sk --> openai : HTTP
+
+@enduml

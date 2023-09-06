@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+node "Super Hero UI" as ui {
+    agent "Quarkus" <<frontend>> as uiQuarkus
+}
+
+node "Hero" as hero {
+    agent "Quarkus (reactive)" <<application>> as heroQuarkus
+    database "Postgresql" as heroPostgresql
+    heroQuarkus .up> heroPostgresql
+}
+
+node "Villain" as villain {
+    agent "Quarkus (imperative)" <<application>> as villainQuarkus
+    database "Postgresql" as villainPostgresql
+    villainQuarkus .up> villainPostgresql
+}
+
+node "Narration" as narration {
+    agent "Quarkus" <<application>> as narrationQuarkus
+    hexagon "Semantic Kernel" as sk
+    narrationQuarkus .up> sk
+}
+
+cloud "Open AI \n Azure OpenAI" as openai
+
+node "Fight" as fight {
+    agent "Quarkus" <<application>> as fightQuarkus
+    database "Postgresql" as fightPostgresql
+    fightQuarkus .up> fightPostgresql
+}
+
+uiQuarkus --> fightQuarkus : HTTP
+fightQuarkus --> heroQuarkus : HTTP
+fightQuarkus --> villainQuarkus : HTTP
+fightQuarkus --> narrationQuarkus : HTTP
+
+sk --> openai : HTTP
+
+@enduml
