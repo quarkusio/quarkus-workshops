@@ -37,6 +37,10 @@
         <github.url>${github.repo}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
         <base.url>${env.BASE_URL}</base.url>
         <github.issue>${github.repo}/issues</github.issue>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+        <quarkus.platform.version>3.3.2</quarkus.platform.version>
+        <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -92,6 +96,13 @@
                         <artifactId>asciidoctorj-diagram</artifactId>
                         <version>${version.asciidoctorj.diagram}</version>
                     </dependency>
+                    <!-- This is here so that dependabot applies updates -->
+                    <dependency>
+                        <groupId>${quarkus.platform.group-id}</groupId>
+                        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                        <version>${quarkus.platform.version}</version>
+                        <type>pom</type>
+                    </dependency>
                 </dependencies>
                 <configuration>
                     <requires>
@@ -123,7 +134,8 @@
                         <jdk-version>${maven.compiler.source}</jdk-version>
                         <graalvm-version>22.3</graalvm-version>
                         <maven-version>3.8.x</maven-version>
-                        <quarkus-version>3.3.2</quarkus-version>
+                        <quarkus-version>${quarkus.platform.version}</quarkus-version>
+                        <compiler-version>${compiler-plugin.version}</compiler-version>
                         <quarkus-pact-version>1.0.1.Final</quarkus-pact-version>
                         <semantic-kernel-version>0.2.8-alpha</semantic-kernel-version>
                     </attributes>
@@ -203,6 +215,16 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- This is here so that dependabot manages it -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>
