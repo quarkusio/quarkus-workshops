@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/api/heroes")
 @Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient
+@RegisterRestClient(configKey = "hero")
 public interface HeroProxy {
 
     @GET

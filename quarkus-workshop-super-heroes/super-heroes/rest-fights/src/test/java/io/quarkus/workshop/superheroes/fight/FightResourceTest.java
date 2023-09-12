@@ -1,7 +1,12 @@
 package io.quarkus.workshop.superheroes.fight;
 
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
+import io.quarkus.workshop.superheroes.fight.client.DefaultTestHero;
+import io.quarkus.workshop.superheroes.fight.client.DefaultTestVillain;
+import io.quarkus.workshop.superheroes.fight.client.Hero;
+import io.quarkus.workshop.superheroes.fight.client.HeroProxy;
+import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.quarkus.workshop.superheroes.fight.client.*;
 import io.restassured.common.mapper.TypeRef;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -40,7 +45,7 @@ public class FightResourceTest {
     private static final int NB_FIGHTS = 3;
     private static String fightId;
 
-    @InjectMock(convertScopes = true)
+    @InjectMock
     @RestClient
     HeroProxy heroProxy;
 

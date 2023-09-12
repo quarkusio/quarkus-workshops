@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/api/villains")
 @Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient
+@RegisterRestClient(configKey = "villain")
 public interface VillainProxy {
 
     @GET
