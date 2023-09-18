@@ -22,7 +22,9 @@ Well, it's going to be a set of microservices:
 * Using Quarkus
 * Using HTTP and events (with Apache Kafka)
 * With some parts of the dark side of microservices (resilience, health, monitoring with Prometheus)
+ifdef::use-ai[]
 * Use OpenAI to introduce some artificial intelligence
+endif::use-ai[]
 * Answer the ultimate question: are super-heroes stronger than super-villains?
 
 This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows, OSX, or Linux laptop.
@@ -40,7 +42,9 @@ What you are going to learn:
 * How you test your microservice
 * How to build a reactive microservice, including reactive data access
 * How you improve the resilience of your service
+ifdef::use-ai[]
 * How to invoke OpenAI/Azure OpenAI APIs using Semantic Kernel
+endif::use-ai[]
 * How to build event-driven microservices with Kafka
 * How to build native executable
 * How to extend Quarkus with extensions
