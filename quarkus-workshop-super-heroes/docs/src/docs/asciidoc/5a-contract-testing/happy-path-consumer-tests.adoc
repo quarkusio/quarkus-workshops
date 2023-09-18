@@ -39,29 +39,22 @@ Create a class called `FightResourceConsumerTest.java`.
 [source,java]
 ----
 include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=skeleton]
+
+    @Test
+    void randomHeroFound() {
+    }
 }
 ----
 
 Here we are setting up a test to run with Pact and telling Pact what ports it should stand up the mock server on.
 We also define how the mock should behave.
 
-[WARNING]
-Because of the complexities of Kotlin classloading, Pact does not work with continuous testing.
-This limitation is resolved with Quarkus 3 and 1.x versions of the Pact extension.
-
-You will need to run tests the old-fashioned way, with
-
-[source,bash]
-----
-./mvnw verify
-----
+Run the build, using `./mvnw verify` or `./mvnw quarkus:dev`.
+You should see a failure. What's happened? The `randomHeroFound` test didn't have any assertions, so how could there be a failure? Pact is doing some validation for us. We have defined a mock, but nothing is exercising it. That might mean our code
+doesn't do what we think it does, so Pact flags it as an error.
 
 
-Run the build (using `./mvnw verify`).
-You should see a failure, because we have a mock, but nothing is using it.
-
-
-Add in a test method.
+Let's fill in the dummy test method with something more substantial. Replace the `randomHeroFound` test with the following.
 You'll notice this is very similar to the one in `FightResourceTest`; you could even copy and paste from that class.
 
 [source,java]
@@ -97,7 +90,5 @@ A more interesting contract test would exercise some of the more complex fights 
 Can you write one?
 (You might also need to define a villain pact.)
 
-If you get stuck, you can look at the consumer contract tests in the https://github.com/quarkusio/quarkus-super-heroes[Quarkus Superheroes sample]
-for inspiration. Have a look at https://github.com/quarkusio/quarkus-super-heroes/blob/main/rest-fights/src/test/java/io/quarkus/sample/superheroes/fight/service/FightServiceConsumerContractTests.java[FightServiceConsumerContractTests.java].
-The code in that application is similar to this workshop, but not exactly the same.
-
+If you get stuck, you can look at the consumer contract tests in the {github-raw}/super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[source repo]
+for inspiration.
