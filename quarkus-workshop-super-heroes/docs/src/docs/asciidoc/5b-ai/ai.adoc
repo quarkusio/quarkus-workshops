@@ -259,7 +259,7 @@ include::../../../../../super-heroes/rest-narration/src/main/resources/Narration
 === Configuring OpenAI/Azure OpenAI access
 
 Configuring the OpenAI/Azure OpenAI access is made thanks to the `conf.properties`.
-Depending if you have chosen OpenAI or Azure OpenAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys:
+Depending if you have previously chosen OpenAI or Azure OpenAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys:
 
 [example, role="cta"]
 --
@@ -267,9 +267,8 @@ If you use OpenAI, create the `rest-narration/src/main/resources/conf.properties
 
 [source,properties]
 ----
-client.azureopenai.key=
-client.azureopenai.endpoint=
-client.azureopenai.deploymentname=
+client.openai.key=
+client.openai.organizationid=
 ----
 
 For Azure OpenAI, use the following configuration in the `rest-narration/src/main/resources/conf.properties` file:
@@ -281,12 +280,13 @@ client.openai.endpoint=
 client.openai.deploymentname=
 ----
 
-We also set the port of the Narration microservice to be 8086 by adding the following configuration to the Quarkus `application.properties` file:
+We also set the port of the Narration microservice to be 8086.
+And to have a better view of what's happening behind the scene with Semantic Kernel, we can increase the log level.
+Just add the following configuration to the Quarkus `application.properties` file:
 
 [source,properties]
 ----
-## HTTP configuration
-quarkus.http.port=8086
+include::../../../../../super-heroes/rest-narration/src/main/resources/application.properties[]
 ----
 --
 
