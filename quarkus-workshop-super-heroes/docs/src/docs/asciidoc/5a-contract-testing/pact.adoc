@@ -3,7 +3,7 @@
 
 '''
 
-Let's look at where we've done so far.
+Let's look at what we've done so far.
 We have been doing some (some) test-driven development, we have several microservices, and they're even talking to each other.
 We have fault tolerance for when services go down.
 
