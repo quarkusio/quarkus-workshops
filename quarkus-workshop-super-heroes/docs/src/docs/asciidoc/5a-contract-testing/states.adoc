@@ -52,7 +52,7 @@ If the provider returns 204 rather than 404, the fallback logic on the provider 
 
 At this point, the consumer and provider need to have a conversation to decide whether the expectations or implementation should be updated.
 To make the fallback logic simplest, we will update the provider.
-Edit the `HeroResource` and update the `getRandomHere` method to explicitly handle the null case.
+Edit the `HeroResource` and update the `getRandomHero` method to explicitly handle the null case.
 
 
 [source,java]
