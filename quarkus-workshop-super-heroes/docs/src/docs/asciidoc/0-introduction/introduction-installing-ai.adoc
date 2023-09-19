@@ -7,20 +7,35 @@ You can choose between OpenAI or Azure OpenAI.
 Azure OpenAI, or "OpenAI on Azure" is a service that provides REST API access to OpenAI's models, including the GPT-4, GPT-3, Codex and Embeddings series.
 The difference between OpenAI and Azure OpenAI is that it runs on Azure global infrastructure, which meets your production needs for critical enterprise security, compliance, and regional availability.
 
-// == OpenAI
-//
-// TODO
-// TODO
-// TODO
-// TODO
-// TODO
-// TODO
-// TODO
-// TODO
+== OpenAI
+
+https://openai.com/[OpenAI] is a leading artificial intelligence research organization creating cutting-edge AI technologies.
+OpenAI offers a range of APIs that enable developers to integrate AI capabilities into their applications.
+Some of these APIs include:
+
+* GPT API: This API provides access to the GPT-3 and 4 language model
+* Codex API: This API provides access to the Codex model, which is a language model trained on a dataset of public code
+* DALL-E API: This API provides access to the DALL-E model, which is a language model trained on a dataset of text-image pairs
+
+We will be using the GPT-3 API to generate the text narrating the fight.
+
+First, you need to have an OpenAI subscription and then generate an API key.
+Then you need to ge the organisation id and key to invoke the API.
+To get the organisation id, go to https://platform.openai.com/account/org-settings[OpenAI organisation settings] and copy the organisation id.:
+
+image::openai-org.png[role=half-size]
+
+Then, to get the API key, go to https://platform.openai.com/account/api-keys[OpenAI API keys] and copy the API key:
+
+image::openai-key.png[role=half-size]
+
+You will have to https://platform.openai.com/account/billing/overview[credit your OpenAI account] with some money to be able to use the API.
+
+image::openai-fund.png[role=half-size]
 
 == Azure OpenAI
 
-If you already have an Azure subscription, you can use it to create an Azure OpenAI resource.
+If you already have an Azure subscription, you can use it to create an https://azure.microsoft.com/products/ai-services/openai-service[Azure OpenAI] resource.
 Otherwise, you can create a https://azure.microsoft.com/free[free Azure subscription] and use it to create an Azure OpenAI resource.
 Then, you need to use the Azure OpenAI service to generate the API key and endpoint URL.
 You can either do that using the https://portal.azure.com/[Azure Portal] or the https://learn.microsoft.com/cli/azure/[Azure CLI].
