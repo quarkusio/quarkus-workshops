@@ -56,9 +56,9 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
-include::../0-introduction/introduction-preparing-checking-ports.adoc[leveloffset=+1]
+include::../core-introduction/introduction-preparing-checking-ports.adoc[leveloffset=+1]
 
-include::../0-introduction/introduction-preparing-warming-docker.adoc[leveloffset=+1]
+include::../core-introduction/introduction-preparing-warming-docker.adoc[leveloffset=+1]
 
 == Setting Up Azure
 
