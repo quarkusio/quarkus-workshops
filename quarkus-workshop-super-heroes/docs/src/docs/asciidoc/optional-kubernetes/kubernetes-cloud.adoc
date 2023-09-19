@@ -1,5 +1,5 @@
 [[cloud]]
-= Containers & Cloud (optional)
+= Containers & Cloud
 
 '''
 
@@ -242,6 +242,7 @@ $ kubectl get kafka
 NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
 my-kafka   3
 ----
+--
 
 === Deploying the Hero & Villain microservices
 

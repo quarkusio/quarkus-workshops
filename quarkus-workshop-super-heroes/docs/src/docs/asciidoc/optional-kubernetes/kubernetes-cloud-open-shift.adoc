@@ -1,2 +1,2 @@
 [[cloud-open-shift]]
-= Open Shift
+= Deploying to Open Shift

@@ -28,7 +28,7 @@ The Angular application is in `src/main/webui`.
 Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
 All the Angular code (graphical components, model, services) is located under `src/main/webui/src/app`.
 
-== Running the Web Application
+=== Running the Web Application
 
 We don't need to worry too much about the Angular code.
 
@@ -78,7 +78,7 @@ because it's looking for its config on the wrong port.
 You might want to create a fuller Quarkus BFF for the UI, and use something like https://quarkus.io/guides/stork[Stork] for service discovery.
 However, that's beyond the scope of this workshop!
 
-== Live coding the UI
+=== Live coding the UI
 
 Live coding works for the javascript parts of the application, just as it does for the Java ones.
 
@@ -92,7 +92,8 @@ You can also change the javascript code.
 For example, try updating the text in `src/main/webui/src/app/app.component.ts`.
 --
 
-== Native compilation and Quinoa
+ifdef::use-native[]
+=== Native compilation and Quinoa
 
 You can compile the UI application as a native binary, just like other Quarkus applications.
 
@@ -109,3 +110,4 @@ Try compiling natively with
 The native compilation will take a while, but once it's done, the UI will start in around 0.02s.
 You can confirm it's working by checking http://localhost:8080.
 --
+endif::use-native[]

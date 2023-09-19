@@ -10,7 +10,6 @@ This workshop started making sure your development environment was ready to deve
 Then, there was some brief terminology to help you in understanding some concepts around Quarkus.
 If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, Cloud Native, or GraalVM, check the Quarkus website for more references.footnote:[Quarkus https://quarkus.io]
 
-
 Then, we focused on developing several isolated microservices.
 Some written in pure JAX-RS (such as the Villain) others with Reactive JAX-RS and Reactive Hibernate (such as the Hero).
 These microservices return data in JSON, validate data thanks to Bean Validation, store and retrieve data from a relational database with the help of JPA, Panache and JTA.
@@ -22,14 +21,24 @@ Then, we made the microservices communicate with each other in HTTP thanks to RE
 But HTTP-related technologies usually use synchronous communication and therefore need to deal with invocation failure.
 With Fault Tolerance, it was just a matter of using a few annotations and we can get some fallback when the communication fails.
 
+ifdef::use-messaging[]
 That's also why we introduced Reactive Messaging with Kafka: so we don't have a temporal coupling between the microservices.
+endif::use-messaging[]
 
-// TODO
-//With so many microservices, observability becomes mandatory.
-//That's why we added some health checks and metrics to our microservices.
-//
-//Then, comes production time.
-//We had to build executable JARs and executable binaries (thanks to GraalVM), and package our microservices into Docker containers.
+ifdef::use-ai[]
+We've also added some Artificial Intelligence.
+Thanks to Semantic Kernel, with a few lines of code, we allowed our Narration microservice to narrate the fight between a Super Hero and a Super Villain.
+endif::use-ai[]
+
+ifdef::use-observability[]
+With so many microservices, observability becomes mandatory.
+That's why we added some health checks and metrics to our microservices.
+endif::use-observability[]
+
+ifdef::use-native[]
+Then, comes production time.
+We had to build executable JARs and executable binaries (thanks to GraalVM), and package our microservices into Docker containers.
+endif::use-native[]
 
 Remember that you can find all the code for this fascicle at {github-url}.
 If some parts were not clear enough, or if you found something missing, a bug, or you just want to leave a note or suggestion, please use the GitHub issue tracker at {github-issue}.

@@ -12,7 +12,7 @@ Building containers locally and pushing them to Azure Container Registry can tak
 If you think you will not have enough time to complete the Workshop, you can skip the next optional sections and go straight to _Running remote containers_.
 ====
 
-== (Optional) Building containers
+== Building containers
 
 In this section, we are going to package our microservices into containers.
 In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
@@ -83,7 +83,7 @@ quarkus/rest-heroes             latest      154MB
 ----
 --
 
-== (Optional) Running local containers
+== Running local containers
 
 Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
 
@@ -135,7 +135,7 @@ docker compose -f docker-compose-app-local.yaml down
 ----
 --
 
-== (Optional) Pushing containers to Azure Container Registry
+== Pushing containers to Azure Container Registry
 
 Now that we have all our Docker containers running locally, let's push them to Azure Container Registry.
 

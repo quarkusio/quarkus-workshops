@@ -20,7 +20,7 @@ endif::give-solution[]
 == What Will You Be Developing?
 
 In this workshop, you will develop an application that allows superheroes to fight against supervillains.
-You will be developing several microservices communicating either synchronously via REST or asynchronously using Kafka:
+You will be developing several microservices communicating with each other:
 
 * _Super Hero UI_: an Angular application to pick up a random superhero, a random supervillain, and makes them fight.
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
@@ -36,9 +36,13 @@ endif::use-ai[]
 Each fight is, then, stored in a PostgreSQL database.
 This microservice can be developed using both the classical (_imperative_) or reactive approach.
 Invocations to the other microservices are protected using resilience patterns (retry, timeout, circuit-breakers)
+ifdef::use-messaging[]
 * _Statistics_: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
 It has an HTML + JQuery UI displaying all the statistics.
+endif::use-messaging[]
+ifdef::use-observability[]
 * _Prometheus_ polls metrics from the three microservices Fight, Hero, and Villain.
+endif::use-observability[]
 
 
 ifdef::use-ai[]
@@ -82,12 +86,34 @@ The structure of this workshop is as follows:
 
 * _Installing all the needed tools_:
 in this section, you will install all the tools and code to be able to develop, compile and execute our application
-* _Developing with Quarkus_:
+* _Developing microservices with Quarkus_:
 in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
+ifdef::use-ai[]
+* _Artificial Intelligence_:
+in this section, you will use OpenAI or Azure OpenAI to invoke an AI so you can generate a random narration of the fight
+endif::use-ai[]
+ifdef::use-messaging[]
+* _Event-driven and Reactive microservices_:
+in this section, you will create a reactive microservice and an event-driven microservice using Kafka
+endif::use-messaging[]
+ifdef::use-native[]
+* _Build native executables_:
+in this section, you will build native executables of all the microservices thanks to GraalVM
+endif::use-native[]
+ifdef::use-kubernetes[]
+* _Containers & Cloud_:
+in this section, you will create Docker images of all the microservices and deploy them to Kubernetes
+endif::use-kubernetes[]
+ifdef::use-observability[]
+* _Observability_:
+in this section, you will add metrics, health checks, and distributed tracing to your microservices
+endif::use-observability[]
+ifdef::use-extension[]
 * _Extending Quarkus_:
 in this section, you will create a Quarkus extension
+endif::use-extension[]
 
-If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the sections _Developing with Quarkus_ and _Extending Quarkus_, and start hacking some code and add-ons.
+If you already have the tools installed, skip the _Installing all the needed tools_ section and jump to the section _Developing with Quarkus_, and start hacking some code and add-ons.
 This "à la carte" mode lets you make the most of this 6-hour long hands-on lab.
 
 == What Do You Have to Do?

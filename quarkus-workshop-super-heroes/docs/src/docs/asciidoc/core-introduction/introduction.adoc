@@ -20,8 +20,11 @@ But, what are we going to build?
 Well, it's going to be a set of microservices:
 
 * Using Quarkus
-* Using HTTP and events (with Apache Kafka)
-* With some parts of the dark side of microservices (resilience, health, monitoring with Prometheus)
+* Using blocking and non-blocking HTTP invocations
+* With some parts of the dark side of microservices (resilience, health, etc)
+ifdef::use-messaging[]
+* Use a event-based architecture using Apache Kafka
+endif::use-messaging[]
 ifdef::use-ai[]
 * Use OpenAI to introduce some artificial intelligence
 endif::use-ai[]
@@ -45,9 +48,21 @@ What you are going to learn:
 ifdef::use-ai[]
 * How to invoke OpenAI/Azure OpenAI APIs using Semantic Kernel
 endif::use-ai[]
+ifdef::use-messaging[]
 * How to build event-driven microservices with Kafka
+endif::use-messaging[]
+ifdef::use-native[]
 * How to build native executable
+endif::use-native[]
+ifdef::use-kubernetes[]
+* How to deploy the microservices to Kubernetes
+endif::use-kubernetes[]
+ifdef::use-observability[]
+* How to monitor your microservices with Prometheus
+endif::use-observability[]
+ifdef::use-extension[]
 * How to extend Quarkus with extensions
+endif::use-extension[]
 * And much more!
 
 Ready? Here we go!
