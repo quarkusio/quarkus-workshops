@@ -29,79 +29,79 @@ Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; G
 image::quarkus-logo.png[]
 
 // Introduction
-include::0-introduction/introduction.adoc[leveloffset=+1]
-include::0-introduction/introduction-presentation.adoc[leveloffset=+2]
-include::0-introduction/introduction-installing.adoc[leveloffset=+2]
-include::0-introduction/introduction-preparing.adoc[leveloffset=+2]
+include::core-introduction/introduction.adoc[leveloffset=+1]
+include::core-introduction/introduction-presentation.adoc[leveloffset=+2]
+include::core-introduction/introduction-installing.adoc[leveloffset=+2]
+include::core-introduction/introduction-preparing.adoc[leveloffset=+2]
 <<<
 // REST API
-include::1-rest/rest.adoc[leveloffset=+1]
-include::1-rest/rest-bootstrapping.adoc[leveloffset=+2]
-include::1-rest/rest-orm.adoc[leveloffset=+2]
-include::1-rest/rest-configuration.adoc[leveloffset=+2]
-include::1-rest/rest-openapi.adoc[leveloffset=+2]
+include::core-rest/rest.adoc[leveloffset=+1]
+include::core-rest/rest-bootstrapping.adoc[leveloffset=+2]
+include::core-rest/rest-orm.adoc[leveloffset=+2]
+include::core-rest/rest-configuration.adoc[leveloffset=+2]
+include::core-rest/rest-openapi.adoc[leveloffset=+2]
 <<<
 // Quarkus
-include::2-quarkus/quarkus.adoc[leveloffset=+1]
-include::2-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
-include::2-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
-include::2-quarkus/quarkus-profile.adoc[leveloffset=+2]
-include::2-quarkus/quarkus-native.adoc[leveloffset=+2]
-include::2-quarkus/quarkus-kubernetes.adoc[leveloffset=+2]
+include::core-quarkus/quarkus.adoc[leveloffset=+1]
+include::core-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
+include::core-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
+include::core-quarkus/quarkus-profile.adoc[leveloffset=+2]
+include::core-quarkus/quarkus-native.adoc[leveloffset=+2]
+include::core-quarkus/quarkus-kubernetes.adoc[leveloffset=+2]
 <<<
 // Reactive
-include::3-reactive/reactive.adoc[leveloffset=+1]
+include::core-reactive/reactive.adoc[leveloffset=+1]
 <<<
 // Microservices
-include::4-microservices/microservices.adoc[leveloffset=+1]
-include::4-microservices/microservices-fight.adoc[leveloffset=+2]
-include::4-microservices/microservices-ui.adoc[leveloffset=+2]
-include::4-microservices/microservices-cors.adoc[leveloffset=+2]
+include::core-microservices/microservices.adoc[leveloffset=+1]
+include::core-microservices/microservices-fight.adoc[leveloffset=+2]
+include::core-microservices/microservices-ui.adoc[leveloffset=+2]
+include::core-microservices/microservices-cors.adoc[leveloffset=+2]
 <<<
 // REST Clients and Fault Tolerance
-include::5-rest-client/rest-client.adoc[leveloffset=+1]
-include::5-rest-client/rest-clients.adoc[leveloffset=+2]
-include::5-rest-client/fallbacks.adoc[leveloffset=+2]
-include::5-rest-client/timeout.adoc[leveloffset=+2]
+include::core-rest-client/rest-client.adoc[leveloffset=+1]
+include::core-rest-client/rest-clients.adoc[leveloffset=+2]
+include::core-rest-client/rest-client-fallbacks.adoc[leveloffset=+2]
+include::core-rest-client/rest-client-timeout.adoc[leveloffset=+2]
 <<<
 // Contract testing
-include::5a-contract-testing/pact.adoc[leveloffset=+1]
-include::5a-contract-testing/happy-path-consumer-tests.adoc[leveloffset=+2]
-include::5a-contract-testing/provider-tests.adoc[leveloffset=+2]
-include::5a-contract-testing/states.adoc[leveloffset=+2]
+include::optional-contract-testing/contract-testing-pact.adoc[leveloffset=+1]
+include::optional-contract-testing/contract-testing-happy-path-consumer-tests.adoc[leveloffset=+2]
+include::optional-contract-testing/contract-testing-provider-tests.adoc[leveloffset=+2]
+include::optional-contract-testing/contract-testing-states.adoc[leveloffset=+2]
 
 ifdef::use-ai[]
 <<<
 // Artificial Intelligence
-include::5b-ai/ai.adoc[leveloffset=+1]
+include::optional-ai/ai.adoc[leveloffset=+1]
 <<<
 endif::use-ai[]
 
 // Messaging
-include::6-messaging/messaging.adoc[leveloffset=+1]
-include::6-messaging/messaging-sending-to-kafka.adoc[leveloffset=+2]
-include::6-messaging/messaging-receiving-from-kafka.adoc[leveloffset=+2]
-include::6-messaging/messaging-websocket.adoc[leveloffset=+2]
-include::6-messaging/messaging-conclusion.adoc[leveloffset=+2]
+include::optional-messaging/messaging.adoc[leveloffset=+1]
+include::optional-messaging/messaging-sending-to-kafka.adoc[leveloffset=+2]
+include::optional-messaging/messaging-receiving-from-kafka.adoc[leveloffset=+2]
+include::optional-messaging/messaging-websocket.adoc[leveloffset=+2]
+include::optional-messaging/messaging-conclusion.adoc[leveloffset=+2]
 <<<
 // Observability
-include::7-observability/observability.adoc[leveloffset=+1]
-include::7-observability/observability-healthcheck.adoc[leveloffset=+2]
+include::optional-observability/observability.adoc[leveloffset=+1]
+include::optional-observability/observability-healthcheck.adoc[leveloffset=+2]
 // TODO Metrics will need advanced edits as it should use micrometer
 //include::7-observability/observability-metrics.adoc[leveloffset=+2]
 //include::7-observability/observability-load.adoc[leveloffset=+2]
 //include::7-observability/observability-prometheus.adoc[leveloffset=+2]
 
 // Extension
-include::8-quarkus-extension/extension.adoc[leveloffset=+1]
+include::optional-quarkus-extension/quarkus-extension.adoc[leveloffset=+1]
 
 // Cloud - TODO This section needs to be rewritten completely
-//include::cloud.adoc[leveloffset=+1]
+//include::kubernetes-cloud.adoc[leveloffset=+1]
 
 // Conclusion
-include::10-conclusion/conclusion.adoc[leveloffset=+1]
-include::10-conclusion/conclusion-references.adoc[leveloffset=+2]
+include::core-conclusion/conclusion.adoc[leveloffset=+1]
+include::core-conclusion/conclusion-references.adoc[leveloffset=+2]
 
 <<<
 // Extra content
-include::B-extended-prereqs/appendix.adoc[leveloffset=+2]
+include::core-appendix/appendix.adoc[leveloffset=+2]

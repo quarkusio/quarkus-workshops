@@ -57,4 +57,4 @@ New revisions are automatically created and are valuable for HTTP traffic redire
 
 image::azure-aca-concepts.png[]
 
-include::../2-quarkus/quarkus-definition.adoc[leveloffset=+1]
+include::../core-quarkus/quarkus-definition.adoc[leveloffset=+1]
