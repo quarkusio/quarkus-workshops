@@ -6,7 +6,7 @@ echo "----------------------------------"
 PROJECT="<give-your-project-a-name>"
 RESOURCE_GROUP="rg-$PROJECT"
 COGNITIVE_SERVICE="cognit-$PROJECT"
-COGNITIVE_DEPLOYMENT="deploy-$PROJECT"
+COGNITIVE_DEPLOYMENT="gpt-3.5-turbo"
 LOCATION="eastus"
 TAG="$PROJECT"
 
