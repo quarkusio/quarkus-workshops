@@ -12,7 +12,9 @@ In this chapter, you are going to see:
 * The Quarkus build process, in other words, the _secret sauce number 1_
 * The Quarkus reactive nature, in other words, the _secret sauce number 2_
 * Some Quarkus features such as the application lifecycle support
+ifdef::use-native[]
 * How you can use Quarkus to generate native executable
+endif::use-native[]
 
 include::quarkus-definition.adoc[leveloffset=+1]
 

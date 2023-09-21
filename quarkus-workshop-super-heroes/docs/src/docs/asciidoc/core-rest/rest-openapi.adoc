@@ -383,7 +383,6 @@ If you go back to the `http://localhost:8084/q/openapi` endpoint you will see th
 
 [source,yaml,subs="attributes+"]
 ----
----
 openapi: 3.0.3
 info:
   title: Villain API

@@ -183,7 +183,7 @@ Because we defined our health check to be a liveness procedure (with `@Liveness`
 //
 //[source]
 //----
-//include::{github-raw}/super-heroes/rest-hero/src/main/java/io/quarkus/workshop/superheroes/hero/health/DatabaseConnectionHealthCheck.java[tags=adocDatabaseConnection]
+//include::{github-raw}/super-heroes/rest-heroes/src/main/java/io/quarkus/workshop/superheroes/hero/health/DatabaseConnectionHealthCheck.java[tags=adocDatabaseConnection]
 //----
 //
 //If you now rerun the health check at http://localhost:8083/q/health/live the checks array will contain only the previously defined `PingHeroResourceHealthCheck` as it is the only check defined with the `@Liveness` qualifier.
@@ -217,7 +217,7 @@ Because we defined our health check to be a liveness procedure (with `@Liveness`
 //
 //[source,indent=0]
 //----
-//include::{github-raw}/super-heroes/rest-hero/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocHealth]
+//include::{github-raw}/super-heroes/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocHealth]
 //----
 
 [NOTE]

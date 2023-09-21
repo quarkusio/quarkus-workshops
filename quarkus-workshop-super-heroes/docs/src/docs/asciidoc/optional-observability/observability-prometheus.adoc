@@ -53,7 +53,7 @@ This will fetch the values from our metric showing the number of checks performe
 image::fault-tolerance-prometheus-3.png[role=half-size]
 --
 
-include::common-solution.adoc[]
+include::../common-solution.adoc[]
 
 [NOTE]
 ====

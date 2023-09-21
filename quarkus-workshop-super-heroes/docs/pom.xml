@@ -166,6 +166,12 @@
                                 <use-windows>false</use-windows>
                                 <use-mac>false</use-mac>
                                 <use-ai>true</use-ai>
+                                <use-contract-testing>false</use-contract-testing>
+                                <use-extension>false</use-extension>
+                                <use-kubernetes>false</use-kubernetes>
+                                <use-messaging>false</use-messaging>
+                                <use-native>false</use-native>
+                                <use-observability>false</use-observability>
                             </attributes>
                         </configuration>
                     </execution>
@@ -182,6 +188,12 @@
                                 <use-windows>false</use-windows>
                                 <use-linux>false</use-linux>
                                 <use-ai>true</use-ai>
+                                <use-contract-testing>false</use-contract-testing>
+                                <use-extension>false</use-extension>
+                                <use-kubernetes>false</use-kubernetes>
+                                <use-messaging>false</use-messaging>
+                                <use-native>false</use-native>
+                                <use-observability>false</use-observability>
                             </attributes>
                         </configuration>
                     </execution>
@@ -198,6 +210,12 @@
                                 <use-mac>false</use-mac>
                                 <use-linux>false</use-linux>
                                 <use-ai>true</use-ai>
+                                <use-contract-testing>false</use-contract-testing>
+                                <use-extension>false</use-extension>
+                                <use-kubernetes>false</use-kubernetes>
+                                <use-messaging>false</use-messaging>
+                                <use-native>false</use-native>
+                                <use-observability>false</use-observability>
                             </attributes>
                         </configuration>
                     </execution>

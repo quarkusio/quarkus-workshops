@@ -14,19 +14,31 @@ Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; G
 :toc:
 :toclevels: 2
 :toc-title: Contents
+// Front Cover Image
+:front-cover-image: image:quarkus-logo.png[]
 // Images
 :full-width: role=full-width
 :half-width: role=half-width
 :half-size: role=half-size
 // Conditional includes - can be overridden in the build to generate tailored docs
-:use-mac: true
-:use-linux: true
-:use-windows: true
-//:use-local-kubernetes: true
-:front-cover-image: image:quarkus-logo.png[]
+:use-mac:
+:use-linux:
+:use-windows:
+// :use-ai:
+// :use-contract-testing:
+// :use-extension:
+// :use-kubernetes:
+// :use-messaging:
+// :use-native:
+// :use-observability:
 // /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
 
 image::quarkus-logo.png[]
+
+
+// ====================================================
+// ====================== CORE ========================
+// ====================================================
 
 // Introduction
 include::core-introduction/introduction.adoc[leveloffset=+1]
@@ -34,6 +46,7 @@ include::core-introduction/introduction-presentation.adoc[leveloffset=+2]
 include::core-introduction/introduction-installing.adoc[leveloffset=+2]
 include::core-introduction/introduction-preparing.adoc[leveloffset=+2]
 <<<
+
 // REST API
 include::core-rest/rest.adoc[leveloffset=+1]
 include::core-rest/rest-bootstrapping.adoc[leveloffset=+2]
@@ -41,67 +54,103 @@ include::core-rest/rest-orm.adoc[leveloffset=+2]
 include::core-rest/rest-configuration.adoc[leveloffset=+2]
 include::core-rest/rest-openapi.adoc[leveloffset=+2]
 <<<
+
 // Quarkus
 include::core-quarkus/quarkus.adoc[leveloffset=+1]
 include::core-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
 include::core-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
 include::core-quarkus/quarkus-profile.adoc[leveloffset=+2]
+ifdef::use-native[]
 include::core-quarkus/quarkus-native.adoc[leveloffset=+2]
+endif::use-native[]
+ifdef::use-kubernetes[]
 include::core-quarkus/quarkus-kubernetes.adoc[leveloffset=+2]
+endif::use-kubernetes[]
 <<<
+
 // Reactive
 include::core-reactive/reactive.adoc[leveloffset=+1]
 <<<
+
 // Microservices
 include::core-microservices/microservices.adoc[leveloffset=+1]
 include::core-microservices/microservices-fight.adoc[leveloffset=+2]
-include::core-microservices/microservices-ui.adoc[leveloffset=+2]
-include::core-microservices/microservices-cors.adoc[leveloffset=+2]
 <<<
+
+// User Interface
+include::core-ui/ui.adoc[leveloffset=+1]
+include::core-ui/ui-cors.adoc[leveloffset=+2]
+<<<
+
 // REST Clients and Fault Tolerance
 include::core-rest-client/rest-client.adoc[leveloffset=+1]
 include::core-rest-client/rest-clients.adoc[leveloffset=+2]
 include::core-rest-client/rest-client-fallbacks.adoc[leveloffset=+2]
 include::core-rest-client/rest-client-timeout.adoc[leveloffset=+2]
 <<<
+
+
+// ====================================================
+// ==================== OPTIONAL ======================
+// ====================================================
+
 // Contract testing
+ifdef::use-contract-testing[]
 include::optional-contract-testing/contract-testing-pact.adoc[leveloffset=+1]
 include::optional-contract-testing/contract-testing-happy-path-consumer-tests.adoc[leveloffset=+2]
 include::optional-contract-testing/contract-testing-provider-tests.adoc[leveloffset=+2]
 include::optional-contract-testing/contract-testing-states.adoc[leveloffset=+2]
-
-ifdef::use-ai[]
 <<<
+endif::use-contract-testing[]
+
 // Artificial Intelligence
+ifdef::use-ai[]
 include::optional-ai/ai.adoc[leveloffset=+1]
 <<<
 endif::use-ai[]
 
 // Messaging
+ifdef::use-messaging[]
 include::optional-messaging/messaging.adoc[leveloffset=+1]
 include::optional-messaging/messaging-sending-to-kafka.adoc[leveloffset=+2]
 include::optional-messaging/messaging-receiving-from-kafka.adoc[leveloffset=+2]
 include::optional-messaging/messaging-websocket.adoc[leveloffset=+2]
 include::optional-messaging/messaging-conclusion.adoc[leveloffset=+2]
 <<<
+endif::use-messaging[]
+
 // Observability
+ifdef::use-observability[]
 include::optional-observability/observability.adoc[leveloffset=+1]
 include::optional-observability/observability-healthcheck.adoc[leveloffset=+2]
-// TODO Metrics will need advanced edits as it should use micrometer
-//include::7-observability/observability-metrics.adoc[leveloffset=+2]
-//include::7-observability/observability-load.adoc[leveloffset=+2]
-//include::7-observability/observability-prometheus.adoc[leveloffset=+2]
+include::optional-observability/observability-metrics.adoc[leveloffset=+2]
+include::optional-observability/observability-load.adoc[leveloffset=+2]
+include::optional-observability/observability-prometheus.adoc[leveloffset=+2]
+<<<
+endif::use-observability[]
 
 // Extension
+ifdef::use-extension[]
 include::optional-quarkus-extension/quarkus-extension.adoc[leveloffset=+1]
+<<<
+endif::use-extension[]
 
-// Cloud - TODO This section needs to be rewritten completely
-//include::kubernetes-cloud.adoc[leveloffset=+1]
+// Kubernetes
+ifdef::use-kubernetes[]
+include::optional-kubernetes/kubernetes-cloud.adoc[leveloffset=+1]
+include::optional-kubernetes/kubernetes-cloud-open-shift.adoc[leveloffset=+2]
+<<<
+endif::use-kubernetes[]
+
+
+// ====================================================
+// ====================== CORE ========================
+// ====================================================
 
 // Conclusion
 include::core-conclusion/conclusion.adoc[leveloffset=+1]
 include::core-conclusion/conclusion-references.adoc[leveloffset=+2]
-
 <<<
-// Extra content
-include::core-appendix/appendix.adoc[leveloffset=+2]
+
+// Appendix
+include::core-appendix/appendix.adoc[leveloffset=+1]

@@ -802,7 +802,7 @@ We configure the access to the database, and force the data initialization (whic
 === Running the Infrastructure
 
 Before going further, be sure to run the infrastructure.
-To execute this service, you need a database (and later on we will need Prometheus and Kafka).
+To execute this service, you need a database.
 Let's use Docker and docker compose to ease the installation of such infrastructure.
 
 You should already have installed the infrastructure into the `infrastructure` directory.
