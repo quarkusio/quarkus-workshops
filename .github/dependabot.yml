@@ -1,10 +1,10 @@
 version: 2
 updates:
   - package-ecosystem: maven
-    directory: /
+    directory: /quarkus-workshop-super-heroes
     open-pull-requests-limit: 40
     schedule:
-      interval: weekly
+      interval: daily
     labels:
       - "version-upgrade"
     pull-request-branch-name:
