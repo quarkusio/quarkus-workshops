@@ -26,7 +26,7 @@
     <name>Quarkus Workshop :: Docs</name>
 
     <properties>
-        <version.asciidoctor.maven.plugin>2.2.2</version.asciidoctor.maven.plugin>
+        <version.asciidoctor.maven.plugin>2.2.4</version.asciidoctor.maven.plugin>
         <version.jruby>9.2.17.0</version.jruby>
         <version.asciidoctorj>2.5.3</version.asciidoctorj>
         <version.asciidoctorj.pdf>1.6.2</version.asciidoctorj.pdf>
