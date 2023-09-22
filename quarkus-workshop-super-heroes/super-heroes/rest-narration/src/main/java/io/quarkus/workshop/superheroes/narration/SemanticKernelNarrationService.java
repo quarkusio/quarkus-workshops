@@ -35,16 +35,15 @@ public class SemanticKernelNarrationService implements NarrationService {
 
         // Creates an Azure OpenAI client
         OpenAIAsyncClient client = getClient();
-        // OpenAIAsyncClient client = OpenAIClientProvider.getClient();
 
         // Creates an instance of the TextCompletion service
-        TextCompletion textCompletion = SKBuilders.chatCompletion().withOpenAIClient(client).setModelId("gpt-3.5-turbo").build();
+        TextCompletion textCompletion = SKBuilders.chatCompletion().withOpenAIClient(client).withModelId("gpt-3.5-turbo").build();
 
         // Instantiates the Kernel
         Kernel kernel = SKBuilders.kernel().withDefaultAIService(textCompletion).build();
 
         // Registers skills
-        ReadOnlyFunctionCollection skill = kernel.importSkillFromDirectory("NarrationSkill", "src/main/resources", "NarrationSkill");
+        ReadOnlyFunctionCollection skill = kernel.importSkillFromResources("", "NarrationSkill", "NarrateFight");
         CompletionSKFunction fightFunction = skill.getFunction("NarrateFight", CompletionSKFunction.class);
 
         // Ask to narrate a fight
