@@ -37,9 +37,12 @@
         <github.url>${github.repo}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
         <base.url>${env.BASE_URL}</base.url>
         <github.issue>${github.repo}/issues</github.issue>
+        <!-- Note! Any versions listed here should have a dummy dependency clause so dependabot manages the versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>3.4.1</quarkus.platform.version>
+        <quarkus.pact.version>1.0.1.Final</quarkus.pact.version>
+        <semantic-kernel.version>0.2.8-alpha</semantic-kernel.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -96,12 +99,28 @@
                         <artifactId>asciidoctorj-diagram</artifactId>
                         <version>${version.asciidoctorj.diagram}</version>
                     </dependency>
-                    <!-- This is here so that dependabot applies updates -->
+                    <!-- These are here so that dependabot applies updates -->
                     <dependency>
                         <groupId>${quarkus.platform.group-id}</groupId>
                         <artifactId>${quarkus.platform.artifact-id}</artifactId>
                         <version>${quarkus.platform.version}</version>
                         <type>pom</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.microsoft.semantic-kernel</groupId>
+                        <artifactId>semantickernel-bom</artifactId>
+                        <version>${semantic-kernel.version}</version>
+                        <type>pom</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.quarkiverse.pact</groupId>
+                        <artifactId>quarkus-pact-consumer</artifactId>
+                        <version>${quarkus.pact.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.quarkiverse.pact</groupId>
+                        <artifactId>quarkus-pact-provider</artifactId>
+                        <version>${quarkus.pact.version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -132,12 +151,13 @@
                         <github-issue>${base.url}</github-issue>
                         <give-solution>true</give-solution>
                         <jdk-version>${maven.compiler.source}</jdk-version>
+                        <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
                         <graalvm-version>22.3</graalvm-version>
                         <maven-version>3.8.x</maven-version>
                         <quarkus-version>${quarkus.platform.version}</quarkus-version>
                         <compiler-version>${compiler-plugin.version}</compiler-version>
-                        <quarkus-pact-version>1.0.1.Final</quarkus-pact-version>
-                        <semantic-kernel-version>0.2.8-alpha</semantic-kernel-version>
+                        <quarkus-pact-version>${quarkus.pact.version}</quarkus-pact-version>
+                        <semantic-kernel-version>${semantic-kernel.version}</semantic-kernel-version>
                     </attributes>
                 </configuration>
                 <executions>
