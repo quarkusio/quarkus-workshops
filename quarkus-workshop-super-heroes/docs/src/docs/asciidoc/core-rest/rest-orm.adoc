@@ -41,7 +41,7 @@ super-heroes
 
 This microservice:
 
-* Interacts with a PostGreSQL database - so it needs a driver
+* Interacts with a PostgreSQL database - so it needs a driver
 * Uses Hibernate with Panache - needs the extension providing it
 * Validates payloads and entities - needs a validator
 * Consumes and produces JSON - needs a JSON mapper
