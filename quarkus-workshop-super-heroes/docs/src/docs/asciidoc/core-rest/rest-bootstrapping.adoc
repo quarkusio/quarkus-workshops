@@ -120,15 +120,15 @@ In addition, you can see the `quarkus-maven-plugin` responsible for the packagin
 <project>
   <!-- ... -->
   <properties>
-    <compiler-plugin.version>3.11.0</compiler-plugin.version>
-    <maven.compiler.release>17</maven.compiler.release>
+    <compiler-plugin.version>{compiler-plugin-version}</compiler-plugin.version>
+    <maven.compiler.release>{jdk-version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>{quarkus-version}</quarkus.platform.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.1.2</surefire-plugin.version>
+    <surefire-plugin.version>{surefire-plugin-version}</surefire-plugin.version>
   </properties>
   <!-- ... -->
   <dependencyManagement>
@@ -250,12 +250,12 @@ $ ./mvnw quarkus:dev
 [INFO] Invoking resources:{quarkus-version}:resources (default-resources) @ rest-villains
 [INFO] Copying 2 resources from src/main/resources to target/classes
 [INFO] Invoking quarkus:{quarkus-version}:generate-code (default) @ rest-villains
-[INFO] Invoking compiler:{compiler-version}:compile (default-compile) @ rest-villains
+[INFO] Invoking compiler:{compiler-plugin-version}:compile (default-compile) @ rest-villains
 [INFO] Nothing to compile - all classes are up to date
 [INFO] Invoking resources:{quarkus-version}:testResources (default-testResources) @ rest-villains
 [INFO] skip non existing resourceDirectory /Users/agoncal/Documents/Code/Temp/quarkus-super-heroes/super-heroes/rest-villains/src/test/resources
 [INFO] Invoking quarkus:{quarkus-version}:generate-code-tests (default) @ rest-villains
-[INFO] Invoking compiler:{compiler-version}:testCompile (default-testCompile) @ rest-villains
+[INFO] Invoking compiler:{compiler-plugin-version}:testCompile (default-testCompile) @ rest-villains
 [INFO] Nothing to compile - all classes are up to date
 Listening for transport dt_socket at address: 5005
 

@@ -130,7 +130,7 @@ endif::use-mac[]
 
 == Checking for GraalVM Installation
 
-Once installed and set up, you should be able to run the following command and get the following output.
+Once installed and set up, you should be able to run the following command and get something like the following output.
 
 [source,shell]
 ----
