@@ -44,6 +44,7 @@
         <quarkus.pact.version>1.0.1.Final</quarkus.pact.version>
         <semantic-kernel.version>0.2.8-alpha</semantic-kernel.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
+        <surefire-plugin.version>3.1.2</surefire-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -122,6 +123,12 @@
                         <artifactId>quarkus-pact-provider</artifactId>
                         <version>${quarkus.pact.version}</version>
                     </dependency>
+                    <dependency>
+                        <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire-plugin.version}</version>
+                    </dependency>
                 </dependencies>
                 <configuration>
                     <requires>
@@ -155,7 +162,8 @@
                         <graalvm-version>22.3</graalvm-version>
                         <maven-version>3.8.x</maven-version>
                         <quarkus-version>${quarkus.platform.version}</quarkus-version>
-                        <compiler-version>${compiler-plugin.version}</compiler-version>
+                        <compiler-plugin-version>${compiler-plugin.version}</compiler-plugin-version>
+                        <surefire-plugin-version>${surefire-plugin.version}</surefire-plugin-version>
                         <quarkus-pact-version>${quarkus.pact.version}</quarkus-pact-version>
                         <semantic-kernel-version>${semantic-kernel.version}</semantic-kernel-version>
                     </attributes>

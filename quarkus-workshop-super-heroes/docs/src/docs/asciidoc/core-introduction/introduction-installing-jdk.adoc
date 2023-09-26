@@ -82,12 +82,12 @@ endif::use-mac[]
 
 ifdef::use-linux[]
 For Linux distributions, there are also packaged java installations.
-[source,shell]
+[source,shell,subs="attributes+"]
 ----
 # dnf (rpm-based)
-dnf install java-17-openjdk
+dnf install java-{jdk-version}-openjdk
 # Debian-based distributions:
-$ apt-get install openjdk-17-jdk
+$ apt-get install openjdk-{jdk-version}-jdk
 ----
 endif::use-linux[]
 
