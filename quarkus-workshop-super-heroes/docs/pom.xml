@@ -42,7 +42,7 @@
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>3.4.1</quarkus.platform.version>
         <quarkus.pact.version>1.0.1.Final</quarkus.pact.version>
-        <semantic-kernel.version>0.2.8-alpha</semantic-kernel.version>
+        <semantic-kernel.version>0.2.9-alpha</semantic-kernel.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <surefire-plugin.version>3.1.2</surefire-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
