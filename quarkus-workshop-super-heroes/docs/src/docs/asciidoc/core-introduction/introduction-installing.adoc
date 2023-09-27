@@ -5,9 +5,13 @@ include::introduction-installing-jdk.adoc[leveloffset=+1]
 
 include::introduction-installing-docker.adoc[leveloffset=+1]
 
+ifdef::use-native[]
 include::introduction-installing-graalvm.adoc[leveloffset=+1]
+endif::use-native[]
 
+ifdef::use-local-kubernetes[]
 include::introduction-installing-rancher.adoc[leveloffset=+1]
+endif::use-local-kubernetes[]
 
 ifdef::use-ai[]
 include::introduction-installing-ai.adoc[leveloffset=+1]
