@@ -22,9 +22,12 @@ jobs:
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs
       - name: Extension build with Maven
         run: mvn -B install -f quarkus-workshop-super-heroes/super-heroes/extension-version/pom.xml
-  publication:
+  docs:
     needs: [ build_java17 ]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ "all","linux","mac","windows" ]
     steps:
       - uses: actions/checkout@v3
       - name: Install JDK 17
@@ -39,11 +42,51 @@ jobs:
           export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
 
           cd quarkus-workshop-super-heroes/docs      
-          mvn install
+          mvn package -Dos=${{ matrix.os }}
+      - name: Publishing fragment
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-fragments
+          path: ./quarkus-workshop-super-heroes/docs/target/generated-asciidoc
+          if-no-files-found: error
+          retention-days: 3
+  publication:
+    needs: [ docs ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download default site
+        uses: actions/download-artifact@v3
+        with:
+          name: all-fragments
+          path: target/generated-asciidoc
+          # take the all- package to be the top-level
+      - name: Download Linux site
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-fragments
+          path: target/generated-asciidoc/linux
+      - name: Download Mac site
+        uses: actions/download-artifact@v3
+        with:
+          name: mac-fragments
+          path: target/generated-asciidoc/mac
+      - name: Download Windows site
+        uses: actions/download-artifact@v3
+        with:
+          name: windows-fragments
+          path: target/generated-asciidoc/windows
+      - name: Site assembly
+        run: |
+          # aggregate the fragments
           
-          # make an index.html
+          # Take just the contents of the variants folders for the other platforms
+          cp -r target/generated-asciidoc/linux/variants/* target/generated-asciidoc/variants
+          cp -r target/generated-asciidoc/mac/variants/* target/generated-asciidoc/variants
+          cp -r target/generated-asciidoc/windows/variants/* target/generated-asciidoc/variants
+          
+          # make an index.html          
           cp target/generated-asciidoc/spine-azure.html target/generated-asciidoc/index-azure.html
-
+          
           # Move things around to preserve the super-heroes structure
           mkdir -p target/site/super-heroes
           cp -R target/generated-asciidoc/* target/site/super-heroes
@@ -51,16 +94,14 @@ jobs:
           cp target/generated-asciidoc/redirect.html target/site/index.html
       - name: Store PR id
         if: "github.event_name == 'pull_request'"
-        run: echo ${{ github.event.number }} > ./quarkus-workshop-super-heroes/docs/target/site/pr-id.txt
-
+        run: echo ${{ github.event.number }} > ./target/site/pr-id.txt
       - name: Publishing directory for PR preview
         if: "github.event_name == 'pull_request'"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: site
-          path: ./quarkus-workshop-super-heroes/docs/target/site
+          path: ./target/site
           retention-days: 3
-
       - name: Publication
         if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
         uses: peaceiris/actions-gh-pages@v3

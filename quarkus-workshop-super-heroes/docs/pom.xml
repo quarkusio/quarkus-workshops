@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- How to use this build file
+Run -Dquickly to just generate a default doc with every flag enabled
+Run -Dos=[linux|mac|windows|all] to generate a set of variants for a single OS. That should take around 10m.
+The default build will take around 50m.
+-->
+
 <!--
   ~ Licensed to the Apache Software Foundation (ASF) under one or more
   ~ contributor license agreements.  See the NOTICE file distributed with
@@ -50,7 +56,46 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <options.files.directory>${project.build.directory}/combinatorics</options.files.directory>
     </properties>
+
+    <!-- These are here so dependabot manages them -->
+    <dependencies>
+        <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${compiler-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${surefire-plugin.version}</version>
+        </dependency>
+        <!-- Normal dependencies we want dependabot to apply updates to -->
+        <dependency>
+            <groupId>${quarkus.platform.group-id}</groupId>
+            <artifactId>${quarkus.platform.artifact-id}</artifactId>
+            <version>${quarkus.platform.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.semantic-kernel</groupId>
+            <artifactId>semantickernel-bom</artifactId>
+            <version>${semantic-kernel.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.pact</groupId>
+            <artifactId>quarkus-pact-consumer</artifactId>
+            <version>${quarkus.pact.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.pact</groupId>
+            <artifactId>quarkus-pact-provider</artifactId>
+            <version>${quarkus.pact.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
@@ -80,35 +125,6 @@
                             <artifactId>asciidoctorj-diagram</artifactId>
                             <version>${version.asciidoctorj.diagram}</version>
                         </dependency>
-                        <!-- These are here so that dependabot applies updates -->
-                        <dependency>
-                            <groupId>${quarkus.platform.group-id}</groupId>
-                            <artifactId>${quarkus.platform.artifact-id}</artifactId>
-                            <version>${quarkus.platform.version}</version>
-                            <type>pom</type>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.microsoft.semantic-kernel</groupId>
-                            <artifactId>semantickernel-bom</artifactId>
-                            <version>${semantic-kernel.version}</version>
-                            <type>pom</type>
-                        </dependency>
-                        <dependency>
-                            <groupId>io.quarkiverse.pact</groupId>
-                            <artifactId>quarkus-pact-consumer</artifactId>
-                            <version>${quarkus.pact.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>io.quarkiverse.pact</groupId>
-                            <artifactId>quarkus-pact-provider</artifactId>
-                            <version>${quarkus.pact.version}</version>
-                        </dependency>
-                        <dependency>
-                            <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-surefire-plugin</artifactId>
-                            <version>${surefire-plugin.version}</version>
-                        </dependency>
                     </dependencies>
                     <configuration>
                         <requires>
@@ -127,7 +143,6 @@
                             <icons>font</icons>
                             <toclevels>3</toclevels>
                             <icons>font</icons>
-                            <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
                             <plantDir>../plantuml</plantDir>
                             <github-raw>${github.raw}</github-raw>
                             <github-url>${github.url}</github-url>
@@ -172,6 +187,84 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>output-html-default</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/generated-asciidoc/
+                            </outputDirectory>
+                            <resources>
+                                <!-- And add in the html configurator to the top-level -->
+                                <resource>
+                                    <directory>src/docs/html</directory>
+                                    <include>**</include>
+                                    <filtering>true</filtering>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/src/docs/asciidoc</directory>
+                                    <filtering>false</filtering>
+                                    <include>assets/**</include>
+                                    <include>images/**</include>
+                                </resource>
+                            </resources>
+                            <attributes>
+                                <options-file>default-options.adoc</options-file>
+                                <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- When we do #302, we can turn azure into an attribute and use the same spine.html
+                         For now, we just build a single copy of it-->
+                        <id>output-html-azure</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDocumentName>spine-azure.adoc</sourceDocumentName>
+                            <outputDirectory>
+                                ${project.build.directory}/generated-asciidoc/
+                            </outputDirectory>
+                            <attributes>
+                                <options-file>default-options.adoc</options-file>
+                                <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- So the combinatorics here do get a bit bonkers, but asciidoc is static, not dynamic, so *all* the variations have to be done at build time.
+             There's no easy way to iterate over a matrix in maven apart from nesting invocations of a plugin that allows us to iterate over a one-dimensional list.
+              That nests very deep and makes awful xml, so we're outsourcing to a shell script. -->
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh</executable>
+                            <arguments>
+                                <argument>${options.files.directory}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>com.soebes.maven.plugins</groupId>
                 <artifactId>iterator-maven-plugin</artifactId>
                 <version>0.5.1</version>
@@ -181,99 +274,49 @@
                         <goals>
                             <goal>iterator</goal>
                         </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <items>
-                        <item>all</item>
-                        <item>linux</item>
-                        <item>mac</item>
-                        <item>windows</item>
-                    </items>
-                    <pluginExecutors>
-                        <pluginExecutor>
-                            <plugin>
-                                <groupId>org.asciidoctor</groupId>
-                                <artifactId>asciidoctor-maven-plugin</artifactId>
-                            </plugin>
-                            <goal>
-                                process-asciidoc
-                            </goal>
-                            <configuration>
-                                <outputDirectory>${project.build.directory}/generated-asciidoc-parameterisations/@item@</outputDirectory>
-                                <attributes>
-                                    <os>@item@</os>
-                                    <use-ai>true</use-ai>
-                                    <use-contract-testing>false</use-contract-testing>
-                                    <use-extension>false</use-extension>
-                                    <use-kubernetes>false</use-kubernetes>
-                                    <use-messaging>false</use-messaging>
-                                    <use-native>false</use-native>
-                                    <use-observability>false</use-observability>
-                                </attributes>
-                            </configuration>
-                        </pluginExecutor>
-                        <!-- When we do #302, we can turn azure into an attribute and use the same spine.html -->
-                        <pluginExecutor>
-                            <plugin>
-                                <groupId>org.asciidoctor</groupId>
-                                <artifactId>asciidoctor-maven-plugin</artifactId>
-                            </plugin>
-                            <goal>
-                                process-asciidoc
-                            </goal>
-                            <configuration>
-                                <sourceDocumentName>spine-azure.adoc</sourceDocumentName>
-                                <outputDirectory>${project.build.directory}/generated-asciidoc-parameterisations/@item@</outputDirectory>
-                                <attributes>
-                                    <os>@item@</os>
-                                    <use-ai>true</use-ai>
-                                    <use-contract-testing>false</use-contract-testing>
-                                    <use-extension>false</use-extension>
-                                    <use-kubernetes>false</use-kubernetes>
-                                    <use-messaging>false</use-messaging>
-                                    <use-native>false</use-native>
-                                    <use-observability>false</use-observability>
-                                </attributes>
-                            </configuration>
-                        </pluginExecutor>
-                    </pluginExecutors>
-                </configuration>
-            </plugin>
-            <!-- This is here so that dependabot manages it -->
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
-                <configuration>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <!-- Adjust files round so the default workshop is at the root level -->
-                <groupId>com.coderplus.maven.plugins</groupId>
-                <artifactId>copy-rename-maven-plugin</artifactId>
-                <version>1.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-file</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>rename</goal>
-                        </goals>
                         <configuration>
-                            <fileSets>
-                                <fileSet>
-                                    <!-- We can't have blank items in the iterator, so we need to add a /all/ for each layer of nesting -->
-                                    <sourceFile>${project.build.directory}/generated-asciidoc-parameterisations/all/</sourceFile>
-                                    <destinationFile>${project.build.directory}/generated-asciidoc/</destinationFile>
-                                </fileSet>
-                                <fileSet>
-                                    <sourceFile>${project.build.directory}/generated-asciidoc-parameterisations/</sourceFile>
-                                    <destinationFile>${project.build.directory}/generated-asciidoc/variants</destinationFile>
-                                </fileSet>
-                            </fileSets>
+                            <folder>${options.files.directory}</folder>
+                            <pluginExecutors>
+                                <pluginExecutor>
+                                    <plugin>
+                                        <groupId>com.soebes.maven.plugins</groupId>
+                                        <artifactId>echo-maven-plugin</artifactId>
+                                        <version>0.5.0</version>
+                                    </plugin>
+                                    <goal>echo</goal>
+                                    <configuration>
+                                        <echos>
+                                            <echo>Generating asciidoc using options from @item@</echo>
+                                        </echos>
+                                    </configuration>
+                                </pluginExecutor>
+                                <pluginExecutor>
+                                    <plugin>
+                                        <groupId>org.asciidoctor</groupId>
+                                        <artifactId>asciidoctor-maven-plugin</artifactId>
+                                    </plugin>
+                                    <goal>
+                                        process-asciidoc
+                                    </goal>
+                                    <configuration>
+                                        <outputDirectory>
+                                            ${project.build.directory}/generated-asciidoc/variants/@item@
+                                        </outputDirectory>
+                                        <attributes>
+                                            <options-file>${options.files.directory}/@item@/options.adoc</options-file>
+                                            <diagram-cachedir>${project.build.directory}/generated-asciidoc/variants/</diagram-cachedir>
+                                            <imagesdir>../../images</imagesdir>
+                                        </attributes>
+                                        <!-- Specify an empty resources set so that nothing gets copied by default in the sub-file folders. -->
+                                        <resources>
+                                            <resource>
+                                                <directory>src/</directory>
+                                                <exclude>**</exclude>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </pluginExecutor>
+                            </pluginExecutors>
                         </configuration>
                     </execution>
                 </executions>
@@ -293,6 +336,38 @@
                 <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
                 <github.repo>http://github.com/quarkusio/quarkus-workshops</github.repo>
             </properties>
+        </profile>
+        <!-- If an os is passed through as a system property, just use that instead of iterating over them all -->
+        <profile>
+            <id>specified-os</id>
+            <activation>
+                <property>
+                    <name>os</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh</executable>
+                                    <arguments>
+                                        <argument>${options.files.directory}</argument>
+                                        <argument>${os}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>

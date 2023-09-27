@@ -2,7 +2,6 @@
 Antonio Goncalves
 v1.0, {docdate}: Quarkus {quarkus-version}
 
-:data-uri:
 :doctype: book
 :source-highlighter: coderay
 :source-language: java
@@ -21,6 +20,30 @@ v1.0, {docdate}: Quarkus {quarkus-version}
 :half-width: role=half-width
 :half-size: role=half-size
 :projectdir: {docdir}/../../../../super-heroes/
+// Conditional includes - can be overridden in the build to generate tailored docs
+include::{options-file}[]
+// Convert from named attributes to booleans
+ifeval::["{os}"=="mac"]
+:use-mac:
+endif::[]
+ifeval::["{os}"=="linux"]
+:use-linux:
+endif::[]
+ifeval::["{os}"=="windows"]
+:use-windows:
+endif::[]
+// Default cases
+ifeval::["{os}"=="all"]
+:use-mac:
+:use-linux:
+:use-windows:
+endif::[]
+// Do a fallback to everything if OS isn't set,
+ifndef::os[]
+:use-mac:
+:use-linux:
+:use-windows:
+endif::[]
 
 // Introduction
 include::optional-azure-container-apps/azure.adoc[leveloffset=+1]

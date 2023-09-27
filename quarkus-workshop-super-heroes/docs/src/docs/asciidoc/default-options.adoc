@@ -1,0 +1,7 @@
+:os: all
+:use-native:
+:use-ai:
+:use-kubernetes:
+:use-contract-testing:
+:use-extension:
+:use-messaging:
