@@ -53,6 +53,102 @@
     </properties>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${version.asciidoctor.maven.plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.jruby</groupId>
+                            <artifactId>jruby</artifactId>
+                            <version>${version.jruby}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj</artifactId>
+                            <version>${version.asciidoctorj}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-pdf</artifactId>
+                            <version>${version.asciidoctorj.pdf}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-diagram</artifactId>
+                            <version>${version.asciidoctorj.diagram}</version>
+                        </dependency>
+                        <!-- These are here so that dependabot applies updates -->
+                        <dependency>
+                            <groupId>${quarkus.platform.group-id}</groupId>
+                            <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                            <version>${quarkus.platform.version}</version>
+                            <type>pom</type>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.microsoft.semantic-kernel</groupId>
+                            <artifactId>semantickernel-bom</artifactId>
+                            <version>${semantic-kernel.version}</version>
+                            <type>pom</type>
+                        </dependency>
+                        <dependency>
+                            <groupId>io.quarkiverse.pact</groupId>
+                            <artifactId>quarkus-pact-consumer</artifactId>
+                            <version>${quarkus.pact.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>io.quarkiverse.pact</groupId>
+                            <artifactId>quarkus-pact-provider</artifactId>
+                            <version>${quarkus.pact.version}</version>
+                        </dependency>
+                        <dependency>
+                            <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>${surefire-plugin.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <requires>
+                            <require>asciidoctor-diagram</require>
+                        </requires>
+                        <relativeBaseDir>true</relativeBaseDir>
+                        <preserveDirectories>true</preserveDirectories>
+                        <backend>html</backend>
+                        <sourceDocumentName>spine.adoc</sourceDocumentName>
+                        <attributes>
+                            <!-- Allows access to remote files (e.g. code on external GitHub) -->
+                            <allow-uri-read/>
+                            <toc>left</toc>
+                            <linkcss>false</linkcss>
+                            <docinfo1>true</docinfo1>
+                            <icons>font</icons>
+                            <toclevels>3</toclevels>
+                            <icons>font</icons>
+                            <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
+                            <plantDir>../plantuml</plantDir>
+                            <github-raw>${github.raw}</github-raw>
+                            <github-url>${github.url}</github-url>
+                            <github-repo>${github.repo}</github-repo>
+                            <github-issue>${github.issue}</github-issue>
+                            <github-issue>${base.url}</github-issue>
+                            <give-solution>true</give-solution>
+                            <jdk-version>${maven.compiler.source}</jdk-version>
+                            <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
+                            <graalvm-version>22.3</graalvm-version>
+                            <maven-version>3.8.x</maven-version>
+                            <quarkus-version>${quarkus.platform.version}</quarkus-version>
+                            <compiler-plugin-version>${compiler-plugin.version}</compiler-plugin-version>
+                            <surefire-plugin-version>${surefire-plugin.version}</surefire-plugin-version>
+                            <quarkus-pact-version>${quarkus.pact.version}</quarkus-pact-version>
+                            <semantic-kernel-version>${semantic-kernel.version}</semantic-kernel-version>
+                        </attributes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>dev.jbang</groupId>
@@ -76,191 +172,73 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>${version.asciidoctor.maven.plugin}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jruby</groupId>
-                        <artifactId>jruby</artifactId>
-                        <version>${version.jruby}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj</artifactId>
-                        <version>${version.asciidoctorj}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-pdf</artifactId>
-                        <version>${version.asciidoctorj.pdf}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-diagram</artifactId>
-                        <version>${version.asciidoctorj.diagram}</version>
-                    </dependency>
-                    <!-- These are here so that dependabot applies updates -->
-                    <dependency>
-                        <groupId>${quarkus.platform.group-id}</groupId>
-                        <artifactId>${quarkus.platform.artifact-id}</artifactId>
-                        <version>${quarkus.platform.version}</version>
-                        <type>pom</type>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.microsoft.semantic-kernel</groupId>
-                        <artifactId>semantickernel-bom</artifactId>
-                        <version>${semantic-kernel.version}</version>
-                        <type>pom</type>
-                    </dependency>
-                    <dependency>
-                        <groupId>io.quarkiverse.pact</groupId>
-                        <artifactId>quarkus-pact-consumer</artifactId>
-                        <version>${quarkus.pact.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>io.quarkiverse.pact</groupId>
-                        <artifactId>quarkus-pact-provider</artifactId>
-                        <version>${quarkus.pact.version}</version>
-                    </dependency>
-                    <dependency>
-                        <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire-plugin.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <requires>
-                        <require>asciidoctor-diagram</require>
-                    </requires>
-                    <relativeBaseDir>true</relativeBaseDir>
-                    <preserveDirectories>true</preserveDirectories>
-                    <backend>html</backend>
-                    <sourceDocumentName>spine.adoc</sourceDocumentName>
-                    <outputDirectory>${project.build.directory}/generated-asciidoc</outputDirectory>
-                    <attributes>
-                        <!-- Allows access to remote files (e.g. code on external GitHub) -->
-                        <allow-uri-read/>
-                        <imagesdir>images</imagesdir>
-                        <toc>left</toc>
-                        <linkcss>false</linkcss>
-                        <docinfo1>true</docinfo1>
-                        <icons>font</icons>
-                        <toclevels>3</toclevels>
-                        <icons>font</icons>
-                        <imagesdir>../images</imagesdir>
-                        <plantDir>../plantuml</plantDir>
-                        <github-raw>${github.raw}</github-raw>
-                        <github-url>${github.url}</github-url>
-                        <github-repo>${github.repo}</github-repo>
-                        <github-issue>${github.issue}</github-issue>
-                        <github-issue>${base.url}</github-issue>
-                        <give-solution>true</give-solution>
-                        <jdk-version>${maven.compiler.source}</jdk-version>
-                        <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
-                        <graalvm-version>22.3</graalvm-version>
-                        <maven-version>3.8.x</maven-version>
-                        <quarkus-version>${quarkus.platform.version}</quarkus-version>
-                        <compiler-plugin-version>${compiler-plugin.version}</compiler-plugin-version>
-                        <surefire-plugin-version>${surefire-plugin.version}</surefire-plugin-version>
-                        <quarkus-pact-version>${quarkus.pact.version}</quarkus-pact-version>
-                        <semantic-kernel-version>${semantic-kernel.version}</semantic-kernel-version>
-                    </attributes>
-                </configuration>
+                <groupId>com.soebes.maven.plugins</groupId>
+                <artifactId>iterator-maven-plugin</artifactId>
+                <version>0.5.1</version>
                 <executions>
                     <execution>
-                        <id>output-html</id>
-                        <phase>generate-resources</phase>
+                        <phase>package</phase>
                         <goals>
-                            <goal>process-asciidoc</goal>
+                            <goal>iterator</goal>
                         </goals>
-                        <configuration>
-                            <attributes>
-                                <imagesdir>images</imagesdir>
-                            </attributes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>output-html-linux</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-asciidoc/linux</outputDirectory>
-                            <attributes>
-                                <imagesdir>images</imagesdir>
-                                <use-windows>false</use-windows>
-                                <use-mac>false</use-mac>
-                                <use-ai>true</use-ai>
-                                <use-contract-testing>false</use-contract-testing>
-                                <use-extension>false</use-extension>
-                                <use-kubernetes>false</use-kubernetes>
-                                <use-messaging>false</use-messaging>
-                                <use-native>false</use-native>
-                                <use-observability>false</use-observability>
-                            </attributes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>output-html-mac</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-asciidoc/mac</outputDirectory>
-                            <attributes>
-                                <imagesdir>images</imagesdir>
-                                <use-windows>false</use-windows>
-                                <use-linux>false</use-linux>
-                                <use-ai>true</use-ai>
-                                <use-contract-testing>false</use-contract-testing>
-                                <use-extension>false</use-extension>
-                                <use-kubernetes>false</use-kubernetes>
-                                <use-messaging>false</use-messaging>
-                                <use-native>false</use-native>
-                                <use-observability>false</use-observability>
-                            </attributes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>output-html-windows</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-asciidoc/windows</outputDirectory>
-                            <attributes>
-                                <imagesdir>images</imagesdir>
-                                <use-mac>false</use-mac>
-                                <use-linux>false</use-linux>
-                                <use-ai>true</use-ai>
-                                <use-contract-testing>false</use-contract-testing>
-                                <use-extension>false</use-extension>
-                                <use-kubernetes>false</use-kubernetes>
-                                <use-messaging>false</use-messaging>
-                                <use-native>false</use-native>
-                                <use-observability>false</use-observability>
-                            </attributes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>output-html-azure</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDocumentName>spine-azure.adoc</sourceDocumentName>
-                            <attributes>
-                                <imagesdir>images</imagesdir>
-                            </attributes>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <items>
+                        <item>all</item>
+                        <item>linux</item>
+                        <item>mac</item>
+                        <item>windows</item>
+                    </items>
+                    <pluginExecutors>
+                        <pluginExecutor>
+                            <plugin>
+                                <groupId>org.asciidoctor</groupId>
+                                <artifactId>asciidoctor-maven-plugin</artifactId>
+                            </plugin>
+                            <goal>
+                                process-asciidoc
+                            </goal>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/generated-asciidoc-parameterisations/@item@</outputDirectory>
+                                <attributes>
+                                    <os>@item@</os>
+                                    <use-ai>true</use-ai>
+                                    <use-contract-testing>false</use-contract-testing>
+                                    <use-extension>false</use-extension>
+                                    <use-kubernetes>false</use-kubernetes>
+                                    <use-messaging>false</use-messaging>
+                                    <use-native>false</use-native>
+                                    <use-observability>false</use-observability>
+                                </attributes>
+                            </configuration>
+                        </pluginExecutor>
+                        <!-- When we do #302, we can turn azure into an attribute and use the same spine.html -->
+                        <pluginExecutor>
+                            <plugin>
+                                <groupId>org.asciidoctor</groupId>
+                                <artifactId>asciidoctor-maven-plugin</artifactId>
+                            </plugin>
+                            <goal>
+                                process-asciidoc
+                            </goal>
+                            <configuration>
+                                <sourceDocumentName>spine-azure.adoc</sourceDocumentName>
+                                <outputDirectory>${project.build.directory}/generated-asciidoc-parameterisations/@item@</outputDirectory>
+                                <attributes>
+                                    <os>@item@</os>
+                                    <use-ai>true</use-ai>
+                                    <use-contract-testing>false</use-contract-testing>
+                                    <use-extension>false</use-extension>
+                                    <use-kubernetes>false</use-kubernetes>
+                                    <use-messaging>false</use-messaging>
+                                    <use-native>false</use-native>
+                                    <use-observability>false</use-observability>
+                                </attributes>
+                            </configuration>
+                        </pluginExecutor>
+                    </pluginExecutors>
+                </configuration>
             </plugin>
             <!-- This is here so that dependabot manages it -->
             <plugin>
@@ -271,6 +249,34 @@
                         <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- Adjust files round so the default workshop is at the root level -->
+                <groupId>com.coderplus.maven.plugins</groupId>
+                <artifactId>copy-rename-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-file</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>rename</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <!-- We can't have blank items in the iterator, so we need to add a /all/ for each layer of nesting -->
+                                    <sourceFile>${project.build.directory}/generated-asciidoc-parameterisations/all/</sourceFile>
+                                    <destinationFile>${project.build.directory}/generated-asciidoc/</destinationFile>
+                                </fileSet>
+                                <fileSet>
+                                    <sourceFile>${project.build.directory}/generated-asciidoc-parameterisations/</sourceFile>
+                                    <destinationFile>${project.build.directory}/generated-asciidoc/variants</destinationFile>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

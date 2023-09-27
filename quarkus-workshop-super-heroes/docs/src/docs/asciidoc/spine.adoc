@@ -22,16 +22,29 @@ Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; G
 :half-size: role=half-size
 :projectdir: {docdir}/../../../../super-heroes/
 // Conditional includes - can be overridden in the build to generate tailored docs
+// Convert from named attributes to booleans
+ifeval::["{os}"=="mac"]
+:use-mac:
+endif::[]
+ifeval::["{os}"=="linux"]
+:use-linux:
+endif::[]
+ifeval::["{os}"=="windows"]
+:use-windows:
+endif::[]
+// Default cases
+ifeval::["{os}"=="all"]
 :use-mac:
 :use-linux:
 :use-windows:
-// :use-ai:
-// :use-contract-testing:
-// :use-extension:
-// :use-kubernetes:
-// :use-messaging:
-// :use-native:
-// :use-observability:
+endif::[]
+// Do a fallback to everything if OS isn't set,
+ifndef::os[]
+:use-mac:
+:use-linux:
+:use-windows:
+endif::[]
+
 // /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
 
 image::quarkus-logo.png[]

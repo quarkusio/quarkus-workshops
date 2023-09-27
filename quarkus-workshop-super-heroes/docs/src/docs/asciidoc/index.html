@@ -39,7 +39,7 @@
             selectedOptions.push(osValue);
 
             // Generate the URL based on selected options
-            const url = baseUrl + selectedOptions.join("/") + "/" + filename;
+            const url = baseUrl + 'variants/' + selectedOptions.join("/") + "/" + filename;
             window.location.href = url;
 
         }
