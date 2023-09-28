@@ -149,17 +149,18 @@ If you are using Mac OS X, make sure the version is greater than 10.11.x (El Cap
 ====
 endif::use-mac[]
 
-This workshop will make use of the following software, tools, frameworks that you will need to install and now (more or less) how it works:
+This workshop will make use of the following software, tools, frameworks that you will need to install and know (more or less) how it works:
 
 * Any IDE you feel comfortable with (eg. Intellij IDEA, Eclipse IDE, VS Code..)
 * JDK {jdk-version}
+ifdef::use-native[]
 * GraalVM {graalvm-version}
-* Docker
+endif::use-native[]
+* Docker or Podman
 * cURL (or any other command line HTTP client)
 ifdef::use-ai[]
 * OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)
 endif::use-ai[]
-* Angular (optional, only if you are in a _frontend_ mood)
 
 We will also be using Maven {maven-version}, but there is no
 need to install it. Instead, the workshop scaffolding includes
