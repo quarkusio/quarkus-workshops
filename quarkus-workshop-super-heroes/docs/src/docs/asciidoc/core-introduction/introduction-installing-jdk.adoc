@@ -65,18 +65,18 @@ There are several different vendors of Java, and each vendor has its own distrib
 Most of these distributions are available on SDKMAN! and can easily be installed.
 Let's install Temurin.
 
-To install Temurin {jdk-version}, we copy its identifier (`{jdk-version}-tem`), which is the version from the table, and we add it as an argument in the install command:
+To install Temurin {jdk-version}, we copy its identifier (`{sdk-java}`), which is the version from the table, and we add it as an argument in the install command:
 
 [source,term,subs="attributes+"]
 ----
-$ sdk install java {jdk-version}-tem
+$ sdk install java {sdk-java}
 
-Downloading: java {jdk-version}-tem
-Repackaging Java {jdk-version}-tem...
-Installing: java {jdk-version}-tem
+Downloading: java {sdk-java}
+Repackaging Java {sdk-java}...
+Installing: java {sdk-java}
 Done installing!
 
-Do you want java {jdk-version}-tem to be set as default? (Y/n):
+Do you want java {sdk-java} to be set as default? (Y/n):
 ----
 endif::use-mac[]
 
