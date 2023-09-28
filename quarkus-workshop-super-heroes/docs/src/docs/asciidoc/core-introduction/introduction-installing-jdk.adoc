@@ -96,12 +96,14 @@ endif::use-linux[]
 Once the installation is complete, it is necessary to set the `JAVA_HOME` variable and the `$JAVA_HOME/bin` directory to the `PATH` variable.
 Check that your system recognizes Java by entering `java -version` and the Java compiler with `javac -version`.
 
-[source,shell]
+[source,shell,subs="attributes+"]
 ----
 $ java -version
 openjdk version "17.0.5" 2022-10-18
+ifdef::use-native[]
 OpenJDK Runtime Environment GraalVM CE 22.3.0 (build 17.0.5+8-jvmci-22.3-b08)
 OpenJDK 64-Bit Server VM GraalVM CE 22.3.0 (build 17.0.5+8-jvmci-22.3-b08, mixed mode, sharing)
+endif::use-native[]
 
 $ javac -version
 javac 17.0.5
