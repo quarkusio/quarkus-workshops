@@ -38,7 +38,7 @@ Create a class called `FightResourceConsumerTest.java`.
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=skeleton]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=skeleton]
 
     @Test
     void randomHeroFound() {
@@ -59,7 +59,7 @@ You'll notice this is very similar to the one in `FightResourceTest`; you could 
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroFound]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroFound]
 ----
 
 Run the tests.

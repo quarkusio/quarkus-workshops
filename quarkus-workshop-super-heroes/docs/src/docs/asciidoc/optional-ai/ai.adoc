@@ -179,7 +179,7 @@ Create the `io.quarkus.workshop.superheroes.narration.Fight` class in the create
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/Fight.java[]
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/Fight.java[]
 ----
 --
 
@@ -194,7 +194,7 @@ Open the generated `io.quarkus.workshop.superheroes.narration.NarrationResource`
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationResource.java[]
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationResource.java[]
 ----
 --
 
@@ -210,7 +210,7 @@ Open the `NarrationResource` and update the content to be:
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationService.java[]
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationService.java[]
 ----
 
 Then, create the `io.quarkus.workshop.superheroes.narration.SemanticKernelNarrationService` that implements the `NarrationService` interface.
@@ -222,7 +222,7 @@ This class has the following methods:
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/SemanticKernelNarrationService.java[]
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/SemanticKernelNarrationService.java[]
 ----
 --
 
@@ -245,14 +245,14 @@ Notice that the prompt uses expression language to get the fight data (e.g., `{{
 
 [source,text]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/resources/NarrationSkill/NarrateFight/skprompt.txt[]
+include::{projectdir}/rest-narration/src/main/resources/NarrationSkill/NarrateFight/skprompt.txt[]
 ----
 
 Under `src/main/resources/NarrationSkill/NarrateFight/`, create the `config.json` file with the following content:
 
 [source,json]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/resources/NarrationSkill/NarrateFight/config.json[]
+include::{projectdir}/rest-narration/src/main/resources/NarrationSkill/NarrateFight/config.json[]
 ----
 --
 
@@ -286,7 +286,7 @@ Just add the following configuration to the Quarkus `application.properties` fil
 
 [source,properties]
 ----
-include::../../../../../super-heroes/rest-narration/src/main/resources/application.properties[]
+include::{projectdir}/rest-narration/src/main/resources/application.properties[]
 ----
 --
 
@@ -300,7 +300,7 @@ Open the `io.quarkus.workshop.superheroes.narration.NarrationResourceTest` class
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-narration/src/test/java/io/quarkus/workshop/superheroes/narration/NarrationResourceTest.java[]
+include::{projectdir}/rest-narration/src/test/java/io/quarkus/workshop/superheroes/narration/NarrationResourceTest.java[]
 ----
 --
 
@@ -361,7 +361,7 @@ Go back to the `io.quarkus.workshop.superheroes.fight.FightResource` class and a
 
 [source,java,indent=0]
 ----
-include::../../../../../super-heroes/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tag=adocNarrate]
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tag=adocNarrate]
 ----
 
 The `FightResource` invokes a new method of the `FightService`.
@@ -369,21 +369,21 @@ Add the following method to the `io.quarkus.workshop.superheroes.fight.FightServ
 
 [source,java,indent=0]
 ----
-include::../../../../../super-heroes/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocNarrate]
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocNarrate]
 ----
 
 Under the `client` package, where all the other proxies are already located, create a new `NarrationProxy` class:
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/NarrationProxy.java[]
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/NarrationProxy.java[]
 ----
 
 To link both microservices, we need to add the following configuration to the `rest-fights/src/main/resources/application.properties` file of the fight microservice:
 
 [source,properties]
 ----
-include::../../../../../super-heroes/rest-fights/src/main/resources/application.properties[tag=adocNarrate]
+include::{projectdir}/rest-fights/src/main/resources/application.properties[tag=adocNarrate]
 ----
 --
 
@@ -398,14 +398,14 @@ Add the following `shouldNarrate` test to the `io.quarkus.workshop.superheroes.f
 
 [source,java,indent=0]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocNarrate]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocNarrate]
 ----
 
 Create the `io.quarkus.workshop.superheroes.fight.client.MockNarrationProxy` class and add the new `narrateFight` method:
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockNarrationProxy.java[]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockNarrationProxy.java[]
 ----
 --
 

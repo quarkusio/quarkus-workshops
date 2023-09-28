@@ -65,7 +65,7 @@ Then, execute the following command to create the Azure OpenAI resources:
 
 [source,bash]
 ----
-include::../../../../../super-heroes/infrastructure/ai-azure-openai-create.sh[tags=adocSetup;!adocSkip]
+include::{projectdir}/infrastructure/ai-azure-openai-create.sh[tags=adocSetup;!adocSkip]
 ----
 
 This script will create the Azure OpenAI resource and deploy the model.
@@ -74,12 +74,12 @@ You will need these properties later one when you will configure the Narration m
 
 [source,bash]
 ----
-include::../../../../../super-heroes/infrastructure/ai-azure-openai-create.sh[tag=adocProperties]
+include::{projectdir}/infrastructure/ai-azure-openai-create.sh[tag=adocProperties]
 ----
 
 Once you've finished the workshop, remember to delete the Azure OpenAI resources to avoid being charged for it:
 
 [source,bash]
 ----
-include::../../../../../super-heroes/infrastructure/ai-azure-openai-delete.sh[tag=adocDelete]
+include::{projectdir}/infrastructure/ai-azure-openai-delete.sh[tag=adocDelete]
 ----

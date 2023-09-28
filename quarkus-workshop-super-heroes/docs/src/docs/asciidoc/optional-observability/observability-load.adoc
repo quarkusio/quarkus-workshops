@@ -17,7 +17,7 @@ For example, if you look at the `HeroScenario`, you will see that it's just a su
 
 [source,indent=0]
 ----
-include::{github-raw}/super-heroes/load-super-heroes/src/main/java/io/quarkus/workshop/superheroes/load/HeroScenario.java[tag=adocScenario]
+include::{projectdir}/load-super-heroes/src/main/java/io/quarkus/workshop/superheroes/load/HeroScenario.java[tag=adocScenario]
 ----
 
 == Running the Load Application

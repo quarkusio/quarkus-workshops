@@ -20,6 +20,7 @@ Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; G
 :full-width: role=full-width
 :half-width: role=half-width
 :half-size: role=half-size
+:projectdir: {docdir}/../../../../super-heroes/
 // Conditional includes - can be overridden in the build to generate tailored docs
 :use-mac:
 :use-linux:

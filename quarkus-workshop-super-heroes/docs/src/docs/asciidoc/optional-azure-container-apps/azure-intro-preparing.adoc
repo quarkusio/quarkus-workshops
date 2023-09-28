@@ -79,7 +79,7 @@ Make sure you are using the right subscription with:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocAzAccountShow]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocAzAccountShow]
 ----
 --
 
@@ -155,7 +155,7 @@ Set the following variables:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariables]
+include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariables]
 ----
 
 Now let's create the Azure resources.
@@ -174,7 +174,7 @@ Execute the following command to create the Super Hero resource group:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocCreateResourceGroup]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocCreateResourceGroup]
 ----
 --
 
@@ -190,14 +190,14 @@ Create a Log Analytics workspace with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocCreateLogAnalytics]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocCreateLogAnalytics]
 ----
 
 Let's also retrieve the Log Analytics Client ID and client secret and store them in environment variables:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocLogAnalyticsSecrets]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocLogAnalyticsSecrets]
 ----
 --
 
@@ -214,21 +214,21 @@ First, let's created an Azure Container Registry with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocCreateContainerRegistry]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocCreateContainerRegistry]
 ----
 
 Update the repository to allow anonymous users to pull the images:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocAnonymousContainerRegistry]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocAnonymousContainerRegistry]
 ----
 
 Get the URL of the Azure Container Registry and set it to the `REGISTRY_URL` variable with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-azure-env.sh[tags=adocContainerRegistryURL]
+include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocContainerRegistryURL]
 ----
 
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
@@ -248,7 +248,7 @@ Set the following environment variables, there will be needed in the Azure CLI c
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariables2]
+include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariables2]
 ----
 --
 

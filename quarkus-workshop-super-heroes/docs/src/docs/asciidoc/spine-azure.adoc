@@ -20,6 +20,7 @@ v1.0, {docdate}: Quarkus {quarkus-version}
 :full-width: role=full-width
 :half-width: role=half-width
 :half-size: role=half-size
+:projectdir: {docdir}/../../../../super-heroes/
 
 // Introduction
 include::optional-azure-container-apps/azure.adoc[leveloffset=+1]
