@@ -21,7 +21,7 @@ Create the container apps environment with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateACAEnv]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreateACAEnv]
 ----
 --
 
@@ -36,17 +36,17 @@ Create the databases with the following commands:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresH]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresH]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresV]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresV]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresF]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreatePostgresF]
 ----
 --
 
@@ -57,17 +57,17 @@ Then, we create the database schemas, one for each database:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaH]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaH]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaV]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaV]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaF]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreateSchemaF]
 ----
 --
 
@@ -81,7 +81,7 @@ Create the tables using the following commands (make sure you are under `quarkus
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableH]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableH]
 ----
 --
 
@@ -93,12 +93,12 @@ Check https://github.com/Azure/azure-cli/issues/21998 for help.
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableV]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableV]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableF]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocInitTableF]
 ----
 
 [example, role="cta"]
@@ -108,17 +108,17 @@ Now, let's add some super heroes and super villains to these databases:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataH]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataH]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataV]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataV]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataF]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocImportDataF]
 ----
 
 
@@ -126,17 +126,17 @@ You can check the content of the tables with the following commands:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataH]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataH]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataV]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataV]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataF]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataF]
 ----
 --
 
@@ -150,21 +150,21 @@ We need to create an Azure event hub for that.
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateEventHub]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreateEventHub]
 ----
 
 Then, create the Kafka topic where the messages will be sent to and consumed from:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocCreateEventHubTopic]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocCreateEventHubTopic]
 ----
 
 To configure Kafka in the Fight and Statistics microservices, get the connection string with the following commands:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-setup-aca-env.sh[tags=adocEventHubConnection]
+include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocEventHubConnection]
 ----
 
 If you log into the https://portal.azure.com[Azure Portal] you should see the following created resources.
@@ -216,7 +216,7 @@ Create the Heroes container app with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppHero]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppHero]
 ----
 
 
@@ -224,7 +224,7 @@ The following command sets the URL of the deployed application to the `HEROES_UR
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroURL]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroURL]
 ----
 
 You can now invoke the Hero microservice APIs with:
@@ -239,7 +239,7 @@ To access the logs of the Heroes microservice, you can write the following query
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroLogs]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppHeroLogs]
 ----
 --
 
@@ -260,14 +260,14 @@ Notice the minimum of replicas is also set to 0:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppVillain]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppVillain]
 ----
 
 The following command sets the URL of the deployed application to the `VILLAINS_URL` variable:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainURL]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainURL]
 ----
 
 You can now invoke the Hero microservice APIs with:
@@ -282,7 +282,7 @@ To access the logs of the Villain microservice, you can write the following quer
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainLogs]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainLogs]
 ----
 --
 
@@ -297,14 +297,14 @@ Create the Statistics container application with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppStatistics]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppStatistics]
 ----
 
 The following command sets the URL of the deployed application to the `STATISTICS_URL` variable:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsURL]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsURL]
 ----
 
 You can now display the Statistics UI with:
@@ -318,7 +318,7 @@ To access the logs of the Statistics microservice, you can write the following q
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsLogs]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsLogs]
 ----
 --
 
@@ -335,14 +335,14 @@ Create the Fights container application with the following command:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppFight]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppFight]
 ----
 
 The following command sets the URL of the deployed application to the `FIGHTS_URL` variable:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppFightURL]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppFightURL]
 ----
 
 Use the following curl commands to access the Fight microservice.
@@ -362,7 +362,7 @@ To access the logs of the Fight microservice, you can write the following query:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppFightLogs]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppFightLogs]
 ----
 
 === Super Hero UI
@@ -378,12 +378,12 @@ For now, let's continue with Azure Container Apps and deploy the UI as a Docker 
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppUI]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppUI]
 ----
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppUIURL]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppUIURL]
 ----
 
 [source,shell]
@@ -396,7 +396,7 @@ To access the UI logs, you can write the following query:
 
 [source,shell,indent=0]
 ----
-include::{github-raw}/super-heroes/infrastructure/azure-deploy-aca.sh[tags=adocAppUILogs]
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppUILogs]
 ----
 
 == Running the Application

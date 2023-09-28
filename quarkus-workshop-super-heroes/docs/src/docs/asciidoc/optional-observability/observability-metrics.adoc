@@ -24,7 +24,7 @@ This will add the following dependency in the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
-include::../../../../../super-heroes/rest-heroes/pom.xml[tags=adocDependencyMetrics]
+include::{projectdir}/rest-heroes/pom.xml[tags=adocDependencyMetrics]
 ----
 
 == Adding Metrics to HeroResource
@@ -45,7 +45,7 @@ Below the source code of the `getRandomHero()` method, but make sure to add metr
 
 [source,indent=0]
 ----
-include::../../../../../super-heroes/rest-heroes/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocMetricsMethods]
+include::{projectdir}/rest-heroes/src/main/java/io/quarkus/workshop/superheroes/hero/HeroResource.java[tags=adocMetricsMethods]
 ----
 
 [example, role="cta"]
@@ -70,7 +70,7 @@ Let's add an extra test method that would make sure Metrics are available in the
 
 [source,indent=0]
 ----
-include::../../../../../super-heroes/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
+include::{projectdir}/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/hero/HeroResourceTest.java[tags=adocMetrics]
 ----
 
 == Reviewing the Generated Metrics

@@ -255,7 +255,7 @@ So, to mock the `VillainProxy` interface we just need to implement the following
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockVillainProxy.java[]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockVillainProxy.java[]
 ----
 
 We are using some common classes for the test data.
@@ -266,7 +266,7 @@ manually, and then fill in the following contents:
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestVillain.java[]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestVillain.java[]
 ----
 
 
@@ -285,7 +285,7 @@ We'll still want a class which holds test data for the hero. Create the followin
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestHero.java[]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestHero.java[]
 ----
 
 
@@ -324,7 +324,7 @@ Finally, edit the `FightResourceTest` and add the following method:
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=shouldGetRandomFighters]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=shouldGetRandomFighters]
 ----
 
 Now, run the test from the dev mode, or from your IDE.

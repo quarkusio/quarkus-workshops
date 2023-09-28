@@ -14,7 +14,7 @@ We use the `given()` to identify the state.
 [source,java]
 
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundPact]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundPact]
 ----
 
 Then, we can define another test method, which exercises our service, given this unhappy state.
@@ -23,7 +23,7 @@ We also want to check that things work as normal for the villain part of the res
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundTest]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundTest]
 ----
 
 Run the tests. They should pass. Then copy them to the hero service, using `cp -r target/pacts ../rest-heroes/src/test/resources`.
@@ -35,7 +35,7 @@ so we'll work around it by handling the state in the `@BeforeEach`.
 
 [source,java]
 ----
-include::../../../../../super-heroes/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java[tags=states]
+include::{projectdir}/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java[tags=states]
 }
 ----
 
