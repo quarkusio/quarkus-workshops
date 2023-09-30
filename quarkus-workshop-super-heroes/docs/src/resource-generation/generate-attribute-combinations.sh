@@ -7,9 +7,9 @@ native=("true" "false")
 kubernetes=("true" "false")
 ai=("true" "false")
 observability=("false")
-messaging=("false") # tactical hack to speed up builds
+messaging=("true" "false")
 contract_testing=("true" "false")
-extension=("false") # tactical hack to speed up builds
+extension=("true" "false")
 
 basedir=$1
 
