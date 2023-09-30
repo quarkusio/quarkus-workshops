@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quarkus Super-Heroes Workshop</title>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+        <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+        <meta name="description" content="A hands on lab about Quarkus">
+
+        <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+        <link href="assets/css/hol.css" media="screen" rel="stylesheet">
+        <link href="assets/css/github.css" media="screen" rel="stylesheet">
+        <script src="assets/js/jquery-3.1.1.js"></script>
+        <script src="assets/js/bootstrap.js"></script>
+    </head>
+    <title>Workshop configurator</title>
+    <script>
+        // Use relative URLs
+        const baseUrl = "./";
+        const filename = "spine.html"
+
+        function generateDefaultURL() {
+            const url = baseUrl + filename
+            window.location.href = url;
+        }
+
+        function generateURL() {
+            const selectedOptions = [];
+
+            // Get the selected build option
+            const flags = ["native", "ai", "kubernetes", "contract-testing", "observability", "extension", "messaging"]
+            const useFlags = flags.map(flag => {
+                const flagName = `use-${flag}`
+                const option = document.querySelector(`input[id="${flagName}"]:checked`);
+                const value = option?.value ? "true" : "false";
+                selectedOptions.push(`${flag}-${value}`);
+            });
+
+            const osOption = document.querySelector('input[name="osOption"]:checked');
+            const osValue = osOption?.value || "all";
+            selectedOptions.unshift(`os-${osValue}`);
+
+            // Generate the URL based on selected options
+            const url = baseUrl + 'variants/' + selectedOptions.join("-") + "/" + filename;
+            window.location.href = url;
+
+        }
+
+    </script>
+</head>
+<body>
+<h1>Quarkus Workshop Configurator</h1>
+
+<button onclick="generateDefaultURL()">Just take me to the default workshop</button>
+
+<h2>What kind of workshop would you like?</h2>
+
+<h3>What operating system are you using?</h3>
+<ul class="configurator">
+    <li>
+        <label for="macRadio">
+            <input type="radio" name="osOption" id="macRadio" value="mac">MacOS
+        </label>
+    </li>
+    <li>
+        <label for="windowsRadio">
+            <input type="radio" name="osOption" id="windowsRadio" value="windows">Windows
+        </label>
+    </li>
+    <li>
+        <label for="linuxRadio">
+            <input type="radio" name="osOption" id="linuxRadio" value="linux">Linux
+        </label></li>
+</ul>
+
+
+<h3 id="feature-selector">What content would you like to include in the workshop?</h3>
+<ul class="configurator">
+    <li id="use-native-li">
+        <label>
+            <input type="checkbox" id="use-native">Native compilation
+        </label>
+    </li>
+    <li id="use-ai-li">
+        <label>
+            <input type="checkbox" id="use-ai">Creating an AI-integration service
+        </label>
+    </li>
+    <li id="use-kubernetes-li">
+        <label>
+            <input type="checkbox" id="use-kubernetes">Running Quarkus on Kubernetes
+        </label>
+    </li>
+    <li>
+    <li id="use-contract-testing-li">
+        <label>
+            <input type="checkbox" id="use-contract-testing">Contract testing with Pact
+        </label>
+    </li>
+    <li id="use-observability-li" hidden="true">
+        <label>
+            <input type="checkbox" id="use-observability">Observability
+        </label>
+    </li>
+    <li id="use-messaging-li" hidden="true">
+        <label>
+            <input type="checkbox" id="use-messaging">Messaging
+        </label>
+    </li>
+    <li id="use-extension-li" hidden="true">
+        <label>
+            <input type="checkbox" id="use-extension">Writing an extension
+        </label>
+    </li>
+</ul>
+
+<br>
+
+<button onclick="generateURL()">Customise my workshop</button>
+<br/>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const hideDefined = urlParams.get("hideDefined")?.toLowerCase() === "true";
+    for (const [key, value] of urlParams.entries()) {
+        if (key === "os") {
+            const input = document.querySelector(`input[id="${value}Radio"]`)
+            if (input) {
+                input.checked = true;
+            }
+        } else {
+            const input = document.querySelector(`input[id="use-${key}"]`)
+            if (input) {
+                if (value && value.toLowerCase() === "true") {
+                    input.checked = true;
+                } else {
+                    input.checked = false;
+                }
+            }
+            if (hideDefined) {
+                const li = document.querySelector(`li[id="use-${key}-li"]`)
+                if (li) {
+                    li.hidden = true;
+                }
+            }
+        }
+
+        hideHeaderIfAllChildrenAreHidden()
+    }
+
+    function hideHeaderIfAllChildrenAreHidden() {
+
+        // Find all of the list items with a name matching use-*-li
+        var lis = document.querySelectorAll("li[id^='use-'],li[id$='-li']");
+
+        if (lis) {
+            // Are any of these children visible?
+            const visible = Array.from(lis).find(li => li.hidden == false)
+            // If not, hide the parent heading
+            if (!visible) {
+                const header = document.querySelector(`[id="feature-selector"]`)
+                if (header) {
+                    header.hidden = true;
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

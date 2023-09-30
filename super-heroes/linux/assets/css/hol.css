@@ -1,0 +1,175 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";
+@import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
+
+html, body {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
+body {
+  margin: 10px;
+}
+
+p,
+blockquote,
+dt,
+td.content,
+span.alt {
+  font-size: medium;
+}
+
+#header,
+#content,
+#footnotes,
+#footer {
+  max-width: 90.5em;
+}
+
+/*There's a font override on these, which we need to de-override*/
+.admonitionblock .title {
+  font-size: 1rem !important;
+  font-family: 'Open Sans', Arial, sans-serif !important;
+}
+
+.quoteblock blockquote,
+.quoteblock blockquote,
+td.content {
+  font-size: 1.2em;
+}
+
+.assignment pre code {
+  background-color: transparent;
+}
+
+.sidebarblock p,
+.sidebarblock dt,
+.sidebarblock td.content,
+p.tableblock {
+  font-size: 1em;
+}
+
+a[data-toggle='collapse'] {
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 46px;
+  font-weight: bold;
+}
+
+#toctitle,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  line-height: 1.1;
+  color: darkblue;
+}
+
+h3, h4, .h3, .h4 {
+  border-bottom: 1px solid darkblue;
+  padding-top: 0.2em;
+}
+
+h1 {
+  margin: .67em 0;
+  font-size: 1.5em;
+}
+
+li p {
+  font-size: medium;
+}
+
+code {
+  color: #c7254e;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.quoteblock blockquote:before {
+  vertical-align: baseline;
+}
+
+.listingblock:hover .clipboard {
+  display: block;
+}
+
+.cta > .content {
+  /*We could set a background or other styling for the CTA blocks here,
+  but we also need to undo the default 'example' styling */
+  background-color: white;
+  border: 0px solid white;
+  box-shadow: none;
+  padding: 0;
+}
+
+/*See here for the list of unicode codes for fontawesome*/
+/*https://fontawesome.com/v5/cheatsheet*/
+
+.cta::before {
+  color: #cc0000;
+  vertical-align: top;
+  font-size: larger;
+  font-family: "Font Awesome 5 Free", 'Open Sans', Arial, sans-serif;
+  content: "\f135" " Time to code";
+  display: inline-block;
+  padding-right: 3px;
+  padding-top: 7px;
+  padding-bottom: 1.25em;
+  font-weight: 900;
+}
+
+.clipboard {
+  display: none;
+  border: 0;
+  font-size: .75em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 6px;
+  color: #999;
+  position: absolute;
+  top: .425rem;
+  right: .5rem;
+  background: transparent;
+}
+
+code + .clipboard {
+  top: 2rem !important;
+}
+
+.clipboard:hover, .clipboard:focus, .clipboard:active {
+  outline: 0;
+  background-color: #eee9e6;
+}
+
+.half-size {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+span.red.big {
+  vertical-align: top;
+}
+
+pre code, pre pre {
+  font-size: 14px;
+}
+
+ul.configurator {
+  list-style-type: none;
+}
