@@ -2,7 +2,41 @@
 @import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
 
 html, body {
-  font-family: 'Open Sans', Arial, sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
+
+    --quarkus-blue: #4695EB;
+    --dark-blue: #09131E;
+    --dark-blue-alt: #0D1C2C;
+    --dark-blue-1: #205894;
+    --white: white;
+
+    --link: #1259A5;
+    --link-dark-bg: #9BCAFA;
+    --link-light-bg: #1259A5;
+    --link-hover: --red;
+    --link-visited: #1259A5;
+
+    --cta-hover: var(--link-hover);
+
+    --soft-yellow: #FDE9BF;
+    --orange: #E37B40;
+    --light-blue: #e4edf7;
+    --red: #FF004A;
+    --dark-red: #cc0000;
+    --cta-blue: #0B58AB;
+
+    --grey-0: #EFEFEF;
+    --grey-1: #AAAAAA;
+    --grey-2: #555555;
+    --grey-3: #333333;
+    --grey-4: #222222;
+    --dark-grey: #4C4C4C;
+    --light-grey: #DCDCDC;
+
+    --border-radius: 10px;
+
+    --site-margins: 13rem;
+
 }
 
 body {
@@ -116,36 +150,88 @@ samp {
 }
 
 .quoteblock blockquote:before {
-  vertical-align: baseline;
+    vertical-align: baseline;
 }
 
 .listingblock:hover .clipboard {
-  display: block;
+    display: block;
+}
+
+.title-band {
+    background: var(--dark-blue-alt) !important;
+    color: var(--white);
+    position: relative;
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+    padding-left: var(--site-margins)
+
+}
+
+.content-area {
+    margin-left: var(--site-margins);
+    margin-right: var(--site-margins);
+    width: 60%;
 }
 
 .cta > .content {
-  /*We could set a background or other styling for the CTA blocks here,
-  but we also need to undo the default 'example' styling */
-  background-color: white;
-  border: 0px solid white;
-  box-shadow: none;
-  padding: 0;
+    /*We could set a background or other styling for the CTA blocks here,
+    but we also need to undo the default 'example' styling */
+    background-color: white;
+    border: 0px solid white;
+    box-shadow: none;
+    padding: 0;
 }
+
+button {
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+
+    white-space: nowrap;
+
+    background-color: var(--quarkus-blue);
+    border-radius: var(--border-radius);
+    border: var(--quarkus-blue);
+
+    padding: 0.5rem 2rem;
+
+    text-transform: uppercase;
+
+}
+
+button:visited {
+    color: var(--white);
+}
+
+button:hover {
+    color: var(--white);
+    background-color: var(--dark-red);
+    border: var(--dark-red);
+}
+
+.big {
+    width: 60%;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    padding: 1em;
+    font-size: 1.2em;
+}
+
 
 /*See here for the list of unicode codes for fontawesome*/
 /*https://fontawesome.com/v5/cheatsheet*/
 
 .cta::before {
-  color: #cc0000;
-  vertical-align: top;
-  font-size: larger;
-  font-family: "Font Awesome 5 Free", 'Open Sans', Arial, sans-serif;
-  content: "\f135" " Time to code";
-  display: inline-block;
-  padding-right: 3px;
-  padding-top: 7px;
-  padding-bottom: 1.25em;
-  font-weight: 900;
+    color: #cc0000;
+    vertical-align: top;
+    font-size: larger;
+    font-family: "Font Awesome 5 Free", 'Open Sans', Arial, sans-serif;
+    content: "\f135" " Time to code";
+    display: inline-block;
+    padding-right: 3px;
+    padding-top: 7px;
+    padding-bottom: 1.25em;
+    font-weight: 900;
 }
 
 .clipboard {
