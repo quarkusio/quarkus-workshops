@@ -14,14 +14,22 @@ blockquote,
 dt,
 td.content,
 span.alt {
-  font-size: medium;
+    font-size: medium;
+}
+
+label {
+    font-weight: normal;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 8px;
 }
 
 #header,
 #content,
 #footnotes,
 #footer {
-  max-width: 90.5em;
+    max-width: 90.5em;
 }
 
 /*There's a font override on these, which we need to de-override*/
