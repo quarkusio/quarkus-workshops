@@ -8,7 +8,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>extension-version</artifactId>
-  <name>Extension Version - Runtime</name>
+  <name>Quarkus Workshop :: Extension Version :: Runtime</name>
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
