@@ -59,11 +59,6 @@ a[data-toggle='collapse'] {
   margin-bottom: 10px;
 }
 
-h1 {
-  font-size: 46px;
-  font-weight: bold;
-}
-
 #toctitle,
 .h1,
 .h2,
@@ -83,21 +78,34 @@ h6 {
 }
 
 h3, h4, .h3, .h4 {
-  border-bottom: 1px solid darkblue;
-  padding-top: 0.2em;
+    border-bottom: 1px solid darkblue;
+    padding-top: 0.2em;
 }
 
 h1 {
-  margin: .67em 0;
-  font-size: 1.5em;
+    margin: .67em 0;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+h4 {
+    font-size: 1.4em;
 }
 
 li p {
-  font-size: medium;
+    font-size: medium;
 }
 
 code {
-  color: #c7254e;
+    color: #c7254e;
 }
 
 code,
