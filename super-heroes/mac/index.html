@@ -54,8 +54,6 @@
 <div class="content-area">
     <button class="big" onclick="generateDefaultURL()">Just take me to the default workshop</button>
 
-    <h2>What kind of workshop would you like?</h2>
-
     <h3>What operating system are you using?</h3>
     <ul class="configurator">
         <li>
@@ -75,45 +73,45 @@
     </ul>
 
 
-<h3 id="feature-selector">What content would you like to include in the workshop?</h3>
-<ul class="configurator">
-    <li id="use-native-li">
-        <label>
-            <input type="checkbox" id="use-native">Native compilation
-        </label>
-    </li>
-    <li id="use-ai-li">
-        <label>
-            <input type="checkbox" id="use-ai">Creating an AI-integration service
-        </label>
-    </li>
-    <li id="use-kubernetes-li">
-        <label>
-            <input type="checkbox" id="use-kubernetes">Running Quarkus on Kubernetes
-        </label>
-    </li>
-    <li>
-    <li id="use-contract-testing-li">
-        <label>
-            <input type="checkbox" id="use-contract-testing">Contract testing with Pact
-        </label>
-    </li>
-    <li id="use-observability-li" hidden="true">
-        <label>
-            <input type="checkbox" id="use-observability">Observability
-        </label>
-    </li>
-    <li id="use-messaging-li" hidden="true">
-        <label>
-            <input type="checkbox" id="use-messaging">Messaging
-        </label>
-    </li>
-    <li id="use-extension-li" hidden="true">
-        <label>
-            <input type="checkbox" id="use-extension">Writing an extension
-        </label>
-    </li>
-</ul>
+    <h3 id="feature-selector">What content would you like to include in the workshop?</h3>
+    <ul class="configurator">
+        <li id="use-native-li">
+            <label>
+                <input type="checkbox" id="use-native">Native compilation
+            </label>
+        </li>
+        <li id="use-ai-li">
+            <label>
+                <input type="checkbox" id="use-ai">Creating an AI-integration service
+            </label>
+        </li>
+        <li id="use-kubernetes-li">
+            <label>
+                <input type="checkbox" id="use-kubernetes">Running Quarkus on Kubernetes
+            </label>
+        </li>
+        <li>
+        <li id="use-contract-testing-li">
+            <label>
+                <input type="checkbox" id="use-contract-testing">Contract testing with Pact
+            </label>
+        </li>
+        <li id="use-observability-li" hidden="true">
+            <label>
+                <input type="checkbox" id="use-observability">Observability
+            </label>
+        </li>
+        <li id="use-messaging-li" hidden="true">
+            <label>
+                <input type="checkbox" id="use-messaging">Messaging
+            </label>
+        </li>
+        <li id="use-extension-li" hidden="true">
+            <label>
+                <input type="checkbox" id="use-extension">Writing an extension
+            </label>
+        </li>
+    </ul>
 
     <button onClick="generateURL()">Take me to my custom workshop</button>
 </div>
