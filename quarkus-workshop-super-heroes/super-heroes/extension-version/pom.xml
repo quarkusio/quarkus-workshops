@@ -6,7 +6,7 @@
   <artifactId>extension-version-parent</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Extension Version - Parent</name>
+  <name>Quarkus Workshop :: Extension Version :: R00T</name>
   <modules>
     <module>deployment</module>
     <module>runtime</module>

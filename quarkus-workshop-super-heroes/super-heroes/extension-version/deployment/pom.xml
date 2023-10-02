@@ -8,7 +8,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>extension-version-deployment</artifactId>
-  <name>Extension Version - Deployment</name>
+  <name>Quarkus Workshop :: Extension Version :: Deployment</name>
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
