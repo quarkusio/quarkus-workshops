@@ -523,57 +523,64 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 .CodeRay .change .change{color:#66f}
 .CodeRay .head .head{color:#f4f}
 </style>
-<meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
-<meta name="description" content="A hands on lab about Quarkus">
+<head>
 
-<link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
-<link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
-<link href="assets/css/hol.css" media="screen" rel="stylesheet">
-<link href="assets/css/github.css" media="screen" rel="stylesheet">
-<script src="assets/js/jquery-3.1.1.js"></script>
-<script src="assets/js/bootstrap.js"></script>
-<!-- be aware that only a few languages have been included-->
-<script src="assets/js/highlight.pack.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+    <meta name="description" content="A hands on lab about Quarkus">
+
+    <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+    <link href="assets/css/hol.css" media="screen" rel="stylesheet">
+    <link href="assets/css/github.css" media="screen" rel="stylesheet">
+    <script src="assets/js/jquery-3.1.1.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <!-- be aware that only a few languages have been included-->
+    <script src="assets/js/highlight.pack.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 
 
-<script>
-    $(document).ready(function () {
-        hljs.initHighlightingOnLoad();
-        $('pre.highlight code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
+    <script>
+        $(document).ready(function () {
+            hljs.initHighlightingOnLoad();
+            $('pre.highlight code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
 
-        var pre = document.getElementsByTagName('pre');
-        for (var i = 0; i < pre.length; i++) {
-            var b = document.createElement('button');
-            b.className = 'clipboard';
-            b.textContent = 'Copy';
-            if (pre[i].childNodes.length === 1 && pre[i].childNodes[0].nodeType === 3) {
-                var div = document.createElement('div');
-                div.textContent = pre[i].textContent;
-                pre[i].textContent = '';
-                pre[i].appendChild(div);
+            var pre = document.getElementsByTagName('pre');
+            for (var i = 0; i < pre.length; i++) {
+                var b = document.createElement('button');
+                b.className = 'clipboard';
+                b.textContent = 'Copy';
+                if (pre[i].childNodes.length === 1 && pre[i].childNodes[0].nodeType === 3) {
+                    var div = document.createElement('div');
+                    div.textContent = pre[i].textContent;
+                    pre[i].textContent = '';
+                    pre[i].appendChild(div);
+                }
+                pre[i].appendChild(b);
             }
-            pre[i].appendChild(b);
-        }
-        var clipboard = new ClipboardJS('.clipboard', {
-            target: function (b) {
-                var p = b.parentNode;
-                return p.getElementsByClassName("code")[0]
-                    ? p.getElementsByClassName("code")[0]
-                    : p.childNodes[0];
-            }
+            var clipboard = new ClipboardJS('.clipboard', {
+                target: function (b) {
+                    var p = b.parentNode;
+                    return p.getElementsByClassName("code")[0]
+                        ? p.getElementsByClassName("code")[0]
+                        : p.childNodes[0];
+                }
+            });
+            clipboard.on('success', function (e) {
+                e.clearSelection();
+                e.trigger.textContent = 'Copied';
+                setTimeout(function () {
+                    e.trigger.textContent = 'Copy';
+                }, 2000);
+            });
         });
-        clipboard.on('success', function (e) {
-            e.clearSelection();
-            e.trigger.textContent = 'Copied';
-            setTimeout(function () {
-                e.trigger.textContent = 'Copy';
-            }, 2000);
-        });
-    });
-</script>
+    </script>
+</head>
+<header>
+    <img src="images/quarkus-logo.png" alt="Quarkus Logo"/>
+</header>
+
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -808,15 +815,6 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="../../images/quarkus-logo.png" alt="quarkus logo">
-</div>
-</div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="_welcome">Welcome</h2>
 <div class="sectionbody">
@@ -8049,7 +8047,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-10-03 07:28:59 UTC
+Last updated 2023-10-03 09:08:13 UTC
 </div>
 </div>
 </body>
