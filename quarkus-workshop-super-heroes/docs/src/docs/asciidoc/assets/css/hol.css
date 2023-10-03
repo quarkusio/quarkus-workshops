@@ -61,15 +61,49 @@ input[type="checkbox"], input[type="radio"] {
 
 #header,
 #content,
-#footnotes,
-#footer {
+#footnotes {
     max-width: 90.5em;
+}
+
+#footer, footer {
+    height: 42px;
+    background-color: black;
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-left: var(--site-margins);
+    margin-right: var(--site-margins);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+/*Evil css, sorry. The asciidoc-generated footer and our custom one need to co-exist, so overlay them*/
+footer {
+    z-index: 4;
+    right: 0;
+    width: 700px; /* don't go so far over we interfere with the main toc */
+    justify-content: right;
+    margin-right: 0;
+    padding-right: 100px; /* fudged by eye, we should come back and set this properly */
+
+}
+
+footer a:visited {
+    color: white;
+}
+
+footer a {
+    color: white;
 }
 
 /*There's a font override on these, which we need to de-override*/
 .admonitionblock .title {
-  font-size: 1rem !important;
-  font-family: 'Open Sans', Arial, sans-serif !important;
+    font-size: 1rem !important;
+    font-family: 'Open Sans', Arial, sans-serif !important;
 }
 
 .quoteblock blockquote,
