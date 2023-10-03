@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-10-02 Quarkus 3.4.1</title>
+<title>Quarkus Super-Heroes Workshop: 2023-10-03 Quarkus 3.4.1</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -523,10 +523,61 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 .CodeRay .change .change{color:#66f}
 .CodeRay .head .head{color:#f4f}
 </style>
+<meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+<meta name="description" content="A hands on lab about Quarkus">
+
+<link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+<link href="assets/css/hol.css" media="screen" rel="stylesheet">
+<link href="assets/css/github.css" media="screen" rel="stylesheet">
+<script src="assets/js/jquery-3.1.1.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<!-- be aware that only a few languages have been included-->
+<script src="assets/js/highlight.pack.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        hljs.initHighlightingOnLoad();
+        $('pre.highlight code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
+        var pre = document.getElementsByTagName('pre');
+        for (var i = 0; i < pre.length; i++) {
+            var b = document.createElement('button');
+            b.className = 'clipboard';
+            b.textContent = 'Copy';
+            if (pre[i].childNodes.length === 1 && pre[i].childNodes[0].nodeType === 3) {
+                var div = document.createElement('div');
+                div.textContent = pre[i].textContent;
+                pre[i].textContent = '';
+                pre[i].appendChild(div);
+            }
+            pre[i].appendChild(b);
+        }
+        var clipboard = new ClipboardJS('.clipboard', {
+            target: function (b) {
+                var p = b.parentNode;
+                return p.getElementsByClassName("code")[0]
+                    ? p.getElementsByClassName("code")[0]
+                    : p.childNodes[0];
+            }
+        });
+        clipboard.on('success', function (e) {
+            e.clearSelection();
+            e.trigger.textContent = 'Copied';
+            setTimeout(function () {
+                e.trigger.textContent = 'Copy';
+            }, 2000);
+        });
+    });
+</script>
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-10-02 Quarkus 3.4.1</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-10-03 Quarkus 3.4.1</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -9245,7 +9296,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-10-02 20:27:58 UTC
+Last updated 2023-10-03 07:28:58 UTC
 </div>
 </div>
 </body>

@@ -434,6 +434,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+<meta name="description" content="A hands on lab about Quarkus">
+
+<link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+<link href="assets/css/hol.css" media="screen" rel="stylesheet">
+<link href="assets/css/github.css" media="screen" rel="stylesheet">
+<script src="assets/js/jquery-3.1.1.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<!-- be aware that only a few languages have been included-->
+<script src="assets/js/highlight.pack.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        hljs.initHighlightingOnLoad();
+        $('pre.highlight code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
+        var pre = document.getElementsByTagName('pre');
+        for (var i = 0; i < pre.length; i++) {
+            var b = document.createElement('button');
+            b.className = 'clipboard';
+            b.textContent = 'Copy';
+            if (pre[i].childNodes.length === 1 && pre[i].childNodes[0].nodeType === 3) {
+                var div = document.createElement('div');
+                div.textContent = pre[i].textContent;
+                pre[i].textContent = '';
+                pre[i].appendChild(div);
+            }
+            pre[i].appendChild(b);
+        }
+        var clipboard = new ClipboardJS('.clipboard', {
+            target: function (b) {
+                var p = b.parentNode;
+                return p.getElementsByClassName("code")[0]
+                    ? p.getElementsByClassName("code")[0]
+                    : p.childNodes[0];
+            }
+        });
+        clipboard.on('success', function (e) {
+            e.clearSelection();
+            e.trigger.textContent = 'Copied';
+            setTimeout(function () {
+                e.trigger.textContent = 'Copy';
+            }, 2000);
+        });
+    });
+</script>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -441,7 +492,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Antonio Goncalves</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2023-10-02</span>
+<span id="revdate">2023-10-03</span>
 <br><span id="revremark">Quarkus 3.4.1</span>
 </div>
 <div id="toc" class="toc2">
@@ -3003,7 +3054,7 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-10-02 20:27:58 UTC
+Last updated 2023-10-03 07:28:58 UTC
 </div>
 </div>
 </body>
