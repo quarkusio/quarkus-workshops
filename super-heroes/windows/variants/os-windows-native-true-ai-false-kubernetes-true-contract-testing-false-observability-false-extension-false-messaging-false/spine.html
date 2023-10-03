@@ -6175,17 +6175,18 @@ __  ____  __  _____   ___  __ ____  ______
 </div>
 <div class="paragraph">
 <p>Once the application is started, go to <a href="http://localhost:8080" class="bare">http://localhost:8080</a> (8080 is the default Quarkus port as we didn&#8217;t change it in the <code>application.properties</code> this time).
-It should display the main web page.</p>
+It should display a main web page. There won&#8217;t be much content yet,
+because we need to fix a few things and add some more implementation.</p>
 </div>
-<div class="imageblock half-size">
+<div class="imageblock">
 <div class="content">
-<img src="../../images/angular-ui.png" alt="angular ui">
+<img src="../../images/blank-ui.png" alt="blank ui">
 </div>
 </div>
 <div class="paragraph">
 <p>If you want, you can visit <a href="http://localhost:4200" class="bare">http://localhost:4200</a> (the usual Angular port) to confirm that Quinoa is forwarding what&#8217;s on port 4200 to port 8080.
-The version of the application on <a href="http://localhost:4200" class="bare">http://localhost:4200</a> will be disappointingly blank,
-because it&#8217;s looking for its config on the wrong port.</p>
+The version of the application on <a href="http://localhost:4200" class="bare">http://localhost:4200</a> will always stay disappointingly blank,
+because it&#8217;s looking for its config on the wrong port. So don&#8217;t use that one!</p>
 </div>
 <div class="paragraph">
 <p>You might want to create a fuller Quarkus BFF for the UI, and use something like <a href="https://quarkus.io/guides/stork">Stork</a> for service discovery.
@@ -8036,7 +8037,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-10-03 09:08:11 UTC
+Last updated 2023-10-03 09:28:13 UTC
 </div>
 </div>
 </body>
