@@ -216,6 +216,7 @@ The default build will take around 50m.
                             <attributes>
                                 <options-file>default-options.adoc</options-file>
                                 <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
+                                <assetsdir>assets</assetsdir>
                             </attributes>
                         </configuration>
                     </execution>
@@ -305,6 +306,7 @@ The default build will take around 50m.
                                             <options-file>${options.files.directory}/@item@/options.adoc</options-file>
                                             <diagram-cachedir>${project.build.directory}/generated-asciidoc/variants/</diagram-cachedir>
                                             <imagesdir>../../images</imagesdir>
+                                            <assetsdir>../../assets</assetsdir>
                                         </attributes>
                                         <!-- Specify an empty resources set so that nothing gets copied by default in the sub-file folders. -->
                                         <resources>
