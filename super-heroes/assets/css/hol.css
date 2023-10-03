@@ -100,6 +100,10 @@ footer a {
     color: white;
 }
 
+#footer-text {
+    color: white;
+}
+
 /*There's a font override on these, which we need to de-override*/
 .admonitionblock .title {
     font-size: 1rem !important;
