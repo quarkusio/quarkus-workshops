@@ -129,13 +129,21 @@ Oh, and be ready to have some fun!
 
 === The completed workshop
 
-If you want to build the completed workshop, after you've unzipped the {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`] file, you would need to run the following commands from the root project:
+If you want to build the completed workshop, after you've unzipped the {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`] file, you would need to run the following command from the root project:
+
+[source, shell]
+----
+$ ./mvnw clean install -Pcomplete
+----
+
+ifdef::use-extension[]
+The extension can be built with the following command:
 
 [source, shell]
 ----
 $ ./mvnw clean install -f super-heroes/extension-version
-$ ./mvnw clean install -Pcomplete
 ----
+endif::use-extension[]
 
 
 == Software Requirements
