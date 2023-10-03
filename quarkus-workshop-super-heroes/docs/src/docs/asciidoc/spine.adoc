@@ -50,8 +50,6 @@ endif::[]
 
 // /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
 
-image::quarkus-logo.png[]
-
 
 // ====================================================
 // ====================== CORE ========================

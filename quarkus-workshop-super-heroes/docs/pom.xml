@@ -139,10 +139,9 @@ The default build will take around 50m.
                             <allow-uri-read/>
                             <toc>left</toc>
                             <linkcss>false</linkcss>
-                            <docinfo1>true</docinfo1>
+                            <docinfo>shared</docinfo>
                             <icons>font</icons>
                             <toclevels>3</toclevels>
-                            <icons>font</icons>
                             <plantDir>../plantuml</plantDir>
                             <github-raw>${github.raw}</github-raw>
                             <github-url>${github.url}</github-url>
