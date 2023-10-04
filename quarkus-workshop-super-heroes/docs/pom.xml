@@ -200,17 +200,13 @@ The default build will take around 50m.
                                 ${project.build.directory}/generated-asciidoc/
                             </outputDirectory>
                             <resources>
-                                <!-- And add in the html configurator to the top-level -->
-                                <resource>
-                                    <directory>src/docs/html</directory>
-                                    <include>**</include>
-                                    <filtering>true</filtering>
-                                </resource>
                                 <resource>
                                     <directory>${project.basedir}/src/docs/asciidoc</directory>
                                     <filtering>false</filtering>
                                     <include>assets/**</include>
                                     <include>images/**</include>
+                                    <!-- And add in the html configurator to the top-level -->
+                                    <include>*html</include>
                                 </resource>
                             </resources>
                             <attributes>
