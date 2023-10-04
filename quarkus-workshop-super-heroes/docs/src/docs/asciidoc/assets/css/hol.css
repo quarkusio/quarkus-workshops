@@ -36,7 +36,7 @@ html, body {
     --border-radius: 10px;
 
     --site-margins: 13rem;
-
+    --toc-width: 20rem;
 }
 
 body {
@@ -67,6 +67,7 @@ input[type="checkbox"], input[type="radio"] {
 
 #footer, footer {
     height: 42px;
+    width: 100%;
     background-color: black;
     color: var(--white);
     display: flex;
@@ -74,22 +75,11 @@ input[type="checkbox"], input[type="radio"] {
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    margin-left: var(--site-margins);
-    margin-right: var(--site-margins);
+    padding-left: calc(var(--toc-width) + var(--site-margins));
+    padding-right: var(--site-margins);
     position: fixed;
     bottom: 0;
-    right: 0;
-}
-
-/*Evil css, sorry. The asciidoc-generated footer and our custom one need to co-exist, so overlay them*/
-footer {
-    z-index: 4;
-    right: 0;
-    width: 700px; /* don't go so far over we interfere with the main toc */
-    justify-content: right;
-    margin-right: 0;
-    padding-right: 100px; /* fudged by eye, we should come back and set this properly */
-
+    right: 0
 }
 
 footer a:visited {
@@ -97,10 +87,6 @@ footer a:visited {
 }
 
 footer a {
-    color: white;
-}
-
-#footer-text {
     color: white;
 }
 
@@ -205,6 +191,10 @@ samp {
 
 }
 
+#toc.toc2 {
+    width: var(--toc-width);
+}
+
 .content-area {
     margin-left: var(--site-margins);
     margin-right: var(--site-margins);
@@ -215,7 +205,7 @@ samp {
     /*We could set a background or other styling for the CTA blocks here,
     but we also need to undo the default 'example' styling */
     background-color: white;
-    border: 0px solid white;
+    border: 0 solid white;
     box-shadow: none;
     padding: 0;
 }

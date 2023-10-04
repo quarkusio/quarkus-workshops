@@ -9,6 +9,8 @@ Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; G
 :figure-caption: Figure
 :table-caption: Table
 :xrefstyle: short
+// No footer, because we control it completely in docinfo-footer
+:nofooter:
 // TOC
 :toc:
 :toclevels: 2
