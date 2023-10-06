@@ -11,6 +11,7 @@
         <meta name="description" content="A hands on lab about Quarkus">
 
         <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
         <link href="assets/css/hol.css" media="screen" rel="stylesheet">
     </head>
     <title>Workshop configurator</title>
@@ -54,26 +55,26 @@
 <div class="content-area">
     <button class="big" onclick="generateDefaultURL()">Just take me to the default workshop</button>
 
-    <h3>What operating system are you using?</h3>
+    <h2><i class="fas fa-desktop"></i>What operating system are you using?</h2>
     <ul class="configurator">
         <li>
             <label for="macRadio">
-                <input type="radio" name="osOption" id="macRadio" value="mac">MacOS
+                <input type="radio" name="osOption" id="macRadio" value="mac"><i class="fab fa-apple"></i>MacOS
             </label>
         </li>
         <li>
             <label for="windowsRadio">
-                <input type="radio" name="osOption" id="windowsRadio" value="windows">Windows
+                <input type="radio" name="osOption" id="windowsRadio" value="windows"><i class="fab fa-windows"></i>Windows
             </label>
         </li>
         <li>
             <label for="linuxRadio">
-                <input type="radio" name="osOption" id="linuxRadio" value="linux">Linux
+                <input type="radio" name="osOption" id="linuxRadio" value="linux"><i class="fab fa-linux"></i>Linux
             </label></li>
     </ul>
 
 
-    <h3 id="feature-selector">What content would you like to include in the workshop?</h3>
+    <h2 id="feature-selector"><i class="fas fa-book"></i>What content would you like to include in the workshop?</h2>
     <ul class="configurator">
         <li id="use-native-li">
             <label>

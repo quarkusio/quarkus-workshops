@@ -55,6 +55,10 @@ label {
     font-weight: normal;
 }
 
+i {
+    padding-right: 0.5em;
+}
+
 input[type="checkbox"], input[type="radio"] {
     margin-right: 8px;
 }
@@ -130,28 +134,30 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: inherit;
-  line-height: 1.1;
-  color: darkblue;
+    font-family: inherit;
+    line-height: 1.1;
+    color: black;
+    font-weight: 600;
+    padding: 2rem 0 0.45rem 0;
 }
 
 h3, h4, .h3, .h4 {
-    border-bottom: 1px solid darkblue;
-    padding-top: 0.2em;
+    border-bottom: 1px solid lightgray;
 }
 
 h1 {
     margin: .67em 0;
     font-size: 2em;
     font-weight: bold;
+    padding: 3rem 0 0.7rem 0;
 }
 
 h2 {
-    font-size: 1.6em;
+    font-size: 1.8em;
 }
 
 h3 {
-    font-size: 1.5em;
+    font-size: 1.6em;
 }
 
 h4 {
@@ -240,7 +246,7 @@ button:hover {
 .big {
     width: 60%;
     margin-top: 1em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     padding: 1em;
     font-size: 1.2em;
 }
