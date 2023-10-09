@@ -20,12 +20,36 @@
         const baseUrl = "./";
         const filename = "spine.html"
 
+        /* It's easy for people to click the most prominent button, but if they've set options they should
+         * be choosing the less prominent button at the bottom. Fix this by making the big button go away.
+         */
+        function hideDefaultButton() {
+            const button = document.querySelector(`button`);
+            button.addEventListener('click', generateTailoredURL)
+
+            const originalText = document.querySelector(`.fadeable`);
+            if (originalText) {
+                // Only flash if there was originalText to change
+                button.classList.toggle('flash')
+
+                originalText.classList.toggle('fadingout');
+                originalText.classList.toggle('fadeable');
+            }
+
+            const replacementText = document.querySelector(`.faded`);
+            if (replacementText) {
+                replacementText.classList.toggle('faded');
+                replacementText.classList.toggle('fadingin');
+            }
+
+        }
+
         function generateDefaultURL() {
             const url = baseUrl + filename
             window.location.href = url;
         }
 
-        function generateURL() {
+        function generateTailoredURL() {
             const selectedOptions = [];
 
             // Get the selected build option
@@ -44,7 +68,6 @@
             // Generate the URL based on selected options
             const url = baseUrl + 'variants/' + selectedOptions.join("-") + "/" + filename;
             window.location.href = url;
-
         }
 
     </script>
@@ -53,23 +76,34 @@
 <h1 class="title-band">Quarkus Workshop Configurator</h1>
 
 <div class="content-area">
-    <button class="big" onclick="generateDefaultURL()">Just take me to the default workshop</button>
+    <button id="fadeable" class="big" onclick="generateDefaultURL()">
+        <!--            spacing help for absolutely positioned children-->
+        <div class="anchor">
+            <div class="fadeable">Just take me to the default workshop
+            </div>
+            <div class="faded">Take me to my custom workshop
+            </div>
+        </div>
+    </button>
 
     <h2><i class="fas fa-desktop"></i>What operating system are you using?</h2>
     <ul class="configurator">
         <li>
             <label for="macRadio">
-                <input type="radio" name="osOption" id="macRadio" value="mac"><i class="fab fa-apple"></i>MacOS
+                <input type="radio" name="osOption" id="macRadio" value="mac" onClick="hideDefaultButton()"><i
+                class="fab fa-apple"></i>MacOS
             </label>
         </li>
         <li>
             <label for="windowsRadio">
-                <input type="radio" name="osOption" id="windowsRadio" value="windows"><i class="fab fa-windows"></i>Windows
+                <input type="radio" name="osOption" id="windowsRadio" value="windows" onClick="hideDefaultButton()"><i
+                class="fab fa-windows"></i>Windows
             </label>
         </li>
         <li>
             <label for="linuxRadio">
-                <input type="radio" name="osOption" id="linuxRadio" value="linux"><i class="fab fa-linux"></i>Linux
+                <input type="radio" name="osOption" id="linuxRadio" value="linux" onClick="hideDefaultButton()"><i
+                class="fab fa-linux"></i>Linux
             </label></li>
     </ul>
 
@@ -78,43 +112,43 @@
     <ul class="configurator">
         <li id="use-native-li">
             <label>
-                <input type="checkbox" id="use-native">Native compilation
+                <input type="checkbox" id="use-native" onClick="hideDefaultButton()">Native compilation
             </label>
         </li>
         <li id="use-ai-li">
             <label>
-                <input type="checkbox" id="use-ai">Creating an AI-integration service
+                <input type="checkbox" id="use-ai" onClick="hideDefaultButton()">Creating an AI-integration service
             </label>
         </li>
         <li id="use-kubernetes-li">
             <label>
-                <input type="checkbox" id="use-kubernetes">Running Quarkus on Kubernetes
+                <input type="checkbox" id="use-kubernetes" onClick="hideDefaultButton()">Running Quarkus on Kubernetes
             </label>
         </li>
         <li>
         <li id="use-contract-testing-li">
-            <label>
-                <input type="checkbox" id="use-contract-testing">Contract testing with Pact
-            </label>
+        <label>
+            <input type="checkbox" id="use-contract-testing" onClick="hideDefaultButton()">Contract testing with
+            Pact
+        </label>
         </li>
         <li id="use-observability-li" hidden="true">
             <label>
-                <input type="checkbox" id="use-observability">Observability
+                <input type="checkbox" id="use-observability" onClick="hideDefaultButton()">Observability
             </label>
         </li>
-    <li id="use-messaging-li">
+        <li id="use-messaging-li">
             <label>
-                <input type="checkbox" id="use-messaging">Messaging
+                <input type="checkbox" id="use-messaging" onClick="hideDefaultButton()">Messaging
             </label>
         </li>
-    <li id="use-extension-li">
+        <li id="use-extension-li">
             <label>
-                <input type="checkbox" id="use-extension">Writing an extension
+                <input type="checkbox" id="use-extension" onClick="hideDefaultButton()">Writing an extension
             </label>
         </li>
     </ul>
 
-    <button onClick="generateURL()">Take me to my custom workshop</button>
 </div>
 
 <script>
