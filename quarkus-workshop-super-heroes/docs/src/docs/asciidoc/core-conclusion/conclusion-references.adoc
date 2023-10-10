@@ -9,3 +9,6 @@
 * https://quarkus.io
 * https://code.quarkus.io
 * https://quarkus.io/guides/all-config
+* https://azure.microsoft.com/services/container-apps[Azure Container Apps Overview]
+* https://docs.microsoft.com/azure/container-apps[Azure Container Apps Documentation]
+* https://github.com/ozangunalp/managed-kafka-quarkus/tree/main/azure-event-hub[Managed Kafka Quarkus]

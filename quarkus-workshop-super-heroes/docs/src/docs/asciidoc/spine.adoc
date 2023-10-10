@@ -146,18 +146,34 @@ include::optional-observability/observability-prometheus.adoc[leveloffset=+2]
 <<<
 endif::use-observability[]
 
+// Container
+ifdef::use-container[]
+include::optional-container/cotnainer.adoc[leveloffset=+1]
+<<<
+endif::use-container[]
+
+// Kubernetes
+ifdef::use-kubernetes[]
+include::optional-kubernetes/kubernetes.adoc[leveloffset=+1]
+include::optional-kubernetes/kubernetes-open-shift.adoc[leveloffset=+2]
+<<<
+endif::use-kubernetes[]
+
+// Azure
+ifdef::use-azure[]
+include::optional-azure-container-apps/azure-aca.adoc[leveloffset=+1]
+include::optional-azure-container-apps/azure-setting-up.adoc[leveloffset=+2]
+include::optional-azure-container-apps/azure-local-running-app.adoc[leveloffset=+2]
+include::optional-azure-container-apps/azure-aca-running-app.adoc[leveloffset=+2]
+include::optional-azure-container-apps/azure-aca-administrating.adoc[leveloffset=+2]
+include::optional-azure-container-apps/azure-cleaning-up.adoc[leveloffset=+2]
+endif::use-azure[]
+
 // Extension
 ifdef::use-extension[]
 include::optional-quarkus-extension/quarkus-extension.adoc[leveloffset=+1]
 <<<
 endif::use-extension[]
-
-// Kubernetes
-ifdef::use-kubernetes[]
-include::optional-kubernetes/kubernetes-cloud.adoc[leveloffset=+1]
-include::optional-kubernetes/kubernetes-cloud-open-shift.adoc[leveloffset=+2]
-<<<
-endif::use-kubernetes[]
 
 
 // ====================================================

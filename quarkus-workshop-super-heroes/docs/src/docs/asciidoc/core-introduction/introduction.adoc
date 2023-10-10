@@ -28,6 +28,9 @@ endif::use-messaging[]
 ifdef::use-ai[]
 * Use OpenAI to introduce some artificial intelligence
 endif::use-ai[]
+ifdef::use-azure[]
+* Deploy the entire application to Azure Container Apps
+endif::use-azure[]
 * Answer the ultimate question: are super-heroes stronger than super-villains?
 
 This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows, OSX, or Linux laptop.
@@ -60,6 +63,13 @@ endif::use-kubernetes[]
 ifdef::use-observability[]
 * How to monitor your microservices with Prometheus
 endif::use-observability[]
+ifdef::use-azure[]
+* What is Azure Container Apps
+* How to push the Docker images to Azure Registry
+* How to create managed services in Azure (Postgres database, Kafka)
+* How to deploy microservices to Azure Container Apps
+* How to configure Docker images in Azure Container Apps
+endif::use-azure[]
 ifdef::use-extension[]
 * How to extend Quarkus with extensions
 endif::use-extension[]

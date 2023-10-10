@@ -108,6 +108,14 @@ ifdef::use-observability[]
 * _Observability_:
 in this section, you will add metrics, health checks, and distributed tracing to your microservices
 endif::use-observability[]
+ifdef::use-azure[]
+* _Azure Container Apps and Quarkus_:
+this section introduces Quarkus and Azure Container Apps to make sure you have all the needed vocabulary to follow along
+* _Running the Application Locally_:
+in this section, you will build Docker images out of Quarkus microservices, execute them locally with Docker compose, push them to Azure Registry, all that using Docker and Azure CLI
+* _Running the Application on Azure Container Apps_:
+in this section, you will create an entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps
+endif::use-azure[]
 ifdef::use-extension[]
 * _Extending Quarkus_:
 in this section, you will create a Quarkus extension
@@ -169,6 +177,9 @@ endif::use-native[]
 ifdef::use-ai[]
 * OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)
 endif::use-ai[]
+ifdef::use-azure[]
+* An Azure subscription and the Azure CLI
+endif::use-azure[]
 
 We will also be using Maven {maven-version}, but there is no
 need to install it. Instead, the workshop scaffolding includes
@@ -181,5 +192,5 @@ You can skip the next section if you have already installed all the prerequisite
 [WARNING]
 ====
 This workshop assumes a bash shell.
-ifdef::use-windows[If you run on Windows, in particular, adjust the commands accordingly.]
+ifdef::use-windows[If you run on Windows, in particular, adjust the commands accordingly or install WSL.]
 ====

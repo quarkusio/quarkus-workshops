@@ -51,6 +51,7 @@ The default build will take around 50m.
         <semantic-kernel.version>0.2.9-alpha</semantic-kernel.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <surefire-plugin.version>3.1.2</surefire-plugin.version>
+        <exec-plugin.version>3.1.0</exec-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -216,25 +217,6 @@ The default build will take around 50m.
                             </attributes>
                         </configuration>
                     </execution>
-                    <execution>
-                        <!-- When we do #302, we can turn azure into an attribute and use the same spine.html
-                         For now, we just build a single copy of it-->
-                        <id>output-html-azure</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDocumentName>spine-azure.adoc</sourceDocumentName>
-                            <outputDirectory>
-                                ${project.build.directory}/generated-asciidoc/
-                            </outputDirectory>
-                            <attributes>
-                                <options-file>default-options.adoc</options-file>
-                                <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
-                            </attributes>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
 
@@ -244,6 +226,7 @@ The default build will take around 50m.
             <plugin>
                 <artifactId>exec-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
+                <version>${exec-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -347,6 +330,7 @@ The default build will take around 50m.
                     <plugin>
                         <artifactId>exec-maven-plugin</artifactId>
                         <groupId>org.codehaus.mojo</groupId>
+                        <version>${exec-plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>generate-sources</phase>
