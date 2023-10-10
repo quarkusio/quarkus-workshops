@@ -44,6 +44,22 @@
 
         }
 
+        function hideDefaultButtonNoAnimation() {
+            const button = document.querySelector(`button`);
+            button.addEventListener('click', generateTailoredURL)
+
+            const originalText = document.querySelector(`.fadeable`);
+            if (originalText) {
+                originalText.hidden = true;
+            }
+
+            const replacementText = document.querySelector(`.faded`);
+            if (replacementText) {
+                replacementText.classList.toggle('faded');
+            }
+
+        }
+
         function generateDefaultURL() {
             const url = baseUrl + filename
             window.location.href = url;
@@ -156,6 +172,7 @@
     const hideDefined = urlParams.get("hideDefined")?.toLowerCase() === "true";
     for (const [key, value] of urlParams.entries()) {
         if (key === "os") {
+            hideDefaultButtonNoAnimation()
             const input = document.querySelector(`input[id="${value}Radio"]`)
             if (input) {
                 input.checked = true;
@@ -163,6 +180,7 @@
         } else {
             const input = document.querySelector(`input[id="use-${key}"]`)
             if (input) {
+                hideDefaultButtonNoAnimation()
                 if (value && value.toLowerCase() === "true") {
                     input.checked = true;
                 } else {
