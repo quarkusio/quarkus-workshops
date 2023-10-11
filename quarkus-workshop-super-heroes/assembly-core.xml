@@ -1,0 +1,65 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>workshop-core</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <outputDirectory>./</outputDirectory>
+            <directory>${basedir}/target/temp-project</directory>
+            <includes>
+                <include>mvnw*</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>./super-heroes</outputDirectory>
+            <directory>${basedir}/target/temp-project</directory>
+            <includes>
+                <include>mvnw*</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <includes>
+                <include>pom.xml</include>
+                <include>.editorconfig</include>
+                <include>mvnw*</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
+
+                <include>super-heroes/mvnw*</include>
+                <include>super-heroes/.mvn/wrapper/maven-wrapper.properties</include>
+
+                <include>super-heroes/infrastructure/**/*</include>
+                <include>super-heroes/kubernetes/**/*</include>
+
+                <include>super-heroes/rest-fights/*</include>
+                <include>super-heroes/rest-fights/.mvn/wrapper/maven-wrapper.properties</include>
+                <include>super-heroes/rest-fights/src/**/*</include>
+
+                <include>super-heroes/rest-heroes/*</include>
+                <include>super-heroes/rest-heroes/.mvn/wrapper/maven-wrapper.properties</include>
+                <include>super-heroes/rest-heroes/src/**/*</include>
+
+                <include>super-heroes/rest-villains/*</include>
+                <include>super-heroes/rest-villains/.mvn/wrapper/maven-wrapper.properties</include>
+                <include>super-heroes/rest-villains/src/**/*</include>
+
+                <include>super-heroes/ui-super-heroes/.mvn/wrapper/maven-wrapper.properties</include>
+                <include>super-heroes/ui-super-heroes/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/docker/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/java/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/resources/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/webui/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/webui/src/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/test/**/*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

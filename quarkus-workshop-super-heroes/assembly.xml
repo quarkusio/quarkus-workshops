@@ -25,46 +25,28 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>extensions</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <excludes>
-                <exclude>**/target/**</exclude>
-                <exclude>**/.idea/**</exclude>
-                <exclude>*.iml</exclude>
-                <exclude>*.settings</exclude>
-                <exclude>*.classpath</exclude>
-                <exclude>*.project</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>super-heroes</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <excludes>
-                <exclude>rest-fights/**</exclude>
-                <exclude>rest-heroes/**</exclude>
-                <exclude>rest-villains/**</exclude>
-                <exclude>event-statistics/**</exclude>
-                <exclude>extension-version/**</exclude>
-                <exclude>**/target/**</exclude>
-                <exclude>**/node/**</exclude>
-                <exclude>**/node_modules/**</exclude>
-                <exclude>**/dist/**</exclude>
-                <exclude>**/.idea/**</exclude>
-                <exclude>*.iml</exclude>
-                <exclude>*.settings</exclude>
-                <exclude>*.classpath</exclude>
-                <exclude>*.project</exclude>
-                <exclude>**/bootstrap.sh</exclude>
-                <exclude>**/ObjectStore</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
             <directory>${basedir}</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <includes>
                 <include>pom.xml</include>
                 <include>.editorconfig</include>
+                <include>mvnw*</include>
                 <include>.mvn/wrapper/maven-wrapper.properties</include>
+
+                <include>super-heroes/mvnw*</include>
+                <include>super-heroes/.mvn/wrapper/maven-wrapper.properties</include>
+
+                <include>super-heroes/infrastructure/**/*</include>
+                <include>super-heroes/kubernetes/**/*</include>
+
+                <include>super-heroes/ui-super-heroes/.mvn/wrapper/maven-wrapper.properties</include>
+                <include>super-heroes/ui-super-heroes/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/docker/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/java/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/resources/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/webui/*</include>
+                <include>super-heroes/ui-super-heroes/src/main/webui/src/**/*</include>
+                <include>super-heroes/ui-super-heroes/src/test/**/*</include>
             </includes>
         </fileSet>
     </fileSets>
