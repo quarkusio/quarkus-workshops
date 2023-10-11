@@ -25,7 +25,7 @@
             window.location.href = url;
         }
 
-        function generateURL() {
+        function generateTailoredURL() {
             const selectedOptions = [];
 
             // Get the selected build option
@@ -44,77 +44,94 @@
             // Generate the URL based on selected options
             const url = baseUrl + 'variants/' + selectedOptions.join("-") + "/" + filename;
             window.location.href = url;
-
         }
 
     </script>
 </head>
 <body>
-<h1 class="title-band">Quarkus Workshop Configurator</h1>
+<h2 class="title-band">Quarkus Workshop Configurator</h2>
 
 <div class="content-area">
-    <button class="big" onclick="generateDefaultURL()">Just take me to the default workshop</button>
+    <div class="mode">
+        <h3 class="no-underline squish">Default workshop configuration</h3>
+        <div>Go to the instructions for all operating systems, with default content.</div>
+        <button class="big" onclick="generateDefaultURL()">
+            Take me to the default workshop
+        </button>
+    </div>
+    <div class="mode right">
+        <h3 class="no-underline squish">Customize workshop</h3>
+        <div>Tailor instructions to your operating system and interests.</div>
 
-    <h2><i class="fas fa-desktop"></i>What operating system are you using?</h2>
-    <ul class="configurator">
-        <li>
-            <label for="macRadio">
-                <input type="radio" name="osOption" id="macRadio" value="mac"><i class="fab fa-apple"></i>MacOS
-            </label>
-        </li>
-        <li>
-            <label for="windowsRadio">
-                <input type="radio" name="osOption" id="windowsRadio" value="windows"><i class="fab fa-windows"></i>Windows
-            </label>
-        </li>
-        <li>
-            <label for="linuxRadio">
-                <input type="radio" name="osOption" id="linuxRadio" value="linux"><i class="fab fa-linux"></i>Linux
-            </label></li>
-    </ul>
+        <h4 class="no-underline"><i class="fas fa-desktop"></i>What operating system are you using?</h4>
+        <ul class="configurator">
+            <li>
+                <label for="macRadio">
+                    <input type="radio" name="osOption" id="macRadio" value="mac"><i
+                    class="fab fa-apple"></i>MacOS
+                </label>
+            </li>
+            <li>
+                <label for="windowsRadio">
+                    <input type="radio" name="osOption" id="windowsRadio" value="windows"><i
+                    class="fab fa-windows"></i>Windows
+                </label>
+            </li>
+            <li>
+                <label for="linuxRadio">
+                    <input type="radio" name="osOption" id="linuxRadio" value="linux"><i
+                    class="fab fa-linux"></i>Linux
+                </label></li>
+        </ul>
 
 
-    <h2 id="feature-selector"><i class="fas fa-book"></i>What content would you like to include in the workshop?</h2>
-    <ul class="configurator">
-        <li id="use-native-li">
-            <label>
-                <input type="checkbox" id="use-native">Native compilation
-            </label>
-        </li>
-        <li id="use-ai-li">
-            <label>
-                <input type="checkbox" id="use-ai">Creating an AI-integration service
-            </label>
-        </li>
-        <li id="use-kubernetes-li">
-            <label>
-                <input type="checkbox" id="use-kubernetes">Running Quarkus on Kubernetes
-            </label>
-        </li>
-        <li>
-        <li id="use-contract-testing-li">
-            <label>
-                <input type="checkbox" id="use-contract-testing">Contract testing with Pact
-            </label>
-        </li>
-        <li id="use-observability-li" hidden="true">
-            <label>
-                <input type="checkbox" id="use-observability">Observability
-            </label>
-        </li>
-    <li id="use-messaging-li">
-            <label>
-                <input type="checkbox" id="use-messaging">Messaging
-            </label>
-        </li>
-    <li id="use-extension-li">
-            <label>
-                <input type="checkbox" id="use-extension">Writing an extension
-            </label>
-        </li>
-    </ul>
-
-    <button onClick="generateURL()">Take me to my custom workshop</button>
+        <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
+            include?
+        </h4>
+        <ul class="configurator">
+            <li id="use-native-li">
+                <label>
+                    <input type="checkbox" id="use-native">Native compilation
+                </label>
+            </li>
+            <li id="use-ai-li">
+                <label>
+                    <input type="checkbox" id="use-ai">Creating an AI-integration service
+                </label>
+            </li>
+            <li id="use-kubernetes-li">
+                <label>
+                    <input type="checkbox" id="use-kubernetes">Running Quarkus on
+                    Kubernetes
+                </label>
+            </li>
+            <li>
+            <li id="use-contract-testing-li">
+                <label>
+                    <input type="checkbox" id="use-contract-testing">Contract testing with
+                    Pact
+                </label>
+            </li>
+            <li id="use-observability-li" hidden="true">
+                <label>
+                    <input type="checkbox" id="use-observability">Observability
+                </label>
+            </li>
+            <li id="use-messaging-li">
+                <label>
+                    <input type="checkbox" id="use-messaging">Messaging
+                </label>
+            </li>
+            <li id="use-extension-li">
+                <label>
+                    <input type="checkbox" id="use-extension">Writing an extension
+                </label>
+            </li>
+        </ul>
+        <button class="big" onclick="generateTailoredURL()">
+            Take me to my custom workshop
+        </button>
+    </div>
 </div>
 
 <script>
