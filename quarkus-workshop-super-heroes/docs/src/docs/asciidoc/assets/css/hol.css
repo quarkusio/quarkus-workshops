@@ -5,7 +5,6 @@ html, body {
     font-family: 'Open Sans', Arial, sans-serif;
 
     --quarkus-blue: #4695EB;
-    --quarkus-blue-tint: #a3caf5;
     --dark-blue: #09131E;
     --dark-blue-alt: #0D1C2C;
     --dark-blue-1: #205894;
@@ -38,8 +37,6 @@ html, body {
 
     --site-margins: 13rem;
     --toc-width: 20rem;
-
-    --shimmer-duration: 0.3s;
 }
 
 body {
@@ -207,7 +204,25 @@ samp {
 .content-area {
     margin-left: var(--site-margins);
     margin-right: var(--site-margins);
-    width: 60%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+
+}
+
+.mode {
+    width: 50%;
+    padding-top: 0em;
+    padding-left: 4em;
+    padding-right: 4em;
+    margin: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right {
+    border-left: 1px lightgrey solid;
 }
 
 .cta > .content {
@@ -247,7 +262,7 @@ button:hover {
 }
 
 .big {
-    width: 60%;
+    width: 95%;
     height: 60px;
     margin-top: 2em;
     margin-bottom: 1em;
@@ -258,126 +273,14 @@ button:hover {
     justify-content: center;
 }
 
-.anchor {
-    width: 100%;
-    height: 1.2em; /* this should be the same height as the font size of what is in the anchor */
-    position: relative;
+.no-underline {
+    border: none;
 }
 
-.fadingin {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background-color: white; /* confusingly, this is actually the text color because of the background clip */
-    opacity: 1;
-
-    background-repeat: no-repeat;
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-animation-name: fade-in;
-    -webkit-animation-duration: var(--shimmer-duration);
-    -webkit-animation-iteration-count: 1;
-    -webkit-background-size: 8em 100%; /*50px*/
-
+.squish {
+    margin-top: 0rem;
+    padding-top: 0rem;
 }
-
-.fadingout {
-    position: absolute;
-    background-color: white; /* confusingly, this is actually the text color because of the background clip */
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-animation-name: fade-out;
-    -webkit-animation-duration: var(--shimmer-duration);
-    -webkit-animation-iteration-count: 1;
-    opacity: 0;
-}
-
-.flash {
-    -webkit-animation-name: flash;
-    -webkit-animation-duration: var(--shimmer-duration);
-    -webkit-animation-iteration-count: 1;
-}
-
-.fadeable {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background-color: white; /* confusingly, this is actually the text color because of the background clip */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.faded {
-    opacity: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-}
-
-@-webkit-keyframes flash {
-    0% {
-        background: var(--quarkus-blue);
-    }
-
-    50% {
-        background: radial-gradient(var(--quarkus-blue-tint), var(--quarkus-blue));
-    }
-
-    100% {
-        background: var(--quarkus-blue);
-    }
-}
-
-/* This animation works by applying a gradient to the background, and using a text-clip so that the background
-is actually the foreground.
- */
-@-webkit-keyframes fade-in {
-    0% {
-        background: radial-gradient(white, var(--quarkus-blue));
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        opacity: 0;
-    }
-
-    50% {
-        background: radial-gradient(white, var(--quarkus-blue));
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        opacity: 0.5
-    }
-
-    100% {
-        background: radial-gradient(white, var(--quarkus-blue));
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        opacity: 1;
-    }
-}
-
-
-@-webkit-keyframes fade-out {
-    0% {
-        background: radial-gradient(var(--quarkus-blue), white);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        opacity: 1;
-    }
-
-    70% {
-        background: radial-gradient(var(--quarkus-blue), white);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        opacity: 0.7
-    }
-
-    100% {
-        background: radial-gradient(var(--quarkus-blue), white);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        opacity: 0;
-    }
-}
-
 
 /*See here for the list of unicode codes for fontawesome*/
 /*https://fontawesome.com/v5/cheatsheet*/
@@ -434,5 +337,7 @@ pre code, pre pre {
 }
 
 ul.configurator {
-  list-style-type: none;
+    list-style-type: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
