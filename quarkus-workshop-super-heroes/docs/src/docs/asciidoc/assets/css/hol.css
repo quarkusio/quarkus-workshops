@@ -204,7 +204,25 @@ samp {
 .content-area {
     margin-left: var(--site-margins);
     margin-right: var(--site-margins);
-    width: 60%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+
+}
+
+.mode {
+    width: 50%;
+    padding-top: 0em;
+    padding-left: 4em;
+    padding-right: 4em;
+    margin: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right {
+    border-left: 1px lightgrey solid;
 }
 
 .cta > .content {
@@ -244,13 +262,25 @@ button:hover {
 }
 
 .big {
-    width: 60%;
-    margin-top: 1em;
+    width: 95%;
+    height: 60px;
+    margin-top: 2em;
     margin-bottom: 1em;
     padding: 1em;
     font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.no-underline {
+    border: none;
+}
+
+.squish {
+    margin-top: 0rem;
+    padding-top: 0rem;
+}
 
 /*See here for the list of unicode codes for fontawesome*/
 /*https://fontawesome.com/v5/cheatsheet*/
@@ -307,5 +337,7 @@ pre code, pre pre {
 }
 
 ul.configurator {
-  list-style-type: none;
+    list-style-type: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
