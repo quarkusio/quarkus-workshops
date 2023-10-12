@@ -83,9 +83,6 @@ jobs:
           cp -r target/generated-asciidoc/mac/variants/* target/generated-asciidoc/variants
           cp -r target/generated-asciidoc/windows/variants/* target/generated-asciidoc/variants
           
-          # make an index.html          
-          cp target/generated-asciidoc/spine-azure.html target/generated-asciidoc/index-azure.html
-          
           # Move things around to preserve the super-heroes structure
           mkdir -p target/site/super-heroes
           cp -R target/generated-asciidoc/* target/site/super-heroes
