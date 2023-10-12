@@ -7,9 +7,9 @@ ai=("true" "false")
 azure=("true" "false")
 container=("true" "false")
 contract_testing=("true" "false")
-extension=("false") # tactical hack to speed up builds
+extension=("true" "false")
 kubernetes=("true" "false")
-messaging=("false") # tactical hack to speed up builds
+messaging=("true" "false")
 native=("true" "false")
 observability=("false")
 
