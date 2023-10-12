@@ -3,15 +3,11 @@
 
 '''
 
-Even if you won't be developing any Quarkus code, you might want to discover why this Java runtime is perfect for developing containerized applications, and why it makes with Azure Container Apps.
-And if you don't know Azure Container Apps, this chapter is the right time to take a breath and discover this Azure service.
 In this chapter, you are going to see:
 
 * What's Azure Container Apps?
 * How does Azure Container Apps fit in the long list of Azure services?
 * Pros and cons of using Azure Container Apps
-* What's Quarkus? and how does it change the Java landscape
-* What are the main Quarkus idea, and how it helps in the _cloud native world_
 
 == What's Azure Container Apps?
 
@@ -56,5 +52,3 @@ They share the same disk space and network.
 New revisions are automatically created and are valuable for HTTP traffic redirection strategies, such as A/B testing.
 
 image::azure-aca-concepts.png[]
-
-include::../core-quarkus/quarkus-definition.adoc[leveloffset=+1]

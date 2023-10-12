@@ -5,7 +5,7 @@ https://docs.microsoft.com/windows/wsl[Windows Subsystem for Linux] (WSL) lets d
 
 [WARNING]
 ====
-If you are using Windows, it is recommended to install WSL.
+If you are using Windows, it is recommended to install WSL as all the commands use bash.
 ====
 
 == Installing WSL

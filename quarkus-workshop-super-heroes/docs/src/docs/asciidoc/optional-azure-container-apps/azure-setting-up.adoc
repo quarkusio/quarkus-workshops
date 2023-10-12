@@ -1,66 +1,5 @@
 [[azure-intro-preparing]]
-= Preparing for the Workshop
-
-This workshop needs internet to access Azure of course, but also to download all sorts of Maven artifacts, Docker images, and even pictures.
-Some of these artifacts are large, and because we have to share internet connexions at the workshop, it is better to download them before the workshop.
-Here are a few commands that you can execute before the workshop.
-
-== Clone the GitHub repository of the application
-
-[example, role="cta"]
---
-First, clone the GitHub repository of the Super Heroes application located at {github-url} by executing the following command:
-
-[source,shell,subs="attributes+"]
-----
-git clone {github-repo}.git --depth 1
-----
---
-
-The code of this Super Heroes application is separated into two different directories:
-
-[plantuml]
-----
-@startsalt
-{
-{
-T
-quarkus-workshop-super-heroes
-+ super-heroes         | The entire Super Hero application
-}
-}
-@endsalt
-----
-
-Under the `super-heroes` directory you will find the entire Super Hero application spread throughout a set of subdirectories, each one containing a microservice or some tooling.
-The final structure will be the following:
-
-[plantuml]
-----
-@startsalt
-{
-{
-T
-quarkus-workshop-super-heroes
-+ super-heroes
-++ event-statistics        | UI and application dealing with fight statistics (you will create it)
-++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
-++ kubernetes              | All the files required to deploy on Kubernetes
-++ load-super-heroes       | Stress tool loading heroes, villains and fights
-++ rest-fight              | REST API allowing super heroes to fight (you will create it)
-++ rest-hero               | Reactive REST API for CRUD operations on Heroes (you will create it)
-++ rest-villains            | REST API for CRUD operations on Villains (you will create it)
-++ ui-super-heroes         | Angular application so we can fight visually
-}
-}
-@endsalt
-----
-
-include::../core-introduction/introduction-preparing-checking-ports.adoc[leveloffset=+1]
-
-include::../core-appendix/appendix-preparing-warming-caches.adoc[leveloffset=+1]
-
-== Setting Up Azure
+= Setting Up Azure
 
 To be able to deploy the application to Azure, you first need an Azure subscription.
 If you don't have one, go to https://signup.azure.com and register.
@@ -83,7 +22,7 @@ include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocAzAccount
 ----
 --
 
-=== Setting Up the Azure Environment
+== Setting Up the Azure Environment
 
 Azure CLI is extensible and you can install as many extensions as you need.
 
@@ -140,11 +79,11 @@ az provider register --namespace Microsoft.Insights
 ----
 --
 
-== Creating Azure Resources
+= Creating Azure Resources
 
 Before creating the infrastructure for the Super Heroes application and deploying the microservices to Azure Container Apps, we need to create some Azure resources.
 
-=== Setting Up the Azure environment variables
+== Setting Up the Azure environment variables
 
 Let's first set a few environment variables that will help us in creating the Azure infrastructure.
 
@@ -161,7 +100,7 @@ include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironment
 Now let's create the Azure resources.
 --
 
-=== Resource Group
+== Resource Group
 
 A https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal[resource group] is a container that holds related resources for an Azure solution.
 The resource group can include all the resources for the solution, or only those resources that you want to manage as a group.
@@ -178,7 +117,7 @@ include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocCreateRes
 ----
 --
 
-=== Log Analytics Workspace
+== Log Analytics Workspace
 
 https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace[Log Analytics workspace] is the environment for Azure Monitor log data.
 Each workspace has its own data repository and configuration, and data sources and solutions are configured to store their data in a particular workspace.
@@ -201,7 +140,7 @@ include::{projectdir}/infrastructure/azure-setup-azure-env.sh[tags=adocLogAnalyt
 ----
 --
 
-=== Azure Container Registry
+== Azure Container Registry
 
 In the next chapters we will be creating Docker containers and pushing them to the Azure Container Registry.
 https://azure.microsoft.com/services/container-registry[Azure Container Registry] is a private registry for hosting container images.
@@ -236,7 +175,7 @@ If you log into the https://portal.azure.com[Azure Portal] you should see the fo
 image::azure-portal-2.png[]
 --
 
-== Setting Up the Environment Variables
+= Setting Up the Environment Variables
 
 The Super Heroes environment and application will be created and deployed using a set of Azure CLI commands.
 Each of these commands need a set of parameters, and some of these parameters can be set of environment variables.
@@ -252,7 +191,7 @@ include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironment
 ----
 --
 
-== Ready?
+= Ready?
 
 After the prerequisites have been installed and the different components have been warmed up, and some Azure resource created, it's now time to deploy some code!
 But before, let us introduce Azure Container Apps and Quarkus.

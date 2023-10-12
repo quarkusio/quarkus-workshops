@@ -4,16 +4,21 @@ Build and deploy a microservice architecture where Super Heroes fight against Su
 
 == Instructions
 
-There are several workshops available that you can follow depending your needs:
+There are several versions of this workshops available that you can follow depending your needs:
 
 * _Develop the Super Heroes with Quarkus_:
 If you are a developer, are new to quarkus, then this workshop might interest you.
-You will develop, from scratch, a set of microservices accessing databases, Kafka channels and exposing APIs.
-Check https://quarkus.io/quarkus-workshops/super-heroes/index.html to get the workshop instructions.
-* _Deploy the Super Heroes to Azure Container Apps_:
-If you are interested in deploying an already made application to Azure Container Apps, then this workshop is for you.
-You will not develop any Quarkus (you don't even need Java tools), but you will be pushing Docker containers, creating managed services on Azure (databases, Kafka) and monitoring the entire system (https://docs.microsoft.com/en-us/events/jdconf-2022/quarkus-superheroes-on-azure[watch a video presenting the workshop]).
-Check https://quarkus.io/quarkus-workshops/super-heroes/index-azure.html to get the workshop instructions.
+You will develop, from scratch, a set of microservices accessing databasesand exposing APIs.
+* _Create an AI-integration service_
+* _Deploy the microservices to Azure Container Apps_
+* _Containerize the microservices_
+* _Contract testing with Pact_
+* _Write a Quarkus extension_
+* _Write a Quarkus extension_
+* _Run Quarkus on Kubernetes_
+* _Messaging with Kafka_
+* _Native compilation_
+* _Observability_
 
 == Start the infrastructure
 
