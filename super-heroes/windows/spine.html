@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</title>
+<title>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -612,6 +612,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#introduction-installing-docker">Docker or Podman</a></li>
 <li><a href="#introduction-installing-graalvm">GraalVM 22.3</a></li>
 <li><a href="#introduction-installing-ai">OpenAI or Azure OpenAI Subscriptions</a></li>
+<li><a href="#azure-intro-installing-wsl">WSL</a></li>
+<li><a href="#azure-intro-installing-azure-cli">Azure CLI</a></li>
 <li><a href="#_recap">Recap</a></li>
 </ul>
 </li>
@@ -842,6 +844,99 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#messaging-conclusion">Unifying Imperative and Reactive Programming</a></li>
 </ul>
 </li>
+<li><a href="#observability">Observability</a>
+<ul class="sectlevel2">
+<li><a href="#observability-healthcheck">Health Check</a>
+<ul class="sectlevel3">
+<li><a href="#_directory_structure_11">Directory Structure</a></li>
+<li><a href="#_installing_the_health_dependency">Installing the Health Dependency</a></li>
+<li><a href="#_running_the_default_health_check">Running the Default Health Check</a></li>
+<li><a href="#_adding_liveness">Adding Liveness</a></li>
+</ul>
+</li>
+<li><a href="#observability-metrics">Metrics</a>
+<ul class="sectlevel3">
+<li><a href="#_installing_the_metrics_dependency">Installing the Metrics Dependency</a></li>
+<li><a href="#_adding_metrics_to_heroresource">Adding Metrics to HeroResource</a></li>
+<li><a href="#_metrics_tests_in_heroresourcetest">Metrics Tests in HeroResourceTest</a></li>
+</ul>
+</li>
+<li><a href="#observability-load">Loading the Microservices</a>
+<ul class="sectlevel3">
+<li><a href="#_give_me_some_load">Give me some load!</a></li>
+<li><a href="#_looking_at_some_code">Looking at Some Code</a></li>
+<li><a href="#_running_the_load_application">Running the Load Application</a></li>
+</ul>
+</li>
+<li><a href="#observability-prometheus">Displaying Metrics on Prometheus</a>
+<ul class="sectlevel3">
+<li><a href="#_configuring_prometheus">Configuring Prometheus</a></li>
+<li><a href="#_adding_graphs_to_prometheus">Adding Graphs to Prometheus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#container">Containers</a>
+<ul class="sectlevel2">
+<li><a href="#_building_containers">Building containers</a></li>
+<li><a href="#_running_containers_locally">Running containers locally</a></li>
+<li><a href="#_building_native_executables">Building native executables</a></li>
+<li><a href="#_building_native_containers">Building native containers</a></li>
+<li><a href="#_running_native_containers_locally">Running native containers locally</a></li>
+</ul>
+</li>
+<li><a href="#kubernetes">Kubernetes</a>
+<ul class="sectlevel2">
+<li><a href="#_deploying_on_kubernetes">Deploying on Kubernetes</a>
+<ul class="sectlevel3">
+<li><a href="#_deploying_the_infrastructure">Deploying the infrastructure</a></li>
+<li><a href="#_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</a></li>
+<li><a href="#_deploying_the_fight_microservice">Deploying the Fight microservice</a></li>
+</ul>
+</li>
+<li><a href="#cloud-open-shift">Deploying to Open Shift</a></li>
+</ul>
+</li>
+<li><a href="#azure-aca">Azure Container Apps and Quarkus</a>
+<ul class="sectlevel2">
+<li><a href="#_whats_azure_container_apps">What&#8217;s Azure Container Apps?</a></li>
+<li><a href="#azure-intro-preparing">Setting Up Azure</a>
+<ul class="sectlevel3">
+<li><a href="#_setting_up_the_azure_environment">Setting Up the Azure Environment</a></li>
+</ul>
+</li>
+<li><a href="#_creating_azure_resources">Creating Azure Resources</a>
+<ul class="sectlevel3">
+<li><a href="#_setting_up_the_azure_environment_variables">Setting Up the Azure environment variables</a></li>
+<li><a href="#_resource_group">Resource Group</a></li>
+<li><a href="#_log_analytics_workspace">Log Analytics Workspace</a></li>
+<li><a href="#_azure_container_registry">Azure Container Registry</a></li>
+</ul>
+</li>
+<li><a href="#_setting_up_the_environment_variables">Setting Up the Environment Variables</a></li>
+<li><a href="#_ready_2">Ready?</a></li>
+<li><a href="#azure-local-running-app">Running the Application Locally</a>
+<ul class="sectlevel3">
+<li><a href="#_pushing_containers_to_azure_container_registry">Pushing containers to Azure Container Registry</a></li>
+<li><a href="#_running_remote_containers">Running remote containers</a></li>
+</ul>
+</li>
+<li><a href="#azure-aca-running-app">Running the Application on Azure Container Apps</a>
+<ul class="sectlevel3">
+<li><a href="#_deploying_the_infrastructure_2">Deploying the Infrastructure</a></li>
+<li><a href="#_deploying_the_applications">Deploying the Applications</a></li>
+<li><a href="#_running_the_application_5">Running the Application</a></li>
+</ul>
+</li>
+<li><a href="#azure-aca-monitoring">Monitoring the Application on Azure Container Apps</a>
+<ul class="sectlevel3">
+<li><a href="#_restarting_a_microservice">Restarting a Microservice</a></li>
+<li><a href="#_redeploying_a_new_version_of_a_microservice">Redeploying a new version of a microservice</a></li>
+</ul>
+</li>
+<li><a href="#_cleaning_up_azure_resources">Cleaning Up Azure Resources</a></li>
+</ul>
+</li>
 <li><a href="#extension">Writing a Quarkus Extension</a>
 <ul class="sectlevel2">
 <li><a href="#_the_extension_framework">The extension framework</a></li>
@@ -852,20 +947,6 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#_packaging_the_extension">Packaging the extension</a></li>
 <li><a href="#_using_the_extension">Using the extension</a></li>
 <li><a href="#_conclusion">Conclusion</a></li>
-</ul>
-</li>
-<li><a href="#cloud">Containers &amp; Cloud</a>
-<ul class="sectlevel2">
-<li><a href="#_from_bare_metal_to_containers">From bare metal to containers</a></li>
-<li><a href="#_building_containers">Building containers</a></li>
-<li><a href="#_deploying_on_kubernetes">Deploying on Kubernetes</a>
-<ul class="sectlevel3">
-<li><a href="#_deploying_the_infrastructure">Deploying the infrastructure</a></li>
-<li><a href="#_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</a></li>
-<li><a href="#_deploying_the_fight_microservice">Deploying the Fight microservice</a></li>
-</ul>
-</li>
-<li><a href="#cloud-open-shift">Deploying to Open Shift</a></li>
 </ul>
 </li>
 <li><a href="#conclusion">Conclusion</a>
@@ -946,6 +1027,9 @@ Well, it&#8217;s going to be a set of microservices:</p>
 <p>Use OpenAI to introduce some artificial intelligence</p>
 </li>
 <li>
+<p>Deploy the entire application to Azure Container Apps</p>
+</li>
+<li>
 <p>Answer the ultimate question: are super-heroes stronger than super-villains?</p>
 </li>
 </ul>
@@ -992,6 +1076,24 @@ On Mac and Windows, Docker for <em>x</em> is recommended instead of the Docker t
 </li>
 <li>
 <p>How to deploy the microservices to Kubernetes</p>
+</li>
+<li>
+<p>How to monitor your microservices with Prometheus</p>
+</li>
+<li>
+<p>What is Azure Container Apps</p>
+</li>
+<li>
+<p>How to push the Docker images to Azure Registry</p>
+</li>
+<li>
+<p>How to create managed services in Azure (Postgres database, Kafka)</p>
+</li>
+<li>
+<p>How to deploy microservices to Azure Container Apps</p>
+</li>
+<li>
+<p>How to configure Docker images in Azure Container Apps</p>
 </li>
 <li>
 <p>How to extend Quarkus with extensions</p>
@@ -1070,6 +1172,9 @@ Invocations to the other microservices are protected using resilience patterns (
 <p><em>Statistics</em>: Each fight is asynchronously sent (via Kafka) to the Statistics microservice.
 It has an HTML + JQuery UI displaying all the statistics.</p>
 </li>
+<li>
+<p><em>Prometheus</em> polls metrics from the three microservices Fight, Hero, and Villain.</p>
+</li>
 </ul>
 </div>
 <div class="imageblock text-center">
@@ -1128,6 +1233,22 @@ in this section, you will build native executables of all the microservices than
 <li>
 <p><em>Containers &amp; Cloud</em>:
 in this section, you will create Docker images of all the microservices and deploy them to Kubernetes</p>
+</li>
+<li>
+<p><em>Observability</em>:
+in this section, you will add metrics, health checks, and distributed tracing to your microservices</p>
+</li>
+<li>
+<p><em>Azure Container Apps and Quarkus</em>:
+this section introduces Quarkus and Azure Container Apps to make sure you have all the needed vocabulary to follow along</p>
+</li>
+<li>
+<p><em>Running the Application Locally</em>:
+in this section, you will build Docker images out of Quarkus microservices, execute them locally with Docker compose, push them to Azure Registry, all that using Docker and Azure CLI</p>
+</li>
+<li>
+<p><em>Running the Application on Azure Container Apps</em>:
+in this section, you will create an entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps</p>
 </li>
 <li>
 <p><em>Extending Quarkus</em>:
@@ -1215,6 +1336,9 @@ If you are stuck, you can always look at the final code in the <a href="https://
 <li>
 <p>OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)</p>
 </li>
+<li>
+<p>An Azure subscription and the Azure CLI</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -1236,7 +1360,7 @@ You can skip the next section if you have already installed all the prerequisite
 <td class="content">
 <div class="paragraph">
 <p>This workshop assumes a bash shell.
-If you run on Windows, in particular, adjust the commands accordingly.</p>
+If you run on Windows, in particular, adjust the commands accordingly or install WSL.</p>
 </div>
 </td>
 </tr>
@@ -1843,6 +1967,93 @@ az cognitiveservices account delete \
 </div>
 </div>
 <div class="sect3">
+<h4 id="azure-intro-installing-wsl">WSL</h4>
+<div class="paragraph">
+<p><a href="https://docs.microsoft.com/windows/wsl">Windows Subsystem for Linux</a> (WSL) lets developers run a GNU/Linux environment&#8201;&#8212;&#8201;including most command-line tools, utilities, and applications&#8201;&#8212;&#8201;directly on Windows, unmodified, without the overhead of a traditional virtual machine or dual-boot setup.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are using Windows, it is recommended to install WSL as all the commands use bash.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_installing_wsl">Installing WSL</h5>
+<div class="paragraph">
+<p>You can install everything you need to run Windows Subsystem for Linux (WSL) by entering this command in an administrator PowerShell or Windows Command Prompt and then restarting your machine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">wsl --install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu by default).</p>
+</div>
+<div class="paragraph">
+<p>The first time you launch a newly installed Linux distribution, a console window will open and you&#8217;ll be asked to wait for files to de-compress and be stored on your machine.
+All future launches should take less than a second.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="azure-intro-installing-azure-cli">Azure CLI</h4>
+<div class="paragraph">
+<p>The Azure command-line interface (<a href="https://docs.microsoft.com/cli/azure">Azure CLI)</a> is a set of commands used to create and manage Azure resources.
+The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation.
+For this workshop you need to have Azure CLI installed locally on your machine.</p>
+</div>
+<div class="sect4">
+<h5 id="_installing_azure_cli">Installing Azure CLI</h5>
+<div class="paragraph">
+<p>The <a href="https://docs.microsoft.com/cli/azure/install-azure-cli">Azure CLI is available to install</a> in Windows, macOS and Linux environments.
+It can also be run in a Docker container and Azure Cloud Shell.
+On Mac OS X, the easiest way to install Azure CLI is by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">brew install azure-cli</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_checking_for_azure_cli_installation">Checking for Azure CLI Installation</h5>
+<div class="paragraph">
+<p>Once the installation is complete, you can execute a few commands to be sure the Azure CLI is correctly installed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az version
+az --version</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_some_azure_cli_commands">Some Azure CLI Commands</h5>
+<div class="paragraph">
+<p>Azure CLI is a command-line utility where you can use several parameters and options to create, query, or delete Azure resources.
+To get some help on the commands, you can type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az help
+az --help
+az vm --help
+az vm disk --help
+az vm disk attach --help</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_recap">Recap</h4>
 <div class="paragraph">
 <p>Before going further, make sure the following commands work on your machine.</p>
@@ -1853,7 +2064,8 @@ az cognitiveservices account delete \
 $GRAALVM_HOME/bin/native-image --version
 curl --version
 docker version
-docker compose version</code></pre>
+docker compose version
+az --version</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9959,6 +10171,2755 @@ To go further on this, we recommend:</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="observability">Observability</h2>
+<div class="sectionbody">
+<hr>
+<div class="paragraph">
+<p>Now that we have several microservices, observing them starts to be a bit tricky:
+we can&#8217;t just look at the logs of all the microservices to see if they are up and running or behaving correctly.
+In the following sections you will add health checks and several metrics to the Fight, Hero and Villain APIs and gather them within Prometheus.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/diag-plantuml-md5-e02bbaf637a94b52982898cd47c02fa9.png" alt="Diagram" width="2865" height="2865">
+</div>
+</div>
+<div class="paragraph">
+<p>In the following sections, you will learn how to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add health checks to our microservices</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="observability-healthcheck">Health Check</h3>
+<div class="paragraph">
+<p>Quarkus applications can utilize the MicroProfile Health specification through the SmallRye Health extension.
+The MicroProfile Health allows applications to provide information about their state to external viewers which is typically useful in cloud environments where automated processes must be able to determine whether the application should be discarded or restarted.<sup class="footnote">[<a id="_footnoteref_22" class="footnote" href="#_footnotedef_22" title="View footnote.">22</a>]</sup></p>
+</div>
+<div class="sect3">
+<h4 id="_directory_structure_11">Directory Structure</h4>
+<div class="paragraph">
+<p>In this module we will add an extra subdirectory with two classes to handle the Health Check.
+You will end-up with the following directory structure:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/diag-plantuml-md5-498786c562fdd24a92a0460ff8c2454e.png" alt="Diagram" width="362" height="276">
+</div>
+</div>
+<div class="paragraph">
+<p>While you could add health checks to all our microservices, we are focusing on the <strong>Hero microservice</strong>.
+So don&#8217;t forget to switch to the Hero microservice code.
+You can apply the same to the other microservices.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installing_the_health_dependency">Installing the Health Dependency</h4>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>To install the MicroProfile Health dependency, just run the following command under the Hero microservice directory (<code>super-heroes/rest-heroes</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw quarkus:add-extension -Dextensions=&quot;smallrye-health&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This will add the following dependency in the <code>pom.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+  <span class="tag">&lt;groupId&gt;</span>io.quarkus<span class="tag">&lt;/groupId&gt;</span>
+  <span class="tag">&lt;artifactId&gt;</span>quarkus-smallrye-health<span class="tag">&lt;/artifactId&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_default_health_check">Running the Default Health Check</h4>
+<div class="paragraph">
+<p>Importing the <code>smallrye-health</code> extension directly exposes three REST endpoints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/q/health/live</code> - The application is up and running.</p>
+</li>
+<li>
+<p><code>/q/health/ready</code> - The application is ready to serve requests.</p>
+</li>
+<li>
+<p><code>/q/health</code> - Accumulating all health check procedures in the application.</p>
+</li>
+<li>
+<p><code>/q/health-ui</code> - Graphical interface of all the checks.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To check that the <code>smallrye-health</code> extension is working as expected, access using your browser or cURL:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://localhost:8083/q/health/live" class="bare">http://localhost:8083/q/health/live</a></p>
+</li>
+<li>
+<p><a href="http://localhost:8083/q/health/ready" class="bare">http://localhost:8083/q/health/ready</a></p>
+</li>
+<li>
+<p><a href="http://localhost:8083/q/health" class="bare">http://localhost:8083/q/health</a></p>
+</li>
+<li>
+<p><a href="http://localhost:8083/q/health-ui" class="bare">http://localhost:8083/q/health-ui</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All of the health REST endpoints return a simple JSON object with two fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>status</code>: the overall result of all the health check procedures</p>
+</li>
+<li>
+<p><code>checks</code>: an array of individual checks (each check has a <code>name</code>, <code>status</code> and optional <code>data</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The general <code>status</code> of the health check is computed as a logical AND of all the declared health check procedures.
+The JSON output looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">checks</span><span class="delimiter">&quot;</span></span>: [
+        {
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Reactive PostgreSQL connections health check</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">data</span><span class="delimiter">&quot;</span></span>: {
+                <span class="key"><span class="delimiter">&quot;</span><span class="content">&lt;default&gt;</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>
+            }
+        }
+    ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also have a nicer graphical representation by going to <a href="http://localhost:8083/q/health-ui" class="bare">http://localhost:8083/q/health-ui</a>.
+If you check the health of our microservices, you will notice that Quarkus had automatically defined common health checks.
+But let&#8217;s define some specific to our microservices.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_liveness">Adding Liveness</h4>
+<div class="paragraph">
+<p>To check that our Hero API application is live, we can check that the <code>HeroResource.hello()</code> method works.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>For that, this is the <code>PingHeroResourceHealthCheck</code> class that we can write under the <code>io.quarkus.workshop.superheroes.hero.health</code> sub-package:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.quarkus.workshop.superheroes.hero.health</span>;
+
+<span class="keyword">import</span> <span class="include">io.quarkus.workshop.superheroes.hero.HeroResource</span>;
+<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.health.HealthCheck</span>;
+<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.health.HealthCheckResponse</span>;
+<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.health.Liveness</span>;
+
+<span class="keyword">import</span> <span class="include">jakarta.inject.Inject</span>;
+
+<span class="annotation">@Liveness</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">PingHeroResourceHealthCheck</span> <span class="directive">implements</span> HealthCheck {
+
+    <span class="annotation">@Inject</span>
+    HeroResource heroResource;
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> HealthCheckResponse call() {
+        <span class="predefined-type">String</span> response = heroResource.hello();
+        <span class="keyword">return</span> HealthCheckResponse.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ping Hero REST Endpoint</span><span class="delimiter">&quot;</span></span>).withData(<span class="string"><span class="delimiter">&quot;</span><span class="content">Response</span><span class="delimiter">&quot;</span></span>, response).up().build();
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see health check procedures are defined as implementations of the <code>HealthCheck</code> interface which are defined as CDI beans with the CDI qualifier <code>@Liveness</code>.
+The liveness check accessible at <code>/q/health/live</code>.
+<code>HealthCheck</code> is a functional interface whose single method <code>call</code> returns a <code>HealthCheckResponse</code> object which can be easily constructed by the fluent builder API shown in the example.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>As we have started our Quarkus application in dev mode simply repeat the request to <a href="http://localhost:8083/q/health/live" class="bare">http://localhost:8083/q/health/live</a> by refreshing your browser window or by using curl <a href="http://localhost:8083/q/health/live" class="bare">http://localhost:8083/q/health/live</a>.
+Because we defined our health check to be a liveness procedure (with <code>@Liveness</code> qualifier) the new health check procedure is now present in the checks array.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">checks</span><span class="delimiter">&quot;</span></span>: [
+        {
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Ping Hero REST Endpoint</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">data</span><span class="delimiter">&quot;</span></span>: {
+                <span class="key"><span class="delimiter">&quot;</span><span class="content">Response</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello Hero Resource</span><span class="delimiter">&quot;</span></span>
+            }
+        }
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Here we&#8217;ve just shown you the health check for the Hero API, but you should do the same for Fight and Villain.
+Create a <code>PingVillainResourceHealthCheck</code> for the Villain microservice (under <code>io.quarkus.workshop.superheroes.villain.health</code> sub-package) and a <code>PingFightResourceHealthCheck</code> based on the same logic.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="observability-metrics">Metrics</h3>
+<div class="paragraph">
+<p>MicroProfile Metrics allows applications to gather various metrics and statistics that provide insights into what is happening inside the application.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup>
+The metrics can be read remotely using JSON format or the OpenMetrics format, so that they can be processed by additional tools such as Prometheus, and stored for analysis and visualisation.<sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>While you could add add metrics to all our microservices, we are focusing on the Hero microservice.
+You can apply the same to the other microservices.</p>
+</div>
+<div class="sect3">
+<h4 id="_installing_the_metrics_dependency">Installing the Metrics Dependency</h4>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>To install the MicroProfile Metrics dependency, just run the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw quarkus:add-extension -Dextensions=&quot;metrics&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This will add the following dependency in the <code>pom.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_metrics_to_heroresource">Adding Metrics to HeroResource</h4>
+<div class="paragraph">
+<p>We want now to measure all methods of all our REST resources.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>For that, we need a few annotations to make sure that our desired metrics are calculated over time and can be exported for manual analysis or processing by additional tooling.
+The metrics that we will gather are these:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>countGetRandomHero</code>: A counter which is increased by one each time the user gets a random hero.</p>
+</li>
+<li>
+<p><code>timeGetRandomHero</code>: This is a timer, therefore a compound metric that benchmarks how much time the request take.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Below the source code of the <code>getRandomHero()</code> method, but make sure to add metrics on all methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"></code></pre>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+
+</div>
+</div>
+<div class="paragraph">
+<p>You will need to add the following import statements:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.eclipse.microprofile.metrics.MetricUnits</span>;
+<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.metrics.annotation.Counted</span>;
+<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.metrics.annotation.Timed</span>;</code></pre>
+</div>
+</div>
+<div class="openblock">
+<div class="content">
+
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_metrics_tests_in_heroresourcetest">Metrics Tests in HeroResourceTest</h4>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Let&#8217;s add an extra test method that would make sure Metrics are available in the application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>== Reviewing the Generated Metrics</p>
+</div>
+<div class="paragraph">
+<p>To view the metrics, execute <code>curl -H "Accept: application/json" <a href="http://localhost:8083/q/metrics/application" class="bare">http://localhost:8083/q/metrics/application</a></code>.
+You will receive a response such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">io.quarkus.workshop.superheroes.hero.HeroResource.countGetRandomHero</span><span class="delimiter">&quot;</span></span>: <span class="integer">44</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">io.quarkus.workshop.superheroes.hero.HeroResource.timeGetRandomHero</span><span class="delimiter">&quot;</span></span>: {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">p99</span><span class="delimiter">&quot;</span></span>: <span class="float">16.227182</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">min</span><span class="delimiter">&quot;</span></span>: <span class="float">2.525987</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">max</span><span class="delimiter">&quot;</span></span>: <span class="float">16.227182</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">mean</span><span class="delimiter">&quot;</span></span>: <span class="float">3.202769680486923</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">p50</span><span class="delimiter">&quot;</span></span>: <span class="float">2.967352</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">p999</span><span class="delimiter">&quot;</span></span>: <span class="float">16.227182</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">stddev</span><span class="delimiter">&quot;</span></span>: <span class="float">1.55809730109504</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">p95</span><span class="delimiter">&quot;</span></span>: <span class="float">3.565725</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">p98</span><span class="delimiter">&quot;</span></span>: <span class="float">4.157616</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">p75</span><span class="delimiter">&quot;</span></span>: <span class="float">3.104259</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">fiveMinRate</span><span class="delimiter">&quot;</span></span>: <span class="float">0.12382047800943181</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">fifteenMinRate</span><span class="delimiter">&quot;</span></span>: <span class="float">0.04406239601227314</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">meanRate</span><span class="delimiter">&quot;</span></span>: <span class="float">0.08741866976313094</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">count</span><span class="delimiter">&quot;</span></span>: <span class="integer">44</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">oneMinRate</span><span class="delimiter">&quot;</span></span>: <span class="float">0.4332024919472982</span>
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s explain the meaning of each metric:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>countGetRandomHero</code>: A counter which is increased by one each time the user asks for a random hero.</p>
+</li>
+<li>
+<p><code>timeGetRandomHero</code>: This is a timer, therefore a compound metric that benchmarks how much time the request takes. All durations are measured in milliseconds. It consists of these values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>min</code>: The shortest duration it took to perform a request.</p>
+</li>
+<li>
+<p><code>max</code>: The longest duration.</p>
+</li>
+<li>
+<p><code>mean</code>: The mean value of the measured durations.</p>
+</li>
+<li>
+<p><code>stddev</code>: The standard deviation.</p>
+</li>
+<li>
+<p><code>count</code>: The number of observations (so it will be the same value as <code>countGetRandomHero</code>).</p>
+</li>
+<li>
+<p><code>p50</code>, <code>p75</code>, <code>p95</code>, <code>p99</code>, <code>p999</code>: Percentiles of the durations. For example the value in p95 means that 95 % of the measurements were faster than this duration.</p>
+</li>
+<li>
+<p><code>meanRate</code>, <code>oneMinRate</code>, <code>fiveMinRate</code>, <code>fifteenMinRate</code>: Mean throughput and one-, five-, and fifteen-minute exponentially-weighted moving average throughput.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you prefer an OpenMetrics export rather than the JSON format, remove the <code>-H "Accept: application/json"</code> argument from your command line.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Again, in this chapter, we&#8217;ve just shown you how to add metrics for the Hero API, but you should do the same for Fight, Villain, and the UI.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="observability-load">Loading the Microservices</h3>
+<div class="paragraph">
+<p>Now that we have the three main microservices exposing health checks and metrics, time to have a decent user interface to  monitor how the system behaves.
+The purpose of this workshop is to add some load to our application.
+You will download the load application, install it and run it.</p>
+</div>
+<div class="sect3">
+<h4 id="_give_me_some_load">Give me some load!</h4>
+<div class="paragraph">
+<p>In the <code>super-heroes/load-super-heroes</code> directory, there is an application that is <strong>NOT</strong> a Quarkus application.
+It&#8217;s a simple Java app that simulates users interacting with the system so it generates some load.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_looking_at_some_code">Looking at Some Code</h4>
+<div class="paragraph">
+<p>The <code>SuperHeroesLoad</code> class is just a <code>main</code> that executes the <code>FightScenario</code>, <code>HeroScenario</code> and <code>VillainScenario</code> in different threads.
+For example, if you look at the <code>HeroScenario</code>, you will see that it&#8217;s just a suit of HTTP calls on the Hero API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> targetUrl = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:8083</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> contextRoot = <span class="string"><span class="delimiter">&quot;</span><span class="content">/api/heroes</span><span class="delimiter">&quot;</span></span>;
+
+<span class="annotation">@Override</span>
+<span class="directive">protected</span> <span class="predefined-type">List</span>&lt;Endpoint&gt; getEndpoints() {
+    <span class="keyword">return</span> Stream.of(
+         endpoint(contextRoot, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>),
+         endpoint(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/hello</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>),
+         endpoint(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/random</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>),
+         endpointWithTemplates(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/{id}</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>::idParam),
+         endpointWithTemplates(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/{id}</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">DELETE</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>::idParam),
+         endpointWithEntity(contextRoot, <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>::createHero)
+    ).collect(collectingAndThen(toList(), <span class="predefined-type">Collections</span>::unmodifiableList));
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_load_application">Running the Load Application</h4>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>You are all set!
+Time to compile and start the load application using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw compile
+./mvnw exec:java</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see the following logs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">INFO: GET - http://localhost:8082/api/fights/1 - 200
+INFO: DELETE - http://localhost:8084/api/villains/440 - 204
+INFO: GET - http://localhost:8083/api/heroes - 200
+INFO: GET - http://localhost:8084/api/villains/hello - 200
+INFO: GET - http://localhost:8082/api/fights - 200
+INFO: GET - http://localhost:8083/api/heroes/581 - 200
+INFO: GET - http://localhost:8084/api/villains/126 - 200
+INFO: GET - http://localhost:8082/api/fights/hello - 200
+INFO: DELETE - http://localhost:8083/api/heroes/491 - 204</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="observability-prometheus">Displaying Metrics on Prometheus</h3>
+<div class="paragraph">
+<p>Now that we&#8217;ve added some load to our application, let&#8217;s measure it with Prometheus.<sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup>
+Prometheus is an open-source systems monitoring and alerting toolkit that integrates well with Quarkus.</p>
+</div>
+<div class="sect3">
+<h4 id="_configuring_prometheus">Configuring Prometheus</h4>
+<div class="paragraph">
+<p>Prometheus needs to be configured to poll data from our microservices.
+This is made under our <code>infrastructure</code> directory, in the <code>prometheus.yml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">scrape_configs</span>:
+  - <span class="string"><span class="content">job_name: 'prometheus'</span></span>
+    <span class="key">static_configs</span>:
+      - <span class="string"><span class="content">targets: ['localhost:9090']</span></span>
+  - <span class="string"><span class="content">job_name: 'fights'</span></span>
+    <span class="key">metrics_path</span>: <span class="string"><span class="content">'/q/metrics'</span></span>
+    <span class="key">static_configs</span>:
+      - <span class="string"><span class="content">targets: ['host.docker.internal:8082']</span></span>
+  - <span class="string"><span class="content">job_name: 'heroes'</span></span>
+    <span class="key">metrics_path</span>: <span class="string"><span class="content">'/q/metrics'</span></span>
+    <span class="key">static_configs</span>:
+      - <span class="string"><span class="content">targets: ['host.docker.internal:8083']</span></span>
+  - <span class="string"><span class="content">job_name: 'villains'</span></span>
+    <span class="key">metrics_path</span>: <span class="string"><span class="content">'/q/metrics'</span></span>
+    <span class="key">static_configs</span>:
+      - <span class="string"><span class="content">targets: ['host.docker.internal:8084']</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file contains basic Prometheus configuration, plus a specific <code>scrape_config</code> which instructs Prometheus to look for application metrics from both Prometheus itself, and our Quarkus microservices at the <code>/q/metrics</code> endpoint.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To execute the application we now need Prometheus.
+Make sure the infrastructure is up and running.
+This means that you&#8217;ve executed <code>docker compose -f docker-compose.yaml up -d</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">On Linux / Ubuntu</div>
+<div class="paragraph">
+<p>On Linux, you may need to update the <code>localhost</code> from the <code>prometheus-linux.yml</code> file with the IP associated with the <code>docker0</code> interface.
+Find the address, update the <code>prometheus-linux.yml</code> and restart the infrastructure.
+Don&#8217;t forget to restart the microservices to re-populate the databases.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_graphs_to_prometheus">Adding Graphs to Prometheus</h4>
+<div class="paragraph">
+<p>The Prometheus console is accessible at <a href="http://localhost:9090" class="bare">http://localhost:9090</a>.</p>
+</div>
+<div class="imageblock half-size">
+<div class="content">
+<img src="images/fault-tolerance-prometheus-1.png" alt="fault tolerance prometheus 1">
+</div>
+</div>
+<div class="paragraph">
+<p>Out of the box, you get a lot of basic JVM metrics or even metrics of Prometheus itself, which are useful.
+But let&#8217;s create new graphs with the metrics of our microservices.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Tape <code>timeGetRandomHero</code> in the query, and select <code>application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second</code> in the box, and click <em>Execute</em>.</p>
+</div>
+<div class="imageblock half-size">
+<div class="content">
+<img src="images/fault-tolerance-prometheus-2.png" alt="fault tolerance prometheus 2">
+</div>
+</div>
+<div class="paragraph">
+<p>This will fetch the values from our metric showing the number of checks performed:</p>
+</div>
+<div class="imageblock half-size">
+<div class="content">
+<img src="images/fault-tolerance-prometheus-3.png" alt="fault tolerance prometheus 3">
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have any problem with the code, don&#8217;t understand or feel you are running, remember to ask for some help.
+Also, you can get the code of this entire workshop from <a href="https://github.com/quarkusio/quarkus-workshops/tree/refs/heads/main/quarkus-workshop-super-heroes" class="bare">https://github.com/quarkusio/quarkus-workshops/tree/refs/heads/main/quarkus-workshop-super-heroes</a>.
+You can also download the completed code from <a href="https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/dist/quarkus-super-heroes-workshop-complete.zip" class="bare">https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/dist/quarkus-super-heroes-workshop-complete.zip</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Stop the load application before going further.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="container">Containers</h2>
+<div class="sectionbody">
+<hr>
+<div class="paragraph">
+<p>In this chapter we will build containers out of our Quarkus microservices and execute them locally thanks to Docker Compose.
+In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+The native compilation uses the OS and architecture of the host system.</p>
+</div>
+<div class="sect2">
+<h3 id="_building_containers">Building containers</h3>
+<div class="paragraph">
+<p>First, Quarkus comes with a set of <code>Dockerfiles</code>.
+The <code>Dockerfile.native</code> file is for running the application in native mode.
+It looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+WORKDIR /work/
+RUN chown 1001 /work \
+    &amp;&amp; chmod &quot;g+rwX&quot; /work \
+    &amp;&amp; chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+CMD [&quot;./application&quot;, &quot;-Dquarkus.http.host=0.0.0.0&quot;]</code></pre>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Check that you have all the Docker images installed locally:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker image ls | grep quarkus</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">quarkus/ui-super-heroes         latest      266MB
+quarkus/event-statistics        latest      145MB
+quarkus/rest-fights             latest      198MB
+quarkus/rest-villains           latest      158MB
+quarkus/rest-heroes             latest      154MB</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_containers_locally">Running containers locally</h3>
+<div class="paragraph">
+<p>Now that we have all our Docker containers created, let&#8217;s execute them all to be sure that everything is working.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Under <code>super-heroes/infrastructure</code> you will find the <code>docker-compose-app-local.yaml</code> file.
+It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
+Execute it with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose -f docker-compose-app-local.yaml up</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To know that all your containers are started, you can use the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose -f docker-compose-app-local.yaml ps</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should get something similar to the following list.
+Make sure all your containers are in <em>running</em> status:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">event-statistics    &quot;./application -Dqua…&quot;   running
+kafka               &quot;sh -c 'export CLUST…&quot;   running
+rest-fights         &quot;./application -Dqua…&quot;   running
+rest-heroes         &quot;./application -Dqua…&quot;   running
+rest-villains       &quot;./application -Dqua…&quot;   running
+super-database      &quot;docker-entrypoint.s…&quot;   running (healthy)
+ui-super-heroes     &quot;/bin/sh -c 'npm sta…&quot;   running</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once all the containers are started, you can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to <a href="http://localhost:8080" class="bare">http://localhost:8080</a> to check the main UI</p>
+</li>
+<li>
+<p>Go to <a href="http://localhost:8085" class="bare">http://localhost:8085</a> to check the statistics UI</p>
+</li>
+<li>
+<p>curl <a href="http://localhost:8084/api/villains" class="bare">http://localhost:8084/api/villains</a> | jq</p>
+</li>
+<li>
+<p>curl <a href="http://localhost:8083/api/heroes" class="bare">http://localhost:8083/api/heroes</a> | jq</p>
+</li>
+<li>
+<p>curl <a href="http://localhost:8082/api/fights/randomfighters" class="bare">http://localhost:8082/api/fights/randomfighters</a> | jq</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Then, make sure you shut down the entire application with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose -f docker-compose-app-local.yaml down</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_native_executables">Building native executables</h3>
+<div class="paragraph">
+<p>And&#8230;&#8203; Linux Containers are &#8230;&#8203; <em>Linux</em>.
+So before being able to build a container with our native executable, we need to produce compatible native executables.
+If you are using a Linux 64 bits machine, you are good to go.
+If not, Quarkus comes with a trick to produce these executable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>-Dquarkus.native.container-build=true</code> allows running the native compilation inside a container (provided by Quarkus).
+The result is a Linux 64 bits executable.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Building a native executable takes time, CPU, and memory.
+It&#8217;s even more accurate in the container.
+So, first, be sure that your container system has enough memory to build the executable.
+It requires at least 6Gb of memory, 8Gb is recommended.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Execute the above command for all our microservices.
+We also copy the UI into the fight service, to simplify the process:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">cd rest-hero
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd rest-villains
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd rest-fight
+cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd event-statistics
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_native_containers">Building native containers</h3>
+<div class="paragraph">
+<p>Now that we have the native executables, we can build containers.
+When you create projects, Quarkus generates two <code>Dockerfiles</code>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>Dockerfile.jvm</code> - A <code>Dockerfile</code> for running the application in JVM mode</p>
+</li>
+<li>
+<p><code>Dockerfile.native</code> - A <code>Dockerfile</code> for running the application in native mode</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We are interested in this second file.
+Open one of these <code>Dockerfile.native</code> files:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /work/
+COPY target/*-runner /work/application
+RUN chmod 775 /work
+EXPOSE 8080
+CMD [&quot;./application&quot;, &quot;-Dquarkus.http.host=0.0.0.0&quot;]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It&#8217;s a pretty straightforward <code>Dockerfile</code> taking a minimal base image and copying the generated native executable.
+It also exposes the port 8080.
+Wait, our microservices are not configured to run on the port 8080.
+We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.</p>
+</div>
+<div class="paragraph">
+<p>To build the containers, use the following scripts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">export ORG=xxxx
+cd rest-hero
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
+cd ..
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
+cd ..
+cd rest-fight
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
+cd ..
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
+cd ..</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Replace <code>ORG</code> with your DockerHub / Quay.io username.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_native_containers_locally">Running native containers locally</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="kubernetes">Kubernetes</h2>
+<div class="sectionbody">
+<hr>
+<div class="paragraph">
+<p>This chapter explores how you can deploy containerized Quarkus applications in Cloud platforms using Kubernetes.
+There are many different approaches to achieve these deployments.
+In this chapter, we are focusing on deploying our containers in Kubernetes.</p>
+</div>
+<div class="sect2">
+<h3 id="_deploying_on_kubernetes">Deploying on Kubernetes</h3>
+<div class="paragraph">
+<p>This section is going to deploy our microservices on Kubernetes.
+It is required to have access to a Kubernetes or OpenShift cluster.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To deploy your microservices, push the built container images to an image registry accessible by your cluster, such as Quay.io or DockerHub.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We recommend using a specific namespace to deploy your system.
+In the following sections, we use the <code>quarkus-workshop</code> namespace.</p>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_infrastructure">Deploying the infrastructure</h4>
+<div class="paragraph">
+<p>The first thing to deploy is the required infrastructure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3 PostgreSQL instances</p>
+</li>
+<li>
+<p>Kafka brokers (3 brokers with 3 Zookeeper to follow the recommended approach)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are many ways to deploy this infrastructure.
+Here, we are going to use two operators:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>PostgreSQL Operator by Dev4Ddevs.com</p>
+</li>
+<li>
+<p>Strimzi Apache Kafka Operator by Red Hat</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>With these operators installed, you can create the required infrastructure with the following custom resource definition (CRD):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">postgresql.dev4devs.com/v1alpha1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">Database</span></span>
+<span class="key">metadata</span>:
+    <span class="key">name</span>: <span class="string"><span class="content">heroes-database</span></span>
+    <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
+<span class="key">spec</span>:
+    <span class="key">databaseCpu</span>: <span class="string"><span class="content">30m</span></span>
+    <span class="key">databaseCpuLimit</span>: <span class="string"><span class="content">60m</span></span>
+    <span class="key">databaseMemoryLimit</span>: <span class="string"><span class="content">512Mi</span></span>
+    <span class="key">databaseMemoryRequest</span>: <span class="string"><span class="content">128Mi</span></span>
+    <span class="key">databaseName</span>: <span class="string"><span class="content">heroes-database</span></span>
+    <span class="key">databaseNameKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_DATABASE</span></span>
+    <span class="key">databasePassword</span>: <span class="string"><span class="content">superman</span></span>
+    <span class="key">databasePasswordKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_PASSWORD</span></span>
+    <span class="key">databaseStorageRequest</span>: <span class="string"><span class="content">1Gi</span></span>
+    <span class="key">databaseUser</span>: <span class="string"><span class="content">superman</span></span>
+    <span class="key">databaseUserKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_USER</span></span>
+    <span class="key">image</span>: <span class="string"><span class="content">centos/postgresql-96-centos7</span></span>
+    <span class="key">size</span>: <span class="string"><span class="content">1</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>This CRD creates the database for the Hero microservice.
+Duplicate this CRD for the fight and villain databases.</p>
+</div>
+<div class="paragraph">
+<p>For the Kafka broker, create the following CRD:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">Kafka</span></span>
+<span class="key">metadata</span>:
+  <span class="key">name</span>: <span class="string"><span class="content">my-kafka</span></span>
+  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
+<span class="key">spec</span>:
+  <span class="key">kafka</span>:
+    <span class="key">version</span>: <span class="string"><span class="content">2.3.0</span></span>
+    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
+    <span class="key">listeners</span>:
+      <span class="key">plain</span>: <span class="string"><span class="content">{}</span></span>
+      <span class="key">tls</span>: <span class="string"><span class="content">{}</span></span>
+    <span class="key">config</span>:
+      <span class="key">offsets.topic.replication.factor</span>: <span class="string"><span class="content">3</span></span>
+      <span class="key">transaction.state.log.replication.factor</span>: <span class="string"><span class="content">3</span></span>
+      <span class="key">transaction.state.log.min.isr</span>: <span class="string"><span class="content">2</span></span>
+      <span class="key">log.message.format.version</span>: <span class="string"><span class="content">'2.3'</span></span>
+    <span class="key">storage</span>:
+      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
+  <span class="key">zookeeper</span>:
+    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
+    <span class="key">storage</span>:
+      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
+  <span class="key">entityOperator</span>:
+    <span class="key">topicOperator</span>: <span class="string"><span class="content">{}</span></span>
+    <span class="key">userOperator</span>: <span class="string"><span class="content">{}</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This CRD creates the brokers and the Zookeeper instances.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also recommended to create the topic.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>For this, create the following CRD:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">KafkaTopic</span></span>
+<span class="key">metadata</span>:
+  <span class="key">name</span>: <span class="string"><span class="content">fights</span></span>
+  <span class="key">labels</span>:
+    <span class="key">strimzi.io/cluster</span>: <span class="string"><span class="content">my-kafka</span></span>
+  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
+<span class="key">spec</span>:
+  <span class="key">partitions</span>: <span class="string"><span class="content">1</span></span>
+  <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
+  <span class="key">config</span>:
+    <span class="key">retention.ms</span>: <span class="string"><span class="content">604800000</span></span>
+    <span class="key">segment.bytes</span>: <span class="string"><span class="content">1073741824</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once everything is created, you should have the following resources:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl get database
+NAME                AGE
+fights-database     16h
+heroes-database     16h
+villains-database   16h
+
+$ kubectl get kafka
+NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
+my-kafka   3</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</h4>
+<div class="paragraph">
+<p>Now that the infrastructure is in place, we can deploy our microservices.
+Let&#8217;s start with the hero and villain microservices.</p>
+</div>
+<div class="paragraph">
+<p>For each, we need to override the port and data source URL.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create a config map with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 2. config-hero.yaml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">v1</span></span>
+<span class="key">data</span>:
+    <span class="key">port</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">8080</span><span class="delimiter">&quot;</span></span>
+    <span class="key">database</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:postgresql://heroes-database:5432/heroes-database</span><span class="delimiter">&quot;</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">ConfigMap</span></span>
+<span class="key">metadata</span>:
+    <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Do the same for the villain microservice.
+Then, apply these resources:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f config-hero.yaml
+$ kubectl apply -f config-villain.yaml</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the config maps are created, we can deploy the microservices.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create a <code>deployment-hero.yaml</code> file with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">v1</span><span class="delimiter">&quot;</span></span>
+<span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">List</span><span class="delimiter">&quot;</span></span>
+<span class="key">items</span>:
+    - <span class="string"><span class="content">apiVersion: &quot;v1&quot;</span></span>
+      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Service</span><span class="delimiter">&quot;</span></span>
+      <span class="key">metadata</span>:
+          <span class="key">labels</span>:
+              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+      <span class="key">spec</span>:
+          <span class="key">ports</span>:
+              - <span class="string"><span class="content">name: &quot;http&quot;</span></span>
+                <span class="key">port</span>: <span class="string"><span class="content">8080</span></span>
+                <span class="key">targetPort</span>: <span class="string"><span class="content">8080</span></span>
+          <span class="key">selector</span>:
+              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ClusterIP</span><span class="delimiter">&quot;</span></span>
+    - <span class="string"><span class="content">apiVersion: &quot;apps/v1&quot;</span></span>
+      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Deployment</span><span class="delimiter">&quot;</span></span>
+      <span class="key">metadata</span>:
+          <span class="key">labels</span>:
+              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+      <span class="key">spec</span>:
+          <span class="key">replicas</span>: <span class="string"><span class="content">1</span></span>
+          <span class="key">selector</span>:
+              <span class="key">matchLabels</span>:
+                  <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+                  <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+                  <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">template</span>:
+              <span class="key">metadata</span>:
+                  <span class="key">labels</span>:
+                      <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+                      <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+                      <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+              <span class="key">spec</span>:
+                  <span class="key">containers</span>:
+                      - <span class="string"><span class="content">image: &quot;$ORG/quarkus-workshop-hero:latest&quot;</span></span>
+                        <span class="key">imagePullPolicy</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">IfNotPresent</span><span class="delimiter">&quot;</span></span>
+                        <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+                        <span class="key">ports</span>:
+                            - <span class="string"><span class="content">containerPort: 8080</span></span>
+                              <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">http</span><span class="delimiter">&quot;</span></span>
+                              <span class="key">protocol</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TCP</span><span class="delimiter">&quot;</span></span>
+                        <span class="key">env</span>:
+                            - <span class="string"><span class="content">name: &quot;KUBERNETES_NAMESPACE&quot;</span></span>
+                              <span class="key">valueFrom</span>:
+                                  <span class="key">fieldRef</span>:
+                                      <span class="key">fieldPath</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata.namespace</span><span class="delimiter">&quot;</span></span>
+
+                            - <span class="string"><span class="content">name: QUARKUS_DATASOURCE_URL</span></span>
+                              <span class="key">valueFrom</span>:
+                                  <span class="key">configMapKeyRef</span>:
+                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
+                                      <span class="key">key</span>: <span class="string"><span class="content">database</span></span>
+
+                            - <span class="string"><span class="content">name: QUARKUS_HTTP_PORT</span></span>
+                              <span class="key">valueFrom</span>:
+                                  <span class="key">configMapKeyRef</span>:
+                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
+                                      <span class="key">key</span>: <span class="string"><span class="content">port</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This descriptor declares:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A service to expose the HTTP endpoint</p>
+</li>
+<li>
+<p>A deployment that instantiates the application</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The deployment declares one container using the container image we built earlier.
+It also overrides the configuration for the HTTP port and database URL.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Don&#8217;t forget to create the equivalent files for the villain microservice.</p>
+</div>
+<div class="paragraph">
+<p>Then, deploy the microservice with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f deployment-hero.yaml
+$ kubectl apply -f deployment-villain.yaml</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_fight_microservice">Deploying the Fight microservice</h4>
+<div class="paragraph">
+<p>Follow the same approach for the fight microservice.
+Note that there are more properties to configure from the config map:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The location of the hero and villain microservice</p>
+</li>
+<li>
+<p>The location of the Kafka broker</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once everything is configured and deployed, your system is now running on Kubernetes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cloud-open-shift">Deploying to Open Shift</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="azure-aca">Azure Container Apps and Quarkus</h2>
+<div class="sectionbody">
+<hr>
+<div class="paragraph">
+<p>In this chapter, you are going to see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What&#8217;s Azure Container Apps?</p>
+</li>
+<li>
+<p>How does Azure Container Apps fit in the long list of Azure services?</p>
+</li>
+<li>
+<p>Pros and cons of using Azure Container Apps</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_whats_azure_container_apps">What&#8217;s Azure Container Apps?</h3>
+<div class="paragraph">
+<p><a href="https://azure.microsoft.com/services/container-apps">Azure Container Apps</a> is a fully managed serverless container service on Azure.
+It allows you to run containerized applications without worrying about orchestration or managing complex infrastructure such as Kubernetes.
+You write code using your preferred programming language or framework (in this workshop it&#8217;s Java and Quarkus, but it can be anything), and build microservices with full support for Distributed Application Runtime (<a href="https://dapr.io">Dapr</a>).
+Then, your containers will scale dynamically based on HTTP traffic or events powered by Kubernetes Event-Driven Autoscaling (<a href="https://keda.sh">KEDA</a>).</p>
+</div>
+<div class="paragraph">
+<p>There are already a few compute resources on Azure: from IAAS to FAAS.
+Azure Container Apps sits between PAAS and FAAS.
+On one hand, it feels more PaaS, because you are not forced into a specific programming model and you can control the rules on which to scale out / scale in.
+On the other hand, it has quite some serverless characteristics like scaling to zero, event-driven scaling, per second pricing and the ability to leverage Dapr&#8217;s event-based bindings.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/azure-aca-compute.png" alt="azure aca compute">
+</div>
+</div>
+<div class="paragraph">
+<p>Container Apps is built on top of Azure Kubernetes Service, including a deep integration with KEDA (event-driven auto scaling for Kubernetes), Dapr (distributed application runtime) and Envoy (a service proxy designed for cloud-native applications).
+The underlying complexity is completely abstracted for the end-user.
+So no need to configure your K8S service, deployment, ingress, volume manifests…
+You get a very simple API and user interface to configure the desired configuration for your containerized application.
+This simplification means also less control, hence the difference with AKS.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/azure-aca-intro.png" alt="azure aca intro">
+</div>
+</div>
+<div class="paragraph">
+<p>Azure Container Apps has the following features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Revisions</em>: automatic versioning that helps to manage the application lifecycle of your container apps</p>
+</li>
+<li>
+<p><em>Traffic control</em>: split incoming HTTP traffic across multiple revisions for Blue/Green deployments and A/B testing</p>
+</li>
+<li>
+<p><em>Ingress</em>: simple HTTPS ingress configuration, without the need to worry about DNS and certificates</p>
+</li>
+<li>
+<p><em>Autoscaling</em>: leverage all KEDA-supported scale triggers to scale your app based on external metrics</p>
+</li>
+<li>
+<p><em>Secrets</em>: deploy secrets that are securely shared between containers, scale rules and Dapr sidecars</p>
+</li>
+<li>
+<p><em>Monitoring</em>: the standard output and error streams are automatically written to Log Analytics</p>
+</li>
+<li>
+<p><em>Dapr</em>: through a simple flag, you can enable native Dapr integration for your Container Apps</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Azure Container Apps <a href="https://yourazurecoach.com/2021/11/03/container-apps-the-missing-piece-in-the-azure-compute-puzzle">introduce the following concepts</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Environment</em>: this is a secure boundary around a group of Container Apps.
+They are deployed in the same virtual network, these apps can easily intercommunicate easily with each other and they write logs to the same Log Analytics workspace.
+An environment can be compared with a Kubernetes namespace.</p>
+</li>
+<li>
+<p><em>Container App</em>: this is a group of containers (pod) that is deployed and scale together.
+They share the same disk space and network.</p>
+</li>
+<li>
+<p><em>Revision</em>: this is an immutable snapshot of a Container App.
+New revisions are automatically created and are valuable for HTTP traffic redirection strategies, such as A/B testing.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/azure-aca-concepts.png" alt="azure aca concepts">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="azure-intro-preparing">Setting Up Azure</h3>
+<div class="paragraph">
+<p>To be able to deploy the application to Azure, you first need an Azure subscription.
+If you don&#8217;t have one, go to <a href="https://signup.azure.com" class="bare">https://signup.azure.com</a> and register.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Then, sign in to Azure from the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az login</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Make sure you are using the right subscription with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az account show</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_the_azure_environment">Setting Up the Azure Environment</h4>
+<div class="paragraph">
+<p>Azure CLI is extensible and you can install as many extensions as you need.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>For this workshop, install the Azure Container Apps and Database extensions for the Azure CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az extension add --name containerapp  --upgrade
+az extension add --name rdbms-connect --upgrade
+az extension add --name log-analytics --upgrade</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can then check the extensions that are installed in your system with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az extension list</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see the extensions that have been installed:</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are on Windows and using WSL, the extensions should be installed under <code>/home/&lt;user&gt;/.azure/cliextensions/</code>.
+If it&#8217;s not the case, and instead extensions are installed under <code>C:\\Users\\&lt;user&gt;\\.azure\\cliextensions</code>, you should reboot your computer.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">[
+  <span class="error">.</span><span class="error">.</span><span class="error">.</span>
+  {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">experimental</span><span class="delimiter">&quot;</span></span>: <span class="value">false</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">extensionType</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">whl</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">containerapp</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">path</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">/Users/agoncal/.azure/cliextensions/containerapp</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">preview</span><span class="delimiter">&quot;</span></span>: <span class="value">true</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">0.3.4</span><span class="delimiter">&quot;</span></span>
+  },
+  <span class="error">.</span><span class="error">.</span><span class="error">.</span>
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, register the needed Azure namespaces:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az provider register --namespace Microsoft.App
+az provider register --namespace Microsoft.OperationalInsights
+az provider register --namespace Microsoft.Insights</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_azure_resources">Creating Azure Resources</h3>
+<div class="paragraph">
+<p>Before creating the infrastructure for the Super Heroes application and deploying the microservices to Azure Container Apps, we need to create some Azure resources.</p>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_the_azure_environment_variables">Setting Up the Azure environment variables</h4>
+<div class="paragraph">
+<p>Let&#8217;s first set a few environment variables that will help us in creating the Azure infrastructure.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Set the following variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">PROJECT=&quot;super-heroes&quot;
+RESOURCE_GROUP=&quot;rg-${PROJECT}&quot;
+LOCATION=&quot;eastus&quot;
+TAG=$PROJECT
+
+LOG_ANALYTICS_WORKSPACE=&quot;log-${PROJECT}&quot;
+
+UNIQUE_IDENTIFIER=$(whoami)
+REGISTRY=&quot;registrysuperheroes&quot;$UNIQUE_IDENTIFIER
+IMAGES_TAG=&quot;1.0&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s create the Azure resources.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_resource_group">Resource Group</h4>
+<div class="paragraph">
+<p>A <a href="https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal">resource group</a> is a container that holds related resources for an Azure solution.
+The resource group can include all the resources for the solution, or only those resources that you want to manage as a group.
+In our workshop, all the databases, all the microservices, etc. will be grouped into a single resource group.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Execute the following command to create the Super Hero resource group:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az group create \
+  --name &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_log_analytics_workspace">Log Analytics Workspace</h4>
+<div class="paragraph">
+<p><a href="https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace">Log Analytics workspace</a> is the environment for Azure Monitor log data.
+Each workspace has its own data repository and configuration, and data sources and solutions are configured to store their data in a particular workspace.
+We will use the same workspace for most of the Azure resources we will be creating.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create a Log Analytics workspace with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az monitor log-analytics workspace create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; \
+  --workspace-name &quot;$LOG_ANALYTICS_WORKSPACE&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s also retrieve the Log Analytics Client ID and client secret and store them in environment variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">LOG_ANALYTICS_WORKSPACE_CLIENT_ID=`az monitor log-analytics workspace show  \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --workspace-name &quot;$LOG_ANALYTICS_WORKSPACE&quot; \
+  --query customerId  \
+  --output tsv | tr -d '[:space:]'`
+
+echo $LOG_ANALYTICS_WORKSPACE_CLIENT_ID
+
+LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=`az monitor log-analytics workspace get-shared-keys \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --workspace-name &quot;$LOG_ANALYTICS_WORKSPACE&quot; \
+  --query primarySharedKey \
+  --output tsv | tr -d '[:space:]'`
+
+echo $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_azure_container_registry">Azure Container Registry</h4>
+<div class="paragraph">
+<p>In the next chapters we will be creating Docker containers and pushing them to the Azure Container Registry.
+<a href="https://azure.microsoft.com/services/container-registry">Azure Container Registry</a> is a private registry for hosting container images.
+Using the Azure Container Registry, you can store Docker-formatted images for all types of container deployments.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>First, let&#8217;s created an Azure Container Registry with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az acr create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; \
+  --name &quot;$REGISTRY&quot; \
+  --workspace &quot;$LOG_ANALYTICS_WORKSPACE&quot; \
+  --sku Premium \
+  --admin-enabled true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Update the repository to allow anonymous users to pull the images:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az acr update \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --name &quot;$REGISTRY&quot; \
+  --anonymous-pull-enabled true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Get the URL of the Azure Container Registry and set it to the <code>REGISTRY_URL</code> variable with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">REGISTRY_URL=$(az acr show \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --name &quot;$REGISTRY&quot; \
+  --query &quot;loginServer&quot; \
+  --output tsv)
+
+echo $REGISTRY_URL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you log into the <a href="https://portal.azure.com">Azure Portal</a> you should see the following created resources.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/azure-portal-2.png" alt="azure portal 2">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_up_the_environment_variables">Setting Up the Environment Variables</h3>
+<div class="paragraph">
+<p>The Super Heroes environment and application will be created and deployed using a set of Azure CLI commands.
+Each of these commands need a set of parameters, and some of these parameters can be set of environment variables.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Set the following environment variables, there will be needed in the Azure CLI commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell"># Container Apps
+CONTAINERAPPS_ENVIRONMENT=&quot;env-${PROJECT}&quot;
+
+# Postgres
+POSTGRES_DB_ADMIN=&quot;superheroesadmin&quot;
+POSTGRES_DB_PWD=&quot;super-heroes-p#ssw0rd-12046&quot;
+POSTGRES_DB_VERSION=&quot;14&quot;
+POSTGRES_SKU=&quot;Standard_B1ms&quot;
+POSTGRES_TIER=&quot;Burstable&quot;
+
+# Kafka
+KAFKA_NAMESPACE=&quot;fights-kafka-$UNIQUE_IDENTIFIER&quot;
+KAFKA_TOPIC=&quot;fights&quot;
+KAFKA_BOOTSTRAP_SERVERS=&quot;$KAFKA_NAMESPACE.servicebus.windows.net:9093&quot;
+
+# Heroes
+HEROES_APP=&quot;heroes-app&quot;
+HEROES_DB=&quot;heroes-db-$UNIQUE_IDENTIFIER&quot;
+HEROES_IMAGE=&quot;${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}&quot;
+HEROES_DB_SCHEMA=&quot;heroes&quot;
+HEROES_DB_CONNECT_STRING=&quot;postgresql://${HEROES_DB}.postgres.database.azure.com:5432/${HEROES_DB_SCHEMA}?ssl=true&amp;sslmode=require&quot;
+
+# Villains
+VILLAINS_APP=&quot;villains-app&quot;
+VILLAINS_DB=&quot;villains-db-$UNIQUE_IDENTIFIER&quot;
+VILLAINS_IMAGE=&quot;${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}&quot;
+VILLAINS_DB_SCHEMA=&quot;villains&quot;
+VILLAINS_DB_CONNECT_STRING=&quot;jdbc:postgresql://${VILLAINS_DB}.postgres.database.azure.com:5432/${VILLAINS_DB_SCHEMA}?ssl=true&amp;sslmode=require&quot;
+
+# Fights
+FIGHTS_APP=&quot;fights-app&quot;
+FIGHTS_DB=&quot;fights-db-$UNIQUE_IDENTIFIER&quot;
+FIGHTS_IMAGE=&quot;${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}&quot;
+FIGHTS_DB_SCHEMA=&quot;fights&quot;
+FIGHTS_DB_CONNECT_STRING=&quot;jdbc:postgresql://${FIGHTS_DB}.postgres.database.azure.com:5432/${FIGHTS_DB_SCHEMA}?ssl=true&amp;sslmode=require&quot;
+
+# Statistics
+STATISTICS_APP=&quot;statistics-app&quot;
+STATISTICS_IMAGE=&quot;${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}&quot;
+
+# UI
+UI_APP=&quot;super-heroes-ui&quot;
+UI_IMAGE=&quot;${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ready_2">Ready?</h3>
+<div class="paragraph">
+<p>After the prerequisites have been installed and the different components have been warmed up, and some Azure resource created, it&#8217;s now time to deploy some code!
+But before, let us introduce Azure Container Apps and Quarkus.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="azure-local-running-app">Running the Application Locally</h3>
+<hr>
+<div class="paragraph">
+<p>In this chapter we will push the containers we&#8217;ve built to Azure Container Registry so we can still run them locally, and later on Azure Container Apps.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Building containers locally and pushing them to Azure Container Registry can take from 15 to 30 minutes (depending on your CPU and bandwith).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In this section, we are going to package our microservices into containers.
+In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+The native compilation uses the OS and architecture of the host system.</p>
+</div>
+<div class="paragraph">
+<p>And&#8230;&#8203; Linux Containers are &#8230;&#8203; <em>Linux</em>.
+So to build a container with a Linux native executable (even if you are on Windows or Mac), Quarkus comes with a trick to produce these executable.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s a pretty straightforward <code>Dockerfile</code> taking a minimal base image and copying the generated native executable.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Building a native executable takes time, CPU, and memory.
+It&#8217;s even more accurate in the container.
+So, first, be sure that your container system has enough memory to build the executable.
+It requires at least 6Gb of memory, 8Gb is recommended.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Execute the following commands to build all our microservices and the UI.
+This will build Docker images out of Linux native executables:
+Under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory execute the following Docker commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">cd extension-version
+mvn clean install
+cd ..
+
+cd rest-heroes
+mvn clean package
+cd ..
+
+cd rest-villains
+mvn clean package
+cd ..
+
+cd rest-fights
+mvn clean package
+cd ..
+
+cd event-statistics
+mvn clean package
+cd ..</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">cd rest-heroes
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-heroes .
+cd ..
+
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-villains ../..
+cd ..
+
+cd rest-fights
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-fights .
+cd ..
+
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/event-statistics .
+cd ..
+
+cd ui-super-heroes
+docker build -f src/main/docker/Dockerfile.build-native -t quarkus/ui-super-heroes .
+cd ..</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pushing_containers_to_azure_container_registry">Pushing containers to Azure Container Registry</h4>
+<div class="paragraph">
+<p>Now that we have all our Docker containers running locally, let&#8217;s push them to Azure Container Registry.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Make sure you&#8217;ve set all the environment variables defined in the previous chapter and that you&#8217;ve also created the resource group and the Azure Container Registry.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the <code>REGISTRY_URL</code> variable).
+Tag the image using the <code>docker tag</code> commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker tag quarkus/ui-super-heroes:latest   $UI_IMAGE
+docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
+docker tag quarkus/rest-fights:latest       $FIGHTS_IMAGE
+docker tag quarkus/rest-villains:latest     $VILLAINS_IMAGE
+docker tag quarkus/rest-heroes:latest       $HEROES_IMAGE</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>To be able to push these Docker images to Azure Registry, we first need to log in to the registry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az acr login \
+  --name &quot;$REGISTRY&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see the prompt <em>Login Succeeded</em>.</p>
+</div>
+<div class="paragraph">
+<p>Then, push all the images with the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker push $UI_IMAGE
+docker push $STATISTICS_IMAGE
+docker push $FIGHTS_IMAGE
+docker push $VILLAINS_IMAGE
+docker push $HEROES_IMAGE</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can check that the images have been pushed to Azure Container Registry by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az acr repository list \
+  --name &quot;$REGISTRY&quot; \
+  --output table</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also get some information on a particular repository or image if needed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az acr repository show \
+  --name &quot;$REGISTRY&quot; \
+  --repository &quot;$HEROES_APP&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can visualize the content of the registry on the <a href="https://portal.azure.com">Azure Portal</a>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/azure-portal-4.png" alt="azure portal 4">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_remote_containers">Running remote containers</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>If you haven&#8217;t skipped the previous optional sections and built the containers your self, you should edit the <code>docker-compose-app-remote.yaml</code> file under <code>super-heroes/infrastructure</code> and change the name <code>superheroesregistry</code> with the value of the <code>$REGISTRY</code> variable.</p>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Now that we have all our Docker containers pushed to Azure Container Registry, let&#8217;s execute them with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose -f docker-compose-app-remote.yaml up</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>s
+Once all the containers are started, you can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to <a href="http://localhost:8080" class="bare">http://localhost:8080</a> to check the main UI</p>
+</li>
+<li>
+<p>Go to <a href="http://localhost:8085" class="bare">http://localhost:8085</a> to check the statistics UI</p>
+</li>
+<li>
+<p>curl <a href="http://localhost:8084/api/villains" class="bare">http://localhost:8084/api/villains</a> | jq</p>
+</li>
+<li>
+<p>curl <a href="http://localhost:8083/api/heroes" class="bare">http://localhost:8083/api/heroes</a> | jq</p>
+</li>
+<li>
+<p>curl <a href="http://localhost:8082/api/fights/randomfighters" class="bare">http://localhost:8082/api/fights/randomfighters</a> | jq</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>On <a href="http://localhost:8080" class="bare">http://localhost:8080</a> you should see the user interface, and you should be able to fight super heroes against super villains:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-ui-ai.png" alt="angular ui ai">
+</div>
+</div>
+<div class="paragraph">
+<p>On <a href="http://localhost:8085" class="bare">http://localhost:8085</a> you should see the statistics of the fights.
+When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.
+The UI is automatically updated at each fight:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-ui-stats.png" alt="angular ui stats">
+</div>
+</div>
+<div class="paragraph">
+<p>You should see the user interface and everything should work.
+Remember to shutdown the entire application with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker compose -f docker-compose-app-remote.yaml down</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ok, enough running these containers locally!
+In the next chapter we will take these remote containers, configure them, and make them work remotely on Azure Container Apps.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="azure-aca-running-app">Running the Application on Azure Container Apps</h3>
+<hr>
+<div class="paragraph">
+<p>Now that we have containerized our application, push it to Azure Container Registry and execute it locally, time to execute it on Azure Container Apps.
+In this chapter we will create the needed infrastructure in Azure Container Apps (database, Kafka, etc.) and then deploy the containers so we can execute our application.</p>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_infrastructure_2">Deploying the Infrastructure</h4>
+<div class="paragraph">
+<p>Before deploying our microservices to Azure Container Apps, we need to create the infrastructure.</p>
+</div>
+<div class="sect4">
+<h5 id="_create_a_container_apps_environment">Create a Container Apps environment</h5>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>First, let&#8217;s create the container apps environment.
+A container apps environment acts as a boundary for our containers.
+Containers deployed on the same environment use the same virtual network and the same Log Analytics workspace.
+Create the container apps environment with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp env create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; \
+  --name &quot;$CONTAINERAPPS_ENVIRONMENT&quot; \
+  --logs-workspace-id &quot;$LOG_ANALYTICS_WORKSPACE_CLIENT_ID&quot; \
+  --logs-workspace-key &quot;$LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_create_the_managed_postgres_databases">Create the managed Postgres Databases</h5>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>We need to create three PostgreSQL databases so the Heroes, Villains and Fights microservice can store data.
+Because we also want to access these database from external SQL client, we make them available to the outside world thanks to the <code>-public all</code> parameter.
+Create the databases with the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$HEROES_APP&quot; \
+  --name &quot;$HEROES_DB&quot; \
+  --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+  --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+  --public all \
+  --tier &quot;$POSTGRES_TIER&quot; \
+  --sku-name &quot;$POSTGRES_SKU&quot; \
+  --storage-size 256 \
+  --version &quot;$POSTGRES_DB_VERSION&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$VILLAINS_APP&quot; \
+  --name &quot;$VILLAINS_DB&quot; \
+  --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+  --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+  --public all \
+  --tier &quot;$POSTGRES_TIER&quot; \
+  --sku-name &quot;$POSTGRES_SKU&quot; \
+  --storage-size 256 \
+  --version &quot;$POSTGRES_DB_VERSION&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$FIGHTS_APP&quot; \
+  --name &quot;$FIGHTS_DB&quot; \
+  --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+  --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+  --public all \
+  --tier &quot;$POSTGRES_TIER&quot; \
+  --sku-name &quot;$POSTGRES_SKU&quot; \
+  --storage-size 256 \
+  --version &quot;$POSTGRES_DB_VERSION&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Then, we create the database schemas, one for each database:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server db create \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --server-name &quot;$HEROES_DB&quot; \
+    --database-name &quot;$HEROES_DB_SCHEMA&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server db create \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --server-name &quot;$VILLAINS_DB&quot; \
+    --database-name &quot;$VILLAINS_DB_SCHEMA&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server db create \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --server-name &quot;$FIGHTS_DB&quot; \
+    --database-name &quot;$FIGHTS_DB_SCHEMA&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Now that we have all our databases setup, time to create the tables and add some data to them.
+Each microservice comes with a set of database initialization files as well as some insert statements.
+Thanks to Azure CLI we can execute these SQL scripts.
+Create the tables using the following commands (make sure you are under <code>quarkus-workshop-super-heroes/super-heroes</code> to execute them):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$HEROES_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$HEROES_DB_SCHEMA&quot; \
+    --file-path &quot;infrastructure/db-init/initialize-tables-heroes.sql&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you get the error <code>No module named 'psycopg2._psycopg'</code> that means that some of your Azure CLI dependencies are not correctly installed.
+Check <a href="https://github.com/Azure/azure-cli/issues/21998" class="bare">https://github.com/Azure/azure-cli/issues/21998</a> for help.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$VILLAINS_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$VILLAINS_DB_SCHEMA&quot; \
+    --file-path &quot;infrastructure/db-init/initialize-tables-villains.sql&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$FIGHTS_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$FIGHTS_DB_SCHEMA&quot; \
+    --file-path &quot;infrastructure/db-init/initialize-tables-fights.sql&quot;</code></pre>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Now, let&#8217;s add some super heroes and super villains to these databases:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$HEROES_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$HEROES_DB_SCHEMA&quot; \
+    --file-path &quot;rest-heroes/src/main/resources/import.sql&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$VILLAINS_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$VILLAINS_DB_SCHEMA&quot; \
+    --file-path &quot;rest-villains/src/main/resources/import.sql&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$FIGHTS_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$FIGHTS_DB_SCHEMA&quot; \
+    --file-path &quot;rest-fights/src/main/resources/import.sql&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can check the content of the tables with the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$HEROES_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$HEROES_DB_SCHEMA&quot; \
+    --querytext &quot;select * from hero&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$VILLAINS_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$VILLAINS_DB_SCHEMA&quot; \
+    --querytext &quot;select * from villain&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az postgres flexible-server execute \
+    --name &quot;$FIGHTS_DB&quot; \
+    --admin-user &quot;$POSTGRES_DB_ADMIN&quot; \
+    --admin-password &quot;$POSTGRES_DB_PWD&quot; \
+    --database-name &quot;$FIGHTS_DB_SCHEMA&quot; \
+    --querytext &quot;select * from fight&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_create_the_managed_kafka">Create the Managed Kafka</h5>
+<div class="paragraph">
+<p>The Fight microservice communicates with the Statistics microservice through Kafka.
+We need to create an Azure event hub for that.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az eventhubs namespace create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --location &quot;$LOCATION&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$FIGHTS_APP&quot; \
+  --name &quot;$KAFKA_NAMESPACE&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, create the Kafka topic where the messages will be sent to and consumed from:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az eventhubs eventhub create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --name &quot;$KAFKA_TOPIC&quot; \
+  --namespace-name &quot;$KAFKA_NAMESPACE&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To configure Kafka in the Fight and Statistics microservices, get the connection string with the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">KAFKA_CONNECTION_STRING=$(az eventhubs namespace authorization-rule keys list \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --namespace-name &quot;$KAFKA_NAMESPACE&quot; \
+  --name RootManageSharedAccessKey \
+  --output json | jq -r .primaryConnectionString)
+
+JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username=&quot;$ConnectionString&quot; password=&quot;'
+KAFKA_JAAS_CONFIG=&quot;${JAAS_CONFIG}${KAFKA_CONNECTION_STRING}\&quot;;&quot;
+
+echo $KAFKA_CONNECTION_STRING
+echo $KAFKA_JAAS_CONFIG</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you log into the <a href="https://portal.azure.com">Azure Portal</a> you should see the following created resources.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/azure-portal-3.png" alt="azure portal 3">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_applications">Deploying the Applications</h4>
+<div class="paragraph">
+<p>Now that the Azure Container Apps environment is all set, we need to deploy our microservices to Azure Container Apps.
+So let&#8217;s create an instance of Container Apps for each of our microservices and User Interface.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you haven&#8217;t built the containers and push them to your own Azure Container Registry, you need to change some environment variables.
+That means, that instead of having <code>REGISTRY="superheroesregistry"$UNIQUE_IDENTIFIER</code>, you need to change it to <code>REGISTRY="superheroesregistry</code> (so it uses the common registry).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">REGISTRY=&quot;registrysuperheroesagoncal&quot;
+
+REGISTRY_URL=$(az acr show \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --name &quot;$REGISTRY&quot; \
+  --query &quot;loginServer&quot; \
+  --output tsv)
+
+HEROES_IMAGE=&quot;${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}&quot;
+VILLAINS_IMAGE=&quot;${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}&quot;
+FIGHTS_IMAGE=&quot;${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}&quot;
+STATISTICS_IMAGE=&quot;${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}&quot;
+UI_IMAGE=&quot;${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}&quot;</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_heroes_microservice">Heroes Microservice</h5>
+<div class="paragraph">
+<p>First, the Heroes microservice.
+The Heroes microservice needs to access the managed Postgres database.
+Therefore, we need to set the right properties using our environment variables.
+Notice that the Heroes microservice has a <code>--min-replicas</code> set to 0.
+That means it can scale down to zero if not used (more on that later).</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create the Heroes container app with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$HEROES_APP&quot; \
+  --image &quot;$HEROES_IMAGE&quot; \
+  --name &quot;$HEROES_APP&quot; \
+  --environment &quot;$CONTAINERAPPS_ENVIRONMENT&quot; \
+  --ingress external \
+  --target-port 8083 \
+  --min-replicas 0 \
+  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
+             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
+             QUARKUS_DATASOURCE_USERNAME=&quot;$POSTGRES_DB_ADMIN&quot; \
+             QUARKUS_DATASOURCE_PASSWORD=&quot;$POSTGRES_DB_PWD&quot; \
+             QUARKUS_DATASOURCE_REACTIVE_URL=&quot;$HEROES_DB_CONNECT_STRING&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following command sets the URL of the deployed application to the <code>HEROES_URL</code> variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">HEROES_URL=&quot;https://$(az containerapp ingress show \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --name &quot;$HEROES_APP&quot; \
+    --output json | jq -r .fqdn)&quot;
+
+echo $HEROES_URL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can now invoke the Hero microservice APIs with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">curl &quot;$HEROES_URL/api/heroes/hello&quot;
+curl &quot;$HEROES_URL/api/heroes&quot; | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the logs of the Heroes microservice, you can write the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az monitor log-analytics query \
+  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --analytics-query &quot;ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$HEROES_APP' | project ContainerAppName_s, Log_s, TimeGenerated &quot; \
+  --output table</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You might have to wait to be able to get the logs.
+Log analytics can take some time to get initialized.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_villains_microservice">Villains Microservice</h5>
+<div class="paragraph">
+<p>The Villain microservice also needs to access the managed Postgres database, so we need to set the right variables.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Notice the minimum of replicas is also set to 0:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$VILLAINS_APP&quot; \
+  --image &quot;$VILLAINS_IMAGE&quot; \
+  --name &quot;$VILLAINS_APP&quot; \
+  --environment &quot;$CONTAINERAPPS_ENVIRONMENT&quot; \
+  --ingress external \
+  --target-port 8084 \
+  --min-replicas 0 \
+  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
+             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
+             QUARKUS_DATASOURCE_USERNAME=&quot;$POSTGRES_DB_ADMIN&quot; \
+             QUARKUS_DATASOURCE_PASSWORD=&quot;$POSTGRES_DB_PWD&quot; \
+             QUARKUS_DATASOURCE_JDBC_URL=&quot;$VILLAINS_DB_CONNECT_STRING&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following command sets the URL of the deployed application to the <code>VILLAINS_URL</code> variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">VILLAINS_URL=&quot;https://$(az containerapp ingress show \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --name &quot;$VILLAINS_APP&quot; \
+    --output json | jq -r .fqdn)&quot;
+
+echo $VILLAINS_URL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can now invoke the Hero microservice APIs with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">curl &quot;$VILLAINS_URL/api/villains/hello&quot;
+curl &quot;$VILLAINS_URL/api/villains&quot; | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the logs of the Villain microservice, you can write the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az monitor log-analytics query \
+  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --analytics-query &quot;ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$VILLAINS_APP' | project ContainerAppName_s, Log_s, TimeGenerated &quot; \
+  --output table</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_statistics_microservice">Statistics Microservice</h5>
+<div class="paragraph">
+<p>The Statistics microservice listens to a Kafka topics and consumes all the fights.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create the Statistics container application with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$STATISTICS_APP&quot; \
+  --image &quot;$STATISTICS_IMAGE&quot; \
+  --name &quot;$STATISTICS_APP&quot; \
+  --environment &quot;$CONTAINERAPPS_ENVIRONMENT&quot; \
+  --ingress external \
+  --target-port 8085 \
+  --min-replicas 0 \
+  --env-vars KAFKA_BOOTSTRAP_SERVERS=&quot;$KAFKA_BOOTSTRAP_SERVERS&quot; \
+             KAFKA_SECURITY_PROTOCOL=SASL_SSL \
+             KAFKA_SASL_MECHANISM=PLAIN \
+             KAFKA_SASL_JAAS_CONFIG=&quot;$KAFKA_JAAS_CONFIG&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following command sets the URL of the deployed application to the <code>STATISTICS_URL</code> variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">STATISTICS_URL=&quot;https://$(az containerapp ingress show \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --name &quot;$STATISTICS_APP&quot; \
+    --output json | jq -r .fqdn)&quot;
+
+echo $STATISTICS_URL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can now display the Statistics UI with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">open &quot;$STATISTICS_URL&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the logs of the Statistics microservice, you can write the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az monitor log-analytics query \
+  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --analytics-query &quot;ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$STATISTICS_APP' | project ContainerAppName_s, Log_s, TimeGenerated &quot; \
+  --output table</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_fights_microservice">Fights Microservice</h5>
+<div class="paragraph">
+<p>The Fight microservice invokes the Heroes and Villains microservices, sends fight messages to a Kafka topics and stores the fights into a MongoDB database.
+We need to configure Kafka (same connection string as the one used by the Statistics microservice) as well as the Postgres database.
+As for the microservice invocations, you need to set the URLs of both Heroes and Villains microservices.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create the Fights container application with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$FIGHTS_APP&quot; \
+  --image &quot;$FIGHTS_IMAGE&quot; \
+  --name &quot;$FIGHTS_APP&quot; \
+  --environment &quot;$CONTAINERAPPS_ENVIRONMENT&quot; \
+  --ingress external \
+  --target-port 8082 \
+  --min-replicas 0 \
+  --env-vars QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=validate \
+             QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT=no-file \
+             QUARKUS_DATASOURCE_USERNAME=&quot;$POSTGRES_DB_ADMIN&quot; \
+             QUARKUS_DATASOURCE_PASSWORD=&quot;$POSTGRES_DB_PWD&quot; \
+             QUARKUS_DATASOURCE_JDBC_URL=&quot;$FIGHTS_DB_CONNECT_STRING&quot; \
+             KAFKA_BOOTSTRAP_SERVERS=&quot;$KAFKA_BOOTSTRAP_SERVERS&quot; \
+             KAFKA_SECURITY_PROTOCOL=SASL_SSL \
+             KAFKA_SASL_MECHANISM=PLAIN \
+             KAFKA_SASL_JAAS_CONFIG=&quot;$KAFKA_JAAS_CONFIG&quot; \
+             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_HEROPROXY_MP_REST_URL=&quot;$HEROES_URL&quot; \
+             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_VILLAINPROXY_MP_REST_URL=&quot;$VILLAINS_URL&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following command sets the URL of the deployed application to the <code>FIGHTS_URL</code> variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">FIGHTS_URL=&quot;https://$(az containerapp ingress show \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --name &quot;$FIGHTS_APP&quot; \
+    --output json | jq -r .fqdn)&quot;
+
+echo $FIGHTS_URL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use the following curl commands to access the Fight microservice.
+Remember that we&#8217;ve set the minimum replicas to 0.
+That means that pinging the Hero and Villain microservices might fallback (you will get a <em>That means that pinging the Hero and Villain microservices might fallback (you will get a That means that pinging the Hero and Villain microservices might fallback (you will get a _Could not invoke the Villains microservice</em> message).
+Execute several times the same curl commands so Azure Containers Apps has time to instantiate one replica and process the requests:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">curl &quot;$FIGHTS_URL/api/fights/hello&quot;
+curl &quot;$FIGHTS_URL/api/fights&quot; | jq
+curl &quot;$FIGHTS_URL/api/fights/randomfighters&quot; | jq</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the logs of the Fight microservice, you can write the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az monitor log-analytics query \
+  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --analytics-query &quot;ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$FIGHTS_APP' | project ContainerAppName_s, Log_s, TimeGenerated &quot; \
+  --output table</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_super_hero_ui">Super Hero UI</h5>
+<div class="paragraph">
+<p>Like for the previous microservices, we will be deploying the UI as Docker image as we did for the previous microservices.
+But we could have also deployed the Super Hero UI using Azure Static Webapps which is suited for Angular applications.
+If you are interested in this approach, you can check <a href="https://azure.microsoft.com/services/app-service/static/">Azure Static Webapps</a>.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>For now, let&#8217;s continue with Azure Container Apps and deploy the UI as a Docker image with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp create \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --tags system=&quot;$TAG&quot; application=&quot;$UI_APP&quot; \
+  --image &quot;$UI_IMAGE&quot; \
+  --name &quot;$UI_APP&quot; \
+  --environment &quot;$CONTAINERAPPS_ENVIRONMENT&quot; \
+  --ingress external \
+  --target-port 8080 \
+  --env-vars API_BASE_URL=&quot;$FIGHTS_URL&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">UI_URL=&quot;https://$(az containerapp ingress show \
+    --resource-group &quot;$RESOURCE_GROUP&quot; \
+    --name &quot;$UI_APP&quot; \
+    --output json | jq -r .fqdn)&quot;
+
+echo $UI_URL</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">open &quot;$UI_URL&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the UI logs, you can write the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az monitor log-analytics query \
+  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --analytics-query &quot;ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$UI_APP' | project ContainerAppName_s, Log_s, TimeGenerated &quot; \
+  --output table</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_application_5">Running the Application</h4>
+<div class="paragraph">
+<p>Now that the entire infrastructure is created and the microservices deployed, you can use all the following commands to either, directly invoke the APIs, or use the user interfaces:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">curl &quot;$HEROES_URL/api/heroes&quot; | jq
+curl &quot;$VILLAINS_URL/api/villains&quot; | jq
+curl &quot;$FIGHTS_URL/api/fights/randomfighters&quot; | jq
+open &quot;$STATISTICS_URL&quot;
+open &quot;$UI_URL&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="azure-aca-monitoring">Monitoring the Application on Azure Container Apps</h3>
+<div class="sect3">
+<h4 id="_restarting_a_microservice">Restarting a Microservice</h4>
+<div class="paragraph">
+<p>If you need to restart a microservice, you need to actually restart the active revision.
+For that, first get the active revision:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp revision list \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --name &quot;$FIGHTS_APP&quot; \
+  --output table</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, restart it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp revision restart \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --app &quot;$FIGHTS_APP&quot; \
+  --name rest-fights-app--mh396rg</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_redeploying_a_new_version_of_a_microservice">Redeploying a new version of a microservice</h4>
+<div class="paragraph">
+<p>If you need to push a new version of a Docker image, make sure it has a different tag.
+Then, update the container with this new tagged image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az containerapp update \
+  --resource-group &quot;$RESOURCE_GROUP&quot; \
+  --image quay.io/quarkus-super-heroes/rest-fights:azure2 \
+  --name &quot;$FIGHTS_APP&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cleaning_up_azure_resources">Cleaning Up Azure Resources</h3>
+<div class="paragraph">
+<p>Do NOT forget to remove the Azure resources once you are done running the workshop.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">az group delete \
+  --name &quot;$RESOURCE_GROUP&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="extension">Writing a Quarkus Extension</h2>
 <div class="sectionbody">
 <hr>
@@ -10327,508 +13288,6 @@ To go further, check <a href="https://quarkus.io/guides/extension-authors-guide"
 </div>
 </div>
 <div class="sect1">
-<h2 id="cloud">Containers &amp; Cloud</h2>
-<div class="sectionbody">
-<hr>
-<div class="paragraph">
-<p>This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
-There are many different approaches to achieve these deployments.
-In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.</p>
-</div>
-<div class="sect2">
-<h3 id="_from_bare_metal_to_containers">From bare metal to containers</h3>
-<div class="paragraph">
-<p>In this section, we are going to package our microservices into containers.
-In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
-The native compilation uses the OS and architecture of the host system.</p>
-</div>
-<div class="paragraph">
-<p>And&#8230;&#8203; Linux Containers are &#8230;&#8203; <em>Linux</em>.
-So before being able to build a container with our native executable, we need to produce compatible native executables.
-If you are using a Linux 64 bits machine, you are good to go.
-If not, Quarkus comes with a trick to produce these executable:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>-Dquarkus.native.container-build=true</code> allows running the native compilation inside a container (provided by Quarkus).
-The result is a Linux 64 bits executable.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Building a native executable takes time, CPU, and memory.
-It&#8217;s even more accurate in the container.
-So, first, be sure that your container system has enough memory to build the executable.
-It requires at least 6Gb of memory, 8Gb is recommended.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Execute the above command for all our microservices.
-We also copy the UI into the fight service, to simplify the process:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">cd rest-hero
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd rest-villains
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd rest-fight
-cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd event-statistics
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_building_containers">Building containers</h3>
-<div class="paragraph">
-<p>Now that we have the native executables, we can build containers.
-When you create projects, Quarkus generates two <code>Dockerfiles</code>:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>Dockerfile.jvm</code> - A <code>Dockerfile</code> for running the application in JVM mode</p>
-</li>
-<li>
-<p><code>Dockerfile.native</code> - A <code>Dockerfile</code> for running the application in native mode</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>We are interested in this second file.
-Open one of these <code>Dockerfile.native</code> files:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD [&quot;./application&quot;, &quot;-Dquarkus.http.host=0.0.0.0&quot;]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It&#8217;s a pretty straightforward <code>Dockerfile</code> taking a minimal base image and copying the generated native executable.
-It also exposes the port 8080.
-Wait, our microservices are not configured to run on the port 8080.
-We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.</p>
-</div>
-<div class="paragraph">
-<p>To build the containers, use the following scripts:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">export ORG=xxxx
-cd rest-hero
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
-cd ..
-cd rest-villains
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
-cd ..
-cd rest-fight
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
-cd ..
-cd event-statistics
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
-cd ..</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Replace <code>ORG</code> with your DockerHub / Quay.io username.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deploying_on_kubernetes">Deploying on Kubernetes</h3>
-<div class="paragraph">
-<p>This section is going to deploy our microservices on Kubernetes.
-It is required to have access to a Kubernetes or OpenShift cluster.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>To deploy your microservices, push the built container images to an image registry accessible by your cluster, such as Quay.io or DockerHub.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>We recommend using a specific namespace to deploy your system.
-In the following sections, we use the <code>quarkus-workshop</code> namespace.</p>
-</div>
-<div class="sect3">
-<h4 id="_deploying_the_infrastructure">Deploying the infrastructure</h4>
-<div class="paragraph">
-<p>The first thing to deploy is the required infrastructure:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>3 PostgreSQL instances</p>
-</li>
-<li>
-<p>Kafka brokers (3 brokers with 3 Zookeeper to follow the recommended approach)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>There are many ways to deploy this infrastructure.
-Here, we are going to use two operators:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>PostgreSQL Operator by Dev4Ddevs.com</p>
-</li>
-<li>
-<p>Strimzi Apache Kafka Operator by Red Hat</p>
-</li>
-</ul>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>With these operators installed, you can create the required infrastructure with the following custom resource definition (CRD):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">postgresql.dev4devs.com/v1alpha1</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">Database</span></span>
-<span class="key">metadata</span>:
-    <span class="key">name</span>: <span class="string"><span class="content">heroes-database</span></span>
-    <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
-<span class="key">spec</span>:
-    <span class="key">databaseCpu</span>: <span class="string"><span class="content">30m</span></span>
-    <span class="key">databaseCpuLimit</span>: <span class="string"><span class="content">60m</span></span>
-    <span class="key">databaseMemoryLimit</span>: <span class="string"><span class="content">512Mi</span></span>
-    <span class="key">databaseMemoryRequest</span>: <span class="string"><span class="content">128Mi</span></span>
-    <span class="key">databaseName</span>: <span class="string"><span class="content">heroes-database</span></span>
-    <span class="key">databaseNameKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_DATABASE</span></span>
-    <span class="key">databasePassword</span>: <span class="string"><span class="content">superman</span></span>
-    <span class="key">databasePasswordKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_PASSWORD</span></span>
-    <span class="key">databaseStorageRequest</span>: <span class="string"><span class="content">1Gi</span></span>
-    <span class="key">databaseUser</span>: <span class="string"><span class="content">superman</span></span>
-    <span class="key">databaseUserKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_USER</span></span>
-    <span class="key">image</span>: <span class="string"><span class="content">centos/postgresql-96-centos7</span></span>
-    <span class="key">size</span>: <span class="string"><span class="content">1</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>This CRD creates the database for the Hero microservice.
-Duplicate this CRD for the fight and villain databases.</p>
-</div>
-<div class="paragraph">
-<p>For the Kafka broker, create the following CRD:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">Kafka</span></span>
-<span class="key">metadata</span>:
-  <span class="key">name</span>: <span class="string"><span class="content">my-kafka</span></span>
-  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
-<span class="key">spec</span>:
-  <span class="key">kafka</span>:
-    <span class="key">version</span>: <span class="string"><span class="content">2.3.0</span></span>
-    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
-    <span class="key">listeners</span>:
-      <span class="key">plain</span>: <span class="string"><span class="content">{}</span></span>
-      <span class="key">tls</span>: <span class="string"><span class="content">{}</span></span>
-    <span class="key">config</span>:
-      <span class="key">offsets.topic.replication.factor</span>: <span class="string"><span class="content">3</span></span>
-      <span class="key">transaction.state.log.replication.factor</span>: <span class="string"><span class="content">3</span></span>
-      <span class="key">transaction.state.log.min.isr</span>: <span class="string"><span class="content">2</span></span>
-      <span class="key">log.message.format.version</span>: <span class="string"><span class="content">'2.3'</span></span>
-    <span class="key">storage</span>:
-      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
-  <span class="key">zookeeper</span>:
-    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
-    <span class="key">storage</span>:
-      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
-  <span class="key">entityOperator</span>:
-    <span class="key">topicOperator</span>: <span class="string"><span class="content">{}</span></span>
-    <span class="key">userOperator</span>: <span class="string"><span class="content">{}</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>This CRD creates the brokers and the Zookeeper instances.</p>
-</div>
-<div class="paragraph">
-<p>It&#8217;s also recommended to create the topic.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>For this, create the following CRD:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">KafkaTopic</span></span>
-<span class="key">metadata</span>:
-  <span class="key">name</span>: <span class="string"><span class="content">fights</span></span>
-  <span class="key">labels</span>:
-    <span class="key">strimzi.io/cluster</span>: <span class="string"><span class="content">my-kafka</span></span>
-  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
-<span class="key">spec</span>:
-  <span class="key">partitions</span>: <span class="string"><span class="content">1</span></span>
-  <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
-  <span class="key">config</span>:
-    <span class="key">retention.ms</span>: <span class="string"><span class="content">604800000</span></span>
-    <span class="key">segment.bytes</span>: <span class="string"><span class="content">1073741824</span></span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Once everything is created, you should have the following resources:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl get database
-NAME                AGE
-fights-database     16h
-heroes-database     16h
-villains-database   16h
-
-$ kubectl get kafka
-NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
-my-kafka   3</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</h4>
-<div class="paragraph">
-<p>Now that the infrastructure is in place, we can deploy our microservices.
-Let&#8217;s start with the hero and villain microservices.</p>
-</div>
-<div class="paragraph">
-<p>For each, we need to override the port and data source URL.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Create a config map with the following content:</p>
-</div>
-<div class="listingblock">
-<div class="title">Listing 2. config-hero.yaml</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">v1</span></span>
-<span class="key">data</span>:
-    <span class="key">port</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">8080</span><span class="delimiter">&quot;</span></span>
-    <span class="key">database</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:postgresql://heroes-database:5432/heroes-database</span><span class="delimiter">&quot;</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">ConfigMap</span></span>
-<span class="key">metadata</span>:
-    <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Do the same for the villain microservice.
-Then, apply these resources:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f config-hero.yaml
-$ kubectl apply -f config-villain.yaml</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Once the config maps are created, we can deploy the microservices.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Create a <code>deployment-hero.yaml</code> file with the following content:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="head"><span class="head">---</span></span>
-<span class="key">apiVersion</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">v1</span><span class="delimiter">&quot;</span></span>
-<span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">List</span><span class="delimiter">&quot;</span></span>
-<span class="key">items</span>:
-    - <span class="string"><span class="content">apiVersion: &quot;v1&quot;</span></span>
-      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Service</span><span class="delimiter">&quot;</span></span>
-      <span class="key">metadata</span>:
-          <span class="key">labels</span>:
-              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-      <span class="key">spec</span>:
-          <span class="key">ports</span>:
-              - <span class="string"><span class="content">name: &quot;http&quot;</span></span>
-                <span class="key">port</span>: <span class="string"><span class="content">8080</span></span>
-                <span class="key">targetPort</span>: <span class="string"><span class="content">8080</span></span>
-          <span class="key">selector</span>:
-              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ClusterIP</span><span class="delimiter">&quot;</span></span>
-    - <span class="string"><span class="content">apiVersion: &quot;apps/v1&quot;</span></span>
-      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Deployment</span><span class="delimiter">&quot;</span></span>
-      <span class="key">metadata</span>:
-          <span class="key">labels</span>:
-              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-      <span class="key">spec</span>:
-          <span class="key">replicas</span>: <span class="string"><span class="content">1</span></span>
-          <span class="key">selector</span>:
-              <span class="key">matchLabels</span>:
-                  <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-                  <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-                  <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">template</span>:
-              <span class="key">metadata</span>:
-                  <span class="key">labels</span>:
-                      <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-                      <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-                      <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-              <span class="key">spec</span>:
-                  <span class="key">containers</span>:
-                      - <span class="string"><span class="content">image: &quot;$ORG/quarkus-workshop-hero:latest&quot;</span></span>
-                        <span class="key">imagePullPolicy</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">IfNotPresent</span><span class="delimiter">&quot;</span></span>
-                        <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-                        <span class="key">ports</span>:
-                            - <span class="string"><span class="content">containerPort: 8080</span></span>
-                              <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">http</span><span class="delimiter">&quot;</span></span>
-                              <span class="key">protocol</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TCP</span><span class="delimiter">&quot;</span></span>
-                        <span class="key">env</span>:
-                            - <span class="string"><span class="content">name: &quot;KUBERNETES_NAMESPACE&quot;</span></span>
-                              <span class="key">valueFrom</span>:
-                                  <span class="key">fieldRef</span>:
-                                      <span class="key">fieldPath</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata.namespace</span><span class="delimiter">&quot;</span></span>
-
-                            - <span class="string"><span class="content">name: QUARKUS_DATASOURCE_URL</span></span>
-                              <span class="key">valueFrom</span>:
-                                  <span class="key">configMapKeyRef</span>:
-                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
-                                      <span class="key">key</span>: <span class="string"><span class="content">database</span></span>
-
-                            - <span class="string"><span class="content">name: QUARKUS_HTTP_PORT</span></span>
-                              <span class="key">valueFrom</span>:
-                                  <span class="key">configMapKeyRef</span>:
-                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
-                                      <span class="key">key</span>: <span class="string"><span class="content">port</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>This descriptor declares:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>A service to expose the HTTP endpoint</p>
-</li>
-<li>
-<p>A deployment that instantiates the application</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The deployment declares one container using the container image we built earlier.
-It also overrides the configuration for the HTTP port and database URL.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Don&#8217;t forget to create the equivalent files for the villain microservice.</p>
-</div>
-<div class="paragraph">
-<p>Then, deploy the microservice with:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f deployment-hero.yaml
-$ kubectl apply -f deployment-villain.yaml</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deploying_the_fight_microservice">Deploying the Fight microservice</h4>
-<div class="paragraph">
-<p>Follow the same approach for the fight microservice.
-Note that there are more properties to configure from the config map:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The location of the hero and villain microservice</p>
-</li>
-<li>
-<p>The location of the Kafka broker</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Once everything is configured and deployed, your system is now running on Kubernetes.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="cloud-open-shift">Deploying to Open Shift</h3>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="conclusion">Conclusion</h2>
 <div class="sectionbody">
 <hr>
@@ -10839,7 +13298,7 @@ We hope you liked it, learnt a few things, and more importantly, will be able to
 <div class="paragraph">
 <p>This workshop started making sure your development environment was ready to develop the entire application.
 Then, there was some brief terminology to help you in understanding some concepts around Quarkus.
-If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, Cloud Native, or GraalVM, check the Quarkus website for more references.<sup class="footnote">[<a id="_footnoteref_22" class="footnote" href="#_footnotedef_22" title="View footnote.">22</a>]</sup></p>
+If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, Cloud Native, or GraalVM, check the Quarkus website for more references.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>Then, we focused on developing several isolated microservices.
@@ -10861,6 +13320,10 @@ With Fault Tolerance, it was just a matter of using a few annotations and we can
 <div class="paragraph">
 <p>We&#8217;ve also added some Artificial Intelligence.
 Thanks to Semantic Kernel, with a few lines of code, we allowed our Narration microservice to narrate the fight between a Super Hero and a Super Villain.</p>
+</div>
+<div class="paragraph">
+<p>With so many microservices, observability becomes mandatory.
+That&#8217;s why we added some health checks and metrics to our microservices.</p>
 </div>
 <div class="paragraph">
 <p>Then, comes production time.
@@ -10898,6 +13361,15 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 <li>
 <p><a href="https://quarkus.io/guides/all-config" class="bare">https://quarkus.io/guides/all-config</a></p>
 </li>
+<li>
+<p><a href="https://azure.microsoft.com/services/container-apps">Azure Container Apps Overview</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/azure/container-apps">Azure Container Apps Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ozangunalp/managed-kafka-quarkus/tree/main/azure-event-hub">Managed Kafka Quarkus</a></p>
+</li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
@@ -10910,7 +13382,7 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 <div class="sect2">
 <h3 id="appendix-installing-maven">Apache Maven 3.8.x</h3>
 <div class="paragraph">
-<p>All the examples of this workshop are built and tested using Maven.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup>
+<p>All the examples of this workshop are built and tested using Maven.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>
 Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork, and so forth.
 Based on the "convention over configuration" principle, Maven brings a standard project description and a number of conventions such as a standard directory structure.
 With an extensible architecture based on plugins, Maven can offer many different services.</p>
@@ -10955,7 +13427,7 @@ OS name: &quot;mac os x&quot;, version: &quot;11.5&quot;, arch: &quot;x86_64&quo
 </div>
 </div>
 <div class="paragraph">
-<p>Be aware that Maven needs Internet access to download plugins and project dependencies from the Maven Central and other remote repositories.<sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup></p>
+<p>Be aware that Maven needs Internet access to download plugins and project dependencies from the Maven Central and other remote repositories.<sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup></p>
 </div>
 </div>
 <div class="sect3">
@@ -11005,7 +13477,7 @@ Each invokes a different phase of the project life cycle (clean, compile, instal
 <div class="sect2">
 <h3 id="appendix-installing-curl">cURL</h3>
 <div class="paragraph">
-<p>To invoke the REST Web Services described in this workshop, we often use cURL.<sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup>
+<p>To invoke the REST Web Services described in this workshop, we often use cURL.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup>
 cURL is a command-line tool and library to do reliable data transfers with various protocols, including HTTP.
 It is free, open-source (available under the MIT Licence), and has been ported to several operating systems.
 If your operating system does not already include cURL (most do), here is how to install it.</p>
@@ -11013,7 +13485,7 @@ If your operating system does not already include cURL (most do), here is how to
 <div class="sect3">
 <h4 id="_installing_curl">Installing cURL</h4>
 <div class="paragraph">
-<p>If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup>
+<p>If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup>
 Open your terminal and install cURL with the following command:</p>
 </div>
 <div class="listingblock">
@@ -11046,7 +13518,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 <div class="paragraph">
 <p>cURL is a command-line utility where you can use several parameters and options to invoke URLs.
 You invoke <code>curl</code> with zero, one, or several command-line options to accompany the URL (or set of URLs) you want the transfer to be about.
-cURL supports over two hundred different options, and I would recommend reading the documentation for more help.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>
+cURL supports over two hundred different options, and I would recommend reading the documentation for more help.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup>
 To get some help on the commands and options, you can type, use the following command:</p>
 </div>
 <div class="listingblock">
@@ -11097,7 +13569,7 @@ cURL does not format this JSON so that you will get a flat String such as:</p>
 <div class="paragraph">
 <p>But what we want is to format the JSON payload, so it is easier to read.
 For that, there is a neat utility tool called <code>jq</code> that we could use.
-<code>jq</code> is a tool for processing JSON inputs, applying the given filter to its JSON text inputs, and producing the filter&#8217;s results as JSON on standard output.<sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup>
+<code>jq</code> is a tool for processing JSON inputs, applying the given filter to its JSON text inputs, and producing the filter&#8217;s results as JSON on standard output.<sup class="footnote">[<a id="_footnoteref_32" class="footnote" href="#_footnotedef_32" title="View footnote.">32</a>]</sup>
 You can install it on Mac OSX with a simple <code>brew install jq</code>.
 Once installed, it&#8217;s just a matter of piping the cURL output to jq like this:</p>
 </div>
@@ -11349,29 +13821,41 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 <a href="#_footnoteref_21">21</a>. Kafka Topic <a href="https://kafka.apache.org/intro#intro_topics" class="bare">https://kafka.apache.org/intro#intro_topics</a>
 </div>
 <div class="footnote" id="_footnotedef_22">
-<a href="#_footnoteref_22">22</a>. Quarkus <a href="https://quarkus.io" class="bare">https://quarkus.io</a>
+<a href="#_footnoteref_22">22</a>. MicroProfile Health <a href="https://microprofile.io/project/eclipse/microprofile-health" class="bare">https://microprofile.io/project/eclipse/microprofile-health</a>
 </div>
 <div class="footnote" id="_footnotedef_23">
-<a href="#_footnoteref_23">23</a>. Maven <a href="https://maven.apache.org" class="bare">https://maven.apache.org</a>
+<a href="#_footnoteref_23">23</a>. MicroProfile Metrics <a href="https://microprofile.io/project/eclipse/microprofile-metrics" class="bare">https://microprofile.io/project/eclipse/microprofile-metrics</a>
 </div>
 <div class="footnote" id="_footnotedef_24">
-<a href="#_footnoteref_24">24</a>. Maven Central <a href="https://search.maven.org" class="bare">https://search.maven.org</a>
+<a href="#_footnoteref_24">24</a>. OpenMetrics <a href="https://openmetrics.io" class="bare">https://openmetrics.io</a>
 </div>
 <div class="footnote" id="_footnotedef_25">
-<a href="#_footnoteref_25">25</a>. cURL <a href="https://curl.haxx.se" class="bare">https://curl.haxx.se</a>
+<a href="#_footnoteref_25">25</a>. Prometheus <a href="https://prometheus.io" class="bare">https://prometheus.io</a>
 </div>
 <div class="footnote" id="_footnotedef_26">
-<a href="#_footnoteref_26">26</a>. Homebrew <a href="https://brew.sh" class="bare">https://brew.sh</a>
+<a href="#_footnoteref_26">26</a>. Quarkus <a href="https://quarkus.io" class="bare">https://quarkus.io</a>
 </div>
 <div class="footnote" id="_footnotedef_27">
-<a href="#_footnoteref_27">27</a>. cURL commands <a href="https://ec.haxx.se/cmdline.html" class="bare">https://ec.haxx.se/cmdline.html</a>
+<a href="#_footnoteref_27">27</a>. Maven <a href="https://maven.apache.org" class="bare">https://maven.apache.org</a>
 </div>
 <div class="footnote" id="_footnotedef_28">
-<a href="#_footnoteref_28">28</a>. jq <a href="https://stedolan.github.io/jq" class="bare">https://stedolan.github.io/jq</a>
+<a href="#_footnoteref_28">28</a>. Maven Central <a href="https://search.maven.org" class="bare">https://search.maven.org</a>
+</div>
+<div class="footnote" id="_footnotedef_29">
+<a href="#_footnoteref_29">29</a>. cURL <a href="https://curl.haxx.se" class="bare">https://curl.haxx.se</a>
+</div>
+<div class="footnote" id="_footnotedef_30">
+<a href="#_footnoteref_30">30</a>. Homebrew <a href="https://brew.sh" class="bare">https://brew.sh</a>
+</div>
+<div class="footnote" id="_footnotedef_31">
+<a href="#_footnoteref_31">31</a>. cURL commands <a href="https://ec.haxx.se/cmdline.html" class="bare">https://ec.haxx.se/cmdline.html</a>
+</div>
+<div class="footnote" id="_footnotedef_32">
+<a href="#_footnoteref_32">32</a>. jq <a href="https://stedolan.github.io/jq" class="bare">https://stedolan.github.io/jq</a>
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-10-11</div>
+    <div>Last updated 2023-10-12</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>

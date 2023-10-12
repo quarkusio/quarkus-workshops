@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</title>
+<title>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -611,6 +611,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#introduction-installing-jdk">JDK 17</a></li>
 <li><a href="#introduction-installing-docker">Docker or Podman</a></li>
 <li><a href="#introduction-installing-ai">OpenAI or Azure OpenAI Subscriptions</a></li>
+<li><a href="#azure-intro-installing-wsl">WSL</a></li>
 <li><a href="#_recap">Recap</a></li>
 </ul>
 </li>
@@ -818,6 +819,18 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#messaging-conclusion">Unifying Imperative and Reactive Programming</a></li>
 </ul>
 </li>
+<li><a href="#kubernetes">Kubernetes</a>
+<ul class="sectlevel2">
+<li><a href="#_deploying_on_kubernetes">Deploying on Kubernetes</a>
+<ul class="sectlevel3">
+<li><a href="#_deploying_the_infrastructure">Deploying the infrastructure</a></li>
+<li><a href="#_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</a></li>
+<li><a href="#_deploying_the_fight_microservice">Deploying the Fight microservice</a></li>
+</ul>
+</li>
+<li><a href="#cloud-open-shift">Deploying to Open Shift</a></li>
+</ul>
+</li>
 <li><a href="#extension">Writing a Quarkus Extension</a>
 <ul class="sectlevel2">
 <li><a href="#_the_extension_framework">The extension framework</a></li>
@@ -828,20 +841,6 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#_packaging_the_extension">Packaging the extension</a></li>
 <li><a href="#_using_the_extension">Using the extension</a></li>
 <li><a href="#_conclusion">Conclusion</a></li>
-</ul>
-</li>
-<li><a href="#cloud">Containers &amp; Cloud</a>
-<ul class="sectlevel2">
-<li><a href="#_from_bare_metal_to_containers">From bare metal to containers</a></li>
-<li><a href="#_building_containers">Building containers</a></li>
-<li><a href="#_deploying_on_kubernetes">Deploying on Kubernetes</a>
-<ul class="sectlevel3">
-<li><a href="#_deploying_the_infrastructure">Deploying the infrastructure</a></li>
-<li><a href="#_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</a></li>
-<li><a href="#_deploying_the_fight_microservice">Deploying the Fight microservice</a></li>
-</ul>
-</li>
-<li><a href="#cloud-open-shift">Deploying to Open Shift</a></li>
 </ul>
 </li>
 <li><a href="#conclusion">Conclusion</a>
@@ -1202,7 +1201,7 @@ You can skip the next section if you have already installed all the prerequisite
 <td class="content">
 <div class="paragraph">
 <p>This workshop assumes a bash shell.
-If you run on Windows, in particular, adjust the commands accordingly.</p>
+If you run on Windows, in particular, adjust the commands accordingly or install WSL.</p>
 </div>
 </td>
 </tr>
@@ -1666,6 +1665,44 @@ az cognitiveservices account delete \
   --name &quot;$COGNITIVE_SERVICE&quot; \
   --resource-group &quot;$RESOURCE_GROUP&quot;</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="azure-intro-installing-wsl">WSL</h4>
+<div class="paragraph">
+<p><a href="https://docs.microsoft.com/windows/wsl">Windows Subsystem for Linux</a> (WSL) lets developers run a GNU/Linux environment&#8201;&#8212;&#8201;including most command-line tools, utilities, and applications&#8201;&#8212;&#8201;directly on Windows, unmodified, without the overhead of a traditional virtual machine or dual-boot setup.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are using Windows, it is recommended to install WSL as all the commands use bash.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_installing_wsl">Installing WSL</h5>
+<div class="paragraph">
+<p>You can install everything you need to run Windows Subsystem for Linux (WSL) by entering this command in an administrator PowerShell or Windows Command Prompt and then restarting your machine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">wsl --install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu by default).</p>
+</div>
+<div class="paragraph">
+<p>The first time you launch a newly installed Linux distribution, a console window will open and you&#8217;ll be asked to wait for files to de-compress and be stored on your machine.
+All future launches should take less than a second.</p>
 </div>
 </div>
 </div>
@@ -9137,6 +9174,371 @@ To go further on this, we recommend:</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="kubernetes">Kubernetes</h2>
+<div class="sectionbody">
+<hr>
+<div class="paragraph">
+<p>This chapter explores how you can deploy containerized Quarkus applications in Cloud platforms using Kubernetes.
+There are many different approaches to achieve these deployments.
+In this chapter, we are focusing on deploying our containers in Kubernetes.</p>
+</div>
+<div class="sect2">
+<h3 id="_deploying_on_kubernetes">Deploying on Kubernetes</h3>
+<div class="paragraph">
+<p>This section is going to deploy our microservices on Kubernetes.
+It is required to have access to a Kubernetes or OpenShift cluster.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To deploy your microservices, push the built container images to an image registry accessible by your cluster, such as Quay.io or DockerHub.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We recommend using a specific namespace to deploy your system.
+In the following sections, we use the <code>quarkus-workshop</code> namespace.</p>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_infrastructure">Deploying the infrastructure</h4>
+<div class="paragraph">
+<p>The first thing to deploy is the required infrastructure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3 PostgreSQL instances</p>
+</li>
+<li>
+<p>Kafka brokers (3 brokers with 3 Zookeeper to follow the recommended approach)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are many ways to deploy this infrastructure.
+Here, we are going to use two operators:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>PostgreSQL Operator by Dev4Ddevs.com</p>
+</li>
+<li>
+<p>Strimzi Apache Kafka Operator by Red Hat</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>With these operators installed, you can create the required infrastructure with the following custom resource definition (CRD):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">postgresql.dev4devs.com/v1alpha1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">Database</span></span>
+<span class="key">metadata</span>:
+    <span class="key">name</span>: <span class="string"><span class="content">heroes-database</span></span>
+    <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
+<span class="key">spec</span>:
+    <span class="key">databaseCpu</span>: <span class="string"><span class="content">30m</span></span>
+    <span class="key">databaseCpuLimit</span>: <span class="string"><span class="content">60m</span></span>
+    <span class="key">databaseMemoryLimit</span>: <span class="string"><span class="content">512Mi</span></span>
+    <span class="key">databaseMemoryRequest</span>: <span class="string"><span class="content">128Mi</span></span>
+    <span class="key">databaseName</span>: <span class="string"><span class="content">heroes-database</span></span>
+    <span class="key">databaseNameKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_DATABASE</span></span>
+    <span class="key">databasePassword</span>: <span class="string"><span class="content">superman</span></span>
+    <span class="key">databasePasswordKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_PASSWORD</span></span>
+    <span class="key">databaseStorageRequest</span>: <span class="string"><span class="content">1Gi</span></span>
+    <span class="key">databaseUser</span>: <span class="string"><span class="content">superman</span></span>
+    <span class="key">databaseUserKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_USER</span></span>
+    <span class="key">image</span>: <span class="string"><span class="content">centos/postgresql-96-centos7</span></span>
+    <span class="key">size</span>: <span class="string"><span class="content">1</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>This CRD creates the database for the Hero microservice.
+Duplicate this CRD for the fight and villain databases.</p>
+</div>
+<div class="paragraph">
+<p>For the Kafka broker, create the following CRD:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">Kafka</span></span>
+<span class="key">metadata</span>:
+  <span class="key">name</span>: <span class="string"><span class="content">my-kafka</span></span>
+  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
+<span class="key">spec</span>:
+  <span class="key">kafka</span>:
+    <span class="key">version</span>: <span class="string"><span class="content">2.3.0</span></span>
+    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
+    <span class="key">listeners</span>:
+      <span class="key">plain</span>: <span class="string"><span class="content">{}</span></span>
+      <span class="key">tls</span>: <span class="string"><span class="content">{}</span></span>
+    <span class="key">config</span>:
+      <span class="key">offsets.topic.replication.factor</span>: <span class="string"><span class="content">3</span></span>
+      <span class="key">transaction.state.log.replication.factor</span>: <span class="string"><span class="content">3</span></span>
+      <span class="key">transaction.state.log.min.isr</span>: <span class="string"><span class="content">2</span></span>
+      <span class="key">log.message.format.version</span>: <span class="string"><span class="content">'2.3'</span></span>
+    <span class="key">storage</span>:
+      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
+  <span class="key">zookeeper</span>:
+    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
+    <span class="key">storage</span>:
+      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
+  <span class="key">entityOperator</span>:
+    <span class="key">topicOperator</span>: <span class="string"><span class="content">{}</span></span>
+    <span class="key">userOperator</span>: <span class="string"><span class="content">{}</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This CRD creates the brokers and the Zookeeper instances.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also recommended to create the topic.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>For this, create the following CRD:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">KafkaTopic</span></span>
+<span class="key">metadata</span>:
+  <span class="key">name</span>: <span class="string"><span class="content">fights</span></span>
+  <span class="key">labels</span>:
+    <span class="key">strimzi.io/cluster</span>: <span class="string"><span class="content">my-kafka</span></span>
+  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
+<span class="key">spec</span>:
+  <span class="key">partitions</span>: <span class="string"><span class="content">1</span></span>
+  <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
+  <span class="key">config</span>:
+    <span class="key">retention.ms</span>: <span class="string"><span class="content">604800000</span></span>
+    <span class="key">segment.bytes</span>: <span class="string"><span class="content">1073741824</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once everything is created, you should have the following resources:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl get database
+NAME                AGE
+fights-database     16h
+heroes-database     16h
+villains-database   16h
+
+$ kubectl get kafka
+NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
+my-kafka   3</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</h4>
+<div class="paragraph">
+<p>Now that the infrastructure is in place, we can deploy our microservices.
+Let&#8217;s start with the hero and villain microservices.</p>
+</div>
+<div class="paragraph">
+<p>For each, we need to override the port and data source URL.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create a config map with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 2. config-hero.yaml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">v1</span></span>
+<span class="key">data</span>:
+    <span class="key">port</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">8080</span><span class="delimiter">&quot;</span></span>
+    <span class="key">database</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:postgresql://heroes-database:5432/heroes-database</span><span class="delimiter">&quot;</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">ConfigMap</span></span>
+<span class="key">metadata</span>:
+    <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Do the same for the villain microservice.
+Then, apply these resources:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f config-hero.yaml
+$ kubectl apply -f config-villain.yaml</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the config maps are created, we can deploy the microservices.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Create a <code>deployment-hero.yaml</code> file with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">v1</span><span class="delimiter">&quot;</span></span>
+<span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">List</span><span class="delimiter">&quot;</span></span>
+<span class="key">items</span>:
+    - <span class="string"><span class="content">apiVersion: &quot;v1&quot;</span></span>
+      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Service</span><span class="delimiter">&quot;</span></span>
+      <span class="key">metadata</span>:
+          <span class="key">labels</span>:
+              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+      <span class="key">spec</span>:
+          <span class="key">ports</span>:
+              - <span class="string"><span class="content">name: &quot;http&quot;</span></span>
+                <span class="key">port</span>: <span class="string"><span class="content">8080</span></span>
+                <span class="key">targetPort</span>: <span class="string"><span class="content">8080</span></span>
+          <span class="key">selector</span>:
+              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ClusterIP</span><span class="delimiter">&quot;</span></span>
+    - <span class="string"><span class="content">apiVersion: &quot;apps/v1&quot;</span></span>
+      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Deployment</span><span class="delimiter">&quot;</span></span>
+      <span class="key">metadata</span>:
+          <span class="key">labels</span>:
+              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+      <span class="key">spec</span>:
+          <span class="key">replicas</span>: <span class="string"><span class="content">1</span></span>
+          <span class="key">selector</span>:
+              <span class="key">matchLabels</span>:
+                  <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+                  <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+                  <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+          <span class="key">template</span>:
+              <span class="key">metadata</span>:
+                  <span class="key">labels</span>:
+                      <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+                      <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
+                      <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
+              <span class="key">spec</span>:
+                  <span class="key">containers</span>:
+                      - <span class="string"><span class="content">image: &quot;$ORG/quarkus-workshop-hero:latest&quot;</span></span>
+                        <span class="key">imagePullPolicy</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">IfNotPresent</span><span class="delimiter">&quot;</span></span>
+                        <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
+                        <span class="key">ports</span>:
+                            - <span class="string"><span class="content">containerPort: 8080</span></span>
+                              <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">http</span><span class="delimiter">&quot;</span></span>
+                              <span class="key">protocol</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TCP</span><span class="delimiter">&quot;</span></span>
+                        <span class="key">env</span>:
+                            - <span class="string"><span class="content">name: &quot;KUBERNETES_NAMESPACE&quot;</span></span>
+                              <span class="key">valueFrom</span>:
+                                  <span class="key">fieldRef</span>:
+                                      <span class="key">fieldPath</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata.namespace</span><span class="delimiter">&quot;</span></span>
+
+                            - <span class="string"><span class="content">name: QUARKUS_DATASOURCE_URL</span></span>
+                              <span class="key">valueFrom</span>:
+                                  <span class="key">configMapKeyRef</span>:
+                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
+                                      <span class="key">key</span>: <span class="string"><span class="content">database</span></span>
+
+                            - <span class="string"><span class="content">name: QUARKUS_HTTP_PORT</span></span>
+                              <span class="key">valueFrom</span>:
+                                  <span class="key">configMapKeyRef</span>:
+                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
+                                      <span class="key">key</span>: <span class="string"><span class="content">port</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This descriptor declares:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A service to expose the HTTP endpoint</p>
+</li>
+<li>
+<p>A deployment that instantiates the application</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The deployment declares one container using the container image we built earlier.
+It also overrides the configuration for the HTTP port and database URL.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Don&#8217;t forget to create the equivalent files for the villain microservice.</p>
+</div>
+<div class="paragraph">
+<p>Then, deploy the microservice with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f deployment-hero.yaml
+$ kubectl apply -f deployment-villain.yaml</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_fight_microservice">Deploying the Fight microservice</h4>
+<div class="paragraph">
+<p>Follow the same approach for the fight microservice.
+Note that there are more properties to configure from the config map:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The location of the hero and villain microservice</p>
+</li>
+<li>
+<p>The location of the Kafka broker</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once everything is configured and deployed, your system is now running on Kubernetes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cloud-open-shift">Deploying to Open Shift</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="extension">Writing a Quarkus Extension</h2>
 <div class="sectionbody">
 <hr>
@@ -9505,508 +9907,6 @@ To go further, check <a href="https://quarkus.io/guides/extension-authors-guide"
 </div>
 </div>
 <div class="sect1">
-<h2 id="cloud">Containers &amp; Cloud</h2>
-<div class="sectionbody">
-<hr>
-<div class="paragraph">
-<p>This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
-There are many different approaches to achieve these deployments.
-In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.</p>
-</div>
-<div class="sect2">
-<h3 id="_from_bare_metal_to_containers">From bare metal to containers</h3>
-<div class="paragraph">
-<p>In this section, we are going to package our microservices into containers.
-In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
-The native compilation uses the OS and architecture of the host system.</p>
-</div>
-<div class="paragraph">
-<p>And&#8230;&#8203; Linux Containers are &#8230;&#8203; <em>Linux</em>.
-So before being able to build a container with our native executable, we need to produce compatible native executables.
-If you are using a Linux 64 bits machine, you are good to go.
-If not, Quarkus comes with a trick to produce these executable:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>-Dquarkus.native.container-build=true</code> allows running the native compilation inside a container (provided by Quarkus).
-The result is a Linux 64 bits executable.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Building a native executable takes time, CPU, and memory.
-It&#8217;s even more accurate in the container.
-So, first, be sure that your container system has enough memory to build the executable.
-It requires at least 6Gb of memory, 8Gb is recommended.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Execute the above command for all our microservices.
-We also copy the UI into the fight service, to simplify the process:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">cd rest-hero
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd rest-villains
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd rest-fight
-cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd event-statistics
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_building_containers">Building containers</h3>
-<div class="paragraph">
-<p>Now that we have the native executables, we can build containers.
-When you create projects, Quarkus generates two <code>Dockerfiles</code>:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>Dockerfile.jvm</code> - A <code>Dockerfile</code> for running the application in JVM mode</p>
-</li>
-<li>
-<p><code>Dockerfile.native</code> - A <code>Dockerfile</code> for running the application in native mode</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>We are interested in this second file.
-Open one of these <code>Dockerfile.native</code> files:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD [&quot;./application&quot;, &quot;-Dquarkus.http.host=0.0.0.0&quot;]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It&#8217;s a pretty straightforward <code>Dockerfile</code> taking a minimal base image and copying the generated native executable.
-It also exposes the port 8080.
-Wait, our microservices are not configured to run on the port 8080.
-We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.</p>
-</div>
-<div class="paragraph">
-<p>To build the containers, use the following scripts:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">export ORG=xxxx
-cd rest-hero
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
-cd ..
-cd rest-villains
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
-cd ..
-cd rest-fight
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
-cd ..
-cd event-statistics
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
-cd ..</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Replace <code>ORG</code> with your DockerHub / Quay.io username.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deploying_on_kubernetes">Deploying on Kubernetes</h3>
-<div class="paragraph">
-<p>This section is going to deploy our microservices on Kubernetes.
-It is required to have access to a Kubernetes or OpenShift cluster.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>To deploy your microservices, push the built container images to an image registry accessible by your cluster, such as Quay.io or DockerHub.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>We recommend using a specific namespace to deploy your system.
-In the following sections, we use the <code>quarkus-workshop</code> namespace.</p>
-</div>
-<div class="sect3">
-<h4 id="_deploying_the_infrastructure">Deploying the infrastructure</h4>
-<div class="paragraph">
-<p>The first thing to deploy is the required infrastructure:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>3 PostgreSQL instances</p>
-</li>
-<li>
-<p>Kafka brokers (3 brokers with 3 Zookeeper to follow the recommended approach)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>There are many ways to deploy this infrastructure.
-Here, we are going to use two operators:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>PostgreSQL Operator by Dev4Ddevs.com</p>
-</li>
-<li>
-<p>Strimzi Apache Kafka Operator by Red Hat</p>
-</li>
-</ul>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>With these operators installed, you can create the required infrastructure with the following custom resource definition (CRD):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">postgresql.dev4devs.com/v1alpha1</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">Database</span></span>
-<span class="key">metadata</span>:
-    <span class="key">name</span>: <span class="string"><span class="content">heroes-database</span></span>
-    <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
-<span class="key">spec</span>:
-    <span class="key">databaseCpu</span>: <span class="string"><span class="content">30m</span></span>
-    <span class="key">databaseCpuLimit</span>: <span class="string"><span class="content">60m</span></span>
-    <span class="key">databaseMemoryLimit</span>: <span class="string"><span class="content">512Mi</span></span>
-    <span class="key">databaseMemoryRequest</span>: <span class="string"><span class="content">128Mi</span></span>
-    <span class="key">databaseName</span>: <span class="string"><span class="content">heroes-database</span></span>
-    <span class="key">databaseNameKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_DATABASE</span></span>
-    <span class="key">databasePassword</span>: <span class="string"><span class="content">superman</span></span>
-    <span class="key">databasePasswordKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_PASSWORD</span></span>
-    <span class="key">databaseStorageRequest</span>: <span class="string"><span class="content">1Gi</span></span>
-    <span class="key">databaseUser</span>: <span class="string"><span class="content">superman</span></span>
-    <span class="key">databaseUserKeyEnvVar</span>: <span class="string"><span class="content">POSTGRESQL_USER</span></span>
-    <span class="key">image</span>: <span class="string"><span class="content">centos/postgresql-96-centos7</span></span>
-    <span class="key">size</span>: <span class="string"><span class="content">1</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>This CRD creates the database for the Hero microservice.
-Duplicate this CRD for the fight and villain databases.</p>
-</div>
-<div class="paragraph">
-<p>For the Kafka broker, create the following CRD:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">Kafka</span></span>
-<span class="key">metadata</span>:
-  <span class="key">name</span>: <span class="string"><span class="content">my-kafka</span></span>
-  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
-<span class="key">spec</span>:
-  <span class="key">kafka</span>:
-    <span class="key">version</span>: <span class="string"><span class="content">2.3.0</span></span>
-    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
-    <span class="key">listeners</span>:
-      <span class="key">plain</span>: <span class="string"><span class="content">{}</span></span>
-      <span class="key">tls</span>: <span class="string"><span class="content">{}</span></span>
-    <span class="key">config</span>:
-      <span class="key">offsets.topic.replication.factor</span>: <span class="string"><span class="content">3</span></span>
-      <span class="key">transaction.state.log.replication.factor</span>: <span class="string"><span class="content">3</span></span>
-      <span class="key">transaction.state.log.min.isr</span>: <span class="string"><span class="content">2</span></span>
-      <span class="key">log.message.format.version</span>: <span class="string"><span class="content">'2.3'</span></span>
-    <span class="key">storage</span>:
-      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
-  <span class="key">zookeeper</span>:
-    <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
-    <span class="key">storage</span>:
-      <span class="key">type</span>: <span class="string"><span class="content">ephemeral</span></span>
-  <span class="key">entityOperator</span>:
-    <span class="key">topicOperator</span>: <span class="string"><span class="content">{}</span></span>
-    <span class="key">userOperator</span>: <span class="string"><span class="content">{}</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>This CRD creates the brokers and the Zookeeper instances.</p>
-</div>
-<div class="paragraph">
-<p>It&#8217;s also recommended to create the topic.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>For this, create the following CRD:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">kafka.strimzi.io/v1beta1</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">KafkaTopic</span></span>
-<span class="key">metadata</span>:
-  <span class="key">name</span>: <span class="string"><span class="content">fights</span></span>
-  <span class="key">labels</span>:
-    <span class="key">strimzi.io/cluster</span>: <span class="string"><span class="content">my-kafka</span></span>
-  <span class="key">namespace</span>: <span class="string"><span class="content">quarkus-workshop</span></span>
-<span class="key">spec</span>:
-  <span class="key">partitions</span>: <span class="string"><span class="content">1</span></span>
-  <span class="key">replicas</span>: <span class="string"><span class="content">3</span></span>
-  <span class="key">config</span>:
-    <span class="key">retention.ms</span>: <span class="string"><span class="content">604800000</span></span>
-    <span class="key">segment.bytes</span>: <span class="string"><span class="content">1073741824</span></span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Once everything is created, you should have the following resources:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl get database
-NAME                AGE
-fights-database     16h
-heroes-database     16h
-villains-database   16h
-
-$ kubectl get kafka
-NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
-my-kafka   3</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deploying_the_hero_villain_microservices">Deploying the Hero &amp; Villain microservices</h4>
-<div class="paragraph">
-<p>Now that the infrastructure is in place, we can deploy our microservices.
-Let&#8217;s start with the hero and villain microservices.</p>
-</div>
-<div class="paragraph">
-<p>For each, we need to override the port and data source URL.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Create a config map with the following content:</p>
-</div>
-<div class="listingblock">
-<div class="title">Listing 2. config-hero.yaml</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">v1</span></span>
-<span class="key">data</span>:
-    <span class="key">port</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">8080</span><span class="delimiter">&quot;</span></span>
-    <span class="key">database</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:postgresql://heroes-database:5432/heroes-database</span><span class="delimiter">&quot;</span></span>
-<span class="key">kind</span>: <span class="string"><span class="content">ConfigMap</span></span>
-<span class="key">metadata</span>:
-    <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Do the same for the villain microservice.
-Then, apply these resources:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f config-hero.yaml
-$ kubectl apply -f config-villain.yaml</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Once the config maps are created, we can deploy the microservices.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Create a <code>deployment-hero.yaml</code> file with the following content:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="head"><span class="head">---</span></span>
-<span class="key">apiVersion</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">v1</span><span class="delimiter">&quot;</span></span>
-<span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">List</span><span class="delimiter">&quot;</span></span>
-<span class="key">items</span>:
-    - <span class="string"><span class="content">apiVersion: &quot;v1&quot;</span></span>
-      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Service</span><span class="delimiter">&quot;</span></span>
-      <span class="key">metadata</span>:
-          <span class="key">labels</span>:
-              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-      <span class="key">spec</span>:
-          <span class="key">ports</span>:
-              - <span class="string"><span class="content">name: &quot;http&quot;</span></span>
-                <span class="key">port</span>: <span class="string"><span class="content">8080</span></span>
-                <span class="key">targetPort</span>: <span class="string"><span class="content">8080</span></span>
-          <span class="key">selector</span>:
-              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ClusterIP</span><span class="delimiter">&quot;</span></span>
-    - <span class="string"><span class="content">apiVersion: &quot;apps/v1&quot;</span></span>
-      <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Deployment</span><span class="delimiter">&quot;</span></span>
-      <span class="key">metadata</span>:
-          <span class="key">labels</span>:
-              <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-              <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-              <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-      <span class="key">spec</span>:
-          <span class="key">replicas</span>: <span class="string"><span class="content">1</span></span>
-          <span class="key">selector</span>:
-              <span class="key">matchLabels</span>:
-                  <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-                  <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-                  <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-          <span class="key">template</span>:
-              <span class="key">metadata</span>:
-                  <span class="key">labels</span>:
-                      <span class="key">app</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-                      <span class="key">version</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">01</span><span class="delimiter">&quot;</span></span>
-                      <span class="key">group</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">$ORG</span><span class="delimiter">&quot;</span></span>
-              <span class="key">spec</span>:
-                  <span class="key">containers</span>:
-                      - <span class="string"><span class="content">image: &quot;$ORG/quarkus-workshop-hero:latest&quot;</span></span>
-                        <span class="key">imagePullPolicy</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">IfNotPresent</span><span class="delimiter">&quot;</span></span>
-                        <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus-workshop-hero</span><span class="delimiter">&quot;</span></span>
-                        <span class="key">ports</span>:
-                            - <span class="string"><span class="content">containerPort: 8080</span></span>
-                              <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">http</span><span class="delimiter">&quot;</span></span>
-                              <span class="key">protocol</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TCP</span><span class="delimiter">&quot;</span></span>
-                        <span class="key">env</span>:
-                            - <span class="string"><span class="content">name: &quot;KUBERNETES_NAMESPACE&quot;</span></span>
-                              <span class="key">valueFrom</span>:
-                                  <span class="key">fieldRef</span>:
-                                      <span class="key">fieldPath</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">metadata.namespace</span><span class="delimiter">&quot;</span></span>
-
-                            - <span class="string"><span class="content">name: QUARKUS_DATASOURCE_URL</span></span>
-                              <span class="key">valueFrom</span>:
-                                  <span class="key">configMapKeyRef</span>:
-                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
-                                      <span class="key">key</span>: <span class="string"><span class="content">database</span></span>
-
-                            - <span class="string"><span class="content">name: QUARKUS_HTTP_PORT</span></span>
-                              <span class="key">valueFrom</span>:
-                                  <span class="key">configMapKeyRef</span>:
-                                      <span class="key">name</span>: <span class="string"><span class="content">hero-config</span></span>
-                                      <span class="key">key</span>: <span class="string"><span class="content">port</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>This descriptor declares:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>A service to expose the HTTP endpoint</p>
-</li>
-<li>
-<p>A deployment that instantiates the application</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The deployment declares one container using the container image we built earlier.
-It also overrides the configuration for the HTTP port and database URL.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Don&#8217;t forget to create the equivalent files for the villain microservice.</p>
-</div>
-<div class="paragraph">
-<p>Then, deploy the microservice with:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">$ kubectl apply -f deployment-hero.yaml
-$ kubectl apply -f deployment-villain.yaml</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deploying_the_fight_microservice">Deploying the Fight microservice</h4>
-<div class="paragraph">
-<p>Follow the same approach for the fight microservice.
-Note that there are more properties to configure from the config map:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The location of the hero and villain microservice</p>
-</li>
-<li>
-<p>The location of the Kafka broker</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Once everything is configured and deployed, your system is now running on Kubernetes.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="cloud-open-shift">Deploying to Open Shift</h3>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="conclusion">Conclusion</h2>
 <div class="sectionbody">
 <hr>
@@ -10071,6 +9971,15 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 </li>
 <li>
 <p><a href="https://quarkus.io/guides/all-config" class="bare">https://quarkus.io/guides/all-config</a></p>
+</li>
+<li>
+<p><a href="https://azure.microsoft.com/services/container-apps">Azure Container Apps Overview</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/azure/container-apps">Azure Container Apps Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ozangunalp/managed-kafka-quarkus/tree/main/azure-event-hub">Managed Kafka Quarkus</a></p>
 </li>
 </ul>
 </div>
@@ -10542,7 +10451,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-10-11</div>
+    <div>Last updated 2023-10-12</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>

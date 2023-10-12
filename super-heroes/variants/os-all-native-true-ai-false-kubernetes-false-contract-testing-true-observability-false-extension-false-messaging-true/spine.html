@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</title>
+<title>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -611,6 +611,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#introduction-installing-jdk">JDK 17</a></li>
 <li><a href="#introduction-installing-docker">Docker or Podman</a></li>
 <li><a href="#introduction-installing-graalvm">GraalVM 22.3</a></li>
+<li><a href="#azure-intro-installing-wsl">WSL</a></li>
 <li><a href="#_recap">Recap</a></li>
 </ul>
 </li>
@@ -1138,7 +1139,7 @@ You can skip the next section if you have already installed all the prerequisite
 <td class="content">
 <div class="paragraph">
 <p>This workshop assumes a bash shell.
-If you run on Windows, in particular, adjust the commands accordingly.</p>
+If you run on Windows, in particular, adjust the commands accordingly or install WSL.</p>
 </div>
 </td>
 </tr>
@@ -1545,6 +1546,44 @@ To bypass the issue, it is recommended to run the following command instead of d
 <pre class="CodeRay highlight"><code data-lang="shell">$ $GRAALVM_HOME/bin/native-image --version
 GraalVM 22.3.1 Java 17 CE (Java Version 17.0.6+10-jvmci-22.3-b13)</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="azure-intro-installing-wsl">WSL</h4>
+<div class="paragraph">
+<p><a href="https://docs.microsoft.com/windows/wsl">Windows Subsystem for Linux</a> (WSL) lets developers run a GNU/Linux environment&#8201;&#8212;&#8201;including most command-line tools, utilities, and applications&#8201;&#8212;&#8201;directly on Windows, unmodified, without the overhead of a traditional virtual machine or dual-boot setup.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are using Windows, it is recommended to install WSL as all the commands use bash.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_installing_wsl">Installing WSL</h5>
+<div class="paragraph">
+<p>You can install everything you need to run Windows Subsystem for Linux (WSL) by entering this command in an administrator PowerShell or Windows Command Prompt and then restarting your machine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">wsl --install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu by default).</p>
+</div>
+<div class="paragraph">
+<p>The first time you launch a newly installed Linux distribution, a console window will open and you&#8217;ll be asked to wait for files to de-compress and be stored on your machine.
+All future launches should take less than a second.</p>
 </div>
 </div>
 </div>
@@ -8764,6 +8803,15 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 <li>
 <p><a href="https://quarkus.io/guides/all-config" class="bare">https://quarkus.io/guides/all-config</a></p>
 </li>
+<li>
+<p><a href="https://azure.microsoft.com/services/container-apps">Azure Container Apps Overview</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/azure/container-apps">Azure Container Apps Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ozangunalp/managed-kafka-quarkus/tree/main/azure-event-hub">Managed Kafka Quarkus</a></p>
+</li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
@@ -9237,7 +9285,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-10-11</div>
+    <div>Last updated 2023-10-12</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>

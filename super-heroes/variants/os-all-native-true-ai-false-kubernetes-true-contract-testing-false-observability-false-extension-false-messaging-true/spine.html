@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</title>
+<title>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-10-11 Quarkus 3.4.1</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-10-12 Quarkus 3.4.1</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -611,6 +611,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#introduction-installing-jdk">JDK 17</a></li>
 <li><a href="#introduction-installing-docker">Docker or Podman</a></li>
 <li><a href="#introduction-installing-graalvm">GraalVM 22.3</a></li>
+<li><a href="#azure-intro-installing-wsl">WSL</a></li>
 <li><a href="#_recap">Recap</a></li>
 </ul>
 </li>
@@ -799,10 +800,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#messaging-conclusion">Unifying Imperative and Reactive Programming</a></li>
 </ul>
 </li>
-<li><a href="#cloud">Containers &amp; Cloud</a>
+<li><a href="#kubernetes">Kubernetes</a>
 <ul class="sectlevel2">
-<li><a href="#_from_bare_metal_to_containers">From bare metal to containers</a></li>
-<li><a href="#_building_containers">Building containers</a></li>
 <li><a href="#_deploying_on_kubernetes">Deploying on Kubernetes</a>
 <ul class="sectlevel3">
 <li><a href="#_deploying_the_infrastructure">Deploying the infrastructure</a></li>
@@ -1148,7 +1147,7 @@ You can skip the next section if you have already installed all the prerequisite
 <td class="content">
 <div class="paragraph">
 <p>This workshop assumes a bash shell.
-If you run on Windows, in particular, adjust the commands accordingly.</p>
+If you run on Windows, in particular, adjust the commands accordingly or install WSL.</p>
 </div>
 </td>
 </tr>
@@ -1555,6 +1554,44 @@ To bypass the issue, it is recommended to run the following command instead of d
 <pre class="CodeRay highlight"><code data-lang="shell">$ $GRAALVM_HOME/bin/native-image --version
 GraalVM 22.3.1 Java 17 CE (Java Version 17.0.6+10-jvmci-22.3-b13)</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="azure-intro-installing-wsl">WSL</h4>
+<div class="paragraph">
+<p><a href="https://docs.microsoft.com/windows/wsl">Windows Subsystem for Linux</a> (WSL) lets developers run a GNU/Linux environment&#8201;&#8212;&#8201;including most command-line tools, utilities, and applications&#8201;&#8212;&#8201;directly on Windows, unmodified, without the overhead of a traditional virtual machine or dual-boot setup.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are using Windows, it is recommended to install WSL as all the commands use bash.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_installing_wsl">Installing WSL</h5>
+<div class="paragraph">
+<p>You can install everything you need to run Windows Subsystem for Linux (WSL) by entering this command in an administrator PowerShell or Windows Command Prompt and then restarting your machine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">wsl --install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu by default).</p>
+</div>
+<div class="paragraph">
+<p>The first time you launch a newly installed Linux distribution, a console window will open and you&#8217;ll be asked to wait for files to de-compress and be stored on your machine.
+All future launches should take less than a second.</p>
 </div>
 </div>
 </div>
@@ -8238,149 +8275,13 @@ To go further on this, we recommend:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="cloud">Containers &amp; Cloud</h2>
+<h2 id="kubernetes">Kubernetes</h2>
 <div class="sectionbody">
 <hr>
 <div class="paragraph">
-<p>This chapter explores how you can deploy Quarkus applications in containers and Cloud platforms.
+<p>This chapter explores how you can deploy containerized Quarkus applications in Cloud platforms using Kubernetes.
 There are many different approaches to achieve these deployments.
-In this chapter, we are focusing on the creation of containers using Quarkus native executables and the deployment of our system in Kubernetes/OpenShift.</p>
-</div>
-<div class="sect2">
-<h3 id="_from_bare_metal_to_containers">From bare metal to containers</h3>
-<div class="paragraph">
-<p>In this section, we are going to package our microservices into containers.
-In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
-The native compilation uses the OS and architecture of the host system.</p>
-</div>
-<div class="paragraph">
-<p>And&#8230;&#8203; Linux Containers are &#8230;&#8203; <em>Linux</em>.
-So before being able to build a container with our native executable, we need to produce compatible native executables.
-If you are using a Linux 64 bits machine, you are good to go.
-If not, Quarkus comes with a trick to produce these executable:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>-Dquarkus.native.container-build=true</code> allows running the native compilation inside a container (provided by Quarkus).
-The result is a Linux 64 bits executable.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Building a native executable takes time, CPU, and memory.
-It&#8217;s even more accurate in the container.
-So, first, be sure that your container system has enough memory to build the executable.
-It requires at least 6Gb of memory, 8Gb is recommended.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Execute the above command for all our microservices.
-We also copy the UI into the fight service, to simplify the process:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">cd rest-hero
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd rest-villains
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd rest-fight
-cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..
-cd event-statistics
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
-cd ..</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_building_containers">Building containers</h3>
-<div class="paragraph">
-<p>Now that we have the native executables, we can build containers.
-When you create projects, Quarkus generates two <code>Dockerfiles</code>:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>Dockerfile.jvm</code> - A <code>Dockerfile</code> for running the application in JVM mode</p>
-</li>
-<li>
-<p><code>Dockerfile.native</code> - A <code>Dockerfile</code> for running the application in native mode</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>We are interested in this second file.
-Open one of these <code>Dockerfile.native</code> files:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD [&quot;./application&quot;, &quot;-Dquarkus.http.host=0.0.0.0&quot;]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It&#8217;s a pretty straightforward <code>Dockerfile</code> taking a minimal base image and copying the generated native executable.
-It also exposes the port 8080.
-Wait, our microservices are not configured to run on the port 8080.
-We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.</p>
-</div>
-<div class="paragraph">
-<p>To build the containers, use the following scripts:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">export ORG=xxxx
-cd rest-hero
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
-cd ..
-cd rest-villains
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
-cd ..
-cd rest-fight
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
-cd ..
-cd event-statistics
-docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
-cd ..</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Replace <code>ORG</code> with your DockerHub / Quay.io username.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
+In this chapter, we are focusing on deploying our containers in Kubernetes.</p>
 </div>
 <div class="sect2">
 <h3 id="_deploying_on_kubernetes">Deploying on Kubernetes</h3>
@@ -8605,8 +8506,7 @@ $ kubectl apply -f config-villain.yaml</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="head"><span class="head">---</span></span>
-<span class="key">apiVersion</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">v1</span><span class="delimiter">&quot;</span></span>
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">v1</span><span class="delimiter">&quot;</span></span>
 <span class="key">kind</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">List</span><span class="delimiter">&quot;</span></span>
 <span class="key">items</span>:
     - <span class="string"><span class="content">apiVersion: &quot;v1&quot;</span></span>
@@ -8804,6 +8704,15 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 </li>
 <li>
 <p><a href="https://quarkus.io/guides/all-config" class="bare">https://quarkus.io/guides/all-config</a></p>
+</li>
+<li>
+<p><a href="https://azure.microsoft.com/services/container-apps">Azure Container Apps Overview</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/azure/container-apps">Azure Container Apps Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ozangunalp/managed-kafka-quarkus/tree/main/azure-event-hub">Managed Kafka Quarkus</a></p>
 </li>
 </ul>
 </div>
@@ -9278,7 +9187,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-10-11</div>
+    <div>Last updated 2023-10-12</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
