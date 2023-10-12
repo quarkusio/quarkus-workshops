@@ -148,7 +148,7 @@ endif::use-observability[]
 
 // Container
 ifdef::use-container[]
-include::optional-container/cotnainer.adoc[leveloffset=+1]
+include::optional-container/container.adoc[leveloffset=+1]
 <<<
 endif::use-container[]
 
