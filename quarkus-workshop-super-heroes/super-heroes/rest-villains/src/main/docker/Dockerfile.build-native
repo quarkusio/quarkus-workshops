@@ -21,7 +21,7 @@ USER quarkus
 WORKDIR /code
 COPY --chown=quarkus:quarkus . ${WORKDIR}
 
-RUN ./mvnw -B clean install -DskipTests -Pcomplete -pl :extension-version-parent -amd
+RUN ./mvnw -B clean install -DskipTests -pl :extension-version-parent -amd
 RUN ./mvnw -B clean package -f super-heroes/rest-villains -DskipTests -Pnative
 
 ## Stage 2 : create the docker final image

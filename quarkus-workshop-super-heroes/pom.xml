@@ -102,6 +102,11 @@
     <profiles>
         <profile>
             <id>complete</id>
+            <activation>
+                <file>
+                    <exists>super-heroes/extension-version</exists>
+                </file>
+            </activation>
             <modules>
                 <module>super-heroes/extension-version</module>
                 <module>super-heroes/rest-villains</module>
@@ -114,6 +119,13 @@
         </profile>
         <profile>
             <id>core</id>
+            <activation>
+                <file>
+                    <missing>super-heroes/extension-version</missing>
+                    <exists>super-heroes/rest-villains</exists>
+                    <!-- We do the selection this way around, because if this profile triggers in the complete case, the reactor order ends up wrong when the next profile triggers-->
+                </file>
+            </activation>
             <modules>
                 <module>super-heroes/rest-villains</module>
                 <module>super-heroes/rest-heroes</module>
@@ -121,8 +133,14 @@
             </modules>
         </profile>
         <profile>
-            <id>full</id>
+            <id>full</id> <!-- Needs to be manually invoked or it will trigger in the CI, #280 should fix -->
             <modules>
+                <module>super-heroes/extension-version</module>
+                <module>super-heroes/rest-villains</module>
+                <module>super-heroes/rest-heroes</module>
+                <module>super-heroes/rest-fights</module>
+                <module>super-heroes/event-statistics</module>
+                <module>super-heroes/rest-narration</module>
                 <module>docs</module>
             </modules>
         </profile>
