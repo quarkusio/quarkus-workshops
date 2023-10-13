@@ -1,0 +1,203 @@
+[[container]]
+= Containers
+
+'''
+
+In this chapter we will build containers out of our Quarkus microservices and execute them locally thanks to Docker Compose.
+In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+The native compilation uses the OS and architecture of the host system.
+
+== Building containers
+
+First, Quarkus comes with a set of `Dockerfiles`.
+The `Dockerfile.native` file is for running the application in native mode.
+It looks like this:
+
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+WORKDIR /work/
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+[example, role="cta"]
+--
+Check that you have all the Docker images installed locally:
+
+[source,shell]
+----
+docker image ls | grep quarkus
+----
+
+The output should look like this:
+
+[source,shell]
+----
+quarkus/ui-super-heroes         latest      266MB
+quarkus/event-statistics        latest      145MB
+quarkus/rest-fights             latest      198MB
+quarkus/rest-villains           latest      158MB
+quarkus/rest-heroes             latest      154MB
+----
+--
+
+
+== Running containers locally
+
+Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
+
+[example, role="cta"]
+--
+Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
+It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
+Execute it with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app-local.yaml up
+----
+
+To know that all your containers are started, you can use the following command:
+
+[source,shell]
+----
+docker compose -f docker-compose-app-local.yaml ps
+----
+
+You should get something similar to the following list.
+Make sure all your containers are in _running_ status:
+
+[source,shell]
+----
+event-statistics    "./application -Dqua…"   running
+kafka               "sh -c 'export CLUST…"   running
+rest-fights         "./application -Dqua…"   running
+rest-heroes         "./application -Dqua…"   running
+rest-villains       "./application -Dqua…"   running
+super-database      "docker-entrypoint.s…"   running (healthy)
+ui-super-heroes     "/bin/sh -c 'npm sta…"   running
+----
+
+Once all the containers are started, you can:
+
+* Go to http://localhost:8080 to check the main UI
+* Go to http://localhost:8085 to check the statistics UI
+* curl http://localhost:8084/api/villains | jq
+* curl http://localhost:8083/api/heroes | jq
+* curl http://localhost:8082/api/fights/randomfighters | jq
+
+Then, make sure you shut down the entire application with:
+
+[source,shell]
+----
+docker compose -f docker-compose-app-local.yaml down
+----
+--
+
+== Building native executables
+
+
+And... Linux Containers are ... _Linux_.
+So before being able to build a container with our native executable, we need to produce compatible native executables.
+If you are using a Linux 64 bits machine, you are good to go.
+If not, Quarkus comes with a trick to produce these executable:
+
+[source,shell]
+----
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+----
+
+The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
+The result is a Linux 64 bits executable.
+
+[TIP]
+====
+Building a native executable takes time, CPU, and memory.
+It's even more accurate in the container.
+So, first, be sure that your container system has enough memory to build the executable.
+It requires at least 6Gb of memory, 8Gb is recommended.
+====
+
+[example, role="cta"]
+--
+
+Execute the above command for all our microservices.
+We also copy the UI into the fight service, to simplify the process:
+
+[source,shell]
+----
+cd rest-hero
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd rest-villains
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd rest-fight
+cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+cd event-statistics
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
+cd ..
+----
+--
+
+== Building native containers
+
+Now that we have the native executables, we can build containers.
+When you create projects, Quarkus generates two `Dockerfiles`:
+
+1. `Dockerfile.jvm` - A `Dockerfile` for running the application in JVM mode
+2. `Dockerfile.native` - A `Dockerfile` for running the application in native mode
+
+We are interested in this second file.
+Open one of these `Dockerfile.native` files:
+
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /work/
+COPY target/*-runner /work/application
+RUN chmod 775 /work
+EXPOSE 8080
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
+It also exposes the port 8080.
+Wait, our microservices are not configured to run on the port 8080.
+We need to override this property as well as a few other such as the HTTP client endpoints, and database locations.
+
+To build the containers, use the following scripts:
+
+[source,shell]
+----
+export ORG=xxxx
+cd rest-hero
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
+cd ..
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
+cd ..
+cd rest-fight
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
+cd ..
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
+cd ..
+----
+
+[NOTE]
+====
+Replace `ORG` with your DockerHub / Quay.io username.
+====
+
+== Running native containers locally

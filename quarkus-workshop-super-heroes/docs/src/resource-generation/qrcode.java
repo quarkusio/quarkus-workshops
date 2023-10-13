@@ -20,6 +20,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * To invoke this, run jbang https://github
+ * .com/quarkusio/quarkus-workshops/blob/main/quarkus-workshop-super-heroes/docs/src/resource
+ * -generation/qrcode.java https://shattereddisk.github.io/rickroll/ mycode.png
+ */
 class qrcode {
 
     // We can do either 1color or rgb

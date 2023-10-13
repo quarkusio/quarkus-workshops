@@ -1,0 +1,10 @@
+= Cleaning Up Azure Resources
+
+Do NOT forget to remove the Azure resources once you are done running the workshop.
+
+[source,shell]
+----
+az group delete \
+  --name "$RESOURCE_GROUP"
+----
+

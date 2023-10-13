@@ -3,16 +3,12 @@
 
 '''
 
-In this chapter we will build containers out of our Quarkus microservices and execute them locally thanks to Docker Compose.
-Then, we will push the containers to Azure Container Registry so we can still run them locally, and later on Azure Container Apps.
+In this chapter we will push the containers we've built to Azure Container Registry so we can still run them locally, and later on Azure Container Apps.
 
 [NOTE]
 ====
 Building containers locally and pushing them to Azure Container Registry can take from 15 to 30 minutes (depending on your CPU and bandwith).
-If you think you will not have enough time to complete the Workshop, you can skip the next optional sections and go straight to _Running remote containers_.
 ====
-
-== Building containers
 
 In this section, we are going to package our microservices into containers.
 In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
@@ -20,24 +16,6 @@ The native compilation uses the OS and architecture of the host system.
 
 And... Linux Containers are ... _Linux_.
 So to build a container with a Linux native executable (even if you are on Windows or Mac), Quarkus comes with a trick to produce these executable.
-First, Quarkus comes with a set of `Dockerfiles`.
-The `Dockerfile.native` file is for running the application in native mode.
-It looks like this:
-
-[source,text]
-----
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
-WORKDIR /work/
-RUN chown 1001 /work \
-    && chmod "g+rwX" /work \
-    && chown 1001:root /work
-COPY --chown=1001:root target/*-runner /work/application
-
-EXPOSE 8080
-USER 1001
-
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
-----
 
 It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
 
@@ -62,76 +40,6 @@ include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocCompi
 [source,shell,indent=0]
 ----
 include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocBuilding]
-----
-
-Check that you have all the Docker images installed locally:
-
-[source,shell]
-----
-docker image ls | grep quarkus
-----
-
-The output should look like this:
-
-[source,shell]
-----
-quarkus/ui-super-heroes         latest      266MB
-quarkus/event-statistics        latest      145MB
-quarkus/rest-fights             latest      198MB
-quarkus/rest-villains           latest      158MB
-quarkus/rest-heroes             latest      154MB
-----
---
-
-== Running local containers
-
-Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
-
-[example, role="cta"]
---
-Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
-It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
-Execute it with:
-
-[source,shell]
-----
-docker compose -f docker-compose-app-local.yaml up
-----
-
-To know that all your containers are started, you can use the following command:
-
-[source,shell]
-----
-docker compose -f docker-compose-app-local.yaml ps
-----
-
-You should get something similar to the following list.
-Make sure all your containers are in _running_ status:
-
-[source,shell]
-----
-event-statistics    "./application -Dqua…"   running
-kafka               "sh -c 'export CLUST…"   running
-rest-fights         "./application -Dqua…"   running
-rest-heroes         "./application -Dqua…"   running
-rest-villains       "./application -Dqua…"   running
-super-database      "docker-entrypoint.s…"   running (healthy)
-ui-super-heroes     "/bin/sh -c 'npm sta…"   running
-----
-
-Once all the containers are started, you can:
-
-* Go to http://localhost:8080 to check the main UI
-* Go to http://localhost:8085 to check the statistics UI
-* curl http://localhost:8084/api/villains | jq
-* curl http://localhost:8083/api/heroes | jq
-* curl http://localhost:8082/api/fights/randomfighters | jq
-
-Then, make sure you shut down the entire application with:
-
-[source,shell]
-----
-docker compose -f docker-compose-app-local.yaml down
 ----
 --
 

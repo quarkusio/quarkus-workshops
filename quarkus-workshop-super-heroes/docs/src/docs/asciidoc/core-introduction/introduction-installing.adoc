@@ -17,6 +17,14 @@ ifdef::use-ai[]
 include::introduction-installing-ai.adoc[leveloffset=+1]
 endif::use-ai[]
 
+ifdef::use-windows[]
+include::introduction-installing-wsl.adoc[leveloffset=+1]
+endif::use-windows[]
+
+ifdef::use-azure[]
+include::introduction-installing-azure-cli.adoc[leveloffset=+1]
+endif::use-azure[]
+
 == Recap
 
 Before going further, make sure the following commands work on your machine.
@@ -33,6 +41,9 @@ docker compose version
 ifdef::use-local-kubernetes[]
 kubectl version # If you used Rancher Desktop and plan to use Kubernetes
 endif::use-local-kubernetes[]
+ifdef::use-azure[]
+az --version
+endif::use-azure[]
 ----
 
 We have not mentioned cURL up to now, because most modern operating systems ship with it pre-installed.
