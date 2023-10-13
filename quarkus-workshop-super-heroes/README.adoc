@@ -103,6 +103,7 @@ $ mvn package -N
 This generates the following zip files
 
 * `dist/quarkus-super-heroes-workshop.zip`: contains the bare minimum code to follow up the workshop
+* `dist/quarkus-super-heroes-core.zip`: contains the core microservices (heroes, villains, fights and the UI)
 * `dist/quarkus-super-heroes-workshop-complete.zip`: contains all the code (useful if you get lost or want to jump a section of the workshop)
 
 

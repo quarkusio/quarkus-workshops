@@ -12,7 +12,6 @@
     </properties>
     <modules>
         <module>super-heroes/ui-super-heroes</module>
-        <module>super-heroes/load-super-heroes</module>
     </modules>
     <build>
         <plugins>
@@ -84,6 +83,7 @@
                     <descriptors>
                         <descriptor>assembly.xml</descriptor>
                         <descriptor>assembly-complete.xml</descriptor>
+                        <descriptor>assembly-core.xml</descriptor>
                     </descriptors>
                     <outputDirectory>dist</outputDirectory>
                 </configuration>
@@ -109,6 +109,15 @@
                 <module>super-heroes/rest-fights</module>
                 <module>super-heroes/event-statistics</module>
                 <module>super-heroes/rest-narration</module>
+                <module>super-heroes/load-super-heroes</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>core</id>
+            <modules>
+                <module>super-heroes/rest-villains</module>
+                <module>super-heroes/rest-heroes</module>
+                <module>super-heroes/rest-fights</module>
             </modules>
         </profile>
         <profile>
