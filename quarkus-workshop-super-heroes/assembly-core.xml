@@ -1,7 +1,7 @@
 <assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
-    <id>workshop</id>
+    <id>workshop-core</id>
     <formats>
         <format>zip</format>
     </formats>
@@ -49,6 +49,9 @@
 
                 <include>super-heroes/infrastructure/**/*</include>
                 <include>super-heroes/kubernetes/**/*</include>
+                <include>super-heroes/rest-fights/**/*</include>
+                <include>super-heroes/rest-heroes/**/*</include>
+                <include>super-heroes/rest-villains/**/*</include>
                 <include>super-heroes/ui-super-heroes/**/*</include>
             </includes>
         </fileSet>

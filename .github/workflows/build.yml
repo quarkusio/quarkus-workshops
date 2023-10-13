@@ -17,11 +17,9 @@ jobs:
           distribution: temurin
           java-version: 17
       - name: Microservices build with Maven
-        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pcomplete
+        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
       - name: Native build with Maven
-        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs
-      - name: Extension build with Maven
-        run: mvn -B install -f quarkus-workshop-super-heroes/super-heroes/extension-version/pom.xml
+        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs -pl '!:rest-narration,!:extension-version'
   docs:
     runs-on: ubuntu-latest
     strategy:
