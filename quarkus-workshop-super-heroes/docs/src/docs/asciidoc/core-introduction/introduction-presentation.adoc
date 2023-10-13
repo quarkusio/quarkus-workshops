@@ -134,26 +134,6 @@ If you are stuck, you can always look at the final code in the {github-url}[GitH
 
 Oh, and be ready to have some fun!
 
-
-=== The completed workshop
-
-If you want to build the completed workshop, after you've unzipped the {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`] file, you would need to run the following command from the root project:
-
-[source, shell]
-----
-$ ./mvnw clean install -Pcomplete
-----
-
-ifdef::use-extension[]
-The extension can be built with the following command:
-
-[source, shell]
-----
-$ ./mvnw clean install -f super-heroes/extension-version
-----
-endif::use-extension[]
-
-
 == Software Requirements
 
 First of all, make sure you have a 64-bit computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
