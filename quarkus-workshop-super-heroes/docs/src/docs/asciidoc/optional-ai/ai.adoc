@@ -45,15 +45,13 @@ Let's create a new microservice that will use Semantic Kernel to narrate the fig
 New microservice, new project!
 
 As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to https://code.quarkus.io if you prefer).
-Open a terminal and run the following command:
+Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
 
 [example, role="cta"]
 --
 
 [source,shell,subs="attributes+"]
 ----
-cd quarkus-workshop-super-heroes/super-heroes
-
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DplatformVersion={quarkus-version} \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \

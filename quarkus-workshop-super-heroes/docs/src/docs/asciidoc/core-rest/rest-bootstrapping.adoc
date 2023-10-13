@@ -7,15 +7,13 @@ That's what you are going to see in this section.
 == Bootstrapping the Villain REST Endpoint
 
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
-Open a terminal and run the following command:
+Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
 
 [example, role="cta"]
 --
 
 [source,shell,subs="attributes+"]
 ----
-cd quarkus-workshop-super-heroes/super-heroes
-
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DplatformVersion={quarkus-version} \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
@@ -37,7 +35,7 @@ but allows a project's build dependencies to be encapsulated.
 The last line selects the extension we want to use.
 As a start, we only select `resteasy-reactive-jackson`, which will also import `resteasy-reactive`.
 
-If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM (`quarkus-super-heroes/pom.xml`) by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
@@ -174,27 +172,26 @@ If we focus on the dependencies section, you can see the extensions allowing the
 <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-reactive</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+    </dependency>
     <!-- ... -->
 </dependencies>
 ----
 
-`quarkus-arc` is the dependency injection framework integrated into Quarkus.
+* `quarkus-arc` is the dependency injection framework integrated into Quarkus.
 It's designed to perform build-time injections.
 We will see later why this is essential for Quarkus.
-
-`resteasy-reactive` is the framework we will use to implement our REST API.
+* `resteasy-reactive` is the framework we will use to implement our REST API.
 It uses JAX-RS annotations such as `@Path`, `@GET`...
-`reasteasy-reactive-jackson` adds JSON object mapping capabilities to RESTEasy reactive.
+* `reasteasy-reactive-jackson` adds JSON object mapping capabilities to RESTEasy reactive.
 
 == The Villain Resource
 
@@ -277,7 +274,12 @@ Then check that the endpoint returns `hello` as expected:
 [source,shell]
 ----
 curl http://localhost:8080/api/villains
+----
 
+You should see the following
+
+[source,shell]
+----
 Hello from RESTEasy Reactive
 ----
 
@@ -308,11 +310,9 @@ Now, execute the cURL command again:
 [source,shell]
 ----
 curl http://localhost:8080/api/villains
-
-Hello Villain Resource
 ----
 
-The output has changed without you having to stop and restart Quarkus!
+The output has changed ("_Hello Villain Resource_") without you having to stop and restart Quarkus!
 --
 
 == Testing the Application
@@ -397,7 +397,7 @@ You can also configure the ports used by tests by configuring the `quarkus.http.
 [example, role="cta"]
 --
 
-In the terminal running the application in _dev mode_, you should see at the bottom:
+In the terminal running the application in _dev mode_ (`./mvnw quarkus:dev`), you should see at the bottom:
 
 [source,text]
 ----

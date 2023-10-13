@@ -41,15 +41,13 @@ In this section, we will cover the basics of Mutiny and implement an entirely re
 New microservice, new project!
 
 The easiest way to create this new Quarkus project is to use the Quarkus Maven plugin.
-Open a terminal and run the following command:
+Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory
 
 [example, role="cta"]
 --
 
 [source,shell,subs="attributes+"]
 ----
-cd quarkus-workshop-super-heroes/super-heroes
-
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
     -DplatformVersion={quarkus-version} \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
