@@ -19,7 +19,7 @@ For that, just add a log invoking `ConfigUtils.getProfiles()` in the `onStart()`
 
 [source,indent=0]
 ----
-LOGGER.info("The application VILLAIN is starting with profile " + ConfigUtils.getProfiles());
+include::{projectdir}/rest-villains/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplicationLifeCycle.java[tag=adocProfile]
 ----
 --
 

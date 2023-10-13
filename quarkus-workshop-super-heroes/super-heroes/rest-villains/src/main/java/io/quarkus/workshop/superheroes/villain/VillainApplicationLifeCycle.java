@@ -7,11 +7,15 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import org.jboss.logging.Logger;
 
+// tag::adocJavadoc[]
+
 /**
  * Demonstrates how to use Quarkus {@link StartupEvent}s and {@link ShutdownEvent}s as well as how to gain access to the {@link ConfigUtils}.
  */
+// end::adocJavadoc[]
 @ApplicationScoped
 public class VillainApplicationLifeCycle {
+
     private static final Logger LOGGER = Logger.getLogger(VillainApplicationLifeCycle.class);
 
     void onStart(@Observes StartupEvent ev) {
@@ -20,7 +24,9 @@ public class VillainApplicationLifeCycle {
         LOGGER.info("  \\ \\ / /| | | |/ _` | | '_ \\     / _ \\ | |_) | | ");
         LOGGER.info("   \\ V / | | | | (_| | | | | |   / ___ \\|  __/| | ");
         LOGGER.info("    \\_/  |_|_|_|\\__,_|_|_| |_|  /_/   \\_\\_|  |___|");
+        // tag::adocProfile[]
         LOGGER.info("The application VILLAIN is starting with profile " + ConfigUtils.getProfiles());
+        // end::adocProfile[]
     }
 
     void onStop(@Observes ShutdownEvent ev) {
