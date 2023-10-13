@@ -135,6 +135,12 @@ Once installed and set up, you should be able to run the following command and g
 [source,shell]
 ----
 $ $GRAALVM_HOME/bin/native-image --version
+----
+
+You should get something like:
+
+[source,shell]
+----
 GraalVM 22.3.1 Java 17 CE (Java Version 17.0.6+10-jvmci-22.3-b13)
 ----
 

@@ -1,0 +1,62 @@
+[[appendix-installing-curl]]
+
+= cURL
+
+To invoke the REST Web Services described in this workshop, we often use cURL.footnote:[cURL https://curl.haxx.se]
+cURL is a command-line tool and library to do reliable data transfers with various protocols, including HTTP.
+It is free, open-source (available under the MIT Licence), and has been ported to several operating systems.
+If your operating system does not already include cURL (most do), here is how to install it.
+
+== Installing cURL
+
+ifdef::use-mac[]
+If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.footnote:[Homebrew https://brew.sh]
+Open your terminal and install cURL with the following command:
+
+[source,shell]
+----
+brew install curl
+----
+endif::use-mac[]
+
+ifdef::use-windows[]
+For Windows, download and install curl from https://curl.se/download.html.
+endif::use-windows[]
+
+== Checking for cURL Installation
+
+Once installed, check for cURL by running `curl --version` in the terminal.
+It should display cURL version:
+
+[source,shell]
+----
+$ curl --version
+curl 7.64.1 (x86_64-apple-darwin20.0) libcurl/7.64.1 (SecureTransport) LibreSSL/2.8.3 zlib/1.2.11 nghttp2/1.41.0
+Release-Date: 2019-03-27
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp
+Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM NTLM_WB SPNEGO SSL UnixSockets
+----
+
+== Some cURL Commands
+
+cURL is a command-line utility where you can use several parameters and options to invoke URLs.
+You invoke `curl` with zero, one, or several command-line options to accompany the URL (or set of URLs) you want the transfer to be about.
+cURL supports over two hundred different options, and I would recommend reading the documentation for more help.footnote:[cURL commands https://ec.haxx.se/cmdline.html]
+To get some help on the commands and options, you can type, use the following command:
+
+[source,shell]
+----
+$ curl --help
+
+Usage: curl [options...] <url>
+----
+
+You can also opt to use `curl --manual`, which will output the entire man page for cURL plus an appended tutorial for the most common use cases.
+
+Here are some commands you will use to invoke the RESTful web service examples in this workshop.
+
+* `curl http://localhost:8083/api/heroes/hello`: HTTP GET on a given URL.
+* `curl -X GET http://localhost:8083/api/heroes/hello`: Same effect as the previous command, an HTTP GET on a given URL.
+* `curl -v http://localhost:8083/api/heroes/hello`: HTTP GET on a given URL with verbose mode on.
+* `curl -H 'Content-Type: application/json' http://localhost:8083/api/heroes/hello`: HTTP GET on a given URL passing the JSON Content Type in the HTTP Header.
+* `curl -X DELETE http://localhost:8083/api/heroes/1`: HTTP DELETE on a given URL.
