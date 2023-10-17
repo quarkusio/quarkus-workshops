@@ -1,7 +1,6 @@
 [[quarkus-kubernetes]]
-= From Java to Kubernetes
+= From Container to Kubernetes
 
-ifdef::use-local-kubernetes[]
 [NOTE]
 ====
 This section is optional and demonstrates how to ask Quarkus to create a container and deploy it to Kubernetes.
@@ -13,68 +12,7 @@ We will use Rancher Desktop as indicated in the prerequisites.
 
 1. Make sure that Docker Desktop (if installed) is turned off
 2. Make sure Rancher Desktop is started. The container runtime must be _dockerd_ (Preferences -> Container Runtime -> dockerd (moby)).
-endif::use-local-kubernetes[]
 
-== Building a container
-
-Quarkus is able to build a container image automatically.
-It proposes multiple approaches to do so, but we recommend using https://github.com/GoogleContainerTools/jib[jib].
-
-The resulting image follows the container good practices such as the usage of layers, avoiding the `root` user...
-
-[example, role="cta"]
---
-Add the `quarkus-container-image-jib` extension using the following command:
-
-[source, shell]
-----
-./mvnw quarkus:add-extension -Dextensions="jib"
-----
---
-
-It adds the following dependency to the `pom.xml` file:
-
-[source, xml]
-----
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-container-image-jib</artifactId>
-</dependency>
-----
-
-[example, role="cta"]
---
-Then, launch the following command to build the application and create the container image:
-
-[source, shell]
-----
-./mvnw clean package -Dquarkus.container-image.build=true
-----
-
-Once done, verify that the container image has been created using:
-
-[source, shell]
-----
-docker images | grep villains
-.../rest-villains              1.0.0-SNAPSHOT         1298cad04f5e   About a minute ago   388MB
-----
---
-
-== Building a container running a native executable
-
-In the previous section, the container embeds the Java application.
-You can also build and use the native executable.
-To do this, runs the following command:
-
-[source, shell]
-----
-./mvnw clean package -Dquarkus.container-image.build=true -Pnative -Dquarkus.native.container-build=true
-----
-
-`-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
-This option is not required if you use Linux.
-
-ifdef::use-local-kubernetes[]
 == Deploying to Kubernetes
 
 Quarkus can also run our application in Kubernetes and compute the Kubernetes descriptor.
@@ -157,8 +95,19 @@ Finally, deploy the application using:
 [source, shell]
 ----
 ./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests
-...
+----
+
+Check the pods with the following command:
+
+[source, shell]
+----
 kubectl get pods
+----
+
+You should see something like:
+
+[source, shell]
+----
 NAME                             READY   STATUS    RESTARTS   AGE
 my-villains-db-postgresql-0      1/1     Running   0          28m
 rest-villains-7c7479b959-7fn64   1/1     Running   0          12m
@@ -174,5 +123,3 @@ kubectl port-forward pods/rest-villains-7c7479b959-7fn64 8080:8080
 ----
 
 Now, you can access the application from your browser using: http://localhost:8080/api/villains
-
-endif::use-local-kubernetes[]
