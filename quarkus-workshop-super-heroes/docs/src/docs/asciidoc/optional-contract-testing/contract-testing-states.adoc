@@ -11,8 +11,8 @@ In that case, we expect that the heroes server will return a 404. Let's get that
 
 Add a new pact.
 We use the `given()` to identify the state.
-[source,java]
 
+[source,java,indent=0]
 ----
 include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundPact]
 ----
@@ -21,7 +21,7 @@ Then, we can define another test method, which exercises our service, given this
 If the hero service returns 404, we want to check that the fallback instances we defined earlier are used.
 We also want to check that things work as normal for the villain part of the response.
 
-[source,java]
+[source,java,indent=0]
 ----
 include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceConsumerTest.java[tags=randomHeroNotFoundTest]
 ----
@@ -33,10 +33,9 @@ We would normally do that with a `@State` annotation.
 However, for boring JUnit classloading reasons, we don't have access to the CDI context in the `@State` method,
 so we'll work around it by handling the state in the `@BeforeEach`.
 
-[source,java]
+[source,java,indent=0]
 ----
 include::{projectdir}/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java[tags=states]
-}
 ----
 
 What's going on?
@@ -57,21 +56,21 @@ Edit the `HeroResource` and update the `getRandomHero` method to explicitly hand
 
 [source,java]
 ----
-    @Operation(summary = "Returns a random hero")
-    @GET
-    @Path("/random")
-    @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class, required = true)))
-    public Uni<RestResponse<Hero>> getRandomHero() {
-        return Hero.findRandom()
-            .onItem().ifNotNull().transform(h -> {
-                this.logger.debugf("Found random hero: %s", h);
-                return RestResponse.ok(h);
-            })
-            .onItem().ifNull().continueWith(() -> {
-                this.logger.debug("No random villain found");
-                return RestResponse.notFound();
-            });
-    }
+@Operation(summary = "Returns a random hero")
+@GET
+@Path("/random")
+@APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Hero.class, required = true)))
+public Uni<RestResponse<Hero>> getRandomHero() {
+    return Hero.findRandom()
+        .onItem().ifNotNull().transform(h -> {
+            this.logger.debugf("Found random hero: %s", h);
+            return RestResponse.ok(h);
+        })
+        .onItem().ifNull().continueWith(() -> {
+            this.logger.debug("No random villain found");
+            return RestResponse.notFound();
+        });
+}
 ----
 
 The tests should now pass.

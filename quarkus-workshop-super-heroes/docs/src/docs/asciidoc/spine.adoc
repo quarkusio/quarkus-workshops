@@ -112,7 +112,7 @@ include::core-rest-client/rest-client-timeout.adoc[leveloffset=+2]
 
 // Contract testing
 ifdef::use-contract-testing[]
-include::optional-contract-testing/contract-testing-pact.adoc[leveloffset=+1]
+include::optional-contract-testing/contract-testing.adoc[leveloffset=+1]
 include::optional-contract-testing/contract-testing-happy-path-consumer-tests.adoc[leveloffset=+2]
 include::optional-contract-testing/contract-testing-provider-tests.adoc[leveloffset=+2]
 include::optional-contract-testing/contract-testing-states.adoc[leveloffset=+2]

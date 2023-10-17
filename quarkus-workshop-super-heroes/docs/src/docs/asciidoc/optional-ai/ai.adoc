@@ -29,7 +29,7 @@ https://learn.microsoft.com/semantic-kernel/overview[Semantic Kernel] is an open
 By doing so, you can create AI apps that combine the best of both worlds:
 the deterministic nature of conventional programming and the semantic aspect of AI.
 
-image::semantic-kernel.png[Semantic Kernel]
+image::semantic-kernel.png[role=half-size]
 
 Semantic Kernel has been engineered to allow developers to flexibly integrate AI services into their existing apps.
 To do so, Semantic Kernel provides a set of connectors that make it easy to add memories and models.
