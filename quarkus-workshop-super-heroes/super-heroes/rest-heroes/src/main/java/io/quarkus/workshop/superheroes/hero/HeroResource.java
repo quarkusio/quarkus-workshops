@@ -25,14 +25,18 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
+
 import java.net.URI;
 import java.util.List;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
+// tag::adocJavadoc[]
+
 /**
  * JAX-RS API endpoints with <code>/api/heroes</code> as the base URI for all endpoints
  */
+// end::adocJavadoc[]
 @Path("/api/heroes")
 @Tag(name = "heroes")
 public class HeroResource {
