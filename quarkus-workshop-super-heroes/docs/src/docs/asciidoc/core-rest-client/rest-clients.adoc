@@ -1,4 +1,4 @@
-[[fault-tolerance-rest-client]]
+[[rest-clients]]
 = REST Client
 
 This chapter explains how to use the MicroProfile REST Client in order to interact with REST APIs with very little effort.footnote:[MicroProfile REST Client https://github.com/eclipse/microprofile-rest-client]
@@ -121,8 +121,6 @@ Villain findRandomVillain() {
 Hero findRandomHero() {
    return heroProxy.findRandomHero();
 }
-
-
 ----
 
 Note the Rest client injection.
@@ -146,24 +144,7 @@ In our case both interfaces should be created under the `client` subpackage and 
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.fight.client;
-
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
-
-@Path("/api/heroes")
-@Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient(configKey = "hero")
-public interface HeroProxy {
-
-    @GET
-    @Path("/random")
-    Hero findRandomHero();
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/HeroProxy.java[]
 ----
 
 The `findRandomHero` method gives our code the ability to query a random hero from the Hero REST API.
@@ -180,24 +161,7 @@ The `VillainProxy` is very similar and looks like this:
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.fight.client;
-
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
-
-@Path("/api/villains")
-@Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient(configKey = "villain")
-public interface VillainProxy {
-
-    @GET
-    @Path("/random")
-    Villain findRandomVillain();
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/VillainProxy.java[]
 ----
 
 [example, role="cta"]
@@ -250,8 +214,7 @@ This built-in stereotype declares `@Alternative`, `@Priority(1)` and `@Dependent
 
 === Mocking a Villain service
 
-So, to mock the `VillainProxy` interface we just need to implement the following `MockVillainProxy` class (under the `client` subpackage):
-
+So, to mock the `VillainProxy` interface we just need to implement the following `MockVillainProxy` class (under the `client` subpackage under `src/test/java/io/quarkus/workshop/superheroes/fight`):
 
 [source,java]
 ----
@@ -260,8 +223,7 @@ include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/
 
 We are using some common classes for the test data.
 They don't exist yet, so the IDE will complain!
-Let your IDE's quick fix create the classes for you, or create them
-manually, and then fill in the following contents:
+Let your IDE's quick fix create the classes for you, or create them manually (under the `client` subpackage under `src/test/java/io/quarkus/workshop/superheroes/fight`), and then fill in the following contents:
 
 
 [source,java]
@@ -269,19 +231,17 @@ manually, and then fill in the following contents:
 include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/DefaultTestVillain.java[]
 ----
 
-
 === Mocking a Hero service
 
 We could create a `@Mock` for the `HeroProxy`, as we did for the Villain, but there are some drawbacks to using `@Mock`:
 
-- Any class defined by `@Mock`
-is global in scope, and can't be isolated to individual tests. That can result in unwanted cross-talk between tests.
-- Because of how the mock is defined,
-it's also harder to use https://site.mockito.org/[Mockito] to generate the mock instance.
+* Any class defined by `@Mock` is global in scope, and can't be isolated to individual tests.
+That can result in unwanted cross-talk between tests.
+* Because of how the mock is defined, it's also harder to use https://site.mockito.org/[Mockito] to generate the mock instance.
 
 Let's try a different approach.
 
-We'll still want a class which holds test data for the hero. Create the following:
+We'll still want a class which holds test data for the hero. Create the following under the `client` subpackage:
 
 [source,java]
 ----
@@ -293,42 +253,45 @@ Add the extended Quarkus Mockito support to the `fight` service's `pom.xml`:
 
 [source,xml]
 ----
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5-mockito</artifactId>
-            <scope>test</scope>
-        </dependency>
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-junit5-mockito</artifactId>
+    <scope>test</scope>
+</dependency>
 ----
 
 Now we can add the following to the top of the `FightResourceTest`:
 
-[source,java]
+[source,java,indent=0]
 ----
-    @InjectMock
-    @RestClient
-    HeroProxy heroProxy;
-
-    @BeforeEach
-    public void setup() {
-        Mockito.when(heroProxy.findRandomHero()).thenReturn(DefaultTestHero.INSTANCE);
-    }
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocMock]
 ----
 
-The `when` call is a static import of `Mockito.when`. The
-https://quarkus.io/guides/getting-started-testing#further-simplification-with-injectmock[`@InjectMock`] annotation results in a mock being created and made available in test methods of the test class.
+The `when` call is a static import of `Mockito.when`.
+The https://quarkus.io/guides/getting-started-testing#further-simplification-with-injectmock[`@InjectMock`] annotation results in a mock being created and made available in test methods of the test class.
 Importantly, other test classes are not affected by this.
+
+[source,java,indent=0]
+----
+import io.quarkus.test.InjectMock;
+import static org.mockito.Mockito.when;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+----
 
 [example, role="cta"]
 --
 Finally, edit the `FightResourceTest` and add the following method:
 
-[source,java]
+[source,java,indent=0]
 ----
 include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocGetRandomFighters]
 ----
 
 Now, run the test from the dev mode, or from your IDE.
 You can shutdown the hero and villain services to verify that the tests still pass.
-
-Don't forget to restart them before going further.
 --
+
+Time to play.
+Start the Hero, Villain and Fight microservices as well as the user interface (using `./mvnw quarkus:dev` on each project) and select random fighters.
+
+image::angular-ui.png[role=half-size]

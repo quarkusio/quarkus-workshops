@@ -1,4 +1,4 @@
-[[fault-tolerance-timeout]]
+[[rest-client-timeout]]
 = Timeout
 
 Sometimes invoking a REST API can take a long time.
@@ -44,7 +44,12 @@ public Response getRandomFighters() {
 
 [NOTE]
 --
-Don't forget to add the following import: `import org.eclipse.microprofile.config.inject.ConfigProperty;` and `import org.eclipse.microprofile.faulttolerance.Timeout;`
+Don't forget to add the following import:
+[source,java,indent=0]
+----
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Timeout;
+----
 --
 
 Let's say we've added some new functionality in the `veryLongProcess` method.
