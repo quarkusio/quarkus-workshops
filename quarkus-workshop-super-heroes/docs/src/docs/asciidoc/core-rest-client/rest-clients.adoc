@@ -324,7 +324,7 @@ Finally, edit the `FightResourceTest` and add the following method:
 
 [source,java]
 ----
-include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=shouldGetRandomFighters]
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocGetRandomFighters]
 ----
 
 Now, run the test from the dev mode, or from your IDE.

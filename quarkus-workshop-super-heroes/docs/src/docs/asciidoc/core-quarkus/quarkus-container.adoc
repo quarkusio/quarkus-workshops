@@ -1,4 +1,4 @@
-[[quarkus-kubernetes]]
+[[quarkus-container]]
 = From Java to Container
 
 This section demonstrates how to ask Quarkus to create a container.

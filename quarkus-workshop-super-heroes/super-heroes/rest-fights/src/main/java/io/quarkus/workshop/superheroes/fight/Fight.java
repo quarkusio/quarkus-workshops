@@ -1,18 +1,22 @@
 package io.quarkus.workshop.superheroes.fight;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Column;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.Instant;
+
+// tag::adocJavadoc[]
 
 /**
  * Entity class for a Fight. Re-used in the API layer
  */
+// end::adocJavadoc[]
 @Entity
-@Schema(description="Each fight has a winner and a loser")
+@Schema(description = "Each fight has a winner and a loser")
 public class Fight extends PanacheEntity {
 
     @NotNull
@@ -39,5 +43,4 @@ public class Fight extends PanacheEntity {
     public String winnerTeam;
     @NotNull
     public String loserTeam;
-
 }

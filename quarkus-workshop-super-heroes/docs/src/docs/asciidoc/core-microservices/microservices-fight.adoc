@@ -122,45 +122,7 @@ Create the `io.quarkus.workshop.superheroes.fight.Fight` class with the followin
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.fight;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
-import java.time.Instant;
-
-@Entity
-@Schema(description="Each fight has a winner and a loser")
-public class Fight extends PanacheEntity {
-
-    @NotNull
-    public Instant fightDate;
-    @NotNull
-    public String winnerName;
-    @NotNull
-    public int winnerLevel;
-    @NotNull
-    @Column(columnDefinition = "TEXT")
-    public String winnerPowers;
-    @NotNull
-    public String winnerPicture;
-    @NotNull
-    public String loserName;
-    @NotNull
-    public int loserLevel;
-    @NotNull
-    @Column(columnDefinition = "TEXT")
-    public String loserPowers;
-    @NotNull
-    public String loserPicture;
-    @NotNull
-    public String winnerTeam;
-    @NotNull
-    public String loserTeam;
-
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/Fight.java[tag=!adocJavadoc]
 ----
 --
 
@@ -178,23 +140,7 @@ Create the `io.quarkus.workshop.superheroes.fight.Fighters` class, with the foll
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.fight;
-
-import io.quarkus.workshop.superheroes.fight.client.Hero;
-import io.quarkus.workshop.superheroes.fight.client.Villain;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.NotNull;
-
-@Schema(description="A fight between one hero and one villain")
-public class Fighters {
-
-    @NotNull
-    public Hero hero;
-    @NotNull
-    public Villain villain;
-
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/Fighters.java[tag=!adocJavadoc]
 ----
 --
 
@@ -205,50 +151,16 @@ The Fight REST API is just interested in the hero's name, level, picture and pow
 --
 So create the `Hero` bean looks like this (notice the `client` subpackage):
 
-[source]
+[source,java]
 ----
-package io.quarkus.workshop.superheroes.fight.client;
-
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.NotNull;
-
-@Schema(description="The hero fighting against the villain")
-public class Hero {
-
-    @NotNull
-    public String name;
-    @NotNull
-    public int level;
-    @NotNull
-    public String picture;
-    public String powers;
-
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/Hero.java[tag=!adocJavadoc]
 ----
 
 Also create the `Villain` counterpart (also in the `client` subpackage):
 
-[source]
+[source,java]
 ----
-package io.quarkus.workshop.superheroes.fight.client;
-
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.NotNull;
-
-@Schema(description="The villain fighting against the hero")
-public class Villain {
-
-    @NotNull
-    public String name;
-    @NotNull
-    public int level;
-    @NotNull
-    public String picture;
-    public String powers;
-
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/Villain.java[tag=!adocJavadoc]
 ----
 --
 
@@ -380,71 +292,7 @@ To expose a REST API we also need a `FightResource` (with OpenAPI annotations of
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.fight;
-
-import org.jboss.logging.Logger;
-
-import jakarta.inject.Inject;
-import jakarta.validation.Valid;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
-
-import java.util.List;
-
-import static jakarta.ws.rs.core.MediaType.*;
-
-@Path("/api/fights")
-@Produces(APPLICATION_JSON)
-public class FightResource {
-
-    @Inject Logger logger;
-
-    @Inject
-    FightService service;
-
-    @GET
-    @Path("/randomfighters")
-    public Response getRandomFighters() {
-        Fighters fighters = service.findRandomFighters();
-        logger.debug("Get random fighters " + fighters);
-        return Response.ok(fighters).build();
-    }
-
-    @GET
-    public Response getAllFights() {
-        List<Fight> fights = service.findAllFights();
-        logger.debug("Total number of fights " + fights);
-        return Response.ok(fights).build();
-    }
-
-    @GET
-    @Path("/{id}")
-    public Response getFight(Long id) {
-        Fight fight = service.findFightById(id);
-        if (fight != null) {
-            logger.debug("Found fight " + fight);
-            return Response.ok(fight).build();
-        } else {
-            logger.debug("No fight found with id " + id);
-            return Response.noContent().build();
-        }
-    }
-
-    @POST
-    public Fight fight(@Valid Fighters fighters, UriInfo uriInfo) {
-        return service.persistFight(fighters);
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/hello")
-    public String hello() {
-        return "Hello Fight Resource";
-    }
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tags=!adocJavadoc;!adocFaultTolerance;!adocNarrate]
 ----
 
 [NOTE]
@@ -498,26 +346,7 @@ In the `application.properties` file add:
 
 [source,properties]
 ----
-## HTTP configuration
-quarkus.http.port=8082
-
-# drop and create the database at startup (use `update` to only update the schema)
-quarkus.hibernate-orm.database.generation=drop-and-create
-
-## Logging configuration
-quarkus.log.console.enable=true
-quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
-quarkus.log.console.level=DEBUG
-
-## Production configuration
-%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/fights_database
-%prod.quarkus.datasource.db-kind=postgresql
-%prod.quarkus.datasource.username=superfight
-%prod.quarkus.datasource.password=superfight
-%prod.quarkus.hibernate-orm.sql-load-script=import.sql
-
-%prod.quarkus.log.console.level=INFO
-%prod.quarkus.hibernate-orm.database.generation=update
+include::{projectdir}/rest-fights/src/main/resources/application.properties[tags=!adocFaultTolerance;!adocRestClient;!adocNarrate;!adocKafka;!adocCORS]
 ----
 --
 
