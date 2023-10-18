@@ -73,15 +73,6 @@ include::core-quarkus/quarkus.adoc[leveloffset=+1]
 include::core-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
 include::core-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
 include::core-quarkus/quarkus-profile.adoc[leveloffset=+2]
-ifdef::use-native[]
-include::core-quarkus/quarkus-native.adoc[leveloffset=+2]
-endif::use-native[]
-ifdef::use-container[]
-include::core-quarkus/quarkus-container.adoc[leveloffset=+2]
-endif::use-container[]
-ifdef::use-kubernetes[]
-include::core-quarkus/quarkus-kubernetes.adoc[leveloffset=+2]
-endif::use-kubernetes[]
 <<<
 
 // Reactive
@@ -149,6 +140,12 @@ ifdef::use-cli[]
 include::optional-cli/cli.adoc[leveloffset=+1]
 <<<
 endif::use-cli[]
+
+// Native
+ifdef::use-native[]
+include::optional-native/native.adoc[leveloffset=+1]
+<<<
+endif::use-native[]
 
 // Container
 ifdef::use-container[]

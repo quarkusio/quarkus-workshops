@@ -1,7 +1,7 @@
-[[quarkus-native]]
-= From Java to Native
+[[native]]
+= Building a Native Executables
 
-== Building a Native Executable
+'''
 
 Let's now produce a native executable for our application.
 As explained in the introduction of this chapter, Quarkus can generate native executables.
@@ -50,3 +50,26 @@ It also takes a few minutes, even for a simple application like the Villain micr
 Most of the time is spent during the dead code elimination, as it traverses the whole (closed) world.
 ====
 
+
+== Native compilation and Quinoa
+
+You can compile the UI application as a native binary, just like other Quarkus applications.
+
+[example, role="cta"]
+--
+
+Try compiling natively with
+
+----
+./mvnw package -Pnative
+----
+
+Then, just execute the produced binary:
+
+----
+./target/ui-super-heroes-1.0.0-SNAPSHOT-runner
+----
+
+The native compilation will take a while, but once it's done, the UI will start in around 0.02s.
+You can confirm it's working by checking http://localhost:8080.
+--

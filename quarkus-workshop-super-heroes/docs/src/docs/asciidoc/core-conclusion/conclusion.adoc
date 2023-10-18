@@ -35,10 +35,18 @@ With so many microservices, observability becomes mandatory.
 That's why we added some health checks and metrics to our microservices.
 endif::use-observability[]
 
+Then, came production time.
+With Quarkus it's very easy to build executable JARs.
+With a JVM installed you can execute these JARs which are optimal for production.
 ifdef::use-native[]
-Then, comes production time.
-We had to build executable JARs and executable binaries (thanks to GraalVM), and package our microservices into Docker containers.
+And if you need to turn your microservice into an executable binary (thanks to GraalVM), that's easy too.
+Quarkus supports GraalVM since the beginning and makes its integration smooth.
 endif::use-native[]
+ifdef::use-container[]
+Same if you want to package microservices into Docker containers.
+Quarkus supports Jib.
+So with a simple Maven command you can turn your microservice into a container.
+endif::use-container[]
 
 Remember that you can find all the code for this fascicle at {github-url}.
 If some parts were not clear enough, or if you found something missing, a bug, or you just want to leave a note or suggestion, please use the GitHub issue tracker at {github-issue}.

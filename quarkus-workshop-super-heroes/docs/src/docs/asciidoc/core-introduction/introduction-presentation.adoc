@@ -102,9 +102,13 @@ ifdef::use-native[]
 * _Build native executables_:
 in this section, you will build native executables of all the microservices thanks to GraalVM
 endif::use-native[]
+ifdef::use-container[]
+* _Containers_:
+in this section, you will create Docker images of all the microservices
+endif::use-container[]
 ifdef::use-kubernetes[]
-* _Containers & Cloud_:
-in this section, you will create Docker images of all the microservices and deploy them to Kubernetes
+* _Cloud_:
+once the microservices are all containerize, you can deploy them to Kubernetes
 endif::use-kubernetes[]
 ifdef::use-observability[]
 * _Observability_:

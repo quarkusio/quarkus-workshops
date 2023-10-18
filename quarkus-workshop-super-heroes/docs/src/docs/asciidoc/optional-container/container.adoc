@@ -4,12 +4,15 @@
 '''
 
 In this chapter we will build containers out of our Quarkus microservices and execute them locally thanks to Docker Compose.
-In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
+Thanks to Quarkus Cloud Native capabilities, we will be able to build and execute containers easily.
+ifdef::use-native[]
+We will also produce Linux 64 bits native executables and runs them in a container.
 The native compilation uses the OS and architecture of the host system.
+endif::use-native[]
 
 == Building containers
 
-First, Quarkus comes with a set of `Dockerfiles`.
+When we generated our microservices, Quarkus has generated a set of `Dockerfiles`.
 The `Dockerfile.native` file is for running the application in native mode.
 It looks like this:
 
@@ -110,6 +113,36 @@ So before being able to build a container with our native executable, we need to
 If you are using a Linux 64 bits machine, you are good to go.
 If not, Quarkus comes with a trick to produce these executable:
 
+
+
+
+
+
+
+The `Dockerfile.native` file is for running the application in native mode.
+It looks like this:
+
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+WORKDIR /work/
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+
+
+
+
+
+
+
 [source,shell]
 ----
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
@@ -201,3 +234,79 @@ Replace `ORG` with your DockerHub / Quay.io username.
 ====
 
 == Running native containers locally
+
+
+
+
+
+
+
+
+
+
+== Building a container
+
+This section demonstrates how to ask Quarkus to create a container.
+
+Quarkus is able to build a container image automatically.
+It proposes multiple approaches to do so, but we recommend using https://github.com/GoogleContainerTools/jib[jib].
+
+The resulting image follows the container good practices such as the usage of layers, avoiding the `root` user...
+
+[example, role="cta"]
+--
+Add the `quarkus-container-image-jib` extension using the following command:
+
+[source, shell]
+----
+./mvnw quarkus:add-extension -Dextensions="jib"
+----
+--
+
+It adds the following dependency to the `pom.xml` file:
+
+[source, xml]
+----
+<dependency>
+  <groupId>io.quarkus</groupId>
+  <artifactId>quarkus-container-image-jib</artifactId>
+</dependency>
+----
+
+[example, role="cta"]
+--
+Then, launch the following command to build the application and create the container image:
+
+[source, shell]
+----
+./mvnw clean package -Dquarkus.container-image.build=true
+----
+
+Once done, verify that the container image has been created using:
+
+[source, shell]
+----
+docker images | grep villains
+----
+
+You should get a similar output:
+
+[source, shell]
+----
+.../rest-villains              1.0.0-SNAPSHOT         1298cad04f5e   About a minute ago   388MB
+----
+--
+
+== Building a container running a native executable
+
+We've just created a container that embeds the Java application and a JVM.
+But you can also build and use the native executable.
+To do this, runs the following command:
+
+[source, shell]
+----
+./mvnw clean package -Dquarkus.container-image.build=true -Pnative -Dquarkus.native.container-build=true
+----
+
+`-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
+This option is not required if you use Linux.
