@@ -223,7 +223,8 @@ public class FightResourceTest {
             .when()
             .post("/api/fights/narrate")
             .then()
-            .statusCode(CREATED.getStatusCode());
+            .statusCode(CREATED.getStatusCode())
+            .body(startsWith("Lorem ipsum dolor sit amet"));
     }
     // end::adocNarrate[]
 

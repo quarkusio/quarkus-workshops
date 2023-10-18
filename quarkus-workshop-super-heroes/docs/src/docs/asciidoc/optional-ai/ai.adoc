@@ -72,7 +72,7 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 
 [source,xml]
 ----
-<module>super-heroes/rest-heroes</module>
+<module>super-heroes/rest-narration</module>
 ----
 
 === Directory Structure
@@ -257,7 +257,13 @@ include::{projectdir}/rest-narration/src/main/resources/NarrationSkill/NarrateFi
 === Configuring OpenAI/Azure OpenAI access
 
 Configuring the OpenAI/Azure OpenAI access is made thanks to the `conf.properties`.
-Depending if you have previously chosen OpenAI or Azure OpenAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys:
+Depending if you have previously chosen OpenAI or Azure OpenAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys.
+
+[WARNING]
+====
+Make sure that you have previously either created an Azure AI or OpenAI subscription.
+If not, go back to xref:introduction-installing-ai[xrefstyle=full].
+====
 
 [example, role="cta"]
 --
@@ -291,6 +297,19 @@ include::{projectdir}/rest-narration/src/main/resources/application.properties[]
 === Testing the Narration Microservice
 
 Time for some tests!
+But before creating the test class, we need to add the Mockito dependency to the project.
+That's because we want to mock the Semantic Kernel client.
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-junit5-mockito</artifactId>
+    <scope>test</scope>
+</dependency>
+----
+
+
 Open the `io.quarkus.workshop.superheroes.narration.NarrationResourceTest` class and copy the following content:
 
 [example, role="cta"]
@@ -392,7 +411,14 @@ Like the other dependencies, the Narration microservice needs to be mocked so we
 [example, role="cta"]
 --
 
-Add the following `shouldNarrate` test to the `io.quarkus.workshop.superheroes.fight.FightResourceTest` class:
+Add the following `shouldNarrate` test to the `io.quarkus.workshop.superheroes.fight.FightResourceTest` class.
+And make sure you use the right imports:
+
+[source,java,indent=0]
+----
+import java.time.Instant;
+import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
+----
 
 [source,java,indent=0]
 ----
@@ -418,4 +444,4 @@ The result of the fight is displayed, and below, you have a "Narrate the fight" 
 Click on it, wait a few seconds (remember that the Narration microservice access a remote AI service that takes time) and the narration of the fight is displayed.
 Being _Generative AI_, you can click several times on the button and you will get different narrations.
 
-image::angular-ui.png[role=half-size]
+image::angular-ui-ai.png[role=half-size]
