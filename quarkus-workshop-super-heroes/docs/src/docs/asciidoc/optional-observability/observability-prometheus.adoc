@@ -1,13 +1,15 @@
 [[observability-prometheus]]
 = Displaying Metrics on Prometheus
 
-Now that we've added some load to our application, let's measure it with Prometheus.footnote:[Prometheus https://prometheus.io]
+When we use our application, it generates some load.
+Now, we want to be able to measure it.
+And for that, we will be using Prometheus.footnote:[Prometheus https://prometheus.io]
 Prometheus is an open-source systems monitoring and alerting toolkit that integrates well with Quarkus.
 
 == Configuring Prometheus
 
 Prometheus needs to be configured to poll data from our microservices.
-This is made under our `infrastructure` directory, in the `prometheus.yml` file:
+This is done under our `infrastructure` directory, in the `prometheus.yml` file:
 
 [source,yaml,indent=0]
 ----
@@ -54,9 +56,4 @@ image::fault-tolerance-prometheus-3.png[role=half-size]
 --
 
 include::../common-solution.adoc[]
-
-[NOTE]
-====
-Stop the load application before going further.
-====
 
