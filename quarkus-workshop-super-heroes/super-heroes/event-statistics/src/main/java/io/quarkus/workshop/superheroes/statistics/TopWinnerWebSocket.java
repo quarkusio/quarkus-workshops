@@ -18,12 +18,14 @@ import jakarta.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+// tag::adocJavadoc[]
 /**
  * WebSocket endpoint for the {@code /stats/winners} endpoint. Exposes the {@code winner-stats} channel over the socket to anyone listening.
  * <p>
  *   Uses constructor injection over field injection to show how it is done.
  * </p>
  */
+// end::adocJavadoc[]
 @ServerEndpoint("/stats/winners")
 @ApplicationScoped
 public class TopWinnerWebSocket {

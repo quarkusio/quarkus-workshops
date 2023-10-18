@@ -3,7 +3,7 @@
 
 '''
 
-So far, we have build 3 microservices, all using HTTP to interact.
+So far, we have build microservices that all use HTTP to interact.
 However, HTTP has significant flaws, such as temporal coupling between the different microservices.
 If the service is not there or is slow, the caller is directly impacted.
 Also, it's hard to guess the capacity of the service you call; maybe you should not call it right now because this service is under heavy load.
