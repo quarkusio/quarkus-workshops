@@ -47,11 +47,13 @@ az extension list
 
 You should see the extensions that have been installed:
 
+ifdef::use-windows[]
 [WARNING]
 ====
 If you are on Windows and using WSL, the extensions should be installed under `/home/<user>/.azure/cliextensions/`.
 If it's not the case, and instead extensions are installed under `C:\\Users\\<user>\\.azure\\cliextensions`, you should reboot your computer.
 ====
+endif::use-windows[]
 
 [source,json]
 ----
@@ -187,11 +189,15 @@ Set the following environment variables, there will be needed in the Azure CLI c
 
 [source,shell,indent=0]
 ----
-include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariables2]
+include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariablesCore]
+
+ifdef::use-messaging[]
+include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariablesStat]
+endif::use-messaging[]
+
+ifdef::use-ai[]
+include::{projectdir}/infrastructure/azure-setup-env-var.sh[tags=adocEnvironmentVariablesNarration]
+endif::use-ai[]
+
 ----
 --
-
-= Ready?
-
-After the prerequisites have been installed and the different components have been warmed up, and some Azure resource created, it's now time to deploy some code!
-But before, let us introduce Azure Container Apps and Quarkus.

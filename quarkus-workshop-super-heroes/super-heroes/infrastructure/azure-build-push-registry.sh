@@ -78,14 +78,18 @@ echo "> Tagging Fights..." $FIGHTS_IMAGE
 echo "> Tagging Villains..." $VILLAINS_IMAGE
 echo "> Tagging Heroes..." $HEROES_IMAGE
 
-# tag::adocTagging[]
-docker tag quarkus/ui-super-heroes:latest   $UI_IMAGE
-docker tag quarkus/event-statistics:latest  $STATISTICS_IMAGE
-docker tag quarkus/rest-fights:latest       $FIGHTS_IMAGE
-docker tag quarkus/rest-villains:latest     $VILLAINS_IMAGE
-docker tag quarkus/rest-heroes:latest       $HEROES_IMAGE
-# end::adocTagging[]
-
+# tag::adocTaggingCore[]
+docker tag quarkus/ui-super-heroes:1.0.0-SNAPSHOT   $UI_IMAGE
+docker tag quarkus/rest-fights:1.0.0-SNAPSHOT       $FIGHTS_IMAGE
+docker tag quarkus/rest-villains:1.0.0-SNAPSHOT     $VILLAINS_IMAGE
+docker tag quarkus/rest-heroes:1.0.0-SNAPSHOT       $HEROES_IMAGE
+# end::adocTaggingCore[]
+# tag::adocTaggingStat[]
+docker tag quarkus/event-statistics:1.0.0-SNAPSHOT  $STATISTICS_IMAGE
+# end::adocTaggingStat[]
+# tag::adocTaggingNarration[]
+docker tag quarkus/rest-narration:1.0.0-SNAPSHOT    $NARRATION_IMAGE
+# end::adocTaggingNarration[]
 
 echo ">>> Logging into Container Registry..."
 
@@ -97,13 +101,18 @@ az acr login \
 
 echo ">>> Pushing images into Container Registry..."
 
-# tag::adocPushing[]
+# tag::adocPushingCore[]
 docker push $UI_IMAGE
-docker push $STATISTICS_IMAGE
 docker push $FIGHTS_IMAGE
 docker push $VILLAINS_IMAGE
 docker push $HEROES_IMAGE
-# end::adocPushing[]
+# end::adocPushingCore[]
+# tag::adocPushingStat[]
+docker push $STATISTICS_IMAGE
+# end::adocPushingStat[]
+# tag::adocPushingNarration[]
+docker push $NARRATION_IMAGE
+# end::adocPushingNarration[]
 
 
 echo ">>> Listing images from the Container Registry..."

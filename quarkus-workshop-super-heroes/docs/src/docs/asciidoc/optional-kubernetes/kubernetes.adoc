@@ -1,5 +1,5 @@
 [[kubernetes]]
-= Kubernetes
+= Deploying with Kubernetes
 
 '''
 

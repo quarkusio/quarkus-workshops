@@ -7,7 +7,7 @@ create table Villain
 (
     id        int8 not null,
     level     int4 not null,
-    name      varchar(255),
+    name      varchar(50) not null,
     otherName varchar(255),
     picture   varchar(255),
     powers    TEXT,
