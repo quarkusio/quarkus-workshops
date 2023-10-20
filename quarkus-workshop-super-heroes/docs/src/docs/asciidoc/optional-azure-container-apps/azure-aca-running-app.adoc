@@ -264,6 +264,7 @@ include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainLogs
 ----
 --
 
+ifdef::use-ai[]
 === Narration Microservice
 
 The Narration microservice does not access any database, just a remote OpenAI/AzureAI service.
@@ -297,6 +298,7 @@ To access the logs of the Narration microservice, you can write the following qu
 include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppNarrationLogs]
 ----
 --
+endif::use-ai[]
 
 ifdef::use-messaging[]
 === Statistics Microservice
