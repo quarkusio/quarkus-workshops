@@ -1,5 +1,5 @@
 [[container]]
-= Containers
+= Building Containers
 
 '''
 
@@ -10,57 +10,118 @@ We will also produce Linux 64 bits native executables and runs them in a contain
 The native compilation uses the OS and architecture of the host system.
 endif::use-native[]
 
-== Building containers
+== Building Containers with Quarkus
 
-When we generated our microservices, Quarkus has generated a set of `Dockerfiles`.
-The `Dockerfile.native` file is for running the application in native mode.
+When we bootstrapped our microservices with the Maven Quarkus plugin, a set of `Dockerfiles` have been generated under `src/main/docker`:
+
+* `Dockerfile.jvm`: Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode.
+* `Dockerfile.legacy-jar`: Deprecated Dockerfile building a container in JVM mode.
+* `Dockerfile.native`: Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode.
+* `Dockerfile.native-micro`: Same as above but it uses a micro base image, tuned for Quarkus native executables.
+
+Quarkus is able to build a container image automatically.
+It proposes multiple approaches to do so, but we recommend using https://github.com/GoogleContainerTools/jib[jib].
+As you have guessed by now, using jib is as simple as adding a Quarkus extension to each project.
+
+== Building Containers for our Microservices in JVM Mode
+
+The `Dockerfile.jvm` file is for running the application in JVM mode.
 It looks like this:
 
 [source,text]
 ----
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
-WORKDIR /work/
-RUN chown 1001 /work \
-    && chmod "g+rwX" /work \
-    && chown 1001:root /work
-COPY --chown=1001:root target/*-runner /work/application
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm[tag=adocSnippet]
+----
 
-EXPOSE 8080
-USER 1001
+To start using it, we first need to install the jib extension in all our projects.
 
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+[example, role="cta"]
+--
+Add the `quarkus-container-image-jib` extension executing the following commands from the root `super-heroes` directory:
+
+[source,shell]
+----
+./mvnw --file rest-fights/pom.xml quarkus:add-extension -Dextensions="jib"
+./mvnw --file rest-heroes/pom.xml quarkus:add-extension -Dextensions="jib"
+./mvnw --file rest-villains/pom.xml quarkus:add-extension -Dextensions="jib"
+./mvnw --file ui-super-heroes/pom.xml quarkus:add-extension -Dextensions="jib"
+ifdef::use-messaging[]
+./mvnw --file event-statistics/pom.xml quarkus:add-extension -Dextensions="jib"
+endif::use-messaging[]
+ifdef::use-ai[]
+./mvnw --file rest-narration/pom.xml quarkus:add-extension -Dextensions="jib"
+endif::use-ai[]
+----
+--
+
+It adds the following dependency to the `pom.xml` files:
+
+[source, xml]
+----
+<dependency>
+  <groupId>io.quarkus</groupId>
+  <artifactId>quarkus-container-image-jib</artifactId>
+</dependency>
 ----
 
 [example, role="cta"]
 --
+Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-Dmaven.test.skip=true` if you want to skip the tests):
+
+[source, shell]
+----
+./mvnw --file rest-fights/pom.xml clean package -Dquarkus.container-image.build=true
+./mvnw --file rest-heroes/pom.xml clean package -Dquarkus.container-image.build=true
+./mvnw --file rest-villains/pom.xml clean package -Dquarkus.container-image.build=true
+./mvnw --file ui-super-heroes/pom.xml clean package -Dquarkus.container-image.build=true
+ifdef::use-messaging[]
+./mvnw --file event-statistics/pom.xml clean package -Dquarkus.container-image.build=true
+endif::use-messaging[]
+ifdef::use-ai[]
+./mvnw --file rest-narration/pom.xml clean package -Dquarkus.container-image.build=true
+endif::use-ai[]
+----
+
 Check that you have all the Docker images installed locally:
 
 [source,shell]
 ----
-docker image ls | grep quarkus
+docker image ls
 ----
 
 The output should look like this:
 
 [source,shell]
 ----
-quarkus/ui-super-heroes         latest      266MB
-quarkus/event-statistics        latest      145MB
-quarkus/rest-fights             latest      198MB
-quarkus/rest-villains           latest      158MB
-quarkus/rest-heroes             latest      154MB
+REPOSITORY                      TAG                  IMAGE ID       SIZE
+<org>/rest-fights             1.0.0-SNAPSHOT       adb8a546a66b   419MB
+<org>/rest-heroes             1.0.0-SNAPSHOT       d9e6ae6e3e23   402MB
+<org>/rest-villains           1.0.0-SNAPSHOT       60a5c813f59a   402MB
+<org>/ui-super-heroes         1.0.0-SNAPSHOT       82fce62c11a5   379MB
+ifdef::use-messaging[]
+<org>/event-statistics        1.0.0-SNAPSHOT       a5472c5bd576   395MB
+endif::use-messaging[]
+ifdef::use-ai[]
+<org>/rest-narration          1.0.0-SNAPSHOT       fcfe334594f3   390MB
+endif::use-ai[]
 ----
 --
 
+== Running JVM Mode Containers Locally
 
-== Running containers locally
-
-Now that we have all our Docker containers created, let's execute them all to be sure that everything is working.
+Now that we have all our Docker images created, let's execute them all to be sure that everything is working.
 
 [example, role="cta"]
 --
 Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
 It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
+
+[WARNING]
+====
+In the `docker-compose-app-local.yaml` file, you need to update the `image` property of each microservice to match the name of the image you just built.
+For example, replace `quarkus/rest-villains` by `<org>/rest-villains` (<`org`> being your DockerHub / Quay.io username).
+====
+
 Execute it with:
 
 [source,shell]
@@ -80,13 +141,19 @@ Make sure all your containers are in _running_ status:
 
 [source,shell]
 ----
-event-statistics    "./application -Dqua…"   running
-kafka               "sh -c 'export CLUST…"   running
-rest-fights         "./application -Dqua…"   running
-rest-heroes         "./application -Dqua…"   running
-rest-villains       "./application -Dqua…"   running
-super-database      "docker-entrypoint.s…"   running (healthy)
-ui-super-heroes     "/bin/sh -c 'npm sta…"   running
+NAME               IMAGE                                         STATUS         PORTS
+ui-super-heroes    agoncal<org/ui-super-heroes:1.0.0-SNAPSHOT    Up             0.0.0.0:8080->8080/tcp
+rest-fights        agoncal<org/rest-fights:1.0.0-SNAPSHOT        Up             0.0.0.0:8082->8082/tcp
+rest-heroes        agoncal<org/rest-heroes:1.0.0-SNAPSHOT        Up             0.0.0.0:8083->8083/tcp
+rest-villains      agoncal<org/rest-villains:1.0.0-SNAPSHOT      Up             0.0.0.0:8084->8084/tcp
+ifdef::use-messaging[]
+event-statistics   agoncal<org/event-statistics:1.0.0-SNAPSHOT   Up             0.0.0.0:8085->8085/tcp
+endif::use-messaging[]
+ifdef::use-ai[]
+rest-narration     agoncal<org/rest-narration:1.0.0-SNAPSHOT     Up             0.0.0.0:8086->8086/tcp
+endif::use-ai[]
+super-database     postgres:14                                   Up (healthy)   0.0.0.0:5432->5432/tcp
+super-kafka        quay.io/strimzi/kafka:0.28.0-kafka-3.1.0      Up             0.0.0.0:9092->9092/tcp
 ----
 
 Once all the containers are started, you can:
@@ -105,7 +172,8 @@ docker compose -f docker-compose-app-local.yaml down
 ----
 --
 
-== Building native executables
+ifdef::use-ai[]
+== Building Containers for our Microservices in Native Mode
 
 
 And... Linux Containers are ... _Linux_.
@@ -124,21 +192,8 @@ It looks like this:
 
 [source,text]
 ----
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
-WORKDIR /work/
-RUN chown 1001 /work \
-    && chmod "g+rwX" /work \
-    && chown 1001:root /work
-COPY --chown=1001:root target/*-runner /work/application
-
-EXPOSE 8080
-USER 1001
-
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
-
-
-
 
 
 
@@ -233,69 +288,8 @@ cd ..
 Replace `ORG` with your DockerHub / Quay.io username.
 ====
 
-== Running native containers locally
+== Running Native Mode Containers Locally
 
-
-
-
-
-
-
-
-
-
-== Building a container
-
-This section demonstrates how to ask Quarkus to create a container.
-
-Quarkus is able to build a container image automatically.
-It proposes multiple approaches to do so, but we recommend using https://github.com/GoogleContainerTools/jib[jib].
-
-The resulting image follows the container good practices such as the usage of layers, avoiding the `root` user...
-
-[example, role="cta"]
---
-Add the `quarkus-container-image-jib` extension using the following command:
-
-[source, shell]
-----
-./mvnw quarkus:add-extension -Dextensions="jib"
-----
---
-
-It adds the following dependency to the `pom.xml` file:
-
-[source, xml]
-----
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-container-image-jib</artifactId>
-</dependency>
-----
-
-[example, role="cta"]
---
-Then, launch the following command to build the application and create the container image:
-
-[source, shell]
-----
-./mvnw clean package -Dquarkus.container-image.build=true
-----
-
-Once done, verify that the container image has been created using:
-
-[source, shell]
-----
-docker images | grep villains
-----
-
-You should get a similar output:
-
-[source, shell]
-----
-.../rest-villains              1.0.0-SNAPSHOT         1298cad04f5e   About a minute ago   388MB
-----
---
 
 == Building a container running a native executable
 
@@ -310,3 +304,4 @@ To do this, runs the following command:
 
 `-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
 This option is not required if you use Linux.
+endif::use-ai[]
