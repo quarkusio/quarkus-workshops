@@ -1,8 +1,8 @@
-# Angular UI
+# React UI
 
 ## Introduction
 
-This is the main user interface for the application. The application is an Angular application served via Quarkus
+This is the main user interface for the application. The application is a React application served via Quarkus
 Quinoa.
 
 ## TLDR
@@ -13,8 +13,8 @@ mvn quarkus:dev
 
 ## Building and running the application
 
-Builds are served using a Quarkus server. This server serves the compiled Angular application and an `env.js` file.
-This `env.js` file is generated at startup, and adds a `window.NG_CONFIG` property that the Angular application can read
+Builds are served using a Quarkus server. This server serves the compiled React application and an `env.js` file.
+This `env.js` file is generated at startup, and adds a `window.APP_CONFIG` property that the React application can read
 from.
 
 ### Configuration
@@ -49,8 +49,8 @@ Then use the following command:
 quarkus dev
 ```
 
-This starts the Angular hot reloading server at http://localhost:4200, and the Quarkus server to supply the `env.js`
-file. The Quarkus server will proxy requests to the Angular development server.
+This starts the React hot reloading server at http://localhost:3000, and the Quarkus server to supply the `env.js`
+file. The Quarkus server will proxy requests to the React development server.
 
 You can then access the application on http://localhost:8080.
 
@@ -114,7 +114,7 @@ system, [follow these instructions](../README.md#deploying-to-kubernetes).
 
 ### Routing
 
-There are 2 environment variables that can be set on this application to control how the Angular UI communicates with
+There are 2 environment variables that can be set on this application to control how the React UI communicates with
 the [`rest-fights`](../rest-fights) application:
 
 | Env Var                  | Default Value                                        | Description                                                                                                                                                                                                                                                                                                      |
@@ -122,63 +122,10 @@ the [`rest-fights`](../rest-fights) application:
 | `API_BASE_URL`           | `http://localhost:8082`                              | The base URL for the [`rest-fights`](../rest-fights) application. Set this to a fully qualified URL (i.e. http://www.example.com or http://somehost.com:someport) to define the URL for the [`rest-fights`](../rest-fights) application.                                                                        |
 | `CALCULATE_API_BASE_URL` | `false` on Minikube/Kubernetes. `true` on OpenShift. | If `true`, look at the URL in the browser and replace the `ui-super-heroes` host name with
 
-# Under the covers with Angular
+# Under the covers with React
 
-Although you don't need to know Angular to run this component, the following commands may be helpful for making changes.
-
-## Angular CLI commands
-
-### Initiliaze
-
-```
-$ ng new super-heroes --directory super-heroes-ui --prefix hero --routing false --skipTests true --inlineStyle true --commit false --minimal true --style css
-```
-
-### Admin components
-
-```
-$ ng generate component fight-list --spec false --inline-style true
-$ ng generate component fight --spec false --inline-style true
-```
-
-### Material design
-
-```
-$ ng add @angular/material
-```
-
-### Swagger Codegen
-
-```
-$ swagger-codegen generate -i http://localhost:8082/openapi -l typescript-angular -o src/app/shared
-```
-
-## Angular CLI documentation
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
-any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also
-use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag
-for a production build.
+Although you don't need to know React to run this component, the following commands may be helpful for making changes.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out
-the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Run `npm test` to execute the unit tests via Jest.

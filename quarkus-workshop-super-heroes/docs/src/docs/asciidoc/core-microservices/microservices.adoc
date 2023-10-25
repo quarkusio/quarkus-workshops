@@ -5,7 +5,7 @@
 
 So far we've built two microservices: the villains and heroes microservices.
 In the following sections you will develop an extra microservice: a _fight_ microservice where heroes and villains fight.
-We will also add an Angular front-end, so we can fight graphically.
+We will also add a React front-end, so we can fight graphically.
 But as you can notice in the diagram below, these microservices still not communicate with each other.
 You will have to wait the next chapter for that ;o)
 

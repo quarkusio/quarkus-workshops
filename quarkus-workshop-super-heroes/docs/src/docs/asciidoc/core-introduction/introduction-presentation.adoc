@@ -20,7 +20,7 @@ endif::give-solution[]
 In this workshop, you will develop an application that allows superheroes to fight against supervillains.
 You will be developing several microservices communicating with each other:
 
-* _Super Hero UI_: an Angular application to pick up a random superhero, a random supervillain, and makes them fight.
+* _Super Hero UI_: a React application to pick up a random superhero, a random supervillain, and makes them fight.
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
 * _Villain REST API_: A classical HTTP microservice exposing CRUD operations on Villains, stored in a PostgreSQL database
 * _Hero REST API_: A reactive HTTP microservice exposing CRUD operations on Heroes, stored in a Postgres database
@@ -70,16 +70,16 @@ endif::use-ai[]
 The table at the bottom shows the list of the previous fights.
 
 ifdef::use-ai[]
-image::angular-ui-ai.png[role=half-size]
+image::react-ui-ai.png[role=half-size]
 endif::use-ai[]
 ifndef::use-ai[]
-image::angular-ui.png[role=half-size]
+image::react-ui.png[role=half-size]
 endif::use-ai[]
 
 
 The Statistics UI shows the number of fights per hero and villain.
 
-image::angular-ui-stats.png[role=half-size]
+image::react-ui-stats.png[role=half-size]
 
 == How Does This Workshop Work?
 
@@ -89,7 +89,7 @@ The structure of this workshop is as follows:
 * _Installing all the needed tools_:
 in this section, you will install all the tools and code to be able to develop, compile and execute our application
 * _Developing microservices with Quarkus_:
-in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus
+in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use a React web application, and all that on Quarkus
 ifdef::use-ai[]
 * _Artificial Intelligence_:
 in this section, you will use OpenAI or Azure OpenAI to invoke an AI so you can generate a random narration of the fight

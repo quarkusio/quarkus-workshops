@@ -28,7 +28,7 @@ public class WebUITests {
             .then()
             .statusCode(OK.getStatusCode())
             .contentType(HTML)
-            .body(matchesPattern(Pattern.compile(".*<hero-root>.*", Pattern.DOTALL)));
+            .body(matchesPattern(Pattern.compile(".*<div id=\"root\">.*", Pattern.DOTALL)));
         // We don't want to do full HTML parsing here, because that should
         // be in the javascript tests. Instead, just confirm that we
         // are successfully serving the HTML content on /

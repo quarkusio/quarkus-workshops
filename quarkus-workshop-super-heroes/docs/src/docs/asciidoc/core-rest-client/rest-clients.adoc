@@ -294,4 +294,4 @@ You can shutdown the hero and villain services to verify that the tests still pa
 Time to play.
 Start the Hero, Villain and Fight microservices as well as the user interface (using `./mvnw quarkus:dev` on each project) and select random fighters.
 
-image::angular-ui.png[role=half-size]
+image::react-ui.png[role=half-size]

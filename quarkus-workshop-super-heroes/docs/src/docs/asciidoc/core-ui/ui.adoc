@@ -3,9 +3,9 @@
 
 Now that we have the three main microservices, time to have a decent user interface to start fighting.
 The purpose of this workshop is not to develop a web interface and learn _yet another web framework_.
-This time you will just execute another Quarkus instance with an already Angular application.
+This time you will just execute another Quarkus instance with an already React application.
 We will be using https://quarkiverse.github.io/quarkiverse-docs/quarkus-quinoa/dev/[Quinoa]
-to handle building and serving the Angular application.
+to handle building and serving the React application.
 
 == Quinoa?
 
@@ -23,13 +23,13 @@ Quinoa is framework-agnostic, and works with React, Angular, Vue, Lit, and other
 Navigate to the `super-heroes/ui-super-heroes` directory.
 It contains the code of the application.
 
-The Angular application is in `src/main/webui`.
-Being an Angular application, you will find a `package.json` file which defines all the needed dependencies.
-All the Angular code (graphical components, model, services) is located under `src/main/webui/src/app`.
+The React application is in `src/main/webui`.
+Being a React application, you will find a `package.json` file which defines all the needed dependencies.
+All the React code (graphical components, model, services) is located under `src/main/webui/src/app`.
 
 === Running the Web Application
 
-We don't need to worry too much about the Angular code.
+We don't need to worry too much about the React code.
 
 [example, role="cta"]
 --
@@ -51,8 +51,8 @@ You should see console output like the following
 
 [source,shell,subs="attributes+"]
 ----
-2023-05-18 14:22:02,745 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-5) Quinoa package manager live coding is up and running on port: 4200 (in 18118ms)
-2023-05-18 14:22:02,749 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-40) Quinoa is forwarding unhandled requests to port: 4200
+2023-05-18 14:22:02,745 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-5) Quinoa package manager live coding is up and running on port: 3000 (in 18118ms)
+2023-05-18 14:22:02,749 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-40) Quinoa is forwarding unhandled requests to port: 3000
 __  ____  __  _____   ___  __ ____  ______
  --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
  -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
@@ -66,8 +66,8 @@ because we need to fix a few things and add some more implementation.
 
 image::blank-ui.png[]
 
-If you want, you can visit http://localhost:4200 (the usual Angular port) to confirm that Quinoa is forwarding what's on port 4200 to port 8080.
-The version of the application on http://localhost:4200 will always stay disappointingly blank,
+If you want, you can visit http://localhost:3000 (the usual React port) to confirm that Quinoa is forwarding what's on port 3000 to port 8080.
+The version of the application on http://localhost:3000 will always stay disappointingly blank,
 because it's looking for its config on the wrong port. So don't use that one!
 
 You might want to create a fuller Quarkus BFF for the UI, and use something like https://quarkus.io/guides/stork[Stork] for service discovery.
