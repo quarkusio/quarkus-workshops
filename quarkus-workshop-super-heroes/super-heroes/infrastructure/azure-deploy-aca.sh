@@ -15,6 +15,7 @@ HEROES_IMAGE="${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}"
 VILLAINS_IMAGE="${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}"
 FIGHTS_IMAGE="${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}"
 STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
+NARRATION_IMAGE="${REGISTRY_URL}/${NARRATION_APP}:${IMAGES_TAG}"
 UI_IMAGE="${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}"
 
 
@@ -103,6 +104,43 @@ az monitor log-analytics query \
 # end::adocAppVillainLogs[]
 
 
+echo ">>> Creating Narration app in Azure Container Apps..."
+
+# tag::adocCreateAppNarration[]
+az containerapp create \
+  --resource-group "$RESOURCE_GROUP" \
+  --tags system="$TAG" application="$NARRATION_APP" \
+  --image "$NARRATION_IMAGE" \
+  --name "$NARRATION_APP" \
+  --environment "$CONTAINERAPPS_ENVIRONMENT" \
+  --ingress external \
+  --target-port 8086 \
+  --min-replicas 0
+# end::adocCreateAppNarration[]
+
+
+echo ">>> Retrieving the URL of Narration app..."
+
+# tag::adocAppNarrationURL[]
+NARRATION_URL="https://$(az containerapp ingress show \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$NARRATION_APP" \
+    --output json | jq -r .fqdn)"
+
+echo $NARRATION_URL
+# end::adocAppNarrationURL[]
+
+
+echo ">>> Retrieving logs of Narration app..."
+
+# tag::adocAppNarrationLogs[]
+az monitor log-analytics query \
+  --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s == '$NARRATION_APP' | project ContainerAppName_s, Log_s, TimeGenerated " \
+  --output table
+# end::adocAppNarrationLogs[]
+
+
 echo ">>> Creating Statistics app in Azure Container Apps..."
 
 # tag::adocCreateAppStatistics[]
@@ -165,8 +203,9 @@ az containerapp create \
              KAFKA_SECURITY_PROTOCOL=SASL_SSL \
              KAFKA_SASL_MECHANISM=PLAIN \
              KAFKA_SASL_JAAS_CONFIG="$KAFKA_JAAS_CONFIG" \
-             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_HEROPROXY_MP_REST_URL="$HEROES_URL" \
-             IO_QUARKUS_WORKSHOP_SUPERHEROES_FIGHT_CLIENT_VILLAINPROXY_MP_REST_URL="$VILLAINS_URL"
+             QUARKUS_REST_CLIENT_HERO_URL="$HEROES_URL" \
+             QUARKUS_REST_CLIENT_VILLAIN_URL="$VILLAINS_URL" \
+             QUARKUS_REST_CLIENT_NARRATION_URL="$NARRATION_URL"
 # end::adocCreateAppFight[]
 
 

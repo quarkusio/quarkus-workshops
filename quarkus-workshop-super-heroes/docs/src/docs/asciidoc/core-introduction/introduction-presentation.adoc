@@ -1,8 +1,6 @@
 [[introduction-presentation]]
 = Presenting the Workshop
 
-== What Is This Workshop About?
-
 This workshop should give you a practical introduction to Quarkus.
 You will practice all the needed tools to develop an entire microservice architecture, mixing classical HTTP, reactive and event-based microservices.
 You will finish by extending the capabilities of Quarkus and learn more about the ability to create native executables.
@@ -41,8 +39,12 @@ ifdef::use-messaging[]
 It has an HTML + JQuery UI displaying all the statistics.
 endif::use-messaging[]
 ifdef::use-observability[]
-* _Prometheus_ polls metrics from the three microservices Fight, Hero, and Villain.
+* _Prometheus_: Polls metrics from the three microservices Fight, Hero, and Villain.
 endif::use-observability[]
+ifdef::use-cli[]
+* _Command Line Interface_: Quarkus can also be used to create CLI applications.
+You will create a CLI application that adds load to the Fight, Hero, and Villain microservices.
+endif::use-cli[]
 
 
 ifdef::use-ai[]
@@ -100,9 +102,13 @@ ifdef::use-native[]
 * _Build native executables_:
 in this section, you will build native executables of all the microservices thanks to GraalVM
 endif::use-native[]
+ifdef::use-container[]
+* _Containers_:
+in this section, you will create Docker images of all the microservices
+endif::use-container[]
 ifdef::use-kubernetes[]
-* _Containers & Cloud_:
-in this section, you will create Docker images of all the microservices and deploy them to Kubernetes
+* _Cloud_:
+once the microservices are all containerize, you can deploy them to Kubernetes
 endif::use-kubernetes[]
 ifdef::use-observability[]
 * _Observability_:
@@ -116,6 +122,10 @@ in this section, you will build Docker images out of Quarkus microservices, exec
 * _Running the Application on Azure Container Apps_:
 in this section, you will create an entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps
 endif::use-azure[]
+ifdef::use-cli[]
+* _Command Line Interface_:
+in this section, you will create a command line application with Quarkus
+endif::use-cli[]
 ifdef::use-extension[]
 * _Extending Quarkus_:
 in this section, you will create a Quarkus extension
@@ -130,7 +140,6 @@ This workshop should be as self-explanatory as possible.
 So your job is to follow the instructions by yourself, do what you are supposed to do, and do not hesitate to ask for any clarification or assistance; that's why the team is here.
 
 You will download a zip file ({github-raw}/dist/quarkus-super-heroes-workshop.zip[`quarkus-super-heroes-workshop.zip`]) containing _some_ of the code and you will need to complete it.
-If you are stuck, you can always look at the final code in the {github-url}[GitHub repository], or download another zip file ({github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`]) that contains _all_ the code of the workshop.
 
 Oh, and be ready to have some fun!
 
@@ -153,7 +162,7 @@ ifdef::use-native[]
 * GraalVM {graalvm-version}
 endif::use-native[]
 * Docker or Podman
-* cURL (or any other command line HTTP client)
+* cURL (should already be installed in your OS, if not, check xref:appendix-installing-curl[the appendix for installation instructions]) and `jq`
 ifdef::use-ai[]
 * OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)
 endif::use-ai[]
@@ -161,10 +170,9 @@ ifdef::use-azure[]
 * An Azure subscription and the Azure CLI
 endif::use-azure[]
 
-We will also be using Maven {maven-version}, but there is no
-need to install it. Instead, the workshop scaffolding includes
-a maven wrapper, `mvnw`. If you'd prefer to install your own Maven and don't already have it,
- xref:appendix-installing-maven[see the instructions at the end of the workshop].
+We will also be using Maven {maven-version}, but there is no need to install it.
+Instead, the workshop scaffolding includes a maven wrapper, `mvnw`.
+If you'd prefer to install your own Maven and don't already have it, xref:appendix-installing-maven[see the instructions at the end of the workshop].
 
 The following section focuses on how to install and set up the needed software.
 You can skip the next section if you have already installed all the prerequisites.

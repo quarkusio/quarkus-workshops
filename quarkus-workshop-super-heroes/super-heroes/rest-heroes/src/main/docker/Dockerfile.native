@@ -14,6 +14,7 @@
 # docker run -i --rm -p 8080:8080 quarkus/rest-heroes
 #
 ###
+# tag::adocSnippet[]
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8
 WORKDIR /work/
 RUN chown 1001 /work \
@@ -25,3 +26,4 @@ EXPOSE 8080
 USER 1001
 
 ENTRYPOINT ["./application", "-Dquarkus.http.host=0.0.0.0"]
+# end::adocSnippet[]

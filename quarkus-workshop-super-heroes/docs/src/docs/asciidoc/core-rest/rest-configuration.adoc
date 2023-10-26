@@ -113,12 +113,17 @@ level.multiplier=0.5
 [example, role="cta"]
 --
 If you didn't already, start the application with `./mvnw quarkus:dev`.
-Once started, create a new villain with the following cUrl command:
+Once started, create a new villain with the following cUrl command (notice the verbose option `-v` to see the HTTP response headers):
 
 [source,shell]
 ----
 curl -X POST -d  '{"level":5, "name":"Super Bad", "powers":"Agility, Longevity"}'  -H "Content-Type: application/json" http://localhost:8084/api/villains -v
+----
 
+You should see something like this:
+
+[source,shell]
+----
 < HTTP/1.1 201 Created
 < Location: http://localhost:8084/api/villains/582
 ----

@@ -32,17 +32,35 @@ NOTE: If you do not have a Docker licence, you might prefer `podman` (https://po
 
 == Checking for Docker Installation
 
-Once installed, check that both `docker` and `docker compose` are available in your `PATH`:
+Once installed, check that both `docker` and `docker compose` are available in your `PATH`.
+For that, execute the following commands:
 
 [source,shell]
 ----
 $ docker version
+----
+
+You should see something like this:
+
+[source,shell]
+----
 Docker version 20.10.8, build 3967b7d
 Cloud integration: v1.0.24
 Version:           20.10.14
 API version:       1.41
+----
 
+Then, check the Docker Compose version:
+
+[source,shell]
+----
 $ docker compose version
+----
+
+Docker compose being a separate utility, you should get a different version than Docker itself:
+
+[source,shell]
+----
 Docker Compose version v2.5.0
 ----
 
@@ -51,7 +69,13 @@ Finally, run your first container as follows:
 [source,shell]
 ----
 $ docker run hello-world
+----
 
+For the first time, this will download the `hello-world` image from the Docker Hub and run it.
+You should get something like this:
+
+[source,shell]
+----
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
 

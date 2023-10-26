@@ -45,6 +45,7 @@ public class FightResourceTest {
     private static final int NB_FIGHTS = 3;
     private static String fightId;
 
+    // tag::adocMock[]
     @InjectMock
     @RestClient
     HeroProxy heroProxy;
@@ -53,6 +54,7 @@ public class FightResourceTest {
     public void setup() {
         when(heroProxy.findRandomHero()).thenReturn(DefaultTestHero.INSTANCE);
     }
+    // end::adocMock[]
 
     @Test
     void shouldPingOpenAPI() {
@@ -173,7 +175,7 @@ public class FightResourceTest {
         assertEquals(NB_FIGHTS + 1, fights.size());
     }
 
-    // tag::shouldGetRandomFighters[]
+    // tag::adocGetRandomFighters[]
     @Test
     void shouldGetRandomFighters() {
         Fighters fighters = given()
@@ -197,7 +199,7 @@ public class FightResourceTest {
         assertEquals(villain.level, DefaultTestVillain.DEFAULT_VILLAIN_LEVEL);
         assertEquals(villain.powers, DefaultTestVillain.DEFAULT_VILLAIN_POWERS);
     }
-    // end::shouldGetRandomFighters[]
+    // end::adocGetRandomFighters[]
 
     // tag::adocNarrate[]
     @Test
@@ -221,7 +223,8 @@ public class FightResourceTest {
             .when()
             .post("/api/fights/narrate")
             .then()
-            .statusCode(CREATED.getStatusCode());
+            .statusCode(CREATED.getStatusCode())
+            .body(startsWith("Lorem ipsum dolor sit amet"));
     }
     // end::adocNarrate[]
 

@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VillainResourceTest {
+
     private static final String JSON = "application/json;charset=UTF-8";
 
     private static final String DEFAULT_NAME = "Super Chocolatine";
@@ -194,14 +195,16 @@ public class VillainResourceTest {
         assertEquals(NB_VILLAINS, villains.size());
     }
 
-    @Test
-    void shouldPingOpenAPI() {
-        given().header(ACCEPT, JSON).when().get("/q/openapi").then().statusCode(OK.getStatusCode());
-    }
-
     private TypeRef<List<Villain>> getVillainTypeRef() {
         return new TypeRef<List<Villain>>() {
             // Kept empty on purpose
         };
     }
+
+    // tag::adocMethodPingOpenAPI[]
+    @Test
+    void shouldPingOpenAPI() {
+        given().header(ACCEPT, JSON).when().get("/q/openapi").then().statusCode(OK.getStatusCode());
+    }
+    // end::adocMethodPingOpenAPI[]
 }

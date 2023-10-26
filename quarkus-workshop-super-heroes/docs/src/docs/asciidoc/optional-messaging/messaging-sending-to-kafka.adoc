@@ -121,8 +121,7 @@ For this, edit the `application.properties` file and add the following propertie
 
 [source,properties]
 ----
-mp.messaging.outgoing.fights.connector=smallrye-kafka
-mp.messaging.outgoing.fights.value.serializer=io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+include::{projectdir}/rest-fights/src/main/resources/application.properties[tag=adocKafka]
 ----
 --
 

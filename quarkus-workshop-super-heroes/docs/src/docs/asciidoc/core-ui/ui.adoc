@@ -1,4 +1,4 @@
-[[microservices-ui]]
+[[ui]]
 = User Interface
 
 Now that we have the three main microservices, time to have a decent user interface to start fighting.
@@ -16,8 +16,7 @@ It also helps with both packaging and serving, and if you want it to, abstracts 
 When enabled in development mode, Quinoa will start the UI live coding server provided by the target framework and forward relevant requests to it.
 In production mode, Quinoa will run the build and process the generated files to serve them at runtime.
 
-Quinoa is framework-agnostic, and works with React, Angular, Vue, Lit, and others.
- …) alongside other Quarkus services (REST, GraphQL, Security, Events, etc).
+Quinoa is framework-agnostic, and works with React, Angular, Vue, Lit, and others, alongside other Quarkus services (REST, GraphQL, Security, Events, etc).
 
 == The Web Application
 
@@ -43,9 +42,9 @@ Be sure you have the hero, villain and fights microservices running (dev mode is
 If you don't have Node installed, Quinoa will install it during the start process (under the `.quinoa` directory).
 
 ----
-2023-05-18 14:21:38,896 INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installing node version v16.16.0
-2023-05-18 14:21:44,162 INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Extracting NPM
-2023-05-18 14:21:44,624 INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installed node locally.
+INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installing node version v16.16.0
+INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Extracting NPM
+INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installed node locally.
 ----
 
 You should see console output like the following
@@ -88,22 +87,3 @@ You can also change the javascript code.
 For example, try updating the text in `src/main/webui/src/app/app.component.ts`.
 --
 
-ifdef::use-native[]
-=== Native compilation and Quinoa
-
-You can compile the UI application as a native binary, just like other Quarkus applications.
-
-[example, role="cta"]
---
-
-Try compiling natively with
-
-----
-./mvnw package -Pnative
-./target/ui-super-heroes-1.0.0-SNAPSHOT-runner
-----
-
-The native compilation will take a while, but once it's done, the UI will start in around 0.02s.
-You can confirm it's working by checking http://localhost:8080.
---
-endif::use-native[]

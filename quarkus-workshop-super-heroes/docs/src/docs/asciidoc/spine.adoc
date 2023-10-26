@@ -23,8 +23,6 @@ Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; G
 :half-size: role=half-size
 :projectdir: {docdir}/../../../../super-heroes/
 // Conditional includes - can be overridden in the build to generate tailored docs
-// /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
-// Conditional includes - can be overridden in the build to generate tailored docs
 include::{options-file}[]
 // Convert from named attributes to booleans
 ifeval::["{os}"=="mac"]
@@ -48,8 +46,6 @@ ifndef::os[]
 :use-linux:
 :use-windows:
 endif::[]
-
-
 // /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
 
 
@@ -77,12 +73,6 @@ include::core-quarkus/quarkus.adoc[leveloffset=+1]
 include::core-quarkus/quarkus-augmentation.adoc[leveloffset=+2]
 include::core-quarkus/quarkus-lifecycle.adoc[leveloffset=+2]
 include::core-quarkus/quarkus-profile.adoc[leveloffset=+2]
-ifdef::use-native[]
-include::core-quarkus/quarkus-native.adoc[leveloffset=+2]
-endif::use-native[]
-ifdef::use-kubernetes[]
-include::core-quarkus/quarkus-kubernetes.adoc[leveloffset=+2]
-endif::use-kubernetes[]
 <<<
 
 // Reactive
@@ -113,7 +103,7 @@ include::core-rest-client/rest-client-timeout.adoc[leveloffset=+2]
 
 // Contract testing
 ifdef::use-contract-testing[]
-include::optional-contract-testing/contract-testing-pact.adoc[leveloffset=+1]
+include::optional-contract-testing/contract-testing.adoc[leveloffset=+1]
 include::optional-contract-testing/contract-testing-happy-path-consumer-tests.adoc[leveloffset=+2]
 include::optional-contract-testing/contract-testing-provider-tests.adoc[leveloffset=+2]
 include::optional-contract-testing/contract-testing-states.adoc[leveloffset=+2]
@@ -140,11 +130,22 @@ endif::use-messaging[]
 ifdef::use-observability[]
 include::optional-observability/observability.adoc[leveloffset=+1]
 include::optional-observability/observability-healthcheck.adoc[leveloffset=+2]
-include::optional-observability/observability-metrics.adoc[leveloffset=+2]
-include::optional-observability/observability-load.adoc[leveloffset=+2]
+// include::optional-observability/observability-metrics.adoc[leveloffset=+2]
 include::optional-observability/observability-prometheus.adoc[leveloffset=+2]
 <<<
 endif::use-observability[]
+
+// CLI
+ifdef::use-cli[]
+include::optional-cli/cli.adoc[leveloffset=+1]
+<<<
+endif::use-cli[]
+
+// Native
+ifdef::use-native[]
+include::optional-native/native.adoc[leveloffset=+1]
+<<<
+endif::use-native[]
 
 // Container
 ifdef::use-container[]

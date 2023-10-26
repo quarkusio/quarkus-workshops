@@ -4,6 +4,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.net.URI;
 import java.util.List;
+
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -26,9 +27,12 @@ import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 
+// tag::adocJavadoc[]
+
 /**
  * JAX-RS API endpoints with <code>/api/villains</code> as the base URI for all endpoints
  */
+// end::adocJavadoc[]
 @Path("/api/villains")
 @Tag(name = "villains")
 public class VillainResource {

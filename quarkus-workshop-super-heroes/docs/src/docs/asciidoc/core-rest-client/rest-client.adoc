@@ -1,4 +1,4 @@
-[[fault-tolerance]]
+[[rest-client]]
 = HTTP communication & Fault Tolerance
 
 '''

@@ -1,0 +1,151 @@
+openapi: 3.0.3
+info:
+    title: Villain API
+    description: This API allows CRUD operations on a villain
+    contact:
+        name: Quarkus
+        url: https://github.com/quarkusio
+    version: "1.0"
+externalDocs:
+    description: All the Quarkus workshops
+    url: https://github.com/quarkusio/quarkus-workshops
+servers:
+    -   url: http://localhost:8084
+tags:
+    -   name: villains
+paths:
+    /api/villains:
+        get:
+            tags:
+                - villains
+            summary: Returns all the villains from the database
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Villain'
+        put:
+            tags:
+                - villains
+            summary: Updates an exiting  villain
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Villain'
+            responses:
+                "200":
+                    description: The updated villain
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Villain'
+        post:
+            tags:
+                - villains
+            summary: Creates a valid villain
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Villain'
+            responses:
+                "201":
+                    description: The URI of the created villain
+                    content:
+                        application/json:
+                            schema:
+                                format: uri
+                                type: string
+    /api/villains/hello:
+        get:
+            tags:
+                - villains
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+    /api/villains/random:
+        get:
+            tags:
+                - villains
+            summary: Returns a random villain
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Villain'
+    /api/villains/{id}:
+        get:
+            tags:
+                - villains
+            summary: Returns a villain for a given identifier
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Villain'
+                "204":
+                    description: The villain is not found for a given identifier
+        delete:
+            tags:
+                - villains
+            summary: Deletes an exiting villain
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                "204":
+                    description: No Content
+components:
+    schemas:
+        Villain:
+            required:
+                - name
+                - level
+            type: object
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    maxLength: 50
+                    minLength: 3
+                    type: string
+                otherName:
+                    type: string
+                level:
+                    format: int32
+                    minimum: 1
+                    type: integer
+                picture:
+                    type: string
+                powers:
+                    type: string
+    securitySchemes:
+        SecurityScheme:
+            type: http
+            description: Authentication
+            scheme: basic

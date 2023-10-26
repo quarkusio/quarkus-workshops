@@ -42,11 +42,17 @@ If the filter is enabled and an HTTP request is identified as cross-origin, the 
 [example, role="cta"]
 --
 
-So make sure you set `quarkus.http.cors=true` and `%dev.quarkus.http.cors.origins=/.*/` properties on the:
+So make sure you set the following properties on the:
 
-1. Fight microservice,
-2. Hero microservice,
-3. Villain microservice
+* Fight microservice,
+* Hero microservice,
+* Villain microservice
+
+[source,properties]
+----
+quarkus.http.cors=true
+%dev.quarkus.http.cors.origins=/.*/
+----
 --
 
 But, even with this, the UI is still not working.

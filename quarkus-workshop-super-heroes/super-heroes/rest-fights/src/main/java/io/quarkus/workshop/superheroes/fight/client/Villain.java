@@ -4,10 +4,13 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotNull;
 
+// tag::adocJavadoc[]
+
 /**
  * POJO representing a Villain response from the Villain service
  */
-@Schema(description="The villain fighting against the hero")
+// end::adocJavadoc[]
+@Schema(description = "The villain fighting against the hero")
 public class Villain {
 
     @NotNull

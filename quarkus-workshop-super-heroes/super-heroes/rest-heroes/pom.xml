@@ -169,6 +169,7 @@
         </plugins>
     </build>
     <profiles>
+        <!-- tag::adocNative[] -->
         <profile>
             <id>native</id>
             <activation>
@@ -181,5 +182,6 @@
                 <quarkus.package.type>native</quarkus.package.type>
             </properties>
         </profile>
+        <!-- end::adocNative[] -->
     </profiles>
 </project>

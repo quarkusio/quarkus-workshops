@@ -74,12 +74,11 @@ Importing the `smallrye-health` extension directly exposes three REST endpoints:
 * `/q/health` - Accumulating all health check procedures in the application.
 * `/q/health-ui` - Graphical interface of all the checks.
 
-To check that the `smallrye-health` extension is working as expected, access using your browser or cURL:
+To check that the `smallrye-health` extension is working as expected, make sure the Hero service is up and running (`./mvnw quarkus:dev`) and access using your browser or cURL the following URLs:
 
 * http://localhost:8083/q/health/live
 * http://localhost:8083/q/health/ready
 * http://localhost:8083/q/health
-* http://localhost:8083/q/health-ui
 
 All of the health REST endpoints return a simple JSON object with two fields:
 
@@ -109,6 +108,8 @@ You can also have a nicer graphical representation by going to http://localhost:
 If you check the health of our microservices, you will notice that Quarkus had automatically defined common health checks.
 But let's define some specific to our microservices.
 
+image::observability-health-ui.png[role=half-size]
+
 == Adding Liveness
 
 To check that our Hero API application is live, we can check that the `HeroResource.hello()` method works.
@@ -119,27 +120,7 @@ For that, this is the `PingHeroResourceHealthCheck` class that we can write unde
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.hero.health;
-
-import io.quarkus.workshop.superheroes.hero.HeroResource;
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.HealthCheckResponse;
-import org.eclipse.microprofile.health.Liveness;
-
-import jakarta.inject.Inject;
-
-@Liveness
-public class PingHeroResourceHealthCheck implements HealthCheck {
-
-    @Inject
-    HeroResource heroResource;
-
-    @Override
-    public HealthCheckResponse call() {
-        String response = heroResource.hello();
-        return HealthCheckResponse.named("Ping Hero REST Endpoint").withData("Response", response).up().build();
-    }
-}
+include::{projectdir}/rest-heroes/src/main/java/io/quarkus/workshop/superheroes/hero/health/PingHeroResourceHealthCheck.java[]
 ----
 --
 

@@ -6,7 +6,7 @@ echo "----------------------------------"
 PROJECT="<give-your-project-a-name>"
 RESOURCE_GROUP="rg-$PROJECT"
 COGNITIVE_SERVICE="cognit-$PROJECT"
-COGNITIVE_DEPLOYMENT="gpt-3.5-turbo"
+COGNITIVE_DEPLOYMENT="gpt35turbo"
 LOCATION="eastus"
 TAG="$PROJECT"
 
@@ -52,7 +52,8 @@ az cognitiveservices account deployment create \
   --model-name "gpt-35-turbo" \
   --model-version "0301"  \
   --model-format "OpenAI" \
-  --scale-settings-scale-type "Standard"
+  --sku-capacity 1 \
+  --sku-name "Standard"
 
 # tag::adocSkip[]
 echo "Getting the model..."

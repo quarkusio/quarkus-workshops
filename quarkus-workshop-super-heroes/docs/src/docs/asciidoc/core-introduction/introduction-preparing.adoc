@@ -43,7 +43,7 @@ quarkus-workshop-super-heroes
 ++ event-statistics        | UI and application dealing with fight statistics (you will create it)
 ++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
 ++ kubernetes              | All the files required to deploy on Kubernetes
-++ load-super-heroes       | Stress tool loading heroes, villains and fights
+++ load-super-heroes       | CLI tool to load stress on heroes, villains and fights
 ++ rest-fights             | REST API allowing super heroes to fight (you will create it)
 ++ rest-heroes             | Reactive REST API for CRUD operations on Heroes (you will create it)
 ++ rest-narration          | REST API invoking an AI to narrate the fight (you will create it)

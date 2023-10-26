@@ -3,49 +3,13 @@
 
 '''
 
-In this chapter we will push the containers we've built to Azure Container Registry so we can still run them locally, and later on Azure Container Apps.
+In this chapter we will push the containers we've created in the previous chpater to Azure Container Registry, and we will run them locally.
+Later we will deploy them on Azure Container Apps.
 
-[NOTE]
-====
-Building containers locally and pushing them to Azure Container Registry can take from 15 to 30 minutes (depending on your CPU and bandwith).
-====
+== Pushing Local Images to Azure Container Registry
 
-In this section, we are going to package our microservices into containers.
-In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
-The native compilation uses the OS and architecture of the host system.
-
-And... Linux Containers are ... _Linux_.
-So to build a container with a Linux native executable (even if you are on Windows or Mac), Quarkus comes with a trick to produce these executable.
-
-It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
-
-[TIP]
-====
-Building a native executable takes time, CPU, and memory.
-It's even more accurate in the container.
-So, first, be sure that your container system has enough memory to build the executable.
-It requires at least 6Gb of memory, 8Gb is recommended.
-====
-
-[example, role="cta"]
---
-Execute the following commands to build all our microservices and the UI.
-This will build Docker images out of Linux native executables:
-Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the following Docker commands:
-
-[source,shell,indent=0]
-----
-include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocCompiling]
-----
-[source,shell,indent=0]
-----
-include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocBuilding]
-----
---
-
-== Pushing containers to Azure Container Registry
-
-Now that we have all our Docker containers running locally, let's push them to Azure Container Registry.
+In the previous chapter we have built our Docker containers and run locally thanks to Docker Compose.
+Now we will push them to Azure Container Registry and execute them locally, again, with Docker Compose.
 
 [NOTE]
 ====
@@ -59,7 +23,14 @@ Tag the image using the `docker tag` commands:
 
 [source,shell,indent=0]
 ----
-include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocTagging]
+include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocTaggingCore]
+ifdef::use-messaging[]
+include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocTaggingStat]
+endif::use-messaging[]
+ifdef::use-ai[]
+include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocTaggingNarration]
+endif::use-ai[]
+
 ----
 --
 
@@ -78,7 +49,13 @@ Then, push all the images with the following commands:
 
 [source,shell,indent=0]
 ----
-include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocPushing]
+include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocPushingCore]
+ifdef::use-messaging[]
+include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocPushingStat]
+endif::use-messaging[]
+ifdef::use-ai[]
+include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocPushingNarration]
+endif::use-ai[]
 ----
 
 You can check that the images have been pushed to Azure Container Registry by executing the following command:
@@ -100,16 +77,16 @@ You can visualize the content of the registry on the https://portal.azure.com[Az
 image::azure-portal-4.png[]
 --
 
-== Running remote containers
+== Running Remote Images Locally
 
-[NOTE]
-====
+Now that we have our docker images pushed to Azure Container Registry, we can run them locally with Docker Compose.
+We will use the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` to run the remote images locally.
+But before we need to change a few things.
+
 [example, role="cta"]
 --
-
-If you haven't skipped the previous optional sections and built the containers your self, you should edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `superheroesregistry` with the value of the `$REGISTRY` variable.
+You should edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `registrysuperheroesagoncal` with the value of the `$REGISTRY` variable.
 --
-====
 
 [example, role="cta"]
 --
@@ -124,10 +101,12 @@ s
 Once all the containers are started, you can:
 
 * Go to http://localhost:8080 to check the main UI
-* Go to http://localhost:8085 to check the statistics UI
 * curl http://localhost:8084/api/villains | jq
 * curl http://localhost:8083/api/heroes | jq
 * curl http://localhost:8082/api/fights/randomfighters | jq
+ifdef::use-messaging[]
+* Go to http://localhost:8085 to check the statistics UI
+endif::use-messaging[]
 
 On http://localhost:8080 you should see the user interface, and you should be able to fight super heroes against super villains:
 

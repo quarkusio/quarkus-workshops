@@ -15,14 +15,14 @@ REGISTRY="registrysuperheroes"$UNIQUE_IDENTIFIER
 IMAGES_TAG="1.0"
 # end::adocEnvironmentVariables[]
 
-# tag::adocEnvironmentVariables2[]
+# tag::adocEnvironmentVariablesCore[]
 # Container Apps
 CONTAINERAPPS_ENVIRONMENT="env-${PROJECT}"
 
 # Postgres
 POSTGRES_DB_ADMIN="superheroesadmin"
 POSTGRES_DB_PWD="super-heroes-p#ssw0rd-12046"
-POSTGRES_DB_VERSION="14"
+POSTGRES_DB_VERSION="15"
 POSTGRES_SKU="Standard_B1ms"
 POSTGRES_TIER="Burstable"
 
@@ -52,11 +52,20 @@ FIGHTS_IMAGE="${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}"
 FIGHTS_DB_SCHEMA="fights"
 FIGHTS_DB_CONNECT_STRING="jdbc:postgresql://${FIGHTS_DB}.postgres.database.azure.com:5432/${FIGHTS_DB_SCHEMA}?ssl=true&sslmode=require"
 
-# Statistics
-STATISTICS_APP="statistics-app"
-STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
-
 # UI
 UI_APP="super-heroes-ui"
 UI_IMAGE="${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}"
-# end::adocEnvironmentVariables2[]
+# end::adocEnvironmentVariablesCore[]
+
+# tag::adocEnvironmentVariablesNarration[]
+# Narration
+NARRATION_APP="narration-app"
+NARRATION_IMAGE="${REGISTRY_URL}/${NARRATION_APP}:${IMAGES_TAG}"
+# end::adocEnvironmentVariablesNarration[]
+
+# tag::adocEnvironmentVariablesStat[]
+# Statistics
+STATISTICS_APP="statistics-app"
+STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
+# end::adocEnvironmentVariablesStat[]
+

@@ -140,6 +140,7 @@ include::{projectdir}/infrastructure/azure-setup-aca-env.sh[tags=adocSelectDataF
 ----
 --
 
+ifdef::use-messaging[]
 === Create the Managed Kafka
 
 The Fight microservice communicates with the Statistics microservice through Kafka.
@@ -171,35 +172,12 @@ If you log into the https://portal.azure.com[Azure Portal] you should see the fo
 
 image::azure-portal-3.png[]
 --
+endif::use-messaging[]
 
 == Deploying the Applications
 
 Now that the Azure Container Apps environment is all set, we need to deploy our microservices to Azure Container Apps.
 So let's create an instance of Container Apps for each of our microservices and User Interface.
-
-[NOTE]
-====
-If you haven't built the containers and push them to your own Azure Container Registry, you need to change some environment variables.
-That means, that instead of having `REGISTRY="superheroesregistry"$UNIQUE_IDENTIFIER`, you need to change it to `REGISTRY="superheroesregistry` (so it uses the common registry).
-
-[source,shell]
-----
-REGISTRY="registrysuperheroesagoncal"
-
-REGISTRY_URL=$(az acr show \
-  --resource-group "$RESOURCE_GROUP" \
-  --name "$REGISTRY" \
-  --query "loginServer" \
-  --output tsv)
-
-HEROES_IMAGE="${REGISTRY_URL}/${HEROES_APP}:${IMAGES_TAG}"
-VILLAINS_IMAGE="${REGISTRY_URL}/${VILLAINS_APP}:${IMAGES_TAG}"
-FIGHTS_IMAGE="${REGISTRY_URL}/${FIGHTS_APP}:${IMAGES_TAG}"
-STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
-UI_IMAGE="${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}"
-----
-
-====
 
 === Heroes Microservice
 
@@ -270,7 +248,7 @@ The following command sets the URL of the deployed application to the `VILLAINS_
 include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainURL]
 ----
 
-You can now invoke the Hero microservice APIs with:
+You can now invoke the Villain microservice APIs with:
 
 [source,shell]
 ----
@@ -286,6 +264,43 @@ include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppVillainLogs
 ----
 --
 
+ifdef::use-ai[]
+=== Narration Microservice
+
+The Narration microservice does not access any database, just a remote OpenAI/AzureAI service.
+
+[example, role="cta"]
+--
+[source,shell,indent=0]
+----
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppNarration]
+----
+
+The following command sets the URL of the deployed application to the `NARRATION_URL` variable:
+
+[source,shell,indent=0]
+----
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppNarrationURL]
+----
+
+You can now invoke the Narration microservice APIs with:
+
+[source,shell]
+----
+curl "$NARRATION_URL/api/narration/hello"
+curl -X POST -d  '{"winnerName":"Super winner", "winnerLevel":42, "winnerPowers":"jumping", "loserName":"Super loser", "loserLevel":2, "loserPowers":"leaping", "winnerTeam":"heroes", "loserTeam":"villains" }'  -H "Content-Type: application/json" "$NARRATION_URL/api/narration" -v
+----
+
+To access the logs of the Narration microservice, you can write the following query:
+
+[source,shell,indent=0]
+----
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppNarrationLogs]
+----
+--
+endif::use-ai[]
+
+ifdef::use-messaging[]
 === Statistics Microservice
 
 The Statistics microservice listens to a Kafka topics and consumes all the fights.
@@ -321,6 +336,7 @@ To access the logs of the Statistics microservice, you can write the following q
 include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppStatisticsLogs]
 ----
 --
+endif::use-messaging[]
 
 === Fights Microservice
 

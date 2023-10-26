@@ -1,4 +1,8 @@
+[[introduction]]
 = Welcome
+
+'''
+
 Let's start from the beginning.
 Quarkus.
 What's Quarkus?
@@ -23,7 +27,7 @@ Well, it's going to be a set of microservices:
 * Using blocking and non-blocking HTTP invocations
 * With some parts of the dark side of microservices (resilience, health, etc)
 ifdef::use-messaging[]
-* Use a event-based architecture using Apache Kafka
+* Use an event-based architecture using Apache Kafka
 endif::use-messaging[]
 ifdef::use-ai[]
 * Use OpenAI to introduce some artificial intelligence
@@ -37,6 +41,9 @@ This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows
 You just need JDK {jdk-version} on your machine and Docker (having Apache Maven {maven-version} installed is optional as you will rely on the Apache Maven Wrapper).
 ifdef::use-mac,use-windows[]
 On Mac and Windows, Docker for _x_ is recommended instead of the Docker toolbox setup.
+endif::[]
+ifdef::use-windows[]
+On Windows it is also recommended to have WSL (https://docs.microsoft.com/windows/wsl[Windows Subsystem for Linux]) installed.
 endif::[]
 
 What you are going to learn:
@@ -54,9 +61,15 @@ endif::use-ai[]
 ifdef::use-messaging[]
 * How to build event-driven microservices with Kafka
 endif::use-messaging[]
+ifdef::use-contract-testing[]
+* How to build use contract testing so we are sure our microservices are fully functional
+endif::use-contract-testing[]
 ifdef::use-native[]
 * How to build native executable
 endif::use-native[]
+ifdef::use-container[]
+* How to containerize our microservices
+endif::use-container[]
 ifdef::use-kubernetes[]
 * How to deploy the microservices to Kubernetes
 endif::use-kubernetes[]
@@ -70,6 +83,9 @@ ifdef::use-azure[]
 * How to deploy microservices to Azure Container Apps
 * How to configure Docker images in Azure Container Apps
 endif::use-azure[]
+ifdef::use-cli[]
+* How to use Quarkus CLI to create a command-line application to load stress our microservices
+endif::use-cli[]
 ifdef::use-extension[]
 * How to extend Quarkus with extensions
 endif::use-extension[]

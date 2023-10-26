@@ -6,10 +6,13 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotNull;
 
+// tag::adocJavadoc[]
+
 /**
  * Entity class representing Fighters
  */
-@Schema(description="A fight between one hero and one villain")
+// end::adocJavadoc[]
+@Schema(description = "A fight between one hero and one villain")
 public class Fighters {
 
     @NotNull

@@ -8,11 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 import java.util.Random;
+
+// tag::adocJavadoc[]
 
 /**
  * JPA entity class for a Hero. Re-used in the API layer.
  */
+// end::adocJavadoc[]
 @Entity
 public class Hero extends PanacheEntity {
 
@@ -35,7 +39,7 @@ public class Hero extends PanacheEntity {
         return count()
             .map(count -> random.nextInt(count.intValue()))
             .chain(randomHero -> findAll().page(randomHero, 1)
-                                          .firstResult());
+                .firstResult());
     }
 
     @Override

@@ -1,4 +1,4 @@
-[[fault-tolerance-fallbacks]]
+[[rest-client-fallbacks]]
 = Fallbacks
 
 So now you've been playing this great Super Heroes Fight for a few hours... and you kill the Hero REST API.
@@ -62,35 +62,7 @@ For that, add two fallback methods to the `FightService` and a `@Fallback` annot
 
 [source,java,indent=0]
 ----
-@Fallback(fallbackMethod = "fallbackRandomHero")
-Hero findRandomHero() {
-    return heroProxy.findRandomHero();
-}
-
-@Fallback(fallbackMethod = "fallbackRandomVillain")
-Villain findRandomVillain() {
-    return villainProxy.findRandomVillain();
-}
-
-public Hero fallbackRandomHero() {
-    logger.warn("Falling back on Hero");
-    Hero hero = new Hero();
-    hero.name = "Fallback hero";
-    hero.picture = "https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero";
-    hero.powers = "Fallback hero powers";
-    hero.level = 1;
-    return hero;
-}
-
-public Villain fallbackRandomVillain() {
-    logger.warn("Falling back on Villain");
-    Villain villain = new Villain();
-    villain.name = "Fallback villain";
-    villain.picture = "https://dummyimage.com/280x380/b22222/ffffff&text=Fallback+Villain";
-    villain.powers = "Fallback villain powers";
-    villain.level = 42;
-    return villain;
-}
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocFallback]
 ----
 --
 

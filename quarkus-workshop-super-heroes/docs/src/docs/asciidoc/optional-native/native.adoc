@@ -1,0 +1,179 @@
+[[native]]
+= Building Native Executables
+
+'''
+
+Let's now produce native executables for our application.
+Thanks to its GraalVM integration, Quarkus can easily generate native executables.
+Just like Go, native executables don't need a VM to run; they contain the whole application, like an `.exe` file on Windows.
+
+== Building Native Executables with Quarkus
+
+Having native executables for our microservices improves their startup time and produces a minimal disk footprint.
+This can be a big plus if your microservices run in a serverless environment where scaling from zero is important.
+The produced binary has everything to run the application, including the needed parts of the "JVM" (shrunk to be just enough to run the application), and the application itself.
+
+[NOTE]
+--
+Choosing JVM execution vs. native executable execution depends on your application needs and environment.
+--
+
+To be able to build native executables, you need GraalVM to be installed.
+And make sure you have the `GRAALVM_HOME` environment variable defined and pointing to where you installed GraalVM.
+Then, if you look at all the `pom.xml` files, you will find the following profile.
+This allows you to build a native executable just by invoking `./mvnw package -Pnative`.
+
+[source,xml,indent=0]
+----
+include::{projectdir}/rest-heroes/pom.xml[tag=adocNative]
+----
+
+== Building Native Executables for our Microservices
+
+Let's create native executables for all our microservices.
+Well, maybe not all of them.
+Let's see.
+
+[example, role="cta"]
+--
+From the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-Dmaven.test.skip=true`):
+
+[source,shell]
+----
+./mvnw --file rest-fights/pom.xml package -Pnative
+./mvnw --file rest-heroes/pom.xml package -Pnative
+./mvnw --file rest-villains/pom.xml package -Pnative
+./mvnw --file ui-super-heroes/pom.xml package -Pnative
+ifdef::use-messaging[]
+./mvnw --file event-statistics/pom.xml package -Pnative
+endif::use-messaging[]
+----
+
+[WARNING]
+====
+Creating a native executable requires a lot of memory and CPU.
+It also takes a few minutes, even for a simple application like the Villain microservice.
+Most of the time is spent during the dead code elimination, as it traverses the whole (closed) world.
+====
+
+During the compilation of each microservice, you see a lot of information about the native compilation.
+Below is a summary of the output for that you will get.
+
+[source,shell]
+----
+===========================================================================================
+GraalVM Native Image: Generating 'rest-heroes-1.0.0-SNAPSHOT-runner' (executable)...
+===========================================================================================
+[1/8] Initializing...                                                      (24.3s @ 0.53GB)
+[2/8] Performing analysis...
+[3/8] Building universe...                                                  (6.9s @ 4.64GB)
+[4/8] Parsing methods...      [***]                                         (5.1s @ 2.80GB)
+[5/8] Inlining methods...     [***]                                         (2.1s @ 4.71GB)
+[6/8] Compiling methods...    [********]                                  (67.6s @ 10.11GB)
+[7/8] Layouting methods...    [***]                                         (9.4s @ 4.04GB)
+[8/8] Creating image...       [***]                                         (9.1s @ 5.41GB)
+----
+
+ifdef::use-ai[]
+If you try to execute `./mvnw package -Pnative` in the Narration microservice, the compilation will fail.
+You will get something like this:
+
+[source,shell]
+----
+===========================================================================================
+GraalVM Native Image: Generating 'rest-narration-1.0.0-SNAPSHOT-runner' (executable)...
+===========================================================================================
+[1/8] Initializing...                                                      (24.3s @ 0.53GB)
+[2/8] Performing analysis...
+ERROR [com.azu.cor.imp.jac.XmlMapperFactory] Failed to retrieve MethodHandles used to create XmlMapper. XML serialization won't be supported until 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+ERROR [com.azu.cor.imp.jac.ObjectMapperShim] Package versions: jackson-core=2.15.2, jackson-databind=2.15.2, jackson-dataformat-xml=unknown, jackson-datatype-jsr310=2.15.2
+Error: Classes that should be initialized at run time got initialized during image building
+----
+
+That's because the Narration microservice uses external libraries that are not easily compilable with GraaVM.
+Not all libraries are compatible with GraalVM out of the box.
+Therefore, we will keep on running the Narration microservice in JVM mode, not in native mode.
+
+[source,shell]
+----
+./mvnw --file rest-narration/pom.xml clean package
+----
+endif::use-ai[]
+--
+
+ifdef::use-messaging[]
+[NOTE]
+====
+Do you remember the `@RegisterForReflection` annotation that we used in the Statistics microservice?
+Well, this annotation instructs the native compilation to allow reflection access to the class.
+Without it, the serialization/deserialization would not work when running the native executable.
+This information is required when running the application as a native executable.
+====
+endif::use-messaging[]
+
+== Running the Application in Native mode
+
+The native compilation takes a while.
+In addition to the regular files, the build also produces `target/xxx-yyy-1.0.0-SNAPSHOT-runner` files.
+Notice that there is no `.jar` file extension.
+It's just a binary file that you can execute directly like any other binary.
+Let's execute the entire application in native mode.
+
+[example, role="cta"]
+--
+Native mode is using the `prod` profile, meaning that the infrastructure needs to be up and running (`docker compose -f docker-compose.yaml up -d`).
+Then, from the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-Dmaven.test.skip=true`):
+
+[source,shell]
+----
+./rest-fights/target/rest-fights-1.0.0-SNAPSHOT-runner
+./rest-heroes/target/rest-heroes-1.0.0-SNAPSHOT-runner
+./rest-villains/target/rest-villains-1.0.0-SNAPSHOT-runner
+./ui-super-heroes/target/ui-super-heroes-1.0.0-SNAPSHOT-runner
+ifdef::use-messaging[]
+./event-statistics/target/event-statistics-1.0.0-SNAPSHOT-runner
+endif::use-messaging[]
+ifdef::use-ai[]
+./rest-narration/target/quarkus-app/quarkus-run.jar
+endif::use-ai[]
+----
+
+You can then go to http://localhost:8080 and start new fights.
+--
+
+// == Testing the Native Executables
+
+// Producing a native executable can lead to a few issues, and so it’s also a good idea to run some tests against the application running in the native file. In the pom.xml file, the native profile contains:
+//
+// <plugin>
+//   <artifactId>maven-failsafe-plugin</artifactId>
+//   <version>${surefire-plugin.version}</version>
+//   <executions>
+//     <execution>
+//       <goals>
+//         <goal>integration-test</goal>
+//         <goal>verify</goal>
+//       </goals>
+//       <configuration>
+//         <systemProperties>
+//           <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+//         </systemProperties>
+//       </configuration>
+//     </execution>
+//   </executions>
+// </plugin>
+//
+// This instructs the failsafe-maven-plugin to run integration-test and indicates the location of the produced native executable.
+//
+// Then, open the src/test/java/io/quarkus/workshop/superheroes/hero/NativeHeroResourceIT.java and update it with the following:
+//
+// Instead of using @QuarkusTest, it uses the @SubstrateTest test runner that starts the application from the native file before the tests. The executable is retrieved using the native.image.path system property configured in the Failsafe Maven Plugin. We extend our previous tests, but you can also implement your own tests.
+//
+// Notice that NativeHeroResourceIT does not extend HeroResourceTest. It is a good practice to share the same tests for native and JVM mode that way but in our case the behavior is a bit different. For example, we do not want Swagger UI exposed in our native image.
+//
+// Before running the test, we need to configure in which profile they run. If you look at the test class, it starts a database on a specific port (5499). We need to configure the application to connect on this port. For this edit the application.properties and add:
+//
+// The first line configure the profile to use in the native integration tests. Here we use a custom profile named it. Note that by default prod is used. The second line overrides the JDBC url to use the right port. Now we can run the tests.
+//
+// To see the NativeHeroResourceIT run against the native executable, use ./mvnw verify -Pnative:
+

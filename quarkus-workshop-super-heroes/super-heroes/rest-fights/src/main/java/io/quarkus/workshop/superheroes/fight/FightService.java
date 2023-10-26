@@ -61,6 +61,7 @@ public class FightService {
         return fighters;
     }
 
+    // tag::adocFallback[]
     @Fallback(fallbackMethod = "fallbackRandomHero")
     Hero findRandomHero() {
         return heroProxy.findRandomHero();
@@ -90,6 +91,7 @@ public class FightService {
         villain.level = 42;
         return villain;
     }
+    // end::adocFallback[]
 
     @Transactional(REQUIRED)
     public Fight persistFight(Fighters fighters) {

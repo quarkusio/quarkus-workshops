@@ -1,6 +1,7 @@
 :os: all
 :use-ai:
 :use-azure:
+:use-cli:
 :use-container:
 :use-contract-testing:
 :use-extension:

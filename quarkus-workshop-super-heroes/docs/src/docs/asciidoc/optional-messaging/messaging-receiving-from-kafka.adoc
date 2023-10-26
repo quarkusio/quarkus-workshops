@@ -85,23 +85,7 @@ Create the `io.quarkus.workshop.superheroes.statistics.Fight` class with the fol
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.statistics;
-
-import java.time.Instant;
-
-
-public class Fight {
-
-    public Instant fightDate;
-    public String winnerName;
-    public int winnerLevel;
-    public String winnerPicture;
-    public String loserName;
-    public int loserLevel;
-    public String loserPicture;
-    public String winnerTeam;
-    public String loserTeam;
-}
+include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Fight.java[]
 ----
 
 We also need to a deserializer that will receive the Kafka record and create the `Fight` instances.
@@ -109,16 +93,7 @@ Create the `io.quarkus.workshop.superheroes.statistics.FightDeserializer` class 
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.statistics;
-
-import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
-
-public class FightDeserializer extends ObjectMapperDeserializer<Fight> {
-
-    public FightDeserializer() {
-        super(Fight.class);
-    }
-}
+include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/FightDeserializer.java[]
 ----
 --
 
@@ -137,52 +112,7 @@ The `computeTopWinners` method uses more advanced reactive programming construct
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.statistics;
-
-import io.smallrye.mutiny.Multi;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.eclipse.microprofile.reactive.messaging.Outgoing;
-import org.jboss.logging.Logger;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
-@ApplicationScoped
-public class SuperStats {
-
-    @Inject
-    Logger logger;
-
-    private final Ranking topWinners = new Ranking(10);
-    private final TeamStats stats = new TeamStats();
-
-    @Incoming("fights")
-    @Outgoing("team-stats")
-    public Multi<Double> computeTeamStats(Multi<Fight> results) {
-        return results
-            .onItem().transform(stats::add)
-            .invoke(() -> logger.info("Fight received. Computed the team statistics"));
-    }
-
-    @Incoming("fights")
-    @Outgoing("winner-stats")
-    public Multi<Iterable<Score>> computeTopWinners(Multi<Fight> results) {
-        return results
-            .group().by(fight -> fight.winnerName)
-            .onItem().transformToMultiAndMerge(group ->
-                group
-                    .onItem().scan(Score::new, this::incrementScore))
-            .onItem().transform(topWinners::onNewScore)
-            .invoke(() -> logger.info("Fight received. Computed the top winners"));
-    }
-
-    private Score incrementScore(Score score, Fight fight) {
-        score.name = fight.winnerName;
-        score.score = score.score + 1;
-        return score;
-    }
-
-}
+include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/SuperStats.java[tag=!adocJavadoc]
 ----
 --
 
@@ -196,82 +126,21 @@ Then, create the `Ranking` class, used to compute a floating top 10, with the fo
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.statistics;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-
-public class Ranking {
-
-    private final int max;
-
-    private final Comparator<Score> comparator = Comparator.comparingInt(s -> -1 * s.score);
-
-    private final LinkedList<Score> top = new LinkedList<>();
-
-    public Ranking(int size) {
-        max = size;
-    }
-
-    public Iterable<Score> onNewScore(Score score) {
-        // Remove score if already present,
-        top.removeIf(s -> s.name.equalsIgnoreCase(score.name));
-        // Add the score
-        top.add(score);
-        // Sort
-        top.sort(comparator);
-
-        // Drop on overflow
-        if (top.size() > max) {
-            top.remove(top.getLast());
-        }
-
-        return Collections.unmodifiableList(top);
-    }
-}
+include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Ranking.java[tag=!adocJavadoc]
 ----
 --
 The `Score` class is a simple structure storing the name of a hero or villain and its actual score, _i.e._ the number of won battles.
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.statistics;
-
-import io.quarkus.runtime.annotations.RegisterForReflection;
-
-@RegisterForReflection
-public class Score {
-    public String name;
-    public int score;
-
-    public Score() {
-        this.score = 0;
-    }
-}
+include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Score.java[tag=!adocJavadoc]
 ----
 
 The `TeamStats` class is an object keeping track of the number of battles won by heroes and villains.
 
 [source,java]
 ----
-package io.quarkus.workshop.superheroes.statistics;
-
-class TeamStats {
-
-    private int villains = 0;
-    private int heroes = 0;
-
-    double add(Fight result) {
-        if (result.winnerTeam.equalsIgnoreCase("heroes")) {
-            heroes = heroes + 1;
-        } else {
-            villains = villains + 1;
-        }
-        return ((double) heroes / (heroes + villains));
-    }
-
-}
+include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/TeamStats.java[tag=!adocJavadoc]
 ----
 
 [TIP]
@@ -290,12 +159,7 @@ Edit the `application.properties` file and add the following content:
 
 [source,properties]
 ----
-quarkus.http.port=8085
-
-## Kafka configuration
-mp.messaging.incoming.fights.connector=smallrye-kafka
-mp.messaging.incoming.fights.auto.offset.reset=earliest
-mp.messaging.incoming.fights.broadcast=true
+include::{projectdir}/event-statistics/src/main/resources/application.properties[]
 ----
 --
 
