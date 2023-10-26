@@ -19,7 +19,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - name: Skeleton build with Maven
-        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs
+        run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs -pl '!:rest-narration,!:extension-version'
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
       - name: Extension build with Maven
