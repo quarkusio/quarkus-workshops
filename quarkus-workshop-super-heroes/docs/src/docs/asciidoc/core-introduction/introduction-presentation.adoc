@@ -143,27 +143,6 @@ You will download a zip file ({github-raw}/dist/quarkus-super-heroes-workshop.zi
 
 Oh, and be ready to have some fun!
 
-[NOTE]
-====
-If you are stuck, you can always look at the final code in the {github-url}[GitHub repository], or download another zip file ({github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`]) that contains _all_ the code of the workshop.
-If you want to build the completed workshop, after you've unzipped the {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip[`quarkus-super-heroes-workshop-complete.zip`] file, you would need to run the following command from the root project:
-
-[source, shell]
-----
-$ ./mvnw clean install -Pcomplete
-----
-
-ifdef::use-extension[]
-The extension can be built with the following command:
-
-[source, shell]
-----
-$ ./mvnw clean install -f super-heroes/extension-version
-----
-endif::use-extension[]
-====
-
-
 == Software Requirements
 
 First of all, make sure you have a 64-bit computer with admin rights (so you can install all the needed tools) and at least 8Gb of RAM (as some tools need a few resources).
@@ -183,7 +162,7 @@ ifdef::use-native[]
 * GraalVM {graalvm-version}
 endif::use-native[]
 * Docker or Podman
-* cURL (or any other command line HTTP client) and optionally `jq` (check the xref:appendix-installing-jq[appendix for installation instructions])
+* cURL (should already be installed in your OS, if not, check xref:appendix-installing-curl[the appendix for installation instructions]) and `jq`
 ifdef::use-ai[]
 * OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)
 endif::use-ai[]

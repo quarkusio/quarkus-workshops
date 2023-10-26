@@ -6,44 +6,6 @@
 In this chapter we will push the containers we've created in the previous chpater to Azure Container Registry, and we will run them locally.
 Later we will deploy them on Azure Container Apps.
 
-// [NOTE]
-// ====
-// Building containers locally and pushing them to Azure Container Registry can take from 15 to 30 minutes (depending on your CPU and bandwith).
-// ====
-//
-// In this section, we are going to package our microservices into containers.
-// In particular, we are going to produce Linux 64 bits native executables and runs them in a container.
-// The native compilation uses the OS and architecture of the host system.
-//
-// And... Linux Containers are ... _Linux_.
-// So to build a container with a Linux native executable (even if you are on Windows or Mac), Quarkus comes with a trick to produce these executable.
-//
-// It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
-//
-// [TIP]
-// ====
-// Building a native executable takes time, CPU, and memory.
-// It's even more accurate in the container.
-// So, first, be sure that your container system has enough memory to build the executable.
-// It requires at least 6Gb of memory, 8Gb is recommended.
-// ====
-//
-// [example, role="cta"]
-// --
-// Execute the following commands to build all our microservices and the UI.
-// This will build Docker images out of Linux native executables:
-// Under the `quarkus-workshop-super-heroes/super-heroes` directory execute the following Docker commands:
-//
-// [source,shell,indent=0]
-// ----
-// include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocCompiling]
-// ----
-// [source,shell,indent=0]
-// ----
-// include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocBuilding]
-// ----
-// --
-
 == Pushing Local Images to Azure Container Registry
 
 In the previous chapter we have built our Docker containers and run locally thanks to Docker Compose.
