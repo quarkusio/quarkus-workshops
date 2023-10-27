@@ -279,9 +279,9 @@ For Azure OpenAI, use the following configuration in the `rest-narration/src/mai
 
 [source,properties]
 ----
-client.openai.key=
-client.openai.endpoint=
-client.openai.deploymentname=
+client.azureopenai.key=
+client.azureopenai.endpoint=
+client.azureopenai.deploymentname=
 ----
 
 We also set the port of the Narration microservice to be 8086.
