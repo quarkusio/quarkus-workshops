@@ -984,7 +984,7 @@ You will be developing several microservices communicating with each other:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><em>Super Hero UI</em>: an Angular application to pick up a random superhero, a random supervillain, and makes them fight.
+<p><em>Super Hero UI</em>: a React application to pick up a random superhero, a random supervillain, and makes them fight.
 The Super Hero UI is exposed via Quarkus and invokes the Fight REST API</p>
 </li>
 <li>
@@ -1017,7 +1017,7 @@ The table at the bottom shows the list of the previous fights.</p>
 </div>
 <div class="imageblock half-size">
 <div class="content">
-<img src="../../images/angular-ui.png" alt="angular ui">
+<img src="../../images/react-ui.png" alt="react ui">
 </div>
 </div>
 <div class="paragraph">
@@ -1025,7 +1025,7 @@ The table at the bottom shows the list of the previous fights.</p>
 </div>
 <div class="imageblock half-size">
 <div class="content">
-<img src="../../images/angular-ui-stats.png" alt="angular ui stats">
+<img src="../../images/react-ui-stats.png" alt="react ui stats">
 </div>
 </div>
 </div>
@@ -1043,7 +1043,7 @@ in this section, you will install all the tools and code to be able to develop, 
 </li>
 <li>
 <p><em>Developing microservices with Quarkus</em>:
-in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use an Angular web application, and all that on Quarkus</p>
+in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use a React web application, and all that on Quarkus</p>
 </li>
 <li>
 <p><em>Event-driven and Reactive microservices</em>:
@@ -1444,7 +1444,7 @@ The final structure will be the following (don&#8217;t worry if you don&#8217;t 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../images/diag-plantuml-md5-8e2a3456337b1a85b7610070d2c60d6c.png" alt="Diagram" width="651" height="164">
+<img src="../../images/diag-plantuml-md5-fb06ca44d555cf95f35d7c92f3d3c4a9.png" alt="Diagram" width="651" height="164">
 </div>
 </div>
 <div class="paragraph">
@@ -5314,7 +5314,7 @@ Open your browser and go to <a href="http://localhost:8083/api/heroes" class="ba
 <div class="paragraph">
 <p>So far we&#8217;ve built two microservices: the villains and heroes microservices.
 In the following sections you will develop an extra microservice: a <em>fight</em> microservice where heroes and villains fight.
-We will also add an Angular front-end, so we can fight graphically.
+We will also add a React front-end, so we can fight graphically.
 But as you can notice in the diagram below, these microservices still not communicate with each other.
 You will have to wait the next chapter for that ;o)</p>
 </div>
@@ -6133,9 +6133,9 @@ Once the application is started, just check that it returns the fights from the 
 <div class="paragraph">
 <p>Now that we have the three main microservices, time to have a decent user interface to start fighting.
 The purpose of this workshop is not to develop a web interface and learn <em>yet another web framework</em>.
-This time you will just execute another Quarkus instance with an already Angular application.
+This time you will just execute another Quarkus instance with an already React application.
 We will be using <a href="https://quarkiverse.github.io/quarkiverse-docs/quarkus-quinoa/dev/">Quinoa</a>
-to handle building and serving the Angular application.</p>
+to handle building and serving the React application.</p>
 </div>
 <div class="sect2">
 <h3 id="_quinoa">Quinoa?</h3>
@@ -6159,14 +6159,14 @@ In production mode, Quinoa will run the build and process the generated files to
 It contains the code of the application.</p>
 </div>
 <div class="paragraph">
-<p>The Angular application is in <code>src/main/webui</code>.
-Being an Angular application, you will find a <code>package.json</code> file which defines all the needed dependencies.
-All the Angular code (graphical components, model, services) is located under <code>src/main/webui/src/app</code>.</p>
+<p>The React application is in <code>src/main/webui</code>.
+Being a React application, you will find a <code>package.json</code> file which defines all the needed dependencies.
+All the React code (graphical components, model, services) is located under <code>src/main/webui/src/app</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="_running_the_web_application">Running the Web Application</h4>
 <div class="paragraph">
-<p>We don&#8217;t need to worry too much about the Angular code.</p>
+<p>We don&#8217;t need to worry too much about the React code.</p>
 </div>
 <div class="exampleblock cta">
 <div class="content">
@@ -6194,8 +6194,8 @@ INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-<span class="integer">4
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">2023-05-18 14:22:02,745 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-5) Quinoa package manager live coding is up and running on port: 4200 (in 18118ms)
-2023-05-18 14:22:02,749 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-40) Quinoa is forwarding unhandled requests to port: 4200
+<pre class="CodeRay highlight"><code data-lang="shell">2023-05-18 14:22:02,745 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-5) Quinoa package manager live coding is up and running on port: 3000 (in 18118ms)
+2023-05-18 14:22:02,749 INFO  [io.qua.qui.dep.ForwardedDevProcessor] (build-40) Quinoa is forwarding unhandled requests to port: 3000
 __  ____  __  _____   ___  __ ____  ______
  --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
  -/ /_/ / /_/ / __ |/ , _/ ,&lt; / /_/ /\ \
@@ -6214,8 +6214,8 @@ because we need to fix a few things and add some more implementation.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If you want, you can visit <a href="http://localhost:4200" class="bare">http://localhost:4200</a> (the usual Angular port) to confirm that Quinoa is forwarding what&#8217;s on port 4200 to port 8080.
-The version of the application on <a href="http://localhost:4200" class="bare">http://localhost:4200</a> will always stay disappointingly blank,
+<p>If you want, you can visit <a href="http://localhost:3000" class="bare">http://localhost:3000</a> (the usual React port) to confirm that Quinoa is forwarding what&#8217;s on port 3000 to port 8080.
+The version of the application on <a href="http://localhost:3000" class="bare">http://localhost:3000</a> will always stay disappointingly blank,
 because it&#8217;s looking for its config on the wrong port. So don&#8217;t use that one!</p>
 </div>
 <div class="paragraph">
@@ -6795,7 +6795,7 @@ Start the Hero, Villain and Fight microservices as well as the user interface (u
 </div>
 <div class="imageblock half-size">
 <div class="content">
-<img src="../../images/angular-ui.png" alt="angular ui">
+<img src="../../images/react-ui.png" alt="react ui">
 </div>
 </div>
 </div>
@@ -7115,7 +7115,7 @@ A successful refactoring!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now visit the UI at <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
+<p>Now visit the UI at <a href="http://localhost:8080/" class="bare">http://localhost:8080/</a>.
 What&#8217;s going on?
 The hero&#8217;s level is always 0. Why didn&#8217;t the tests catch this?</p>
 </div>
@@ -8505,7 +8505,7 @@ Trigger some fights, and you should see the live statistics moving.</p>
 </div>
 <div class="imageblock half-size">
 <div class="content">
-<img src="../../images/angular-ui-stats.png" alt="angular ui stats">
+<img src="../../images/react-ui-stats.png" alt="react ui stats">
 </div>
 </div>
 </div>
@@ -8957,8 +8957,8 @@ Some written in pure JAX-RS (such as the Villain) others with Reactive JAX-RS an
 These microservices return data in JSON, validate data thanks to Bean Validation, store and retrieve data from a relational database with the help of JPA, Panache and JTA.</p>
 </div>
 <div class="paragraph">
-<p>You then installed an already coded Angular application on another instance of Quarkus.
-At this stage, the Angular application couldn&#8217;t access the microservices because of CORS issues that we quickly fixed.</p>
+<p>You then installed an already coded React application on another instance of Quarkus.
+At this stage, the React application couldn&#8217;t access the microservices because of CORS issues that we quickly fixed.</p>
 </div>
 <div class="paragraph">
 <p>Then, we made the microservices communicate with each other in HTTP thanks to REST Client.
