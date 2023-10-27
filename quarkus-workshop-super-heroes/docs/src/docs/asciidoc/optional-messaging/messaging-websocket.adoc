@@ -88,7 +88,7 @@ Time to start the application using:
 Then, open `http://localhost:8085` in a new browser window.
 Trigger some fights, and you should see the live statistics moving.
 
-image::angular-ui-stats.png[role=half-size]
+image::react-ui-stats.png[role=half-size]
 --
 
 Quarkus automatically reuse the Kafka broker from the fight service.

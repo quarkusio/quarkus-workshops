@@ -444,4 +444,4 @@ The result of the fight is displayed, and below, you have a "Narrate the fight" 
 Click on it, wait a few seconds (remember that the Narration microservice access a remote AI service that takes time) and the narration of the fight is displayed.
 Being _Generative AI_, you can click several times on the button and you will get different narrations.
 
-image::angular-ui-ai.png[role=half-size]
+image::react-ui-ai.png[role=half-size]

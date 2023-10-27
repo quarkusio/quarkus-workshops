@@ -34,7 +34,7 @@ public class EnvResource {
             calculateApiBaseUrl);
         // We could just return the Config object, but that would be json, and we want a
         // javascript snippet we can include with <script src="..."/>
-        return "window.NG_CONFIG=" + objectMapper.writeValueAsString(config);
+        return "window.APP_CONFIG=" + objectMapper.writeValueAsString(config);
     }
 
 

@@ -384,7 +384,7 @@ include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocAppFightLogs]
 === Super Hero UI
 
 Like for the previous microservices, we will be deploying the UI as Docker image as we did for the previous microservices.
-But we could have also deployed the Super Hero UI using Azure Static Webapps which is suited for Angular applications.
+But we could have also deployed the Super Hero UI using Azure Static Webapps which is suited for React applications.
 If you are interested in this approach, you can check https://azure.microsoft.com/services/app-service/static/[Azure Static Webapps].
 
 [example, role="cta"]

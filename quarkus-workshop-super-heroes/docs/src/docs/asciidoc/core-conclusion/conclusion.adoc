@@ -14,8 +14,8 @@ Then, we focused on developing several isolated microservices.
 Some written in pure JAX-RS (such as the Villain) others with Reactive JAX-RS and Reactive Hibernate (such as the Hero).
 These microservices return data in JSON, validate data thanks to Bean Validation, store and retrieve data from a relational database with the help of JPA, Panache and JTA.
 
-You then installed an already coded Angular application on another instance of Quarkus.
-At this stage, the Angular application couldn't access the microservices because of CORS issues that we quickly fixed.
+You then installed an already coded React application on another instance of Quarkus.
+At this stage, the React application couldn't access the microservices because of CORS issues that we quickly fixed.
 
 Then, we made the microservices communicate with each other in HTTP thanks to REST Client.
 But HTTP-related technologies usually use synchronous communication and therefore need to deal with invocation failure.

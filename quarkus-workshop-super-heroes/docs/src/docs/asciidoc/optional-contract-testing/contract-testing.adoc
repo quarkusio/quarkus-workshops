@@ -34,7 +34,7 @@ The heroes, villains, and fights tests should all be running clean.
 A successful refactoring!
 --
 
-Now visit the UI at http://localhost:4200/.
+Now visit the UI at http://localhost:8080/.
 What's going on?
 The hero's level is always 0. Why didn't the tests catch this?
 
