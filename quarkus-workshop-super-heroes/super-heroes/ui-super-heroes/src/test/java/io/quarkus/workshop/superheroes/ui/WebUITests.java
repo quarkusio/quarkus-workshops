@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.matchesPattern;
  * The `Enable` test profile enables the Web UI (build and serve).
  */
 @QuarkusTest
-@TestProfile(QuinoaTestProfiles.Enable.class)
+@TestProfile(QuinoaTestProfiles.EnableAndRunTests.class)
 public class WebUITests {
 
     @Test
