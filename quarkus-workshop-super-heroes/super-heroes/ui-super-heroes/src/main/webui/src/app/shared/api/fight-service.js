@@ -8,8 +8,8 @@ import axios from "axios"
 
 const defaultHeaders = {'Content-Type': "application/json"}
 
-let basePath = window.APP_CONFIG.API_BASE_URL
-const calculateApiBaseUrl = window.APP_CONFIG.CALCULATE_API_BASE_URL
+let basePath = window.APP_CONFIG?.API_BASE_URL
+const calculateApiBaseUrl = window.APP_CONFIG?.CALCULATE_API_BASE_URL
 
 if (calculateApiBaseUrl) {
   // If calculateApiBaseUrl then just replace "ui-super-heroes" with "rest-fights" in the current URL

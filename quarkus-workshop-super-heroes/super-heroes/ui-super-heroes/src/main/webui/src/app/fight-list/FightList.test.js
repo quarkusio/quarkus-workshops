@@ -1,5 +1,5 @@
 import React from "react"
-import {render, screen} from "@testing-library/react"
+import {render, screen, within} from "@testing-library/react"
 import "@testing-library/jest-dom"
 import {FightList} from "./FightList"
 import {getFights} from "../shared/api/fight-service"
@@ -36,10 +36,31 @@ describe("the fight list", () => {
     await act(async () => {
       render(<FightList/>)
     })
-    expect(screen.getByText(/Winner/i)).toBeInTheDocument()
-    expect(screen.getByText(/Loser/i)).toBeInTheDocument()
-    expect(screen.getByText(/Fight Date/i)).toBeInTheDocument()
 
+    const table = screen.getByRole("table")
+    expect(table).toBeInTheDocument()
+
+    const thead = within(table).getAllByRole('rowgroup')[0]
+    const headRows = within(thead).getAllByRole("row")
+    const headCols = within(headRows[0]).getAllByRole("columnheader")
+
+    const numCols = 4
+
+    expect(headCols).toHaveLength(numCols)
+    expect(headCols[0]).toHaveTextContent("Id")
+    expect(headCols[1]).toHaveTextContent("Fight Date")
+    expect(headCols[2]).toHaveTextContent("Winner")
+    expect(headCols[3]).toHaveTextContent("Loser")
+
+    const tbody = within(table).getAllByRole('rowgroup')[1]
+    const bodyRows = within(tbody).getAllByRole('row')
+    const rowCols = within(bodyRows[0]).getAllByRole("cell")
+
+    expect(rowCols).toHaveLength(numCols)
+    expect(rowCols[0]).toHaveTextContent(fight.id)
+    expect(rowCols[1]).toHaveTextContent(fight.fightDate)
+    expect(rowCols[2]).toHaveTextContent(fight.winnerName)
+    expect(rowCols[3]).toHaveTextContent(fight.loserName)
   })
 
   it("renders rows for the fights", async () => {
