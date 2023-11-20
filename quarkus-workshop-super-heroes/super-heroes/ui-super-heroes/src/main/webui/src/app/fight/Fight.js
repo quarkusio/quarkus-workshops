@@ -4,7 +4,7 @@ import {faComment} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 
-function Fight() {
+function Fight({onFight}) {
   const [fighters, setFighters] = useState()
   const [fightResult, setFightResult] = useState()
   const [narration, setNarration] = useState()
@@ -21,7 +21,10 @@ function Fight() {
   }
 
   const fight = () => {
-    startFight(fighters).then(response => setFightResult(response))
+    startFight(fighters).then(response => {
+      setFightResult(response)
+      onFight()
+    })
   }
 
   // This initialises the component on its initial load with a call to get fighters
