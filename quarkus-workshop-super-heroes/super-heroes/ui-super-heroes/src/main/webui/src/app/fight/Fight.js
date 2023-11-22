@@ -39,8 +39,8 @@ function Fight({onFight}) {
     )
   } else
     return (
-      <div className="row" id="fight-row">
-        <div>
+      <div id="fight-row">
+        <div className='character'>
           <div className={winner === fighters.hero.name ? 'hero-winner-card' : 'off'}>
             <h2 className="hero-name">
               {fighters.hero.name}
@@ -84,7 +84,7 @@ function Fight({onFight}) {
           </div>
         </div>
 
-        <div>
+        <div className='character'>
           <div className={winner === fighters.villain.name ? 'villain-winner-card' : 'off'}>
             <h2 className="villain-name">
               {fighters.villain.name}

@@ -57,12 +57,10 @@ td {
 }
 
 .rounded {
-  display: inline-block;
-  position: relative;
-  width: 80%;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-bottom: 20px;
+    width: 80%;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 20px;
 }
 
 .level {
@@ -121,14 +119,15 @@ td {
   10px 0 50px #FF5B68;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 #fight-row {
-  margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    grid-auto-flow: column;
+    justify-content: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 30px;
+    gap: 2rem;
 }
 
 .fight-list-header {
@@ -143,6 +142,9 @@ td {
 
 .powers {
   font-size: xx-large;
+}
+
+.character {
 }
 
 .hero {
