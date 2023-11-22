@@ -123,7 +123,7 @@ public class FightResourceConsumerTest {
 
         assertEquals(hero.name, "Fallback hero");
         assertEquals(hero.picture,
-            "https://dummyimage.com/280x380/1e8fff/ffffff&text=Fallback+Hero");
+            "https://dummyimage.com/240x320/1e8fff/ffffff&text=Fallback+Hero");
         assertEquals(hero.level, 1);
     }
     // end::randomHeroNotFoundTest[]
