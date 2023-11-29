@@ -36,7 +36,7 @@ for os in "${oses[@]}"; do
                                             # Create a filename based on the combination
                                             # Any changes here should be reflected in the index.html UI, too
                                             # It would be nice to make nested folders but the maven iterator plugin needs a flat set of folders
-                                            dirname=${basedir}/os-${os}-native-${use_native}-ai-${use_ai}-kubernetes-${use_kubernetes}-contract-testing-${use_contract_testing}-observability-${use_observability}-extension-${use_extension}-messaging-${use_messaging}
+                                            dirname=${basedir}/os-${os}-ai-${use_ai}-azure-${use_azure}-cli-${use_cli}-container-${use_container}-contract-testing-${use_contract_testing}-extension-${use_extension}-kubernetes-${use_kubernetes}-messaging-${use_messaging}-native-${use_native}-observability-${use_observability}
                                             mkdir -p ${dirname}
 
                                             filename="${dirname}/options.adoc"
