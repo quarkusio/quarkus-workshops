@@ -29,7 +29,7 @@
             const selectedOptions = [];
 
             // Get the selected build option
-            const flags = ["native", "ai", "kubernetes", "contract-testing", "observability", "extension", "messaging"]
+            const flags = ["ai", "azure", "cli", "container", "contract-testing", "extension", "kubernetes", "messaging", "native", "observability"]
             const useFlags = flags.map(flag => {
                 const flagName = `use-${flag}`
                 const option = document.querySelector(`input[id="${flagName}"]:checked`);
