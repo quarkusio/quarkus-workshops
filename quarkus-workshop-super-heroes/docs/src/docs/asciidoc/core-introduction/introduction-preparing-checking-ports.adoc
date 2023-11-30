@@ -20,8 +20,12 @@ ifdef::use-ai[]
 lsof -i tcp:8086    # Narration REST API
 endif::use-ai[]
 lsof -i tcp:5432    # Postgres
+ifdef::use_observability[]
 lsof -i tcp:9090    # Prometheus
+endif::use_observability[]
+ifdef::use-messaging[]
 lsof -i tcp:2181    # Zookeeper
 lsof -i tcp:9092    # Kafka
+endif::use-messaging[]
 ----
 --

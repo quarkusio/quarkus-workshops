@@ -7,14 +7,14 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-fights .
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/rest-narration .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/rest-fights
+# docker run -i --rm -p 8080:8080 quarkus/rest-narration
 #
 ###
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.9
 WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \

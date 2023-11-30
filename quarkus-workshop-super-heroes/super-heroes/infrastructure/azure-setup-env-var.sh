@@ -3,7 +3,7 @@
 echo ">>> Setting environment variables..."
 
 # tag::adocEnvironmentVariables[]
-PROJECT="super-heroes"
+PROJECT="<give-your-project-a-name>"
 RESOURCE_GROUP="rg-${PROJECT}"
 LOCATION="eastus"
 TAG=$PROJECT
@@ -25,11 +25,6 @@ POSTGRES_DB_PWD="super-heroes-p#ssw0rd-12046"
 POSTGRES_DB_VERSION="15"
 POSTGRES_SKU="Standard_B1ms"
 POSTGRES_TIER="Burstable"
-
-# Kafka
-KAFKA_NAMESPACE="fights-kafka-$UNIQUE_IDENTIFIER"
-KAFKA_TOPIC="fights"
-KAFKA_BOOTSTRAP_SERVERS="$KAFKA_NAMESPACE.servicebus.windows.net:9093"
 
 # Heroes
 HEROES_APP="heroes-app"
@@ -67,5 +62,10 @@ NARRATION_IMAGE="${REGISTRY_URL}/${NARRATION_APP}:${IMAGES_TAG}"
 # Statistics
 STATISTICS_APP="statistics-app"
 STATISTICS_IMAGE="${REGISTRY_URL}/${STATISTICS_APP}:${IMAGES_TAG}"
+
+# Kafka
+KAFKA_NAMESPACE="fights-kafka-$UNIQUE_IDENTIFIER"
+KAFKA_TOPIC="fights"
+KAFKA_BOOTSTRAP_SERVERS="$KAFKA_NAMESPACE.servicebus.windows.net:9093"
 # end::adocEnvironmentVariablesStat[]
 
