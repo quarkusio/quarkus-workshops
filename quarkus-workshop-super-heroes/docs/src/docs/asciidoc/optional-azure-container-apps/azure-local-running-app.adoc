@@ -47,7 +47,7 @@ Make sure you've set all the environment variables defined in the previous chapt
 [example, role="cta"]
 --
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
-Tag the image using the `docker tag` commands (make sur to change the value of `quarkus/` by the value of your local organisation):
+Tag the image using the `docker tag` commands (make sure to change the value of `quarkus/` by the value of your local organisation):
 
 [source,shell,indent=0]
 ----
