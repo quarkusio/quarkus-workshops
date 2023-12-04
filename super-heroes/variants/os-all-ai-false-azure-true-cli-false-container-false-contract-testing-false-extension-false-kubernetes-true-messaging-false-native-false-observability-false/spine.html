@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-11-29 Quarkus 3.6.0</title>
+<title>Quarkus Super-Heroes Workshop: 2023-12-04 Quarkus 3.6.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-11-29 Quarkus 3.6.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-12-04 Quarkus 3.6.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -1022,14 +1022,6 @@ The table at the bottom shows the list of the previous fights.</p>
 <div class="imageblock half-size">
 <div class="content">
 <img src="../../images/react-ui.png" alt="react ui">
-</div>
-</div>
-<div class="paragraph">
-<p>The Statistics UI shows the number of fights per hero and villain.</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="../../images/react-ui-stats.png" alt="react ui stats">
 </div>
 </div>
 </div>
@@ -1661,10 +1653,7 @@ The final structure will be the following (don&#8217;t worry if you don&#8217;t 
 lsof -i tcp:8082    # Fight REST API
 lsof -i tcp:8083    # Hero REST API
 lsof -i tcp:8084    # Villain REST API
-lsof -i tcp:5432    # Postgres
-lsof -i tcp:9090    # Prometheus
-lsof -i tcp:2181    # Zookeeper
-lsof -i tcp:9092    # Kafka</code></pre>
+lsof -i tcp:5432    # Postgres</code></pre>
 </div>
 </div>
 </div>
@@ -6516,7 +6505,7 @@ It can be enabled in the Quarkus configuration file:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors=true
-%dev.quarkus.http.cors.origins=/.*/</code></pre>
+quarkus.http.cors.origins=/.*/</code></pre>
 </div>
 </div>
 </div>
@@ -8033,11 +8022,11 @@ az provider register --namespace Microsoft.Insights</code></pre>
 <div class="exampleblock cta">
 <div class="content">
 <div class="paragraph">
-<p>Set the following variables:</p>
+<p>Set the following variables.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">PROJECT=&quot;super-heroes&quot;
+<pre class="CodeRay highlight"><code data-lang="shell">PROJECT=&quot;&lt;give-your-project-a-name&gt;&quot;
 RESOURCE_GROUP=&quot;rg-${PROJECT}&quot;
 LOCATION=&quot;eastus&quot;
 TAG=$PROJECT
@@ -8208,11 +8197,6 @@ POSTGRES_DB_VERSION=&quot;15&quot;
 POSTGRES_SKU=&quot;Standard_B1ms&quot;
 POSTGRES_TIER=&quot;Burstable&quot;
 
-# Kafka
-KAFKA_NAMESPACE=&quot;fights-kafka-$UNIQUE_IDENTIFIER&quot;
-KAFKA_TOPIC=&quot;fights&quot;
-KAFKA_BOOTSTRAP_SERVERS=&quot;$KAFKA_NAMESPACE.servicebus.windows.net:9093&quot;
-
 # Heroes
 HEROES_APP=&quot;heroes-app&quot;
 HEROES_DB=&quot;heroes-db-$UNIQUE_IDENTIFIER&quot;
@@ -8246,14 +8230,40 @@ UI_IMAGE=&quot;${REGISTRY_URL}/${UI_APP}:${IMAGES_TAG}&quot;</code></pre>
 <h3 id="azure-local-running-app">Running the Application Locally</h3>
 <hr>
 <div class="paragraph">
-<p>In this chapter we will push the containers we&#8217;ve created in the previous chpater to Azure Container Registry, and we will run them locally.
+<p>In this chapter we will push the containers we&#8217;ve created in the previous chapter to Azure Container Registry, and we will run them locally.
 Later we will deploy them on Azure Container Apps.</p>
 </div>
 <div class="sect3">
 <h4 id="_pushing_local_images_to_azure_container_registry">Pushing Local Images to Azure Container Registry</h4>
 <div class="paragraph">
-<p>In the previous chapter we have built our Docker containers and run locally thanks to Docker Compose.
-Now we will push them to Azure Container Registry and execute them locally, again, with Docker Compose.</p>
+<p>In the previous chapter we have built our Docker containers and run locally thanks to Docker Compose.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Check that you have all the Docker images installed locally before going further by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker image ls</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">REPOSITORY                      TAG                  IMAGE ID       SIZE
+&lt;org&gt;/rest-fights             1.0.0-SNAPSHOT       adb8a546a66b   419MB
+&lt;org&gt;/rest-heroes             1.0.0-SNAPSHOT       d9e6ae6e3e23   402MB
+&lt;org&gt;/rest-villains           1.0.0-SNAPSHOT       60a5c813f59a   402MB
+&lt;org&gt;/ui-super-heroes         1.0.0-SNAPSHOT       82fce62c11a5   379MB</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we will tag the images, push them to Azure Container Registry and execute them locally, again, with Docker Compose.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -8273,7 +8283,7 @@ Now we will push them to Azure Container Registry and execute them locally, agai
 <div class="content">
 <div class="paragraph">
 <p>Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the <code>REGISTRY_URL</code> variable).
-Tag the image using the <code>docker tag</code> commands:</p>
+Tag the image using the <code>docker tag</code> commands (make sure to change the value of <code>quarkus/</code> by the value of your local organisation):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8281,6 +8291,30 @@ Tag the image using the <code>docker tag</code> commands:</p>
 docker tag quarkus/rest-fights:1.0.0-SNAPSHOT       $FIGHTS_IMAGE
 docker tag quarkus/rest-villains:1.0.0-SNAPSHOT     $VILLAINS_IMAGE
 docker tag quarkus/rest-heroes:1.0.0-SNAPSHOT       $HEROES_IMAGE</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Make sure all the images have properly been tagged by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">docker image ls</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">REPOSITORY                      TAG                  IMAGE ID       SIZE
+registrysuperheroes&lt;uniquename&gt;.azurecr.io/fights-app            1.0    f6605baa0b3c  461MB
+registrysuperheroes&lt;uniquename&gt;.azurecr.io/heroes-app            1.0    c5acab2980c3  443MB
+registrysuperheroes&lt;uniquename&gt;.azurecr.io/villains-app          1.0    666953f1bd0c  444MB
+registrysuperheroes&lt;uniquename&gt;.azurecr.io/super-heroes-ui       1.0    879013ecd43a  420MB</code></pre>
 </div>
 </div>
 </div>
@@ -8396,16 +8430,6 @@ Once all the containers are started, you can:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>On <a href="http://localhost:8085" class="bare">http://localhost:8085</a> you should see the statistics of the fights.
-When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.
-The UI is automatically updated at each fight:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../../images/react-ui-stats.png" alt="react ui stats">
-</div>
-</div>
-<div class="paragraph">
 <p>You should see the user interface and everything should work.
 Remember to shutdown the entire application with:</p>
 </div>
@@ -8477,7 +8501,7 @@ Create the databases with the following commands:</p>
   --public all \
   --tier &quot;$POSTGRES_TIER&quot; \
   --sku-name &quot;$POSTGRES_SKU&quot; \
-  --storage-size 64 \
+  --storage-size 32 \
   --version &quot;$POSTGRES_DB_VERSION&quot;</code></pre>
 </div>
 </div>
@@ -8493,7 +8517,7 @@ Create the databases with the following commands:</p>
   --public all \
   --tier &quot;$POSTGRES_TIER&quot; \
   --sku-name &quot;$POSTGRES_SKU&quot; \
-  --storage-size 64 \
+  --storage-size 32 \
   --version &quot;$POSTGRES_DB_VERSION&quot;</code></pre>
 </div>
 </div>
@@ -8509,7 +8533,7 @@ Create the databases with the following commands:</p>
   --public all \
   --tier &quot;$POSTGRES_TIER&quot; \
   --sku-name &quot;$POSTGRES_SKU&quot; \
-  --storage-size 64 \
+  --storage-size 32 \
   --version &quot;$POSTGRES_DB_VERSION&quot;</code></pre>
 </div>
 </div>
@@ -9526,7 +9550,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-11-29</div>
+    <div>Last updated 2023-12-04</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>

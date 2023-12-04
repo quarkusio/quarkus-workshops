@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-11-29 Quarkus 3.6.0</title>
+<title>Quarkus Super-Heroes Workshop: 2023-12-04 Quarkus 3.6.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-11-29 Quarkus 3.6.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-12-04 Quarkus 3.6.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -989,14 +989,6 @@ The table at the bottom shows the list of the previous fights.</p>
 <div class="imageblock half-size">
 <div class="content">
 <img src="../../images/react-ui.png" alt="react ui">
-</div>
-</div>
-<div class="paragraph">
-<p>The Statistics UI shows the number of fights per hero and villain.</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="../../images/react-ui-stats.png" alt="react ui stats">
 </div>
 </div>
 </div>
@@ -1448,10 +1440,7 @@ The final structure will be the following (don&#8217;t worry if you don&#8217;t 
 lsof -i tcp:8082    # Fight REST API
 lsof -i tcp:8083    # Hero REST API
 lsof -i tcp:8084    # Villain REST API
-lsof -i tcp:5432    # Postgres
-lsof -i tcp:9090    # Prometheus
-lsof -i tcp:2181    # Zookeeper
-lsof -i tcp:9092    # Kafka</code></pre>
+lsof -i tcp:5432    # Postgres</code></pre>
 </div>
 </div>
 </div>
@@ -6293,7 +6282,7 @@ It can be enabled in the Quarkus configuration file:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors=true
-%dev.quarkus.http.cors.origins=/.*/</code></pre>
+quarkus.http.cors.origins=/.*/</code></pre>
 </div>
 </div>
 </div>
@@ -7085,7 +7074,7 @@ It looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/openjdk-17:1.16
+<pre class="CodeRay highlight"><code data-lang="text">FROM registry.access.redhat.com/ubi8/openjdk-17:1.18
 
 ENV LANGUAGE='en_US:en'
 
@@ -7098,7 +7087,7 @@ COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
 
 EXPOSE 8080
 USER 185
-ENV JAVA_OPTS=&quot;-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager&quot;
+ENV JAVA_OPTS_APPEND=&quot;-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager&quot;
 ENV JAVA_APP_JAR=&quot;/deployments/quarkus-run.jar&quot;
 
 ENTRYPOINT [ &quot;/opt/jboss/container/java/run/run-java.sh&quot; ]</code></pre>
@@ -8638,7 +8627,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-11-29</div>
+    <div>Last updated 2023-12-04</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>

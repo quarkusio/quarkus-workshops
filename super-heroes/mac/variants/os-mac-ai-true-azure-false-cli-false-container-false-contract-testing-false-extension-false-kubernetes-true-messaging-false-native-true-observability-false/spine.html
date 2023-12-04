@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2023-11-29 Quarkus 3.6.0</title>
+<title>Quarkus Super-Heroes Workshop: 2023-12-04 Quarkus 3.6.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2023-11-29 Quarkus 3.6.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2023-12-04 Quarkus 3.6.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -1012,14 +1012,6 @@ The table at the bottom shows the list of the previous fights.</p>
 <img src="../../images/react-ui-ai.png" alt="react ui ai">
 </div>
 </div>
-<div class="paragraph">
-<p>The Statistics UI shows the number of fights per hero and villain.</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="../../images/react-ui-stats.png" alt="react ui stats">
-</div>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_how_does_this_workshop_work">How Does This Workshop Work?</h4>
@@ -1109,7 +1101,7 @@ So your job is to follow the instructions by yourself, do what you are supposed 
 <p>cURL (should already be installed in your OS, if not, check <a href="#appendix-installing-curl">the appendix for installation instructions</a>) and <code>jq</code></p>
 </li>
 <li>
-<p>OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)</p>
+<p>OpenAI or Azure OpenAI keys</p>
 </li>
 </ul>
 </div>
@@ -1689,10 +1681,10 @@ az account show</code></pre>
 echo &quot;----------------------------------&quot;
 PROJECT=&quot;&lt;give-your-project-a-name&gt;&quot;
 RESOURCE_GROUP=&quot;rg-$PROJECT&quot;
-COGNITIVE_SERVICE=&quot;cognit-$PROJECT&quot;
-COGNITIVE_DEPLOYMENT=&quot;gpt35turbo&quot;
 LOCATION=&quot;eastus&quot;
 TAG=&quot;$PROJECT&quot;
+COGNITIVE_SERVICE=&quot;cognit-$PROJECT&quot;
+COGNITIVE_DEPLOYMENT=&quot;gpt35turbo&quot;
 
 echo &quot;Creating the resource group...&quot;
 echo &quot;------------------------------&quot;
@@ -1862,10 +1854,7 @@ lsof -i tcp:8082    # Fight REST API
 lsof -i tcp:8083    # Hero REST API
 lsof -i tcp:8084    # Villain REST API
 lsof -i tcp:8086    # Narration REST API
-lsof -i tcp:5432    # Postgres
-lsof -i tcp:9090    # Prometheus
-lsof -i tcp:2181    # Zookeeper
-lsof -i tcp:9092    # Kafka</code></pre>
+lsof -i tcp:5432    # Postgres</code></pre>
 </div>
 </div>
 </div>
@@ -6710,7 +6699,7 @@ It can be enabled in the Quarkus configuration file:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors=true
-%dev.quarkus.http.cors.origins=/.*/</code></pre>
+quarkus.http.cors.origins=/.*/</code></pre>
 </div>
 </div>
 </div>
@@ -7600,7 +7589,7 @@ Add the following XML in the <code>rest-narration/pom.xml</code> file:</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml">  <span class="tag">&lt;properties&gt;</span>
     <span class="comment">&lt;!-- ... --&gt;</span>
-    <span class="tag">&lt;semantic-kernel.version&gt;</span>0.2.9-alpha<span class="tag">&lt;/semantic-kernel.version&gt;</span>
+    <span class="tag">&lt;semantic-kernel.version&gt;</span>0.2.11-alpha<span class="tag">&lt;/semantic-kernel.version&gt;</span>
   <span class="tag">&lt;/properties&gt;</span>
   <span class="tag">&lt;dependencyManagement&gt;</span>
     <span class="tag">&lt;dependencies&gt;</span>
@@ -7619,6 +7608,10 @@ Add the following XML in the <code>rest-narration/pom.xml</code> file:</p>
     <span class="tag">&lt;dependency&gt;</span>
       <span class="tag">&lt;groupId&gt;</span>com.microsoft.semantic-kernel<span class="tag">&lt;/groupId&gt;</span>
       <span class="tag">&lt;artifactId&gt;</span>semantickernel-core<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;/dependency&gt;</span>
+    <span class="tag">&lt;dependency&gt;</span>
+      <span class="tag">&lt;groupId&gt;</span>com.microsoft.semantic-kernel<span class="tag">&lt;/groupId&gt;</span>
+      <span class="tag">&lt;artifactId&gt;</span>semantickernel-settings-loader<span class="tag">&lt;/artifactId&gt;</span>
     <span class="tag">&lt;/dependency&gt;</span>
     <span class="tag">&lt;dependency&gt;</span>
       <span class="tag">&lt;groupId&gt;</span>com.microsoft.semantic-kernel<span class="tag">&lt;/groupId&gt;</span>
@@ -7758,7 +7751,6 @@ This class has the following methods:</p>
 <span class="keyword">import</span> <span class="include">com.azure.ai.openai.OpenAIAsyncClient</span>;
 <span class="keyword">import</span> <span class="include">com.microsoft.semantickernel.Kernel</span>;
 <span class="keyword">import</span> <span class="include">com.microsoft.semantickernel.SKBuilders</span>;
-<span class="keyword">import</span> <span class="include">com.microsoft.semantickernel.connectors.ai.openai.util.ClientType</span>;
 <span class="keyword">import</span> <span class="include">com.microsoft.semantickernel.connectors.ai.openai.util.OpenAIClientProvider</span>;
 <span class="keyword">import</span> <span class="include">com.microsoft.semantickernel.exceptions.ConfigurationException</span>;
 <span class="keyword">import</span> <span class="include">com.microsoft.semantickernel.orchestration.SKContext</span>;
@@ -8034,7 +8026,7 @@ Just add the following configuration to the Quarkus <code>application.properties
 quarkus.http.port=8086
 ## CORS
 quarkus.http.cors=true
-%dev.quarkus.http.cors.origins=/.*/
+quarkus.http.cors.origins=*
 ## Logging configuration
 quarkus.log.category.&quot;com.microsoft.semantickernel&quot;.level=DEBUG</code></pre>
 </div>
@@ -9582,7 +9574,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2023-11-29</div>
+    <div>Last updated 2023-12-04</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
