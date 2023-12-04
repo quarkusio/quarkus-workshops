@@ -92,7 +92,10 @@ Let's first set a few environment variables that will help us in creating the Az
 [example, role="cta"]
 --
 
-Set the following variables:
+Set the following variables.
+ifdef::use-ai[]
+If you've picked up Azure OpenAI for the Narration microservice, then you should already have the `PROJECT`, `RESOURCE_GROUP`, `LOCATION` and `TAG` variables setup.
+endif::use-ai[]
 
 [source,shell,indent=0]
 ----

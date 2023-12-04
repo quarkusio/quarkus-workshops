@@ -3,13 +3,41 @@
 
 '''
 
-In this chapter we will push the containers we've created in the previous chpater to Azure Container Registry, and we will run them locally.
+In this chapter we will push the containers we've created in the previous chapter to Azure Container Registry, and we will run them locally.
 Later we will deploy them on Azure Container Apps.
 
 == Pushing Local Images to Azure Container Registry
 
 In the previous chapter we have built our Docker containers and run locally thanks to Docker Compose.
-Now we will push them to Azure Container Registry and execute them locally, again, with Docker Compose.
+
+[example, role="cta"]
+--
+Check that you have all the Docker images installed locally before going further by executing the following command:
+
+[source,shell]
+----
+docker image ls
+----
+
+The output should look like this:
+
+[source,shell]
+----
+REPOSITORY                      TAG                  IMAGE ID       SIZE
+<org>/rest-fights             1.0.0-SNAPSHOT       adb8a546a66b   419MB
+<org>/rest-heroes             1.0.0-SNAPSHOT       d9e6ae6e3e23   402MB
+<org>/rest-villains           1.0.0-SNAPSHOT       60a5c813f59a   402MB
+<org>/ui-super-heroes         1.0.0-SNAPSHOT       82fce62c11a5   379MB
+ifdef::use-messaging[]
+<org>/event-statistics        1.0.0-SNAPSHOT       a5472c5bd576   395MB
+endif::use-messaging[]
+ifdef::use-ai[]
+<org>/rest-narration          1.0.0-SNAPSHOT       fcfe334594f3   390MB
+endif::use-ai[]
+----
+--
+
+Now we will tag the images, push them to Azure Container Registry and execute them locally, again, with Docker Compose.
 
 [NOTE]
 ====
@@ -19,7 +47,7 @@ Make sure you've set all the environment variables defined in the previous chapt
 [example, role="cta"]
 --
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
-Tag the image using the `docker tag` commands:
+Tag the image using the `docker tag` commands (make sure to change the value of `quarkus/` by the value of your local organisation):
 
 [source,shell,indent=0]
 ----
@@ -31,6 +59,33 @@ ifdef::use-ai[]
 include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocTaggingNarration]
 endif::use-ai[]
 
+----
+--
+
+[example, role="cta"]
+--
+Make sure all the images have properly been tagged by executing the following command:
+
+[source,shell]
+----
+docker image ls
+----
+
+The output should look like this:
+
+[source,shell]
+----
+REPOSITORY                      TAG                  IMAGE ID       SIZE
+registrysuperheroes<uniquename>.azurecr.io/fights-app            1.0    f6605baa0b3c  461MB
+registrysuperheroes<uniquename>.azurecr.io/heroes-app            1.0    c5acab2980c3  443MB
+registrysuperheroes<uniquename>.azurecr.io/villains-app          1.0    666953f1bd0c  444MB
+registrysuperheroes<uniquename>.azurecr.io/super-heroes-ui       1.0    879013ecd43a  420MB
+ifdef::use-messaging[]
+registrysuperheroes<uniquename>.azurecr.io/event-statistics      1.0    a5472c5bd576  395MB
+endif::use-messaging[]
+ifdef::use-ai[]
+registrysuperheroes<uniquename>.azurecr.io/narration-app         1.0    50c657de360d  432MB
+endif::use-ai[]
 ----
 --
 
@@ -118,11 +173,13 @@ image::react-ui.png[]
 endif::use-ai[]
 
 
+ifdef::use-messaging[]
 On http://localhost:8085 you should see the statistics of the fights.
 When super heroes and super heroes are fights, the statistics shows which one has won the most fights, and the percentage of fights won by the two groups.
 The UI is automatically updated at each fight:
 
 image::react-ui-stats.png[]
+endif::use-messaging[]
 
 You should see the user interface and everything should work.
 Remember to shutdown the entire application with:

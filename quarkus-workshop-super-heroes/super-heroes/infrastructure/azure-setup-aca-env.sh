@@ -44,7 +44,7 @@ az postgres flexible-server create \
   --public all \
   --tier "$POSTGRES_TIER" \
   --sku-name "$POSTGRES_SKU" \
-  --storage-size 64 \
+  --storage-size 32 \
   --version "$POSTGRES_DB_VERSION"
 # end::adocCreatePostgresH[]
 
@@ -62,7 +62,7 @@ az postgres flexible-server create \
   --public all \
   --tier "$POSTGRES_TIER" \
   --sku-name "$POSTGRES_SKU" \
-  --storage-size 64 \
+  --storage-size 32 \
   --version "$POSTGRES_DB_VERSION"
 # end::adocCreatePostgresV[]
 
@@ -80,7 +80,7 @@ az postgres flexible-server create \
   --public all \
   --tier "$POSTGRES_TIER" \
   --sku-name "$POSTGRES_SKU" \
-  --storage-size 64 \
+  --storage-size 32 \
   --version "$POSTGRES_DB_VERSION"
 # end::adocCreatePostgresF[]
 

@@ -51,7 +51,7 @@ So make sure you set the following properties on the:
 [source,properties]
 ----
 quarkus.http.cors=true
-%dev.quarkus.http.cors.origins=/.*/
+quarkus.http.cors.origins=/.*/
 ----
 --
 

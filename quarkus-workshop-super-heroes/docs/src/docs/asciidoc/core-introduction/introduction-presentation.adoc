@@ -77,9 +77,11 @@ image::react-ui.png[role=half-size]
 endif::use-ai[]
 
 
+ifdef::use-messaging[]
 The Statistics UI shows the number of fights per hero and villain.
 
 image::react-ui-stats.png[role=half-size]
+endif::use-messaging[]
 
 == How Does This Workshop Work?
 
@@ -164,7 +166,7 @@ endif::use-native[]
 * Docker or Podman
 * cURL (should already be installed in your OS, if not, check xref:appendix-installing-curl[the appendix for installation instructions]) and `jq`
 ifdef::use-ai[]
-* OpenAI or Azure OpenAI keys (optional, only if you want to use the narration feature)
+* OpenAI or Azure OpenAI keys
 endif::use-ai[]
 ifdef::use-azure[]
 * An Azure subscription and the Azure CLI

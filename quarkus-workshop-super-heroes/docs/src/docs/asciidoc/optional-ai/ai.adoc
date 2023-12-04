@@ -160,6 +160,10 @@ Add the following XML in the `rest-narration/pom.xml` file:
     </dependency>
     <dependency>
       <groupId>com.microsoft.semantic-kernel</groupId>
+      <artifactId>semantickernel-settings-loader</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.semantic-kernel</groupId>
       <artifactId>semantickernel-connectors-ai-openai</artifactId>
     </dependency>
   </dependencies>
