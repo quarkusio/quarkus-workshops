@@ -13,11 +13,19 @@ function Fight({onFight}) {
 
 
   const newFighters = () => {
-    getRandomFighters().then(answer => setFighters(answer))
+    getRandomFighters().then(answer => {
+      setFighters(answer)
+      clearPreviousFight()
+    })
   }
 
   const narrate = () => {
     narrateFight(fightResult).then(answer => setNarration(answer))
+  }
+
+  const clearPreviousFight = () => {
+    setNarration(undefined)
+    setFightResult(undefined)
   }
 
   const fight = () => {
