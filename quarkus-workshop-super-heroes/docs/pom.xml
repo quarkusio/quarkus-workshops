@@ -50,7 +50,7 @@ The default build will take around 50m.
         <quarkus.pact.version>1.1.0</quarkus.pact.version>
         <semantic-kernel.version>0.2.11-alpha</semantic-kernel.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
-        <surefire-plugin.version>3.2.2</surefire-plugin.version>
+        <surefire-plugin.version>3.2.3</surefire-plugin.version>
         <exec-plugin.version>3.1.0</exec-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
