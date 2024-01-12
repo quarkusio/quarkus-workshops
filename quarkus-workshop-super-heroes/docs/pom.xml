@@ -32,7 +32,7 @@ The default build will take around 50m.
     <name>Quarkus Workshop :: Docs</name>
 
     <properties>
-        <version.asciidoctor.maven.plugin>2.2.4</version.asciidoctor.maven.plugin>
+        <version.asciidoctor.maven.plugin>2.2.5</version.asciidoctor.maven.plugin>
         <version.jruby>9.4.5.0</version.jruby>
         <version.asciidoctorj>2.5.10</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
