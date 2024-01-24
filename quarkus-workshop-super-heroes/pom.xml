@@ -46,7 +46,7 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.7</version>
                 <executions>
                     <execution>
                         <id>get-wrapper</id>
