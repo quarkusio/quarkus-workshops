@@ -1,0 +1,80 @@
+schemaVersion: 2.2.0
+metadata:
+  name: superheroes-workshop
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image@sha256:75034f0dad7a6df3db53e20fc3597b68f2311e556164d47aa9151d3b3584bbce
+      #image: quay.io/openshiftlabs/quarkus-workshop-stack:3.9
+      memoryLimit: 8Gi
+      memoryRequest: 1Gi
+      cpuLimit: "2"
+      cpuRequest: 200m
+      env:
+        - name: USE_JAVA17
+          value: "true"
+        - value: /home/jboss/.m2
+          name: MAVEN_CONFIG
+        - value: -Xmx4G -Xss128M -XX:MetaspaceSize=1G -XX:MaxMetaspaceSize=2G
+          name: MAVEN_OPTS
+        - name: KUBEDOCK_ENABLED
+          value: 'true'
+        - name: DOCKER_HOST
+          value: 'tcp://127.0.0.1:2475'
+        - name: TESTCONTAINERS_RYUK_DISABLED
+          value: 'true'
+        - name: TESTCONTAINERS_CHECKS_DISABLE
+          value: 'true'          
+      endpoints:
+        - exposure: none
+          name: kubedock
+          protocol: tcp
+          targetPort: 2475      
+        - exposure: public
+          name: http-booster
+          protocol: http
+          targetPort: 8080
+          attributes:
+            discoverable: true
+            urlRewriteSupported: true
+        - exposure: internal
+          name: debug
+          protocol: http
+          targetPort: 5005
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+  - name: m2
+    volume:
+      size: 10G
+commands:
+  - id: 01-run-tests
+    exec:
+      label: 01. Run Tests
+      component: quarkus-tools
+      commandLine: mvn verify
+  - id: 02-live-coding
+    exec:
+      label: 02. Start Live Coding
+      component: quarkus-tools
+      commandLine: mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0
+  - id: 03-package-app
+    exec:
+      label: 03. Package App for OpenShift
+      component: quarkus-tools
+      commandLine: mvn package -DskipTests
+  - id: 04-build-native
+    exec:
+      label: 04. Build Native App
+      component: quarkus-tools
+      commandLine: mvn package -Pnative -DskipTests
+  - id: 05-run-fast-jar
+    exec:
+      label: 05. Run Fast Jar
+      component: quarkus-tools
+      commandLine: java -Dquarkus.http.port=8081 -jar target/quarkus-app/quarkus-run.jar
+  - id: 06-run-native
+    exec:
+      label: 06. Run Native App
+      component: quarkus-tools
+      commandLine: ./target/people-1.0-SNAPSHOT-runner -Dquarkus.http.port=8081      
