@@ -27,7 +27,7 @@ To avoid port conflicts between the real services and the Pact stubs, let's use 
 Open the fight service's `application.properties` and add the following
 
 ----
-%test.quarkus.rest-client.hero.url=http://localhost:8083=http://localhost:8093
+%test.quarkus.rest-client.hero.url=http://localhost:8093
 ----
 
 The `%test` scopes the updated property to only apply in the test mode.
