@@ -5358,6 +5358,9 @@ During that time, it can handle other requests.</p>
 <pre class="CodeRay highlight"><code data-lang="properties">## HTTP configuration
 quarkus.http.port=8083
 
+## Custom banner file path
+quarkus.banner.path=banner.txt
+
 # drop and create the database at startup (use `update` to only update the schema)
 quarkus.hibernate-orm.database.generation=drop-and-create
 
@@ -6325,6 +6328,9 @@ JSON being the default media type in Quarkus, we could have omitted the <code>@P
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="properties">## HTTP configuration
 quarkus.http.port=8082
+
+## Custom banner file path
+quarkus.banner.path=banner.txt
 
 ## drop and create the database at startup (use `update` to only update the schema)
 quarkus.hibernate-orm.database.generation=drop-and-create
@@ -8073,6 +8079,10 @@ Just add the following configuration to the Quarkus <code>application.properties
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="properties">## HTTP configuration
 quarkus.http.port=8086
+
+## Custom banner file path
+quarkus.banner.path=banner.txt
+
 ## CORS
 quarkus.http.cors=true
 quarkus.http.cors.origins=*
