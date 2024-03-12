@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
     <properties>
-        <assembly-plugin.version>3.6.0</assembly-plugin.version>
+        <assembly-plugin.version>3.7.0</assembly-plugin.version>
     </properties>
     <modules>
         <module>super-heroes/ui-super-heroes</module>
