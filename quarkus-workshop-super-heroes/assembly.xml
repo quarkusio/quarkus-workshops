@@ -40,6 +40,7 @@
             </excludes>
             <includes>
                 <include>pom.xml</include>
+                <include>assembly*</include>
                 <include>.editorconfig</include>
                 <include>mvnw*</include>
                 <include>.mvn/wrapper/maven-wrapper.properties</include>
