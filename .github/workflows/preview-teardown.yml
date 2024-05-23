@@ -10,9 +10,10 @@ jobs:
     steps:
       - name: Teardown surge preview
         id: deploy
-        run: npx surge teardown https://quarkiverse-quarkus-workshops-pr-${{ github.event.number }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }} || true
+        run: npx surge teardown https://quarkiverse-quarkus-workshops-pr-${{ github.event.number }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }} || echo "NOT_TORNDOWN=true" >> "$GITHUB_ENV"
       - name: Update PR status comment
         uses: actions-cool/maintain-one-comment@v3.0.0
+        if: env.NOT_TORNDOWN != 'true'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
