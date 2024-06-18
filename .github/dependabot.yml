@@ -9,3 +9,11 @@ updates:
       - "version-upgrade"
     pull-request-branch-name:
       separator: "_"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: daily
+    labels:
+      - infra
+    pull-request-branch-name:
+      separator: "_"
