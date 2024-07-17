@@ -3,6 +3,8 @@ set -e
 
 # Define the variable variations
 # To disable a variant, just set it to false, rather than removing it (or remove it everywhere, including the pom and the HTML)
+# NOTE: If you disable it here, you also need to remove it from the configurator: index.html
+# and also from default-options.adoc
 ai=("true" "false")
 azure=("true" "false")
 cli=("false")
