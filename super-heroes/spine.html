@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2024-06-18 Quarkus 3.6.0</title>
+<title>Quarkus Super-Heroes Workshop: 2024-07-17 Quarkus 3.6.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2024-06-18 Quarkus 3.6.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2024-07-17 Quarkus 3.6.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -832,24 +832,6 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#messaging-conclusion">Unifying Imperative and Reactive Programming</a></li>
 </ul>
 </li>
-<li><a href="#observability">Observability</a>
-<ul class="sectlevel2">
-<li><a href="#observability-healthcheck">Health Check</a>
-<ul class="sectlevel3">
-<li><a href="#_directory_structure_11">Directory Structure</a></li>
-<li><a href="#_installing_the_health_dependency">Installing the Health Dependency</a></li>
-<li><a href="#_running_the_default_health_check">Running the Default Health Check</a></li>
-<li><a href="#_adding_liveness">Adding Liveness</a></li>
-</ul>
-</li>
-<li><a href="#observability-prometheus">Displaying Metrics on Prometheus</a>
-<ul class="sectlevel3">
-<li><a href="#_configuring_prometheus">Configuring Prometheus</a></li>
-<li><a href="#_adding_graphs_to_prometheus">Adding Graphs to Prometheus</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a href="#cli">Loading the Microservices</a>
 <ul class="sectlevel2">
 <li><a href="#_give_me_some_load">Give me some load!</a></li>
@@ -1080,9 +1062,6 @@ On Windows it is also recommended to have WSL (<a href="https://docs.microsoft.c
 <p>How to deploy the microservices to Kubernetes</p>
 </li>
 <li>
-<p>How to monitor your microservices with Prometheus</p>
-</li>
-<li>
 <p>What is Azure Container Apps</p>
 </li>
 <li>
@@ -1175,9 +1154,6 @@ Invocations to the other microservices are protected using resilience patterns (
 It has an HTML + JQuery UI displaying all the statistics.</p>
 </li>
 <li>
-<p><em>Prometheus</em>: Polls metrics from the three microservices Fight, Hero, and Villain.</p>
-</li>
-<li>
 <p><em>Command Line Interface</em>: Quarkus can also be used to create CLI applications.
 You will create a CLI application that adds load to the Fight, Hero, and Villain microservices.</p>
 </li>
@@ -1243,10 +1219,6 @@ in this section, you will create Docker images of all the microservices</p>
 <li>
 <p><em>Cloud</em>:
 once the microservices are all containerize, you can deploy them to Kubernetes</p>
-</li>
-<li>
-<p><em>Observability</em>:
-in this section, you will add metrics, health checks, and distributed tracing to your microservices</p>
 </li>
 <li>
 <p><em>Azure Container Apps and Quarkus</em>:
@@ -10266,372 +10238,6 @@ To go further on this, we recommend:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="observability">Observability</h2>
-<div class="sectionbody">
-<hr>
-<div class="paragraph">
-<p>Now that we have several microservices, observing them starts to be a bit tricky:
-we can&#8217;t just look at the logs of all the microservices to see if they are up and running or behaving correctly.
-In the following sections you will add health checks and several metrics to the Fight, Hero and Villain APIs and gather them within Prometheus.</p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="images/diag-plantuml-md5-e02bbaf637a94b52982898cd47c02fa9.png" alt="Diagram" width="2865" height="2865">
-</div>
-</div>
-<div class="paragraph">
-<p>In the following sections, you will learn how to:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Add health checks to our microservices</p>
-</li>
-</ul>
-</div>
-<div class="sect2">
-<h3 id="observability-healthcheck">Health Check</h3>
-<div class="paragraph">
-<p>Quarkus applications can utilize the MicroProfile Health specification through the SmallRye Health extension.
-The MicroProfile Health allows applications to provide information about their state to external viewers which is typically useful in cloud environments where automated processes must be able to determine whether the application should be discarded or restarted.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup></p>
-</div>
-<div class="sect3">
-<h4 id="_directory_structure_11">Directory Structure</h4>
-<div class="paragraph">
-<p>In this module we will add an extra subdirectory with two classes to handle the Health Check.
-You will end-up with the following directory structure:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/diag-plantuml-md5-498786c562fdd24a92a0460ff8c2454e.png" alt="Diagram" width="362" height="276">
-</div>
-</div>
-<div class="paragraph">
-<p>While you could add health checks to all our microservices, we are focusing on the <strong>Hero microservice</strong>.
-So don&#8217;t forget to switch to the Hero microservice code.
-You can apply the same to the other microservices.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_installing_the_health_dependency">Installing the Health Dependency</h4>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>To install the MicroProfile Health dependency, just run the following command under the Hero microservice directory (<code>super-heroes/rest-heroes</code>):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw quarkus:add-extension -Dextensions=&quot;smallrye-health&quot;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>This will add the following dependency in the <code>pom.xml</code> file:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
-  <span class="tag">&lt;groupId&gt;</span>io.quarkus<span class="tag">&lt;/groupId&gt;</span>
-  <span class="tag">&lt;artifactId&gt;</span>quarkus-smallrye-health<span class="tag">&lt;/artifactId&gt;</span>
-<span class="tag">&lt;/dependency&gt;</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_running_the_default_health_check">Running the Default Health Check</h4>
-<div class="paragraph">
-<p>Importing the <code>smallrye-health</code> extension directly exposes three REST endpoints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>/q/health/live</code> - The application is up and running.</p>
-</li>
-<li>
-<p><code>/q/health/ready</code> - The application is ready to serve requests.</p>
-</li>
-<li>
-<p><code>/q/health</code> - Accumulating all health check procedures in the application.</p>
-</li>
-<li>
-<p><code>/q/health-ui</code> - Graphical interface of all the checks.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To check that the <code>smallrye-health</code> extension is working as expected, make sure the Hero service is up and running (<code>./mvnw quarkus:dev</code>) and access using your browser or cURL the following URLs:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://localhost:8083/q/health/live" class="bare">http://localhost:8083/q/health/live</a></p>
-</li>
-<li>
-<p><a href="http://localhost:8083/q/health/ready" class="bare">http://localhost:8083/q/health/ready</a></p>
-</li>
-<li>
-<p><a href="http://localhost:8083/q/health" class="bare">http://localhost:8083/q/health</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>All of the health REST endpoints return a simple JSON object with two fields:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>status</code>: the overall result of all the health check procedures</p>
-</li>
-<li>
-<p><code>checks</code>: an array of individual checks (each check has a <code>name</code>, <code>status</code> and optional <code>data</code>)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The general <code>status</code> of the health check is computed as a logical AND of all the declared health check procedures.
-The JSON output looks like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="json">{
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">checks</span><span class="delimiter">&quot;</span></span>: [
-        {
-            <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Reactive PostgreSQL connections health check</span><span class="delimiter">&quot;</span></span>,
-            <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
-            <span class="key"><span class="delimiter">&quot;</span><span class="content">data</span><span class="delimiter">&quot;</span></span>: {
-                <span class="key"><span class="delimiter">&quot;</span><span class="content">&lt;default&gt;</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>
-            }
-        }
-    ]
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can also have a nicer graphical representation by going to <a href="http://localhost:8083/q/health-ui" class="bare">http://localhost:8083/q/health-ui</a>.
-If you check the health of our microservices, you will notice that Quarkus had automatically defined common health checks.
-But let&#8217;s define some specific to our microservices.</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="images/observability-health-ui.png" alt="observability health ui">
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_adding_liveness">Adding Liveness</h4>
-<div class="paragraph">
-<p>To check that our Hero API application is live, we can check that the <code>HeroResource.hello()</code> method works.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>For that, this is the <code>PingHeroResourceHealthCheck</code> class that we can write under the <code>io.quarkus.workshop.superheroes.hero.health</code> sub-package:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.quarkus.workshop.superheroes.hero.health</span>;
-
-<span class="keyword">import</span> <span class="include">io.quarkus.workshop.superheroes.hero.HeroResource</span>;
-<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.health.HealthCheck</span>;
-<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.health.HealthCheckResponse</span>;
-<span class="keyword">import</span> <span class="include">org.eclipse.microprofile.health.Liveness</span>;
-
-<span class="keyword">import</span> <span class="include">jakarta.inject.Inject</span>;
-
-<span class="comment">/**
- * {@link HealthCheck} to ping the Hero service
- */</span>
-<span class="annotation">@Liveness</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">PingHeroResourceHealthCheck</span> <span class="directive">implements</span> HealthCheck {
-
-    <span class="annotation">@Inject</span>
-    HeroResource heroResource;
-
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> HealthCheckResponse call() {
-        <span class="predefined-type">String</span> response = heroResource.hello();
-        <span class="keyword">return</span> HealthCheckResponse.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ping Hero REST Endpoint</span><span class="delimiter">&quot;</span></span>).withData(<span class="string"><span class="delimiter">&quot;</span><span class="content">Response</span><span class="delimiter">&quot;</span></span>, response).up().build();
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>As you can see health check procedures are defined as implementations of the <code>HealthCheck</code> interface which are defined as CDI beans with the CDI qualifier <code>@Liveness</code>.
-The liveness check accessible at <code>/q/health/live</code>.
-<code>HealthCheck</code> is a functional interface whose single method <code>call</code> returns a <code>HealthCheckResponse</code> object which can be easily constructed by the fluent builder API shown in the example.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>As we have started our Quarkus application in dev mode simply repeat the request to <a href="http://localhost:8083/q/health/live" class="bare">http://localhost:8083/q/health/live</a> by refreshing your browser window or by using curl <a href="http://localhost:8083/q/health/live" class="bare">http://localhost:8083/q/health/live</a>.
-Because we defined our health check to be a liveness procedure (with <code>@Liveness</code> qualifier) the new health check procedure is now present in the checks array.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="json">{
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">checks</span><span class="delimiter">&quot;</span></span>: [
-        {
-            <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Ping Hero REST Endpoint</span><span class="delimiter">&quot;</span></span>,
-            <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>,
-            <span class="key"><span class="delimiter">&quot;</span><span class="content">data</span><span class="delimiter">&quot;</span></span>: {
-                <span class="key"><span class="delimiter">&quot;</span><span class="content">Response</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello Hero Resource</span><span class="delimiter">&quot;</span></span>
-            }
-        }
-    ]
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Here we&#8217;ve just shown you the health check for the Hero API, but you should do the same for Fight and Villain.
-Create a <code>PingVillainResourceHealthCheck</code> for the Villain microservice (under <code>io.quarkus.workshop.superheroes.villain.health</code> sub-package) and a <code>PingFightResourceHealthCheck</code> based on the same logic.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="observability-prometheus">Displaying Metrics on Prometheus</h3>
-<div class="paragraph">
-<p>When we use our application, it generates some load.
-Now, we want to be able to measure it.
-And for that, we will be using Prometheus.<sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup>
-Prometheus is an open-source systems monitoring and alerting toolkit that integrates well with Quarkus.</p>
-</div>
-<div class="sect3">
-<h4 id="_configuring_prometheus">Configuring Prometheus</h4>
-<div class="paragraph">
-<p>Prometheus needs to be configured to poll data from our microservices.
-This is done under our <code>infrastructure</code> directory, in the <code>prometheus.yml</code> file:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">scrape_configs</span>:
-  - <span class="string"><span class="content">job_name: 'prometheus'</span></span>
-    <span class="key">static_configs</span>:
-      - <span class="string"><span class="content">targets: ['localhost:9090']</span></span>
-  - <span class="string"><span class="content">job_name: 'fights'</span></span>
-    <span class="key">metrics_path</span>: <span class="string"><span class="content">'/q/metrics'</span></span>
-    <span class="key">static_configs</span>:
-      - <span class="string"><span class="content">targets: ['host.docker.internal:8082']</span></span>
-  - <span class="string"><span class="content">job_name: 'heroes'</span></span>
-    <span class="key">metrics_path</span>: <span class="string"><span class="content">'/q/metrics'</span></span>
-    <span class="key">static_configs</span>:
-      - <span class="string"><span class="content">targets: ['host.docker.internal:8083']</span></span>
-  - <span class="string"><span class="content">job_name: 'villains'</span></span>
-    <span class="key">metrics_path</span>: <span class="string"><span class="content">'/q/metrics'</span></span>
-    <span class="key">static_configs</span>:
-      - <span class="string"><span class="content">targets: ['host.docker.internal:8084']</span></span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This file contains basic Prometheus configuration, plus a specific <code>scrape_config</code> which instructs Prometheus to look for application metrics from both Prometheus itself, and our Quarkus microservices at the <code>/q/metrics</code> endpoint.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>To execute the application we now need Prometheus.
-Make sure the infrastructure is up and running.
-This means that you&#8217;ve executed <code>docker compose -f docker-compose.yaml up -d</code>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">On Linux / Ubuntu</div>
-<div class="paragraph">
-<p>On Linux, you may need to update the <code>localhost</code> from the <code>prometheus-linux.yml</code> file with the IP associated with the <code>docker0</code> interface.
-Find the address, update the <code>prometheus-linux.yml</code> and restart the infrastructure.
-Don&#8217;t forget to restart the microservices to re-populate the databases.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_adding_graphs_to_prometheus">Adding Graphs to Prometheus</h4>
-<div class="paragraph">
-<p>The Prometheus console is accessible at <a href="http://localhost:9090" class="bare">http://localhost:9090</a>.</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="images/fault-tolerance-prometheus-1.png" alt="fault tolerance prometheus 1">
-</div>
-</div>
-<div class="paragraph">
-<p>Out of the box, you get a lot of basic JVM metrics or even metrics of Prometheus itself, which are useful.
-But let&#8217;s create new graphs with the metrics of our microservices.</p>
-</div>
-<div class="exampleblock cta">
-<div class="content">
-<div class="paragraph">
-<p>Tape <code>timeGetRandomHero</code> in the query, and select <code>application_io_quarkus_workshop_superheroes_hero_HeroResource_timeGetRandomHero_five_min_rate_per_second</code> in the box, and click <em>Execute</em>.</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="images/fault-tolerance-prometheus-2.png" alt="fault tolerance prometheus 2">
-</div>
-</div>
-<div class="paragraph">
-<p>This will fetch the values from our metric showing the number of checks performed:</p>
-</div>
-<div class="imageblock half-size">
-<div class="content">
-<img src="images/fault-tolerance-prometheus-3.png" alt="fault tolerance prometheus 3">
-</div>
-</div>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If you have any problem with the code, don&#8217;t understand or feel you are running, remember to ask for some help.
-Also, you can get the code of this entire workshop from <a href="https://github.com/quarkusio/quarkus-workshops/tree/refs/heads/main/quarkus-workshop-super-heroes" class="bare">https://github.com/quarkusio/quarkus-workshops/tree/refs/heads/main/quarkus-workshop-super-heroes</a>.
-You can also download the completed code from <a href="https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/dist/quarkus-super-heroes-workshop-complete.zip" class="bare">https://raw.githubusercontent.com/quarkusio/quarkus-workshops/refs/heads/main/quarkus-workshop-super-heroes/dist/quarkus-super-heroes-workshop-complete.zip</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="cli">Loading the Microservices</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -13703,7 +13309,7 @@ We hope you liked it, learnt a few things, and more importantly, will be able to
 <div class="paragraph">
 <p>This workshop started making sure your development environment was ready to develop the entire application.
 Then, there was some brief terminology to help you in understanding some concepts around Quarkus.
-If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, Cloud Native, or GraalVM, check the Quarkus website for more references.<sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup></p>
+If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, Cloud Native, or GraalVM, check the Quarkus website for more references.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>Then, we focused on developing several isolated microservices.
@@ -13725,10 +13331,6 @@ With Fault Tolerance, it was just a matter of using a few annotations and we can
 <div class="paragraph">
 <p>We&#8217;ve also added some Artificial Intelligence.
 Thanks to Semantic Kernel, with a few lines of code, we allowed our Narration microservice to narrate the fight between a Super Hero and a Super Villain.</p>
-</div>
-<div class="paragraph">
-<p>With so many microservices, observability becomes mandatory.
-That&#8217;s why we added some health checks and metrics to our microservices.</p>
 </div>
 <div class="paragraph">
 <p>Then, came production time.
@@ -13793,7 +13395,7 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 <div class="sect2">
 <h3 id="appendix-installing-maven">Apache Maven 3.8.x</h3>
 <div class="paragraph">
-<p>All the examples of this workshop are built and tested using Maven.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup>
+<p>All the examples of this workshop are built and tested using Maven.<sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup>
 Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork, and so forth.
 Based on the "convention over configuration" principle, Maven brings a standard project description and a number of conventions such as a standard directory structure.
 With an extensible architecture based on plugins, Maven can offer many different services.</p>
@@ -13838,7 +13440,7 @@ OS name: &quot;mac os x&quot;, version: &quot;11.5&quot;, arch: &quot;x86_64&quo
 </div>
 </div>
 <div class="paragraph">
-<p>Be aware that Maven needs Internet access to download plugins and project dependencies from the Maven Central and other remote repositories.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup></p>
+<p>Be aware that Maven needs Internet access to download plugins and project dependencies from the Maven Central and other remote repositories.<sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup></p>
 </div>
 </div>
 <div class="sect3">
@@ -13888,7 +13490,7 @@ Each invokes a different phase of the project life cycle (clean, compile, instal
 <div class="sect2">
 <h3 id="appendix-installing-curl">cURL</h3>
 <div class="paragraph">
-<p>To invoke the REST Web Services described in this workshop, we often use cURL.<sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup>
+<p>To invoke the REST Web Services described in this workshop, we often use cURL.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup>
 cURL is a command-line tool and library to do reliable data transfers with various protocols, including HTTP.
 It is free, open-source (available under the MIT Licence), and has been ported to several operating systems.
 If your operating system does not already include cURL (most do), here is how to install it.</p>
@@ -13896,7 +13498,7 @@ If your operating system does not already include cURL (most do), here is how to
 <div class="sect3">
 <h4 id="_installing_curl">Installing cURL</h4>
 <div class="paragraph">
-<p>If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup>
+<p>If you are on Mac OS X and have installed Homebrew, then installing cURL is just a matter of a single command.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>
 Open your terminal and install cURL with the following command:</p>
 </div>
 <div class="listingblock">
@@ -13929,7 +13531,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 <div class="paragraph">
 <p>cURL is a command-line utility where you can use several parameters and options to invoke URLs.
 You invoke <code>curl</code> with zero, one, or several command-line options to accompany the URL (or set of URLs) you want the transfer to be about.
-cURL supports over two hundred different options, and I would recommend reading the documentation for more help.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup>
+cURL supports over two hundred different options, and I would recommend reading the documentation for more help.<sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup>
 To get some help on the commands and options, you can type, use the following command:</p>
 </div>
 <div class="listingblock">
@@ -14192,32 +13794,26 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 <a href="#_footnoteref_22">22</a>. Kafka Topic <a href="https://kafka.apache.org/intro#intro_topics" class="bare">https://kafka.apache.org/intro#intro_topics</a>
 </div>
 <div class="footnote" id="_footnotedef_23">
-<a href="#_footnoteref_23">23</a>. MicroProfile Health <a href="https://microprofile.io/project/eclipse/microprofile-health" class="bare">https://microprofile.io/project/eclipse/microprofile-health</a>
+<a href="#_footnoteref_23">23</a>. Quarkus <a href="https://quarkus.io" class="bare">https://quarkus.io</a>
 </div>
 <div class="footnote" id="_footnotedef_24">
-<a href="#_footnoteref_24">24</a>. Prometheus <a href="https://prometheus.io" class="bare">https://prometheus.io</a>
+<a href="#_footnoteref_24">24</a>. Maven <a href="https://maven.apache.org" class="bare">https://maven.apache.org</a>
 </div>
 <div class="footnote" id="_footnotedef_25">
-<a href="#_footnoteref_25">25</a>. Quarkus <a href="https://quarkus.io" class="bare">https://quarkus.io</a>
+<a href="#_footnoteref_25">25</a>. Maven Central <a href="https://search.maven.org" class="bare">https://search.maven.org</a>
 </div>
 <div class="footnote" id="_footnotedef_26">
-<a href="#_footnoteref_26">26</a>. Maven <a href="https://maven.apache.org" class="bare">https://maven.apache.org</a>
+<a href="#_footnoteref_26">26</a>. cURL <a href="https://curl.haxx.se" class="bare">https://curl.haxx.se</a>
 </div>
 <div class="footnote" id="_footnotedef_27">
-<a href="#_footnoteref_27">27</a>. Maven Central <a href="https://search.maven.org" class="bare">https://search.maven.org</a>
+<a href="#_footnoteref_27">27</a>. Homebrew <a href="https://brew.sh" class="bare">https://brew.sh</a>
 </div>
 <div class="footnote" id="_footnotedef_28">
-<a href="#_footnoteref_28">28</a>. cURL <a href="https://curl.haxx.se" class="bare">https://curl.haxx.se</a>
-</div>
-<div class="footnote" id="_footnotedef_29">
-<a href="#_footnoteref_29">29</a>. Homebrew <a href="https://brew.sh" class="bare">https://brew.sh</a>
-</div>
-<div class="footnote" id="_footnotedef_30">
-<a href="#_footnoteref_30">30</a>. cURL commands <a href="https://ec.haxx.se/cmdline.html" class="bare">https://ec.haxx.se/cmdline.html</a>
+<a href="#_footnoteref_28">28</a>. cURL commands <a href="https://ec.haxx.se/cmdline.html" class="bare">https://ec.haxx.se/cmdline.html</a>
 </div>
 </div>
 <footer>
-    <div>Last updated 2024-06-18</div>
+    <div>Last updated 2024-07-17</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>

@@ -87,6 +87,8 @@
         <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
             include?
         </h4>
+        <!--  NOTE TO ANYONE WHO MAY COME HERE IN THE FUTURE TO CREATE A NEW SECTION -->
+        <!--  Make sure any changes you make here also have corresponding changes in generate-attribute-combinations.sh and default-options.adoc!      -->
         <ul class="configurator">
             <li id="use-ai-li">
                 <label>
@@ -129,12 +131,11 @@
                     <input type="checkbox" id="use-native">Native compilation
                 </label>
             </li>
-            <li>
-            <li id="use-observability-li">
-                <label>
-                    <input type="checkbox" id="use-observability">Observability
-                </label>
-            </li>
+<!--            <li id="use-observability-li">-->
+<!--                <label>-->
+<!--                    <input type="checkbox" id="use-observability">Observability-->
+<!--                </label>-->
+<!--            </li>-->
         </ul>
         <button class="big" onclick="generateTailoredURL()">
             Take me to my custom workshop
