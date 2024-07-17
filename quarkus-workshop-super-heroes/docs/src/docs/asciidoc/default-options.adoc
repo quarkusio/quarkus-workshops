@@ -1,3 +1,5 @@
+// Make sure the defaults here are kept in sync with
+// both generate-attribute-combinations.sh and index.html!
 :os: all
 :use-ai:
 :use-azure:
@@ -8,4 +10,3 @@
 :use-kubernetes:
 :use-messaging:
 :use-native:
-:use-observability:
