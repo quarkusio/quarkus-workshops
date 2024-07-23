@@ -31,7 +31,7 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>3.6.0</quarkus.platform.version>
-        <quinoa.version>2.2.1</quinoa.version>
+        <quinoa.version>2.4.3</quinoa.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.2.2</surefire-plugin.version>
     </properties>
