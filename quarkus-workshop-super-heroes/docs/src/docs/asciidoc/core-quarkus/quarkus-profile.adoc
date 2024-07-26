@@ -36,7 +36,17 @@ Now, you will get the `dev` profile enabled if you start your application in dev
 If you start the tests, the `test` profile is enabled (the `multiplier` is set to 1).
 
 You can also create your own profiles, and activate them with the `quarkus.profile` property.
-For example, to use a profile called `foo`, package your application with `./mvnw package`, and start it with `java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar`.
+For example, to use a profile called `foo`, add the datasource for foo profile
+
+```java
+%foo.quarkus.datasource.username=superbad
+%foo.quarkus.datasource.username=superbad
+%foo.quarkus.datasource.password=superbad
+%foo.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/villains_database
+%foo.quarkus.hibernate-orm.sql-load-script=import.sql
+```
+
+package your application with `./mvnw package`, and start it with `java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar`.
 You will see that the `foo` profile is enabled.
 As not overridden, the `level.multiplier` property has the value 0.5.
 
