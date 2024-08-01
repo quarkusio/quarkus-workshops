@@ -40,7 +40,6 @@ For example, to use a profile called `foo`, add the datasource for foo profile
 
 ```java
 %foo.quarkus.datasource.username=superbad
-%foo.quarkus.datasource.username=superbad
 %foo.quarkus.datasource.password=superbad
 %foo.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/villains_database
 %foo.quarkus.hibernate-orm.sql-load-script=import.sql
