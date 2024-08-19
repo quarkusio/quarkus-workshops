@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2024-07-17 Quarkus 3.6.0</title>
+<title>Quarkus Super-Heroes Workshop: 2024-08-19 Quarkus 3.6.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2024-07-17 Quarkus 3.6.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2024-08-19 Quarkus 3.6.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -4734,7 +4734,18 @@ If you start the tests, the <code>test</code> profile is enabled (the <code>mult
 </div>
 <div class="paragraph">
 <p>You can also create your own profiles, and activate them with the <code>quarkus.profile</code> property.
-For example, to use a profile called <code>foo</code>, package your application with <code>./mvnw package</code>, and start it with <code>java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar</code>.
+For example, to use a profile called <code>foo</code>, add the datasource for foo profile</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">%foo.quarkus.datasource.username=superbad
+%foo.quarkus.datasource.password=superbad
+%foo.quarkus.datasource.jdbc.url=jdbc:postgresql:<span class="comment">//localhost:5432/villains_database</span>
+%foo.quarkus.hibernate-orm.sql-load-script=<span class="keyword">import</span>.<span class="include">sql</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>package your application with <code>./mvnw package</code>, and start it with <code>java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar</code>.
 You will see that the <code>foo</code> profile is enabled.
 As not overridden, the <code>level.multiplier</code> property has the value 0.5.</p>
 </div>
@@ -11015,7 +11026,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2024-07-17</div>
+    <div>Last updated 2024-08-19</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
