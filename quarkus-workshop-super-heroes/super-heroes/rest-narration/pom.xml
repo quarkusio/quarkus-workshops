@@ -33,7 +33,7 @@
     <quarkus.platform.version>3.6.0</quarkus.platform.version>
     <semantic-kernel.version>0.2.11-alpha</semantic-kernel.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.2.2</surefire-plugin.version>
+    <surefire-plugin.version>3.5.0</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
