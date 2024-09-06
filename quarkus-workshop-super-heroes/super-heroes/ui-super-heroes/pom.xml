@@ -30,8 +30,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>3.6.0</quarkus.platform.version>
-        <quinoa.version>2.2.1</quinoa.version>
+        <quarkus.platform.version>3.14.2</quarkus.platform.version>
+        <quinoa.version>2.4.7</quinoa.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.2.2</surefire-plugin.version>
     </properties>
@@ -58,11 +58,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-reactive</artifactId>
+            <artifactId>quarkus-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+            <artifactId>quarkus-rest-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

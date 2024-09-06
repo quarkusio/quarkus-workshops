@@ -35,7 +35,7 @@ If you open the `pom.xml` file, you will see that the following extensions have 
 * `io.quarkus:quarkus-hibernate-orm-panache`
 * `io.quarkus:quarkus-hibernate-validator`
 * `io.quarkus:quarkus-smallrye-openapi`
-* `io.quarkus:quarkus-smallrye-reactive-messaging-kafka`
+* `io.quarkus:quarkus-messaging-kafka`
 * `io.quarkus:quarkus-resteasy-reactive-jackson`
 * `io.quarkus:quarkus-jdbc-postgresql`
 --
