@@ -153,7 +153,7 @@ The default build will take around 50m.
                             <jdk-version>${maven.compiler.source}</jdk-version>
                             <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
                             <graalvm-version>22.3</graalvm-version>
-                            <maven-version>3.8.x</maven-version>
+                            <maven-version>3.9.x</maven-version>
                             <quarkus-version>${quarkus.platform.version}</quarkus-version>
                             <compiler-plugin-version>${compiler-plugin.version}</compiler-plugin-version>
                             <surefire-plugin-version>${surefire-plugin.version}</surefire-plugin-version>
