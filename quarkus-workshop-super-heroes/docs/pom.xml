@@ -46,7 +46,7 @@ The default build will take around 50m.
         <!-- Note! Any versions listed here should have a dummy dependency clause so dependabot manages the versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>3.6.0</quarkus.platform.version>
+        <quarkus.platform.version>3.14.3</quarkus.platform.version>
         <quarkus.pact.version>1.3.0</quarkus.pact.version>
         <semantic-kernel.version>0.2.11-alpha</semantic-kernel.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
