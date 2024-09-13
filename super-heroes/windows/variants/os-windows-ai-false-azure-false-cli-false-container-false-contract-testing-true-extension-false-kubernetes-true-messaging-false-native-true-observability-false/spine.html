@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins">
-<title>Quarkus Super-Heroes Workshop: 2024-09-06 Quarkus 3.6.0</title>
+<meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins, George Gastaldi">
+<title>Quarkus Super-Heroes Workshop: 2024-09-13 Quarkus 3.14.3</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2024-09-06 Quarkus 3.6.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2024-09-13 Quarkus 3.14.3</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -591,6 +591,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <span id="author4" class="author">Aurea Munoz Hernandez</span><br>
 <span id="author5" class="author">Georgios Andrianakis</span><br>
 <span id="author6" class="author">Holly Cummins</span><br>
+<span id="author7" class="author">George Gastaldi</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -807,7 +808,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </li>
 <li><a href="#_installing_extra_software">Appendix A: Installing extra software</a>
 <ul class="sectlevel2">
-<li><a href="#appendix-installing-maven">Apache Maven 3.8.x</a>
+<li><a href="#appendix-installing-maven">Apache Maven 3.9.x</a>
 <ul class="sectlevel3">
 <li><a href="#_installing_maven">Installing Maven</a></li>
 <li><a href="#_checking_for_maven_installation">Checking for Maven Installation</a></li>
@@ -878,7 +879,7 @@ Well, it&#8217;s going to be a set of microservices:</p>
 </div>
 <div class="paragraph">
 <p>This workshop is a BYOL (<em>Bring Your Own Laptop</em>) session, so bring your Windows, OSX, or Linux laptop.
-You just need JDK 17 on your machine and Docker (having Apache Maven 3.8.x installed is optional as you will rely on the Apache Maven Wrapper).
+You just need JDK 17 on your machine and Docker (having Apache Maven 3.9.x installed is optional as you will rely on the Apache Maven Wrapper).
 On Mac and Windows, Docker for <em>x</em> is recommended instead of the Docker toolbox setup.
 On Windows it is also recommended to have WSL (<a href="https://docs.microsoft.com/windows/wsl">Windows Subsystem for Linux</a>) installed.</p>
 </div>
@@ -1070,7 +1071,7 @@ So your job is to follow the instructions by yourself, do what you are supposed 
 </ul>
 </div>
 <div class="paragraph">
-<p>We will also be using Maven 3.8.x, but there is no need to install it.
+<p>We will also be using Maven 3.9.x, but there is no need to install it.
 Instead, the workshop scaffolding includes a maven wrapper, <code>mvnw</code>.
 If you&#8217;d prefer to install your own Maven and don&#8217;t already have it, <a href="#appendix-installing-maven">see the instructions at the end of the workshop</a>.</p>
 </div>
@@ -1370,18 +1371,6 @@ Select the 17 version.</p>
 <div class="paragraph">
 <p>Once installed, define the <code>GRAALVM_HOME</code> environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be <code>~/.sdkman/candidates/java/22.3.r17-grl</code>).</p>
 </div>
-<div class="paragraph">
-<p>The <code>native-image</code> tool must be installed.
-It can be done by running the following command under <code>$GRAALVM_HOME/bin</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./gu install native-image</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>from your GraalVM <code>bin</code> directory.</p>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_checking_for_graalvm_installation">Checking for GraalVM Installation</h5>
@@ -1398,7 +1387,9 @@ It can be done by running the following command under <code>$GRAALVM_HOME/bin</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">GraalVM 22.3.1 Java 17 CE (Java Version 17.0.6+10-jvmci-22.3-b13)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">native-image 22.0.2 2024-07-16
+OpenJDK Runtime Environment Mandrel-24.0.2.0-Final (build 22.0.2+9)
+OpenJDK 64-Bit Server VM Mandrel-24.0.2.0-Final (build 22.0.2+9, mixed mode)</code></pre>
 </div>
 </div>
 </div>
@@ -1566,7 +1557,7 @@ It&#8217;s using the <em>imperative</em> development model.</p>
 <p>How to create a new Quarkus application</p>
 </li>
 <li>
-<p>How to implement REST API using JAX-RS and the RESTEasy Reactive extension<sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup></p>
+<p>How to implement REST API using JAX-RS and the Quarkus REST extension <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup></p>
 </li>
 <li>
 <p>How to compose your application using beans</p>
@@ -1616,13 +1607,13 @@ Open a terminal and run the following command under the <code>quarkus-workshop-s
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw io.quarkus:quarkus-maven-plugin:3.6.0:create \
-    -DplatformVersion=3.6.0 \
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw io.quarkus:quarkus-maven-plugin:3.14.3:create \
+    -DplatformVersion=3.14.3 \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-villains \
     -DclassName=&quot;io.quarkus.workshop.superheroes.villain.VillainResource&quot; \
     -Dpath=&quot;api/villains&quot; \
-    -Dextensions=&quot;resteasy-reactive-jackson&quot;</code></pre>
+    -Dextensions=&quot;rest-jackson&quot;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1633,7 +1624,7 @@ Open a terminal and run the following command under the <code>quarkus-workshop-s
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Notice that we scaffold the project with a reactive implementation of RestEasy (<code>resteasy-reactive-jackson</code>).
+<p>Notice that we scaffold the project with Quarkus REST (<code>rest-jackson</code>).
 This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.</p>
 </div>
 </td>
@@ -1646,7 +1637,7 @@ but allows a project&#8217;s build dependencies to be encapsulated.</p>
 </div>
 <div class="paragraph">
 <p>The last line selects the extension we want to use.
-As a start, we only select <code>resteasy-reactive-jackson</code>, which will also import <code>resteasy-reactive</code>.</p>
+As a start, we only select <code>rest-jackson</code>, which will also import <code>rest</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you want your IDE to manage this new Maven project, you can declare it in the parent POM (<code>quarkus-super-heroes/pom.xml</code>) by adding this new module in the <code>&lt;modules&gt;</code> section:</p>
@@ -1667,7 +1658,7 @@ As a start, we only select <code>resteasy-reactive-jackson</code>, which will al
 <td class="content">
 <div class="title">Prefer a Web UI?</div>
 <div class="paragraph">
-<p>Instead of the Maven command, you can use <a href="https://code.quarkus.io" class="bare">https://code.quarkus.io</a> and select the <code>resteasy-reactive-jackson</code> extension.</p>
+<p>Instead of the Maven command, you can use <a href="https://code.quarkus.io" class="bare">https://code.quarkus.io</a> and select the <code>rest-jackson</code> extension.</p>
 </div>
 </td>
 </tr>
@@ -1725,7 +1716,7 @@ In addition, you can see the <code>quarkus-maven-plugin</code> responsible for t
     <span class="tag">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span class="tag">&lt;/project.reporting.outputEncoding&gt;</span>
     <span class="tag">&lt;quarkus.platform.artifact-id&gt;</span>quarkus-bom<span class="tag">&lt;/quarkus.platform.artifact-id&gt;</span>
     <span class="tag">&lt;quarkus.platform.group-id&gt;</span>io.quarkus<span class="tag">&lt;/quarkus.platform.group-id&gt;</span>
-    <span class="tag">&lt;quarkus.platform.version&gt;</span>3.6.0<span class="tag">&lt;/quarkus.platform.version&gt;</span>
+    <span class="tag">&lt;quarkus.platform.version&gt;</span>3.14.3<span class="tag">&lt;/quarkus.platform.version&gt;</span>
     <span class="tag">&lt;skipITs&gt;</span>true<span class="tag">&lt;/skipITs&gt;</span>
     <span class="tag">&lt;surefire-plugin.version&gt;</span>3.2.2<span class="tag">&lt;/surefire-plugin.version&gt;</span>
   <span class="tag">&lt;/properties&gt;</span>
@@ -1767,7 +1758,7 @@ In addition, you can see the <code>quarkus-maven-plugin</code> responsible for t
 </div>
 </div>
 <div class="paragraph">
-<p>If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (resteasy-reactive and resteasy-reactive-jackson)</p>
+<p>If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (<code>rest</code> and <code>rest-jackson</code>)</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1778,11 +1769,11 @@ In addition, you can see the <code>quarkus-maven-plugin</code> responsible for t
     <span class="tag">&lt;/dependency&gt;</span>
     <span class="tag">&lt;dependency&gt;</span>
       <span class="tag">&lt;groupId&gt;</span>io.quarkus<span class="tag">&lt;/groupId&gt;</span>
-      <span class="tag">&lt;artifactId&gt;</span>quarkus-resteasy-reactive<span class="tag">&lt;/artifactId&gt;</span>
+      <span class="tag">&lt;artifactId&gt;</span>quarkus-rest<span class="tag">&lt;/artifactId&gt;</span>
     <span class="tag">&lt;/dependency&gt;</span>
     <span class="tag">&lt;dependency&gt;</span>
       <span class="tag">&lt;groupId&gt;</span>io.quarkus<span class="tag">&lt;/groupId&gt;</span>
-      <span class="tag">&lt;artifactId&gt;</span>quarkus-resteasy-reactive-jackson<span class="tag">&lt;/artifactId&gt;</span>
+      <span class="tag">&lt;artifactId&gt;</span>quarkus-rest-jackson<span class="tag">&lt;/artifactId&gt;</span>
     <span class="tag">&lt;/dependency&gt;</span>
     <span class="comment">&lt;!-- ... --&gt;</span>
 <span class="tag">&lt;/dependencies&gt;</span></code></pre>
@@ -1796,11 +1787,11 @@ It&#8217;s designed to perform build-time injections.
 We will see later why this is essential for Quarkus.</p>
 </li>
 <li>
-<p><code>resteasy-reactive</code> is the framework we will use to implement our REST API.
+<p><code>quarkus-rest</code> is the framework we will use to implement our REST API.
 It uses JAX-RS annotations such as <code>@Path</code>, <code>@GET</code>&#8230;&#8203;</p>
 </li>
 <li>
-<p><code>reasteasy-reactive-jackson</code> adds JSON object mapping capabilities to RESTEasy reactive.</p>
+<p><code>quarkus-rest-jackson</code> adds JSON object mapping capabilities to Quarkus REST.</p>
 </li>
 </ul>
 </div>
@@ -1825,7 +1816,7 @@ It uses JAX-RS annotations such as <code>@Path</code>, <code>@GET</code>&#8230;&
     <span class="annotation">@GET</span>
     <span class="annotation">@Produces</span>(MediaType.TEXT_PLAIN)
     <span class="directive">public</span> <span class="predefined-type">String</span> hello() {
-        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello from RESTEasy Reactive</span><span class="delimiter">&quot;</span></span>;
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello from Quarkus REST</span><span class="delimiter">&quot;</span></span>;
     }
 }</code></pre>
 </div>
@@ -1876,15 +1867,15 @@ Methods can also have their own <code>@Path</code> annotation suffixed to the cl
 [INFO] Building rest-villains 1.0.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- quarkus-maven-plugin:3.6.0:dev (default-cli) @ rest-villains ---
-[INFO] Invoking resources:3.6.0:resources (default-resources) @ rest-villains
+[INFO] --- quarkus-maven-plugin:3.14.3:dev (default-cli) @ rest-villains ---
+[INFO] Invoking resources:3.14.3:resources (default-resources) @ rest-villains
 [INFO] Copying 2 resources from src/main/resources to target/classes
-[INFO] Invoking quarkus:3.6.0:generate-code (default) @ rest-villains
+[INFO] Invoking quarkus:3.14.3:generate-code (default) @ rest-villains
 [INFO] Invoking compiler:3.11.0:compile (default-compile) @ rest-villains
 [INFO] Nothing to compile - all classes are up to date
-[INFO] Invoking resources:3.6.0:testResources (default-testResources) @ rest-villains
+[INFO] Invoking resources:3.14.3:testResources (default-testResources) @ rest-villains
 [INFO] skip non existing resourceDirectory /Users/agoncal/Documents/Code/Temp/quarkus-super-heroes/super-heroes/rest-villains/src/test/resources
-[INFO] Invoking quarkus:3.6.0:generate-code-tests (default) @ rest-villains
+[INFO] Invoking quarkus:3.14.3:generate-code-tests (default) @ rest-villains
 [INFO] Invoking compiler:3.11.0:testCompile (default-testCompile) @ rest-villains
 [INFO] Nothing to compile - all classes are up to date
 Listening for transport dt_socket at address: 5005
@@ -1893,10 +1884,10 @@ __  ____  __  _____   ___  __ ____  ______
  --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
  -/ /_/ / /_/ / __ |/ , _/ ,&lt; / /_/ /\ \
 --\___\_\____/_/ |_/_/|_/_/|_|\____/___/
-2022-11-15 14:05:29,414 INFO  [io.quarkus] (Quarkus Main Thread) rest-villains 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.6.0) started in 1.093s. Listening on: http://localhost:8080
+2022-11-15 14:05:29,414 INFO  [io.quarkus] (Quarkus Main Thread) rest-villains 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.14.3) started in 1.093s. Listening on: http://localhost:8080
 
 2022-11-15 14:05:29,423 INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2022-11-15 14:05:29,423 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
+2022-11-15 14:05:29,423 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, rest, rest-jackson, smallrye-context-propagation, vertx]
 
 Tests paused
 Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options&gt;</code></pre>
@@ -1915,7 +1906,7 @@ Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] f
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">Hello from RESTEasy Reactive</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">Hello from Quarkus REST</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2026,7 +2017,7 @@ To check that the hot reload is working, update the <code>VillainResource.hello(
           .when().get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/api/villains</span><span class="delimiter">&quot;</span></span>)
           .then()
              .statusCode(<span class="integer">200</span>)
-             .body(is(<span class="string"><span class="delimiter">&quot;</span><span class="content">Hello from RESTEasy Reactive</span><span class="delimiter">&quot;</span></span>));
+             .body(is(<span class="string"><span class="delimiter">&quot;</span><span class="content">Hello from Quarkus REST</span><span class="delimiter">&quot;</span></span>));
     }
 
 }</code></pre>
@@ -2076,7 +2067,7 @@ Unfortunately, this first run didn&#8217;t end well:</p>
 2022-11-15 14:13:17,925 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#testHelloEndpoint() failed
 : java.lang.AssertionError: 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is &quot;Hello from RESTEasy Reactive&quot;
+Expected: is &quot;Hello from Quarkus REST&quot;
   Actual: Hello Villain Resource
 
         at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
@@ -2086,7 +2077,7 @@ Expected: is &quot;Hello from RESTEasy Reactive&quot;
 2022-11-15 14:13:17,927 ERROR [io.qua.test] (Test runner thread) &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Summary: &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
 io.quarkus.workshop.superheroes.villain.VillainResourceTest#testHelloEndpoint(VillainResourceTest.java:18) VillainResourceTest#testHelloEndpoint() 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is &quot;Hello from RESTEasy Reactive&quot;
+Expected: is &quot;Hello from Quarkus REST&quot;
   Actual: Hello Villain Resource
 
 2022-11-15 14:13:17,929 ERROR [io.qua.test] (Test runner thread) &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1 TEST FAILED &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
@@ -2095,7 +2086,7 @@ Expected: is &quot;Hello from RESTEasy Reactive&quot;
 2022-11-15 14:13:18,155 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#testHelloEndpoint() failed
 : java.lang.AssertionError: 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is &quot;Hello from RESTEasy Reactive&quot;
+Expected: is &quot;Hello from Quarkus REST&quot;
   Actual: Hello Villain Resource
 
         at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
@@ -2105,7 +2096,7 @@ Expected: is &quot;Hello from RESTEasy Reactive&quot;
 2022-11-15 14:13:18,156 ERROR [io.qua.test] (Test runner thread) &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Summary: &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
 io.quarkus.workshop.superheroes.villain.VillainResourceTest#testHelloEndpoint(VillainResourceTest.java:18) VillainResourceTest#testHelloEndpoint() 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is &quot;Hello from RESTEasy Reactive&quot;
+Expected: is &quot;Hello from Quarkus REST&quot;
   Actual: Hello Villain Resource
 
 2022-11-15 14:13:18,157 ERROR [io.qua.test] (Test runner thread) &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1 TEST FAILED &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code></pre>
@@ -2324,7 +2315,7 @@ Hibernate ORM with Panache focuses on making your entities trivial and fun to wr
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-No need to add an extension for JSON, we already included <code>resteasy-reactive-jackson</code>.
+No need to add an extension for JSON, we already included <code>rest-jackson</code>.
 </td>
 </tr>
 </table>
@@ -4298,7 +4289,7 @@ It still has database access, ORM support, transaction, JSON serialization, and 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">[INFO] --- quarkus-maven-plugin:3.6.0:build (default) @ rest-villains ---
+<pre class="CodeRay highlight"><code data-lang="shell">[INFO] --- quarkus-maven-plugin:3.14.3:build (default) @ rest-villains ---
 [INFO] [org.jboss.threads] JBoss Threads version 3.4.2.Final
 [INFO] [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.5.7.Final
 [INFO] [io.quarkus.deployment.QuarkusAugmentor] Quarkus augmentation completed in 1932ms</code></pre>
@@ -4560,7 +4551,7 @@ The logic of the microservice is the same.</p>
 <p>How to create a new reactive Quarkus application</p>
 </li>
 <li>
-<p>How to implement REST API using JAX-RS and the RESTEasy Reactive extension using a reactive development model</p>
+<p>How to implement REST API using JAX-RS and the Quarkus REST extension using a reactive development model</p>
 </li>
 <li>
 <p>How to access your database using Hibernate Reactive with Panache</p>
@@ -4612,13 +4603,13 @@ Open a terminal and run the following command under the <code>quarkus-workshop-s
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw io.quarkus:quarkus-maven-plugin:3.6.0:create \
-    -DplatformVersion=3.6.0 \
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw io.quarkus:quarkus-maven-plugin:3.14.3:create \
+    -DplatformVersion=3.14.3 \
     -DprojectGroupId=io.quarkus.workshop.super-heroes \
     -DprojectArtifactId=rest-heroes \
     -DclassName=&quot;io.quarkus.workshop.superheroes.hero.HeroResource&quot; \
     -Dpath=&quot;api/heroes&quot; \
-    -Dextensions=&quot;resteasy-reactive-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client&quot;</code></pre>
+    -Dextensions=&quot;rest-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client&quot;</code></pre>
 </div>
 </div>
 </div>
@@ -4629,7 +4620,7 @@ Open a terminal and run the following command under the <code>quarkus-workshop-s
 <div class="ulist">
 <ul>
 <li>
-<p><code>resteasy-reactive-jackson</code> provides RESTEasy Reactive and the ability to map JSON objects,</p>
+<p><code>rest-jackson</code> provides Quarkus REST and the ability to map JSON objects,</p>
 </li>
 <li>
 <p><code>quarkus-hibernate-validator</code> provides the Hibernate Validator support,</p>
@@ -5455,13 +5446,13 @@ Under the <code>quarkus-workshop-super-heroes/super-heroes</code> root directory
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw io.quarkus:quarkus-maven-plugin:3.6.0:create \
-  -DplatformVersion=3.6.0 \
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw io.quarkus:quarkus-maven-plugin:3.14.3:create \
+  -DplatformVersion=3.14.3 \
   -DprojectGroupId=io.quarkus.workshop.super-heroes \
   -DprojectArtifactId=rest-fights \
   -DclassName=&quot;io.quarkus.workshop.superheroes.fight.FightResource&quot; \
   -Dpath=&quot;api/fights&quot; \
-  -Dextensions=&quot;jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka&quot;</code></pre>
+  -Dextensions=&quot;jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi,kafka&quot;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5482,7 +5473,7 @@ Under the <code>quarkus-workshop-super-heroes/super-heroes</code> root directory
 <p><code>io.quarkus:quarkus-messaging-kafka</code></p>
 </li>
 <li>
-<p><code>io.quarkus:quarkus-resteasy-reactive-jackson</code></p>
+<p><code>io.quarkus:quarkus-rest-jackson</code></p>
 </li>
 <li>
 <p><code>io.quarkus:quarkus-jdbc-postgresql</code></p>
@@ -6258,7 +6249,7 @@ __  ____  __  _____   ___  __ ____  ______
  --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
  -/ /_/ / /_/ / __ |/ , _/ ,&lt; / /_/ /\ \
 --\___\_\____/_/ |_/_/|_/_/|_|\____/___/
-2023-05-18 14:22:03,237 INFO  [io.quarkus] (Quarkus Main Thread) ui-super-heroes 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.6.0) started in 24.765s. Listening on: http://localhost:8080</code></pre>
+2023-05-18 14:22:03,237 INFO  [io.quarkus] (Quarkus Main Thread) ui-super-heroes 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.14.3) started in 24.765s. Listening on: http://localhost:8080</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8457,7 +8448,7 @@ If some parts were not clear enough, or if you found something missing, a bug, o
 <h2 id="_installing_extra_software">Appendix A: Installing extra software</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="appendix-installing-maven">Apache Maven 3.8.x</h3>
+<h3 id="appendix-installing-maven">Apache Maven 3.9.x</h3>
 <div class="paragraph">
 <p>All the examples of this workshop are built and tested using Maven.<sup class="footnote">[<a id="_footnoteref_22" class="footnote" href="#_footnotedef_22" title="View footnote.">22</a>]</sup>
 Maven offers a building solution, shared libraries, and a plugin platform for your projects, allowing you to do quality control, documentation, teamwork, and so forth.
@@ -8467,7 +8458,7 @@ With an extensible architecture based on plugins, Maven can offer many different
 <div class="sect3">
 <h4 id="_installing_maven">Installing Maven</h4>
 <div class="paragraph">
-<p>The examples of this workshop have been developed with Apache Maven 3.8.x.
+<p>The examples of this workshop have been developed with Apache Maven 3.9.x.
 For this workshop, it is <strong>not</strong> necessary to install Maven.
 You can just use the Maven wrapper in your working directory, <code>./mvnw</code>.
 The wrapper is always at a suitable Maven version.</p>
@@ -8776,7 +8767,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 <a href="#_footnoteref_6">6</a>. GraalVM Download <a href="https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.3" class="bare">https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.3</a>
 </div>
 <div class="footnote" id="_footnotedef_7">
-<a href="#_footnoteref_7">7</a>. RESTEasy Reactive support the reactive and imperative development models.
+<a href="#_footnoteref_7">7</a>. Quarkus REST supports the reactive and imperative development models.
 </div>
 <div class="footnote" id="_footnotedef_8">
 <a href="#_footnoteref_8">8</a>. RestAssured <a href="http://rest-assured.io" class="bare">http://rest-assured.io</a>
@@ -8834,7 +8825,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2024-09-06</div>
+    <div>Last updated 2024-09-13</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
