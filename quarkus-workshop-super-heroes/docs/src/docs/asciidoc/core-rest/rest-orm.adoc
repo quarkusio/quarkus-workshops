@@ -62,7 +62,7 @@ To add the required dependencies, just run the following command under the `supe
 ----
 --
 
-TIP: No need to add an extension for JSON, we already included `resteasy-reactive-jackson`.
+TIP: No need to add an extension for JSON, we already included `rest-jackson`.
 
 This will add the following dependencies in the `pom.xml` file:
 

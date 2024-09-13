@@ -55,7 +55,7 @@ Open a terminal and run the following command:
     -DprojectArtifactId=event-statistics \
     -DclassName="io.quarkus.workshop.superheroes.statistics.StatisticResource" \
     -Dpath="api/stats" \
-    -Dextensions="kafka, resteasy-reactive-jackson, websockets"
+    -Dextensions="kafka, rest-jackson, websockets"
 ----
 --
 

@@ -247,7 +247,7 @@ And the version will be displayed:
 ----
 10:16:58 INFO  [io.qu.wo.su.ve.ru.VersionRecorder] (Quarkus Main Thread) Version: 1.0.0-SNAPSHOT
 ...
-10:17:00 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, extension-version, hibernate-orm, hibernate-orm-panache, hibernate-validator, jdbc-postgresql, narayana-jta, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, smallrye-health, smallrye-openapi, swagger-ui, vertx]
+10:17:00 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, extension-version, hibernate-orm, hibernate-orm-panache, hibernate-validator, jdbc-postgresql, narayana-jta, rest, rest-jackson, smallrye-context-propagation, smallrye-health, smallrye-openapi, swagger-ui, vertx]
 ----
 
 == Conclusion

@@ -58,13 +58,13 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
     -DprojectArtifactId=rest-narration \
     -DclassName="io.quarkus.workshop.superheroes.narration.NarrationResource" \
     -Dpath="api/narration" \
-    -Dextensions="resteasy-reactive-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance"
+    -Dextensions="rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance"
 ----
 --
 
 This microservice needs less dependencies than the previous ones:
 
-* `resteasy-reactive-jackson` provides RESTEasy Reactive and the ability to map JSON objects,
+* `rest-jackson` provides Quarkus REST and the ability to map JSON objects,
 * `quarkus-smallrye-openapi` provides the OpenAPI descriptor support and the Swagger UI in the dev console,
 * `quarkus-smallrye-fault-tolerance` provides the MicroProfile Fault Tolerance dependency so we can fallback in case OpenAI/Azure OpenAI does not respond.
 

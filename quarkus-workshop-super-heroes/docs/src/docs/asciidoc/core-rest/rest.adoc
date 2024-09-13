@@ -21,7 +21,7 @@ include::{plantDir}/1-rest-physical-architecture.puml[]
 In the following sections, you learn:
 
 * How to create a new Quarkus application
-* How to implement REST API using JAX-RS and the RESTEasy Reactive extensionfootnote:[RESTEasy Reactive support the reactive and imperative development models.]
+* How to implement REST API using JAX-RS and the Quarkus REST extension footnote:[Quarkus REST supports the reactive and imperative development models.]
 * How to compose your application using beans
 * How to access your database using Hibernate ORM with Panache
 * How to use transactions
