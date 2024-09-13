@@ -103,15 +103,6 @@ endif::use-mac[]
 
 Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `~/.sdkman/candidates/java/{graalvm-version}.r{jdk-version}-grl`).
 
-The `native-image` tool must be installed.
-It can be done by running the following command under `$GRAALVM_HOME/bin`
-
-[source,shell]
-----
-./gu install native-image
-----
-
-from your GraalVM `bin` directory.
 
 ifdef::use-mac[]
 [NOTE]
@@ -141,6 +132,8 @@ You should get something like:
 
 [source,shell]
 ----
-GraalVM 22.3.1 Java 17 CE (Java Version 17.0.6+10-jvmci-22.3-b13)
+native-image 22.0.2 2024-07-16
+OpenJDK Runtime Environment Mandrel-24.0.2.0-Final (build 22.0.2+9)
+OpenJDK 64-Bit Server VM Mandrel-24.0.2.0-Final (build 22.0.2+9, mixed mode)
 ----
 

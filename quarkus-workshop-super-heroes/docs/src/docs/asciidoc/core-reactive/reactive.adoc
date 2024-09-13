@@ -17,7 +17,7 @@ include::{plantDir}/3-reactive-physical-architecture.puml[]
 In the following sections, you will learn:
 
 * How to create a new reactive Quarkus application
-* How to implement REST API using JAX-RS and the RESTEasy Reactive extension using a reactive development model
+* How to implement REST API using JAX-RS and the Quarkus REST extension using a reactive development model
 * How to access your database using Hibernate Reactive with Panache
 * How to use transactions the reactive way
 
@@ -54,13 +54,13 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
     -DprojectArtifactId=rest-heroes \
     -DclassName="io.quarkus.workshop.superheroes.hero.HeroResource" \
     -Dpath="api/heroes" \
-    -Dextensions="resteasy-reactive-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client"
+    -Dextensions="rest-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client"
 ----
 --
 
 As you can see, we can select multiple extensions during the project creation:
 
-* `resteasy-reactive-jackson` provides RESTEasy Reactive and the ability to map JSON objects,
+* `rest-jackson` provides Quarkus REST and the ability to map JSON objects,
 * `quarkus-hibernate-validator` provides the Hibernate Validator support,
 * `quarkus-smallrye-openapi` provides the OpenAPI descriptor support and the Swagger UI in the dev console,
 * `quarkus-hibernate-reactive-panache` provides Panache entity supports using Hibernate Reactive, an ORM using reactive database drivers,

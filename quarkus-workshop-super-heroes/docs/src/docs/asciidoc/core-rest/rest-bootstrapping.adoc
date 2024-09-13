@@ -20,12 +20,12 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
     -DprojectArtifactId=rest-villains \
     -DclassName="io.quarkus.workshop.superheroes.villain.VillainResource" \
     -Dpath="api/villains" \
-    -Dextensions="resteasy-reactive-jackson"
+    -Dextensions="rest-jackson"
 ----
 
 [NOTE]
 ====
-Notice that we scaffold the project with a reactive implementation of RestEasy (`resteasy-reactive-jackson`).
+Notice that we scaffold the project with Quarkus REST (`rest-jackson`).
 This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.
 ====
 
@@ -33,7 +33,7 @@ Remember that `mvnw` is the maven wrapper. It behaves like `mvn`,
 but allows a project's build dependencies to be encapsulated.
 
 The last line selects the extension we want to use.
-As a start, we only select `resteasy-reactive-jackson`, which will also import `resteasy-reactive`.
+As a start, we only select `rest-jackson`, which will also import `rest`.
 
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM (`quarkus-super-heroes/pom.xml`) by adding this new module in the `<modules>` section:
 
@@ -45,7 +45,7 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 [TIP]
 .Prefer a Web UI?
 ====
-Instead of the Maven command, you can use https://code.quarkus.io and select the `resteasy-reactive-jackson` extension.
+Instead of the Maven command, you can use https://code.quarkus.io and select the `rest-jackson` extension.
 ====
 
 == Directory Structure
@@ -165,7 +165,7 @@ In addition, you can see the `quarkus-maven-plugin` responsible for the packagin
 </project>
 ----
 
-If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (resteasy-reactive and resteasy-reactive-jackson)
+If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (`rest` and `rest-jackson`)
 
 [source,xml,indent=0]
 ----
@@ -176,11 +176,11 @@ If we focus on the dependencies section, you can see the extensions allowing the
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-reactive</artifactId>
+      <artifactId>quarkus-rest</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+      <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
     <!-- ... -->
 </dependencies>
@@ -189,9 +189,9 @@ If we focus on the dependencies section, you can see the extensions allowing the
 * `quarkus-arc` is the dependency injection framework integrated into Quarkus.
 It's designed to perform build-time injections.
 We will see later why this is essential for Quarkus.
-* `resteasy-reactive` is the framework we will use to implement our REST API.
+* `quarkus-rest` is the framework we will use to implement our REST API.
 It uses JAX-RS annotations such as `@Path`, `@GET`...
-* `reasteasy-reactive-jackson` adds JSON object mapping capabilities to RESTEasy reactive.
+* `quarkus-rest-jackson` adds JSON object mapping capabilities to Quarkus REST.
 
 == The Villain Resource
 
@@ -212,7 +212,7 @@ public class VillainResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return "Hello from RESTEasy Reactive";
+        return "Hello from Quarkus REST";
     }
 }
 ----
@@ -263,7 +263,7 @@ __  ____  __  _____   ___  __ ____  ______
 2022-11-15 14:05:29,414 INFO  [io.quarkus] (Quarkus Main Thread) rest-villains 1.0.0-SNAPSHOT on JVM (powered by Quarkus {quarkus-version}) started in 1.093s. Listening on: http://localhost:8080
 
 2022-11-15 14:05:29,423 INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
-2022-11-15 14:05:29,423 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, resteasy-reactive, resteasy-reactive-jackson, smallrye-context-propagation, vertx]
+2022-11-15 14:05:29,423 INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, rest, rest-jackson, smallrye-context-propagation, vertx]
 
 Tests paused
 Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options>
@@ -280,7 +280,7 @@ You should see the following
 
 [source,shell]
 ----
-Hello from RESTEasy Reactive
+Hello from Quarkus REST
 ----
 
 Alternatively, you can open http://localhost:8080/api/villains in your browser.
@@ -377,7 +377,7 @@ public class VillainResourceTest {
           .when().get("/api/villains")
           .then()
              .statusCode(200)
-             .body(is("Hello from RESTEasy Reactive"));
+             .body(is("Hello from Quarkus REST"));
     }
 
 }
@@ -416,7 +416,7 @@ Unfortunately, this first run didn't end well:
 2022-11-15 14:13:17,925 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#testHelloEndpoint() failed
 : java.lang.AssertionError: 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is "Hello from RESTEasy Reactive"
+Expected: is "Hello from Quarkus REST"
   Actual: Hello Villain Resource
 
         at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
@@ -426,7 +426,7 @@ Expected: is "Hello from RESTEasy Reactive"
 2022-11-15 14:13:17,927 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> Summary: <<<<<<<<<<<<<<<<<<<<
 io.quarkus.workshop.superheroes.villain.VillainResourceTest#testHelloEndpoint(VillainResourceTest.java:18) VillainResourceTest#testHelloEndpoint() 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is "Hello from RESTEasy Reactive"
+Expected: is "Hello from Quarkus REST"
   Actual: Hello Villain Resource
 
 2022-11-15 14:13:17,929 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> 1 TEST FAILED <<<<<<<<<<<<<<<<<<<<
@@ -435,7 +435,7 @@ Expected: is "Hello from RESTEasy Reactive"
 2022-11-15 14:13:18,155 ERROR [io.qua.test] (Test runner thread) Test VillainResourceTest#testHelloEndpoint() failed
 : java.lang.AssertionError: 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is "Hello from RESTEasy Reactive"
+Expected: is "Hello from Quarkus REST"
   Actual: Hello Villain Resource
 
         at io.restassured.internal.ValidatableResponseImpl.body(ValidatableResponseImpl.groovy)
@@ -445,7 +445,7 @@ Expected: is "Hello from RESTEasy Reactive"
 2022-11-15 14:13:18,156 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> Summary: <<<<<<<<<<<<<<<<<<<<
 io.quarkus.workshop.superheroes.villain.VillainResourceTest#testHelloEndpoint(VillainResourceTest.java:18) VillainResourceTest#testHelloEndpoint() 1 expectation failed.
 Response body doesn't match expectation.
-Expected: is "Hello from RESTEasy Reactive"
+Expected: is "Hello from Quarkus REST"
   Actual: Hello Villain Resource
 
 2022-11-15 14:13:18,157 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> 1 TEST FAILED <<<<<<<<<<<<<<<<<<<<

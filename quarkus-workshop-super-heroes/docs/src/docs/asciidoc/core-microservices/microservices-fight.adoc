@@ -27,7 +27,7 @@ Open a terminal and run the following command:
   -DprojectArtifactId=rest-fights \
   -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
   -Dpath="api/fights" \
-  -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka"
+  -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi,kafka"
 ----
 
 If you open the `pom.xml` file, you will see that the following extensions have been imported:
@@ -36,7 +36,7 @@ If you open the `pom.xml` file, you will see that the following extensions have 
 * `io.quarkus:quarkus-hibernate-validator`
 * `io.quarkus:quarkus-smallrye-openapi`
 * `io.quarkus:quarkus-messaging-kafka`
-* `io.quarkus:quarkus-resteasy-reactive-jackson`
+* `io.quarkus:quarkus-rest-jackson`
 * `io.quarkus:quarkus-jdbc-postgresql`
 --
 
