@@ -63,12 +63,12 @@ We are going to rework the:
 * `FightResourceTest` class
 * `application.properties`
 
-== Installing the Reactive REST Client Dependency
+== Installing the REST Client Dependency
 
 [example, role="cta"]
 --
 
-To install the Reactive REST Client dependency, just run the following command in the Fight microservice:
+To install the REST Client dependency, just run the following command in the Fight microservice:
 
 [source,shell]
 ----
@@ -86,7 +86,7 @@ This will add the following dependency in the `pom.xml` file:
 </dependency>
 ----
 
-This dependency imports both the reactive rest client implementation and the JSON mapping support (which uses Jackson).
+This dependency imports both the REST client implementation and the JSON mapping support (which uses Jackson).
 
 == FightService Invoking External Microservices
 
