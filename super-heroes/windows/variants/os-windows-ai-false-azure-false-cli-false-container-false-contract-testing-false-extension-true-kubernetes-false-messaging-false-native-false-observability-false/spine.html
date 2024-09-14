@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins, George Gastaldi">
-<title>Quarkus Super-Heroes Workshop: 2024-09-13 Quarkus 3.14.3</title>
+<title>Quarkus Super-Heroes Workshop: 2024-09-14 Quarkus 3.14.3</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2024-09-13 Quarkus 3.14.3</h1>
+<h1>Quarkus Super-Heroes Workshop: 2024-09-14 Quarkus 3.14.3</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -736,7 +736,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#rest-clients">REST Client</a>
 <ul class="sectlevel3">
 <li><a href="#_directory_structure_7">Directory Structure</a></li>
-<li><a href="#_installing_the_reactive_rest_client_dependency">Installing the Reactive REST Client Dependency</a></li>
+<li><a href="#_installing_the_rest_client_dependency">Installing the REST Client Dependency</a></li>
 <li><a href="#_fightservice_invoking_external_microservices">FightService Invoking External Microservices</a></li>
 <li><a href="#_creating_the_interfaces">Creating the Interfaces</a></li>
 <li><a href="#_configuring_rest_client_invocation">Configuring REST Client Invocation</a></li>
@@ -6331,15 +6331,15 @@ We will also deal with fault tolerance thanks to timeouts and circuit breaker.</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installing_the_reactive_rest_client_dependency">Installing the Reactive REST Client Dependency</h4>
+<h4 id="_installing_the_rest_client_dependency">Installing the REST Client Dependency</h4>
 <div class="exampleblock cta">
 <div class="content">
 <div class="paragraph">
-<p>To install the Reactive REST Client dependency, just run the following command in the Fight microservice:</p>
+<p>To install the REST Client dependency, just run the following command in the Fight microservice:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw quarkus:add-extension -Dextensions=&quot;io.quarkus:quarkus-rest-client-reactive-jackson&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw quarkus:add-extension -Dextensions=&quot;io.quarkus:quarkus-rest-client-jackson&quot;</code></pre>
 </div>
 </div>
 </div>
@@ -6351,12 +6351,12 @@ We will also deal with fault tolerance thanks to timeouts and circuit breaker.</
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
   <span class="tag">&lt;groupId&gt;</span>io.quarkus<span class="tag">&lt;/groupId&gt;</span>
-  <span class="tag">&lt;artifactId&gt;</span>quarkus-rest-client-reactive-jackson<span class="tag">&lt;/artifactId&gt;</span>
+  <span class="tag">&lt;artifactId&gt;</span>quarkus-rest-client-jackson<span class="tag">&lt;/artifactId&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This dependency imports both the reactive rest client implementation and the JSON mapping support (which uses Jackson).</p>
+<p>This dependency imports both the REST client implementation and the JSON mapping support (which uses Jackson).</p>
 </div>
 </div>
 <div class="sect3">
@@ -7832,7 +7832,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2024-09-13</div>
+    <div>Last updated 2024-09-14</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
