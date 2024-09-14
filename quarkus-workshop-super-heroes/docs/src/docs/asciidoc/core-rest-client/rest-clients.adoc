@@ -72,7 +72,7 @@ To install the Reactive REST Client dependency, just run the following command i
 
 [source,shell]
 ----
-./mvnw quarkus:add-extension -Dextensions="io.quarkus:quarkus-rest-client-reactive-jackson"
+./mvnw quarkus:add-extension -Dextensions="io.quarkus:quarkus-rest-client-jackson"
 ----
 --
 
@@ -82,7 +82,7 @@ This will add the following dependency in the `pom.xml` file:
 ----
 <dependency>
   <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
+  <artifactId>quarkus-rest-client-jackson</artifactId>
 </dependency>
 ----
 
