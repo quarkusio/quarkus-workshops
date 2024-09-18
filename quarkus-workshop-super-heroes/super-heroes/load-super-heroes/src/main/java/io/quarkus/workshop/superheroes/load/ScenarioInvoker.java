@@ -16,7 +16,7 @@
  */
 package io.quarkus.workshop.superheroes.load;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;

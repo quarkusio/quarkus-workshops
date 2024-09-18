@@ -16,7 +16,7 @@
  */
 package io.quarkus.workshop.superheroes.load;
 
-import com.github.javafaker.Superhero;
+import net.datafaker.providers.base.Superhero;
 
 import javax.json.Json;
 import javax.json.JsonObject;
