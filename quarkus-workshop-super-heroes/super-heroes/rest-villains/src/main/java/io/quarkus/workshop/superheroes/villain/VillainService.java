@@ -63,7 +63,6 @@ public class VillainService {
     }
 
     public void deleteVillain(Long id) {
-        Villain villain = Villain.findById(id);
-        villain.delete();
+        Villain.deleteById(id);
     }
 }

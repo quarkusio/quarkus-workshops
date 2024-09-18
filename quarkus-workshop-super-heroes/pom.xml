@@ -114,7 +114,7 @@
                 <module>super-heroes/rest-fights</module>
                 <module>super-heroes/event-statistics</module>
                 <module>super-heroes/rest-narration</module>
-                <module>super-heroes/load-super-heroes</module>
+                <module>super-heroes/cli-super-heroes</module>
             </modules>
         </profile>
         <profile>
@@ -141,6 +141,7 @@
                 <module>super-heroes/rest-fights</module>
                 <module>super-heroes/event-statistics</module>
                 <module>super-heroes/rest-narration</module>
+                <module>super-heroes/cli-super-heroes</module>
                 <module>docs</module>
             </modules>
         </profile>
