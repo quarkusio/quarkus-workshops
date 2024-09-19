@@ -135,10 +135,29 @@ For this, what do we need:
 The _runtime_ part of an extension contains only the classes and resources required at runtime.
 For the version extension, it would be a single class that prints the version.
 
+First, let's create the configuration class that will allow users to dynamically configure whether the version should be printed:
 [example, role="cta"]
 --
 
-In the runtime module, create the `src/main/java` directory, and, in this directory, the `io.quarkus.workshop.superheroes.version.runtime.VersionRecorder` class with the following content:
+Under the `runtime` module, create the `src/main/java` directory, and, in this directory, create a new interface named `io.quarkus.workshop.superheroes.version.runtime.VersionConfig` with the following content:
+
+[source,java]
+----
+include::{code-root}/extension-version/runtime/src/main/java/io/quarkus/workshop/superheroes/version/runtime/VersionConfig.java[]
+----
+--
+The `@ConfigMapping` annotation declares `VersionConfig` as a configuration interface which configuration properties are prefixed with `quarkus.version` prefix. It is also used in CDI aware environments to scan and register Config Mappings.
+
+The `@ConfigRoot` annotation declares that the configuration is available during runtime.
+
+The `@WithDefault("true")` is used to declare the default value returned when `enabled()` is called.
+
+By default, the name of the property is derived from what's declared in the `prefix` attribute inside `@ConfigMapping` plus the name of the method. In our case, the user-configured property will be `quarkus.version.enabled`.
+
+[example, role="cta"]
+--
+
+Still in the `runtime` module, create the `io.quarkus.workshop.superheroes.version.runtime.VersionRecorder` class with the following content:
 
 [source,java]
 ----
@@ -160,19 +179,6 @@ The version extension consists of a single build step that extracts the version 
 
 [example, role="cta"]
 --
-First, let's create the configuration class that will allow users to dynamically configure whether the version should be printed:
-
-Under the `deployment` module, create new class `io.quarkus.workshop.superheroes.version.deployment.VersionConfig` with the following content:
-
-[source,java]
-----
-include::{code-root}/extension-version/deployment/src/main/java/io/quarkus/workshop/superheroes/version/deployment/VersionConfig.java[]
-----
---
-
-The `@ConfigRoot` annotation declares `VersionConfig` as a configuration class which configuration properties are prefixed with `quarkus.` prefix.
-
-The `@ConfigItem` is used to declare individual configuration properties. By default, the name of the property is derived from the name of the field. In our case, the user-configured property will be `quarkus.version.enabled`.
 
 Next, open the `ExtensionVersionProcessor` class, and update the content to be:
 
@@ -180,7 +186,7 @@ Next, open the `ExtensionVersionProcessor` class, and update the content to be:
 ----
 include::{code-root}/extension-version/deployment/src/main/java/io/quarkus/workshop/superheroes/version/deployment/ExtensionVersionProcessor.java[]
 ----
-
+--
 This class is the core of the extension.
 It contains a set of methods annotated with `@BuildStep`.
 

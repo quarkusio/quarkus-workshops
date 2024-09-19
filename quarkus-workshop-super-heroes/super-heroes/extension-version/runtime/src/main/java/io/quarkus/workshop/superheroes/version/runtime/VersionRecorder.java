@@ -6,8 +6,10 @@ import org.jboss.logging.Logger;
 @Recorder
 public class VersionRecorder {
 
-    public void printVersion(String version) {
-        Logger.getLogger(VersionRecorder.class.getName()).infof("Version: %s", version);
+    public void printVersion(VersionConfig versionConfig, String version) {
+        if (versionConfig.enabled()) {
+            Logger.getLogger(VersionRecorder.class.getName()).infof("Version: %s", version);
+        }
     }
 
 }
