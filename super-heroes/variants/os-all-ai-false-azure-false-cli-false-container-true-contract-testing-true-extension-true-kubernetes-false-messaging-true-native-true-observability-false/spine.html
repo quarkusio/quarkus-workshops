@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins, George Gastaldi">
-<title>Quarkus Super-Heroes Workshop: 2024-09-18 Quarkus 3.15.0</title>
+<title>Quarkus Super-Heroes Workshop: 2024-09-19 Quarkus 3.15.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2024-09-18 Quarkus 3.15.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2024-09-19 Quarkus 3.15.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -9437,10 +9437,53 @@ For this, what do we need:</p>
 <p>The <em>runtime</em> part of an extension contains only the classes and resources required at runtime.
 For the version extension, it would be a single class that prints the version.</p>
 </div>
+<div class="paragraph">
+<p>First, let&#8217;s create the configuration class that will allow users to dynamically configure whether the version should be printed:</p>
+</div>
 <div class="exampleblock cta">
 <div class="content">
 <div class="paragraph">
-<p>In the runtime module, create the <code>src/main/java</code> directory, and, in this directory, the <code>io.quarkus.workshop.superheroes.version.runtime.VersionRecorder</code> class with the following content:</p>
+<p>Under the <code>runtime</code> module, create the <code>src/main/java</code> directory, and, in this directory, create a new interface named <code>io.quarkus.workshop.superheroes.version.runtime.VersionConfig</code> with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.quarkus.workshop.superheroes.version.runtime</span>;
+
+<span class="keyword">import</span> <span class="include">io.quarkus.runtime.annotations.ConfigPhase</span>;
+<span class="keyword">import</span> <span class="include">io.quarkus.runtime.annotations.ConfigRoot</span>;
+<span class="keyword">import</span> <span class="include">io.smallrye.config.ConfigMapping</span>;
+<span class="keyword">import</span> <span class="include">io.smallrye.config.WithDefault</span>;
+
+<span class="annotation">@ConfigMapping</span>(prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">quarkus.version</span><span class="delimiter">&quot;</span></span>)
+<span class="annotation">@ConfigRoot</span>(phase = ConfigPhase.RUN_TIME)
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">VersionConfig</span> {
+
+    <span class="comment">/**
+     * Enables or disables the version printing at startup.
+     */</span>
+    <span class="annotation">@WithDefault</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
+    <span class="type">boolean</span> enabled();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@ConfigMapping</code> annotation declares <code>VersionConfig</code> as a configuration interface which configuration properties are prefixed with <code>quarkus.version</code> prefix. It is also used in CDI aware environments to scan and register Config Mappings.</p>
+</div>
+<div class="paragraph">
+<p>The <code>@ConfigRoot</code> annotation declares that the configuration is available during runtime.</p>
+</div>
+<div class="paragraph">
+<p>The <code>@WithDefault("true")</code> is used to declare the default value returned when <code>enabled()</code> is called.</p>
+</div>
+<div class="paragraph">
+<p>By default, the name of the property is derived from what&#8217;s declared in the <code>prefix</code> attribute inside <code>@ConfigMapping</code> plus the name of the method. In our case, the user-configured property will be <code>quarkus.version.enabled</code>.</p>
+</div>
+<div class="exampleblock cta">
+<div class="content">
+<div class="paragraph">
+<p>Still in the <code>runtime</code> module, create the <code>io.quarkus.workshop.superheroes.version.runtime.VersionRecorder</code> class with the following content:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9452,8 +9495,10 @@ For the version extension, it would be a single class that prints the version.</
 <span class="annotation">@Recorder</span>
 <span class="directive">public</span> <span class="type">class</span> <span class="class">VersionRecorder</span> {
 
-    <span class="directive">public</span> <span class="type">void</span> printVersion(<span class="predefined-type">String</span> version) {
-        <span class="predefined-type">Logger</span>.getLogger(VersionRecorder.class.getName()).infof(<span class="string"><span class="delimiter">&quot;</span><span class="content">Version: %s</span><span class="delimiter">&quot;</span></span>, version);
+    <span class="directive">public</span> <span class="type">void</span> printVersion(VersionConfig versionConfig, <span class="predefined-type">String</span> version) {
+        <span class="keyword">if</span> (versionConfig.enabled()) {
+            <span class="predefined-type">Logger</span>.getLogger(VersionRecorder.class.getName()).infof(<span class="string"><span class="delimiter">&quot;</span><span class="content">Version: %s</span><span class="delimiter">&quot;</span></span>, version);
+        }
     }
 
 }</code></pre>
@@ -9479,38 +9524,6 @@ The version extension consists of a single build step that extracts the version 
 <div class="exampleblock cta">
 <div class="content">
 <div class="paragraph">
-<p>First, let&#8217;s create the configuration class that will allow users to dynamically configure whether the version should be printed:</p>
-</div>
-<div class="paragraph">
-<p>Under the <code>deployment</code> module, create new class <code>io.quarkus.workshop.superheroes.version.deployment.VersionConfig</code> with the following content:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.quarkus.workshop.superheroes.version.deployment</span>;
-
-<span class="keyword">import</span> <span class="include">io.quarkus.runtime.annotations.ConfigItem</span>;
-<span class="keyword">import</span> <span class="include">io.quarkus.runtime.annotations.ConfigRoot</span>;
-
-<span class="annotation">@ConfigRoot</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">VersionConfig</span> {
-
-    <span class="comment">/**
-     * Enables or disables the version printing at startup.
-     */</span>
-    <span class="annotation">@ConfigItem</span>(defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
-    <span class="type">boolean</span> enabled;
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>@ConfigRoot</code> annotation declares <code>VersionConfig</code> as a configuration class which configuration properties are prefixed with <code>quarkus.</code> prefix.</p>
-</div>
-<div class="paragraph">
-<p>The <code>@ConfigItem</code> is used to declare individual configuration properties. By default, the name of the property is derived from the name of the field. In our case, the user-configured property will be <code>quarkus.version.enabled</code>.</p>
-</div>
-<div class="paragraph">
 <p>Next, open the <code>ExtensionVersionProcessor</code> class, and update the content to be:</p>
 </div>
 <div class="listingblock">
@@ -9522,6 +9535,7 @@ The version extension consists of a single build step that extracts the version 
 <span class="keyword">import</span> <span class="include">io.quarkus.deployment.annotations.Record</span>;
 <span class="keyword">import</span> <span class="include">io.quarkus.deployment.builditem.ApplicationInfoBuildItem</span>;
 <span class="keyword">import</span> <span class="include">io.quarkus.deployment.builditem.FeatureBuildItem</span>;
+<span class="keyword">import</span> <span class="include">io.quarkus.workshop.superheroes.version.runtime.VersionConfig</span>;
 <span class="keyword">import</span> <span class="include">io.quarkus.workshop.superheroes.version.runtime.VersionRecorder</span>;
 
 <span class="type">class</span> <span class="class">ExtensionVersionProcessor</span> {
@@ -9536,11 +9550,11 @@ The version extension consists of a single build step that extracts the version 
     <span class="annotation">@BuildStep</span>
     <span class="annotation">@Record</span>(ExecutionTime.RUNTIME_INIT)
     <span class="type">void</span> recordVersion(ApplicationInfoBuildItem app, VersionConfig versionConfig, VersionRecorder recorder) {
-        <span class="keyword">if</span> (versionConfig.enabled) {
-            recorder.printVersion(app.getVersion());
-        }
+        recorder.printVersion(versionConfig, app.getVersion());
     }
 }</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -10162,7 +10176,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2024-09-18</div>
+    <div>Last updated 2024-09-19</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
