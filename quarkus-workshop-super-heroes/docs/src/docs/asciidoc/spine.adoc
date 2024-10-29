@@ -137,7 +137,7 @@ endif::use-observability[]
 
 // CLI
 ifdef::use-cli[]
-include::optional-cli/cli.adoc[leveloffset=+1]
+include::optional-load/load.adoc[leveloffset=+1]
 <<<
 endif::use-cli[]
 
