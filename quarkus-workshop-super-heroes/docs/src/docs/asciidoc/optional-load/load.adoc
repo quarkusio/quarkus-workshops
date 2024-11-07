@@ -1,0 +1,58 @@
+[[load]]
+= Loading the Microservices
+
+
+Now that we have the three main microservices exposing health checks and metrics, time to have a decent user interface to  monitor how the system behaves.
+The purpose of this workshop is to add some load to our application.
+You will download the load application, install it and run it.
+
+== Give me some load!
+
+In the `super-heroes/load-super-heroes` directory, there is a command line Quarkus application .
+This application simulates users interacting with the system so it generates some load.
+
+== Looking at Some Code
+
+The `CLIMain` class is just a Picocli extension command line application that executes the `FightScenario`, `HeroScenario` and `VillainScenario`,
+on the same thread but randomly executing 3 different random calls to the 3 REST APIs.
+For example, if you look at the `HeroScenario`, you will see that it's just a suit of HTTP calls on the Hero API:
+
+[source,indent=0]
+----
+include::{projectdir}/load-super-heroes/src/main/java/io/quarkus/workshop/superheroes/load/scenarios/HeroScenario.java[tag=adocScenario]
+----
+
+== Running the Load Application
+
+[example, role="cta"]
+--
+You are all set!
+Time to compile and start the load application using:
+
+[source,shell]
+----
+./mvnw package
+java -jar ./target/quarkus-app/quarkus-run.jar -s
+----
+--
+
+You will see the following logs. To stop the load, write something and press Enter key.
+
+[source,shell]
+----
+INFO: GET - http://localhost:8082/api/fights/1 - 200
+INFO: DELETE - http://localhost:8084/api/villains/440 - 204
+INFO: GET - http://localhost:8083/api/heroes - 200
+INFO: GET - http://localhost:8084/api/villains/hello - 200
+INFO: GET - http://localhost:8082/api/fights - 200
+INFO: GET - http://localhost:8083/api/heroes/581 - 200
+INFO: GET - http://localhost:8084/api/villains/126 - 200
+INFO: GET - http://localhost:8082/api/fights/hello - 200
+INFO: DELETE - http://localhost:8083/api/heroes/491 - 204
+----
+
+[NOTE]
+====
+Stop the load application before going further.
+====
+
