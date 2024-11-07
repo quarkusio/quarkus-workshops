@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins, George Gastaldi">
-<title>Quarkus Super-Heroes Workshop: 2024-09-19 Quarkus 3.15.0</title>
+<title>Quarkus Super-Heroes Workshop: 2024-11-07 Quarkus 3.15.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2024-09-19 Quarkus 3.15.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2024-11-07 Quarkus 3.15.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -833,7 +833,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#messaging-conclusion">Unifying Imperative and Reactive Programming</a></li>
 </ul>
 </li>
-<li><a href="#cli">Loading the Microservices</a>
+<li><a href="#load">Loading the Microservices</a>
 <ul class="sectlevel2">
 <li><a href="#_give_me_some_load">Give me some load!</a></li>
 <li><a href="#_looking_at_some_code">Looking at Some Code</a></li>
@@ -3272,8 +3272,7 @@ You can control whether and how the transaction is started with parameters on <c
     }
 
     <span class="directive">public</span> <span class="type">void</span> deleteVillain(<span class="predefined-type">Long</span> id) {
-        Villain villain = Villain.findById(id);
-        villain.delete();
+        Villain.deleteById(id);
     }
 }</code></pre>
 </div>
@@ -10240,7 +10239,7 @@ To go further on this, we recommend:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="cli">Loading the Microservices</h2>
+<h2 id="load">Loading the Microservices</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now that we have the three main microservices exposing health checks and metrics, time to have a decent user interface to  monitor how the system behaves.
@@ -10250,32 +10249,27 @@ You will download the load application, install it and run it.</p>
 <div class="sect2">
 <h3 id="_give_me_some_load">Give me some load!</h3>
 <div class="paragraph">
-<p>In the <code>super-heroes/load-super-heroes</code> directory, there is an application that is <strong>NOT</strong> a Quarkus application.
-It&#8217;s a simple Java app that simulates users interacting with the system so it generates some load.</p>
+<p>In the <code>super-heroes/load-super-heroes</code> directory, there is a command line Quarkus application .
+This application simulates users interacting with the system so it generates some load.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_looking_at_some_code">Looking at Some Code</h3>
 <div class="paragraph">
-<p>The <code>SuperHeroesLoad</code> class is just a <code>main</code> that executes the <code>FightScenario</code>, <code>HeroScenario</code> and <code>VillainScenario</code> in different threads.
+<p>The <code>CLIMain</code> class is just a Picocli extension command line application that executes the <code>FightScenario</code>, <code>HeroScenario</code> and <code>VillainScenario</code>,
+on the same thread but randomly executing 3 different random calls to the 3 REST APIs.
 For example, if you look at the <code>HeroScenario</code>, you will see that it&#8217;s just a suit of HTTP calls on the Hero API:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> targetUrl = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:8083</span><span class="delimiter">&quot;</span></span>;
-
-<span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> contextRoot = <span class="string"><span class="delimiter">&quot;</span><span class="content">/api/heroes</span><span class="delimiter">&quot;</span></span>;
-
-<span class="annotation">@Override</span>
-<span class="directive">protected</span> <span class="predefined-type">List</span>&lt;Endpoint&gt; getEndpoints() {
-    <span class="keyword">return</span> Stream.of(
-         endpoint(contextRoot, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>),
-         endpoint(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/hello</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>),
-         endpoint(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/random</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>),
-         endpointWithTemplates(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/{id}</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>::idParam),
-         endpointWithTemplates(contextRoot + <span class="string"><span class="delimiter">&quot;</span><span class="content">/{id}</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">DELETE</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>::idParam),
-         endpointWithEntity(contextRoot, <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>::createHero)
-    ).collect(collectingAndThen(toList(), <span class="predefined-type">Collections</span>::unmodifiableList));
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="predefined-type">List</span>&lt;Supplier&lt;Response&gt;&gt; callSupplier () {
+    Supplier&lt;Response&gt; helloCall = () -&gt; heroProxy.hello();
+    Supplier&lt;Response&gt; allCall = () -&gt; heroProxy.all();
+    Supplier&lt;Response&gt; randomCall = () -&gt; heroProxy.random();
+    Supplier&lt;Response&gt; getCall = () -&gt; heroProxy.get(idParam());
+    Supplier&lt;Response&gt; createCall = () -&gt; heroProxy.create(create());
+    Supplier&lt;Response&gt; deleteCall = () -&gt; heroProxy.delete(idParam());
+    <span class="keyword">return</span> Stream.of(allCall, helloCall, randomCall, getCall, createCall, deleteCall).collect(Collectors.toList());
 }</code></pre>
 </div>
 </div>
@@ -10290,14 +10284,14 @@ Time to compile and start the load application using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">./mvnw compile
-./mvnw exec:java</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">./mvnw package
+java -jar ./target/quarkus-app/quarkus-run.jar -s</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>You will see the following logs:</p>
+<p>You will see the following logs. To stop the load, write something and press Enter key.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13829,7 +13823,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2024-09-19</div>
+    <div>Last updated 2024-11-07</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
