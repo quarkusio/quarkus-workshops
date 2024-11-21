@@ -21,7 +21,7 @@
             so we need to do a bit of cleaning as part of the default lifecycle.-->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>tidy-generated-project</id>
