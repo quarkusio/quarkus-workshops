@@ -160,7 +160,7 @@ It's an amazing tool to manipulate JSON in the shell.
 More info on: https://stedolan.github.io/jq/
 ====
 
-Hey! Wait a minute! It you enabled continuous testing, Quarkus should have warned you:
+Hey! Wait a minute! If you enabled continuous testing, Quarkus should have warned you:
 
 [source,text]
 ----

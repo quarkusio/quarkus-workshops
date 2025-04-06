@@ -57,7 +57,7 @@ Add the Pact dependency to the heroes service `pom.xml`:
 </dependency>
 ----
 
-We also add the https://quarkus.io/guides/hibernate-orm-panache#mocking[Panache Mock dependency], which allows us to which allows use Mockito to mock all provided static methods.
+We also add the https://quarkus.io/guides/hibernate-orm-panache#mocking[Panache Mock dependency], which allows us to use Mockito to mock all provided static methods.
 That will come in handy at various points in the provider testing.
 
 Create a `io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java` class in the `rest-heroes` project.

@@ -63,7 +63,7 @@ Finally, you need a UI to watch these live statistics.
 [example, role="cta"]
 --
 
-Replace the `META-INF/resources/index.html` file with the following content:
+Create the `src/main/resources/META-INF/resources/index.html` file with the following content:
 
 [source,html]
 ----
