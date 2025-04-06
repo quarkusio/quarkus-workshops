@@ -13,7 +13,7 @@ It can be enabled in the Quarkus configuration file:
 
 [source,properties]
 ----
-quarkus.http.cors=true
+quarkus.http.cors.enabled=true
 ----
 
 If the filter is enabled and an HTTP request is identified as cross-origin, the CORS policy and headers defined using the following properties will be applied before passing the request on to its actual target (servlet, JAX-RS resource, etc.):
