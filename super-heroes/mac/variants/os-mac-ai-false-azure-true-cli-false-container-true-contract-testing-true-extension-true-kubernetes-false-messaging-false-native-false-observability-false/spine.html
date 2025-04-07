@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Emmanuel Bernard, Clement Escoffier, Antonio Goncalves, Aurea Munoz Hernandez, Georgios Andrianakis, Holly Cummins, George Gastaldi">
-<title>Quarkus Super-Heroes Workshop: 2025-03-26 Quarkus 3.20.0</title>
+<title>Quarkus Super-Heroes Workshop: 2025-04-07 Quarkus 3.20.0</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -583,7 +583,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus Super-Heroes Workshop: 2025-03-26 Quarkus 3.20.0</h1>
+<h1>Quarkus Super-Heroes Workshop: 2025-04-07 Quarkus 3.20.0</h1>
 <div class="details">
 <span id="author" class="author">Emmanuel Bernard</span><br>
 <span id="author2" class="author">Clement Escoffier</span><br>
@@ -3564,7 +3564,7 @@ More info on: <a href="https://stedolan.github.io/jq/" class="bare">https://sted
 </table>
 </div>
 <div class="paragraph">
-<p>Hey! Wait a minute! It you enabled continuous testing, Quarkus should have warned you:</p>
+<p>Hey! Wait a minute! If you enabled continuous testing, Quarkus should have warned you:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4531,7 +4531,7 @@ In addition, Arc can detect and remove unused beans at runtime, saving memory.</
 <div class="content">
 <div class="paragraph">
 <p>With the application running in dev mode, open your browser to <a href="http://localhost:8084/q/dev/" class="bare">http://localhost:8084/q/dev/</a>.
-In the ArC widget, you can see the number of beans that have been removed ("Removed Beans"), and if you click on the link, see the list.
+In the ArC widget, you can see the number of components that have been removed ("Removed components"), and if you click on the link, see the list of removed beans.
 If you click on the "Observers" link, you will see the two methods we added.
 In the "Fired Events" view, you can see which event has been fired and when.</p>
 </div>
@@ -6409,7 +6409,7 @@ It can be enabled in the Quarkus configuration file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors=true</code></pre>
+<pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors.enabled=true</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6469,7 +6469,7 @@ It can be enabled in the Quarkus configuration file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors=true
+<pre class="CodeRay highlight"><code data-lang="properties">quarkus.http.cors.enabled=true
 quarkus.http.cors.origins=/.*/</code></pre>
 </div>
 </div>
@@ -7578,7 +7578,7 @@ The Pact framework will generate a test for each expectation in the contract and
 </div>
 </div>
 <div class="paragraph">
-<p>We also add the <a href="https://quarkus.io/guides/hibernate-orm-panache#mocking">Panache Mock dependency</a>, which allows us to which allows use Mockito to mock all provided static methods.
+<p>We also add the <a href="https://quarkus.io/guides/hibernate-orm-panache#mocking">Panache Mock dependency</a>, which allows us to use Mockito to mock all provided static methods.
 That will come in handy at various points in the provider testing.</p>
 </div>
 <div class="paragraph">
@@ -7727,7 +7727,7 @@ so we&#8217;ll work around it by handling the state in the <code>@BeforeEach</co
 <p>What&#8217;s going on?
 The consumer expects a 404 if there are no heroes, but the provider is returning a 204.
 The reasoning from the consumer is that if a caller asks for a resource the server doesn&#8217;t have, it should be a 404, the same way if a user types in an invalid URL into the browser.
-This is a more pure interpretation of REST than what was inplemented by the <code>HeroResource</code>.</p>
+This is a more pure interpretation of REST than what was implemented by the <code>HeroResource</code>.</p>
 </div>
 <div class="paragraph">
 <p>There are arguments for both 404 (not found) and 204 (no content).
@@ -10079,7 +10079,7 @@ This infrastructure starts all these services, so you don&#8217;t have to worry 
 </div>
 </div>
 <footer>
-    <div>Last updated 2025-03-26</div>
+    <div>Last updated 2025-04-07</div>
     <div><i class="far fa-comments"></i>Need help? Join the <a
         href="https://quarkusio.zulipchat.com/#narrow/stream/402952-workshops">
         Zulip workshop chat</a>
