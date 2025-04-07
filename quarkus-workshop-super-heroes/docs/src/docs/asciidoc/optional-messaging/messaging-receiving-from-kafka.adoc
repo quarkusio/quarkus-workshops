@@ -88,7 +88,7 @@ Create the `io.quarkus.workshop.superheroes.statistics.Fight` class with the fol
 include::{projectdir}/event-statistics/src/main/java/io/quarkus/workshop/superheroes/statistics/Fight.java[]
 ----
 
-We also need to a deserializer that will receive the Kafka record and create the `Fight` instances.
+We also need to create a deserializer that will receive the Kafka record and create the `Fight` instances.
 Create the `io.quarkus.workshop.superheroes.statistics.FightDeserializer` class with the following content:
 
 [source,java]

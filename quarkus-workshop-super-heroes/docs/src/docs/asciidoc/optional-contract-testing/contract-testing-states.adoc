@@ -41,7 +41,7 @@ include::{projectdir}/rest-heroes/src/test/java/io/quarkus/workshop/superheroes/
 What's going on?
 The consumer expects a 404 if there are no heroes, but the provider is returning a 204.
 The reasoning from the consumer is that if a caller asks for a resource the server doesn't have, it should be a 404, the same way if a user types in an invalid URL into the browser.
-This is a more pure interpretation of REST than what was inplemented by the `HeroResource`.
+This is a more pure interpretation of REST than what was implemented by the `HeroResource`.
 
 There are arguments for both 404 (not found) and 204 (no content).
 Feel free to debate with your neighbour about which you prefer – but it doesn't really matter which is correct.

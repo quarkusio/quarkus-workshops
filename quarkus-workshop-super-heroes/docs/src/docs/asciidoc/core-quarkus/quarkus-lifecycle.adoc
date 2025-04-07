@@ -77,7 +77,7 @@ In addition, Arc can detect and remove unused beans at runtime, saving memory.
 --
 
 With the application running in dev mode, open your browser to http://localhost:8084/q/dev/.
-In the ArC widget, you can see the number of beans that have been removed ("Removed Beans"), and if you click on the link, see the list.
+In the ArC widget, you can see the number of components that have been removed ("Removed components"), and if you click on the link, see the list of removed beans.
 If you click on the "Observers" link, you will see the two methods we added.
 In the "Fired Events" view, you can see which event has been fired and when.
 --
