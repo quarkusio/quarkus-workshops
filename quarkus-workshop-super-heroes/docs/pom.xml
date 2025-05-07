@@ -36,7 +36,7 @@ The default build will take around 50m.
         <version.jruby>9.4.5.0</version.jruby>
         <version.asciidoctorj>2.5.10</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
-        <version.asciidoctorj.diagram>2.2.13</version.asciidoctorj.diagram>
+        <version.asciidoctorj.diagram>2.3.0</version.asciidoctorj.diagram>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.raw>
         <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
