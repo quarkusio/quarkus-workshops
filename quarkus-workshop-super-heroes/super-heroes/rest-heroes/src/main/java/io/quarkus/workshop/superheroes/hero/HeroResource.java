@@ -1,18 +1,8 @@
 package io.quarkus.workshop.superheroes.hero;
 
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.jboss.logging.Logger;
-import org.jboss.resteasy.reactive.RestPath;
-import org.jboss.resteasy.reactive.RestResponse;
-
-
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -22,9 +12,16 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.reactive.RestPath;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import java.net.URI;
 import java.util.List;
@@ -41,12 +38,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 @Tag(name = "heroes")
 public class HeroResource {
 
-    Logger logger;
-
-    public HeroResource(Logger logger) {
-        this.logger = logger;
-    }
-
     @Operation(summary = "Returns a random hero")
     @GET
     @Path("/random")
@@ -54,11 +45,11 @@ public class HeroResource {
     public Uni<RestResponse<Hero>> getRandomHero() {
         return Hero.findRandom()
             .onItem().ifNotNull().transform(h -> {
-                this.logger.debugf("Found random hero: %s", h);
+                Log.debugf("Found random hero: %s", h);
                 return RestResponse.ok(h);
             })
             .onItem().ifNull().continueWith(() -> {
-                this.logger.debug("No random villain found");
+                Log.debug("No random villain found");
                 return RestResponse.notFound();
             });
     }
@@ -81,7 +72,7 @@ public class HeroResource {
                 if (hero != null) {
                     return RestResponse.ok(hero);
                 }
-                logger.debugf("No Hero found with id %d", id);
+                Log.debugf("No Hero found with id %d", id);
                 return RestResponse.noContent();
             });
     }
@@ -94,7 +85,7 @@ public class HeroResource {
         return hero.<Hero>persist()
             .map(h -> {
                 UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(h.id));
-                logger.debug("New Hero created with URI " + builder.build().toString());
+                Log.debug("New Hero created with URI " + builder.build().toString());
                 return RestResponse.created(builder.build());
             });
     }
@@ -114,7 +105,7 @@ public class HeroResource {
                 return retrieved;
             })
             .map(h -> {
-                logger.debugf("Hero updated with new valued %s", h);
+                Log.debugf("Hero updated with new valued %s", h);
                 return h;
             });
 
@@ -127,7 +118,7 @@ public class HeroResource {
     @WithTransaction
     public Uni<RestResponse<Void>> deleteHero(@RestPath Long id) {
         return Hero.deleteById(id)
-            .invoke(() -> logger.debugf("Hero deleted with %d", id))
+            .invoke(() -> Log.debugf("Hero deleted with %d", id))
             .replaceWith(RestResponse.noContent());
     }
 

@@ -1,18 +1,15 @@
 package io.quarkus.workshop.superheroes.fight;
 
-import jakarta.ws.rs.*;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-// tag::adocFaultTolerance[]
-import org.eclipse.microprofile.faulttolerance.Timeout;
-// end::adocFaultTolerance[]
-import org.jboss.logging.Logger;
-
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 import java.util.List;
 
@@ -29,9 +26,6 @@ import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 @Produces(APPLICATION_JSON)
 @ApplicationScoped
 public class FightResource {
-
-    @Inject
-    Logger logger;
 
     @Inject
     FightService service;
@@ -59,14 +53,14 @@ public class FightResource {
         //  veryLongProcess(); // <-- Added
         // end::adocFaultTolerance[]
         Fighters fighters = service.findRandomFighters();
-        logger.debug("Get random fighters " + fighters);
+        Log.debug("Get random fighters " + fighters);
         return Response.ok(fighters).build();
     }
 
     @GET
     public Response getAllFights() {
         List<Fight> fights = service.findAllFights();
-        logger.debug("Total number of fights " + fights);
+        Log.debug("Total number of fights " + fights);
         return Response.ok(fights).build();
     }
 
@@ -75,10 +69,10 @@ public class FightResource {
     public Response getFight(Long id) {
         Fight fight = service.findFightById(id);
         if (fight != null) {
-            logger.debug("Found fight " + fight);
+            Log.debug("Found fight " + fight);
             return Response.ok(fight).build();
         } else {
-            logger.debug("No fight found with id " + id);
+            Log.debug("No fight found with id " + id);
             return Response.noContent().build();
         }
     }
@@ -101,7 +95,7 @@ public class FightResource {
     @Consumes(APPLICATION_JSON)
     @Produces(TEXT_PLAIN)
     public Response narrateFight(@Valid Fight fight) {
-        logger.debug("Narrate the fight " + fight);
+        Log.debug("Narrate the fight " + fight);
         String narration = service.narrateFight(fight);
         return Response.status(Response.Status.CREATED).entity(narration).build();
 

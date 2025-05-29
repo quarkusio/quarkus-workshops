@@ -9,11 +9,10 @@ import com.microsoft.semantickernel.orchestration.SKContext;
 import com.microsoft.semantickernel.skilldefinition.ReadOnlyFunctionCollection;
 import com.microsoft.semantickernel.textcompletion.CompletionSKFunction;
 import com.microsoft.semantickernel.textcompletion.TextCompletion;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
-import org.jboss.logging.Logger;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -24,8 +23,6 @@ import java.util.Properties;
 @ApplicationScoped
 public class SemanticKernelNarrationService implements NarrationService {
 
-    @Inject
-    Logger logger;
 
     @Override
     @Fallback(fallbackMethod = "fallbackNarrate")
@@ -58,13 +55,13 @@ public class SemanticKernelNarrationService implements NarrationService {
         Mono<SKContext> result = fightFunction.invokeAsync(fightContext);
 
         String narration = result.block().getResult();
-        logger.info("The narration for the fight is: " + narration);
+        Log.info("The narration for the fight is: " + narration);
 
         return narration;
     }
 
     public String fallbackNarrate(Fight fight) {
-        logger.warn("Falling back on Narration");
+        Log.warn("Falling back on Narration");
         return """
             High above a bustling city, a symbol of hope and justice soared through the sky, while chaos reigned below, with malevolent laughter echoing through the streets.
             With unwavering determination, the figure swiftly descended, effortlessly evading explosive attacks, closing the gap, and delivering a decisive blow that silenced the wicked laughter.
