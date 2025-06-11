@@ -3,12 +3,13 @@ package io.quarkus.workshop.superheroes.fight;
 
 import io.quarkus.logging.Log;
 import io.quarkus.workshop.superheroes.fight.client.*;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import java.time.Instant;
 import java.util.List;

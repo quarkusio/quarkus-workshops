@@ -15,6 +15,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -35,6 +36,7 @@ import org.jboss.resteasy.reactive.RestResponse;
 @Path("/api/villains")
 @Tag(name = "villains")
 public class VillainResource {
+
     VillainService service;
 
     public VillainResource(VillainService service) {
