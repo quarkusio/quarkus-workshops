@@ -1,13 +1,13 @@
 package io.quarkus.workshop.superheroes.statistics;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.subscription.Cancellable;
 import io.smallrye.mutiny.unchecked.Unchecked;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,8 +31,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TopWinnerWebSocket {
 
     @Inject ObjectMapper mapper;
-
-    @Inject Logger logger;
 
     @Channel("winner-stats")
     Multi<Iterable<Score>> winners;
@@ -65,7 +63,7 @@ public class TopWinnerWebSocket {
     private void write(Session session, String serialized) {
         session.getAsyncRemote().sendText(serialized, result -> {
             if (result.getException() != null) {
-                logger.error("Unable to write message to web socket", result.getException());
+                Log.error("Unable to write message to web socket", result.getException());
             }
         });
     }

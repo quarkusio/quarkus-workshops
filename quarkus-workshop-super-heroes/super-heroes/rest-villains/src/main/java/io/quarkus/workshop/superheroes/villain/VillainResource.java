@@ -5,6 +5,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.net.URI;
 import java.util.List;
 
+import io.quarkus.logging.Log;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -23,7 +24,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 
@@ -36,12 +36,11 @@ import org.jboss.resteasy.reactive.RestResponse;
 @Path("/api/villains")
 @Tag(name = "villains")
 public class VillainResource {
-    Logger logger;
+
     VillainService service;
 
-    public VillainResource(Logger logger, VillainService service) {
+    public VillainResource(VillainService service) {
         this.service = service;
-        this.logger = logger;
     }
 
     @Operation(summary = "Returns a random villain")
@@ -53,7 +52,7 @@ public class VillainResource {
     )
     public RestResponse<Villain> getRandomVillain() {
         Villain villain = service.findRandomVillain();
-        logger.debug("Found random villain " + villain);
+        Log.debug("Found random villain " + villain);
         return RestResponse.ok(villain);
     }
 
@@ -65,7 +64,7 @@ public class VillainResource {
     )
     public RestResponse<List<Villain>> getAllVillains() {
         List<Villain> villains = service.findAllVillains();
-        logger.debug("Total number of villains " + villains.size());
+        Log.debug("Total number of villains " + villains.size());
         return RestResponse.ok(villains);
     }
 
@@ -77,10 +76,10 @@ public class VillainResource {
     public RestResponse<Villain> getVillain(@RestPath Long id) {
         Villain villain = service.findVillainById(id);
         if (villain != null) {
-            logger.debug("Found villain " + villain);
+            Log.debug("Found villain " + villain);
             return RestResponse.ok(villain);
         } else {
-            logger.debug("No villain found with id " + id);
+            Log.debug("No villain found with id " + id);
             return RestResponse.noContent();
         }
     }
@@ -95,7 +94,7 @@ public class VillainResource {
     public RestResponse<Void> createVillain(@Valid Villain villain, @Context UriInfo uriInfo) {
         villain = service.persistVillain(villain);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(villain.id));
-        logger.debug("New villain created with URI " + builder.build().toString());
+        Log.debug("New villain created with URI " + builder.build().toString());
         return RestResponse.created(builder.build());
     }
 
@@ -108,7 +107,7 @@ public class VillainResource {
     )
     public RestResponse<Villain> updateVillain(@Valid Villain villain) {
         villain = service.updateVillain(villain);
-        logger.debug("Villain updated with new valued " + villain);
+        Log.debug("Villain updated with new valued " + villain);
         return RestResponse.ok(villain);
     }
 
@@ -118,7 +117,7 @@ public class VillainResource {
     @APIResponse(responseCode = "204")
     public RestResponse<Void> deleteVillain(@RestPath Long id) {
         service.deleteVillain(id);
-        logger.debug("Villain deleted with " + id);
+        Log.debug("Villain deleted with " + id);
         return RestResponse.noContent();
     }
 

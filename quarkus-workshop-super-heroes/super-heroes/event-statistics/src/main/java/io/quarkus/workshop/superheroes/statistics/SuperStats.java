@@ -1,12 +1,11 @@
 package io.quarkus.workshop.superheroes.statistics;
 
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
-import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 // tag::adocJavadoc[]
 
@@ -16,9 +15,6 @@ import jakarta.inject.Inject;
 // end::adocJavadoc[]
 @ApplicationScoped
 public class SuperStats {
-
-    @Inject
-    Logger logger;
 
     private final Ranking topWinners = new Ranking(10);
     private final TeamStats stats = new TeamStats();
@@ -36,7 +32,7 @@ public class SuperStats {
     public Multi<Double> computeTeamStats(Multi<Fight> results) {
         return results
             .onItem().transform(stats::add)
-            .invoke(() -> logger.info("Fight received. Computed the team statistics"));
+            .invoke(() -> Log.info("Fight received. Computed the team statistics"));
     }
 
     // tag::adocJavadoc[]
@@ -59,7 +55,7 @@ public class SuperStats {
                 group
                     .onItem().scan(Score::new, this::incrementScore))
             .onItem().transform(topWinners::onNewScore)
-            .invoke(() -> logger.info("Fight received. Computed the top winners"));
+            .invoke(() -> Log.info("Fight received. Computed the top winners"));
     }
 
     private Score incrementScore(Score score, Fight fight) {

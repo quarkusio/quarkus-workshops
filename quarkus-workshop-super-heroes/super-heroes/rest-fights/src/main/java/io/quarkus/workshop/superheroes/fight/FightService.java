@@ -1,15 +1,14 @@
 package io.quarkus.workshop.superheroes.fight;
 
 
+import io.quarkus.logging.Log;
 import io.quarkus.workshop.superheroes.fight.client.*;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.time.Instant;
@@ -25,9 +24,6 @@ import static jakarta.transaction.Transactional.TxType.SUPPORTS;
 @ApplicationScoped
 @Transactional(SUPPORTS)
 public class FightService {
-
-    @Inject
-    Logger logger;
 
     @RestClient
     HeroProxy heroProxy;
@@ -73,7 +69,7 @@ public class FightService {
     }
 
     public Hero fallbackRandomHero() {
-        logger.warn("Falling back on Hero");
+        Log.warn("Falling back on Hero");
         Hero hero = new Hero();
         hero.name = "Fallback hero";
         hero.picture = "https://dummyimage.com/240x320/1e8fff/ffffff&text=Fallback+Hero";
@@ -83,7 +79,7 @@ public class FightService {
     }
 
     public Villain fallbackRandomVillain() {
-        logger.warn("Falling back on Villain");
+        Log.warn("Falling back on Villain");
         Villain villain = new Villain();
         villain.name = "Fallback villain";
         villain.picture = "https://dummyimage.com/240x320/b22222/ffffff&text=Fallback+Villain";
@@ -113,14 +109,14 @@ public class FightService {
         fight.fightDate = Instant.now();
         fight.persist();
 
-        logger.info("Fight sent to statistics");
+        Log.info("Fight sent to statistics");
         emitter.send(fight).toCompletableFuture().join();
 
         return fight;
     }
 
     private Fight heroWon(Fighters fighters) {
-        logger.info("Yes, Hero won :o)");
+        Log.info("Yes, Hero won :o)");
         Fight fight = new Fight();
         fight.winnerName = fighters.hero.name;
         fight.winnerPicture = fighters.hero.picture;
@@ -136,7 +132,7 @@ public class FightService {
     }
 
     private Fight villainWon(Fighters fighters) {
-        logger.info("Gee, Villain won :o(");
+        Log.info("Gee, Villain won :o(");
         Fight fight = new Fight();
         fight.winnerName = fighters.villain.name;
         fight.winnerPicture = fighters.villain.picture;

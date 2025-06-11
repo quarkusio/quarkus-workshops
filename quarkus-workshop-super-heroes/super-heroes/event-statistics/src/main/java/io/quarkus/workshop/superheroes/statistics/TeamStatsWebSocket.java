@@ -1,11 +1,11 @@
 package io.quarkus.workshop.superheroes.statistics;
 
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.subscription.Cancellable;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,7 +31,6 @@ public class TeamStatsWebSocket {
     @Channel("team-stats")
     Multi<Double> stream;
 
-    @Inject Logger logger;
 
     private final List<Session> sessions = new CopyOnWriteArrayList<>();
     private Cancellable cancellable;
@@ -60,7 +59,7 @@ public class TeamStatsWebSocket {
     private void write(Session session, double ratio) {
         session.getAsyncRemote().sendText(Double.toString(ratio), result -> {
             if (result.getException() != null) {
-                logger.error("Unable to write message to web socket", result.getException());
+                Log.error("Unable to write message to web socket", result.getException());
             }
         });
     }
