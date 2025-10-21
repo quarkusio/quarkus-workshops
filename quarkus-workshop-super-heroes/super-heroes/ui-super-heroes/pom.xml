@@ -30,10 +30,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>3.20.0</quarkus.platform.version>
-        <quinoa.version>2.4.7</quinoa.version>
+        <quarkus.platform.version>3.27.0</quarkus.platform.version>
+        <quinoa.version>2.6.2</quinoa.version>
         <skipITs>true</skipITs>
-        <surefire-plugin.version>3.2.2</surefire-plugin.version>
+        <surefire-plugin.version>3.5.3</surefire-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
