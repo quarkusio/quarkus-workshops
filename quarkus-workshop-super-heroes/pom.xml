@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
     <properties>
-        <assembly-plugin.version>3.6.0</assembly-plugin.version>
+        <assembly-plugin.version>3.8.0</assembly-plugin.version>
     </properties>
     <modules>
         <module>super-heroes/ui-super-heroes</module>
@@ -21,7 +21,7 @@
             so we need to do a bit of cleaning as part of the default lifecycle.-->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>tidy-generated-project</id>
@@ -46,7 +46,7 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.31.3</version>
                 <executions>
                     <execution>
                         <id>get-wrapper</id>
