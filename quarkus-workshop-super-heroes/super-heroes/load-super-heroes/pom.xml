@@ -12,7 +12,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>3.27.0</quarkus.platform.version>
+    <quarkus.platform.version>3.31.3</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.5.3</surefire-plugin.version>
     <failsafe.useModulePath>false</failsafe.useModulePath>
@@ -90,6 +90,7 @@
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
+          <argLine>@{argLine}</argLine>
         </configuration>
       </plugin>
       <plugin>
@@ -109,6 +110,7 @@
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
+          <argLine>@{argLine}</argLine>
         </configuration>
       </plugin>
     </plugins>
