@@ -5,7 +5,6 @@ import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ApplicationInfoBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
-import io.quarkus.workshop.superheroes.version.runtime.VersionConfig;
 import io.quarkus.workshop.superheroes.version.runtime.VersionRecorder;
 
 class ExtensionVersionProcessor {
@@ -19,7 +18,7 @@ class ExtensionVersionProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    void recordVersion(ApplicationInfoBuildItem app, VersionConfig versionConfig, VersionRecorder recorder) {
-        recorder.printVersion(versionConfig, app.getVersion());
+    void recordVersion(ApplicationInfoBuildItem app, VersionRecorder recorder) {
+        recorder.printVersion(app.getVersion());
     }
 }
