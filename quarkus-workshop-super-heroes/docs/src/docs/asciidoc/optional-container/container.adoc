@@ -181,12 +181,6 @@ So before being able to build a container with our native executable, we need to
 If you are using a Linux 64 bits machine, you are good to go.
 If not, Quarkus comes with a trick to produce these executable:
 
-
-
-
-
-
-
 The `Dockerfile.native` file is for running the application in native mode.
 It looks like this:
 
@@ -195,16 +189,22 @@ It looks like this:
 include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
 
-
-
-
 [source,shell]
 ----
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 ----
 
 The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
-The result is a Linux 64 bits executable.
+
+ifdef::use-mac[]
+The result is a macOS 64-bit executable.
+endif::use-mac[]
+ifdef::use-linux[]
+The result is a Linux 64-bit executable.
+endif::use-linux[]
+ifdef::use-windows[]
+The result is a Windows 64-bit executable.
+endif::use-windows[]
 
 [TIP]
 ====
