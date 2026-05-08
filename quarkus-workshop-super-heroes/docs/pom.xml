@@ -168,7 +168,7 @@ The default build will take around 50m.
             <plugin>
                 <groupId>dev.jbang</groupId>
                 <artifactId>jbang-maven-plugin</artifactId>
-                <version>0.0.7</version>
+                <version>0.0.8</version>
                 <executions>
                     <execution>
                         <id>run</id>
