@@ -8,7 +8,7 @@ The code in this workshop is based on JDK {jdk-version}, but any JDK version hig
 
 == Installing the JDK
 
-There is an easier way to download and install Java: using https://sdkman.io/[SDKMAN!].
+We recommend installing Java using https://sdkman.io/[SDKMAN!]. It provides a convenient Command Line Interface (CLI) and API for installing, switching, removing and listing JDKs. It also avoids the hassle of manually setting the `PATH` variable.
 
 === Installing SDKMAN!
 
