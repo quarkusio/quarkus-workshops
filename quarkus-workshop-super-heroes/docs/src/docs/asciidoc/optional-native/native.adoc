@@ -15,7 +15,7 @@ The produced binary has everything to run the application, including the needed 
 
 [NOTE]
 --
-Choosing JVM execution vs. native executable execution depends on your application needs and environment.
+Choosing JVM execution vs. native executable execution depends on your application needs and environment. There are some trade-offs to consider.
 --
 
 To be able to build native executables, you need GraalVM to be installed.
@@ -61,45 +61,57 @@ Below is a summary of the output for that you will get.
 
 [source,shell]
 ----
-===========================================================================================
+========================================================================================================================
 GraalVM Native Image: Generating 'rest-heroes-1.0.0-SNAPSHOT-runner' (executable)...
-===========================================================================================
-[1/8] Initializing...                                                      (24.3s @ 0.53GB)
-[2/8] Performing analysis...
-[3/8] Building universe...                                                  (6.9s @ 4.64GB)
-[4/8] Parsing methods...      [***]                                         (5.1s @ 2.80GB)
-[5/8] Inlining methods...     [***]                                         (2.1s @ 4.71GB)
-[6/8] Compiling methods...    [********]                                  (67.6s @ 10.11GB)
-[7/8] Layouting methods...    [***]                                         (9.4s @ 4.04GB)
-[8/8] Creating image...       [***]                                         (9.1s @ 5.41GB)
+========================================================================================================================
+For detailed information and explanations on the build output, visit:
+https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/BuildOutput.md
+------------------------------------------------------------------------------------------------------------------------
+[1/8] Initializing...                                                                                    (5.3s @ 0.28GB)
+ Java version: 25.0.2+10, vendor version: GraalVM CE 25.0.2+10.1
+ Graal compiler: optimization level: 2, target machine: armv8.1-a
+ C compiler: cc (apple, arm64, 21.0.0)
+ Garbage collector: Serial GC (max heap size: 80% of RAM)
+ 11 user-specific feature(s):
+ - com.oracle.svm.thirdparty.gson.GsonFeature
+ - io.quarkus.caffeine.runtime.graal.CacheConstructorsFeature
+ - io.quarkus.hibernate.orm.runtime.graal.DisableLoggingFeature: Disables INFO logging during the analysis phase
+ - io.quarkus.hibernate.orm.runtime.graal.RegisterServicesForReflectionFeature: Makes methods of reachable Hibernate services accessible through Class#getMethods()
+ - io.quarkus.hibernate.validator.runtime.DisableLoggingFeature: Disables INFO logging during the analysis phase for the [org.hibernate.validator.internal.util.Version] categories
+ - io.quarkus.runner.Feature: Auto-generated class by Quarkus from the existing extensions
+ - io.quarkus.runtime.graal.DisableLoggingFeature: Adapts logging during the analysis phase
+ - io.quarkus.runtime.graal.JVMChecksFeature
+ - io.quarkus.runtime.graal.SkipConsoleServiceProvidersFeature: Skip unsupported console service providers when quarkus.native.auto-service-loader-registration is false
+ - org.eclipse.angus.activation.nativeimage.AngusActivationFeature
+ - org.hibernate.graalvm.internal.GraalVMStaticFeature: Hibernate ORM's static reflection registrations for GraalVM
+------------------------------------------------------------------------------------------------------------------------
+ 5 experimental option(s) unlocked:
+ - '-H:+AllowFoldMethods' (origin(s): command line)
+ - '-H:BuildOutputJSONFile' (origin(s): command line)
+ - '-H:-UseServiceLoaderFeature' (origin(s): command line)
+ - '-H:+GenerateBuildArtifactsFile' (origin(s): command line)
+ - '-H:AddOpens' (alternative API option(s): --add-opens java.base/java.lang=ALL-UNNAMED; origin(s): command line)
+------------------------------------------------------------------------------------------------------------------------
+Build resources:
+ - 25.68GB of memory (37.4% of system memory, using available memory)
+ - 16 thread(s) (100.0% of 16 available processor(s), determined at start)
+[2/8] Performing analysis...  [******]                                                                   (9.3s @ 2.60GB)
+   23,519 types,  30,251 fields, and 105,346 methods found reachable
+    7,460 types,     129 fields, and   6,950 methods registered for reflection
+       63 types,      68 fields, and      55 methods registered for JNI access
+        0 downcalls and 0 upcalls registered for foreign access
+        5 native libraries: -framework CoreServices, -framework Foundation, dl, pthread, z
+[3/8] Building universe...                                                                               (2.8s @ 2.55GB)
+[4/8] Parsing methods...      [*]                                                                        (0.9s @ 2.78GB)
+[5/8] Inlining methods...     [***]                                                                      (0.6s @ 2.96GB)
+[6/8] Compiling methods...    [***]                                                                      (8.6s @ 2.10GB)
+[7/8] Laying out methods...   [***]                                                                      (5.3s @ 2.81GB)
+[8/8] Creating image...       [**]                                                                       (4.0s @ 3.17GB)
+  39.70MB (46.41%) for code area:    69,386 compilation units
+  44.83MB (52.39%) for image heap:  485,408 objects and 78 resources
+   1.03MB ( 1.20%) for other data
+  85.56MB in total image size, 85.56MB in total file size
 ----
-
-ifdef::use-ai[]
-If you try to execute `./mvnw package -Pnative` in the Narration microservice, the compilation will fail.
-You will get something like this:
-
-[source,shell]
-----
-===========================================================================================
-GraalVM Native Image: Generating 'rest-narration-1.0.0-SNAPSHOT-runner' (executable)...
-===========================================================================================
-[1/8] Initializing...                                                      (24.3s @ 0.53GB)
-[2/8] Performing analysis...
-ERROR [com.azu.cor.imp.jac.XmlMapperFactory] Failed to retrieve MethodHandles used to create XmlMapper. XML serialization won't be supported until 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
-ERROR [com.azu.cor.imp.jac.ObjectMapperShim] Package versions: jackson-core=2.15.2, jackson-databind=2.15.2, jackson-dataformat-xml=unknown, jackson-datatype-jsr310=2.15.2
-Error: Classes that should be initialized at run time got initialized during image building
-----
-
-That's because the Narration microservice uses external libraries that are not easily compilable with GraaVM.
-Not all libraries are compatible with GraalVM out of the box.
-Therefore, we will keep on running the Narration microservice in JVM mode, not in native mode.
-
-[source,shell]
-----
-./mvnw --file rest-narration/pom.xml clean package
-----
-endif::use-ai[]
---
 
 ifdef::use-messaging[]
 [NOTE]

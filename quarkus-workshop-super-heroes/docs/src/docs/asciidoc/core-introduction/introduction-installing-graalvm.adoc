@@ -17,15 +17,24 @@ Examples for common distributions:
 [source,shell]
 ----
 # dnf (rpm-based)
-sudo dnf install gcc glibc-devel zlib-devel
+sudo dnf install gcc glibc-devel zlib-devel libstdc++-static
+
 # Debian-based distributions:
 sudo apt-get install build-essential libz-dev zlib1g-dev
+
+# Arch Linux
+sudo pacman -S freetype2 gcc glibc lib32-gcc-libs zlib
 ----
 endif::use-linux[]
 
 ifdef::use-mac[]
 On macOS X there are several ways to install GraalVM.
-But using SDKMAN! is the preferred option, as it allows you to easily switch between different versions of GraalVM if needed.
+But using https://sdkman.io/[SDKMAN!] is the preferred option, as it allows you to easily switch between different versions of GraalVM if needed.
+
+[source,shell]
+----
+xcode-select --install
+----
 endif::use-mac[]
 
 ifdef::use-windows[]
@@ -36,21 +45,12 @@ endif::use-windows[]
 == Installing GraalVM
 
 ifndef::use-mac[]
-GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-{graalvm-version}].
+GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases].
 
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
 
-Follow the installation instructions:
-
-ifdef::use-linux[]
-- Linux - https://www.graalvm.org/{graalvm-version}/docs/getting-started/linux/
-endif::use-linux[]
-ifdef::use-windows[]
-- Windows - https://www.graalvm.org/{graalvm-version}/docs/getting-started/windows/
-endif::use-windows[]
-endif::use-mac[]
-
+Follow the https://www.graalvm.org/jdk{graalvm-version}/docs[installation instructions].
 
 ifdef::use-mac[]
 === Listing GraalVM Versions
@@ -64,18 +64,13 @@ GraalVM has its own group and is listed under the `GraalVM` vendor:
 ----
 $ sdk list java
 
-=======================================================================
+================================================================================
 Available Java Versions for macOS ARM 64bit
-=======================================================================
-Vendor        | Use | Version      | Dist    | Status  | Identifier
------------------------------------------------------------------------
-GraalVM       |     | 22.3.r19     | grl     |         | 22.3.r19-grl
-              |     | 22.3.r17     | grl     |         | 22.3.r17-grl
-              |     | 22.3.r11     | grl     |         | 22.3.r11-grl
-              |     | 22.2.r17     | grl     |         | 22.2.r17-grl
-              |     | 22.2.r11     | grl     |         | 22.2.r11-grl
-              |     | 22.1.0.r17   | grl     |         | 22.1.0.r17-grl
-              |     | 22.1.0.r11   | grl     |         | 22.1.0.r11-grl
+================================================================================
+ Vendor        | Use | Version      | Dist    | Status     | Identifier
+--------------------------------------------------------------------------------
+ GraalVM CE    |     | 25.0.2       | graalce |   | 25.0.2-graalce
+               |     | 21.0.2       | graalce |   | 21.0.2-graalce
 =======================================================================
 ----
 
@@ -85,23 +80,15 @@ If you don't have any GraalVM candidate installed, use SDKMAN! to install one or
 === Installing a GraalVM Version
 
 There are several versions of GraalVM available for different versions of the JDK.
-Because we are using Java {jdk-version} in this fascicle, we will install the version of GraalVM that is compatible with Java {jdk-version} (the versions finishing with `r{jdk-version}-grl`).
-Let's install GraalVM {graalvm-version}.
+Because we are using Java {jdk-version} in this fascicle, we will install the version of GraalVM that is compatible with Java {jdk-version}. Pick one of the {graalvm-version}.x-graalce versions from SDKMAN!
 
 [source,term,subs="attributes+"]
 ----
-$ sdk install java {graalvm-version}.r{jdk-version}-grl
-
-Downloading: java {graalvm-version}.r{jdk-version}-grl
-Repackaging Java {graalvm-version}.r{jdk-version}-grl...
-Installing: java {graalvm-version}.r{jdk-version}-grl
-Done installing!
-
-Do you want java {graalvm-version}.r{jdk-version}-grl to be set as default? (Y/n):
+$ sdk install java {graalvm-version}.x-graalce
 ----
 endif::use-mac[]
 
-Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `~/.sdkman/candidates/java/{graalvm-version}.r{jdk-version}-grl`).
+Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `~/.sdkman/candidates/java/{graalvm-version}.x-graalce`).
 
 
 ifdef::use-mac[]
@@ -132,8 +119,8 @@ You should get something like:
 
 [source,shell]
 ----
-native-image 22.0.2 2024-07-16
-OpenJDK Runtime Environment Mandrel-24.0.2.0-Final (build 22.0.2+9)
-OpenJDK 64-Bit Server VM Mandrel-24.0.2.0-Final (build 22.0.2+9, mixed mode)
+native-image 21.0.2 2024-01-16
+GraalVM Runtime Environment GraalVM CE 21.0.2+13.1 (build 21.0.2+13-jvmci-23.1-b30)
+Substrate VM GraalVM CE 21.0.2+13.1 (build 21.0.2+13, serial gc)
 ----
 

@@ -4,19 +4,11 @@
 
 Essential for the development and execution of this workshop is the _Java Development Kit_ (JDK).footnote:[Java http://www.oracle.com/technetwork/java/javase]
 The JDK includes several tools such as a compiler (`javac`), a virtual machine, a documentation generator (`JavaDoc), monitoring tools (Visual VM) and so onfootnote:[Visual VM https://visualvm.github.io].
-The code in this workshop uses JDK {jdk-version}.
+The code in this workshop is based on JDK {jdk-version}, but any JDK version higher will work as well.
 
 == Installing the JDK
 
-To install the JDK {jdk-version}, follows the instructions from https://adoptium.net/installation.html to download and install the JDK for your platform.
-
-ifdef::use-mac[]
-There is also an easier way to download and install Java if you are on Mac OS X: using SDKMAN!.
-_SDKMAN!_{wj}footnote:[SDKMAN! https://sdkman.io] is a tool for managing parallel versions of multiple Software Development Kits (SDK) on most Unix based systems.
-It provides a convenient Command Line Interface (CLI) and API for installing, switching, removing and listing _Candidates_.
-Developers often need to manage parallel versions of different builds of SDKs in their environment and switch from one to another.
-Manually setting the `PATH` variable can become quickly painful.
-That's when SDKMAN! can help you.
+We recommend installing Java using https://sdkman.io/[SDKMAN!]. It provides a convenient Command Line Interface (CLI) and API for installing, switching, removing and listing JDKs. It also avoids the hassle of manually setting the `PATH` variable.
 
 === Installing SDKMAN!
 
@@ -50,9 +42,8 @@ Microsoft     |     | 17.0.5       | ms      |            | 17.0.5-ms
 ...
 Oracle        |     | 19.0.1       | oracle  |            | 19.0.1-oracle
 ...
-Temurin       |     | 19.0.1       | tem     |            | 19.0.1-tem
-              | >>> | 17.0.5       | tem     | installed  | 17.0.5-tem
-              |     | 11.0.17      | tem     | installed  | 11.0.17-tem
+Temurin       | >>> | 25.0.2       | tem     | installed  | 25.0.2-tem
+              | >>> | 17.0.19      | tem     | installed  | 17.0.19-tem
 ==========================================================================
 ----
 
@@ -69,27 +60,8 @@ To install Temurin {jdk-version}, we copy its identifier (`{jdk-version}-tem`), 
 
 [source,term,subs="attributes+"]
 ----
-$ sdk install java {jdk-version}-tem
-
-Downloading: java {jdk-version}-tem
-Repackaging Java {jdk-version}-tem...
-Installing: java {jdk-version}-tem
-Done installing!
-
-Do you want java {jdk-version}-tem to be set as default? (Y/n):
+$ sdk install java {jdk-version}.x-tem
 ----
-endif::use-mac[]
-
-ifdef::use-linux[]
-For Linux distributions, there are also packaged java installations.
-[source,shell,subs="attributes+"]
-----
-# dnf (rpm-based)
-dnf install java-{jdk-version}-openjdk
-# Debian-based distributions:
-$ apt-get install openjdk-{jdk-version}-jdk
-----
-endif::use-linux[]
 
 == Checking for Java Installation
 
@@ -99,12 +71,15 @@ Check that your system recognizes Java by entering `java -version` and the Java 
 [source,shell,subs="attributes+"]
 ----
 $ java -version
-openjdk version "17.0.5" 2022-10-18
+openjdk version "17.0.19" 2025-10-21
+OpenJDK Runtime Environment Temurin-17.0.19+10 (build 17.0.19+10)
+OpenJDK 64-Bit Server VM Temurin-17.0.19+10 (build 17.0.19+10, mixed mode, sharing)
 ifdef::use-native[]
-OpenJDK Runtime Environment GraalVM CE 22.3.0 (build 17.0.5+8-jvmci-22.3-b08)
-OpenJDK 64-Bit Server VM GraalVM CE 22.3.0 (build 17.0.5+8-jvmci-22.3-b08, mixed mode, sharing)
+openjdk 25.0.2 2026-01-20
+OpenJDK Runtime Environment GraalVM CE 25.0.2+10.1 (build 25.0.2+10-jvmci-b01)
+OpenJDK 64-Bit Server VM GraalVM CE 25.0.2+10.1 (build 25.0.2+10-jvmci-b01, mixed mode, sharing)
 endif::use-native[]
 
 $ javac -version
-javac 17.0.5
+javac 17.0.19
 ----
