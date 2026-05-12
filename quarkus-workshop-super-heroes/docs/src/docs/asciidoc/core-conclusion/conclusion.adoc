@@ -27,7 +27,7 @@ endif::use-messaging[]
 
 ifdef::use-ai[]
 We've also added some Artificial Intelligence.
-Thanks to Semantic Kernel, with a few lines of code, we allowed our Narration microservice to narrate the fight between a Super Hero and a Super Villain.
+Thanks to Quarkus LangChain4j, with a few lines of code, we allowed our Narration microservice to narrate the fight between a Super Hero and a Super Villain.
 endif::use-ai[]
 
 ifdef::use-observability[]

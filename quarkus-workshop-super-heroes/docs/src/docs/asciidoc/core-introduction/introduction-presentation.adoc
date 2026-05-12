@@ -25,7 +25,7 @@ The Super Hero UI is exposed via Quarkus and invokes the Fight REST API
 * _Villain REST API_: A classical HTTP microservice exposing CRUD operations on Villains, stored in a PostgreSQL database
 * _Hero REST API_: A reactive HTTP microservice exposing CRUD operations on Heroes, stored in a Postgres database
 ifdef::use-ai[]
-* _Narration REST API_: This microservice talks to OpenAI/Azure OpenAI to generate a random narration of the fight.
+* _Narration REST API_: This microservice talks to OpenAI to generate a random narration of the fight using Quarkus LangChain4j.
 endif::use-ai[]
 * _Fight REST API_: This REST API invokes the Hero and Villain APIs to get a random superhero and supervillain.
 ifdef::use-ai[]
@@ -94,7 +94,7 @@ in this section, you will install all the tools and code to be able to develop, 
 in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use a React web application, and all that on Quarkus
 ifdef::use-ai[]
 * _Artificial Intelligence_:
-in this section, you will use OpenAI or Azure OpenAI to invoke an AI so you can generate a random narration of the fight
+in this section, you will use Quarkus LangChain4j with OpenAI to generate a random narration of the fight
 endif::use-ai[]
 ifdef::use-messaging[]
 * _Event-driven and Reactive microservices_:
@@ -166,7 +166,7 @@ endif::use-native[]
 * Docker or Podman
 * cURL (should already be installed in your OS, if not, check xref:appendix-installing-curl[the appendix for installation instructions]) and `jq`
 ifdef::use-ai[]
-* OpenAI or Azure OpenAI keys
+* An OpenAI API key
 endif::use-ai[]
 ifdef::use-azure[]
 * An Azure subscription and the Azure CLI
