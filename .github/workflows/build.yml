@@ -6,6 +6,11 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build_java17:
     runs-on: ubuntu-latest
@@ -50,6 +55,9 @@ jobs:
   publication:
     needs: [ docs, build_java17 ]
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Download default site
         uses: actions/download-artifact@v4
@@ -75,12 +83,12 @@ jobs:
       - name: Site assembly
         run: |
           # aggregate the fragments
-          
+
           # Take just the contents of the variants folders for the other platforms
           cp -r target/generated-asciidoc/linux/variants/* target/generated-asciidoc/variants
           cp -r target/generated-asciidoc/mac/variants/* target/generated-asciidoc/variants
           cp -r target/generated-asciidoc/windows/variants/* target/generated-asciidoc/variants
-          
+
           # Move things around to preserve the super-heroes structure
           mkdir -p target/site/super-heroes
           cp -R target/generated-asciidoc/* target/site/super-heroes
@@ -96,9 +104,12 @@ jobs:
           name: site
           path: ./target/site
           retention-days: 3
-      - name: Publication
+      - name: Upload Pages artifact
         if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/site
+          path: ./target/site
+      - name: Deploy to GitHub Pages
+        if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
+        id: deployment
+        uses: actions/deploy-pages@v4
