@@ -31,7 +31,8 @@
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>3.33.1</quarkus.platform.version>
-    <semantic-kernel.version>0.2.11-alpha</semantic-kernel.version>
+
+    <quarkus-langchain4j.version>1.9.2</quarkus-langchain4j.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.5.4</surefire-plugin.version>
   </properties>
@@ -45,9 +46,9 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>com.microsoft.semantic-kernel</groupId>
-        <artifactId>semantickernel-bom</artifactId>
-        <version>${semantic-kernel.version}</version>
+        <groupId>io.quarkiverse.langchain4j</groupId>
+        <artifactId>quarkus-langchain4j-bom</artifactId>
+        <version>${quarkus-langchain4j.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -55,16 +56,8 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>com.microsoft.semantic-kernel</groupId>
-      <artifactId>semantickernel-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.microsoft.semantic-kernel</groupId>
-      <artifactId>semantickernel-settings-loader</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.microsoft.semantic-kernel</groupId>
-      <artifactId>semantickernel-connectors-ai-openai</artifactId>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-openai</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

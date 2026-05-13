@@ -42,8 +42,8 @@ public class NarrationResourceTest {
     }
 
     @BeforeEach
-    public void setup() throws Exception {
-        Mockito.when(narrationService.narrate(getFight())).thenReturn("Lorem ipsum dolor sit amet");
+    public void setup() {
+        Mockito.when(narrationService.narrate(Mockito.any(Fight.class))).thenReturn("Lorem ipsum dolor sit amet");
     }
 
     @Test
@@ -74,6 +74,5 @@ public class NarrationResourceTest {
             .post("/api/narration")
             .then()
             .statusCode(CREATED.getStatusCode());
-//            .body(startsWith("Lorem ipsum dolor sit amet"));
     }
 }

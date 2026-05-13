@@ -8,7 +8,7 @@ What happens when they fight?
 Let's ask an AI to narrate the fight!
 
 In this section we will introduce a new microservice that will use AI to narrate the fight between a superhero and a super villain.
-It will use the Semantic Kernel API to generate the text invoking OpenAI or Azure OpenAI (you choose).
+It will use Quarkus LangChain4j to invoke an OpenAI model.
 
 [plantuml,align=center,width=300]
 ----
@@ -17,31 +17,22 @@ include::{plantDir}/5b-ai-narration-microservice.puml[]
 
 In the following sections, you will learn:
 
-* What is Semantic Kernel?
-* How to invoke OpenAI or Azure OpenAI GPT model using Semantic Kernel
-* How to create an OpenAI Plugin (a.k.a Skill) to narrate a fight
+* What is Quarkus LangChain4j?
+* How to create a declarative AI Service to invoke OpenAI
+* How to configure the OpenAI connection
 
 IMPORTANT: This service is exposed on the port 8086.
 
-== What's Semantic Kernel?
+== What's Quarkus LangChain4j?
 
-https://learn.microsoft.com/semantic-kernel/overview[Semantic Kernel] is an open-source SDK that lets you easily combine AI services like OpenAI, Azure OpenAI, and Hugging Face with conventional programming languages like C#, Python or Java.
-By doing so, you can create AI apps that combine the best of both worlds:
-the deterministic nature of conventional programming and the semantic aspect of AI.
+https://docs.quarkiverse.io/quarkus-langchain4j/dev/index.html[Quarkus LangChain4j] is a Quarkus extension that seamlessly integrates Large Language Models (LLMs) into Quarkus applications.
+It lets you define AI-powered services declaratively — using annotations like `@RegisterAiService`, `@SystemMessage`, and `@UserMessage` — so that interacting with an LLM is as simple as calling a Java method.
 
-image::semantic-kernel.png[role=half-size]
-
-Semantic Kernel has been engineered to allow developers to flexibly integrate AI services into their existing apps.
-To do so, Semantic Kernel provides a set of connectors that make it easy to add memories and models.
-In this way, Semantic Kernel is able to add a simulated "brain" to your app.
-
-Additionally, Semantic Kernel makes it easy to add skills to your applications with AI plugins that allow you to interact with the real world.
-These plugins are composed of prompts and native functions that can respond to triggers and perform actions.
-In this way, plugins are like the "body" of your AI app.
+Under the hood, it leverages https://docs.langchain4j.dev/[LangChain4j], a Java framework for building LLM-powered applications, while adding Quarkus-specific features such as CDI integration, configuration via `application.properties`, and native compilation support.
 
 == Narration Microservice
 
-Let's create a new microservice that will use Semantic Kernel to narrate the fight between a superhero and a super villain.
+Let's create a new microservice that will use Quarkus LangChain4j to narrate the fight between a superhero and a super villain.
 New microservice, new project!
 
 As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to https://code.quarkus.io if you prefer).
@@ -66,7 +57,7 @@ This microservice needs less dependencies than the previous ones:
 
 * `rest-jackson` provides Quarkus REST and the ability to map JSON objects,
 * `quarkus-smallrye-openapi` provides the OpenAPI descriptor support and the Swagger UI in the dev console,
-* `quarkus-smallrye-fault-tolerance` provides the MicroProfile Fault Tolerance dependency so we can fallback in case OpenAI/Azure OpenAI does not respond.
+* `quarkus-smallrye-fault-tolerance` provides the MicroProfile Fault Tolerance dependency so we can fallback in case OpenAI does not respond.
 
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
@@ -77,7 +68,7 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 
 === Directory Structure
 
-At the end of this chapter, you will end up with the following directory structure (notice the `NarrationSkill` directory under `src/main/resources`):
+At the end of this chapter, you will end up with the following directory structure:
 
 [plantuml]
 ----
@@ -100,12 +91,7 @@ super-heroes
 ++++++++++  Fight.java
 ++++++++++  NarrationResource.java
 ++++++++++  NarrationService.java
-++++++++++  SemanticKernelNarrationService.java
 ++++  resources
-+++++  NarrationSkill
-+++++++  NarrateFight
-+++++++++  config.json
-+++++++++  skprompt.txt
 +++++  META-INF
 ++++++  resources
 +++++++  index.html
@@ -127,26 +113,24 @@ super-heroes
 @endsalt
 ----
 
-=== Add the Semantic Kernel dependencies
+=== Add the Quarkus LangChain4j dependency
 
-Once the project is created, you need to add the Semantic Kernel dependencies.
-Semantic Kernel is available on https://central.sonatype.com/artifact/com.microsoft.semantic-kernel/semantickernel-bom[Maven Central].
-It has a BOM (Bill of Materials) that you can import in your project and then add the dependencies you need.
+Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
 Add the following XML in the `rest-narration/pom.xml` file:
 
 [source,xml,subs="attributes+"]
 ----
   <properties>
     <!-- ... -->
-    <semantic-kernel.version>{semantic-kernel-version}</semantic-kernel.version>
+    <quarkus-langchain4j.version>{quarkus-langchain4j-version}</quarkus-langchain4j.version>
   </properties>
   <dependencyManagement>
     <dependencies>
       <!-- ... -->
       <dependency>
-        <groupId>com.microsoft.semantic-kernel</groupId>
-        <artifactId>semantickernel-bom</artifactId>
-        <version>${semantic-kernel.version}</version>
+        <groupId>io.quarkiverse.langchain4j</groupId>
+        <artifactId>quarkus-langchain4j-bom</artifactId>
+        <version>${quarkus-langchain4j.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -155,16 +139,8 @@ Add the following XML in the `rest-narration/pom.xml` file:
   <dependencies>
     <!-- ... -->
     <dependency>
-      <groupId>com.microsoft.semantic-kernel</groupId>
-      <artifactId>semantickernel-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.microsoft.semantic-kernel</groupId>
-      <artifactId>semantickernel-settings-loader</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.microsoft.semantic-kernel</groupId>
-      <artifactId>semantickernel-connectors-ai-openai</artifactId>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-openai</artifactId>
     </dependency>
   </dependencies>
 ----
@@ -187,8 +163,9 @@ include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superhero
 
 === The Narration REST Resource
 
-The `NarrationResource` only has one HTTP POST method to create a new narration.
+The `NarrationResource` has one HTTP POST method to create a new narration.
 Given a fight, it will invoke the `NarrationService` to return a fight narration.
+The method is annotated with `@Timeout` and `@Fallback` so that if the OpenAI service is slow or unavailable, a fallback narration is returned instead of an error.
 
 [example, role="cta"]
 --
@@ -200,115 +177,72 @@ include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superhero
 ----
 --
 
-=== The Semantic Kernel Narration service
+=== The AI Narration Service
 
-Now it's time to implement the `NarrationService` that will use the Semantic Kernel to generate the narration.
-First of all, let's create an interface that will be implemented by the `SemanticKernelNarrationService` but could also be implemented by other AI frameworks:
-Create the `io.quarkus.workshop.superheroes.narration.NarrationService` interface in the created project with the following content:
+Now it's time to implement the `NarrationService`.
+With Quarkus LangChain4j, instead of writing imperative code to call an LLM, you declare an _AI Service_ interface.
+The extension takes care of generating the implementation, sending the right prompt to the LLM, and returning the result.
+
+The key annotations are:
+
+* `@RegisterAiService` — marks this interface as an AI service; Quarkus generates the implementation automatically.
+* `@SystemMessage` — provides the system prompt that sets the persona and rules for the LLM.
+* `@UserMessage` — provides the user prompt template. Template variables like `{fight.winnerName}` are resolved from the method parameters.
 
 [example, role="cta"]
 --
-Open the `NarrationResource` and update the content to be:
+Create the `io.quarkus.workshop.superheroes.narration.NarrationService` interface in the created project with the following content:
 
 [source,java]
 ----
 include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationService.java[]
 ----
-
-Then, create the `io.quarkus.workshop.superheroes.narration.SemanticKernelNarrationService` that implements the `NarrationService` interface.
-This class has the following methods:
-
-* `narrate`: the main method that will use the Semantic Kernel to generate the narration
-* `fallbackNarrate`: the fallback method that will be invoked if the `narrate` method fails (due to a timeout for example)
-* `getClient`: a method that returns the Semantic Kernel client configured by the `conf.properties` file
-
-[source,java]
-----
-include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/SemanticKernelNarrationService.java[]
-----
 --
 
-=== The Narration skill
+That's it!
+No boilerplate, no manual HTTP calls, no JSON parsing.
+Quarkus LangChain4j handles all of that.
+The `@SystemMessage` tells the LLM to behave like a Marvel Comics writer, and the `@UserMessage` passes the fight data as a structured prompt.
 
-With skills, you can encapsulate AI capabilities into a single unit of functionality.
-Semantic Kernel skills implement the https://platform.openai.com/docs/plugins/getting-started/plugin-manifest[OpenAI Plugin specification] also known as "skills".
-To narrate a fight, we need to create a `NarrateFight` function.
-For that, you need to create a set of directories unders `rest-narration/src/main/resources/NarrationSkill/NarrateFight`.
+=== Configuring OpenAI access
 
-[example, role="cta"]
---
-Under the `NarrationSkill/NarrateFight` directory, create the following files:
-
-* `skprompt.txt`: the prompt that will be sent to OpenAI/Azure OpenAI
-* `config.json`: the configuration of the skill
-
-Under `src/main/resources/NarrationSkill/NarrateFight/`, create the `skprompt.txt` file with the following content.
-Notice that the prompt uses expression language to get the fight data (e.g., `{{$winner_name}}`).
-
-[source,text]
-----
-include::{projectdir}/rest-narration/src/main/resources/NarrationSkill/NarrateFight/skprompt.txt[]
-----
-
-Under `src/main/resources/NarrationSkill/NarrateFight/`, create the `config.json` file with the following content:
-
-[source,json]
-----
-include::{projectdir}/rest-narration/src/main/resources/NarrationSkill/NarrateFight/config.json[]
-----
---
-
-=== Configuring OpenAI/Azure OpenAI access
-
-Configuring the OpenAI/Azure OpenAI access is made thanks to the `conf.properties`.
-Depending if you have previously chosen OpenAI or Azure OpenAI, you either need to use the `client.openai` or `client.azureopenai` configuration keys.
+The OpenAI connection is configured entirely through `application.properties` — no separate configuration files needed.
 
 [WARNING]
 ====
-Make sure that you have previously either created an Azure AI or OpenAI subscription.
+Make sure that you have previously created an OpenAI subscription and obtained an API key.
 If not, go back to xref:introduction-installing-ai[xrefstyle=full].
 ====
 
 [example, role="cta"]
 --
-If you use OpenAI, create the `rest-narration/src/main/resources/conf.properties` file and add the following configuration:
-
-[source,properties]
-----
-client.openai.key=
-client.openai.organizationid=
-----
-
-For Azure OpenAI, use the following configuration in the `rest-narration/src/main/resources/conf.properties` file:
-
-[source,properties]
-----
-client.azureopenai.key=
-client.azureopenai.endpoint=
-client.azureopenai.deploymentname=
-----
-
-We also set the port of the Narration microservice to be 8086.
-And to have a better view of what's happening behind the scene with Semantic Kernel, we can increase the log level.
-Just add the following configuration to the Quarkus `application.properties` file:
+Add the following configuration to the `rest-narration/src/main/resources/application.properties` file:
 
 [source,properties]
 ----
 include::{projectdir}/rest-narration/src/main/resources/application.properties[]
+----
+
+Before running the application, set the `OPENAI_API_KEY` environment variable with your OpenAI API key:
+
+[source,shell]
+----
+export OPENAI_API_KEY=<your-openai-api-key>
 ----
 --
 
 === Testing the Narration Microservice
 
 Time for some tests!
-But before creating the test class, we need to add the Mockito dependency to the project.
-That's because we want to mock the Semantic Kernel client.
+Since we don't want to call the real OpenAI API during tests, we will mock the `NarrationService` AI service using Quarkus' `@InjectMock`.
+
+First, make sure you have the Mockito dependency in the project:
 
 [source,xml]
 ----
 <dependency>
     <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-junit5-mockito</artifactId>
+    <artifactId>quarkus-junit-mockito</artifactId>
     <scope>test</scope>
 </dependency>
 ----
@@ -337,7 +271,7 @@ Now that the tests are green, we are ready to run our Narration microservice.
 [example, role="cta"]
 --
 
-Use `./mvnw quarkus:dev` to start it.
+Make sure you have set the `OPENAI_API_KEY` environment variable, then use `./mvnw quarkus:dev` to start it.
 Once the Narration microservice is started, create a new narration with the following cUrl command:
 
 [source,shell]
@@ -444,7 +378,7 @@ Now execute `./mvnw test` and make sure that all the tests pass.
 Time to run the entire application!
 For that, start all the microservices (Heroes, Villains, Fight and Narration) as well as the frontend.
 When all the microservices are started, access the frontend at http://localhost:8080 and click on the `Fight` button.
-The result of the fight is displayed, and below, you have a "Narrate the fight" button.
+The result of the fight is displayed, and below, you have a "Narrate the Fight" button.
 Click on it, wait a few seconds (remember that the Narration microservice access a remote AI service that takes time) and the narration of the fight is displayed.
 Being _Generative AI_, you can click several times on the button and you will get different narrations.
 

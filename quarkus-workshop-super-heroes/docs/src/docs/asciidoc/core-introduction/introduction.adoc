@@ -56,7 +56,7 @@ What you are going to learn:
 * How to build a reactive microservice, including reactive data access
 * How you improve the resilience of your service
 ifdef::use-ai[]
-* How to invoke OpenAI/Azure OpenAI APIs using Semantic Kernel
+* How to invoke OpenAI using Quarkus LangChain4j
 endif::use-ai[]
 ifdef::use-messaging[]
 * How to build event-driven microservices with Kafka
