@@ -5,6 +5,8 @@ on:
     workflows: [ "Build" ]
     types:
       - completed
+    branches-ignore:
+      - "main"
 
 jobs:
   preview:
