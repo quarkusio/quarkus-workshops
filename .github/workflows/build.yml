@@ -55,9 +55,6 @@ jobs:
   publication:
     needs: [ docs, build_java17 ]
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Download default site
         uses: actions/download-artifact@v8
@@ -104,12 +101,23 @@ jobs:
           name: site
           path: ./target/site
           retention-days: 3
+  deploy:
+    if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
+    needs: [ publication ]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download Built site
+        uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: site
       - name: Upload Pages artifact
-        if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./target/site
+          path: site
       - name: Deploy to GitHub Pages
-        if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
         id: deployment
         uses: actions/deploy-pages@v4
