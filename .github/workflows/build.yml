@@ -95,7 +95,6 @@ jobs:
         if: "github.event_name == 'pull_request'"
         run: echo ${{ github.event.number }} > ./target/site/pr-id.txt
       - name: Publishing directory for PR preview
-        if: "github.event_name == 'pull_request'"
         uses: actions/upload-artifact@v7
         with:
           name: site
