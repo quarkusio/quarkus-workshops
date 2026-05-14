@@ -14,9 +14,9 @@ jobs:
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Download PR Artifact
-        uses: dawidd6/action-download-artifact@v6
+        uses: actions/download-artifact@v4
         with:
-          run_id: ${{ github.event.workflow_run.id }}
+          run-id: ${{ github.event.workflow_run.id }}
           name: site
       - name: Store PR id as variable
         id: pr
@@ -27,21 +27,21 @@ jobs:
         id: deploy
         run: npx surge ./ --domain https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }}
       - name: Update PR status comment on success
-        uses: actions-cool/maintain-one-comment@v3.0.0
+        uses: quarkusio/action-helpers@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          action: maintain-one-comment
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh
-            <!-- Sticky Pull Request Comment -->
-          body-include: '<!-- Sticky Pull Request Comment -->'
-          number: ${{ steps.pr.outputs.id }}
+          body-marker: '<!-- Sticky Pull Request Comment -->'
+          pr-number: ${{ steps.pr.outputs.id }}
       - name: Update PR status comment on failure
+        uses: quarkusio/action-helpers@main
         if: ${{ failure() }}
-        uses: actions-cool/maintain-one-comment@v3.0.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          action: maintain-one-comment
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             😭 Deploy PR Preview failed.
-            <!-- Sticky Pull Request Comment -->
-          body-include: '<!-- Sticky Pull Request Comment -->'
-          number: ${{ steps.pr.outputs.id }}
+          body-marker: '<!-- Sticky Pull Request Comment -->'
+          pr-number: ${{ steps.pr.outputs.id }}
