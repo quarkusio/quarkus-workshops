@@ -8,6 +8,10 @@ on:
     branches-ignore:
       - "main"
 
+permissions:
+  actions: read
+  pull-requests: write
+
 jobs:
   preview:
     runs-on: ubuntu-latest
