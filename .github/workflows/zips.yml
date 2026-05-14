@@ -7,6 +7,10 @@ on:
     paths-ignore:
       - 'quarkus-workshop-super-heroes/docs/**'
       - 'quarkus-workshop-super-heroes/dist/**'
+
+permissions:
+  contents: write
+
 jobs:
   build_java17:
     runs-on: ubuntu-latest
