@@ -20,6 +20,7 @@ jobs:
       - name: Download PR Artifact
         uses: actions/download-artifact@v8
         with:
+          github-token: ${{ github.token }}
           run-id: ${{ github.event.workflow_run.id }}
           name: site
       - name: Store PR id as variable
