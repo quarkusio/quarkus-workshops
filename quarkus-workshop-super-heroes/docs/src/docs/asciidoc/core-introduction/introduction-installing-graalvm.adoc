@@ -51,6 +51,7 @@ Version {graalvm-version} is required.
 Select the {jdk-version} version.
 
 Follow the https://www.graalvm.org/jdk{graalvm-version}/docs[installation instructions].
+endif::[]
 
 ifdef::use-mac[]
 === Listing GraalVM Versions
