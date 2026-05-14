@@ -46,7 +46,7 @@ jobs:
           cd quarkus-workshop-super-heroes/docs      
           mvn package -Dos=${{ matrix.os }}
       - name: Publishing fragment
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
           path: ./quarkus-workshop-super-heroes/docs/target/generated-asciidoc
@@ -99,7 +99,7 @@ jobs:
         run: echo ${{ github.event.number }} > ./target/site/pr-id.txt
       - name: Publishing directory for PR preview
         if: "github.event_name == 'pull_request'"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site
           path: ./target/site
