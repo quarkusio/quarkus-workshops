@@ -48,6 +48,7 @@ The default build will take around 50m.
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>3.33.1</quarkus.platform.version>
         <quarkus.pact.version>1.6.0</quarkus.pact.version>
+        <graalvm.version>25.0.2</graalvm.version>
         <quarkus-langchain4j.version>1.9.2</quarkus-langchain4j.version>
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
@@ -95,6 +96,11 @@ The default build will take around 50m.
             <groupId>io.quarkiverse.pact</groupId>
             <artifactId>quarkus-pact-provider</artifactId>
             <version>${quarkus.pact.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.graalvm.nativeimage</groupId>
+            <artifactId>svm</artifactId>
+            <version>${graalvm.version}</version>
         </dependency>
     </dependencies>
 
@@ -152,7 +158,7 @@ The default build will take around 50m.
                             <give-solution>true</give-solution>
                             <jdk-version>${maven.compiler.source}</jdk-version>
                             <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
-                            <graalvm-version>21</graalvm-version>
+                            <graalvm-version>${graalvm.version}</graalvm-version>
                             <maven-version>3.9.x</maven-version>
                             <quarkus-version>${quarkus.platform.version}</quarkus-version>
                             <compiler-plugin-version>${compiler-plugin.version}</compiler-plugin-version>

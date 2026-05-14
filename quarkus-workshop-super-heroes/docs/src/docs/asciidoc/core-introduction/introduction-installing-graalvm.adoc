@@ -30,11 +30,6 @@ endif::use-linux[]
 ifdef::use-mac[]
 On macOS X there are several ways to install GraalVM.
 But using https://sdkman.io/[SDKMAN!] is the preferred option, as it allows you to easily switch between different versions of GraalVM if needed.
-
-[source,shell]
-----
-xcode-select --install
-----
 endif::use-mac[]
 
 ifdef::use-windows[]
@@ -45,16 +40,24 @@ endif::use-windows[]
 == Installing GraalVM
 
 ifndef::use-mac[]
-GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases].
+GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases/tag/jdk-{graalvm-version}].
 
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
 
-Follow the https://www.graalvm.org/jdk{graalvm-version}/docs[installation instructions].
-endif::[]
+Follow the installation instructions:
+
+ifdef::use-linux[]
+- Linux - https://www.graalvm.org/{graalvm-version}/docs/getting-started/linux/
+endif::use-linux[]
+ifdef::use-windows[]
+- Windows - https://www.graalvm.org/{graalvm-version}/docs/getting-started/windows/
+endif::use-windows[]
+endif::use-mac[]
+
 
 ifdef::use-mac[]
-=== Listing GraalVM Versions
+=== Listing GraalVM Versions with SDKMan
 
 First of all, check if you already have the GraalVM Candidates installed on your machine.
 To list the available versions of GraalVM, use the SDKMAN! `list java` command.
@@ -120,7 +123,7 @@ You should get something like:
 
 [source,shell]
 ----
-native-image 21.0.2 2024-01-16
+native-image ${graalvm-version} 2024-01-16
 GraalVM Runtime Environment GraalVM CE 21.0.2+13.1 (build 21.0.2+13-jvmci-23.1-b30)
 Substrate VM GraalVM CE 21.0.2+13.1 (build 21.0.2+13, serial gc)
 ----
