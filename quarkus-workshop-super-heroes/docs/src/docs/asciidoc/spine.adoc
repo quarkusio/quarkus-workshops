@@ -187,4 +187,4 @@ include::core-conclusion/conclusion-references.adoc[leveloffset=+2]
 <<<
 
 // Appendix
-include::core-appendix/appendix.adoc[leveloffset=+1]
+include::core-appendix/appendix.adoc[]

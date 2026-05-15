@@ -49,9 +49,8 @@ As stated above, an extension is divided into two parts, called `deployment` (au
 include::{plantDir}/8-extension-architecture.puml[]
 ----
 
-[example, role="cta"]
---
-
+[role="cta"]
+====
 From the directory `super-heroes` execute the following commands:
 
 [source,shell,subs="attributes+"]
@@ -63,7 +62,7 @@ From the directory `super-heroes` execute the following commands:
     -DgroupId=io.quarkus.workshop.super-heroes \
     -DpackageName=io.quarkus.workshop.superheroes.version
 ----
---
+====
 
 This command creates the structure for the version extension:
 
@@ -136,16 +135,15 @@ The _runtime_ part of an extension contains only the classes and resources requi
 For the version extension, it would be a single class that prints the version.
 
 First, let's create the configuration class that will allow users to dynamically configure whether the version should be printed:
-[example, role="cta"]
---
-
+[role="cta"]
+====
 Under the `runtime` module, create the `src/main/java` directory, and, in this directory, create a new interface named `io.quarkus.workshop.superheroes.version.runtime.VersionConfig` with the following content:
 
 [source,java]
 ----
 include::{code-root}/extension-version/runtime/src/main/java/io/quarkus/workshop/superheroes/version/runtime/VersionConfig.java[]
 ----
---
+====
 The `@ConfigMapping` annotation declares `VersionConfig` as a configuration interface which configuration properties are prefixed with `quarkus.version` prefix. It is also used in CDI aware environments to scan and register Config Mappings.
 
 The `@ConfigRoot` annotation declares that the configuration is available during runtime.
@@ -154,16 +152,15 @@ The `@WithDefault("true")` is used to declare the default value returned when `e
 
 By default, the name of the property is derived from what's declared in the `prefix` attribute inside `@ConfigMapping` plus the name of the method. In our case, the user-configured property will be `quarkus.version.enabled`.
 
-[example, role="cta"]
---
-
+[role="cta"]
+====
 Still in the `runtime` module, create the `io.quarkus.workshop.superheroes.version.runtime.VersionRecorder` class with the following content:
 
 [source,java]
 ----
 include::{code-root}/extension-version/runtime/src/main/java/io/quarkus/workshop/superheroes/version/runtime/VersionRecorder.java[]
 ----
---
+====
 
 Simple right?
 But how does it work?
@@ -177,16 +174,15 @@ We will see how this recorder is used from the _deployment_ module.
 This module contains _build steps_, i.e., methods called during the augmentation phase and computing just enough bytecode to serve the services the application requires.
 The version extension consists of a single build step that extracts the version and uses the `VersionRecorder`.
 
-[example, role="cta"]
---
-
+[role="cta"]
+====
 Next, open the `ExtensionVersionProcessor` class, and update the content to be:
 
 [source, java]
 ----
 include::{code-root}/extension-version/deployment/src/main/java/io/quarkus/workshop/superheroes/version/deployment/ExtensionVersionProcessor.java[]
 ----
---
+====
 This class is the core of the extension.
 It contains a set of methods annotated with `@BuildStep`.
 
@@ -216,22 +212,20 @@ Any invocations made on these proxies will be recorded, and bytecode will be wri
 
 == Packaging the extension
 
-[example, role="cta"]
---
-
+[role="cta"]
+====
 From the root directory of the extension, run:
 
 [source,shell]
 ----
 ./mvnw clean install
 ----
---
+====
 
 == Using the extension
 
-[example, role="cta"]
---
-
+[role="cta"]
+====
 Go back to the _villain_ microservice, and add the following dependency to the `pom.xml` file:
 
 [source,xml,indent=0]
@@ -245,7 +239,7 @@ If not yet started, start the microservice with:
 ----
 ./mvnw quarkus:dev
 ----
---
+====
 
 And the version will be displayed:
 
