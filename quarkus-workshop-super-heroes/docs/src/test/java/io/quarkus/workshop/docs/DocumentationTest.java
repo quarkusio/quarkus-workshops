@@ -3,6 +3,7 @@ package io.quarkus.workshop.docs;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,14 +17,14 @@ public class DocumentationTest extends DocumentationTestBase {
     @Test
     @DisplayName("Main spine.html file should exist")
     void testSpineFileExists() {
-        Path spineFile = Paths.get(DOCS_BASE_PATH, SPINE_HTML);
+        Path spineFile = new File(DOCS_BASE_PATH, SPINE_HTML).toPath();
         assertTrue(Files.exists(spineFile), "spine.html should exist at " + spineFile);
     }
 
     @Test
     @DisplayName("Main spine.html should load without errors")
     void testSpineLoadsSuccessfully() {
-        String fileUrl = "file://" + Paths.get(DOCS_BASE_PATH, SPINE_HTML).toAbsolutePath();
+        String fileUrl = "file://" + new File(DOCS_BASE_PATH, SPINE_HTML).toPath().toAbsolutePath();
 
         Response response = page.navigate(fileUrl);
         assertNotNull(response, "Page should load");
@@ -162,6 +163,6 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     private void navigateToSpine() {
-        navigateTo(Paths.get(DOCS_BASE_PATH, SPINE_HTML));
+        navigateTo(new File(DOCS_BASE_PATH, SPINE_HTML).toPath());
     }
 }
