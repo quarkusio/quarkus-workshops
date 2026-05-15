@@ -15,7 +15,7 @@ jobs:
   build_java17:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install JDK 17
         uses: actions/setup-java@v4
         with:
@@ -31,7 +31,7 @@ jobs:
       matrix:
         os: [ "all","linux","mac","windows" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install JDK 17
         uses: actions/setup-java@v4
         with:
