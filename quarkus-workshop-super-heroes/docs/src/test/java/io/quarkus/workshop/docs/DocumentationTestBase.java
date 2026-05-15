@@ -5,6 +5,7 @@ import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.LoadState;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ public abstract class DocumentationTestBase {
     protected BrowserContext context;
     protected Page page;
 
-    protected static final String DOCS_BASE_PATH = System.getProperty("docs.base.path", "target/generated-asciidoc/");
+    protected static final File DOCS_BASE_PATH = new File(System.getProperty("docs.base.path", "target/generated-asciidoc/"));
     protected static final String SPINE_HTML = "spine.html";
 
     private static final Pattern URL_PATTERN = Pattern.compile(

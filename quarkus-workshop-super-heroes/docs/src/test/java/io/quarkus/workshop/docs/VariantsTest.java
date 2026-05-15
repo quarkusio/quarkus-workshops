@@ -5,10 +5,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assumptions.*;
  */
 public class VariantsTest extends DocumentationTestBase {
 
-    private static final String VARIANTS_PATH = DOCS_BASE_PATH + "/variants/";
+    private static final File VARIANTS_PATH = new File(DOCS_BASE_PATH,"variants");
 
     static Stream<Path> variantProvider() throws IOException {
-        Path variantsDir = Paths.get(VARIANTS_PATH);
+        Path variantsDir = VARIANTS_PATH.toPath();
 
         if (!Files.exists(variantsDir)) {
-            return Stream.empty();
+            throw new IllegalStateException(String.format("The variants directory, %s, does not exist.", variantsDir));
         }
 
         List<Path> variants = new ArrayList<>();
@@ -141,7 +141,7 @@ public class VariantsTest extends DocumentationTestBase {
     @Test
     @DisplayName("Sample of variants should have different content based on flags")
     void testVariantsHaveDifferentContent() throws IOException {
-        Path variantsDir = Paths.get(VARIANTS_PATH);
+        Path variantsDir = VARIANTS_PATH.toPath();
         assumeTrue(Files.exists(variantsDir), "Variants directory not generated yet");
 
         List<Path> variantFiles = new ArrayList<>();
