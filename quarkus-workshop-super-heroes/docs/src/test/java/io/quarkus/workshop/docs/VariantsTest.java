@@ -27,12 +27,17 @@ public class VariantsTest extends DocumentationTestBase {
 
     private static final File VARIANTS_PATH = new File(DOCS_BASE_PATH,"variants");
 
+    @BeforeAll
+    static void checkVariantsExist() {
+        assumeTrue(VARIANTS_PATH.exists(),
+            "Variants directory does not exist: " + VARIANTS_PATH + ". Skipping variant tests.");
+    }
+
     static Stream<Path> variantProvider() throws IOException {
         Path variantsDir = VARIANTS_PATH.toPath();
 
-        if (!Files.exists(variantsDir)) {
-            throw new IllegalStateException(String.format("The variants directory, %s, does not exist.", variantsDir));
-        }
+        assumeTrue(Files.exists(variantsDir),
+            String.format("The variants directory, %s, does not exist.", variantsDir));
 
         List<Path> variants = new ArrayList<>();
 
