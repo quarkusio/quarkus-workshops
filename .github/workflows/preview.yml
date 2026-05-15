@@ -30,7 +30,7 @@ jobs:
           rm -f pr-id.txt
       - name: Publishing to surge for preview
         id: deploy
-        run: npx surge ./ --domain https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: npx surge@0.23.1 ./ --domain quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }}
       - name: Update PR status comment on success
         uses: quarkusio/action-helpers@main
         with:
