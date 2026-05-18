@@ -3,28 +3,27 @@
 = Warming up Docker images
 
 To warm up your Docker image repository, navigate to the `quarkus-workshop-super-heroes/super-heroes/infrastructure` directory.
-Here, you will find a
-ifdef::use-mac,use-windows[`docker-compose.yaml`]
-ifdef::use-mac+use-linux[ or ]
-ifdef::use-linux[`docker-compose-linux.yaml`]
-file which defines all the needed Docker images.
+ifdef::use-mac,use-windows[]
+Here, you will find a `docker-compose.yaml` file which defines all the needed Docker images.
+endif::use-mac,use-windows[]
+ifdef::use-linux[]
+Here, you will find a `docker-compose-linux.yaml` file which defines all the needed Docker images.
+endif::use-linux[]
+ifndef::use-mac+use-windows+use-linux[]
+Here, you will find a `docker-compose.yaml` or `docker-compose-linux.yaml` file which defines all the needed Docker images.
+endif::use-mac+use-windows+use-linux[]
 Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
 
-[example, role="cta"]
---
+[role="cta"]
+====
 
 Then execute the following command which will download all the Docker images and start the containers:
 
 [source,shell]
 ----
-ifdef::use-mac,use-windows[]
 docker compose -f docker-compose.yaml up -d
-endif::use-mac,use-windows[]
-ifndef::use-mac,use-windows[]
-docker compose -f docker-compose-linux.yaml up -d
-endif::use-mac,use-windows[]
 ----
---
+====
 
 ifdef::use-linux[]
 [WARNING]

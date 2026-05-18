@@ -34,8 +34,8 @@ Let's create native executables for all our microservices.
 Well, maybe not all of them.
 Let's see.
 
-[example, role="cta"]
---
+[role="cta"]
+====
 From the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-Dmaven.test.skip=true`):
 
 [source,shell]
@@ -48,6 +48,7 @@ ifdef::use-messaging[]
 ./mvnw --file event-statistics/pom.xml package -Pnative
 endif::use-messaging[]
 ----
+====
 
 [WARNING]
 ====
@@ -131,8 +132,8 @@ Notice that there is no `.jar` file extension.
 It's just a binary file that you can execute directly like any other binary.
 Let's execute the entire application in native mode.
 
-[example, role="cta"]
---
+[role="cta"]
+====
 Native mode is using the `prod` profile, meaning that the infrastructure needs to be up and running (`docker compose -f docker-compose.yaml up -d`).
 Then, from the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-Dmaven.test.skip=true`):
 
@@ -151,7 +152,7 @@ endif::use-ai[]
 ----
 
 You can then go to http://localhost:8080 and start new fights.
---
+====
 
 // == Testing the Native Executables
 

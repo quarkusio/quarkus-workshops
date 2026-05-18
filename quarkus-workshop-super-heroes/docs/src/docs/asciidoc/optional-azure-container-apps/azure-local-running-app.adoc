@@ -10,8 +10,8 @@ Later we will deploy them on Azure Container Apps.
 
 In the previous chapter we have built our Docker containers and run locally thanks to Docker Compose.
 
-[example, role="cta"]
---
+[role="cta"]
+====
 Check that you have all the Docker images installed locally before going further by executing the following command:
 
 [source,shell]
@@ -35,7 +35,7 @@ ifdef::use-ai[]
 <org>/rest-narration          1.0.0-SNAPSHOT       fcfe334594f3   390MB
 endif::use-ai[]
 ----
---
+====
 
 Now we will tag the images, push them to Azure Container Registry and execute them locally, again, with Docker Compose.
 
@@ -44,8 +44,8 @@ Now we will tag the images, push them to Azure Container Registry and execute th
 Make sure you've set all the environment variables defined in the previous chapter and that you've also created the resource group and the Azure Container Registry.
 ====
 
-[example, role="cta"]
---
+[role="cta"]
+====
 Before you can push an image to your registry, you must tag it with the fully qualified name of your registry login server (the `REGISTRY_URL` variable).
 Tag the image using the `docker tag` commands (make sure to change the value of `quarkus/` by the value of your local organisation):
 
@@ -60,10 +60,10 @@ include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocTaggi
 endif::use-ai[]
 
 ----
---
+====
 
-[example, role="cta"]
---
+[role="cta"]
+====
 Make sure all the images have properly been tagged by executing the following command:
 
 [source,shell]
@@ -87,10 +87,10 @@ ifdef::use-ai[]
 registrysuperheroes<uniquename>.azurecr.io/narration-app         1.0    50c657de360d  432MB
 endif::use-ai[]
 ----
---
+====
 
-[example, role="cta"]
---
+[role="cta"]
+====
 To be able to push these Docker images to Azure Registry, we first need to log in to the registry:
 
 [source,shell,indent=0]
@@ -130,7 +130,7 @@ include::{projectdir}/infrastructure/azure-build-push-registry.sh[tags=adocShowi
 You can visualize the content of the registry on the https://portal.azure.com[Azure Portal].
 
 image::azure-portal-4.png[]
---
+====
 
 == Running Remote Images Locally
 
@@ -138,20 +138,20 @@ Now that we have our docker images pushed to Azure Container Registry, we can ru
 We will use the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` to run the remote images locally.
 But before we need to change a few things.
 
-[example, role="cta"]
---
+[role="cta"]
+====
 You should edit the `docker-compose-app-remote.yaml` file under `super-heroes/infrastructure` and change the name `registrysuperheroesagoncal` with the value of the `$REGISTRY` variable.
---
+====
 
-[example, role="cta"]
---
+[role="cta"]
+====
 Now that we have all our Docker containers pushed to Azure Container Registry, let's execute them with:
 
 [source,shell]
 ----
 docker compose -f docker-compose-app-remote.yaml up
 ----
---
+====
 s
 Once all the containers are started, you can:
 

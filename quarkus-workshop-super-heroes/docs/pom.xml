@@ -186,7 +186,15 @@ The default build will take around 50m.
                             <surefire-plugin-version>${surefire-plugin.version}</surefire-plugin-version>
                             <quarkus-pact-version>${quarkus.pact.version}</quarkus-pact-version>
                             <quarkus-langchain4j-version>${quarkus-langchain4j.version}</quarkus-langchain4j-version>
+                            <code-root>${project.basedir}/../super-heroes</code-root>
                         </attributes>
+                        <!-- WARN catches unterminated blocks, unknown styles, and include errors.
+                             DEBUG would also catch asciidoctor-diagram 'dot' lookup messages which are unavoidable tooling noise. -->
+                        <logHandler>
+                            <failIf>
+                                <severity>WARN</severity>
+                            </failIf>
+                        </logHandler>
                     </configuration>
                 </plugin>
             </plugins>
