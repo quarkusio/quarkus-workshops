@@ -43,7 +43,7 @@ jobs:
           action: maintain-one-comment
           github-token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh
+            🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh
           body-marker: '<!-- Sticky Pull Request Comment -->'
           pr-number: ${{ steps.pr.outputs.id }}
       - name: Update PR status comment on failure
