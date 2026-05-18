@@ -23,9 +23,10 @@ jobs:
           rm -f pr-id.txt
       - name: Trim site for preview
         run: |
-          rm -rf super-heroes/linux super-heroes/windows
+          rm -rf super-heroes/linux super-heroes/mac super-heroes/windows
           cd super-heroes/variants
           rm -rf os-linux-* os-windows-*
+          du -sh ..
       - name: Publishing to surge for preview
         id: deploy
         run: npx surge ./ --domain https://quarkiverse-quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }}
