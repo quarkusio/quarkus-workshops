@@ -37,13 +37,18 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Site generation
+      - name: Site generation prep
         run: |
           sudo apt-get install graphviz
           
           export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
-
-          cd quarkus-workshop-super-heroes/docs      
+      - name: Install Playwright
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps chromium"
+      - name: Build and test site
+        run: |
+          cd quarkus-workshop-super-heroes/docs
           mvn package -Dos=${{ matrix.os }}
       - name: Publishing fragment
         uses: actions/upload-artifact@v7
@@ -100,9 +105,39 @@ jobs:
           name: site
           path: ./target/site
           retention-days: 3
+  test-docs:
+    needs: [ publication ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Download assembled site
+        uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: target/site
+      - name: Install Playwright
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps chromium"
+      - name: Run documentation tests
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn test -Ddocs.base.path=../../target/site/super-heroes
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
-    needs: [ publication ]
+    needs: [ publication, test-docs ]
     runs-on: ubuntu-latest
     environment:
       name: github-pages

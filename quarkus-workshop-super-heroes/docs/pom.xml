@@ -37,6 +37,8 @@ The default build will take around 50m.
         <version.asciidoctorj>2.5.10</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>2.2.13</version.asciidoctorj.diagram>
+        <version.playwright>1.48.0</version.playwright>
+        <version.junit>5.11.4</version.junit>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.raw>
         <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
@@ -95,6 +97,31 @@ The default build will take around 50m.
             <groupId>io.quarkiverse.pact</groupId>
             <artifactId>quarkus-pact-provider</artifactId>
             <version>${quarkus.pact.version}</version>
+        </dependency>
+        <!-- Playwright for documentation testing -->
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>${version.playwright}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -165,6 +192,30 @@ The default build will take around 50m.
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>dev.jbang</groupId>
                 <artifactId>jbang-maven-plugin</artifactId>
