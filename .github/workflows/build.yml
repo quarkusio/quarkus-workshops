@@ -21,6 +21,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+          cache: maven
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
       - name: Native build with Maven
@@ -37,6 +38,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+          cache: maven
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('**/pom.xml') }}
       - name: Site generation prep
         run: |
           sudo apt-get install graphviz
@@ -115,6 +122,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+          cache: maven
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('**/pom.xml') }}
       - name: Download assembled site
         uses: actions/download-artifact@v8
         with:

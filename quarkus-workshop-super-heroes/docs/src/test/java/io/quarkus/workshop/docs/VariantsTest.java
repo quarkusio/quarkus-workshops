@@ -2,8 +2,6 @@ package io.quarkus.workshop.docs;
 
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +15,8 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 /**
  * Tests for documentation variants.
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assumptions.*;
  */
 public class VariantsTest extends DocumentationTestBase {
 
-    private static final File VARIANTS_PATH = new File(DOCS_BASE_PATH,"variants");
+    private static final File VARIANTS_PATH = new File(DOCS_BASE_PATH, "variants");
 
     @BeforeAll
     static void checkVariantsExist() {
@@ -33,7 +33,7 @@ public class VariantsTest extends DocumentationTestBase {
             "Variants directory does not exist: " + VARIANTS_PATH + ". Skipping variant tests.");
     }
 
-    static Stream<Path> variantProvider() throws IOException {
+    private static List<Path> findVariants() throws IOException {
         Path variantsDir = VARIANTS_PATH.toPath();
 
         assumeTrue(Files.exists(variantsDir),
@@ -52,95 +52,73 @@ public class VariantsTest extends DocumentationTestBase {
                  });
         }
 
-        return variants.stream();
+        return variants;
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant should load without errors")
-    void testVariantLoadsSuccessfully(Path variantFile) {
-        String fileUrl = "file://" + variantFile.toAbsolutePath();
+    @TestFactory
+    @DisplayName("Variant documentation tests")
+    Stream<DynamicContainer> testVariants() throws IOException {
+        List<Path> variants = findVariants();
+        assumeFalse(variants.isEmpty(), "No variants found");
 
-        Response response = page.navigate(fileUrl);
-        assertNotNull(response, "Variant page should load: " + variantFile);
-        assertTrue(response.ok() || response.status() == 0,
-            "Variant page should load successfully: " + variantFile + " (status: " + response.status() + ")");
+        return variants.stream().map(variantFile -> {
+            String variantName = variantFile.getParent().getFileName().toString();
+            return dynamicContainer(variantName, Stream.of(
+                dynamicTest("should load without errors",        () -> checkLoads(variantFile)),
+                dynamicTest("should have proper title",          this::checkTitle),
+                dynamicTest("should have table of contents",     this::checkTableOfContents),
+                dynamicTest("should have main content sections", this::checkMainSections),
+                dynamicTest("internal links should work",        this::checkInternalLinks),
+                dynamicTest("should not have broken images",     this::checkImages),
+                dynamicTest("should have code blocks",           this::checkCodeBlocks)
+            ));
+        });
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant should have proper title")
-    void testVariantHasTitle(Path variantFile) {
+    private void checkLoads(Path variantFile) {
         navigateTo(variantFile);
 
         String title = page.title();
-        assertNotNull(title, "Variant should have a title: " + variantFile);
-        assertFalse(title.isEmpty(), "Variant title should not be empty: " + variantFile);
+        assertNotNull(title, "Variant should have a title");
+        assertFalse(title.isEmpty(), "Variant title should not be empty");
+    }
+
+    private void checkTitle() {
+        String title = page.title();
         assertTrue(title.toLowerCase().contains("quarkus") || title.toLowerCase().contains("workshop"),
-            "Variant title should contain 'Quarkus' or 'Workshop': " + variantFile + ", but was: " + title);
+            "Title should contain 'Quarkus' or 'Workshop', but was: " + title);
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant should have table of contents")
-    void testVariantHasTableOfContents(Path variantFile) {
-        navigateTo(variantFile);
-
+    private void checkTableOfContents() {
         Locator toc = page.locator("#toc, .toc, nav");
-        assertTrue(toc.count() > 0,
-            "Variant should have a table of contents: " + variantFile);
+        assertTrue(toc.count() > 0, "Should have a table of contents");
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant should have main content sections")
-    void testVariantHasMainSections(Path variantFile) {
-        navigateTo(variantFile);
-
+    private void checkMainSections() {
         int h2Count = page.locator("h2").count();
         assertTrue(h2Count >= 5,
-            "Variant " + variantFile.getFileName() + " should have at least 5 top-level sections, but found " + h2Count);
+            "Should have at least 5 top-level sections, but found " + h2Count);
 
         int sectionCount = page.locator(".sect1").count();
         assertTrue(sectionCount >= 5,
-            "Variant " + variantFile.getFileName() + " should have at least 5 sect1 blocks, but found " + sectionCount);
+            "Should have at least 5 sect1 blocks, but found " + sectionCount);
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant internal links should work")
-    void testVariantInternalLinksWork(Path variantFile) {
-        navigateTo(variantFile);
-
+    private void checkInternalLinks() {
         Set<String> brokenLinks = findBrokenInternalLinks();
-
         assertTrue(brokenLinks.isEmpty(),
-            "Variant " + variantFile.getFileName() + " has broken internal links: " +
-            String.join(", ", brokenLinks));
+            "Has broken internal links: " + String.join(", ", brokenLinks));
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant should not have broken image references")
-    void testVariantImagesLoad(Path variantFile) {
-        navigateTo(variantFile);
-
+    private void checkImages() {
         Set<String> brokenImages = findBrokenImages();
-
         assertTrue(brokenImages.isEmpty(),
-            "Variant " + variantFile.getFileName() + " has broken images: " +
-            String.join(", ", brokenImages));
+            "Has broken images: " + String.join(", ", brokenImages));
     }
 
-    @ParameterizedTest
-    @MethodSource("variantProvider")
-    @DisplayName("Each variant should have code blocks")
-    void testVariantHasCodeBlocks(Path variantFile) {
-        navigateTo(variantFile);
-
+    private void checkCodeBlocks() {
         Locator codeBlocks = page.locator("pre code, .listingblock, .code");
-        assertTrue(codeBlocks.count() > 0,
-            "Variant should have code blocks: " + variantFile);
+        assertTrue(codeBlocks.count() > 0, "Should have code blocks");
     }
 
     @Test

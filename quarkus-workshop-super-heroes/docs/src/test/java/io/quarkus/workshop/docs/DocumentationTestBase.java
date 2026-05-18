@@ -58,7 +58,7 @@ public abstract class DocumentationTestBase {
     protected void navigateTo(Path htmlFile) {
         String fileUrl = "file://" + htmlFile.toAbsolutePath();
         page.navigate(fileUrl);
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
     }
 
     protected Set<String> findBrokenInternalLinks() {
