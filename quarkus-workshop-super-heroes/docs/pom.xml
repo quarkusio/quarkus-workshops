@@ -37,6 +37,7 @@ The default build will take around 50m.
         <version.asciidoctorj>2.5.10</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>3.2.1</version.asciidoctorj.diagram>
+        <version.asciidoctorj.diagram.plantuml>1.2025.3</version.asciidoctorj.diagram.plantuml>
         <version.playwright>1.59.0</version.playwright>
         <version.junit>5.11.4</version.junit>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
@@ -152,6 +153,11 @@ The default build will take around 50m.
                             <groupId>org.asciidoctor</groupId>
                             <artifactId>asciidoctorj-diagram</artifactId>
                             <version>${version.asciidoctorj.diagram}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-diagram-plantuml</artifactId>
+                            <version>${version.asciidoctorj.diagram.plantuml}</version>
                         </dependency>
                     </dependencies>
                     <configuration>
