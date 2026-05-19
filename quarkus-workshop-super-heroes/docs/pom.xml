@@ -32,9 +32,9 @@ The default build will take around 50m.
     <name>Quarkus Workshop :: Docs</name>
 
     <properties>
-        <version.asciidoctor.maven.plugin>2.2.4</version.asciidoctor.maven.plugin>
+        <version.asciidoctor.maven.plugin>3.2.0</version.asciidoctor.maven.plugin>
         <version.jruby>9.4.5.0</version.jruby>
-        <version.asciidoctorj>2.5.10</version.asciidoctorj>
+        <version.asciidoctorj>3.0.1</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>2.2.13</version.asciidoctorj.diagram>
         <version.playwright>1.59.0</version.playwright>
@@ -262,11 +262,12 @@ The default build will take around 50m.
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/docs/asciidoc</directory>
-                                    <filtering>false</filtering>
-                                    <include>assets/**</include>
-                                    <include>images/**</include>
-                                    <!-- And add in the html configurator to the top-level -->
-                                    <include>*html</include>
+                                    <includes>
+                                        <include>assets/**</include>
+                                        <include>images/**</include>
+                                        <!-- And add in the html configurator to the top-level -->
+                                        <include>*html</include>
+                                    </includes>
                                 </resource>
                             </resources>
                             <attributes>
@@ -350,7 +351,9 @@ The default build will take around 50m.
                                         <resources>
                                             <resource>
                                                 <directory>src/</directory>
-                                                <exclude>**</exclude>
+                                                <excludes>
+                                                    <exclude>**</exclude>
+                                                </excludes>
                                             </resource>
                                         </resources>
                                     </configuration>
