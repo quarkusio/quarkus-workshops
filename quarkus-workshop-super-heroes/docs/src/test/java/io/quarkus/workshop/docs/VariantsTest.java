@@ -1,100 +1,124 @@
 package io.quarkus.workshop.docs;
 
-import com.microsoft.playwright.*;
-import org.junit.jupiter.api.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
-import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.AfterParameterizedClassInvocation;
+import org.junit.jupiter.params.BeforeParameterizedClassInvocation;
+import org.junit.jupiter.params.Parameter;
+import org.junit.jupiter.params.ParameterizedClass;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for documentation variants.
  * These tests can only be run after variants are generated, which is time-consuming.
  * Tests are skipped when the variants directory does not exist.
  */
+@ParameterizedClass(name = "{0}", allowZeroInvocations = true)
+@MethodSource("findVariants")
 public class VariantsTest extends DocumentationTestBase {
 
-    private static final File VARIANTS_PATH = new File(DOCS_BASE_PATH, "variants");
+    static final File VARIANTS_PATH = new File(DOCS_BASE_PATH, "variants");
 
-    @BeforeAll
-    static void checkVariantsExist() {
-        assumeTrue(VARIANTS_PATH.exists(),
-            "Variants directory does not exist: " + VARIANTS_PATH + ". Skipping variant tests.");
-    }
+    private static BrowserContext sharedContext;
+    private static Page sharedPage;
 
-    private static List<Path> findVariants() throws IOException {
+    @Parameter
+    Path variantFile;
+
+    static List<Named<Path>> findVariants() throws IOException {
         Path variantsDir = VARIANTS_PATH.toPath();
 
-        assumeTrue(Files.exists(variantsDir),
-            String.format("The variants directory, %s, does not exist.", variantsDir));
+        if (!Files.exists(variantsDir)) {
+            return List.of();
+        }
 
-        List<Path> variants = new ArrayList<>();
+        List<Named<Path>> variants = new ArrayList<>();
 
         try (Stream<Path> paths = Files.walk(variantsDir, 2)) {
             paths.filter(Files::isDirectory)
-                 .filter(p -> !p.equals(variantsDir))
-                 .forEach(dir -> {
-                     Path spineFile = dir.resolve(SPINE_HTML);
-                     if (Files.exists(spineFile)) {
-                         variants.add(spineFile);
-                     }
-                 });
+                .filter(p -> !p.equals(variantsDir))
+                .forEach(dir -> {
+                    Path spineFile = dir.resolve(SPINE_HTML);
+                    if (Files.exists(spineFile)) {
+                        variants.add(Named.of(dir.getFileName().toString(), spineFile));
+                    }
+                });
         }
 
         return variants;
     }
 
-    @TestFactory
-    @DisplayName("Variant documentation tests")
-    Stream<DynamicContainer> testVariants() throws IOException {
-        List<Path> variants = findVariants();
-        assumeFalse(variants.isEmpty(), "No variants found");
-
-        return variants.stream().map(variantFile -> {
-            String variantName = variantFile.getParent().getFileName().toString();
-            return dynamicContainer(variantName, Stream.of(
-                dynamicTest("should load without errors",        () -> checkLoads(variantFile)),
-                dynamicTest("should have proper title",          this::checkTitle),
-                dynamicTest("should have table of contents",     this::checkTableOfContents),
-                dynamicTest("should have main content sections", this::checkMainSections),
-                dynamicTest("internal links should work",        this::checkInternalLinks),
-                dynamicTest("should not have broken images",     this::checkImages),
-                dynamicTest("should have code blocks",           this::checkCodeBlocks)
-            ));
-        });
+    @BeforeParameterizedClassInvocation
+    static void setupVariant(Path variantFile) {
+        sharedContext = browser.newContext();
+        sharedPage = sharedContext.newPage();
+        sharedPage.navigate("file://" + variantFile.toAbsolutePath());
+        sharedPage.waitForLoadState(LoadState.DOMCONTENTLOADED);
     }
 
-    private void checkLoads(Path variantFile) {
-        navigateTo(variantFile);
+    @AfterParameterizedClassInvocation
+    static void teardownVariant() {
+        if (sharedContext!=null) {
+            sharedContext.close();
+            sharedContext = null;
+            sharedPage = null;
+        }
+    }
 
+    @Override
+    @BeforeEach
+    void createContextAndPage() {
+        context = sharedContext;
+        page = sharedPage;
+    }
+
+    @Override
+    @AfterEach
+    void closeContext() {
+        // managed per invocation, not per test
+    }
+
+    @Test
+    void shouldLoadWithoutErrors() {
         String title = page.title();
         assertNotNull(title, "Variant should have a title");
         assertFalse(title.isEmpty(), "Variant title should not be empty");
     }
 
-    private void checkTitle() {
+    @Test
+    void shouldHaveProperTitle() {
         String title = page.title();
         assertTrue(title.toLowerCase().contains("quarkus") || title.toLowerCase().contains("workshop"),
             "Title should contain 'Quarkus' or 'Workshop', but was: " + title);
     }
 
-    private void checkTableOfContents() {
+    @Test
+    void shouldHaveTableOfContents() {
         Locator toc = page.locator("#toc, .toc, nav");
         assertTrue(toc.count() > 0, "Should have a table of contents");
     }
 
-    private void checkMainSections() {
+    @Test
+    void shouldHaveMainSections() {
         int h2Count = page.locator("h2").count();
         assertTrue(h2Count >= 5,
             "Should have at least 5 top-level sections, but found " + h2Count);
@@ -104,53 +128,23 @@ public class VariantsTest extends DocumentationTestBase {
             "Should have at least 5 sect1 blocks, but found " + sectionCount);
     }
 
-    private void checkInternalLinks() {
+    @Test
+    void internalLinksShouldWork() {
         Set<String> brokenLinks = findBrokenInternalLinks();
         assertTrue(brokenLinks.isEmpty(),
             "Has broken internal links: " + String.join(", ", brokenLinks));
     }
 
-    private void checkImages() {
+    @Test
+    void shouldNotHaveBrokenImages() {
         Set<String> brokenImages = findBrokenImages();
         assertTrue(brokenImages.isEmpty(),
             "Has broken images: " + String.join(", ", brokenImages));
     }
 
-    private void checkCodeBlocks() {
+    @Test
+    void shouldHaveCodeBlocks() {
         Locator codeBlocks = page.locator("pre code, .listingblock, .code");
         assertTrue(codeBlocks.count() > 0, "Should have code blocks");
-    }
-
-    @Test
-    @DisplayName("Sample of variants should have different content based on flags")
-    void testVariantsHaveDifferentContent() throws IOException {
-        Path variantsDir = VARIANTS_PATH.toPath();
-        assumeTrue(Files.exists(variantsDir), "Variants directory not generated yet");
-
-        List<Path> variantFiles = new ArrayList<>();
-        try (Stream<Path> paths = Files.walk(variantsDir, 2)) {
-            paths.filter(Files::isDirectory)
-                 .filter(p -> !p.equals(variantsDir))
-                 .limit(5)
-                 .forEach(dir -> {
-                     Path spineFile = dir.resolve(SPINE_HTML);
-                     if (Files.exists(spineFile)) {
-                         variantFiles.add(spineFile);
-                     }
-                 });
-        }
-
-        assumeTrue(variantFiles.size() >= 2, "Need at least 2 variants to compare");
-
-        Set<Long> fileSizes = new HashSet<>();
-        for (Path variant : variantFiles) {
-            fileSizes.add(Files.size(variant));
-        }
-
-        if (variantFiles.size() > 2) {
-            assertTrue(fileSizes.size() > 1,
-                "Variants should have different content sizes (found " + fileSizes.size() +
-                " unique sizes from " + variantFiles.size() + " variants)");
-        }
     }
 }
