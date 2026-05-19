@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Teardown surge preview
         id: deploy
-        run: npx surge teardown https://quarkus-workshops-pr-${{ github.event.number }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }} || echo "NOT_TORNDOWN=true" >> "$GITHUB_ENV"
+        run: npx surge@0.23.1 teardown https://quarkus-workshops-pr-${{ github.event.number }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }} || echo "NOT_TORNDOWN=true" >> "$GITHUB_ENV"
       - name: Update PR status comment
         uses: quarkusio/action-helpers@main
         if: env.NOT_TORNDOWN != 'true'
@@ -20,5 +20,5 @@ jobs:
           body: |
             🙈 The PR is closed and the preview is expired.
           body-marker: '<!-- Sticky Pull Request Comment -->'
-          pr-number: ${{ steps.pr.outputs.id }}
+          pr-number: ${{ github.event.number }}
 
