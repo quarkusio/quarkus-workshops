@@ -31,6 +31,8 @@ jobs:
     strategy:
       matrix:
         os: [ "all","linux","mac","windows" ]
+    env:
+      MAVEN_OPTS: "-Xmx4g"
     steps:
       - uses: actions/checkout@v6
       - name: Install JDK
