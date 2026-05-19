@@ -98,6 +98,11 @@ jobs:
           cp -r target/generated-asciidoc/mac/variants/* target/generated-asciidoc/variants
           cp -r target/generated-asciidoc/windows/variants/* target/generated-asciidoc/variants
 
+          # Remove the OS-specific directories now that their variants are merged
+          rm -rf target/generated-asciidoc/linux
+          rm -rf target/generated-asciidoc/mac
+          rm -rf target/generated-asciidoc/windows
+
           # Move things around to preserve the super-heroes structure
           mkdir -p target/site/super-heroes
           cp -R target/generated-asciidoc/* target/site/super-heroes
