@@ -1,6 +1,6 @@
+!option handwritten true
 skinparam dpi 300
 skinparam useBetaStyle true
-skinparam handwritten true
 allow_mixing
 
 skinparam node {
