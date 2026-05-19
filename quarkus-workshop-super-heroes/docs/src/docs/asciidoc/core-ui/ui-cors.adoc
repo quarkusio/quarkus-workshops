@@ -58,10 +58,7 @@ quarkus.http.cors.origins=/.*/
 But, even with this, the UI is still not working.
 The CORS errors are gone, so that's a good step, but we forgot something else:
 
-[plantuml,align=center]
-----
-include::{plantDir}/4-microservices-fights-sequence.puml[]
-----
+plantuml::plantuml/4-microservices-fights-sequence.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
 
 Remember the function to retrieve random fighters.
 We are currently returning `null`.
