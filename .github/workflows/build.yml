@@ -32,7 +32,7 @@ jobs:
       matrix:
         os: [ "all","linux","mac","windows" ]
     env:
-      MAVEN_OPTS: "-Xmx4g"
+      MAVEN_OPTS: "-Xmx8g"
     steps:
       - uses: actions/checkout@v6
       - name: Install JDK
