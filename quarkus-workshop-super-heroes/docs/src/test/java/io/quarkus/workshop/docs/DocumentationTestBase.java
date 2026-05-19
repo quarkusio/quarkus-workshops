@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 public abstract class DocumentationTestBase {
 
-    protected static Playwright playwright;
-    protected static Browser browser;
+    private static final ThreadLocal<Playwright> playwright = new ThreadLocal<>();
+    private static final ThreadLocal<Browser> browser = new ThreadLocal<>();
     protected BrowserContext context;
     protected Page page;
 
@@ -26,25 +26,37 @@ public abstract class DocumentationTestBase {
         Pattern.CASE_INSENSITIVE
     );
 
+    static Browser getOrCreateBrowser() {
+        if (browser.get() == null) {
+            Playwright pw = Playwright.create();
+            playwright.set(pw);
+            browser.set(pw.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true)));
+        }
+        return browser.get();
+    }
+
     @BeforeAll
     static void launchBrowser() {
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+        getOrCreateBrowser();
     }
 
     @AfterAll
     static void closeBrowser() {
-        if (browser != null) {
-            browser.close();
+        Browser b = browser.get();
+        if (b != null) {
+            b.close();
+            browser.remove();
         }
-        if (playwright != null) {
-            playwright.close();
+        Playwright p = playwright.get();
+        if (p != null) {
+            p.close();
+            playwright.remove();
         }
     }
 
     @BeforeEach
     void createContextAndPage() {
-        context = browser.newContext();
+        context = getOrCreateBrowser().newContext();
         page = context.newPage();
     }
 
