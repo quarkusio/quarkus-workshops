@@ -21,11 +21,15 @@ node "Villain" as villain {
 
 node "Narration" as narration {
     agent "Quarkus" <<application>> as narrationQuarkus
-    hexagon "Semantic Kernel" as sk
+    hexagon "LangChain4j" as sk
     narrationQuarkus .up> sk
 }
 
+!ifdef use_azure
 cloud "Open AI \n Azure OpenAI" as openai
+!else
+cloud "LLM Provider \n (OpenAI, Ollama, etc.)" as openai
+!endif
 
 node "Fight" as fight {
     agent "Quarkus" <<application>> as fightQuarkus

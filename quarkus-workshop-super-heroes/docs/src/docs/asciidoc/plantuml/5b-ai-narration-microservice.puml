@@ -5,11 +5,15 @@ left to right direction
 
 node "Narration" as hero {
     agent "Quarkus" <<application>> as narrationQuarkus
-    hexagon "Semantic Kernel" as sk
+    hexagon "LangChain4j" as sk
     narrationQuarkus .up> sk
 }
 
+!ifdef use_azure
 cloud "Open AI \n Azure OpenAI" as openai
+!else
+cloud "LLM Provider \n (OpenAI, Ollama, Gemini, etc.)" as openai
+!endif
 
 REST ()-- narrationQuarkus
 sk --> openai : HTTP
