@@ -48,16 +48,10 @@ endif::use-cli[]
 
 
 ifdef::use-ai[]
-[plantuml,align=center]
-----
-include::{plantDir}/0-introduction-physical-architecture-ai.puml[]
-----
+plantuml::plantuml/0-introduction-physical-architecture-ai.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
 endif::use-ai[]
 ifndef::use-ai[]
-[plantuml,align=center]
-----
-include::{plantDir}/0-introduction-physical-architecture.puml[]
-----
+plantuml::plantuml/0-introduction-physical-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
 endif::use-ai[]
 
 

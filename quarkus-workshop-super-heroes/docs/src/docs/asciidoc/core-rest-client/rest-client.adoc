@@ -7,7 +7,4 @@ So far we've built one Fight microservice which need to invoke the Hero and Vill
 In the following sections you will develop this invocation thanks to the MicroProfile REST Client.
 We will also deal with fault tolerance thanks to timeouts and circuit breaker.
 
-[plantuml,align=center]
-----
-include::{plantDir}/5-rest-client-physical-architecture.puml[]
-----
+plantuml::plantuml/5-rest-client-physical-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]

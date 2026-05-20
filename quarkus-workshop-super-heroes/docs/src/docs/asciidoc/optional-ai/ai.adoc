@@ -10,10 +10,7 @@ Let's ask an AI to narrate the fight!
 In this section we will introduce a new microservice that will use AI to narrate the fight between a superhero and a super villain.
 It will use Quarkus LangChain4j to invoke an OpenAI model.
 
-[plantuml,align=center,width=300]
-----
-include::{plantDir}/5b-ai-narration-microservice.puml[]
-----
+plantuml::plantuml/5b-ai-narration-microservice.puml[align=center,width=300,theme="handwritten from {plantuml-theme-dir}"]
 
 In the following sections, you will learn:
 
@@ -300,10 +297,7 @@ Remember that you can also check Swagger UI by going to the dev console: http://
 
 Now that we have a narration microservice up and running, we can invoke it from the fight microservice.
 
-[plantuml,align=center,width=300]
-----
-include::{plantDir}/5a-ai-physical-architecture.puml[]
-----
+plantuml::plantuml/5a-ai-physical-architecture.puml[align=center,width=300,theme="handwritten from {plantuml-theme-dir}"]
 
 === Adding narration to the Fight Microservice
 

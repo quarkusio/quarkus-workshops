@@ -37,7 +37,7 @@ The default build will take around 50m.
         <version.asciidoctorj>3.0.1</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>3.2.1</version.asciidoctorj.diagram>
-        <version.asciidoctorj.diagram.plantuml>1.2025.3</version.asciidoctorj.diagram.plantuml>
+        <version.asciidoctorj.diagram.plantuml>1.2026.2</version.asciidoctorj.diagram.plantuml>
         <version.playwright>1.59.0</version.playwright>
         <version.junit>6.0.3</version.junit>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
@@ -177,6 +177,7 @@ The default build will take around 50m.
                             <icons>font</icons>
                             <toclevels>3</toclevels>
                             <plantDir>../plantuml</plantDir>
+                            <plantuml-theme-dir>${project.basedir}/src/docs/asciidoc/plantuml/themes/</plantuml-theme-dir>
                             <github-raw>${github.raw}</github-raw>
                             <github-url>${github.url}</github-url>
                             <github-repo>${github.repo}</github-repo>

@@ -9,10 +9,7 @@ We will also add a React front-end, so we can fight graphically.
 But as you can notice in the diagram below, these microservices still not communicate with each other.
 You will have to wait the next chapter for that ;o)
 
-[plantuml,align=center]
-----
-include::{plantDir}/4-microservices-physical-architecture.puml[]
-----
+plantuml::plantuml/4-microservices-physical-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
 
 Each microservice is developed in its own directory.
 

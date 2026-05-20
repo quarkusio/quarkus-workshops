@@ -1,7 +1,5 @@
 @startuml
-!option handwritten true
 skinparam dpi 300
-skinparam useBetaStyle true
 
 skinparam participant {
     backgroundColor<<frontend>> #D2B4DE
