@@ -24,6 +24,19 @@ jobs:
           cache: maven
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
+      - name: Report microservices test results
+        if: always()
+        uses: ./.github/actions/test-reporter
+        with:
+          report-path: quarkus-workshop-super-heroes
+          report-name: 'Microservices Test Results'
+      - name: Upload microservices test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: microservices-test-results
+          path: '**/target/surefire-reports/TEST-*.xml'
+          retention-days: 7
       - name: Native build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs -pl '!:rest-narration,!:extension-version'
   docs:
@@ -57,6 +70,12 @@ jobs:
         run: |
           cd quarkus-workshop-super-heroes/docs
           mvn package -Dos=${{ matrix.os }}
+      - name: Report site build test results
+        if: always()
+        uses: ./.github/actions/test-reporter
+        with:
+          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-name: 'Site Build Test Results (${{ matrix.os }})'
       - name: Publishing fragment
         uses: actions/upload-artifact@v7
         with:
@@ -146,6 +165,12 @@ jobs:
         run: |
           cd quarkus-workshop-super-heroes/docs
           mvn test -Ddocs.base.path=../../target/site/super-heroes
+      - name: Report documentation test results
+        if: always()
+        uses: ./.github/actions/test-reporter
+        with:
+          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-name: 'Documentation Test Results'
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
