@@ -4,7 +4,7 @@
 left to right direction
 
 node "Narration" as hero {
-    agent "Quarkus" <<application>> as narrationQuarkus
+    agent "QUARKUS_ICON Quarkus" <<application>> as narrationQuarkus
     hexagon "LangChain4j" as sk
     narrationQuarkus .up> sk
 }
@@ -15,7 +15,8 @@ cloud "Open AI \n Azure OpenAI" as openai
 cloud "LLM Provider \n (OpenAI, Ollama, Gemini, etc.)" as openai
 !endif
 
-REST ()-- narrationQuarkus
+() "REST" as rest #4695EB
+rest -- narrationQuarkus
 sk --> openai : HTTP
 
 @enduml

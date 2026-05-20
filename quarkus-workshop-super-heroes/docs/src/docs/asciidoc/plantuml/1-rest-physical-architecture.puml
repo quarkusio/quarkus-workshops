@@ -4,11 +4,12 @@
 left to right direction
 
 node "Villain" as villain {
-    agent "Quarkus (imperative)" <<application>> as villainQuarkus
+    agent "QUARKUS_ICON Quarkus (imperative)" <<application>> as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }
 
-REST ()-- villainQuarkus
+() "REST" as rest #4695EB
+rest -- villainQuarkus
 
 @enduml

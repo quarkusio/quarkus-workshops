@@ -4,11 +4,12 @@
 left to right direction
 
 node "Hero" as hero {
-    agent "Quarkus (reactive)" <<application>> as heroQuarkus
+    agent "QUARKUS_ICON Quarkus (reactive)" <<application>> as heroQuarkus
     database "Postgresql" as heroPostgresql
     heroQuarkus .up> heroPostgresql
 }
 
-REST ()-- heroQuarkus
+() "REST" as rest #4695EB
+rest -- heroQuarkus
 
 @enduml
