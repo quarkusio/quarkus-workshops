@@ -230,6 +230,8 @@ The default build will take around 50m.
                         <junit.jupiter.execution.parallel.mode.classes.default>concurrent</junit.jupiter.execution.parallel.mode.classes.default>
                         <junit.jupiter.execution.parallel.config.strategy>fixed</junit.jupiter.execution.parallel.config.strategy>
                         <junit.jupiter.execution.parallel.config.fixed.parallelism>4</junit.jupiter.execution.parallel.config.fixed.parallelism>
+                        <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
+                        <os>${os}</os>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
