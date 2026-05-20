@@ -5,14 +5,23 @@ updates:
     open-pull-requests-limit: 40
     schedule:
       interval: daily
+    cooldown:
+      default-days: 4
     labels:
       - "version-upgrade"
     pull-request-branch-name:
       separator: "_"
+  - package-ecosystem: "npm"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: daily
+    cooldown:
+      default-days: 7
     labels:
       - infra
     pull-request-branch-name:
