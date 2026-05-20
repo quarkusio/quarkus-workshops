@@ -4,23 +4,23 @@
 left to right direction
 
 node "Super Hero UI" as ui {
-    agent "Quarkus" <<frontend>> as uiQuarkus
+    agent "QUARKUS_ICON Quarkus" <<frontend>> as uiQuarkus
 }
 
 node "Hero" as hero {
-    agent "Quarkus (reactive)" <<application>> as heroQuarkus
+    agent "QUARKUS_ICON Quarkus (reactive)" <<application>> as heroQuarkus
     database "Postgresql" as heroPostgresql
     heroQuarkus .up> heroPostgresql
 }
 
 node "Villain" as villain {
-    agent "Quarkus (imperative)" <<application>> as villainQuarkus
+    agent "QUARKUS_ICON Quarkus (imperative)" <<application>> as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }
 
 node "Fight" as fight {
-    agent "Quarkus" <<application>> as fightQuarkus
+    agent "QUARKUS_ICON Quarkus" <<application>> as fightQuarkus
     database "Postgresql" as fightPostgresql
     fightQuarkus .up> fightPostgresql
 }
@@ -28,7 +28,7 @@ node "Fight" as fight {
 package "stats" {
     node "Statistics" as stat {
         agent "HTML+JQuery" <<frontend>> as statUI
-        agent "Quarkus (imperative)" <<application>> as statQuarkus
+        agent "QUARKUS_ICON Quarkus (imperative)" <<application>> as statQuarkus
         statUI .up> statQuarkus
     }
 

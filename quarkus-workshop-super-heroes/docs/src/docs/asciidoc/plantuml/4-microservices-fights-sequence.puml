@@ -1,9 +1,30 @@
 @startuml
 skinparam dpi 300
+skinparam defaultFontName "Open Sans"
+skinparam defaultFontColor #091313
 
 skinparam participant {
-    backgroundColor<<frontend>> #D2B4DE
-    backgroundColor<<application>> #FAE5D3
+    backgroundColor<<frontend>> #4695EB
+    fontColor<<frontend>> #FFFFFF
+    borderColor<<frontend>> #1A3A5C
+    backgroundColor<<application>> #F0EDE8
+    fontColor<<application>> #091313
+    borderColor<<application>> #9E9A95
+}
+
+skinparam arrow {
+    fontName "Open Sans"
+    color #FF004A
+    fontColor #555555
+    thickness 2
+    fontSize 13
+}
+
+skinparam sequence {
+    lifeLineBorderColor #1A3A5C
+    lifeLineBackgroundColor #EBF3FD
+    activationBackgroundColor #D6E6FA
+    activationBorderColor #1A3A5C
 }
 
 participant UI as UI <<frontend>>

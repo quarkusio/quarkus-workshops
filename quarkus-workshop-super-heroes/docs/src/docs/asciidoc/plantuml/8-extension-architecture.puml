@@ -4,17 +4,17 @@
 left to right direction
 
 package "version-deployment" as deployment {
-    class VersionConfig {
+    class VersionConfig <<(C,#D6E6FA)>> {
         boolean enabled
     }
 
-    class VersionExtensionProcessor {
+    class VersionExtensionProcessor <<(C,#D6E6FA)>> {
         @BuildStep @Record recordVersion()
     }
 }
 
 package "version" as runtime {
-    class VersionRecorder {
+    class VersionRecorder <<(C,#D6E6FA)>> {
         print(String version)
     }
 
