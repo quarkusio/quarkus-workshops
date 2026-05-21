@@ -33,7 +33,7 @@ The default build will take around 50m.
 
     <properties>
         <version.asciidoctor.maven.plugin>3.2.0</version.asciidoctor.maven.plugin>
-        <version.jruby>9.4.5.0</version.jruby>
+        <version.jruby>10.1.0.0</version.jruby>
         <version.asciidoctorj>3.0.1</version.asciidoctorj>
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>3.2.1</version.asciidoctorj.diagram>
@@ -41,7 +41,9 @@ The default build will take around 50m.
         <version.playwright>1.59.0</version.playwright>
         <version.junit>6.1.0</version.junit>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
-        <github.raw>https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.raw>
+        <github.raw>
+            https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes
+        </github.raw>
         <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
         <github.url>${github.repo}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
         <base.url>${env.BASE_URL}</base.url>
@@ -55,8 +57,8 @@ The default build will take around 50m.
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
         <exec-plugin.version>3.6.3</exec-plugin.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -290,7 +292,8 @@ The default build will take around 50m.
                             </resources>
                             <attributes>
                                 <options-file>default-options.adoc</options-file>
-                                <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
+                                <imagesdir>images
+                                </imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
                                 <assetsdir>assets</assetsdir>
                             </attributes>
                         </configuration>
@@ -312,7 +315,8 @@ The default build will take around 50m.
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh</executable>
+                            <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh
+                            </executable>
                             <arguments>
                                 <argument>${options.files.directory}</argument>
                             </arguments>
@@ -361,7 +365,8 @@ The default build will take around 50m.
                                         </outputDirectory>
                                         <attributes>
                                             <options-file>${options.files.directory}/@item@/options.adoc</options-file>
-                                            <diagram-cachedir>${project.build.directory}/generated-asciidoc/variants/</diagram-cachedir>
+                                            <diagram-cachedir>${project.build.directory}/generated-asciidoc/variants/
+                                            </diagram-cachedir>
                                             <imagesdir>../../images</imagesdir>
                                             <assetsdir>../../assets</assetsdir>
                                         </attributes>
@@ -393,7 +398,9 @@ The default build will take around 50m.
             </activation>
             <properties>
                 <base.url>http://quarkus.io/</base.url>
-                <github.raw>https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes</github.raw>
+                <github.raw>
+                    https://raw.githubusercontent.com/quarkusio/quarkus-workshops/main/quarkus-workshop-super-heroes
+                </github.raw>
                 <github.repo>http://github.com/quarkusio/quarkus-workshops</github.repo>
             </properties>
         </profile>
@@ -418,7 +425,8 @@ The default build will take around 50m.
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh</executable>
+                                    <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh
+                                    </executable>
                                     <arguments>
                                         <argument>${options.files.directory}</argument>
                                         <argument>${os}</argument>

@@ -12,15 +12,15 @@ permissions:
   id-token: write
 
 jobs:
-  build_java17:
+  build_java:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Install JDK 17
+      - name: Install JDK
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 25
           cache: maven
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
@@ -44,13 +44,15 @@ jobs:
     strategy:
       matrix:
         os: [ "all","linux","mac","windows" ]
+    env:
+      MAVEN_OPTS: "-Xmx8g"
     steps:
       - uses: actions/checkout@v6
-      - name: Install JDK 17
+      - name: Install JDK
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 25
           cache: maven
       - name: Cache Playwright browsers
         uses: actions/cache@v5
@@ -84,7 +86,7 @@ jobs:
           if-no-files-found: error
           retention-days: 3
   publication:
-    needs: [ docs, build_java17 ]
+    needs: [ docs, build_java ]
     runs-on: ubuntu-latest
     steps:
       - name: Download default site
@@ -141,11 +143,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Install JDK 17
+      - name: Install JDK
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 25
           cache: maven
       - name: Cache Playwright browsers
         uses: actions/cache@v5
