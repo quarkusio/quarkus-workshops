@@ -3,7 +3,7 @@
 
 left to right direction
 
-node "Villain" as villain {
+rectangle "Villain" as villain {
     agent "QUARKUS_ICON Quarkus (imperative)" <<application>> as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql

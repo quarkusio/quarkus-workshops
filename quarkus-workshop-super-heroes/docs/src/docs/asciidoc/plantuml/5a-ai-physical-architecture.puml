@@ -3,23 +3,23 @@
 
 left to right direction
 
-node "Super Hero UI" as ui {
+rectangle "Super Hero UI" as ui {
     agent "QUARKUS_ICON Quarkus" <<frontend>> as uiQuarkus
 }
 
-node "Hero" as hero {
+rectangle "Hero" as hero {
     agent "QUARKUS_ICON Quarkus (reactive)" <<application>> as heroQuarkus
     database "Postgresql" as heroPostgresql
     heroQuarkus .up> heroPostgresql
 }
 
-node "Villain" as villain {
+rectangle "Villain" as villain {
     agent "QUARKUS_ICON Quarkus (imperative)" <<application>> as villainQuarkus
     database "Postgresql" as villainPostgresql
     villainQuarkus .up> villainPostgresql
 }
 
-node "Narration" as narration {
+rectangle "Narration" as narration {
     agent "QUARKUS_ICON Quarkus" <<application>> as narrationQuarkus
     hexagon "LangChain4j" as sk
     narrationQuarkus .up> sk
@@ -31,7 +31,7 @@ cloud "Open AI \n Azure OpenAI" as openai
 cloud "LLM Provider \n (OpenAI, Ollama, Gemini, etc.)" as openai
 !endif
 
-node "Fight" as fight {
+rectangle "Fight" as fight {
     agent "QUARKUS_ICON Quarkus" <<application>> as fightQuarkus
     database "Postgresql" as fightPostgresql
     fightQuarkus .up> fightPostgresql

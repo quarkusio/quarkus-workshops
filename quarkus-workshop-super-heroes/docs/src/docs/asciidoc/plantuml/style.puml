@@ -49,6 +49,15 @@ skinparam node {
     roundCorner 10
 }
 
+skinparam rectangle {
+    borderColor DARK_BLUE_GRAY
+    backgroundColor LIGHT_BLUE
+    fontName "Open Sans"
+    fontSize 17
+    fontColor DARK_BLUE_GRAY
+    roundCorner 10
+}
+
 skinparam database {
     borderColor DARK_BLUE_GRAY
     backgroundColor #A8C4E0

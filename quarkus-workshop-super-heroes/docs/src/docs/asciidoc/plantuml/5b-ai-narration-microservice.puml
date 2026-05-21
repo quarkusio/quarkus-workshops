@@ -3,7 +3,7 @@
 
 left to right direction
 
-node "Narration" as hero {
+rectangle "Narration" as hero {
     agent "QUARKUS_ICON Quarkus" <<application>> as narrationQuarkus
     hexagon "LangChain4j" as sk
     narrationQuarkus .up> sk
