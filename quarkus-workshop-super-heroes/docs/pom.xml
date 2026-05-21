@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- How to use this build file
 Run -Dquickly to just generate a default doc with every flag enabled
-Run -Dos=[linux|mac|windows|all] to generate a set of variants for a single OS. That should take around 10m.
-The default build will take around 50m.
+Run -Dos=[linux|mac|windows|all] to generate a set of variants for a single OS. That should take around 2-3m.
+The default build will take around 10m.
 -->
 
 <!--
@@ -54,7 +54,6 @@ The default build will take around 50m.
         <quarkus-langchain4j.version>1.9.2</quarkus-langchain4j.version>
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
-        <exec-plugin.version>3.6.3</exec-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -98,6 +97,19 @@ The default build will take around 50m.
             <groupId>io.quarkiverse.pact</groupId>
             <artifactId>quarkus-pact-provider</artifactId>
             <version>${quarkus.pact.version}</version>
+        </dependency>
+        <!-- JSON parsing for test config -->
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>2.1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
+            <version>1.1.6</version>
+            <scope>test</scope>
         </dependency>
         <!-- Playwright for documentation testing -->
         <dependency>
@@ -232,6 +244,7 @@ The default build will take around 50m.
                         <junit.jupiter.execution.parallel.config.fixed.parallelism>4</junit.jupiter.execution.parallel.config.fixed.parallelism>
                         <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
                         <os>${os}</os>
+                        <variants.config.path>${basedir}/src/resource-generation/variants-config.json</variants.config.path>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
@@ -248,7 +261,26 @@ The default build will take around 50m.
                 <version>0.0.7</version>
                 <executions>
                     <execution>
-                        <id>run</id>
+                        <id>generate-variants</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <script>src/resource-generation/generate-variants.java</script>
+                            <args>
+                                <arg>${basedir}/src/resource-generation/variants-config.json</arg>
+                                <arg>${options.files.directory}</arg>
+                                <arg>--template</arg>
+                                <arg>${basedir}/src/docs/asciidoc/index.html.template</arg>
+                                <arg>${project.build.directory}/generated-asciidoc/index.html</arg>
+                                <arg>--defaults</arg>
+                                <arg>${project.build.directory}/generated-defaults/default-options.adoc</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>qrcode</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>run</goal>
@@ -289,7 +321,7 @@ The default build will take around 50m.
                                 </resource>
                             </resources>
                             <attributes>
-                                <options-file>default-options.adoc</options-file>
+                                <options-file>${project.build.directory}/generated-defaults/default-options.adoc</options-file>
                                 <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
                                 <assetsdir>assets</assetsdir>
                             </attributes>
@@ -298,29 +330,8 @@ The default build will take around 50m.
                 </executions>
             </plugin>
 
-            <!-- So the combinatorics here do get a bit bonkers, but asciidoc is static, not dynamic, so *all* the variations have to be done at build time.
-             There's no easy way to iterate over a matrix in maven apart from nesting invocations of a plugin that allows us to iterate over a one-dimensional list.
-              That nests very deep and makes awful xml, so we're outsourcing to a shell script. -->
-            <plugin>
-                <artifactId>exec-maven-plugin</artifactId>
-                <groupId>org.codehaus.mojo</groupId>
-                <version>${exec-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh</executable>
-                            <arguments>
-                                <argument>${options.files.directory}</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
+            <!-- Variant generation is handled by the generate-variants JBang script above.
+                 Configuration lives in variants-config.json (single source of truth for flags, constraints, and standalone markers). -->
             <plugin>
                 <groupId>com.soebes.maven.plugins</groupId>
                 <artifactId>iterator-maven-plugin</artifactId>
@@ -408,21 +419,28 @@ The default build will take around 50m.
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <version>${exec-plugin.version}</version>
+                        <groupId>dev.jbang</groupId>
+                        <artifactId>jbang-maven-plugin</artifactId>
+                        <version>0.0.7</version>
                         <executions>
                             <execution>
+                                <id>generate-variants</id>
                                 <phase>generate-sources</phase>
                                 <goals>
-                                    <goal>exec</goal>
+                                    <goal>run</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/src/resource-generation/generate-attribute-combinations.sh</executable>
-                                    <arguments>
-                                        <argument>${options.files.directory}</argument>
-                                        <argument>${os}</argument>
-                                    </arguments>
+                                    <script>src/resource-generation/generate-variants.java</script>
+                                    <args>
+                                        <arg>${basedir}/src/resource-generation/variants-config.json</arg>
+                                        <arg>${options.files.directory}</arg>
+                                        <arg>${os}</arg>
+                                        <arg>--template</arg>
+                                        <arg>${basedir}/src/docs/asciidoc/index.html.template</arg>
+                                        <arg>${project.build.directory}/generated-asciidoc/index.html</arg>
+                                        <arg>--defaults</arg>
+                                        <arg>${project.build.directory}/generated-defaults/default-options.adoc</arg>
+                                    </args>
                                 </configuration>
                             </execution>
                         </executions>

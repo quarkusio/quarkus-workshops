@@ -1,0 +1,15 @@
+{
+  "flags": [
+    { "id": "ai", "label": "Creating an AI-integration service", "enabled": true, "defaultValue": true, "requires": [], "standalone": false },
+    { "id": "azure", "label": "Deploying the microservices to Azure Container Apps", "enabled": true, "defaultValue": true, "requires": ["container"], "standalone": false },
+    { "id": "cli", "label": "CLI", "enabled": false, "defaultValue": false, "requires": [], "standalone": false },
+    { "id": "container", "label": "Containerizing the microservices", "enabled": true, "defaultValue": true, "requires": [], "standalone": false },
+    { "id": "contract-testing", "label": "Contract testing with Pact", "enabled": true, "defaultValue": true, "requires": [], "standalone": true },
+    { "id": "extension", "label": "Writing a Quarkus extension", "enabled": true, "defaultValue": true, "requires": [], "standalone": true },
+    { "id": "kubernetes", "label": "Running Quarkus on Kubernetes", "enabled": true, "defaultValue": true, "requires": ["container"], "standalone": false },
+    { "id": "messaging", "label": "Messaging with Kafka", "enabled": true, "defaultValue": true, "requires": [], "standalone": false },
+    { "id": "native", "label": "Native compilation", "enabled": true, "defaultValue": true, "requires": [], "standalone": false },
+    { "id": "observability", "label": "Observability", "enabled": false, "defaultValue": false, "requires": [], "standalone": false }
+  ],
+  "osOptions": ["all", "mac", "linux", "windows"]
+}
