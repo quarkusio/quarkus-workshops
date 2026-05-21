@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quarkus Super-Heroes Workshop</title>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+        <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+        <meta name="description" content="A hands on lab about Quarkus">
+
+        <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+        <link href="assets/css/hol.css" media="screen" rel="stylesheet">
+        <style>
+            .select-controls {
+                font-size: 0.9em;
+                margin-bottom: 0.5em;
+            }
+        </style>
+    </head>
+    <title>Workshop configurator</title>
+    <script>
+        const variantsConfig = __VARIANTS_CONFIG_JSON__;
+
+        const allFlags = variantsConfig.flags;
+        const enabledFlags = allFlags.filter(f => f.enabled);
+        const nonStandaloneFlags = enabledFlags.filter(f => !f.standalone);
+        const standaloneFlags = enabledFlags.filter(f => f.standalone);
+
+        const baseUrl = "./";
+        const filename = "spine.html";
+
+        function generateDefaultURL() {
+            window.location.href = baseUrl + filename;
+        }
+
+        function selectAll() {
+            enabledFlags.forEach(f => {
+                const cb = document.getElementById(`use-${f.id}`);
+                if (cb) {
+                    cb.disabled = false;
+                    cb.checked = true;
+                    updateLabelStyle(f.id, false);
+                }
+            });
+            // Re-apply dependency constraints (all enabled, so all requirements met)
+            enforceConstraints(null, true);
+        }
+
+        function selectNone() {
+            enabledFlags.forEach(f => {
+                const cb = document.getElementById(`use-${f.id}`);
+                if (cb) {
+                    cb.disabled = false;
+                    cb.checked = false;
+                    updateLabelStyle(f.id, false);
+                }
+            });
+        }
+
+        function generateTailoredURL() {
+            const selectedOptions = [];
+
+            const osOption = document.querySelector('input[name="osOption"]:checked');
+            const osValue = osOption?.value || "all";
+            selectedOptions.push(`os-${osValue}`);
+
+            allFlags.forEach(flag => {
+                const checkbox = document.querySelector(`input[id="use-${flag.id}"]`);
+                let value;
+                if (!flag.enabled) {
+                    value = String(flag.defaultValue);
+                } else if (checkbox) {
+                    value = checkbox.checked ? "true" : "false";
+                } else {
+                    value = "false";
+                }
+                selectedOptions.push(`${flag.id}-${value}`);
+            });
+
+            window.location.href = baseUrl + 'variants/' + selectedOptions.join("-") + "/" + filename;
+        }
+
+        function enforceConstraints(changedFlagId, isChecked) {
+            if (!isChecked) {
+                // Uncheck and disable anything that requires this flag
+                enabledFlags.forEach(f => {
+                    if (f.requires.includes(changedFlagId)) {
+                        const cb = document.getElementById(`use-${f.id}`);
+                        if (cb) {
+                            cb.checked = false;
+                            cb.disabled = true;
+                            updateLabelStyle(f.id, true);
+                            enforceConstraints(f.id, false);
+                        }
+                    }
+                });
+            } else {
+                // Auto-check all requirements
+                const flag = enabledFlags.find(f => f.id === changedFlagId);
+                if (flag) {
+                    flag.requires.forEach(reqId => {
+                        const cb = document.getElementById(`use-${reqId}`);
+                        if (cb && !cb.checked) {
+                            cb.checked = true;
+                            enforceConstraints(reqId, true);
+                        }
+                    });
+                }
+                // Re-enable anything that was disabled because this was unchecked
+                enabledFlags.forEach(f => {
+                    if (f.requires.includes(changedFlagId)) {
+                        const cb = document.getElementById(`use-${f.id}`);
+                        if (cb) {
+                            const allMet = f.requires.every(r =>
+                                document.getElementById(`use-${r}`)?.checked);
+                            cb.disabled = !allMet;
+                            updateLabelStyle(f.id, !allMet);
+                        }
+                    }
+                });
+            }
+        }
+
+        function enforceStandaloneConstraints(changedFlagId, isChecked) {
+            const changedFlag = enabledFlags.find(f => f.id === changedFlagId);
+            if (!changedFlag) return;
+
+            if (changedFlag.standalone && isChecked) {
+                // A standalone flag was checked — disable all non-standalone flags
+                nonStandaloneFlags.forEach(f => {
+                    const cb = document.getElementById(`use-${f.id}`);
+                    if (cb) {
+                        cb.checked = false;
+                        cb.disabled = true;
+                        updateLabelStyle(f.id, true);
+                    }
+                });
+                // Uncheck other standalone flags (mutually exclusive)
+                standaloneFlags.forEach(f => {
+                    if (f.id !== changedFlagId) {
+                        const cb = document.getElementById(`use-${f.id}`);
+                        if (cb) {
+                            cb.checked = false;
+                        }
+                    }
+                });
+            } else if (!changedFlag.standalone && isChecked) {
+                // A non-standalone flag was checked — disable all standalone flags
+                standaloneFlags.forEach(f => {
+                    const cb = document.getElementById(`use-${f.id}`);
+                    if (cb) {
+                        cb.checked = false;
+                        cb.disabled = true;
+                        updateLabelStyle(f.id, true);
+                    }
+                });
+            } else {
+                // Something was unchecked — check if we should re-enable the other group
+                const anyNonStandaloneChecked = nonStandaloneFlags.some(f =>
+                    document.getElementById(`use-${f.id}`)?.checked);
+                const anyStandaloneChecked = standaloneFlags.some(f =>
+                    document.getElementById(`use-${f.id}`)?.checked);
+
+                if (!anyNonStandaloneChecked && !anyStandaloneChecked) {
+                    // Nothing checked — enable everything
+                    enabledFlags.forEach(f => {
+                        const cb = document.getElementById(`use-${f.id}`);
+                        if (cb) {
+                            cb.disabled = false;
+                            updateLabelStyle(f.id, false);
+                        }
+                    });
+                } else if (!anyNonStandaloneChecked) {
+                    // Only standalone checked — keep non-standalone disabled
+                    nonStandaloneFlags.forEach(f => {
+                        const cb = document.getElementById(`use-${f.id}`);
+                        if (cb) {
+                            cb.disabled = true;
+                            updateLabelStyle(f.id, true);
+                        }
+                    });
+                } else if (!anyStandaloneChecked) {
+                    // Only non-standalone checked — keep standalone disabled
+                    standaloneFlags.forEach(f => {
+                        const cb = document.getElementById(`use-${f.id}`);
+                        if (cb) {
+                            cb.disabled = true;
+                            updateLabelStyle(f.id, true);
+                        }
+                    });
+                }
+            }
+        }
+
+        function updateLabelStyle(flagId, disabled) {
+            const li = document.getElementById(`use-${flagId}-li`);
+            if (li) {
+                li.style.opacity = disabled ? "0.5" : "1";
+            }
+        }
+
+        function onCheckboxChange(flagId) {
+            const cb = document.getElementById(`use-${flagId}`);
+            if (!cb) return;
+            enforceStandaloneConstraints(flagId, cb.checked);
+            enforceConstraints(flagId, cb.checked);
+        }
+    </script>
+</head>
+<body>
+<h2 class="title-band">Quarkus Workshop Configurator</h2>
+
+<div class="content-area">
+    <div class="mode">
+        <h3 class="no-underline squish">Default workshop configuration</h3>
+        <div>Go to the instructions for all operating systems, with default content.</div>
+        <button class="big" onclick="generateDefaultURL()">
+            Take me to the default workshop
+        </button>
+    </div>
+    <div class="mode right">
+        <h3 class="no-underline squish">Customize workshop</h3>
+        <div>Tailor instructions to your operating system and interests.</div>
+
+        <h4 class="no-underline"><i class="fas fa-desktop"></i>What operating system are you using?</h4>
+        <ul class="configurator">
+            <li>
+                <label for="macRadio">
+                    <input type="radio" name="osOption" id="macRadio" value="mac"><i
+                    class="fab fa-apple"></i>MacOS
+                </label>
+            </li>
+            <li>
+                <label for="windowsRadio">
+                    <input type="radio" name="osOption" id="windowsRadio" value="windows"><i
+                    class="fab fa-windows"></i>Windows
+                </label>
+            </li>
+            <li>
+                <label for="linuxRadio">
+                    <input type="radio" name="osOption" id="linuxRadio" value="linux"><i
+                    class="fab fa-linux"></i>Linux
+                </label></li>
+        </ul>
+
+        <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
+            include?
+        </h4>
+        <div class="select-controls">
+            <a href="#" onclick="selectAll(); return false;">Select all</a> / <a href="#" onclick="selectNone(); return false;">none</a>
+        </div>
+        <!-- Checkboxes are generated dynamically from variants-config.json -->
+        <ul class="configurator" id="feature-checkboxes"></ul>
+
+        <div id="standalone-section" style="display:none">
+            <h4 class="no-underline" id="standalone-selector"><i class="fas fa-puzzle-piece"></i>Standalone modules
+            </h4>
+            <ul class="configurator" id="standalone-checkboxes"></ul>
+        </div>
+
+        <button class="big" onclick="generateTailoredURL()">
+            Take me to my custom workshop
+        </button>
+    </div>
+</div>
+
+<script>
+    // Build checkboxes dynamically from config
+    function buildCheckboxes() {
+        const featureList = document.getElementById('feature-checkboxes');
+        const standaloneList = document.getElementById('standalone-checkboxes');
+        const standaloneSection = document.getElementById('standalone-section');
+
+        nonStandaloneFlags.forEach(flag => {
+            const li = document.createElement('li');
+            li.id = `use-${flag.id}-li`;
+            const label = document.createElement('label');
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.id = `use-${flag.id}`;
+            input.addEventListener('change', () => onCheckboxChange(flag.id));
+            label.appendChild(input);
+            let labelText = flag.label;
+            if (flag.requires.length > 0) {
+                labelText += ` (needs ${flag.requires.join(', ')})`;
+            }
+            label.appendChild(document.createTextNode(labelText));
+            li.appendChild(label);
+            featureList.appendChild(li);
+        });
+
+        if (standaloneFlags.length > 0) {
+            standaloneSection.style.display = '';
+            standaloneFlags.forEach(flag => {
+                const li = document.createElement('li');
+                li.id = `use-${flag.id}-li`;
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = `use-${flag.id}`;
+                input.addEventListener('change', () => onCheckboxChange(flag.id));
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(flag.label));
+                li.appendChild(label);
+                standaloneList.appendChild(li);
+            });
+        }
+    }
+
+    buildCheckboxes();
+
+    // Handle URL parameters for pre-setting options
+    const urlParams = new URLSearchParams(window.location.search);
+    const hideDefined = urlParams.get("hideDefined")?.toLowerCase() === "true";
+    for (const [key, value] of urlParams.entries()) {
+        if (key === "os") {
+            const input = document.querySelector(`input[id="${value}Radio"]`);
+            if (input) {
+                input.checked = true;
+            }
+        } else if (key !== "hideDefined") {
+            const input = document.querySelector(`input[id="use-${key}"]`);
+            if (input) {
+                if (value && value.toLowerCase() === "true") {
+                    input.checked = true;
+                } else {
+                    input.checked = false;
+                }
+            }
+            if (hideDefined) {
+                const li = document.querySelector(`li[id="use-${key}-li"]`);
+                if (li) {
+                    li.hidden = true;
+                }
+            }
+        }
+    }
+
+    // Re-apply constraints after URL params are set
+    enabledFlags.forEach(f => {
+        const cb = document.getElementById(`use-${f.id}`);
+        if (cb && cb.checked) {
+            enforceStandaloneConstraints(f.id, true);
+            enforceConstraints(f.id, true);
+        }
+    });
+
+    function hideHeaderIfAllChildrenAreHidden() {
+        var lis = document.querySelectorAll("li[id^='use-'],li[id$='-li']");
+        if (lis) {
+            const visible = Array.from(lis).find(li => li.hidden == false);
+            if (!visible) {
+                const header = document.querySelector(`[id="feature-selector"]`);
+                if (header) {
+                    header.hidden = true;
+                }
+            }
+        }
+    }
+    hideHeaderIfAllChildrenAreHidden();
+</script>
+
+</body>
+</html>
