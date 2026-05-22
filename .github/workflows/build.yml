@@ -84,7 +84,7 @@ jobs:
           if-no-files-found: error
           retention-days: 3
   publication:
-    needs: [ docs, build_java17 ]
+    needs: [ docs ]
     runs-on: ubuntu-latest
     steps:
       - name: Download default site
@@ -180,7 +180,7 @@ jobs:
           retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
-    needs: [ publication, test-docs ]
+    needs: [ publication, test-docs, build_java17 ]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
