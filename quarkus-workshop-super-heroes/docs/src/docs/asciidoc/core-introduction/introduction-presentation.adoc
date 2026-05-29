@@ -47,12 +47,7 @@ You will create a CLI application that adds load to the Fight, Hero, and Villain
 endif::use-cli[]
 
 
-ifdef::use-ai[]
-plantuml::plantuml/0-introduction-physical-architecture-ai.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
-endif::use-ai[]
-ifndef::use-ai[]
 plantuml::plantuml/0-introduction-physical-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
-endif::use-ai[]
 
 
 

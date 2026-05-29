@@ -276,6 +276,9 @@ The default build will take around 10m.
                                 <arg>${project.build.directory}/generated-asciidoc/index.html</arg>
                                 <arg>--defaults</arg>
                                 <arg>${project.build.directory}/generated-defaults/default-options.adoc</arg>
+                                <arg>--copy-images</arg>
+                                <arg>${basedir}/src/docs/asciidoc/images</arg>
+                                <arg>${project.build.directory}/generated-asciidoc/images</arg>
                             </args>
                         </configuration>
                     </execution>
@@ -322,6 +325,7 @@ The default build will take around 10m.
                             </resources>
                             <attributes>
                                 <options-file>${project.build.directory}/generated-defaults/default-options.adoc</options-file>
+                                <plantuml-config>${project.build.directory}/generated-defaults/plantuml-config.puml</plantuml-config>
                                 <imagesdir>images</imagesdir> <!-- I don't know why this has to be specified as one level above the plantuml dir, when they're siblings, but it does -->
                                 <assetsdir>assets</assetsdir>
                             </attributes>
@@ -372,11 +376,11 @@ The default build will take around 10m.
                                         </outputDirectory>
                                         <attributes>
                                             <options-file>${options.files.directory}/@item@/options.adoc</options-file>
-                                            <diagram-cachedir>${project.build.directory}/generated-asciidoc/variants/</diagram-cachedir>
-                                            <imagesdir>../../images</imagesdir>
+                                            <plantuml-config>${options.files.directory}/@item@/plantuml-config.puml</plantuml-config>
+                                            <!-- imagesdir is set per variant in options.adoc (pointing to a shared diagram-key subdirectory) -->
                                             <assetsdir>../../assets</assetsdir>
                                         </attributes>
-                                        <!-- Specify an empty resources set so that nothing gets copied by default in the sub-file folders. -->
+                                        <!-- Empty resources: static images live in the shared images/ dir, not per-variant -->
                                         <resources>
                                             <resource>
                                                 <directory>src/</directory>
@@ -440,6 +444,9 @@ The default build will take around 10m.
                                         <arg>${project.build.directory}/generated-asciidoc/index.html</arg>
                                         <arg>--defaults</arg>
                                         <arg>${project.build.directory}/generated-defaults/default-options.adoc</arg>
+                                        <arg>--copy-images</arg>
+                                        <arg>${basedir}/src/docs/asciidoc/images</arg>
+                                        <arg>${project.build.directory}/generated-asciidoc/images</arg>
                                     </args>
                                 </configuration>
                             </execution>
