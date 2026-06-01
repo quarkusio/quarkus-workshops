@@ -47,7 +47,7 @@ You will create a CLI application that adds load to the Fight, Hero, and Villain
 endif::use-cli[]
 
 
-plantuml::plantuml/0-introduction-physical-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
+plantuml::plantuml/0-introduction-physical-architecture.puml[align=center,theme="quarkus from {plantuml-theme-dir}"]
 
 
 
