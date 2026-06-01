@@ -12,12 +12,16 @@ import jakarta.json.JsonString;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class generate_variants {
 
@@ -27,7 +31,7 @@ class generate_variants {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
-            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--template <template-path> <output-path>] [--defaults <output-path>]");
+            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--template <template-path> <output-path>] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>]");
             System.exit(1);
         }
 
@@ -37,6 +41,8 @@ class generate_variants {
         String templatePath = null;
         String templateOutputPath = null;
         String defaultsOutputPath = null;
+        String imagesSrcDir = null;
+        String imagesDestDir = null;
 
         for (int i = 2; i < args.length; i++) {
             if ("--template".equals(args[i]) && i + 2 < args.length) {
@@ -44,6 +50,9 @@ class generate_variants {
                 templateOutputPath = args[++i];
             } else if ("--defaults".equals(args[i]) && i + 1 < args.length) {
                 defaultsOutputPath = args[++i];
+            } else if ("--copy-images".equals(args[i]) && i + 2 < args.length) {
+                imagesSrcDir = args[++i];
+                imagesDestDir = args[++i];
             } else if (osFilter == null) {
                 osFilter = args[i];
             }
@@ -68,6 +77,7 @@ class generate_variants {
                 .filter(f -> f.enabled() && f.standalone())
                 .toList();
 
+        Set<String> diagramKeys = new LinkedHashSet<>();
         int variantCount = 0;
 
         for (String os : osOptions) {
@@ -84,6 +94,7 @@ class generate_variants {
                     continue;
                 }
 
+                diagramKeys.add(diagramKey(assignment));
                 writeVariant(outputDir, os, flags, assignment);
                 variantCount++;
             }
@@ -98,6 +109,7 @@ class generate_variants {
                         assignment.put(f.id(), f.id().equals(sf.id()));
                     }
                 }
+                diagramKeys.add(diagramKey(assignment));
                 writeVariant(outputDir, os, flags, assignment);
                 variantCount++;
             }
@@ -108,6 +120,7 @@ class generate_variants {
                 everything.put(f.id(), f.enabled() || f.defaultValue());
             }
             if (isValid(everything, flags)) {
+                diagramKeys.add(diagramKey(everything));
                 writeVariant(outputDir, os, flags, everything);
                 variantCount++;
             }
@@ -121,6 +134,10 @@ class generate_variants {
 
         if (templatePath != null && templateOutputPath != null) {
             processTemplate(templatePath, templateOutputPath, config);
+        }
+
+        if (imagesSrcDir != null && imagesDestDir != null) {
+            copyStaticImages(imagesSrcDir, imagesDestDir, diagramKeys);
         }
     }
 
@@ -169,13 +186,22 @@ class generate_variants {
                     pw.println(":use-" + f.id() + ":");
                 }
             }
+            pw.println(":imagesdir: ../../images/d-" + diagramKey(assignment));
         }
         System.out.println("Created " + optionsFile);
+
+        writePlantumlConfig(dir, flags, assignment);
     }
 
     private static void writeDefaults(String outputPath, List<Flag> flags) throws IOException {
         Path path = Path.of(outputPath);
         Files.createDirectories(path.getParent());
+
+        Map<String, Boolean> assignment = new LinkedHashMap<>();
+        for (Flag f : flags) {
+            assignment.put(f.id(), f.defaultValue());
+        }
+
         try (PrintWriter pw = new PrintWriter(path.toFile())) {
             pw.println(":os: all");
             for (Flag f : flags) {
@@ -185,6 +211,54 @@ class generate_variants {
             }
         }
         System.out.println("Generated " + outputPath);
+
+        writePlantumlConfig(path.getParent(), flags, assignment);
+    }
+
+    // Only flags that appear in !ifdef guards in .puml files need distinct diagram directories.
+    // Currently: ai and azure. Update if new !ifdef guards are added to .puml files.
+    private static String diagramKey(Map<String, Boolean> assignment) {
+        boolean ai = Boolean.TRUE.equals(assignment.get("ai"));
+        boolean azure = Boolean.TRUE.equals(assignment.get("azure"));
+        if (ai && azure) return "ai-azure";
+        if (ai) return "ai";
+        return "base";
+    }
+
+    private static void copyStaticImages(String srcDir, String destDir,
+                                            Set<String> diagramKeys) throws IOException {
+        Path src = Path.of(srcDir);
+        if (!Files.isDirectory(src)) {
+            System.out.println("Images source directory not found: " + srcDir + " (skipping copy)");
+            return;
+        }
+
+        for (String key : diagramKeys) {
+            Path dest = Path.of(destDir, "d-" + key);
+            Files.createDirectories(dest);
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(src, "*.{png,jpg,svg}")) {
+                for (Path file : stream) {
+                    Path target = dest.resolve(file.getFileName());
+                    if (!Files.exists(target)) {
+                        Files.copy(file, target);
+                    }
+                }
+            }
+        }
+        System.out.println("Copied static images to " + diagramKeys.size() + " diagram-key directories");
+    }
+
+    private static void writePlantumlConfig(Path dir, List<Flag> flags,
+                                             Map<String, Boolean> assignment) throws IOException {
+        Path configFile = dir.resolve("plantuml-config.puml");
+        try (PrintWriter pw = new PrintWriter(configFile.toFile())) {
+            for (Flag f : flags) {
+                if (Boolean.TRUE.equals(assignment.get(f.id()))) {
+                    pw.println("!define use_" + f.id());
+                }
+            }
+        }
+        System.out.println("Created " + configFile);
     }
 
     private static void processTemplate(String templatePath, String outputPath,

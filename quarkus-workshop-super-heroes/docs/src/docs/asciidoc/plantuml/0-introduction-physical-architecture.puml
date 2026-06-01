@@ -19,6 +19,20 @@ rectangle "Villain" as villain {
     villainQuarkus .up> villainPostgresql
 }
 
+!ifdef use_ai
+rectangle "Narration" as narration {
+    agent "QUARKUS_ICON Quarkus" <<application>> as narrationQuarkus
+    hexagon "LangChain4j" as sk
+    narrationQuarkus .up> sk
+}
+
+!ifdef use_azure
+cloud "Open AI \n Azure OpenAI" as openai
+!else
+cloud "LLM Provider \n (OpenAI, Ollama, etc.)" as openai
+!endif
+!endif
+
 rectangle "Fight" as fight {
     agent "QUARKUS_ICON Quarkus" <<application>> as fightQuarkus
     database "Postgresql" as fightPostgresql
@@ -47,6 +61,11 @@ rectangle "Prometheus" as prometheus {
 uiQuarkus --> fightQuarkus : HTTP
 fightQuarkus --> heroQuarkus : HTTP
 fightQuarkus --> villainQuarkus : HTTP
+!ifdef use_ai
+fightQuarkus --> narrationQuarkus : HTTP
+
+sk --> openai : HTTP
+!endif
 
 fightQuarkus ..> kafka : Message
 stat <.. kafka : Message

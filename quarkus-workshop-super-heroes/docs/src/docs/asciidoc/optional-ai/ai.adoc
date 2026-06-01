@@ -297,7 +297,7 @@ Remember that you can also check Swagger UI by going to the dev console: http://
 
 Now that we have a narration microservice up and running, we can invoke it from the fight microservice.
 
-plantuml::plantuml/5a-ai-physical-architecture.puml[align=center,width=300,theme="handwritten from {plantuml-theme-dir}"]
+plantuml::plantuml/5-rest-client-physical-architecture.puml[align=center,width=300,theme="handwritten from {plantuml-theme-dir}"]
 
 === Adding narration to the Fight Microservice
 
