@@ -13,7 +13,7 @@ It's using the _imperative_ development model.
 
 The _fight_ microservice will use this service.
 
-plantuml::plantuml/1-rest-physical-architecture.puml[align=center,width=300,theme="handwritten from {plantuml-theme-dir}"]
+plantuml::plantuml/1-rest-physical-architecture.puml[align=center,width=300,theme="quarkus from {plantuml-theme-dir}"]
 
 In the following sections, you learn:
 

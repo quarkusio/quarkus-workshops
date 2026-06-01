@@ -7,7 +7,7 @@ Now that we have several microservices, observing them starts to be a bit tricky
 we can't just look at the logs of all the microservices to see if they are up and running or behaving correctly.
 In the following sections you will add health checks and several metrics to the Fight, Hero and Villain APIs and gather them within Prometheus.
 
-plantuml::plantuml/7-observability-physical-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
+plantuml::plantuml/7-observability-physical-architecture.puml[align=center,theme="quarkus from {plantuml-theme-dir}"]
 
 In the following sections, you will learn how to:
 

@@ -189,7 +189,8 @@ The default build will take around 10m.
                             <icons>font</icons>
                             <toclevels>3</toclevels>
                             <plantDir>../plantuml</plantDir>
-                            <plantuml-theme-dir>${project.basedir}/src/docs/asciidoc/plantuml/themes/</plantuml-theme-dir>
+                            <!-- To test changes locally, use                             <plantuml-theme-dir>${project.basedir}/src/docs/asciidoc/plantuml/themes/</plantuml-theme-dir> -->
+                            <plantuml-theme-dir>https://quarkus.io/assets/plantuml/themes</plantuml-theme-dir>
                             <github-raw>${github.raw}</github-raw>
                             <github-url>${github.url}</github-url>
                             <github-repo>${github.repo}</github-repo>

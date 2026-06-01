@@ -9,7 +9,7 @@ In this chapter, we will see the counterpart of the Villain microservice: the He
 Instead of the imperative approach used for the villains, we will use reactive programming and Hibernate Reactive.
 The logic of the microservice is the same.
 
-plantuml::plantuml/3-reactive-physical-architecture.puml[align=center,width=300,theme="handwritten from {plantuml-theme-dir}"]
+plantuml::plantuml/3-reactive-physical-architecture.puml[align=center,width=300,theme="quarkus from {plantuml-theme-dir}"]
 
 In the following sections, you will learn:
 

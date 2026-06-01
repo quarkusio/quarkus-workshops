@@ -44,7 +44,7 @@ To build an extension, Quarkus provides a framework to:
 
 As stated above, an extension is divided into two parts, called `deployment` (augmentation) and `runtime`.
 
-plantuml::plantuml/8-extension-architecture.puml[align=center,theme="handwritten from {plantuml-theme-dir}"]
+plantuml::plantuml/8-extension-architecture.puml[align=center,theme="quarkus from {plantuml-theme-dir}"]
 
 [role="cta"]
 ====
