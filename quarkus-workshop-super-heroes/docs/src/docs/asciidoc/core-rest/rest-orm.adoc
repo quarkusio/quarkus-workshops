@@ -422,7 +422,7 @@ VALUES (nextval('villain_seq'), 'The Rival (CW)', 'Edward Clariss',
 --
 
 Ok, but that's just a few entries.
-Download the SQL file {github-raw}/super-heroes/rest-villains/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
+*Download* the SQL file {github-raw}/super-heroes/rest-villains/src/main/resources/import.sql[import.sql] and copy it under `src/main/resources`.
 Now, you have more than 500 villains that will be loaded in the database.
 
 If you didn't yet, start the application in dev mode by executing the following command under the `rest-villains` directory:
