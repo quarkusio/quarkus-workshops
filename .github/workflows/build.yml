@@ -65,7 +65,7 @@ jobs:
       - name: Install Playwright
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps chromium"
+          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes/docs
@@ -160,7 +160,7 @@ jobs:
       - name: Install Playwright
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps chromium"
+          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Run documentation tests
         run: |
           cd quarkus-workshop-super-heroes/docs
