@@ -46,7 +46,7 @@ endif::use-windows[]
 == Installing GraalVM
 
 ifdef::use-windows[]
-GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases].
+Where SDKMAN! is not available, GraalVM can be installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases].
 
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
