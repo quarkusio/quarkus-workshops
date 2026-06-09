@@ -53,7 +53,7 @@ The default build will take around 10m.
         <quarkus.pact.version>1.6.0</quarkus.pact.version>
         <quarkus-langchain4j.version>1.9.2</quarkus-langchain4j.version>
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
-        <surefire-plugin.version>3.5.4</surefire-plugin.version>
+        <surefire-plugin.version>3.5.6</surefire-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
