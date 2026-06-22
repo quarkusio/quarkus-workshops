@@ -413,7 +413,7 @@ The default build will take around 10m.
                 <github.repo>http://github.com/quarkusio/quarkus-workshops</github.repo>
             </properties>
         </profile>
-        <!-- If an os is passed through as a system property, just use that instead of iterating over them all -->
+        <!-- If os or buildTool is passed as a system property, filter variant generation accordingly -->
         <profile>
             <id>specified-os</id>
             <activation>
@@ -439,7 +439,51 @@ The default build will take around 10m.
                                     <args>
                                         <arg>${basedir}/src/resource-generation/variants-config.json</arg>
                                         <arg>${options.files.directory}</arg>
+                                        <arg>--os</arg>
                                         <arg>${os}</arg>
+                                        <arg>--template</arg>
+                                        <arg>${basedir}/src/docs/asciidoc/index.html.template</arg>
+                                        <arg>${project.build.directory}/generated-asciidoc/index.html</arg>
+                                        <arg>--defaults</arg>
+                                        <arg>${project.build.directory}/generated-defaults/default-options.adoc</arg>
+                                        <arg>--copy-images</arg>
+                                        <arg>${basedir}/src/docs/asciidoc/images</arg>
+                                        <arg>${project.build.directory}/generated-asciidoc/images</arg>
+                                    </args>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>specified-buildtool</id>
+            <activation>
+                <property>
+                    <name>buildTool</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>dev.jbang</groupId>
+                        <artifactId>jbang-maven-plugin</artifactId>
+                        <version>0.0.7</version>
+                        <executions>
+                            <execution>
+                                <id>generate-variants</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <script>src/resource-generation/generate-variants.java</script>
+                                    <args>
+                                        <arg>${basedir}/src/resource-generation/variants-config.json</arg>
+                                        <arg>${options.files.directory}</arg>
+                                        <arg>--buildTool</arg>
+                                        <arg>${buildTool}</arg>
                                         <arg>--template</arg>
                                         <arg>${basedir}/src/docs/asciidoc/index.html.template</arg>
                                         <arg>${project.build.directory}/generated-asciidoc/index.html</arg>

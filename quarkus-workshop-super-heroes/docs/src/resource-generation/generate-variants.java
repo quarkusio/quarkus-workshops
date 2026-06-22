@@ -38,6 +38,7 @@ class generate_variants {
         String configPath = args[0];
         String outputDir = args[1];
         String osFilter = null;
+        String buildToolFilter = null;
         String templatePath = null;
         String templateOutputPath = null;
         String defaultsOutputPath = null;
@@ -53,6 +54,10 @@ class generate_variants {
             } else if ("--copy-images".equals(args[i]) && i + 2 < args.length) {
                 imagesSrcDir = args[++i];
                 imagesDestDir = args[++i];
+            } else if ("--buildTool".equals(args[i]) && i + 1 < args.length) {
+                buildToolFilter = args[++i];
+            } else if ("--os".equals(args[i]) && i + 1 < args.length) {
+                osFilter = args[++i];
             } else if (osFilter == null) {
                 osFilter = args[i];
             }
@@ -65,9 +70,15 @@ class generate_variants {
 
         List<Flag> flags = parseFlags(config.getJsonArray("flags"));
         List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
+        List<String> buildToolOptions = config.containsKey("buildToolOptions")
+                ? parseStringArray(config.getJsonArray("buildToolOptions"))
+                : List.of("all");
 
         if (osFilter != null) {
             osOptions = List.of(osFilter);
+        }
+        if (buildToolFilter != null) {
+            buildToolOptions = List.of(buildToolFilter);
         }
 
         List<Flag> enabledNonStandalone = flags.stream()
@@ -80,49 +91,51 @@ class generate_variants {
         Set<String> diagramKeys = new LinkedHashSet<>();
         int variantCount = 0;
 
-        for (String os : osOptions) {
-            // Generate all valid combinations of non-standalone flags
-            int nonStandaloneCount = enabledNonStandalone.size();
-            for (int bits = 0; bits < (1 << nonStandaloneCount); bits++) {
-                Map<String, Boolean> assignment = buildAssignment(flags, enabledNonStandalone, bits);
-                // Standalone flags are false in the main matrix
-                for (Flag sf : standaloneFlags) {
-                    assignment.put(sf.id(), false);
-                }
-
-                if (!isValid(assignment, flags)) {
-                    continue;
-                }
-
-                diagramKeys.add(diagramKey(assignment));
-                writeVariant(outputDir, os, flags, assignment);
-                variantCount++;
-            }
-
-            // Generate standalone variants: each standalone flag alone (all others off)
-            for (Flag sf : standaloneFlags) {
-                Map<String, Boolean> assignment = new LinkedHashMap<>();
-                for (Flag f : flags) {
-                    if (!f.enabled()) {
-                        assignment.put(f.id(), f.defaultValue());
-                    } else {
-                        assignment.put(f.id(), f.id().equals(sf.id()));
+        for (String buildTool : buildToolOptions) {
+            for (String os : osOptions) {
+                // Generate all valid combinations of non-standalone flags
+                int nonStandaloneCount = enabledNonStandalone.size();
+                for (int bits = 0; bits < (1 << nonStandaloneCount); bits++) {
+                    Map<String, Boolean> assignment = buildAssignment(flags, enabledNonStandalone, bits);
+                    // Standalone flags are false in the main matrix
+                    for (Flag sf : standaloneFlags) {
+                        assignment.put(sf.id(), false);
                     }
-                }
-                diagramKeys.add(diagramKey(assignment));
-                writeVariant(outputDir, os, flags, assignment);
-                variantCount++;
-            }
 
-            // Generate the "everything" variant (all enabled flags true, if valid)
-            Map<String, Boolean> everything = new LinkedHashMap<>();
-            for (Flag f : flags) {
-                everything.put(f.id(), f.enabled() || f.defaultValue());
-            }
-            if (isValid(everything, flags)) {
-                diagramKeys.add(diagramKey(everything));
-                writeVariant(outputDir, os, flags, everything);
-                variantCount++;
+                    if (!isValid(assignment, flags)) {
+                        continue;
+                    }
+
+                    diagramKeys.add(diagramKey(assignment));
+                    writeVariant(outputDir, buildTool, os, flags, assignment);
+                    variantCount++;
+                }
+
+                // Generate standalone variants: each standalone flag alone (all others off)
+                for (Flag sf : standaloneFlags) {
+                    Map<String, Boolean> assignment = new LinkedHashMap<>();
+                    for (Flag f : flags) {
+                        if (!f.enabled()) {
+                            assignment.put(f.id(), f.defaultValue());
+                        } else {
+                            assignment.put(f.id(), f.id().equals(sf.id()));
+                        }
+                    }
+                    diagramKeys.add(diagramKey(assignment));
+                    writeVariant(outputDir, buildTool, os, flags, assignment);
+                    variantCount++;
+                }
+
+                // Generate the "everything" variant (all enabled flags true, if valid)
+                Map<String, Boolean> everything = new LinkedHashMap<>();
+                for (Flag f : flags) {
+                    everything.put(f.id(), f.enabled() || f.defaultValue());
+                }
+                if (isValid(everything, flags)) {
+                    diagramKeys.add(diagramKey(everything));
+                    writeVariant(outputDir, buildTool, os, flags, everything);
+                    variantCount++;
+                }
             }
         }
 
@@ -168,9 +181,10 @@ class generate_variants {
         return true;
     }
 
-    private static void writeVariant(String outputDir, String os,
+    private static void writeVariant(String outputDir, String buildTool, String os,
                                       List<Flag> flags, Map<String, Boolean> assignment) throws IOException {
-        StringBuilder dirname = new StringBuilder("os-").append(os);
+        StringBuilder dirname = new StringBuilder("bt-").append(buildTool)
+                .append("-os-").append(os);
         for (Flag f : flags) {
             dirname.append("-").append(f.id()).append("-").append(assignment.get(f.id()));
         }
@@ -180,6 +194,7 @@ class generate_variants {
 
         Path optionsFile = dir.resolve("options.adoc");
         try (PrintWriter pw = new PrintWriter(optionsFile.toFile())) {
+            pw.println(":buildtool: " + buildTool);
             pw.println(":os: " + os);
             for (Flag f : flags) {
                 if (Boolean.TRUE.equals(assignment.get(f.id()))) {
@@ -203,6 +218,7 @@ class generate_variants {
         }
 
         try (PrintWriter pw = new PrintWriter(path.toFile())) {
+            pw.println(":buildtool: all");
             pw.println(":os: all");
             for (Flag f : flags) {
                 if (f.defaultValue()) {
