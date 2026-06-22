@@ -1,3 +1,4 @@
+ifdef::use-maven[]
 [[appendix-installing-maven]]
 
 = Apache Maven {maven-version}
@@ -69,3 +70,66 @@ Each invokes a different phase of the project life cycle (clean, compile, instal
 * `mvn package`: Compiles, executes the tests, and packages the code into an archive.
 * `mvn install`: Builds and installs the artifacts in your local repository.
 * `mvn clean install`: Cleans and installs (note that you can add several commands separated by a space, like `mvn clean compile test`).
+endif::use-maven[]
+
+ifdef::use-gradle[]
+[[appendix-installing-gradle]]
+
+= Gradle
+
+All the examples of this workshop are built and tested using Gradle.footnote:[Gradle https://gradle.org]
+Gradle offers a flexible build automation tool with support for multi-project builds, dependency management, and an extensible plugin system.
+
+== Installing Gradle
+
+For this workshop, it is *not* necessary to install Gradle globally.
+The workshop scaffolding includes a Gradle wrapper (`./gradlew`) in each project directory.
+The wrapper automatically downloads and uses the correct version of Gradle, so you can start building right away.
+
+If you'd prefer to have a global installation of Gradle, here's how.
+ifdef::use-windows,use-linux[]
+Once you have installed JDK {jdk-version}, make sure the `JAVA_HOME` environment variable is set.
+Then, download Gradle from https://gradle.org/releases/, unzip the file on your hard drive and add the `gradle/bin` directory to your `PATH` variable.
+More details about the installation process are available on https://gradle.org/install/.
+endif::use-windows,use-linux[]
+
+ifdef::use-mac[]
+If you are on Mac OS X and use Homebrew, install Gradle with the following command:
+
+[source,shell]
+----
+brew install gradle
+----
+endif::use-mac[]
+
+== Checking for Gradle Installation
+
+You can verify the Gradle wrapper works by opening a command line in a project directory and running:
+
+[source,shell]
+----
+$ ./gradlew --version
+----
+
+This will print the Gradle version and the JDK version it uses.
+
+== Some Gradle Commands
+
+Gradle is a command-line utility where you can use several parameters and options to build, test, or package your code.
+To get some help on the commands, you can use the following command:
+
+[source,shell]
+----
+$ ./gradlew --help
+----
+
+Here are some commands that you will be using to run the examples in the workshop.
+Each invokes a different task in the build lifecycle (clean, build, test, etc.) and uses the `build.gradle` file to download libraries, customize the compilation, or extend behavior with plugins:
+
+* `./gradlew clean`: Deletes all generated files (compiled classes, generated code, artifacts etc.).
+* `./gradlew compileJava`: Compiles the main Java classes.
+* `./gradlew compileTestJava`: Compiles the test classes.
+* `./gradlew test`: Compiles the main Java classes as well as the test classes and executes the tests.
+* `./gradlew build`: Compiles, executes the tests, and packages the code into an archive.
+* `./gradlew clean build`: Cleans and builds (note that you can add several tasks separated by a space, like `./gradlew clean compileJava test`).
+endif::use-gradle[]

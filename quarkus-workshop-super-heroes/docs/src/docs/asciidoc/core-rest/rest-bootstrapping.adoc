@@ -6,12 +6,21 @@ That's what you are going to see in this section.
 
 == Bootstrapping the Villain REST Endpoint
 
+ifdef::use-maven[]
 The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin.
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
+endif::use-maven[]
+ifdef::use-gradle[]
+The easiest way to create a new Quarkus project is to use the Quarkus CLI.
+Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
+endif::use-gradle[]
 
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
+[.tab-maven]
+****
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
@@ -22,6 +31,20 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
     -Dpath="api/villains" \
     -Dextensions="rest-jackson"
 ----
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+****
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.super-heroes:rest-villains \
+    --extension="rest-jackson" \
+    --java={jdk-version} \
+    --build-tool=gradle
+----
+****
+endif::use-gradle[]
 
 [NOTE]
 ====
@@ -29,29 +52,56 @@ Notice that we scaffold the project with Quarkus REST (`rest-jackson`).
 This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.
 ====
 
-Remember that `mvnw` is the maven wrapper. It behaves like `mvn`,
-but allows a project's build dependencies to be encapsulated.
+ifdef::use-maven[]
+Remember that `mvnw` is the Maven wrapper.
+It behaves like `mvn`, but allows a project's build dependencies to be encapsulated.
+endif::use-maven[]
+ifdef::use-gradle[]
+ifndef::use-maven[]
+Remember that `gradlew` is the Gradle wrapper.
+endif::use-maven[]
+ifdef::use-maven[]
+Similarly, `gradlew` is the Gradle wrapper.
+endif::use-maven[]
+It behaves like `gradle`, but allows a project's build dependencies to be encapsulated.
+endif::use-gradle[]
 
 The last line selects the extension we want to use.
 As a start, we only select `rest-jackson`, which will also import `rest`.
 
+ifdef::use-maven[]
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM (`quarkus-super-heroes/pom.xml`) by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/rest-villains</module>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+If you want your IDE to manage this new Gradle project, you can declare it in the parent settings file (`quarkus-super-heroes/settings.gradle.kts`) by adding:
+
+[source,kotlin]
+----
+include("super-heroes:rest-villains")
+----
+endif::use-gradle[]
 --
 [TIP]
 .Prefer a Web UI?
 ====
+ifdef::use-maven[]
 Instead of the Maven command, you can use https://code.quarkus.io and select the `rest-jackson` extension.
+endif::use-maven[]
+ifdef::use-gradle[]
+Instead of the Quarkus CLI command, you can use https://code.quarkus.io and select the `rest-jackson` extension (make sure to select Gradle as the build tool).
+endif::use-gradle[]
 ====
 
 == Directory Structure
 
 Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
 
+ifdef::use-maven[]
 [plantuml]
 ----
 @startsalt
@@ -99,7 +149,60 @@ super-heroes
 }
 @endsalt
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villains
+++  gradle
+++  src
++++  main
+++++  docker
++++++  Dockerfile.jvm
++++++  Dockerfile.legacy-jar
++++++  Dockerfile.native
++++++  Dockerfile.native-micro
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  VillainResource.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  VillainResourceIT.java
+++++++++++  VillainResourceTest.java
+++  .dockerignore
+++  .gitignore
+++  build.gradle.kts
+++  gradle.properties
+++  gradlew
+++  gradlew.bat
+++  settings.gradle.kts
+++  README.md
+}
+}
+@endsalt
+----
+endif::use-gradle[]
 
+ifdef::use-maven[]
 The Maven archetype generates the following `rest-villains` sub-directory:
 
 * The Maven structure with a `pom.xml`
@@ -185,6 +288,51 @@ If we focus on the dependencies section, you can see the extensions allowing the
     <!-- ... -->
 </dependencies>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+The Quarkus CLI generates the following `rest-villains` sub-directory:
+
+* The Gradle structure with a `build.gradle.kts` and `settings.gradle.kts`
+* An `io.quarkus.workshop.superheroes.villain.VillainResource` resource exposed on `/api/villains`
+* An associated unit test `VillainResourceTest`
+* The landing page `index.html` that is accessible on http://localhost:8080 after starting the application
+* Example `Dockerfile` files for both native and JVM modes in `src/main/docker`
+* The `application.properties` configuration file
+
+Once generated, look at the `build.gradle.kts`.
+You will find the import of the Quarkus BOM, allowing you to omit the version on the different Quarkus dependencies.
+In addition, you can see the Quarkus Gradle plugin responsible for the packaging of the application and providing the development mode.
+
+[source,kotlin,indent=0,subs="attributes+"]
+----
+plugins {
+    java
+    id("io.quarkus")
+}
+
+dependencies {
+    implementation(enforcedPlatform("io.quarkus:quarkus-bom:{quarkus-version}"))
+    // ...
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_{jdk-version}
+    targetCompatibility = JavaVersion.VERSION_{jdk-version}
+}
+----
+
+If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (`rest` and `rest-jackson`)
+
+[source,kotlin,indent=0]
+----
+dependencies {
+    implementation("io.quarkus:quarkus-arc")
+    implementation("io.quarkus:quarkus-rest")
+    implementation("io.quarkus:quarkus-rest-jackson")
+    // ...
+}
+----
+endif::use-gradle[]
 
 * `quarkus-arc` is the dependency injection framework integrated into Quarkus.
 It's designed to perform build-time injections.
@@ -232,9 +380,17 @@ NOTE: Methods can also have their own `@Path` annotation suffixed to the class o
 
 Now we are ready to run our application.
 
+ifdef::use-maven[]
 Use: `./mvnw quarkus:dev` in the `rest-villains` directory:
+endif::use-maven[]
+ifdef::use-gradle[]
+Use: `./gradlew quarkusDev` in the `rest-villains` directory:
+endif::use-gradle[]
 
-[source,shell,,subs="attributes+"]
+ifdef::use-maven[]
+[.tab-maven]
+****
+[source,shell,subs="attributes+"]
 ----
 $ ./mvnw quarkus:dev
 [INFO] Scanning for projects...
@@ -268,6 +424,34 @@ __  ____  __  _____   ___  __ ____  ______
 Tests paused
 Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options>
 ----
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+****
+[source,shell,subs="attributes+"]
+----
+$ ./gradlew quarkusDev
+----
+
+You should see output ending with the Quarkus banner and a message like:
+
+[source,text,subs="attributes+"]
+----
+__  ____  __  _____   ___  __ ____  ______
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+INFO  [io.quarkus] (Quarkus Main Thread) rest-villains 1.0.0-SNAPSHOT on JVM (powered by Quarkus {quarkus-version}) started in 1.093s. Listening on: http://localhost:8080
+
+INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, rest, rest-jackson, smallrye-context-propagation, vertx]
+
+Tests paused
+Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options>
+----
+****
+endif::use-gradle[]
 
 Then check that the endpoint returns `hello` as expected:
 
@@ -288,7 +472,12 @@ Alternatively, you can open http://localhost:8080/api/villains in your browser.
 
 == Development Mode
 
+ifdef::use-maven[]
 `quarkus:dev` runs Quarkus in development mode.
+endif::use-maven[]
+ifdef::use-gradle[]
+`quarkusDev` runs Quarkus in development mode.
+endif::use-gradle[]
 It enables hot deployment with background compilation, which means that when you modify your Java files or your resource files and invoke a REST endpoint (i.e., cURL command or refresh your browser), these changes will automatically take effect.
 It works too for resource files like the configuration property and HTML files.
 Refreshing the browser triggers a scan of the workspace, and if any changes are detected, the Java files are recompiled and the application is redeployed; your request is then serviced by the redeployed application.
@@ -319,6 +508,7 @@ The output has changed ("_Hello Villain Resource_") without you having to stop a
 
 All right, so far, so good, but wouldn't it be better with a few tests, just in case.
 
+ifdef::use-maven[]
 In the generated `pom.xml` file, you can see two test dependencies:
 
 [source,xml,indent=0]
@@ -337,9 +527,23 @@ In the generated `pom.xml` file, you can see two test dependencies:
     </dependency>
 </dependencies>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+In the generated `build.gradle.kts` file, you can see two test dependencies:
+
+[source,kotlin,indent=0]
+----
+dependencies {
+    // ...
+    testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.rest-assured:rest-assured")
+}
+----
+endif::use-gradle[]
 
 So, we will use Junit 5 combined with RESTAssured, which eases the testing of REST applications.
 
+ifdef::use-maven[]
 If you look at the `maven-surefire-plugin` configuration in the `pom.xml`, you will see that we set the `java.util.logging` system property to ensure tests will use the correct method log manager.
 
 [source,xml]
@@ -355,6 +559,10 @@ If you look at the `maven-surefire-plugin` configuration in the `pom.xml`, you w
     </configuration>
 </plugin>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+With Gradle, the Quarkus plugin automatically handles the test configuration, so no extra plugin setup is needed.
+endif::use-gradle[]
 
 The generated project contains a simple test in `VillainResourceTest.java`.
 
@@ -397,7 +605,12 @@ You can also configure the ports used by tests by configuring the `quarkus.http.
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
 In the terminal running the application in _dev mode_ (`./mvnw quarkus:dev`), you should see at the bottom:
+endif::use-maven[]
+ifdef::use-gradle[]
+In the terminal running the application in _dev mode_ (`./gradlew quarkusDev`), you should see at the bottom:
+endif::use-gradle[]
 
 [source,text]
 ----
@@ -495,16 +708,33 @@ Quarkus detects and runs the tests for you.
 
 You can also run the tests from a terminal using:
 
+ifdef::use-maven[]
+[.tab-maven]
+****
 [source,shell]
 ----
 ./mvnw test
 ----
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+****
+[source,shell]
+----
+./gradlew test
+----
+****
+endif::use-gradle[]
 
 == Packaging and Running the Application
 
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
+[.tab-maven]
+****
 The application is packaged using the `./mvnw package` command (it also runs the tests).
 That command generates:
 
@@ -514,6 +744,23 @@ That command generates:
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
 
 Stop the application running in dev mode (by hitting `q` or `CTRL+C`), and run the application using: `java -jar target/quarkus-app/quarkus-run.jar`.
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+****
+The application is packaged using the `./gradlew build` command (it also runs the tests).
+That command generates:
+
+* `build/libs/rest-villains-1.0.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Gradle build (it is not an executable jar);
+* `build/quarkus-app/` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
+
+This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
+
+Stop the application running in dev mode (by hitting `q` or `CTRL+C`), and run the application using: `java -jar build/quarkus-app/quarkus-run.jar`.
+****
+endif::use-gradle[]
+
 --
 
 [NOTE]

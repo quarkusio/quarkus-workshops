@@ -12,6 +12,7 @@ Interactions with the database will uses Hibernate ORM and will block until the 
 In this module we will add extra classes to the Villain API project.
 You will end-up with the following directory structure:
 
+ifdef::use-maven[]
 [plantuml]
 ----
 @startsalt
@@ -36,6 +37,34 @@ super-heroes
 }
 @endsalt
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villains
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainResource.java (already exists)
+++++++++++  VillainService.java
+++  build.gradle.kts
+++  settings.gradle.kts
+}
+}
+@endsalt
+----
+endif::use-gradle[]
 
 == Installing the PostgreSQL Dependency, Hibernate with Panache and Hibernate Validator
 
@@ -54,6 +83,7 @@ Because JPA and Bean Validation work well together, we will use Bean Validation 
 
 To add the required dependencies, just run the following command under the `super-heroes/rest-villains` directory:
 
+ifdef::use-maven[]
 [example, role="cta"]
 --
 [source,shell]
@@ -61,9 +91,20 @@ To add the required dependencies, just run the following command under the `supe
 ./mvnw quarkus:add-extension -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[example, role="cta"]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator"
+----
+--
+endif::use-gradle[]
 
 TIP: No need to add an extension for JSON, we already included `rest-jackson`.
 
+ifdef::use-maven[]
 This will add the following dependencies in the `pom.xml` file:
 
 [source,xml,indent=0]
@@ -85,8 +126,24 @@ This will add the following dependencies in the `pom.xml` file:
     <!-- ... -->
 </dependencies>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+This will add the following dependencies in the `build.gradle.kts` file:
 
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-hibernate-orm-panache")
+implementation("io.quarkus:quarkus-hibernate-validator")
+implementation("io.quarkus:quarkus-jdbc-postgresql")
+----
+endif::use-gradle[]
+
+ifdef::use-maven[]
 From now on, you can choose to either edit your pom directly or use the `quarkus:add-extension` command.
+endif::use-maven[]
+ifdef::use-gradle[]
+From now on, you can choose to either edit your `build.gradle.kts` directly or use the `addExtension` command.
+endif::use-gradle[]
 
 == Villain Entity
 
@@ -215,7 +272,13 @@ Quarkus does that for us (just make sure you have Docker up and running).
 [example, role="cta"]
 --
 
-Start the application in dev mode with `./mvnw quarkus:dev`.
+Start the application in dev mode with
+ifdef::use-maven[]
+`./mvnw quarkus:dev`.
+endif::use-maven[]
+ifdef::use-gradle[]
+`./gradlew quarkusDev`.
+endif::use-gradle[]
 In the log, you will see the following:
 
 [source,text]
@@ -426,12 +489,29 @@ Ok, but that's just a few entries.
 Now, you have more than 500 villains that will be loaded in the database.
 
 If you didn't yet, start the application in dev mode by executing the following command under the `rest-villains` directory:
+--
 
+ifdef::use-maven[]
+[example, role="cta"]
+--
 [source,shell]
 ----
 ./mvnw quarkus:dev
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[example, role="cta"]
+--
+[source,shell]
+----
+./gradlew quarkusDev
+----
+--
+endif::use-gradle[]
 
+[example, role="cta"]
+--
 Then, open your browser to http://localhost:8080/api/villains.
 You should see lots of heroes...
 --
@@ -468,7 +548,13 @@ However, in our case, we just execute HTTP requests to check the result.
 
 [example, role="cta"]
 --
-Run the test either in the dev mode or using `./mvnw test`.
+Run the test either in the dev mode or using
+ifdef::use-maven[]
+`./mvnw test`.
+endif::use-maven[]
+ifdef::use-gradle[]
+`./gradlew test`.
+endif::use-gradle[]
 They should pass.
 --
 
@@ -542,12 +628,30 @@ endif::use-linux[]
 [example, role="cta"]
 --
 Stop the dev mode, and run:
+--
 
+ifdef::use-maven[]
+[example, role="cta"]
+--
 [source,shell]
 ----
 ./mvnw package
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[example, role="cta"]
+--
+[source,shell]
+----
+./gradlew build
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[example, role="cta"]
+--
 As previously, you will get your application in `target/quarkus-app`, run it using:
 
 [source,shell]
@@ -558,6 +662,21 @@ java -jar target/quarkus-app/quarkus-run.jar
 Open your browser to http://localhost:8080/api/villains, and verify it displays the expected content.
 Once done, stop the application using `CTRL+C`.
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[example, role="cta"]
+--
+As previously, you will get your application in `build/quarkus-app`, run it using:
+
+[source,shell]
+----
+java -jar build/quarkus-app/quarkus-run.jar
+----
+
+Open your browser to http://localhost:8080/api/villains, and verify it displays the expected content.
+Once done, stop the application using `CTRL+C`.
+--
+endif::use-gradle[]
 
 
 

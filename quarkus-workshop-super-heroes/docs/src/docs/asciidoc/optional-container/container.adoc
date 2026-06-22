@@ -38,7 +38,11 @@ To start using it, we first need to install the jib extension in all our project
 [example, role="cta"]
 --
 Add the `quarkus-container-image-jib` extension executing the following commands from the root `super-heroes` directory:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw --file rest-fights/pom.xml quarkus:add-extension -Dextensions="jib"
@@ -53,7 +57,27 @@ ifdef::use-ai[]
 endif::use-ai[]
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew -p rest-fights addExtension --extensions="jib"
+./gradlew -p rest-heroes addExtension --extensions="jib"
+./gradlew -p rest-villains addExtension --extensions="jib"
+./gradlew -p ui-super-heroes addExtension --extensions="jib"
+ifdef::use-messaging[]
+./gradlew -p event-statistics addExtension --extensions="jib"
+endif::use-messaging[]
+ifdef::use-ai[]
+./gradlew -p rest-narration addExtension --extensions="jib"
+endif::use-ai[]
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 It adds the following dependency to the `pom.xml` files:
 
 [source, xml]
@@ -63,11 +87,29 @@ It adds the following dependency to the `pom.xml` files:
   <artifactId>quarkus-container-image-jib</artifactId>
 </dependency>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+It adds the following dependency to the `build.gradle.kts` files:
+
+[source,kotlin]
+----
+implementation("io.quarkus:quarkus-container-image-jib")
+----
+endif::use-gradle[]
 
 [example, role="cta"]
 --
+ifdef::use-maven[]
 Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-Dmaven.test.skip=true` if you want to skip the tests):
+endif::use-maven[]
+ifdef::use-gradle[]
+Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-x test` if you want to skip the tests):
+endif::use-gradle[]
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source, shell]
 ----
 ./mvnw --file rest-fights/pom.xml clean package -Dquarkus.container-image.build=true
@@ -81,7 +123,29 @@ ifdef::use-ai[]
 ./mvnw --file rest-narration/pom.xml clean package -Dquarkus.container-image.build=true
 endif::use-ai[]
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source, shell]
+----
+./gradlew -p rest-fights clean build -Dquarkus.container-image.build=true
+./gradlew -p rest-heroes clean build -Dquarkus.container-image.build=true
+./gradlew -p rest-villains clean build -Dquarkus.container-image.build=true
+./gradlew -p ui-super-heroes clean build -Dquarkus.container-image.build=true
+ifdef::use-messaging[]
+./gradlew -p event-statistics clean build -Dquarkus.container-image.build=true
+endif::use-messaging[]
+ifdef::use-ai[]
+./gradlew -p rest-narration clean build -Dquarkus.container-image.build=true
+endif::use-ai[]
+----
+--
+endif::use-gradle[]
 
+[example, role="cta"]
+--
 Check that you have all the Docker images installed locally:
 
 [source,shell]
@@ -189,10 +253,24 @@ It looks like this:
 include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
+----
+--
+endif::use-gradle[]
 
 The `-Dquarkus.native.container-build=true` allows running the native compilation inside a container (provided by Quarkus).
 
@@ -219,7 +297,11 @@ It requires at least 6Gb of memory, 8Gb is recommended.
 
 Execute the above command for all our microservices.
 We also copy the UI into the fight service, to simplify the process:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 cd rest-hero
@@ -237,6 +319,28 @@ cd event-statistics
 cd ..
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+cd rest-hero
+./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
+cd ..
+cd rest-villains
+./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
+cd ..
+cd rest-fight
+cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
+./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
+cd ..
+cd event-statistics
+./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
+cd ..
+----
+--
+endif::use-gradle[]
 
 == Building native containers
 
@@ -249,6 +353,9 @@ When you create projects, Quarkus generates two `Dockerfiles`:
 We are interested in this second file.
 Open one of these `Dockerfile.native` files:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,text]
 ----
 FROM registry.access.redhat.com/ubi8/ubi-minimal
@@ -258,6 +365,22 @@ RUN chmod 775 /work
 EXPOSE 8080
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,text]
+----
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /work/
+COPY build/*-runner /work/application
+RUN chmod 775 /work
+EXPOSE 8080
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+----
+--
+endif::use-gradle[]
 
 It's a pretty straightforward `Dockerfile` taking a minimal base image and copying the generated native executable.
 It also exposes the port 8080.
@@ -297,10 +420,24 @@ We've just created a container that embeds the Java application and a JVM.
 But you can also build and use the native executable.
 To do this, runs the following command:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source, shell]
 ----
 ./mvnw clean package -Dquarkus.container-image.build=true -Pnative -Dquarkus.native.container-build=true
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source, shell]
+----
+./gradlew clean build -Dquarkus.container-image.build=true -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
+----
+--
+endif::use-gradle[]
 
 `-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
 This option is not required if you use Linux.

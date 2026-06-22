@@ -29,19 +29,40 @@ To simplify making more resilient applications, Quarkus contains an implementati
 
 == Installing the Fault Tolerance Dependency
 
-To install the MicroProfile Fault Tolerance dependency, just run the following command in the Fight microservice:
-
 [example, role="cta"]
 --
+To install the MicroProfile Fault Tolerance dependency, just run the following command in the Fight microservice:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="smallrye-fault-tolerance"
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 This will add the following dependency in the `pom.xml` file:
+endif::use-maven[]
+ifdef::use-gradle[]
+This will add the following dependency in the `build.gradle.kts` file:
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,indent=0]
 ----
 <dependency>
@@ -49,6 +70,17 @@ This will add the following dependency in the `pom.xml` file:
   <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
+----
+--
+endif::use-gradle[]
 
 == Adding Fallbacks
 

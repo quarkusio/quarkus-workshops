@@ -41,7 +41,7 @@ Changing the port is one of the rare configuration that cannot be done while the
 
 You would need to restart the application to change the port.
 
-Hit `CTRL+C` to stop the application if it still running and restart it with: `./mvnw quarkus:dev`.
+Hit `CTRL+C` to stop the application if it still running and restart it in dev mode.
 Then run:
 
 [source,shell]
@@ -112,7 +112,7 @@ level.multiplier=0.5
 
 [example, role="cta"]
 --
-If you didn't already, start the application with `./mvnw quarkus:dev`.
+If you didn't already, start the application in dev mode.
 Once started, create a new villain with the following cUrl command (notice the verbose option `-v` to see the HTTP response headers):
 
 [source,shell]

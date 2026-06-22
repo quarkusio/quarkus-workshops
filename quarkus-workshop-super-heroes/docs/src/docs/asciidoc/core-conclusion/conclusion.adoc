@@ -45,7 +45,7 @@ endif::use-native[]
 ifdef::use-container[]
 Same if you want to package microservices into Docker containers.
 Quarkus supports Jib.
-So with a simple Maven command you can turn your microservice into a container.
+So with a simple build command you can turn your microservice into a container.
 endif::use-container[]
 
 Remember that you can find all the code for this fascicle at {github-url}.

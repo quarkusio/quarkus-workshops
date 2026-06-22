@@ -6,6 +6,16 @@
 
 '''
 
+ifdef::use-gradle[]
+[NOTE]
+====
+Quarkus extension development currently requires Maven.
+Even if you use Gradle for your applications, you will need Maven for this chapter.
+The extension creation command and multi-module structure rely on Maven.
+However, simple build and dev-mode commands have Gradle equivalents shown below.
+====
+endif::use-gradle[]
+
 Most of the Quarkus magic happens inside extensions.
 The goal of an extension is to compute _just enough bytecode_ to start the services that the application requires and drop everything else.
 
@@ -50,6 +60,9 @@ plantuml::plantuml/8-extension-architecture.puml[align=center,theme="quarkus fro
 ====
 From the directory `super-heroes` execute the following commands:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create-extension -N \
@@ -59,6 +72,24 @@ From the directory `super-heroes` execute the following commands:
     -DgroupId=io.quarkus.workshop.super-heroes \
     -DpackageName=io.quarkus.workshop.superheroes.version
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+NOTE: Extension creation requires Maven. Use the Maven wrapper for this step:
+
+[source,shell,subs="attributes+"]
+----
+./mvnw io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create-extension -N \
+    -DplatformVersion={quarkus-version} \
+    -DwithoutTests \
+    -DextensionId=extension-version \
+    -DgroupId=io.quarkus.workshop.super-heroes \
+    -DpackageName=io.quarkus.workshop.superheroes.version
+----
+--
+endif::use-gradle[]
 ====
 
 This command creates the structure for the version extension:
@@ -213,29 +244,67 @@ Any invocations made on these proxies will be recorded, and bytecode will be wri
 ====
 From the root directory of the extension, run:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw clean install
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew clean build
+----
+--
+endif::use-gradle[]
 ====
 
 == Using the extension
 
 [role="cta"]
 ====
+ifdef::use-maven[]
 Go back to the _villain_ microservice, and add the following dependency to the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
 include::{code-root}/rest-villains/pom.xml[tags=extension-version]
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+Go back to the _villain_ microservice, and add the following dependency to the `build.gradle` file:
+
+[source,groovy,indent=0]
+----
+implementation 'io.quarkus.workshop.super-heroes:extension-version:1.0.0-SNAPSHOT'
+----
+endif::use-gradle[]
 
 If not yet started, start the microservice with:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:dev
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew quarkusDev
+----
+--
+endif::use-gradle[]
 ====
 
 And the version will be displayed:

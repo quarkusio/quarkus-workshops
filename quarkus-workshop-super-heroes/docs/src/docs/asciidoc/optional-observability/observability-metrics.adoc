@@ -13,19 +13,52 @@ You can apply the same to the other microservices.
 --
 
 To install the MicroProfile Metrics dependency, just run the following command:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="metrics"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="metrics"
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 This will add the following dependency in the `pom.xml` file:
+endif::use-maven[]
+ifdef::use-gradle[]
+This will add the following dependency in the `build.gradle.kts` file:
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,indent=0]
 ----
 include::{projectdir}/rest-heroes/pom.xml[tags=adocDependencyMetrics]
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-smallrye-metrics")
+----
+--
+endif::use-gradle[]
 
 == Adding Metrics to HeroResource
 

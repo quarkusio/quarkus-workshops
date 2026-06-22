@@ -40,8 +40,17 @@ void pactVerificationTestTemplate(PactVerificationContext context) {
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
 Add the Pact dependency to the heroes service `pom.xml`:
+endif::use-maven[]
+ifdef::use-gradle[]
+Add the Pact dependency to the heroes service `build.gradle.kts`:
+endif::use-gradle[]
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,subs="attributes+"]
 ----
 <dependency>
@@ -56,9 +65,24 @@ Add the Pact dependency to the heroes service `pom.xml`:
     <scope>test</scope>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,subs="attributes+"]
+----
+testImplementation("io.quarkiverse.pact:quarkus-pact-provider:{quarkus-pact-version}")
+testImplementation("io.quarkus:quarkus-panache-mock")
+----
+--
+endif::use-gradle[]
 
 We also add the https://quarkus.io/guides/hibernate-orm-panache#mocking[Panache Mock dependency], which allows us to use Mockito to mock all provided static methods.
 That will come in handy at various points in the provider testing.
+
+[example, role="cta"]
+--
 
 Create a `io/quarkus/workshop/superheroes/hero/HeroContractVerificationTest.java` class in the `rest-heroes` project.
 It doesn't need to do much except tell Pact what port the Hero provider is listening on,

@@ -7,6 +7,7 @@ In this section, you are going to see how you can send messages to a Kafka topic
 In this section we are going to extend the **Fight microservice**.
 In the following tree, we are going to edit the marked classes
 
+ifdef::use-maven[]
 [plantuml]
 ----
 @startsalt
@@ -39,6 +40,41 @@ super-heroes
 }
 @endsalt
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-fight
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  fight
+++++++++++  Fight.java
+++++++++++  FightResource.java
+++++++++++  FightService.java <--
+++++++++++  Fighters.java
++++++++++++ client
+++++++++++++ Hero.java
+++++++++++++ HeroProxy.java
+++++++++++++ Villain.java
+++++++++++++ VillainProxy.java
++++++++++++ kafka
+++++++++++++ KafkaWriter.java <--
+++  build.gradle.kts
+}
+}
+@endsalt
+----
+endif::use-gradle[]
 
 == Adding the Reactive Messaging Dependency
 
@@ -47,15 +83,32 @@ super-heroes
 
 The Kafka extension was already imported during the project creation.
 In doubt, you can run in the Fight microservice:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions=" io.quarkus:quarkus-smallrye-reactive-messaging-kafka"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="io.quarkus:quarkus-smallrye-reactive-messaging-kafka"
+----
+--
+endif::use-gradle[]
 
 The previous command adds the following dependency:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,indent=0]
 ----
 <dependency>
@@ -63,8 +116,24 @@ The previous command adds the following dependency:
   <artifactId>quarkus-messaging-kafka</artifactId>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-messaging-kafka")
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 If not yet started, start the microservice using `./mvnw quarkus:dev`.
+endif::use-maven[]
+ifdef::use-gradle[]
+If not yet started, start the microservice using `./gradlew quarkusDev`.
+endif::use-gradle[]
 
 [NOTE]
 ====

@@ -80,7 +80,7 @@ The structure of this workshop is as follows:
 * _Installing all the needed tools_:
 in this section, you will install all the tools and code to be able to develop, compile and execute our application
 * _Developing microservices with Quarkus_:
-in this section, you will develop a microservice architecture by creating several Maven projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use a React web application, and all that on Quarkus
+in this section, you will develop a microservice architecture by creating several projects, write some Java code, add JPA entities, JAX-RS REST endpoints, write some tests, use a React web application, and all that on Quarkus
 ifdef::use-ai[]
 * _Artificial Intelligence_:
 in this section, you will use Quarkus LangChain4j with OpenAI to generate a random narration of the fight
@@ -161,9 +161,25 @@ ifdef::use-azure[]
 * An Azure subscription and the Azure CLI
 endif::use-azure[]
 
+ifdef::use-maven[]
+ifndef::use-gradle[]
 We will also be using Maven {maven-version}, but there is no need to install it.
-Instead, the workshop scaffolding includes a maven wrapper, `mvnw`.
+Instead, the workshop scaffolding includes a Maven wrapper, `mvnw`.
 If you'd prefer to install your own Maven and don't already have it, xref:appendix-installing-maven[see the instructions at the end of the workshop].
+endif::use-gradle[]
+ifdef::use-gradle[]
+The workshop supports both Maven and Gradle as build tools — you can choose either one.
+There is no need to install them: the workshop scaffolding includes both a Maven wrapper (`mvnw`) and a Gradle wrapper (`gradlew`).
+If you'd prefer to install your own, see the instructions for xref:appendix-installing-maven[Maven] or xref:appendix-installing-gradle[Gradle] at the end of the workshop.
+endif::use-gradle[]
+endif::use-maven[]
+ifndef::use-maven[]
+ifdef::use-gradle[]
+We will also be using Gradle, but there is no need to install it globally.
+The workshop scaffolding includes a Gradle wrapper, `gradlew`.
+If you'd prefer to install your own Gradle and don't already have it, xref:appendix-installing-gradle[see the instructions at the end of the workshop].
+endif::use-gradle[]
+endif::use-maven[]
 
 The following section focuses on how to install and set up the needed software.
 You can skip the next section if you have already installed all the prerequisites.

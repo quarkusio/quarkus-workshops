@@ -9,8 +9,17 @@ which means that we begin by writing tests for the API consumer.
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
 Add the Pact Quarkus extension to the `pom.xml` of the Fights service:
+endif::use-maven[]
+ifdef::use-gradle[]
+Add the Pact Quarkus extension to the `build.gradle.kts` of the Fights service:
+endif::use-gradle[]
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,subs="attributes+"]
 ----
 <dependency>
@@ -21,6 +30,16 @@ Add the Pact Quarkus extension to the `pom.xml` of the Fights service:
 </dependency>
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,subs="attributes+"]
+----
+testImplementation("io.quarkiverse.pact:quarkus-pact-consumer:{quarkus-pact-version}")
+----
+--
+endif::use-gradle[]
 
 The Pact framework will stand up a server which listens on a port.
 To avoid port conflicts between the real services and the Pact stubs, let's use a different port for the contract instances.
@@ -49,7 +68,12 @@ include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/
 Here we are setting up a test to run with Pact and telling Pact what ports it should stand up the mock server on.
 We also define how the mock should behave.
 
+ifdef::use-maven[]
 Run the build, using `./mvnw verify` or `./mvnw quarkus:dev`.
+endif::use-maven[]
+ifdef::use-gradle[]
+Run the build, using `./gradlew test` or `./gradlew quarkusDev`.
+endif::use-gradle[]
 You should see a failure. What's happened? The `randomHeroFound` test didn't have any assertions, so how could there be a failure? Pact is doing some validation for us. We have defined a mock, but nothing is exercising it. That might mean our code
 doesn't do what we think it does, so Pact flags it as an error.
 

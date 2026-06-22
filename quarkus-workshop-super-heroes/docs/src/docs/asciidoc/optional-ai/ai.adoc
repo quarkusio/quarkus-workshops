@@ -32,12 +32,20 @@ Under the hood, it leverages https://docs.langchain4j.dev/[LangChain4j], a Java 
 Let's create a new microservice that will use Quarkus LangChain4j to narrate the fight between a superhero and a super villain.
 New microservice, new project!
 
+ifdef::use-maven[]
 As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to https://code.quarkus.io if you prefer).
+endif::use-maven[]
+ifdef::use-gradle[]
+As before, the easiest way to create this new Quarkus project is to use the Quarkus CLI (you can also go to https://code.quarkus.io if you prefer).
+endif::use-gradle[]
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
 
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
+[.tab-maven]
+****
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
@@ -48,6 +56,20 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
     -Dpath="api/narration" \
     -Dextensions="rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance"
 ----
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+****
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.super-heroes:rest-narration \
+    --extension="rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance" \
+    --java={jdk-version} \
+    --build-tool=gradle
+----
+****
+endif::use-gradle[]
 --
 
 This microservice needs less dependencies than the previous ones:
@@ -56,17 +78,20 @@ This microservice needs less dependencies than the previous ones:
 * `quarkus-smallrye-openapi` provides the OpenAPI descriptor support and the Swagger UI in the dev console,
 * `quarkus-smallrye-fault-tolerance` provides the MicroProfile Fault Tolerance dependency so we can fallback in case OpenAI does not respond.
 
+ifdef::use-maven[]
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/rest-narration</module>
 ----
+endif::use-maven[]
 
 === Directory Structure
 
 At the end of this chapter, you will end up with the following directory structure:
 
+ifdef::use-maven[]
 [plantuml]
 ----
 @startsalt
@@ -109,9 +134,57 @@ super-heroes
 }
 @endsalt
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-narration
+++  src
++++  main
+++++  docker
++++++  ...
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  narration
+++++++++++  Fight.java
+++++++++++  NarrationResource.java
+++++++++++  NarrationService.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  narration
+++++++++++  NarrationResourceTest.java
+++++++++++  NarrationResourceIT.java
+++  gradlew
+++  gradlew.bat
+++  build.gradle.kts
+++  gradle.properties
+++  settings.gradle.kts
+}
+}
+@endsalt
+----
+endif::use-gradle[]
 
 === Add the Quarkus LangChain4j dependency
 
+ifdef::use-maven[]
 Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
 Add the following XML in the `rest-narration/pom.xml` file:
 
@@ -141,6 +214,21 @@ Add the following XML in the `rest-narration/pom.xml` file:
     </dependency>
   </dependencies>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
+Add the following to the `rest-narration/build.gradle.kts` file:
+
+[source,kotlin,subs="attributes+"]
+----
+val quarkusLangchain4jVersion = "{quarkus-langchain4j-version}"
+
+dependencies {
+    implementation(enforcedPlatform("io.quarkiverse.langchain4j:quarkus-langchain4j-bom:$quarkusLangchain4jVersion"))
+    implementation("io.quarkiverse.langchain4j:quarkus-langchain4j-openai")
+}
+----
+endif::use-gradle[]
 
 === The Fight bean
 
@@ -235,6 +323,7 @@ Since we don't want to call the real OpenAI API during tests, we will mock the `
 
 First, make sure you have the Mockito dependency in the project:
 
+ifdef::use-maven[]
 [source,xml]
 ----
 <dependency>
@@ -243,6 +332,13 @@ First, make sure you have the Mockito dependency in the project:
     <scope>test</scope>
 </dependency>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[source,kotlin]
+----
+testImplementation("io.quarkus:quarkus-junit-mockito")
+----
+endif::use-gradle[]
 
 
 Open the `io.quarkus.workshop.superheroes.narration.NarrationResourceTest` class and copy the following content:
@@ -258,7 +354,12 @@ include::{projectdir}/rest-narration/src/test/java/io/quarkus/workshop/superhero
 
 [example, role="cta"]
 --
+ifdef::use-maven[]
 Make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+endif::use-maven[]
+ifdef::use-gradle[]
+Make sure the tests pass by executing the command `./gradlew test` (or from your IDE).
+endif::use-gradle[]
 --
 
 === Running the Narration Microservice
@@ -268,7 +369,12 @@ Now that the tests are green, we are ready to run our Narration microservice.
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
 Make sure you have set the `OPENAI_API_KEY` environment variable, then use `./mvnw quarkus:dev` to start it.
+endif::use-maven[]
+ifdef::use-gradle[]
+Make sure you have set the `OPENAI_API_KEY` environment variable, then use `./gradlew quarkusDev` to start it.
+endif::use-gradle[]
 Once the Narration microservice is started, create a new narration with the following cUrl command:
 
 [source,shell]
@@ -365,7 +471,12 @@ include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/
 ----
 --
 
+ifdef::use-maven[]
 Now execute `./mvnw test` and make sure that all the tests pass.
+endif::use-maven[]
+ifdef::use-gradle[]
+Now execute `./gradlew test` and make sure that all the tests pass.
+endif::use-gradle[]
 
 == Running, Testing and Packaging the Application
 

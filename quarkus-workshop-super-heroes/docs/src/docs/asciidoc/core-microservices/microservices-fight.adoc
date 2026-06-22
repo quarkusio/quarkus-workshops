@@ -11,14 +11,23 @@ IMPORTANT: This microservice uses the imperative development model but use react
 
 == Bootstrapping the Fight REST Endpoint
 
+ifdef::use-maven[]
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+endif::use-maven[]
+ifdef::use-gradle[]
+Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use the Quarkus CLI.
+Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+endif::use-gradle[]
 
 [example, role="cta"]
 --
-
 Open a terminal and run the following command:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
@@ -29,8 +38,27 @@ Open a terminal and run the following command:
   -Dpath="api/fights" \
   -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi,kafka"
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.super-heroes:rest-fights \
+  --extension="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi,kafka" \
+  --java={jdk-version} \
+  --build-tool=gradle
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 If you open the `pom.xml` file, you will see that the following extensions have been imported:
+endif::use-maven[]
+ifdef::use-gradle[]
+If you open the `build.gradle.kts` file, you will see that the following extensions have been imported:
+endif::use-gradle[]
 
 * `io.quarkus:quarkus-hibernate-orm-panache`
 * `io.quarkus:quarkus-hibernate-validator`
@@ -38,7 +66,6 @@ If you open the `pom.xml` file, you will see that the following extensions have 
 * `io.quarkus:quarkus-messaging-kafka`
 * `io.quarkus:quarkus-rest-jackson`
 * `io.quarkus:quarkus-jdbc-postgresql`
---
 
 ifdef::use-messaging[]
 You can see that beyond the extensions we have used so far, we added the Kafka support which uses Eclipse MicroProfile Reactive Messaging.
@@ -47,21 +74,38 @@ endif::use-messaging[]
 
 [example, role="cta"]
 --
+ifdef::use-maven[]
 The Quarkus Maven plugin has generated some code that we won't be using.
 You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
+endif::use-maven[]
+ifdef::use-gradle[]
+The Quarkus CLI has generated some code that we won't be using.
+You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
+endif::use-gradle[]
 
+ifdef::use-maven[]
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/rest-fights</module>
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+If you want your IDE to manage this new Gradle project, you can declare it in the `settings.gradle.kts` by adding:
+
+[source,kotlin]
+----
+include("super-heroes:rest-fights")
+----
+endif::use-gradle[]
 --
 
 == Directory Structure
 
 At the end you should have the following directory structure:
 
+ifdef::use-maven[]
 [plantuml]
 ----
 @startsalt
@@ -108,6 +152,60 @@ super-heroes
 }
 @endsalt
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-fights
+++  src
++++  main
+++++  docker
++++++  ...
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  fight
+++++++++++  Fight.java
+++++++++++  FightResource.java
+++++++++++  FightService.java
+++++++++++  Fighters.java
++++++++++  client
+++++++++++  Hero.java
+++++++++++  Villain.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++++  import.sql
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  fight
+++++++++++  FightResourceTest.java
+++  gradlew
+++  gradlew.bat
+++  build.gradle.kts
+++  settings.gradle.kts
+++  gradle
++++  wrapper
+++++  gradle-wrapper.jar
+++++  gradle-wrapper.properties
+}
+}
+@endsalt
+----
+endif::use-gradle[]
 
 == Fight Entity
 
@@ -524,11 +622,21 @@ public class FightResourceTest {
 --
 
 First, delete the generated `FightResourceIT` native test class, as we won't run native tests.
+ifdef::use-maven[]
 Then, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+endif::use-maven[]
+ifdef::use-gradle[]
+Then, make sure the tests pass by executing the command `./gradlew test` (or from your IDE).
+endif::use-gradle[]
 Quarkus automatically starts the PostGreSQL database.
 
 Now that the tests are green, we are ready to run our application.
+ifdef::use-maven[]
 Use `./mvnw quarkus:dev` to start it (notice that there is no banner yet, it will come later).
+endif::use-maven[]
+ifdef::use-gradle[]
+Use `./gradlew quarkusDev` to start it (notice that there is no banner yet, it will come later).
+endif::use-gradle[]
 Once the application is started, just check that it returns the fights from the database with the following cURL command:
 
 [source,shell]

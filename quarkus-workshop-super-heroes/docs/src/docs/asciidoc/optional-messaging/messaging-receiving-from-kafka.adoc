@@ -9,6 +9,7 @@ For example, it determines if villains win more battle than heroes, and who is t
 
 In this section, we are going to develop the following structure:
 
+ifdef::use-maven[]
 [plantuml]
 --
 @startsalt
@@ -36,10 +37,42 @@ super-heroes
 }
 @endsalt
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+--
+@startsalt
+{
+{
+T
+super-heroes
++  event-statistics
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  statistics
+++++++++++ Fight.java
+++++++++++ FightDeserializer.java
+++++++++++ Ranking.java
+++++++++++ Score.java
+++++++++++ SuperStats.java
+++++++++++ TeamStats.java
+++  build.gradle.kts
+++  settings.gradle.kts
+++  gradle.properties
+}
+}
+@endsalt
+--
+endif::use-gradle[]
 
 == Bootstrapping the Statistics REST Endpoint
 
-Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command.
+Like for the other microservice, the easiest way to create this new Quarkus project is to use a command.
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
 
 [example, role="cta"]
@@ -47,6 +80,9 @@ Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you 
 
 Open a terminal and run the following command:
 
+ifdef::use-maven[]
+[.tab-maven]
+****
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
@@ -57,14 +93,30 @@ Open a terminal and run the following command:
     -Dpath="api/stats" \
     -Dextensions="kafka, rest-jackson, websockets"
 ----
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+****
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.super-heroes:event-statistics \
+    --extension="kafka,rest-jackson,websockets" \
+    --java={jdk-version} \
+    --build-tool=gradle
+----
+****
+endif::use-gradle[]
 --
 
+ifdef::use-maven[]
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/event-statistics</module>
 ----
+endif::use-maven[]
 
 [example, role="cta"]
 --

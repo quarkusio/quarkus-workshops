@@ -9,6 +9,7 @@ The MicroProfile Health allows applications to provide information about their s
 In this module we will add an extra subdirectory with two classes to handle the Health Check.
 You will end-up with the following directory structure:
 
+ifdef::use-maven[]
 [plantuml]
 ----
 @startsalt
@@ -38,6 +39,38 @@ super-heroes
 }
 @endsalt
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-hero
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  Hero.java
+++++++++++  HeroApplication.java
+++++++++++  HeroApplicationLifeCycle.java
+++++++++++  HeroResource.java
+++++++++++  HeroService.java
+++++++++++  health
++++++++++++  DatabaseConnectionHealthCheck.java
++++++++++++  PingHeroResourceHealthCheck.java
+++  build.gradle.kts
+}
+}
+@endsalt
+----
+endif::use-gradle[]
 
 While you could add health checks to all our microservices, we are focusing on the **Hero microservice**.
 So don't forget to switch to the Hero microservice code.
@@ -48,15 +81,37 @@ You can apply the same to the other microservices.
 [example, role="cta"]
 --
 To install the MicroProfile Health dependency, just run the following command under the Hero microservice directory (`super-heroes/rest-heroes`):
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="smallrye-health"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="smallrye-health"
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 This will add the following dependency in the `pom.xml` file:
+endif::use-maven[]
+ifdef::use-gradle[]
+This will add the following dependency in the `build.gradle.kts` file:
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,indent=0]
 ----
 <dependency>
@@ -64,6 +119,17 @@ This will add the following dependency in the `pom.xml` file:
   <artifactId>quarkus-smallrye-health</artifactId>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-smallrye-health")
+----
+--
+endif::use-gradle[]
 
 == Running the Default Health Check
 
@@ -74,7 +140,12 @@ Importing the `smallrye-health` extension directly exposes three REST endpoints:
 * `/q/health` - Accumulating all health check procedures in the application.
 * `/q/health-ui` - Graphical interface of all the checks.
 
+ifdef::use-maven[]
 To check that the `smallrye-health` extension is working as expected, make sure the Hero service is up and running (`./mvnw quarkus:dev`) and access using your browser or cURL the following URLs:
+endif::use-maven[]
+ifdef::use-gradle[]
+To check that the `smallrye-health` extension is working as expected, make sure the Hero service is up and running (`./gradlew quarkusDev`) and access using your browser or cURL the following URLs:
+endif::use-gradle[]
 
 * http://localhost:8083/q/health/live
 * http://localhost:8083/q/health/ready
