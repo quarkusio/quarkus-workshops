@@ -11,6 +11,9 @@ In this section, we will see how to use OpenAPI with Quarkus and introduce the d
 In this module we will add extra class (`VillainApplication`) to the Villain API project.
 You will end-up with the following directory structure:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -36,6 +39,38 @@ super-heroes
 }
 @endsalt
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villain
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainApplication.java // We will add it
+++++++++++  VillainResource.java
+++++++++++  VillainService.java
+++  build.gradle.kts
+}
+}
+@endsalt
+----
+--
+endif::use-gradle[]
 
 == Installing the OpenAPI extension
 
@@ -45,15 +80,37 @@ Quarkus proposes a `smallrye-openapi` extension compliant with the MicroProfile 
 --
 
 To install the OpenAPI dependency, just run the following command:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="smallrye-openapi"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="smallrye-openapi"
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 This will add the following dependency in the `pom.xml` file:
+endif::use-maven[]
+ifdef::use-gradle[]
+This will add the following dependency in the `build.gradle.kts` file:
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,indent=0]
 ----
 <dependency>
@@ -61,6 +118,17 @@ This will add the following dependency in the `pom.xml` file:
   <artifactId>quarkus-smallrye-openapi</artifactId>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-smallrye-openapi")
+----
+--
+endif::use-gradle[]
 
 == Open API
 
@@ -174,7 +242,12 @@ include::{projectdir}/rest-villains/src/test/java/io/quarkus/workshop/superheroe
 Run the test:
 
  - From the dev mode, or
+ifdef::use-maven[]
  - By executing the test using `./mvnw test`.
+endif::use-maven[]
+ifdef::use-gradle[]
+ - By executing the test using `./gradlew test`.
+endif::use-gradle[]
 --
 
 include::../common-solution.adoc[]

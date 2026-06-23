@@ -46,6 +46,17 @@ ifndef::os[]
 :use-linux:
 :use-windows:
 endif::[]
+// Convert from buildtool named attribute to booleans
+ifeval::["{buildtool}"=="maven"]
+:use-maven:
+endif::[]
+ifeval::["{buildtool}"=="gradle"]
+:use-gradle:
+endif::[]
+// Fallback to Maven if buildtool isn't set
+ifndef::buildtool[]
+:use-maven:
+endif::[]
 // /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
 
 

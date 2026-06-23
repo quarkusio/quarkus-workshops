@@ -10,15 +10,32 @@ It still has database access, ORM support, transaction, JSON serialization, and 
 [example, role="cta"]
 --
 Let's now package this application using:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw package
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew build
+----
+--
+endif::use-gradle[]
 
 In the log, you can see actions happening during what Quarkus calls the _augmentation_ phase.
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell,subs="attributes+"]
 ----
 [INFO] --- quarkus-maven-plugin:{quarkus-version}:build (default) @ rest-villains ---
@@ -26,6 +43,14 @@ In the log, you can see actions happening during what Quarkus calls the _augment
 [INFO] [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.5.7.Final
 [INFO] [io.quarkus.deployment.QuarkusAugmentor] Quarkus augmentation completed in 1932ms
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+NOTE: With Gradle, the output will look slightly different, but you will see the same _Quarkus augmentation completed_ message.
+--
+endif::use-gradle[]
 
 In this log, you can observe the _build_ principle.
 Typically, about Hibernate, it saves from having to:
@@ -40,12 +65,22 @@ Only runtime configuration properties are applied at startup (such as database U
 Also, during this augmentation, Java classes are generated or extended.
 Remember the `Villain` Panache entity.
 The class is extended during the _augmentation_.
+ifdef::use-maven[]
 If you run `javap --class-path target/quarkus-app/quarkus/transformed-bytecode.jar io.quarkus.workshop.superheroes.villain.Villain`, you can see methods prefixed with `$$` added to the class.
+endif::use-maven[]
+ifdef::use-gradle[]
+If you run `javap --class-path build/quarkus-app/quarkus/transformed-bytecode.jar io.quarkus.workshop.superheroes.villain.Villain`, you can see methods prefixed with `$$` added to the class.
+endif::use-gradle[]
 
 Each _extension_ can combine build time and run time.
 The following figure presents some of the extensions you already used, but there are a lot more.
 We are going to learn more about extensions later in this workshop and even build one.
+ifdef::use-maven[]
 What's important to understand for now is that the magic is packaged into extension, and every time you add a `quarkus-` dependency to your `pom.xml` file, you enable an extension.
+endif::use-maven[]
+ifdef::use-gradle[]
+What's important to understand for now is that the magic is packaged into extension, and every time you add a `quarkus-` dependency to your `build.gradle.kts` file, you enable an extension.
+endif::use-gradle[]
 
 image::quarkus-extensions.png[role=half-size]
 

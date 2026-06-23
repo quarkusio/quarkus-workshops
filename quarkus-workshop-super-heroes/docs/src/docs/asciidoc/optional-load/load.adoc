@@ -28,13 +28,28 @@ include::{projectdir}/load-super-heroes/src/main/java/io/quarkus/workshop/superh
 --
 You are all set!
 Time to compile and start the load application using:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw package
 java -jar ./target/quarkus-app/quarkus-run.jar -s
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew build
+java -jar ./build/quarkus-app/quarkus-run.jar -s
+----
+--
+endif::use-gradle[]
 
 You will see the following logs. To stop the load, write something and press Enter key.
 

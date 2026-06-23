@@ -34,8 +34,30 @@ We don't need to worry too much about the React code.
 [example, role="cta"]
 --
 From the `ui-super-heroes`
-directory, use `./mvnw quarkus:dev` to start the web application.
+directory, start the web application:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
+[source,shell]
+----
+./mvnw quarkus:dev
+----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew quarkusDev
+----
+--
+endif::use-gradle[]
+
+[example, role="cta"]
+--
 Be sure you have the hero, villain and fights microservices running (dev mode is enough).
 --
 

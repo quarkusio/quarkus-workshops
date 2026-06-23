@@ -54,7 +54,12 @@ quarkus-workshop-super-heroes
 @endsalt
 ----
 
+ifdef::use-maven[]
 Most of these subdirectories are Maven projects and follow the Maven directory structure:
+endif::use-maven[]
+ifdef::use-gradle[]
+Most of these subdirectories are Gradle projects and follow the standard Java directory structure:
+endif::use-gradle[]
 
 [plantuml]
 ----

@@ -7,6 +7,9 @@ This chapter explains how to use the MicroProfile REST Client in order to intera
 
 Remember the structure of the Fight microservice:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -56,6 +59,62 @@ T
 }
 @endsalt
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+.
++ src
+++ main
++++ docker
++++ java
+++++ io
++++++ quarkus
+++++++ workshop
++++++++ superheroes
+++++++++ fight
++++++++++ Fight.java
++++++++++ FightResource.java
++++++++++ FightService.java
++++++++++ Fighters.java
++++++++++ client
++++++++++++ Hero.java
++++++++++++ HeroProxy.java
++++++++++++ Villain.java
++++++++++++ VillainProxy.java
++++ resources
+++++ META-INF
++++++ resources
+++++++ index.html
++++++ application.properties
++++++ import.sql
+++ test
++++ java
+++++ io
++++++ quarkus
+++++++ workshop
+++++++++ superheroes
++++++++++ fight
+++++++++++ FightResourceTest.java
++++++++++ client
++++++++++++ DefaultTestHero.java
++++++++++++ DefaultTestVillain.java
++++++++++++ MockHeroProxy.java
++++++++++++ MockVillainProxy.java
++ build.gradle.kts
+}
+}
+@endsalt
+----
+--
+endif::use-gradle[]
 
 We are going to rework the:
 
@@ -69,15 +128,37 @@ We are going to rework the:
 --
 
 To install the REST Client dependency, just run the following command in the Fight microservice:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="io.quarkus:quarkus-rest-client-jackson"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew addExtension --extensions="io.quarkus:quarkus-rest-client-jackson"
+----
+--
+endif::use-gradle[]
 
+ifdef::use-maven[]
 This will add the following dependency in the `pom.xml` file:
+endif::use-maven[]
+ifdef::use-gradle[]
+This will add the following dependency in the `build.gradle.kts` file:
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml,indent=0]
 ----
 <dependency>
@@ -85,6 +166,17 @@ This will add the following dependency in the `pom.xml` file:
   <artifactId>quarkus-rest-client-jackson</artifactId>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin,indent=0]
+----
+implementation("io.quarkus:quarkus-rest-client-jackson")
+----
+--
+endif::use-gradle[]
 
 This dependency imports both the REST client implementation and the JSON mapping support (which uses Jackson).
 
@@ -249,8 +341,16 @@ include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/
 ----
 
 
+ifdef::use-maven[]
 Add the extended Quarkus Mockito support to the `fight` service's `pom.xml`:
+endif::use-maven[]
+ifdef::use-gradle[]
+Add the extended Quarkus Mockito support to the `fight` service's `build.gradle.kts`:
+endif::use-gradle[]
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml]
 ----
 <dependency>
@@ -259,6 +359,17 @@ Add the extended Quarkus Mockito support to the `fight` service's `pom.xml`:
     <scope>test</scope>
 </dependency>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin]
+----
+testImplementation("io.quarkus:quarkus-junit5-mockito")
+----
+--
+endif::use-gradle[]
 
 Now we can add the following to the top of the `FightResourceTest`:
 
@@ -291,7 +402,13 @@ Now, run the test from the dev mode, or from your IDE.
 You can shutdown the hero and villain services to verify that the tests still pass.
 --
 
+ifdef::use-maven[]
 Time to play.
 Start the Hero, Villain and Fight microservices as well as the user interface (using `./mvnw quarkus:dev` on each project) and select random fighters.
+endif::use-maven[]
+ifdef::use-gradle[]
+Time to play.
+Start the Hero, Villain and Fight microservices as well as the user interface (using `./gradlew quarkusDev` on each project) and select random fighters.
+endif::use-gradle[]
 
 image::react-ui.png[role=half-size]

@@ -34,11 +34,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
     private static final String[] ALL_OS_OPTIONS;
     private static final String[] OS_OPTIONS;
+    private static final String[] ALL_BT_OPTIONS;
+    private static final String[] BT_OPTIONS;
 
     static {
         VariantsConfig config = VariantsConfig.load();
         ALL_OS_OPTIONS = config.osOptions().toArray(new String[0]);
         OS_OPTIONS = getOsOptionsToTest(ALL_OS_OPTIONS);
+        ALL_BT_OPTIONS = config.buildToolOptions().toArray(new String[0]);
+        BT_OPTIONS = getBuildToolOptionsToTest(ALL_BT_OPTIONS);
     }
 
     @Test
@@ -98,6 +102,19 @@ public class ConfiguratorTest extends DocumentationTestBase {
             Locator osRadio = page.locator("input[id='" + os + "Radio']");
             assertEquals(1, osRadio.count(), "Should have " + os + " radio button");
         }
+    }
+
+    @Test
+    @DisplayName("Configurator should have build tool selection options")
+    void testIndexHasBuildToolOptions() {
+        navigateToIndex();
+
+        Locator mavenRadio = page.locator("input[id='mavenRadio'][name='buildToolOption']");
+        assertEquals(1, mavenRadio.count(), "Should have Maven build tool radio button");
+
+        Locator gradleRadio = page.locator("input[id='gradleRadio'][name='buildToolOption']");
+        assertEquals(1, gradleRadio.count(), "Should have Gradle build tool radio button");
+
     }
 
     @Test
@@ -219,8 +236,12 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
         // Verify we navigated to a valid page
         String currentUrl = page.url();
+        assertFalse(currentUrl.startsWith("chrome-error:"),
+            "Page should load without error, but got: " + currentUrl);
         assertFalse(currentUrl.contains("index.html"),
             "Should have navigated away from index.html");
+        assertTrue(currentUrl.contains("bt-"),
+            "URL should include build tool prefix bt-: " + currentUrl);
         assertTrue(currentUrl.contains("contract-testing-true"),
             "URL should include contract-testing-true: " + currentUrl);
         assertTrue(currentUrl.contains("extension-true"),
@@ -341,6 +362,17 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
         navigateToIndex();
 
+        // Select the build tool radio button
+        String btRadioId = switch (params.buildTool) {
+            case "maven" -> "mavenRadio";
+            case "gradle" -> "gradleRadio";
+            default -> "mavenRadio";
+        };
+        Locator btRadio = page.locator("input[id='" + btRadioId + "']");
+        if (btRadio.count() > 0) {
+            btRadio.check();
+        }
+
         // Select the OS radio button
         String osRadioId = params.os + "Radio";
         Locator osRadio = page.locator("input[id='" + osRadioId + "']");
@@ -365,6 +397,8 @@ public class ConfiguratorTest extends DocumentationTestBase {
         String currentUrl = page.url();
         assertFalse(currentUrl.contains("index.html"),
             "Should have navigated away from index.html for: " + params);
+        assertTrue(currentUrl.contains("bt-" + params.buildTool),
+            "URL should include bt-" + params.buildTool + " for: " + params + ", but was: " + currentUrl);
 
         // Verify the page has basic structure
         String title = page.title();
@@ -386,6 +420,20 @@ public class ConfiguratorTest extends DocumentationTestBase {
             new Object[]{checkboxId, checked});
     }
 
+    private static String[] getBuildToolOptionsToTest(String[] allBtOptions) {
+        String btProperty = System.getProperty("buildTool");
+        if (btProperty != null && !btProperty.isEmpty()) {
+            for (String validBt : allBtOptions) {
+                if (validBt.equals(btProperty)) {
+                    return new String[]{btProperty};
+                }
+            }
+            System.err.println("Warning: Unknown buildTool property value '" + btProperty +
+                "', testing all build tool options");
+        }
+        return allBtOptions;
+    }
+
     private static String[] getOsOptionsToTest(String[] allOsOptions) {
         String osProperty = System.getProperty("os");
         if (osProperty != null && !osProperty.isEmpty()) {
@@ -404,9 +452,11 @@ public class ConfiguratorTest extends DocumentationTestBase {
         VariantsConfig config = VariantsConfig.load();
         List<CombinationParams> combinations = new ArrayList<>();
 
-        for (String os : OS_OPTIONS) {
-            for (Map<String, Boolean> assignment : config.generateValidCombinations(os)) {
-                combinations.add(new CombinationParams(os, assignment));
+        for (String bt : BT_OPTIONS) {
+            for (String os : OS_OPTIONS) {
+                for (Map<String, Boolean> assignment : config.generateValidCombinations(os)) {
+                    combinations.add(new CombinationParams(os, bt, assignment));
+                }
             }
         }
 
@@ -419,16 +469,18 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
     static class CombinationParams {
         final String os;
+        final String buildTool;
         final Map<String, Boolean> flags;
 
-        CombinationParams(String os, Map<String, Boolean> flags) {
+        CombinationParams(String os, String buildTool, Map<String, Boolean> flags) {
             this.os = os;
+            this.buildTool = buildTool;
             this.flags = flags;
         }
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder("os=").append(os);
+            StringBuilder sb = new StringBuilder("bt=").append(buildTool).append(", os=").append(os);
             flags.forEach((k, v) -> sb.append(", ").append(k).append("=").append(v));
             return sb.toString();
         }

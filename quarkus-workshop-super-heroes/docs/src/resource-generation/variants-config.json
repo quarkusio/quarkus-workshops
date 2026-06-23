@@ -90,5 +90,9 @@
         "mac",
         "linux",
         "windows"
+    ],
+    "buildToolOptions": [
+        "maven",
+        "gradle"
     ]
 }

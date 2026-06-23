@@ -10,6 +10,9 @@ In this module, we will display a banner in the logs once the Villain microservi
 In this section, we will add an extra class (`VillainApplicationLifeCycle`) to handle the Villain API lifecycle.
 You will end up with the following directory structure:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -36,6 +39,39 @@ super-heroes
 }
 @endsalt
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villains
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainApplication.java
+++++++++++  VillainApplicationLifeCycle.java <-- added
+++++++++++  VillainResource.java
+++++++++++  VillainService.java
+++  build.gradle.kts
+}
+}
+@endsalt
+----
+--
+endif::use-gradle[]
 
 == Displaying a Banner
 
@@ -60,7 +96,7 @@ On startup with the `StartupEvent` so it can execute code (here, displaying the 
 [example, role="cta"]
 --
 
-Run the application with: `./mvnw quarkus:dev`, the banner is printed to the console.
+Run the application in dev mode, the banner is printed to the console.
 When the application is stopped, the second log message is printed.
 --
 

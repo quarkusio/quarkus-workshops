@@ -37,12 +37,18 @@ In this section, we will cover the basics of Mutiny and implement an entirely re
 
 New microservice, new project!
 
+ifdef::use-maven[]
 The easiest way to create this new Quarkus project is to use the Quarkus Maven plugin.
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory
+endif::use-maven[]
+ifdef::use-gradle[]
+The easiest way to create this new Quarkus project is to use the Quarkus CLI.
+Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory
+endif::use-gradle[]
 
-[example, role="cta"]
+ifdef::use-maven[]
+[.tab-maven]
 --
-
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
@@ -54,6 +60,19 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
     -Dextensions="rest-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client"
 ----
 --
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.superheroes:rest-heroes \
+    --extension="rest-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client" \
+    --java={jdk-version} \
+    --gradle-kotlin-dsl
+----
+--
+endif::use-gradle[]
 
 As you can see, we can select multiple extensions during the project creation:
 
@@ -63,17 +82,36 @@ As you can see, we can select multiple extensions during the project creation:
 * `quarkus-hibernate-reactive-panache` provides Panache entity supports using Hibernate Reactive, an ORM using reactive database drivers,
 * `quarkus-reactive-pg-client` provides the reactive database driver used by Hibernate Reactive to interact with PostGreSQL databases.
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/rest-heroes</module>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+If you want your IDE to manage this new Gradle project, you can declare it in the `settings.gradle.kts` by adding:
+
+[source,kotlin]
+----
+include("super-heroes:rest-heroes")
+----
+--
+endif::use-gradle[]
 
 === Directory Structure
 
 At the end of this chapter, you will end up with the following directory structure:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -115,6 +153,59 @@ super-heroes
 }
 @endsalt
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-heroes
+++  src
++++  main
+++++  docker
++++++  ...
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  Hero.java
+++++++++++  HeroResource.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++++  import.sql
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  hero
+++++++++++  HeroResourceTest.java
+++  gradlew
+++  gradlew.bat
+++  build.gradle.kts
+++  settings.gradle.kts
+++  gradle
++++  wrapper
+++++  gradle-wrapper.jar
+++++  gradle-wrapper.properties
+}
+}
+@endsalt
+----
+--
+endif::use-gradle[]
 
 === The Hero entity
 
@@ -255,7 +346,12 @@ The tests are very similar to the ones from the villain service.
 
 [example, role="cta"]
 --
+ifdef::use-maven[]
 First, make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+endif::use-maven[]
+ifdef::use-gradle[]
+First, make sure the tests pass by executing the command `./gradlew test` (or from your IDE).
+endif::use-gradle[]
 --
 
 Now that the tests are green, we are ready to run our application.
@@ -263,7 +359,12 @@ Now that the tests are green, we are ready to run our application.
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
 Use `./mvnw quarkus:dev` to start it.
+endif::use-maven[]
+ifdef::use-gradle[]
+Use `./gradlew quarkusDev` to start it.
+endif::use-gradle[]
 Once the application is started, create a new hero with the following cUrl command:
 
 [source,shell]
@@ -312,7 +413,12 @@ Remember that you can also check Swagger UI by going to the dev console: http://
 [example, role="cta"]
 --
 
+ifdef::use-maven[]
 Then, build the application using: `./mvnw package`, and run the application using `java -jar target/quarkus-app/quarkus-run.jar`.
+endif::use-maven[]
+ifdef::use-gradle[]
+Then, build the application using: `./gradlew build`, and run the application using `java -jar build/quarkus-app/quarkus-run.jar`.
+endif::use-gradle[]
 Open your browser and go to http://localhost:8083/api/heroes.
 --
 

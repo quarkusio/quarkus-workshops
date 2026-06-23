@@ -24,6 +24,8 @@ out/
 *.tar.gz
 *.rar
 **/target
+**/build
+**/.gradle
 *dummy*
 ObjectStore
 maven-wrapper.jar

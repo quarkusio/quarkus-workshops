@@ -77,14 +77,30 @@ You are all set!
 
 [example, role="cta"]
 --
-
 Time to start the application using:
+--
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 ./mvnw quarkus:dev
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+./gradlew quarkusDev
+----
+--
+endif::use-gradle[]
 
+[example, role="cta"]
+--
 Then, open `http://localhost:8085` in a new browser window.
 Trigger some fights, and you should see the live statistics moving.
 

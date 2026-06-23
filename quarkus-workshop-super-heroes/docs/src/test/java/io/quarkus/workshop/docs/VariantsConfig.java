@@ -22,14 +22,16 @@ public class VariantsConfig {
 
     private final List<Flag> flags;
     private final List<String> osOptions;
+    private final List<String> buildToolOptions;
 
     public record Flag(String id, String label, boolean enabled, boolean defaultValue,
                        List<String> requires, boolean standalone) {
     }
 
-    private VariantsConfig(List<Flag> flags, List<String> osOptions) {
+    private VariantsConfig(List<Flag> flags, List<String> osOptions, List<String> buildToolOptions) {
         this.flags = flags;
         this.osOptions = osOptions;
+        this.buildToolOptions = buildToolOptions;
     }
 
     public static synchronized VariantsConfig load() {
@@ -38,7 +40,9 @@ public class VariantsConfig {
                 JsonObject config = reader.readObject();
                 List<Flag> flags = parseFlags(config.getJsonArray("flags"));
                 List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
-                instance = new VariantsConfig(flags, osOptions);
+                JsonArray btArray = config.getJsonArray("buildToolOptions");
+                List<String> buildToolOptions = btArray != null ? parseStringArray(btArray) : List.of("maven");
+                instance = new VariantsConfig(flags, osOptions, buildToolOptions);
             } catch (IOException e) {
                 throw new RuntimeException("Failed to read variants config from " + CONFIG_PATH, e);
             }
@@ -52,6 +56,10 @@ public class VariantsConfig {
 
     public List<String> osOptions() {
         return osOptions;
+    }
+
+    public List<String> buildToolOptions() {
+        return buildToolOptions;
     }
 
     public List<Flag> enabledFlags() {

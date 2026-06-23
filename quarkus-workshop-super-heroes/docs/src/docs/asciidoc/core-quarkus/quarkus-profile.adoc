@@ -6,7 +6,12 @@ These allow you to have multiple configurations in the same file and select betw
 
 Quarkus has three profiles by default, although it is possible to use as many as you like. The default profiles are:
 
+ifdef::use-maven[]
 * `dev` - Activated when in development mode (i.e. `quarkus:dev`)
+endif::use-maven[]
+ifdef::use-gradle[]
+* `dev` - Activated when in development mode (i.e. `quarkusDev`)
+endif::use-gradle[]
 * `test` - Activated when running tests
 * `prod` - The default profile when not running in development or test mode
 
@@ -32,7 +37,12 @@ In the `application.properties` file, you can prefix a property with the profile
 For example, we did add the `%test.level.multiplier=1` property in the previous chapter.
 It indicates that the property `level.multiplier` is set to 1 in the `test` profile.
 
+ifdef::use-maven[]
 Now, you will get the `dev` profile enabled if you start your application in dev mode with `./mvnw compile quarkus:dev`.
+endif::use-maven[]
+ifdef::use-gradle[]
+Now, you will get the `dev` profile enabled if you start your application in dev mode with `./gradlew quarkusDev`.
+endif::use-gradle[]
 If you start the tests, the `test` profile is enabled (the `multiplier` is set to 1).
 
 You can also create your own profiles, and activate them with the `quarkus.profile` property.
@@ -45,7 +55,12 @@ For example, to use a profile called `foo`, add the datasource for foo profile
 %foo.quarkus.hibernate-orm.sql-load-script=import.sql
 ```
 
+ifdef::use-maven[]
 package your application with `./mvnw package`, and start it with `java -Dquarkus.profile=foo -jar target/quarkus-app/quarkus-run.jar`.
+endif::use-maven[]
+ifdef::use-gradle[]
+package your application with `./gradlew build`, and start it with `java -Dquarkus.profile=foo -jar build/quarkus-app/quarkus-run.jar`.
+endif::use-gradle[]
 You will see that the `foo` profile is enabled.
 As not overridden, the `level.multiplier` property has the value 0.5.
 
