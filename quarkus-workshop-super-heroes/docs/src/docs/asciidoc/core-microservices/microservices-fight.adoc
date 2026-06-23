@@ -45,10 +45,10 @@ ifdef::use-gradle[]
 --
 [source,shell,subs="attributes+"]
 ----
-quarkus create app io.quarkus.workshop.super-heroes:rest-fights \
+quarkus create app io.quarkus.workshop.superheroes:rest-fights \
   --extension="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi,kafka" \
   --java={jdk-version} \
-  --build-tool=gradle
+  --gradle-kotlin-dsl
 ----
 --
 endif::use-gradle[]

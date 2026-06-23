@@ -38,10 +38,10 @@ ifdef::use-gradle[]
 ****
 [source,shell,subs="attributes+"]
 ----
-quarkus create app io.quarkus.workshop.super-heroes:rest-villains \
+quarkus create app io.quarkus.workshop.superheroes:rest-villains \
     --extension="rest-jackson" \
     --java={jdk-version} \
-    --build-tool=gradle
+    --gradle-kotlin-dsl
 ----
 ****
 endif::use-gradle[]

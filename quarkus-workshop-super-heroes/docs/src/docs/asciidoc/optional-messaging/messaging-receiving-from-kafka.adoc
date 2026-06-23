@@ -100,10 +100,10 @@ ifdef::use-gradle[]
 ****
 [source,shell,subs="attributes+"]
 ----
-quarkus create app io.quarkus.workshop.super-heroes:event-statistics \
+quarkus create app io.quarkus.workshop.superheroes:event-statistics \
     --extension="kafka,rest-jackson,websockets" \
     --java={jdk-version} \
-    --build-tool=gradle
+    --gradle-kotlin-dsl
 ----
 ****
 endif::use-gradle[]
