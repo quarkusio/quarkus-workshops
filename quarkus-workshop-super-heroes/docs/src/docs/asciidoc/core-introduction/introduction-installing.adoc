@@ -19,6 +19,10 @@ ifdef::use-ai[]
 include::introduction-installing-ai.adoc[leveloffset=+1]
 endif::use-ai[]
 
+ifdef::use-gradle[]
+include::introduction-installing-quarkus-cli.adoc[leveloffset=+1]
+endif::use-gradle[]
+
 ifdef::use-windows[]
 include::introduction-installing-wsl.adoc[leveloffset=+1]
 endif::use-windows[]
@@ -34,6 +38,9 @@ Before going further, make sure the following commands work on your machine.
 [source,shell]
 ----
 java -version
+ifdef::use-gradle[]
+quarkus --version
+endif::use-gradle[]
 ifdef::use-native[]
 $GRAALVM_HOME/bin/native-image --version
 endif::use-native[]
