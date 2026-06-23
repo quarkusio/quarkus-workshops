@@ -110,6 +110,8 @@ endif::use-gradle[]
 At the end of this chapter, you will end up with the following directory structure:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -151,8 +153,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -199,6 +204,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 === The Hero entity

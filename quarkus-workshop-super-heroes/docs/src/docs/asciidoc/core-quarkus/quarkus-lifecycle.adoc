@@ -11,6 +11,8 @@ In this section, we will add an extra class (`VillainApplicationLifeCycle`) to h
 You will end up with the following directory structure:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -37,8 +39,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -65,6 +70,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 == Displaying a Banner

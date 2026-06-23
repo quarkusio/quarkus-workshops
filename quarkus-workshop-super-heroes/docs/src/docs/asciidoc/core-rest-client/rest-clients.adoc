@@ -8,6 +8,8 @@ This chapter explains how to use the MicroProfile REST Client in order to intera
 Remember the structure of the Fight microservice:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -57,8 +59,11 @@ T
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -108,6 +113,7 @@ T
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 We are going to rework the:

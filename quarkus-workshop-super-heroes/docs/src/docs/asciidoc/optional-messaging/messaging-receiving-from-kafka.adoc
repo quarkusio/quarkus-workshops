@@ -10,6 +10,8 @@ For example, it determines if villains win more battle than heroes, and who is t
 In this section, we are going to develop the following structure:
 
 ifdef::use-maven[]
+[.tab-maven]
+****
 [plantuml]
 --
 @startsalt
@@ -37,8 +39,11 @@ super-heroes
 }
 @endsalt
 --
+****
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+****
 [plantuml]
 --
 @startsalt
@@ -68,6 +73,7 @@ super-heroes
 }
 @endsalt
 --
+****
 endif::use-gradle[]
 
 == Bootstrapping the Statistics REST Endpoint

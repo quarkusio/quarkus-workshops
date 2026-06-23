@@ -12,6 +12,8 @@ In this module we will add extra class (`VillainApplication`) to the Villain API
 You will end-up with the following directory structure:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -37,8 +39,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -64,6 +69,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 == Installing the OpenAPI extension

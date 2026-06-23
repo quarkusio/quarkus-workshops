@@ -8,6 +8,8 @@ In this section we are going to extend the **Fight microservice**.
 In the following tree, we are going to edit the marked classes
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -40,8 +42,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -74,6 +79,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 == Adding the Reactive Messaging Dependency

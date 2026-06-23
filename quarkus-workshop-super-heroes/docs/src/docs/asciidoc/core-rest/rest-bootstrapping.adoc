@@ -108,6 +108,8 @@ endif::use-gradle[]
 Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -155,8 +157,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -206,6 +211,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 ifdef::use-maven[]

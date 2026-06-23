@@ -13,6 +13,8 @@ In this module we will add extra classes to the Villain API project.
 You will end-up with the following directory structure:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -37,8 +39,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -64,6 +69,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 == Installing the PostgreSQL Dependency, Hibernate with Panache and Hibernate Validator

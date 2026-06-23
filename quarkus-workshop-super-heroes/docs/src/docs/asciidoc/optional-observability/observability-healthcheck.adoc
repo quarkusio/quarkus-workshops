@@ -10,6 +10,8 @@ In this module we will add an extra subdirectory with two classes to handle the 
 You will end-up with the following directory structure:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -39,8 +41,11 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [plantuml]
 ----
 @startsalt
@@ -70,6 +75,7 @@ super-heroes
 }
 @endsalt
 ----
+--
 endif::use-gradle[]
 
 While you could add health checks to all our microservices, we are focusing on the **Hero microservice**.
