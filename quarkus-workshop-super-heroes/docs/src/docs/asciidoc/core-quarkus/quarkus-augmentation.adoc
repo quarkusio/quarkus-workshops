@@ -34,6 +34,8 @@ endif::use-gradle[]
 In the log, you can see actions happening during what Quarkus calls the _augmentation_ phase.
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell,subs="attributes+"]
 ----
 [INFO] --- quarkus-maven-plugin:{quarkus-version}:build (default) @ rest-villains ---
@@ -41,9 +43,13 @@ ifdef::use-maven[]
 [INFO] [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.5.7.Final
 [INFO] [io.quarkus.deployment.QuarkusAugmentor] Quarkus augmentation completed in 1932ms
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 NOTE: With Gradle, the output will look slightly different, but you will see the same _Quarkus augmentation completed_ message.
+--
 endif::use-gradle[]
 
 In this log, you can observe the _build_ principle.

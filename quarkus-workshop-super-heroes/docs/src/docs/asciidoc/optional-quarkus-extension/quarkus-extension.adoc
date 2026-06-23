@@ -269,20 +269,26 @@ endif::use-gradle[]
 [role="cta"]
 ====
 ifdef::use-maven[]
+[.tab-maven]
+--
 Go back to the _villain_ microservice, and add the following dependency to the `pom.xml` file:
 
 [source,xml,indent=0]
 ----
 include::{code-root}/rest-villains/pom.xml[tags=extension-version]
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 Go back to the _villain_ microservice, and add the following dependency to the `build.gradle` file:
 
 [source,groovy,indent=0]
 ----
 implementation 'io.quarkus.workshop.super-heroes:extension-version:1.0.0-SNAPSHOT'
 ----
+--
 endif::use-gradle[]
 
 If not yet started, start the microservice with:

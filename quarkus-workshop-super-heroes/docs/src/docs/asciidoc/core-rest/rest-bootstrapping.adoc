@@ -68,24 +68,30 @@ endif::use-gradle[]
 
 The last line selects the extension we want to use.
 As a start, we only select `rest-jackson`, which will also import `rest`.
+--
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM (`quarkus-super-heroes/pom.xml`) by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/rest-villains</module>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 If you want your IDE to manage this new Gradle project, you can declare it in the parent settings file (`quarkus-super-heroes/settings.gradle.kts`) by adding:
 
 [source,kotlin]
 ----
 include("super-heroes:rest-villains")
 ----
-endif::use-gradle[]
 --
+endif::use-gradle[]
 [TIP]
 .Prefer a Web UI?
 ====
@@ -509,6 +515,8 @@ The output has changed ("_Hello Villain Resource_") without you having to stop a
 All right, so far, so good, but wouldn't it be better with a few tests, just in case.
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 In the generated `pom.xml` file, you can see two test dependencies:
 
 [source,xml,indent=0]
@@ -527,8 +535,11 @@ In the generated `pom.xml` file, you can see two test dependencies:
     </dependency>
 </dependencies>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 In the generated `build.gradle.kts` file, you can see two test dependencies:
 
 [source,kotlin,indent=0]
@@ -539,11 +550,14 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured")
 }
 ----
+--
 endif::use-gradle[]
 
 So, we will use Junit 5 combined with RESTAssured, which eases the testing of REST applications.
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 If you look at the `maven-surefire-plugin` configuration in the `pom.xml`, you will see that we set the `java.util.logging` system property to ensure tests will use the correct method log manager.
 
 [source,xml]
@@ -559,9 +573,13 @@ If you look at the `maven-surefire-plugin` configuration in the `pom.xml`, you w
     </configuration>
 </plugin>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 With Gradle, the Quarkus plugin automatically handles the test configuration, so no extra plugin setup is needed.
+--
 endif::use-gradle[]
 
 The generated project contains a simple test in `VillainResourceTest.java`.

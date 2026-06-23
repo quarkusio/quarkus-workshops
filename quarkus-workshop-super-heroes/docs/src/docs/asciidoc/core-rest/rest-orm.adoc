@@ -84,7 +84,7 @@ Because JPA and Bean Validation work well together, we will use Bean Validation 
 To add the required dependencies, just run the following command under the `super-heroes/rest-villains` directory:
 
 ifdef::use-maven[]
-[example, role="cta"]
+[.tab-maven]
 --
 [source,shell]
 ----
@@ -93,7 +93,7 @@ ifdef::use-maven[]
 --
 endif::use-maven[]
 ifdef::use-gradle[]
-[example, role="cta"]
+[.tab-gradle]
 --
 [source,shell]
 ----
@@ -105,6 +105,8 @@ endif::use-gradle[]
 TIP: No need to add an extension for JSON, we already included `rest-jackson`.
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 This will add the following dependencies in the `pom.xml` file:
 
 [source,xml,indent=0]
@@ -126,8 +128,11 @@ This will add the following dependencies in the `pom.xml` file:
     <!-- ... -->
 </dependencies>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 This will add the following dependencies in the `build.gradle.kts` file:
 
 [source,kotlin,indent=0]
@@ -136,6 +141,7 @@ implementation("io.quarkus:quarkus-hibernate-orm-panache")
 implementation("io.quarkus:quarkus-hibernate-validator")
 implementation("io.quarkus:quarkus-jdbc-postgresql")
 ----
+--
 endif::use-gradle[]
 
 ifdef::use-maven[]
@@ -492,7 +498,7 @@ If you didn't yet, start the application in dev mode by executing the following 
 --
 
 ifdef::use-maven[]
-[example, role="cta"]
+[.tab-maven]
 --
 [source,shell]
 ----
@@ -501,7 +507,7 @@ ifdef::use-maven[]
 --
 endif::use-maven[]
 ifdef::use-gradle[]
-[example, role="cta"]
+[.tab-gradle]
 --
 [source,shell]
 ----
@@ -631,7 +637,7 @@ Stop the dev mode, and run:
 --
 
 ifdef::use-maven[]
-[example, role="cta"]
+[.tab-maven]
 --
 [source,shell]
 ----
@@ -640,7 +646,7 @@ ifdef::use-maven[]
 --
 endif::use-maven[]
 ifdef::use-gradle[]
-[example, role="cta"]
+[.tab-gradle]
 --
 [source,shell]
 ----
@@ -650,7 +656,7 @@ ifdef::use-gradle[]
 endif::use-gradle[]
 
 ifdef::use-maven[]
-[example, role="cta"]
+[.tab-maven]
 --
 As previously, you will get your application in `target/quarkus-app`, run it using:
 
@@ -664,7 +670,7 @@ Once done, stop the application using `CTRL+C`.
 --
 endif::use-maven[]
 ifdef::use-gradle[]
-[example, role="cta"]
+[.tab-gradle]
 --
 As previously, you will get your application in `build/quarkus-app`, run it using:
 

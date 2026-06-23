@@ -366,16 +366,22 @@ quarkus.kubernetes.image-pull-policy=IfNotPresent # Added
 Add the `quarkus-kubernetes` extension using the following command:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [source, shell]
 ----
 ./mvnw quarkus:add-extension -Dextensions="kubernetes"
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [source, shell]
 ----
 ./gradlew addExtension --extensions="kubernetes"
 ----
+--
 endif::use-gradle[]
 
 TIP: If you are behind a proxy, check the https://quarkus.io/guides/extension-registry-user#how-to-register-as-a-nexus-repository-proxy[Quarkus Registry] proxy documentation.
@@ -388,6 +394,8 @@ Alternatively, you can add the following dependency to the `build.gradle.kts` fi
 endif::use-gradle[]
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [source, xml]
 ----
 <dependency>
@@ -395,18 +403,24 @@ ifdef::use-maven[]
   <artifactId>quarkus-kubernetes</artifactId>
 </dependency>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [source, kotlin]
 ----
 implementation("io.quarkus:quarkus-kubernetes")
 ----
+--
 endif::use-gradle[]
 
 Rancher Desktop authentication use elliptic algorithms not supported by default in Java.
 So, we also need to add the following dependency to the project:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [source, xml]
 ----
 <dependency>
@@ -415,12 +429,16 @@ ifdef::use-maven[]
   <version>1.71</version>
 </dependency>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [source, kotlin]
 ----
 implementation("org.bouncycastle:bcpkix-jdk18on:1.71")
 ----
+--
 endif::use-gradle[]
 
 Before deploying our application, we need to deploy the database.
@@ -440,16 +458,22 @@ helm install my-villains-db \
 Finally, deploy the application using:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [source, shell]
 ----
 ./mvnw clean package -Dquarkus.kubernetes.deploy=true -DskipTests
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [source, shell]
 ----
 ./gradlew clean build -Dquarkus.kubernetes.deploy=true -x test
 ----
+--
 endif::use-gradle[]
 
 Check the pods with the following command:

@@ -82,24 +82,30 @@ ifdef::use-gradle[]
 The Quarkus CLI has generated some code that we won't be using.
 You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
 endif::use-gradle[]
+--
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
 
 [source,xml]
 ----
 <module>super-heroes/rest-fights</module>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 If you want your IDE to manage this new Gradle project, you can declare it in the `settings.gradle.kts` by adding:
 
 [source,kotlin]
 ----
 include("super-heroes:rest-fights")
 ----
-endif::use-gradle[]
 --
+endif::use-gradle[]
 
 == Directory Structure
 

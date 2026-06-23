@@ -21,6 +21,8 @@ Choosing JVM execution vs. native executable execution depends on your applicati
 To be able to build native executables, you need GraalVM to be installed.
 And make sure you have the `GRAALVM_HOME` environment variable defined and pointing to where you installed GraalVM.
 ifdef::use-maven[]
+[.tab-maven]
+--
 Then, if you look at all the `pom.xml` files, you will find the following profile.
 This allows you to build a native executable just by invoking `./mvnw package -Pnative`.
 
@@ -28,9 +30,13 @@ This allows you to build a native executable just by invoking `./mvnw package -P
 ----
 include::{projectdir}/rest-heroes/pom.xml[tag=adocNative]
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 With Gradle, building a native executable is done by passing `-Dquarkus.native.enabled=true` to the build command, e.g. `./gradlew build -Dquarkus.native.enabled=true`.
+--
 endif::use-gradle[]
 
 == Building Native Executables for our Microservices
@@ -39,9 +45,9 @@ Let's create native executables for all our microservices.
 Well, maybe not all of them.
 Let's see.
 
-[role="cta"]
-====
 ifdef::use-maven[]
+[.tab-maven]
+--
 From the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-Dmaven.test.skip=true`):
 
 [source,shell]
@@ -54,8 +60,11 @@ ifdef::use-messaging[]
 ./mvnw --file event-statistics/pom.xml package -Pnative
 endif::use-messaging[]
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 From the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-x test`):
 
 [source,shell]
@@ -68,8 +77,8 @@ ifdef::use-messaging[]
 ./gradlew -p event-statistics build -Dquarkus.native.enabled=true
 endif::use-messaging[]
 ----
+--
 endif::use-gradle[]
-====
 
 [WARNING]
 ====
@@ -158,10 +167,11 @@ Notice that there is no `.jar` file extension.
 It's just a binary file that you can execute directly like any other binary.
 Let's execute the entire application in native mode.
 
-[role="cta"]
-====
 Native mode is using the `prod` profile, meaning that the infrastructure needs to be up and running (`docker compose -f docker-compose.yaml up -d`).
+
 ifdef::use-maven[]
+[.tab-maven]
+--
 Then, from the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-Dmaven.test.skip=true`):
 
 [source,shell]
@@ -177,8 +187,11 @@ ifdef::use-ai[]
 ./rest-narration/target/quarkus-app/quarkus-run.jar
 endif::use-ai[]
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 Then, from the root `super-heroes` directory, run the following commands (to speed up the compilation you can also skip the tests by adding `-x test`):
 
 [source,shell]
@@ -194,10 +207,10 @@ ifdef::use-ai[]
 ./rest-narration/build/quarkus-app/quarkus-run.jar
 endif::use-ai[]
 ----
+--
 endif::use-gradle[]
 
 You can then go to http://localhost:8080 and start new fights.
-====
 
 // == Testing the Native Executables
 

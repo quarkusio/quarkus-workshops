@@ -78,6 +78,8 @@ endif::use-ai[]
 endif::use-gradle[]
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 It adds the following dependency to the `pom.xml` files:
 
 [source, xml]
@@ -87,14 +89,18 @@ It adds the following dependency to the `pom.xml` files:
   <artifactId>quarkus-container-image-jib</artifactId>
 </dependency>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 It adds the following dependency to the `build.gradle.kts` files:
 
 [source,kotlin]
 ----
 implementation("io.quarkus:quarkus-container-image-jib")
 ----
+--
 endif::use-gradle[]
 
 [example, role="cta"]

@@ -185,6 +185,8 @@ endif::use-gradle[]
 === Add the Quarkus LangChain4j dependency
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
 Add the following XML in the `rest-narration/pom.xml` file:
 
@@ -214,8 +216,11 @@ Add the following XML in the `rest-narration/pom.xml` file:
     </dependency>
   </dependencies>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
 Add the following to the `rest-narration/build.gradle.kts` file:
 
@@ -228,6 +233,7 @@ dependencies {
     implementation("io.quarkiverse.langchain4j:quarkus-langchain4j-openai")
 }
 ----
+--
 endif::use-gradle[]
 
 === The Fight bean
@@ -324,6 +330,8 @@ Since we don't want to call the real OpenAI API during tests, we will mock the `
 First, make sure you have the Mockito dependency in the project:
 
 ifdef::use-maven[]
+[.tab-maven]
+--
 [source,xml]
 ----
 <dependency>
@@ -332,12 +340,16 @@ ifdef::use-maven[]
     <scope>test</scope>
 </dependency>
 ----
+--
 endif::use-maven[]
 ifdef::use-gradle[]
+[.tab-gradle]
+--
 [source,kotlin]
 ----
 testImplementation("io.quarkus:quarkus-junit-mockito")
 ----
+--
 endif::use-gradle[]
 
 
