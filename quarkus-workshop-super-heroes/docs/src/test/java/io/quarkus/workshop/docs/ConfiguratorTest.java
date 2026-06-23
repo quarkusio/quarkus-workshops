@@ -115,8 +115,6 @@ public class ConfiguratorTest extends DocumentationTestBase {
         Locator gradleRadio = page.locator("input[id='gradleRadio'][name='buildToolOption']");
         assertEquals(1, gradleRadio.count(), "Should have Gradle build tool radio button");
 
-        Locator bothRadio = page.locator("input[id='bothBuildToolRadio'][name='buildToolOption']");
-        assertEquals(1, bothRadio.count(), "Should have Both build tool radio button");
     }
 
     @Test
@@ -368,7 +366,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
         String btRadioId = switch (params.buildTool) {
             case "maven" -> "mavenRadio";
             case "gradle" -> "gradleRadio";
-            default -> "bothBuildToolRadio";
+            default -> "mavenRadio";
         };
         Locator btRadio = page.locator("input[id='" + btRadioId + "']");
         if (btRadio.count() > 0) {

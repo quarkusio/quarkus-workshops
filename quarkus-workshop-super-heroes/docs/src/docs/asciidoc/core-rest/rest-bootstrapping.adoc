@@ -57,12 +57,7 @@ Remember that `mvnw` is the Maven wrapper.
 It behaves like `mvn`, but allows a project's build dependencies to be encapsulated.
 endif::use-maven[]
 ifdef::use-gradle[]
-ifndef::use-maven[]
 Remember that `gradlew` is the Gradle wrapper.
-endif::use-maven[]
-ifdef::use-maven[]
-Similarly, `gradlew` is the Gradle wrapper.
-endif::use-maven[]
 It behaves like `gradle`, but allows a project's build dependencies to be encapsulated.
 endif::use-gradle[]
 

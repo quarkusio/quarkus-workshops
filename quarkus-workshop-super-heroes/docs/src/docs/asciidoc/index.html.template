@@ -64,7 +64,7 @@
             const selectedOptions = [];
 
             const buildToolOption = document.querySelector('input[name="buildToolOption"]:checked');
-            const buildToolValue = buildToolOption?.value || "all";
+            const buildToolValue = buildToolOption?.value || "maven";
             selectedOptions.push(`bt-${buildToolValue}`);
 
             const osOption = document.querySelector('input[name="osOption"]:checked');
@@ -262,11 +262,6 @@
                     <input type="radio" name="buildToolOption" id="gradleRadio" value="gradle">Gradle
                 </label>
             </li>
-            <li>
-                <label for="bothBuildToolRadio">
-                    <input type="radio" name="buildToolOption" id="bothBuildToolRadio" value="all">Both
-                </label>
-            </li>
         </ul>
 
         <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
@@ -347,7 +342,6 @@
         } else if (key === "buildTool") {
             if (value === "maven") document.getElementById("mavenRadio").checked = true;
             else if (value === "gradle") document.getElementById("gradleRadio").checked = true;
-            else if (value === "all") document.getElementById("bothBuildToolRadio").checked = true;
         } else if (key !== "hideDefined") {
             const input = document.querySelector(`input[id="use-${key}"]`);
             if (input) {

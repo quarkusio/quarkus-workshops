@@ -162,24 +162,15 @@ ifdef::use-azure[]
 endif::use-azure[]
 
 ifdef::use-maven[]
-ifndef::use-gradle[]
 We will also be using Maven {maven-version}, but there is no need to install it.
 Instead, the workshop scaffolding includes a Maven wrapper, `mvnw`.
 If you'd prefer to install your own Maven and don't already have it, xref:appendix-installing-maven[see the instructions at the end of the workshop].
-endif::use-gradle[]
-ifdef::use-gradle[]
-The workshop supports both Maven and Gradle as build tools — you can choose either one.
-There is no need to install them: the workshop scaffolding includes both a Maven wrapper (`mvnw`) and a Gradle wrapper (`gradlew`).
-If you'd prefer to install your own, see the instructions for xref:appendix-installing-maven[Maven] or xref:appendix-installing-gradle[Gradle] at the end of the workshop.
-endif::use-gradle[]
 endif::use-maven[]
-ifndef::use-maven[]
 ifdef::use-gradle[]
 We will also be using Gradle, but there is no need to install it globally.
 The workshop scaffolding includes a Gradle wrapper, `gradlew`.
 If you'd prefer to install your own Gradle and don't already have it, xref:appendix-installing-gradle[see the instructions at the end of the workshop].
 endif::use-gradle[]
-endif::use-maven[]
 
 The following section focuses on how to install and set up the needed software.
 You can skip the next section if you have already installed all the prerequisites.

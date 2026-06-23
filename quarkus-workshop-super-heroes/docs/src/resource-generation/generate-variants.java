@@ -72,7 +72,7 @@ class generate_variants {
         List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
         List<String> buildToolOptions = config.containsKey("buildToolOptions")
                 ? parseStringArray(config.getJsonArray("buildToolOptions"))
-                : List.of("all");
+                : List.of("maven");
 
         if (osFilter != null) {
             osOptions = List.of(osFilter);
@@ -218,7 +218,7 @@ class generate_variants {
         }
 
         try (PrintWriter pw = new PrintWriter(path.toFile())) {
-            pw.println(":buildtool: all");
+            pw.println(":buildtool: maven");
             pw.println(":os: all");
             for (Flag f : flags) {
                 if (f.defaultValue()) {

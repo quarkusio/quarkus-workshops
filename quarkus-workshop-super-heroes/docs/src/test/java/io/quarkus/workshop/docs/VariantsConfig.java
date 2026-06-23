@@ -41,7 +41,7 @@ public class VariantsConfig {
                 List<Flag> flags = parseFlags(config.getJsonArray("flags"));
                 List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
                 JsonArray btArray = config.getJsonArray("buildToolOptions");
-                List<String> buildToolOptions = btArray != null ? parseStringArray(btArray) : List.of("all");
+                List<String> buildToolOptions = btArray != null ? parseStringArray(btArray) : List.of("maven");
                 instance = new VariantsConfig(flags, osOptions, buildToolOptions);
             } catch (IOException e) {
                 throw new RuntimeException("Failed to read variants config from " + CONFIG_PATH, e);

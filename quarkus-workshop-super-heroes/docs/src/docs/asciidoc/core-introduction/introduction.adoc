@@ -39,9 +39,7 @@ endif::use-azure[]
 
 This workshop is a BYOL (_Bring Your Own Laptop_) session, so bring your Windows, OSX, or Linux laptop.
 ifdef::use-maven[]
-ifndef::use-gradle[]
 You just need JDK {jdk-version} on your machine and Docker (having Apache Maven {maven-version} installed is optional as you will rely on the Apache Maven Wrapper).
-endif::use-gradle[]
 endif::use-maven[]
 ifdef::use-gradle[]
 You need JDK {jdk-version}, Docker, and the Quarkus CLI on your machine.

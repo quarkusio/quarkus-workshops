@@ -92,7 +92,6 @@
         "windows"
     ],
     "buildToolOptions": [
-        "all",
         "maven",
         "gradle"
     ]
