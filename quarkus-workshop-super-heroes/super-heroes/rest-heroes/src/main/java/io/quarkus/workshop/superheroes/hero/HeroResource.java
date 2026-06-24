@@ -58,7 +58,7 @@ public class HeroResource {
                 return RestResponse.ok(h);
             })
             .onItem().ifNull().continueWith(() -> {
-                this.logger.debug("No random villain found");
+                this.logger.debug("No random hero found");
                 return RestResponse.notFound();
             });
     }
