@@ -14,7 +14,6 @@ Runtime configuration of logging is done through the normal `application.propert
 
 [source,properties]
 ----
-quarkus.log.console.enable=true
 quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
 quarkus.log.console.level=INFO
 quarkus.log.console.darken=1
