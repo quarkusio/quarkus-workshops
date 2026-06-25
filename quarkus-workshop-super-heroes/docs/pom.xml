@@ -262,6 +262,20 @@ The default build will take around 10m.
                 <version>0.0.7</version>
                 <executions>
                     <execution>
+                        <id>qrcode</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <script>src/resource-generation/qrcode.java</script>
+                            <args>
+                                <arg>${base.url}quarkus-workshops/super-heroes/</arg>
+                                <arg>src/docs/asciidoc/images/qrcode.png</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>generate-variants</id>
                         <phase>generate-sources</phase>
                         <goals>
@@ -280,20 +294,6 @@ The default build will take around 10m.
                                 <arg>--copy-images</arg>
                                 <arg>${basedir}/src/docs/asciidoc/images</arg>
                                 <arg>${project.build.directory}/generated-asciidoc/images</arg>
-                            </args>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>qrcode</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <script>src/resource-generation/qrcode.java</script>
-                            <args>
-                                <arg>${base.url}quarkus-workshops/super-heroes/</arg>
-                                <arg>src/docs/asciidoc/images/qrcode.png</arg>
                             </args>
                         </configuration>
                     </execution>

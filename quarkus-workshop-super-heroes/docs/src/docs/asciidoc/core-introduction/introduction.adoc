@@ -7,13 +7,11 @@ Let's start from the beginning.
 Quarkus.
 What's Quarkus?
 That's a pretty good question and probably a good start.
-If you go to the https://quarkus.io[Quarkus web site], you'll read that Quarkus is "_A Kubernetes Native Java stack tailored for OpenJDK HotSpot & GraalVM, crafted from the best of breed Java libraries and standards_."
-This description is somewhat unclear but does an outstanding job at using bankable keywords.
-It's also written: "_Supersonic Subatomic Java_."
+If you go to the https://quarkus.io[Quarkus web site], you'll read that Quarkus is "_Supersonic Subatomic Java_."
 This is a way of saying that Quarkus is really fast, and it’s really light.
 But what does Quarkus _do_?
 
-In practice, Quarkus is a stack to develop distributed systems and modern applications in Java, Kotlin, or Scala.
+In practice, Quarkus is a stack to develop distributed systems and modern applications in Java or Kotlin.
 Quarkus applications are tailored for the Cloud, containers, and Kubernetes.
 That does not mean you can't use Quarkus in other environments, there are no limits, but the principles infused in Quarkus have made containerization of applications more efficient.
 In this workshop, we will explain what Quarkus is and because the best way to understand Quarkus is to use it, build a set of microservices with it.
