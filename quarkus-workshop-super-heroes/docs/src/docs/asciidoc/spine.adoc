@@ -1,5 +1,5 @@
 = Quarkus Super-Heroes Workshop: {docdate} Quarkus {quarkus-version}
-Emmanuel Bernard; Clement Escoffier; Antonio Goncalves; Aurea Munoz Hernandez; Georgios Andrianakis; Holly Cummins; George Gastaldi
+Antonio Goncalves; Clement Escoffier; Holly Cummins; Georgios Andrianakis; Emmanuel Bernard; George Gastaldi; Martin Stefanko; Eric Deandrea; Aurea Munoz Hernandez
 :doctype: book
 :source-highlighter: coderay
 :source-language: java
