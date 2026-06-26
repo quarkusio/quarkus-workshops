@@ -167,7 +167,6 @@ endif::use-container[]
 // Kubernetes
 ifdef::use-kubernetes[]
 include::optional-kubernetes/kubernetes.adoc[leveloffset=+1]
-include::optional-kubernetes/kubernetes-open-shift.adoc[leveloffset=+2]
 <<<
 endif::use-kubernetes[]
 
