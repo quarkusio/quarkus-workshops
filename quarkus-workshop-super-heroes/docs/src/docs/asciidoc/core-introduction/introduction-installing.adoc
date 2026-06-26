@@ -11,9 +11,9 @@ ifdef::use-native[]
 include::introduction-installing-graalvm.adoc[leveloffset=+1]
 endif::use-native[]
 
-ifdef::use-local-kubernetes[]
+ifdef::use-kubernetes[]
 include::introduction-installing-rancher.adoc[leveloffset=+1]
-endif::use-local-kubernetes[]
+endif::use-kubernetes[]
 
 ifdef::use-ai[]
 include::introduction-installing-ai.adoc[leveloffset=+1]
@@ -47,9 +47,9 @@ endif::use-native[]
 curl --version
 docker version
 docker compose version
-ifdef::use-local-kubernetes[]
+ifdef::use-kubernetes[]
 kubectl version # If you used Rancher Desktop and plan to use Kubernetes
-endif::use-local-kubernetes[]
+endif::use-kubernetes[]
 ifdef::use-azure[]
 az --version
 endif::use-azure[]
