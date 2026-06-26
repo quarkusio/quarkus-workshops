@@ -322,8 +322,8 @@ Once everything is configured and deployed, your system is now running on Kubern
 [NOTE]
 ====
 This section is optional and demonstrates how to ask Quarkus to create a container and deploy it to Kubernetes.
-We will need a running Kubernetes.
-We will use Rancher Desktop as indicated in the prerequisites.
+You will need `kubectl` configured to connect to your target Kubernetes cluster.
+For local development, we recommend using Rancher Desktop as described in the xref:introduction-installing-rancher[Rancher Desktop installation instructions].
 ====
 
 == Prerequisites
