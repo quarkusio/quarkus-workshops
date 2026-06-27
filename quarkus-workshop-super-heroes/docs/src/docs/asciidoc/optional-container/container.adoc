@@ -12,7 +12,12 @@ endif::use-native[]
 
 == Building Containers with Quarkus
 
+ifdef::use-maven[]
 When we bootstrapped our microservices with the Maven Quarkus plugin, a set of `Dockerfiles` have been generated under `src/main/docker`:
+endif::use-maven[]
+ifdef::use-gradle[]
+When we bootstrapped our microservices with the Quarkus CLI, a set of `Dockerfiles` have been generated under `src/main/docker`:
+endif::use-gradle[]
 
 * `Dockerfile.jvm`: Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode.
 * `Dockerfile.legacy-jar`: Deprecated Dockerfile building a container in JVM mode.
@@ -25,6 +30,7 @@ As you have guessed by now, using jib is as simple as adding a Quarkus extension
 
 == Building Containers for our Microservices in JVM Mode
 
+ifdef::use-maven[]
 The `Dockerfile.jvm` file is for running the application in JVM mode.
 It looks like this:
 
@@ -32,6 +38,16 @@ It looks like this:
 ----
 include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm[tag=adocSnippet]
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+The `Dockerfile.jvm-gradle` file is for running the application in JVM mode.
+It looks like this:
+
+[source,text]
+----
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm-gradle[tag=adocSnippet]
+----
+endif::use-gradle[]
 
 To start using it, we first need to install the jib extension in all our projects.
 
@@ -251,6 +267,7 @@ So before being able to build a container with our native executable, we need to
 If you are using a Linux 64 bits machine, you are good to go.
 If not, Quarkus comes with a trick to produce these executable:
 
+ifdef::use-maven[]
 The `Dockerfile.native` file is for running the application in native mode.
 It looks like this:
 
@@ -258,6 +275,16 @@ It looks like this:
 ----
 include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+The `Dockerfile.native-gradle` file is for running the application in native mode.
+It looks like this:
+
+[source,text]
+----
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native-gradle[tag=adocSnippet]
+----
+endif::use-gradle[]
 
 ifdef::use-maven[]
 [.tab-maven]
@@ -395,6 +422,9 @@ We need to override this property as well as a few other such as the HTTP client
 
 To build the containers, use the following scripts:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 export ORG=xxxx
@@ -411,6 +441,29 @@ cd event-statistics
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
 cd ..
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+export ORG=xxxx
+cd rest-hero
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-hero .
+cd ..
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-villain .
+cd ..
+cd rest-fight
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-fight .
+cd ..
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-stats .
+cd ..
+----
+--
+endif::use-gradle[]
 
 [NOTE]
 ====
