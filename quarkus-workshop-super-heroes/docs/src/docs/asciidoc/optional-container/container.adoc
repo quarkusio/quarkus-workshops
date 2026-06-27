@@ -25,8 +25,8 @@ endif::use-gradle[]
 * `Dockerfile.native-micro`: Same as above but it uses a micro base image, tuned for Quarkus native executables.
 
 Quarkus is able to build a container image automatically.
-It proposes multiple approaches to do so, but we recommend using https://github.com/GoogleContainerTools/jib[jib].
-As you have guessed by now, using jib is as simple as adding a Quarkus extension to each project.
+The `quarkus-container-image-docker` extension is already included in our projects for this purpose.
+It uses Docker and the generated `Dockerfiles` to build container images.
 
 == Building Containers for our Microservices in JVM Mode
 
@@ -49,83 +49,24 @@ include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm-gradle[tag=adoc
 ----
 endif::use-gradle[]
 
-To start using it, we first need to install the jib extension in all our projects.
-
-[example, role="cta"]
---
-Add the `quarkus-container-image-jib` extension executing the following commands from the root `super-heroes` directory:
---
-
-ifdef::use-maven[]
-[.tab-maven]
---
-[source,shell]
-----
-./mvnw --file rest-fights/pom.xml quarkus:add-extension -Dextensions="jib"
-./mvnw --file rest-heroes/pom.xml quarkus:add-extension -Dextensions="jib"
-./mvnw --file rest-villains/pom.xml quarkus:add-extension -Dextensions="jib"
-./mvnw --file ui-super-heroes/pom.xml quarkus:add-extension -Dextensions="jib"
-ifdef::use-messaging[]
-./mvnw --file event-statistics/pom.xml quarkus:add-extension -Dextensions="jib"
-endif::use-messaging[]
-ifdef::use-ai[]
-./mvnw --file rest-narration/pom.xml quarkus:add-extension -Dextensions="jib"
-endif::use-ai[]
-----
---
-endif::use-maven[]
 ifdef::use-gradle[]
-[.tab-gradle]
---
-[source,shell]
-----
-./gradlew -p rest-fights addExtension --extensions="jib"
-./gradlew -p rest-heroes addExtension --extensions="jib"
-./gradlew -p rest-villains addExtension --extensions="jib"
-./gradlew -p ui-super-heroes addExtension --extensions="jib"
-ifdef::use-messaging[]
-./gradlew -p event-statistics addExtension --extensions="jib"
-endif::use-messaging[]
-ifdef::use-ai[]
-./gradlew -p rest-narration addExtension --extensions="jib"
-endif::use-ai[]
-----
---
-endif::use-gradle[]
+By default, the `quarkus-container-image-docker` extension uses `Dockerfile.jvm` which references `target/` (Maven's output directory).
+Since Gradle outputs to `build/`, we need to tell Quarkus to use `Dockerfile.jvm-gradle` instead.
+Add the following line to the `gradle.properties` file of each microservice:
 
-ifdef::use-maven[]
-[.tab-maven]
---
-It adds the following dependency to the `pom.xml` files:
-
-[source, xml]
+[source,properties]
 ----
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-container-image-jib</artifactId>
-</dependency>
+quarkus.docker.dockerfile-jvm-path=src/main/docker/Dockerfile.jvm-gradle
 ----
---
-endif::use-maven[]
-ifdef::use-gradle[]
-[.tab-gradle]
---
-It adds the following dependency to the `build.gradle.kts` files:
-
-[source,kotlin]
-----
-implementation("io.quarkus:quarkus-container-image-jib")
-----
---
 endif::use-gradle[]
 
 [example, role="cta"]
 --
 ifdef::use-maven[]
-Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-Dmaven.test.skip=true` if you want to skip the tests):
+From the `super-heroes` directory, execute the following commands to build the applications and create the container images (add `-Dmaven.test.skip=true` if you want to skip the tests):
 endif::use-maven[]
 ifdef::use-gradle[]
-Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-x test` if you want to skip the tests):
+From the `super-heroes` directory, execute the following commands to build the applications and create the container images (add `-x test` if you want to skip the tests):
 endif::use-gradle[]
 --
 
@@ -134,15 +75,27 @@ ifdef::use-maven[]
 --
 [source, shell]
 ----
-./mvnw --file rest-fights/pom.xml clean package -Dquarkus.container-image.build=true
-./mvnw --file rest-heroes/pom.xml clean package -Dquarkus.container-image.build=true
-./mvnw --file rest-villains/pom.xml clean package -Dquarkus.container-image.build=true
-./mvnw --file ui-super-heroes/pom.xml clean package -Dquarkus.container-image.build=true
+cd rest-fights
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
+cd rest-heroes
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
+cd rest-villains
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
+cd ui-super-heroes
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
 ifdef::use-messaging[]
-./mvnw --file event-statistics/pom.xml clean package -Dquarkus.container-image.build=true
+cd event-statistics
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
 endif::use-messaging[]
 ifdef::use-ai[]
-./mvnw --file rest-narration/pom.xml clean package -Dquarkus.container-image.build=true
+cd rest-narration
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
 endif::use-ai[]
 ----
 --
@@ -152,15 +105,27 @@ ifdef::use-gradle[]
 --
 [source, shell]
 ----
-./gradlew -p rest-fights clean build -Dquarkus.container-image.build=true
-./gradlew -p rest-heroes clean build -Dquarkus.container-image.build=true
-./gradlew -p rest-villains clean build -Dquarkus.container-image.build=true
-./gradlew -p ui-super-heroes clean build -Dquarkus.container-image.build=true
+cd rest-fights
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
+cd rest-heroes
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
+cd rest-villains
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
+cd ui-super-heroes
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
 ifdef::use-messaging[]
-./gradlew -p event-statistics clean build -Dquarkus.container-image.build=true
+cd event-statistics
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
 endif::use-messaging[]
 ifdef::use-ai[]
-./gradlew -p rest-narration clean build -Dquarkus.container-image.build=true
+cd rest-narration
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
 endif::use-ai[]
 ----
 --
