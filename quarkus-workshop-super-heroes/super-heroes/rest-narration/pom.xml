@@ -34,7 +34,7 @@
 
     <quarkus-langchain4j.version>1.9.2</quarkus-langchain4j.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.5.4</surefire-plugin.version>
+    <surefire-plugin.version>3.5.6</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
