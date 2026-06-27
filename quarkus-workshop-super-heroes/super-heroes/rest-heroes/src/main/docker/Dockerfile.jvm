@@ -22,9 +22,6 @@
 #
 # docker run -i --rm -p 8080:8080 quarkus/rest-heroes-jvm
 #
-# This image uses the `run-java.sh` script to run the application.
-# This scripts computes the command line to execute your Java application, and
-# includes memory/GC tuning.
 # You can configure the behavior using the following environment properties:
 # - JAVA_OPTS: JVM options passed to the `java` command (example: "-verbose:class") - Be aware that this will override
 # the default JVM options. Use `JAVA_OPTS_APPEND` to append options
@@ -79,7 +76,7 @@
 #
 ###
 # tag::adocSnippet[]
-FROM registry.access.redhat.com/ubi9/openjdk-21-runtime:1.23
+FROM eclipse-temurin:21-jre
 
 ENV LANGUAGE='en_US:en'
 
@@ -92,9 +89,7 @@ COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
 
 EXPOSE 8080
 USER 185
-ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
-ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
+ENTRYPOINT ["java", "-Dquarkus.http.host=0.0.0.0", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager", "-jar", "/deployments/quarkus-run.jar"]
 # end::adocSnippet[]
 
