@@ -3,15 +3,15 @@
 #
 # Before building the container image run:
 #
-# ./mvnw package
+# ./gradlew build -Dquarkus.package.type=legacy-jar
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/rest-villains-jvm .
+# docker build -f src/main/docker/Dockerfile.legacy-jar-gradle -t quarkus/event-statistics-legacy-jar .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/rest-villains-jvm
+# docker run -i --rm -p 8080:8080 quarkus/event-statistics-legacy-jar
 #
 # If you want to include the debug port into your docker image
 # you will have to expose the debug port (default 5005 being the default) like this :  EXPOSE 8080 5005.
@@ -20,7 +20,7 @@
 #
 # Then run the container using :
 #
-# docker run -i --rm -p 8080:8080 quarkus/rest-villains-jvm
+# docker run -i --rm -p 8080:8080 quarkus/event-statistics-legacy-jar
 #
 # You can configure the behavior using the following environment properties:
 # - JAVA_OPTS: JVM options passed to the `java` command (example: "-verbose:class")
@@ -79,14 +79,10 @@ FROM eclipse-temurin:21-jre
 ENV LANGUAGE='en_US:en'
 
 
-# We make four distinct layers so if there are application changes the library layers can be re-used
-COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
-COPY --chown=185 target/quarkus-app/*.jar /deployments/
-COPY --chown=185 target/quarkus-app/app/ /deployments/app/
-COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+COPY build/lib/* /deployments/lib/
+COPY build/*-runner.jar /deployments/quarkus-run.jar
 
 EXPOSE 8080
 USER 185
 
 ENTRYPOINT ["java", "-Dquarkus.http.host=0.0.0.0", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager", "-jar", "/deployments/quarkus-run.jar"]
-

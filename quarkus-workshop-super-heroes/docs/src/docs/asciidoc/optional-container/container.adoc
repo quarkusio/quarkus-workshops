@@ -12,7 +12,12 @@ endif::use-native[]
 
 == Building Containers with Quarkus
 
+ifdef::use-maven[]
 When we bootstrapped our microservices with the Maven Quarkus plugin, a set of `Dockerfiles` have been generated under `src/main/docker`:
+endif::use-maven[]
+ifdef::use-gradle[]
+When we bootstrapped our microservices with the Quarkus CLI, a set of `Dockerfiles` have been generated under `src/main/docker`:
+endif::use-gradle[]
 
 * `Dockerfile.jvm`: Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode.
 * `Dockerfile.legacy-jar`: Deprecated Dockerfile building a container in JVM mode.
@@ -20,11 +25,12 @@ When we bootstrapped our microservices with the Maven Quarkus plugin, a set of `
 * `Dockerfile.native-micro`: Same as above but it uses a micro base image, tuned for Quarkus native executables.
 
 Quarkus is able to build a container image automatically.
-It proposes multiple approaches to do so, but we recommend using https://github.com/GoogleContainerTools/jib[jib].
-As you have guessed by now, using jib is as simple as adding a Quarkus extension to each project.
+The `quarkus-container-image-docker` extension is already included in our projects for this purpose.
+It uses Docker and the generated `Dockerfiles` to build container images.
 
 == Building Containers for our Microservices in JVM Mode
 
+ifdef::use-maven[]
 The `Dockerfile.jvm` file is for running the application in JVM mode.
 It looks like this:
 
@@ -32,84 +38,35 @@ It looks like this:
 ----
 include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm[tag=adocSnippet]
 ----
-
-To start using it, we first need to install the jib extension in all our projects.
-
-[example, role="cta"]
---
-Add the `quarkus-container-image-jib` extension executing the following commands from the root `super-heroes` directory:
---
-
-ifdef::use-maven[]
-[.tab-maven]
---
-[source,shell]
-----
-./mvnw --file rest-fights/pom.xml quarkus:add-extension -Dextensions="jib"
-./mvnw --file rest-heroes/pom.xml quarkus:add-extension -Dextensions="jib"
-./mvnw --file rest-villains/pom.xml quarkus:add-extension -Dextensions="jib"
-./mvnw --file ui-super-heroes/pom.xml quarkus:add-extension -Dextensions="jib"
-ifdef::use-messaging[]
-./mvnw --file event-statistics/pom.xml quarkus:add-extension -Dextensions="jib"
-endif::use-messaging[]
-ifdef::use-ai[]
-./mvnw --file rest-narration/pom.xml quarkus:add-extension -Dextensions="jib"
-endif::use-ai[]
-----
---
 endif::use-maven[]
 ifdef::use-gradle[]
-[.tab-gradle]
---
-[source,shell]
+The `Dockerfile.jvm-gradle` file is for running the application in JVM mode.
+It looks like this:
+
+[source,text]
 ----
-./gradlew -p rest-fights addExtension --extensions="jib"
-./gradlew -p rest-heroes addExtension --extensions="jib"
-./gradlew -p rest-villains addExtension --extensions="jib"
-./gradlew -p ui-super-heroes addExtension --extensions="jib"
-ifdef::use-messaging[]
-./gradlew -p event-statistics addExtension --extensions="jib"
-endif::use-messaging[]
-ifdef::use-ai[]
-./gradlew -p rest-narration addExtension --extensions="jib"
-endif::use-ai[]
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm-gradle[tag=adocSnippet]
 ----
---
 endif::use-gradle[]
 
-ifdef::use-maven[]
-[.tab-maven]
---
-It adds the following dependency to the `pom.xml` files:
-
-[source, xml]
-----
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-container-image-jib</artifactId>
-</dependency>
-----
---
-endif::use-maven[]
 ifdef::use-gradle[]
-[.tab-gradle]
---
-It adds the following dependency to the `build.gradle.kts` files:
+By default, the `quarkus-container-image-docker` extension uses `Dockerfile.jvm` which references `target/` (Maven's output directory).
+Since Gradle outputs to `build/`, we need to tell Quarkus to use `Dockerfile.jvm-gradle` instead.
+Add the following line to the `gradle.properties` file of each microservice:
 
-[source,kotlin]
+[source,properties]
 ----
-implementation("io.quarkus:quarkus-container-image-jib")
+quarkus.docker.dockerfile-jvm-path=src/main/docker/Dockerfile.jvm-gradle
 ----
---
 endif::use-gradle[]
 
 [example, role="cta"]
 --
 ifdef::use-maven[]
-Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-Dmaven.test.skip=true` if you want to skip the tests):
+From the `super-heroes` directory, execute the following commands to build the applications and create the container images (add `-Dmaven.test.skip=true` if you want to skip the tests):
 endif::use-maven[]
 ifdef::use-gradle[]
-Then, from the root `super-heroes` directory, execute the following commands to build the applications and create the container image (add `-x test` if you want to skip the tests):
+From the `super-heroes` directory, execute the following commands to build the applications and create the container images (add `-x test` if you want to skip the tests):
 endif::use-gradle[]
 --
 
@@ -118,15 +75,27 @@ ifdef::use-maven[]
 --
 [source, shell]
 ----
-./mvnw --file rest-fights/pom.xml clean package -Dquarkus.container-image.build=true
-./mvnw --file rest-heroes/pom.xml clean package -Dquarkus.container-image.build=true
-./mvnw --file rest-villains/pom.xml clean package -Dquarkus.container-image.build=true
-./mvnw --file ui-super-heroes/pom.xml clean package -Dquarkus.container-image.build=true
+cd rest-fights
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
+cd rest-heroes
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
+cd rest-villains
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
+cd ui-super-heroes
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
 ifdef::use-messaging[]
-./mvnw --file event-statistics/pom.xml clean package -Dquarkus.container-image.build=true
+cd event-statistics
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
 endif::use-messaging[]
 ifdef::use-ai[]
-./mvnw --file rest-narration/pom.xml clean package -Dquarkus.container-image.build=true
+cd rest-narration
+./mvnw clean package -Dquarkus.container-image.build=true
+cd ..
 endif::use-ai[]
 ----
 --
@@ -136,15 +105,27 @@ ifdef::use-gradle[]
 --
 [source, shell]
 ----
-./gradlew -p rest-fights clean build -Dquarkus.container-image.build=true
-./gradlew -p rest-heroes clean build -Dquarkus.container-image.build=true
-./gradlew -p rest-villains clean build -Dquarkus.container-image.build=true
-./gradlew -p ui-super-heroes clean build -Dquarkus.container-image.build=true
+cd rest-fights
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
+cd rest-heroes
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
+cd rest-villains
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
+cd ui-super-heroes
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
 ifdef::use-messaging[]
-./gradlew -p event-statistics clean build -Dquarkus.container-image.build=true
+cd event-statistics
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
 endif::use-messaging[]
 ifdef::use-ai[]
-./gradlew -p rest-narration clean build -Dquarkus.container-image.build=true
+cd rest-narration
+./gradlew clean build -Dquarkus.container-image.build=true
+cd ..
 endif::use-ai[]
 ----
 --
@@ -242,7 +223,7 @@ docker compose -f docker-compose-app-local.yaml down
 ----
 --
 
-ifdef::use-ai[]
+ifdef::use-native[]
 == Building Containers for our Microservices in Native Mode
 
 
@@ -251,6 +232,7 @@ So before being able to build a container with our native executable, we need to
 If you are using a Linux 64 bits machine, you are good to go.
 If not, Quarkus comes with a trick to produce these executable:
 
+ifdef::use-maven[]
 The `Dockerfile.native` file is for running the application in native mode.
 It looks like this:
 
@@ -258,6 +240,16 @@ It looks like this:
 ----
 include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
+endif::use-maven[]
+ifdef::use-gradle[]
+The `Dockerfile.native-gradle` file is for running the application in native mode.
+It looks like this:
+
+[source,text]
+----
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native-gradle[tag=adocSnippet]
+----
+endif::use-gradle[]
 
 ifdef::use-maven[]
 [.tab-maven]
@@ -310,13 +302,13 @@ ifdef::use-maven[]
 --
 [source,shell]
 ----
-cd rest-hero
+cd rest-heroes
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 cd rest-villains
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
-cd rest-fight
+cd rest-fights
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
@@ -331,13 +323,13 @@ ifdef::use-gradle[]
 --
 [source,shell]
 ----
-cd rest-hero
+cd rest-heroes
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
 cd rest-villains
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
-cd rest-fight
+cd rest-fights
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
@@ -364,12 +356,7 @@ ifdef::use-maven[]
 --
 [source,text]
 ----
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
 --
 endif::use-maven[]
@@ -378,12 +365,7 @@ ifdef::use-gradle[]
 --
 [source,text]
 ----
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY build/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native-gradle[tag=adocSnippet]
 ----
 --
 endif::use-gradle[]
@@ -395,22 +377,48 @@ We need to override this property as well as a few other such as the HTTP client
 
 To build the containers, use the following scripts:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [source,shell]
 ----
 export ORG=xxxx
-cd rest-hero
+cd rest-heroes
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
 cd ..
 cd rest-villains
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
 cd ..
-cd rest-fight
+cd rest-fights
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
 cd ..
 cd event-statistics
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
 cd ..
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,shell]
+----
+export ORG=xxxx
+cd rest-heroes
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-hero .
+cd ..
+cd rest-villains
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-villain .
+cd ..
+cd rest-fights
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-fight .
+cd ..
+cd event-statistics
+docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-stats .
+cd ..
+----
+--
+endif::use-gradle[]
 
 [NOTE]
 ====
@@ -447,4 +455,4 @@ endif::use-gradle[]
 
 `-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
 This option is not required if you use Linux.
-endif::use-ai[]
+endif::use-native[]
