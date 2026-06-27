@@ -223,7 +223,7 @@ docker compose -f docker-compose-app-local.yaml down
 ----
 --
 
-ifdef::use-ai[]
+ifdef::use-native[]
 == Building Containers for our Microservices in Native Mode
 
 
@@ -302,13 +302,13 @@ ifdef::use-maven[]
 --
 [source,shell]
 ----
-cd rest-hero
+cd rest-heroes
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
 cd rest-villains
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
-cd rest-fight
+cd rest-fights
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
@@ -323,13 +323,13 @@ ifdef::use-gradle[]
 --
 [source,shell]
 ----
-cd rest-hero
+cd rest-heroes
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
 cd rest-villains
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
-cd rest-fight
+cd rest-fights
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
@@ -356,12 +356,7 @@ ifdef::use-maven[]
 --
 [source,text]
 ----
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native[tag=adocSnippet]
 ----
 --
 endif::use-maven[]
@@ -370,12 +365,7 @@ ifdef::use-gradle[]
 --
 [source,text]
 ----
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY build/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native-gradle[tag=adocSnippet]
 ----
 --
 endif::use-gradle[]
@@ -393,13 +383,13 @@ ifdef::use-maven[]
 [source,shell]
 ----
 export ORG=xxxx
-cd rest-hero
+cd rest-heroes
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-hero .
 cd ..
 cd rest-villains
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-villain .
 cd ..
-cd rest-fight
+cd rest-fights
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
 cd ..
 cd event-statistics
@@ -414,13 +404,13 @@ ifdef::use-gradle[]
 [source,shell]
 ----
 export ORG=xxxx
-cd rest-hero
+cd rest-heroes
 docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-hero .
 cd ..
 cd rest-villains
 docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-villain .
 cd ..
-cd rest-fight
+cd rest-fights
 docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-fight .
 cd ..
 cd event-statistics
@@ -465,4 +455,4 @@ endif::use-gradle[]
 
 `-Dquarkus.native.container-build=true` is indicating that we need a Linux 64bits executable.
 This option is not required if you use Linux.
-endif::use-ai[]
+endif::use-native[]
