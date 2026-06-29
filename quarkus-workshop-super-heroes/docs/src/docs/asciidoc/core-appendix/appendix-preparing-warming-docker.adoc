@@ -23,6 +23,15 @@ Then execute the following command which will download all the Docker images and
 ----
 docker compose -f docker-compose.yaml up -d
 ----
+ifdef::use-messaging[]
+
+If you are doing the optional messaging section, also start the Kafka infrastructure:
+
+[source,shell]
+----
+docker compose -f docker-compose-kafka.yaml up -d
+----
+endif::use-messaging[]
 ====
 
 ifdef::use-linux[]
@@ -58,10 +67,8 @@ The output should resemble something like this:
 ----
      Name                   Command               State           Ports
 --------------------------------------------------------------------------------
-kafka            sh -c bin/kafka-server-sta ...   Up      0.0.0.0:9092->9092/tcp
 super-database   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
 super-visor      /bin/prometheus --config.f ...   Up      0.0.0.0:9090->9090/tcp
-zookeeper        sh -c bin/zookeeper-server ...   Up      0.0.0.0:2181->2181/tcp
 ----
 
 Once all the containers are up and running, you can shut them down and remove their volumes with the commands:
@@ -71,12 +78,27 @@ Once all the containers are up and running, you can shut them down and remove th
 docker compose -f docker-compose.yaml down
 docker compose -f docker-compose.yaml rm
 ----
+ifdef::use-messaging[]
+
+If you started the Kafka infrastructure, also shut it down:
+
+[source,shell]
+----
+docker compose -f docker-compose-kafka.yaml down
+docker compose -f docker-compose-kafka.yaml rm
+----
+endif::use-messaging[]
 
 [NOTE]
 ====
 .What's this infra?
 Any microservice system is going to rely on a set of technical services.
+ifndef::use-messaging[]
+In our context, we are going to use PostgreSQL as the database and Prometheus as the monitoring tool.
+endif::use-messaging[]
+ifdef::use-messaging[]
 In our context, we are going to use PostgreSQL as the database, Prometheus as the monitoring tool, and Kafka as the event/message bus.
+endif::use-messaging[]
 This infrastructure starts all these services, so you don't have to worry about them.
 
 This infra will only be used when we run our services in _prod_ mode. In _dev_ mode, Quarkus will start everything for us.

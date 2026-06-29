@@ -28,6 +28,7 @@ Open a terminal and run the following command:
 ifdef::use-maven[]
 [.tab-maven]
 --
+ifdef::use-messaging[]
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
@@ -38,11 +39,25 @@ ifdef::use-maven[]
   -Dpath="api/fights" \
   -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi,kafka"
 ----
+endif::use-messaging[]
+ifndef::use-messaging[]
+[source,shell,subs="attributes+"]
+----
+./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+  -DplatformVersion={quarkus-version} \
+  -DprojectGroupId=io.quarkus.workshop.super-heroes \
+  -DprojectArtifactId=rest-fights \
+  -DclassName="io.quarkus.workshop.superheroes.fight.FightResource" \
+  -Dpath="api/fights" \
+  -Dextensions="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi"
+----
+endif::use-messaging[]
 --
 endif::use-maven[]
 ifdef::use-gradle[]
 [.tab-gradle]
 --
+ifdef::use-messaging[]
 [source,shell,subs="attributes+"]
 ----
 quarkus create app io.quarkus.workshop.superheroes:rest-fights \
@@ -50,6 +65,16 @@ quarkus create app io.quarkus.workshop.superheroes:rest-fights \
   --java={jdk-version} \
   --gradle-kotlin-dsl
 ----
+endif::use-messaging[]
+ifndef::use-messaging[]
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.superheroes:rest-fights \
+  --extension="jdbc-postgresql,hibernate-orm-panache,hibernate-validator,rest-jackson,smallrye-openapi" \
+  --java={jdk-version} \
+  --gradle-kotlin-dsl
+----
+endif::use-messaging[]
 --
 endif::use-gradle[]
 
@@ -63,7 +88,9 @@ endif::use-gradle[]
 * `io.quarkus:quarkus-hibernate-orm-panache`
 * `io.quarkus:quarkus-hibernate-validator`
 * `io.quarkus:quarkus-smallrye-openapi`
+ifdef::use-messaging[]
 * `io.quarkus:quarkus-messaging-kafka`
+endif::use-messaging[]
 * `io.quarkus:quarkus-rest-jackson`
 * `io.quarkus:quarkus-jdbc-postgresql`
 
@@ -72,6 +99,7 @@ You can see that beyond the extensions we have used so far, we added the Kafka s
 Stay tuned.
 endif::use-messaging[]
 
+ifdef::use-messaging[]
 [example, role="cta"]
 --
 ifdef::use-maven[]
@@ -83,6 +111,7 @@ The Quarkus CLI has generated some code that we won't be using.
 You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
 endif::use-gradle[]
 --
+endif::use-messaging[]
 
 ifdef::use-maven[]
 [.tab-maven]
