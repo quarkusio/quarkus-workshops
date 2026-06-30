@@ -38,7 +38,7 @@ The default build will take around 10m.
         <version.asciidoctorj.pdf>2.3.9</version.asciidoctorj.pdf>
         <version.asciidoctorj.diagram>3.2.1</version.asciidoctorj.diagram>
         <version.asciidoctorj.diagram.plantuml>1.2026.2</version.asciidoctorj.diagram.plantuml>
-        <version.playwright>1.59.0</version.playwright>
+        <version.playwright>1.61.0</version.playwright>
         <version.junit>6.1.0</version.junit>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.raw>
