@@ -787,6 +787,7 @@ endif::use-gradle[]
 Before running the application, don't forget to stop the hot reload mode (hit CTRL+C), or you will have a port conflict.
 ====
 
+ifdef::use-mac[]
 [WARNING]
 ====
 .Troubleshooting
@@ -815,6 +816,7 @@ Then `sudo vi /etc/hosts` so you have the right to edit the file and add the fol
 ----
 
 ====
+endif::use-mac[]
 
 In another terminal, check that the application runs using:
 
