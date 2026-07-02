@@ -526,7 +526,7 @@ In the generated `pom.xml` file, you can see two test dependencies:
     <!-- ... -->
     <dependency>
         <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-junit5</artifactId>
+        <artifactId>quarkus-junit</artifactId>
         <scope>test</scope>
     </dependency>
     <dependency>
@@ -547,7 +547,7 @@ In the generated `build.gradle.kts` file, you can see two test dependencies:
 ----
 dependencies {
     // ...
-    testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.quarkus:quarkus-junit")
     testImplementation("io.rest-assured:rest-assured")
 }
 ----

@@ -355,7 +355,7 @@ ifdef::use-maven[]
 ----
 <dependency>
     <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-junit5-mockito</artifactId>
+    <artifactId>quarkus-junit-mockito</artifactId>
     <scope>test</scope>
 </dependency>
 ----
@@ -366,7 +366,7 @@ ifdef::use-gradle[]
 --
 [source,kotlin]
 ----
-testImplementation("io.quarkus:quarkus-junit5-mockito")
+testImplementation("io.quarkus:quarkus-junit-mockito")
 ----
 --
 endif::use-gradle[]
