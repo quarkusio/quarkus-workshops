@@ -31,6 +31,36 @@ All the React code (graphical components, model, services) is located under `src
 
 We don't need to worry too much about the React code.
 
+ifdef::use-locked-down[]
+==== Installing the Node dependencies
+
+Quinoa can download and manage a local copy of Node.js for you, but this workshop disables that behaviour (`quarkus.quinoa.package-manager-install=false` in the `application.properties`) so that it works in locked-down environments where downloads from `nodejs.org` are blocked and where you are expected to use your organisation's own npm registry.
+
+This means you need to install the Node dependencies yourself before starting the application.
+
+[example, role="cta"]
+--
+First, make sure https://nodejs.org/[Node.js] (which includes `npm`) is installed and available on your `PATH`. You can check with:
+
+[source,shell]
+----
+node --version
+npm --version
+----
+
+Then, from the `ui-super-heroes` directory, download the Node dependencies into `src/main/webui/node_modules`:
+
+[source,shell]
+----
+npm --prefix src/main/webui install
+----
+--
+
+TIP: If your organisation provides its own npm registry, configure it (for example in an `.npmrc` file or via `npm config set registry`) before running the install so that the dependencies are fetched from the approved source.
+
+Once the dependencies are present, Quinoa will use them (and your system `npm`) rather than trying to download Node.js itself.
+endif::use-locked-down[]
+
 [example, role="cta"]
 --
 From the `ui-super-heroes`
@@ -61,6 +91,7 @@ endif::use-gradle[]
 Be sure you have the hero, villain and fights microservices running (dev mode is enough).
 --
 
+ifndef::use-locked-down[]
 If you don't have Node installed, Quinoa will install it during the start process (under the `.quinoa` directory).
 
 ----
@@ -68,6 +99,7 @@ INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installing node ver
 INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Extracting NPM
 INFO  [com.git.eir.mav.plu.fro.lib.NodeInstaller] (build-40) Installed node locally.
 ----
+endif::use-locked-down[]
 
 You should see console output like the following
 
