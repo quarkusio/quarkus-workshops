@@ -51,6 +51,14 @@
             "standalone": true
         },
         {
+            "id": "locked-down",
+            "label": "Locked-down environment (manual Node install, own npm registry)",
+            "enabled": false,
+            "defaultValue": true,
+            "requires": [],
+            "standalone": false
+        },
+        {
             "id": "kubernetes",
             "label": "Running Quarkus on Kubernetes",
             "enabled": true,
