@@ -10,6 +10,8 @@ First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zi
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 ====
 
+include::../common-no-zip-download.adoc[]
+
 == Download the Maven dependencies
 
 [role="cta"]
@@ -37,6 +39,8 @@ ifdef::use-gradle[]
 First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 ====
+
+include::../common-no-zip-download.adoc[]
 
 == Download the Gradle dependencies
 

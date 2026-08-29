@@ -132,6 +132,8 @@ So your job is to follow the instructions by yourself, do what you are supposed 
 
 You will download a zip file ({github-raw}/dist/quarkus-super-heroes-workshop.zip[`quarkus-super-heroes-workshop.zip`]) containing _some_ of the code and you will need to complete it.
 
+include::../common-no-zip-download.adoc[]
+
 Oh, and be ready to have some fun!
 
 == Software Requirements

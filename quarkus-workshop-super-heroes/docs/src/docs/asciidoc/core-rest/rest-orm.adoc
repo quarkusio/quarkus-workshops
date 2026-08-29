@@ -625,6 +625,8 @@ Let's use Docker and docker compose to ease the installation of such infrastruct
 
 You should already have installed the infrastructure into the `infrastructure` directory.
 
+include::../common-no-zip-infrastructure.adoc[]
+
 [example, role="cta"]
 --
 Now, just execute `docker compose -f docker-compose.yaml up -d` under the `infrastructure` directory.

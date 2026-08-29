@@ -1,0 +1,59 @@
+ifdef::use-no-zip[]
+[TIP]
+.Working without the zip
+====
+The workshop zip provides a `super-heroes/infrastructure` directory.
+If downloading it isn't an option for you, create that directory yourself and add the files below.
+They are exactly the files the zip would have given you, so you can copy and paste them.
+
+.super-heroes/infrastructure/docker-compose.yaml
+[source,yaml]
+----
+include::{projectdir}/infrastructure/docker-compose.yaml[]
+----
+
+ifdef::use-linux[]
+.super-heroes/infrastructure/docker-compose-linux.yaml
+[source,yaml]
+----
+include::{projectdir}/infrastructure/docker-compose-linux.yaml[]
+----
+endif::use-linux[]
+
+ifdef::use-messaging[]
+.super-heroes/infrastructure/docker-compose-kafka.yaml
+[source,yaml]
+----
+include::{projectdir}/infrastructure/docker-compose-kafka.yaml[]
+----
+endif::use-messaging[]
+
+.super-heroes/infrastructure/db-init/initialize-databases.sql
+[source,sql]
+----
+include::{projectdir}/infrastructure/db-init/initialize-databases.sql[]
+----
+
+.super-heroes/infrastructure/monitoring/prometheus.yml
+[source,yaml]
+----
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+include::{projectdir}/infrastructure/monitoring/prometheus.yml[tags=adocPrometheus]
+----
+
+ifdef::use-linux[]
+.super-heroes/infrastructure/monitoring/prometheus-linux.yml
+[source,yaml]
+----
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+include::{projectdir}/infrastructure/monitoring/prometheus-linux.yml[tags=adocPrometheus]
+----
+endif::use-linux[]
+
+Once these files are in place, the `docker compose` commands below will work exactly as they would have with the zip.
+====
+endif::use-no-zip[]
