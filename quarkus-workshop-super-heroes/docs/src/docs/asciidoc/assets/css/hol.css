@@ -191,9 +191,11 @@ samp {
     background: var(--dark-blue-alt) !important;
     color: var(--white);
     position: relative;
-    padding-top: 2.5rem;
-    padding-bottom: 3rem;
-    padding-left: var(--site-margins)
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    /* Keep the full-width band's text lined up with the (centred, max-width)
+       content area below it on large screens. */
+    padding-left: max(4rem, calc((100% - 75rem) / 2 + 4rem))
 
 }
 
@@ -202,10 +204,16 @@ samp {
 }
 
 .content-area {
-    margin-left: var(--site-margins);
-    margin-right: var(--site-margins);
+    /* Cap the width and centre it so the configurator doesn't stretch
+       edge-to-edge (and look sparse) on large monitors, while still using
+       comfortable gutters on smaller screens. */
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 4rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     column-gap: 1em;
 
 }
@@ -213,16 +221,51 @@ samp {
 .mode {
     width: 50%;
     padding-top: 0em;
-    padding-left: 4em;
-    padding-right: 4em;
-    margin: 3em;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin: 1em;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+/* Keep the configurator headings compact so the call-to-action buttons stay
+   above the fold on a laptop screen (see issue #722). */
+.content-area h3,
+.content-area h4 {
+    padding-top: 0.6rem;
+    padding-bottom: 0.35rem;
+}
+
+.content-area .mode > h3:first-child {
+    padding-top: 0;
 }
 
 .right {
     border-left: 1px lightgrey solid;
+}
+
+/* On narrow screens (small laptops in split view, tablets, phones) two 50%
+   columns get cramped, so stack them and swap the divider from a left border
+   to a top border. */
+@media (max-width: 55rem) {
+    .content-area {
+        flex-direction: column;
+        padding: 0 1.5rem;
+    }
+
+    .mode {
+        width: auto;
+        margin: 0.5em 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .right {
+        border-left: none;
+        border-top: 1px lightgrey solid;
+        padding-top: 0.5em;
+    }
 }
 
 .cta > .content {
@@ -264,8 +307,8 @@ button:hover {
 .big {
     width: 95%;
     height: 60px;
-    margin-top: 2em;
-    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
     padding: 1em;
     font-size: 1.2em;
     display: flex;
@@ -338,6 +381,26 @@ pre code, pre pre {
 
 ul.configurator {
     list-style-type: none;
+    padding-left: 0;
     padding-bottom: 0;
+    margin-top: 0.25em;
     margin-bottom: 0;
+    /* Lay options out in rows that wrap, rather than one tall column, so the
+       whole configurator (and its button) fits on screen without scrolling. */
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: 1.5em;
+    row-gap: 0.15em;
+}
+
+ul.configurator li {
+    margin: 0;
+}
+
+/* The feature/standalone checkbox lists have longer labels, so give each item
+   room to form a comfortable multi-column grid that still wraps on narrow
+   screens. */
+#feature-checkboxes li,
+#standalone-checkboxes li {
+    flex: 1 1 18em;
 }
