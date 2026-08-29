@@ -268,6 +268,9 @@
             </li>
         </ul>
 
+        <!-- Flags with a "section" (e.g. locked-down) are rendered here, each under its own heading -->
+        <div id="custom-sections"></div>
+
         <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
             include?
         </h4>
@@ -276,9 +279,6 @@
         </div>
         <!-- Checkboxes are generated dynamically from variants-config.json -->
         <ul class="configurator" id="feature-checkboxes"></ul>
-
-        <!-- Flags with a "section" (e.g. locked-down) are rendered here, each under its own heading -->
-        <div id="custom-sections"></div>
 
         <div id="standalone-section" style="display:none">
             <h4 class="no-underline" id="standalone-selector"><i class="fas fa-puzzle-piece"></i>Standalone modules
@@ -303,6 +303,11 @@
         input.id = `use-${flag.id}`;
         input.addEventListener('change', () => onCheckboxChange(flag.id));
         label.appendChild(input);
+        if (flag.icon) {
+            const icon = document.createElement('i');
+            icon.className = flag.icon;
+            label.appendChild(icon);
+        }
         let labelText = flag.label;
         if (flag.requires && flag.requires.length > 0) {
             labelText += ` (needs ${flag.requires.join(', ')})`;
@@ -328,7 +333,7 @@
                 const heading = document.createElement('h4');
                 heading.className = 'no-underline';
                 const icon = document.createElement('i');
-                icon.className = 'fas fa-lock';
+                icon.className = flag.sectionIcon || 'fas fa-tag';
                 heading.appendChild(icon);
                 heading.appendChild(document.createTextNode(flag.section));
                 customSections.appendChild(heading);
