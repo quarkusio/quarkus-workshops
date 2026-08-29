@@ -57,7 +57,9 @@
             "defaultValue": false,
             "requires": [],
             "standalone": false,
-            "section": "Environment"
+            "icon": "fas fa-shield-alt",
+            "section": "Environment",
+            "sectionIcon": "fas fa-building"
         },
         {
             "id": "kubernetes",
