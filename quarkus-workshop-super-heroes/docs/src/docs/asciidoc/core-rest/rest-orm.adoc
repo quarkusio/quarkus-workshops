@@ -321,6 +321,22 @@ In the log, you will see the following:
 Quarkus detects the need for a database and starts one using a Docker container.
 It automatically configures the application, which means we are good to go and implement our REST API.
 
+ifdef::use-locked-down[]
+[TIP]
+====
+By default, Dev Services pulls the `postgres` image from Docker Hub.
+If your environment only allows specific images (for example, images from an approved internal registry), you can adjust the image being used by setting the `quarkus.datasource.devservices.image-name` property in your `application.properties`:
+
+[source,properties]
+----
+quarkus.datasource.devservices.image-name=registry.example.com/postgres:16
+----
+
+Replace `registry.example.com/postgres:16` with an image that is approved for your environment.
+The same approach works for other Dev Services (for example `quarkus.kafka.devservices.image-name` or `quarkus.redis.devservices.image-name`); each extension exposes its own `image-name` property.
+====
+endif::use-locked-down[]
+
 [NOTE]
 ====
 If the application fails to start properly and the logs contain something like
