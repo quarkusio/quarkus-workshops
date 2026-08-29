@@ -62,6 +62,11 @@ endif::[]
 ifdef::use-locked-down[]
 :use-no-quarkus-cli:
 endif::use-locked-down[]
+// Likewise, a locked-down environment often can't download the workshop zip, so
+// locked-down implies no-zip. It too can be promoted to its own flag later if needed.
+ifdef::use-locked-down[]
+:use-no-zip:
+endif::use-locked-down[]
 // /!\ The document header may not contain empty lines. The first empty line the processor encounters after the document header begins marks the end of the document header and the start of the document body. https://docs.asciidoctor.org/asciidoc/latest/document/header/
 
 

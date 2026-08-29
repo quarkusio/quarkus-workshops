@@ -1,0 +1,9 @@
+ifdef::use-no-zip[]
+[NOTE]
+.Working without the zip
+====
+In some security-conscious environments, downloading the zip isn't an option.
+If that's a constraint you have, you can follow the workshop without it.
+We'll fill in the gaps as we go, showing you how to create the pieces the zip would have provided (and, where a piece is too big to paste, how to copy it from source control).
+====
+endif::use-no-zip[]

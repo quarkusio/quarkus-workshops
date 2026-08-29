@@ -23,6 +23,25 @@ Quinoa is framework-agnostic, and works with React, Angular, Vue, Lit, and other
 Navigate to the `super-heroes/ui-super-heroes` directory.
 It contains the code of the application.
 
+ifdef::use-no-zip[]
+[TIP]
+.Working without the zip
+====
+Unlike the other pieces, the React front end is far too large to paste in here, so if downloading the zip isn't an option for you, copy the `ui-super-heroes` directory from source control instead.
+
+The whole workshop lives at {github-url}.
+You can browse to `quarkus-workshop-super-heroes/super-heroes/ui-super-heroes` and download that directory, or clone the repository and copy it into your `super-heroes` directory:
+
+[source,shell,subs="attributes+"]
+----
+git clone {github-repo}.git
+cp -r quarkus-workshops/quarkus-workshop-super-heroes/super-heroes/ui-super-heroes super-heroes/
+----
+
+If Git access is also restricted in your environment, ask a workshop facilitator for a copy of the `ui-super-heroes` directory.
+====
+endif::use-no-zip[]
+
 The React application is in `src/main/webui`.
 Being a React application, you will find a `package.json` file which defines all the needed dependencies.
 All the React code (graphical components, model, services) is located under `src/main/webui/src/app`.

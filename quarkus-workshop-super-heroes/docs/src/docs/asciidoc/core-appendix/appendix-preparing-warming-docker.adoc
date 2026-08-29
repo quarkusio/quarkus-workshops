@@ -14,6 +14,8 @@ Here, you will find a `docker-compose.yaml` or `docker-compose-linux.yaml` file 
 endif::use-mac+use-windows+use-linux[]
 Notice that there is a `db-init` directory with an `initialize-databases.sql` script which sets up our databases, and a `monitoring` directory (all that will be explained later).
 
+include::../common-no-zip-infrastructure.adoc[]
+
 [role="cta"]
 ====
 
