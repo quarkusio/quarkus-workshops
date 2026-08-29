@@ -17,7 +17,7 @@ Open a terminal and run the following command under the `quarkus-workshop-super-
 endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
-[example, role="cta"]
+[example,role="cta"]
 --
 
 ifdef::use-maven[]
@@ -114,6 +114,10 @@ endif::use-gradle[]
 == Directory Structure
 
 Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :
+ifdef::use-no-quarkus-cli[]
+If you scaffolded your project by hand, don't worry about the missing `Dockerfile`s and Java source files.
+We will fill them in as we need them.
+endif::use-no-quarkus-cli[]
 
 ifdef::use-maven[]
 [.tab-maven]
@@ -400,7 +404,7 @@ NOTE: Methods can also have their own `@Path` annotation suffixed to the class o
 
 == Running the Application
 
-[example, role="cta"]
+[example,role="cta"]
 --
 
 Now we are ready to run our application.
@@ -518,7 +522,7 @@ To check that the hot reload is working, update the `VillainResource.hello()` me
 
 Now, execute the cURL command again:
 
-[example, role="cta"]
+[example,role="cta"]
 --
 
 [source,shell]
@@ -639,7 +643,7 @@ So in your RestAssured tests, you don't have to specify the default test port 80
 You can also configure the ports used by tests by configuring the `quarkus.http.test-port` property in the application.properties.
 ====
 
-[example, role="cta"]
+[example,role="cta"]
 --
 
 ifdef::use-maven[]
@@ -701,7 +705,8 @@ Expected: is "Hello from Quarkus REST"
 2022-11-15 14:13:18,157 ERROR [io.qua.test] (Test runner thread) >>>>>>>>>>>>>>>>>>>> 1 TEST FAILED <<<<<<<<<<<<<<<<<<<<
 ----
 
-It fails! It's expected, you changed the output of `VillainResource.hello()` earlier.
+It fails!
+It's expected, you changed the output of `VillainResource.hello()` earlier.
 Adjust the test body condition accordingly:
 
 [source,java]
@@ -766,7 +771,7 @@ endif::use-gradle[]
 
 == Packaging and Running the Application
 
-[example, role="cta"]
+[example,role="cta"]
 --
 
 ifdef::use-maven[]
@@ -776,7 +781,8 @@ The application is packaged using the `./mvnw package` command (it also runs the
 That command generates:
 
 * `target/rest-villains-1.0.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Maven build (it is not an executable jar);
-* `target/quarkus-app/` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
+* `target/quarkus-app/` : this directory uses the _fast jar_ packaging.
+It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
 
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
 
@@ -790,7 +796,8 @@ The application is packaged using the `./gradlew build` command (it also runs th
 That command generates:
 
 * `build/libs/rest-villains-1.0.0-SNAPSHOT.jar`: containing just the classes and resources of the projects, it's the regular artifact produced by the Gradle build (it is not an executable jar);
-* `build/quarkus-app/` : this directory uses the _fast jar_ packaging. It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
+* `build/quarkus-app/` : this directory uses the _fast jar_ packaging.
+It contains an executable jar (`quarkus-run.jar`), and all the dependencies (structured into `app`, `lib` and `quarkus`).
 
 This _fast jar_ takes advantage of the build-time principle of Quarkus (we discuss it soon) to improve the application performances and which can be easily transposed to container layers.
 
@@ -809,7 +816,6 @@ ifdef::use-mac[]
 [WARNING]
 ====
 .Troubleshooting
-
 You might come across the following error while developing:
 
 [source,shell]
