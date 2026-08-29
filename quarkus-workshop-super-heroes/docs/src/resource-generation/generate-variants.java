@@ -232,13 +232,19 @@ class generate_variants {
     }
 
     // Only flags that appear in !ifdef guards in .puml files need distinct diagram directories.
-    // Currently: ai and azure. Update if new !ifdef guards are added to .puml files.
+    // Currently: ai, azure, messaging and observability. Update if new !ifdef guards are added to .puml files.
     private static String diagramKey(Map<String, Boolean> assignment) {
         boolean ai = Boolean.TRUE.equals(assignment.get("ai"));
         boolean azure = Boolean.TRUE.equals(assignment.get("azure"));
-        if (ai && azure) return "ai-azure";
-        if (ai) return "ai";
-        return "base";
+        boolean messaging = Boolean.TRUE.equals(assignment.get("messaging"));
+        boolean observability = Boolean.TRUE.equals(assignment.get("observability"));
+        List<String> parts = new ArrayList<>();
+        // azure only changes a diagram in combination with ai
+        if (ai && azure) parts.add("ai-azure");
+        else if (ai) parts.add("ai");
+        if (messaging) parts.add("msg");
+        if (observability) parts.add("obs");
+        return parts.isEmpty() ? "base" : String.join("-", parts);
     }
 
     private static void copyStaticImages(String srcDir, String destDir,

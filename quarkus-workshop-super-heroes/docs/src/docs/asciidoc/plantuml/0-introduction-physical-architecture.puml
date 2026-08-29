@@ -39,6 +39,7 @@ rectangle "Fight" as fight {
     fightQuarkus .up> fightPostgresql
 }
 
+!ifdef use_messaging
 package "stats" {
     node "Statistics" as stat {
         agent "HTML+JQuery" <<frontend>> as statUI
@@ -50,12 +51,17 @@ package "stats" {
             agent "Browser" <<frontend>> as uiStats
     }
 }
+!endif
 
+!ifdef use_messaging
 rectangle "Kafka + Zookeeper" as kafka {
 }
+!endif
 
+!ifdef use_observability
 rectangle "Prometheus" as prometheus {
 }
+!endif
 
 
 uiQuarkus --> fightQuarkus : HTTP
@@ -67,11 +73,15 @@ fightQuarkus --> narrationQuarkus : HTTP
 sk --> openai : HTTP
 !endif
 
+!ifdef use_messaging
 fightQuarkus ..> kafka : Message
 stat <.. kafka : Message
 statQuarkus ..> uiStats : Web Sockets
+!endif
 
+!ifdef use_observability
 prometheus .down.> fight : polling
 prometheus  .> hero : polling
 prometheus .> villain : polling
+!endif
 @enduml
