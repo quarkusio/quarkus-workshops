@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import com.microsoft.playwright.Locator;
@@ -334,6 +335,11 @@ public class ConfiguratorTest extends DocumentationTestBase {
         }
     }
 
+    // Flags whose content is not a spine-level include but is guarded inline inside an
+    // always-included core file (e.g. locked-down lives in core-ui/ui.adoc), so they legitimately
+    // have no ifdef block in spine.adoc.
+    private static final Set<String> INLINE_GUARDED_FLAGS = Set.of("locked-down");
+
     @Test
     @DisplayName("spine.adoc should have ifdef blocks for every enabled flag")
     void testSpineAdocHasAllFlags() throws Exception {
@@ -347,6 +353,9 @@ public class ConfiguratorTest extends DocumentationTestBase {
         VariantsConfig config = VariantsConfig.load();
 
         for (VariantsConfig.Flag flag : config.enabledFlags()) {
+            if (INLINE_GUARDED_FLAGS.contains(flag.id())) {
+                continue;
+            }
             assertTrue(spineContent.contains("ifdef::use-" + flag.id() + "[]"),
                 "spine.adoc should have ifdef::use-" + flag.id() + "[] block");
         }

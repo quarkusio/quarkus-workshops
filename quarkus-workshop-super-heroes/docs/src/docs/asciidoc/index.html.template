@@ -28,6 +28,10 @@
         const enabledFlags = allFlags.filter(f => f.enabled);
         const nonStandaloneFlags = enabledFlags.filter(f => !f.standalone);
         const standaloneFlags = enabledFlags.filter(f => f.standalone);
+        // Non-standalone flags without a section are regular "content" checkboxes; those with a
+        // section (e.g. locked-down -> "Environment") are rendered under their own heading instead.
+        const contentFlags = nonStandaloneFlags.filter(f => !f.section);
+        const sectionedFlags = nonStandaloneFlags.filter(f => f.section);
 
         const baseUrl = "./";
         const filename = "spine.html";
@@ -273,6 +277,9 @@
         <!-- Checkboxes are generated dynamically from variants-config.json -->
         <ul class="configurator" id="feature-checkboxes"></ul>
 
+        <!-- Flags with a "section" (e.g. locked-down) are rendered here, each under its own heading -->
+        <div id="custom-sections"></div>
+
         <div id="standalone-section" style="display:none">
             <h4 class="no-underline" id="standalone-selector"><i class="fas fa-puzzle-piece"></i>Standalone modules
             </h4>
@@ -286,45 +293,56 @@
 </div>
 
 <script>
+    // Create the <li> for a single flag checkbox
+    function createFlagCheckbox(flag) {
+        const li = document.createElement('li');
+        li.id = `use-${flag.id}-li`;
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.id = `use-${flag.id}`;
+        input.addEventListener('change', () => onCheckboxChange(flag.id));
+        label.appendChild(input);
+        let labelText = flag.label;
+        if (flag.requires && flag.requires.length > 0) {
+            labelText += ` (needs ${flag.requires.join(', ')})`;
+        }
+        label.appendChild(document.createTextNode(labelText));
+        li.appendChild(label);
+        return li;
+    }
+
     // Build checkboxes dynamically from config
     function buildCheckboxes() {
         const featureList = document.getElementById('feature-checkboxes');
+        const customSections = document.getElementById('custom-sections');
         const standaloneList = document.getElementById('standalone-checkboxes');
         const standaloneSection = document.getElementById('standalone-section');
 
-        nonStandaloneFlags.forEach(flag => {
-            const li = document.createElement('li');
-            li.id = `use-${flag.id}-li`;
-            const label = document.createElement('label');
-            const input = document.createElement('input');
-            input.type = 'checkbox';
-            input.id = `use-${flag.id}`;
-            input.addEventListener('change', () => onCheckboxChange(flag.id));
-            label.appendChild(input);
-            let labelText = flag.label;
-            if (flag.requires.length > 0) {
-                labelText += ` (needs ${flag.requires.join(', ')})`;
+        contentFlags.forEach(flag => featureList.appendChild(createFlagCheckbox(flag)));
+
+        // Group sectioned flags by their section name and render each under its own heading
+        const sectionLists = {};
+        sectionedFlags.forEach(flag => {
+            if (!sectionLists[flag.section]) {
+                const heading = document.createElement('h4');
+                heading.className = 'no-underline';
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-lock';
+                heading.appendChild(icon);
+                heading.appendChild(document.createTextNode(flag.section));
+                customSections.appendChild(heading);
+                const ul = document.createElement('ul');
+                ul.className = 'configurator';
+                customSections.appendChild(ul);
+                sectionLists[flag.section] = ul;
             }
-            label.appendChild(document.createTextNode(labelText));
-            li.appendChild(label);
-            featureList.appendChild(li);
+            sectionLists[flag.section].appendChild(createFlagCheckbox(flag));
         });
 
         if (standaloneFlags.length > 0) {
             standaloneSection.style.display = '';
-            standaloneFlags.forEach(flag => {
-                const li = document.createElement('li');
-                li.id = `use-${flag.id}-li`;
-                const label = document.createElement('label');
-                const input = document.createElement('input');
-                input.type = 'checkbox';
-                input.id = `use-${flag.id}`;
-                input.addEventListener('change', () => onCheckboxChange(flag.id));
-                label.appendChild(input);
-                label.appendChild(document.createTextNode(flag.label));
-                li.appendChild(label);
-                standaloneList.appendChild(li);
-            });
+            standaloneFlags.forEach(flag => standaloneList.appendChild(createFlagCheckbox(flag)));
         }
     }
 

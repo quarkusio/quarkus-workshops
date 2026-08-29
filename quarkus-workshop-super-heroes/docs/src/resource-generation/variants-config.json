@@ -53,10 +53,11 @@
         {
             "id": "locked-down",
             "label": "Locked-down environment (manual Node install, own npm registry)",
-            "enabled": false,
-            "defaultValue": true,
+            "enabled": true,
+            "defaultValue": false,
             "requires": [],
-            "standalone": false
+            "standalone": false,
+            "section": "Environment"
         },
         {
             "id": "kubernetes",
