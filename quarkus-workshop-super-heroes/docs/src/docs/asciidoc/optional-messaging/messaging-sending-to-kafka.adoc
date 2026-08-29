@@ -147,6 +147,10 @@ Quarkus starts a Kafka broker automatically.
 You can check that by executing the `docker container ls` command.
 ====
 
+ifdef::use-locked-down[]
+TIP: If your environment only allows specific images, you can change the broker image with `quarkus.kafka.devservices.image-name` in your `application.properties` (for example `quarkus.kafka.devservices.image-name=registry.example.com/redpanda:latest`).
+endif::use-locked-down[]
+
 == Connecting Imperative and Reactive Using an Emitter
 
 [example, role="cta"]

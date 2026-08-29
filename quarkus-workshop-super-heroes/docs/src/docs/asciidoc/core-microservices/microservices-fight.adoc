@@ -671,6 +671,10 @@ Then, make sure the tests pass by executing the command `./gradlew test` (or fro
 endif::use-gradle[]
 Quarkus automatically starts the PostGreSQL database.
 
+ifdef::use-locked-down[]
+TIP: If your environment only allows specific images, you can change the database image with `quarkus.datasource.devservices.image-name` in your `application.properties` (for example `quarkus.datasource.devservices.image-name=registry.example.com/postgres:16`).
+endif::use-locked-down[]
+
 Now that the tests are green, we are ready to run our application.
 ifdef::use-maven[]
 Use `./mvnw quarkus:dev` to start it (notice that there is no banner yet, it will come later).
