@@ -23,6 +23,8 @@ ifdef::use-linux[You can install it on Linux with your distribution's package ma
 
 For other platforms, see the download instructions at https://jqlang.github.io/jq/download/.
 
+ifdef::use-windows[TIP: If you would rather not install anything, Windows PowerShell can pretty-print JSON out of the box: `curl http://localhost:8083/api/heroes | ConvertFrom-Json | ConvertTo-Json`.]
+
 == Checking for jq Installation
 
 Once installed, it's just a matter of piping the cURL output to jq like this:
