@@ -42,8 +42,10 @@ The easiest way to create this new Quarkus project is to use the Quarkus Maven p
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 The easiest way to create this new Quarkus project is to use the Quarkus CLI.
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 ifdef::use-maven[]
@@ -62,6 +64,7 @@ ifdef::use-maven[]
 --
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 [.tab-gradle]
 --
 [source,shell,subs="attributes+"]
@@ -72,6 +75,11 @@ quarkus create app io.quarkus.workshop.superheroes:rest-heroes \
     --gradle-kotlin-dsl
 ----
 --
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+:app-name: rest-heroes
+include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 As you can see, we can select multiple extensions during the project creation:

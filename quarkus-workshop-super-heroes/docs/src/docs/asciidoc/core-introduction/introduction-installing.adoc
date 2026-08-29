@@ -20,7 +20,9 @@ include::introduction-installing-ai.adoc[leveloffset=+1]
 endif::use-ai[]
 
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 include::introduction-installing-quarkus-cli.adoc[leveloffset=+1]
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 ifdef::use-windows[]
@@ -39,7 +41,9 @@ Before going further, make sure the following commands work on your machine.
 ----
 java -version
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 quarkus --version
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 ifdef::use-native[]
 $GRAALVM_HOME/bin/native-image --version

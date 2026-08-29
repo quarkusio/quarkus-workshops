@@ -11,8 +11,10 @@ The easiest way to create a new Quarkus project is to use the Quarkus Maven plug
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 The easiest way to create a new Quarkus project is to use the Quarkus CLI.
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 [example, role="cta"]
@@ -34,6 +36,7 @@ ifdef::use-maven[]
 ****
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 [.tab-gradle]
 ****
 [source,shell,subs="attributes+"]
@@ -44,6 +47,11 @@ quarkus create app io.quarkus.workshop.superheroes:rest-villains \
     --gradle-kotlin-dsl
 ----
 ****
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+:app-name: rest-villains
+include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 [NOTE]
@@ -94,7 +102,12 @@ ifdef::use-maven[]
 Instead of the Maven command, you can use https://code.quarkus.io and select the `rest-jackson` extension.
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 Instead of the Quarkus CLI command, you can use https://code.quarkus.io and select the `rest-jackson` extension (make sure to select Gradle as the build tool).
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+Instead of creating the files by hand, you can use https://code.quarkus.io and select the `rest-jackson` extension (make sure to select Gradle as the build tool) if that site is reachable from your environment.
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 ====
 
@@ -297,7 +310,12 @@ If we focus on the dependencies section, you can see the extensions allowing the
 ----
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 The Quarkus CLI generates the following `rest-villains` sub-directory:
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+A Quarkus Gradle project has the following `rest-villains` sub-directory:
+endif::use-no-quarkus-cli[]
 
 * The Gradle structure with a `build.gradle.kts` and `settings.gradle.kts`
 * An `io.quarkus.workshop.superheroes.villain.VillainResource` resource exposed on `/api/villains`

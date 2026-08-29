@@ -16,7 +16,12 @@ ifdef::use-maven[]
 When we bootstrapped our microservices with the Maven Quarkus plugin, a set of `Dockerfiles` have been generated under `src/main/docker`:
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 When we bootstrapped our microservices with the Quarkus CLI, a set of `Dockerfiles` have been generated under `src/main/docker`:
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+When we bootstrapped our microservices, we added a set of `Dockerfiles` under `src/main/docker`:
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 * `Dockerfile.jvm`: Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode.

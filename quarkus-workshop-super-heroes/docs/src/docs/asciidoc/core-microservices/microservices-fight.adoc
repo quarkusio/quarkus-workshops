@@ -16,8 +16,10 @@ Like for the Hero and Villain API, the easiest way to create this new Quarkus pr
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use the Quarkus CLI.
 Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 [example, role="cta"]
@@ -55,6 +57,7 @@ endif::use-messaging[]
 --
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 [.tab-gradle]
 --
 ifdef::use-messaging[]
@@ -76,6 +79,11 @@ quarkus create app io.quarkus.workshop.superheroes:rest-fights \
 ----
 endif::use-messaging[]
 --
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+:app-name: rest-fights
+include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
 ifdef::use-maven[]
@@ -107,8 +115,10 @@ The Quarkus Maven plugin has generated some code that we won't be using.
 You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 The Quarkus CLI has generated some code that we won't be using.
 You can delete the Java classes `MyReactiveMessagingApplication` and `MyReactiveMessagingApplicationTest`.
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 --
 endif::use-messaging[]

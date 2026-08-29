@@ -40,7 +40,13 @@ ifdef::use-maven[]
 You just need JDK {jdk-version} on your machine and Docker (having Apache Maven {maven-version} installed is optional as you will rely on the Apache Maven Wrapper).
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 You need JDK {jdk-version}, Docker, and the Quarkus CLI on your machine.
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+You need JDK {jdk-version} and Docker on your machine.
+The Quarkus CLI makes creating projects much easier, but these instructions assume it is not available in your (locked-down) environment.
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 ifdef::use-mac,use-windows[]
 On Mac and Windows, Docker for _x_ is recommended instead of the Docker toolbox setup.

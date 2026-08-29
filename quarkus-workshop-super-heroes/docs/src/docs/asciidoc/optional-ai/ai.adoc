@@ -36,7 +36,9 @@ ifdef::use-maven[]
 As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to https://code.quarkus.io if you prefer).
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 As before, the easiest way to create this new Quarkus project is to use the Quarkus CLI (you can also go to https://code.quarkus.io if you prefer).
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
 
@@ -59,6 +61,7 @@ ifdef::use-maven[]
 ****
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 [.tab-gradle]
 ****
 [source,shell,subs="attributes+"]
@@ -69,6 +72,11 @@ quarkus create app io.quarkus.workshop.superheroes:rest-narration \
     --gradle-kotlin-dsl
 ----
 ****
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+:app-name: rest-narration
+include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 --
 
