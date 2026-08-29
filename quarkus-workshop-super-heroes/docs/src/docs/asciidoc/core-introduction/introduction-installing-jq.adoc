@@ -18,6 +18,12 @@ For that, there is a neat utility tool called `jq` that we could use.
 == Installing jq
 
 ifdef::use-mac[You can install it on Mac OSX with a simple `brew install jq`.]
+ifdef::use-windows[You can install it on Windows with `winget install jqlang.jq` or, if you use Chocolatey, `choco install jq`.]
+ifdef::use-linux[You can install it on Linux with your distribution's package manager, for example `sudo apt-get install jq` (Debian/Ubuntu), `sudo dnf install jq` (Fedora), or `sudo yum install jq` (CentOS/RHEL).]
+
+For other platforms, see the download instructions at https://jqlang.github.io/jq/download/.
+
+ifdef::use-windows[TIP: If you would rather not install anything, Windows PowerShell can pretty-print JSON out of the box: `curl http://localhost:8083/api/heroes | ConvertFrom-Json | ConvertTo-Json`.]
 
 == Checking for jq Installation
 
