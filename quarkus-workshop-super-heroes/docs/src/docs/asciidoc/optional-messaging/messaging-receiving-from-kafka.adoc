@@ -102,6 +102,7 @@ ifdef::use-maven[]
 ****
 endif::use-maven[]
 ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
 [.tab-gradle]
 ****
 [source,shell,subs="attributes+"]
@@ -112,6 +113,11 @@ quarkus create app io.quarkus.workshop.superheroes:event-statistics \
     --gradle-kotlin-dsl
 ----
 ****
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+:app-name: event-statistics
+include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
+endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 --
 
