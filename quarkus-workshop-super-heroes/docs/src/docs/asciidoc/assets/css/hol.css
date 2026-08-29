@@ -404,3 +404,64 @@ ul.configurator li {
 #standalone-checkboxes li {
     flex: 1 1 18em;
 }
+
+/* Render the configurator's checkboxes as modern sliding toggle switches
+   instead of default checkboxes. The OS / build-tool radios are left as-is,
+   and the underlying inputs stay <input type="checkbox"> so all the existing
+   selection / constraint JS keeps working. */
+ul.configurator label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.1em;
+}
+
+ul.configurator input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    flex: 0 0 auto;
+    width: 2.6em;
+    height: 1.4em;
+    margin: 0 0.6em 0 0;
+    padding: 0;
+    border: none;
+    border-radius: 1em;
+    background: var(--grey-1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color 0.25s ease;
+}
+
+ul.configurator input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0.15em;
+    left: 0.15em;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease;
+}
+
+ul.configurator input[type="checkbox"]:checked {
+    background: var(--quarkus-blue);
+}
+
+ul.configurator input[type="checkbox"]:checked::before {
+    transform: translateX(1.2em);
+}
+
+ul.configurator input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--cta-blue);
+    outline-offset: 2px;
+}
+
+ul.configurator input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
