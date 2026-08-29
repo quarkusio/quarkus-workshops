@@ -52,7 +52,7 @@
         },
         {
             "id": "locked-down",
-            "label": "Locked-down environment (manual Node install, own npm registry)",
+            "label": "Locked-down environment",
             "enabled": true,
             "defaultValue": false,
             "requires": [],
