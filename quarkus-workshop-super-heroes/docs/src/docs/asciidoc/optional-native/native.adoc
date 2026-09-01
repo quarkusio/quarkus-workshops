@@ -15,7 +15,8 @@ The produced binary has everything to run the application, including the needed 
 
 [NOTE]
 --
-Choosing JVM execution vs. native executable execution depends on your application needs and environment. There are some trade-offs to consider.
+Choosing JVM execution vs. native executable execution depends on your application needs and environment.
+There are some trade-offs to consider.
 --
 
 To be able to build native executables, you need GraalVM to be installed.
@@ -35,7 +36,7 @@ endif::use-maven[]
 ifdef::use-gradle[]
 [.tab-gradle]
 --
-With Gradle, building a native executable is done by passing `-Dquarkus.native.enabled=true` to the build command, e.g. `./gradlew build -Dquarkus.native.enabled=true`.
+With Gradle, building a native executable is done by passing `-Dquarkus.native.enabled=true` to the build command, e.g. `./gradlew build -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false`.
 --
 endif::use-gradle[]
 
