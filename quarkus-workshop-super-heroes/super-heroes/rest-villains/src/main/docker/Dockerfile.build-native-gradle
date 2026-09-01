@@ -21,7 +21,7 @@ USER quarkus
 WORKDIR /code
 COPY --chown=quarkus:quarkus . ${WORKDIR}
 
-RUN cd super-heroes/rest-villains && ./gradlew build -Dquarkus.native.enabled=true -x test
+RUN cd super-heroes/rest-villains && ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -x test
 
 ## Stage 2 : create the docker final image
 FROM quay.io/quarkus/quarkus-micro-image:1.0
