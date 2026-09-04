@@ -27,10 +27,11 @@ sudo pacman -S freetype2 gcc glibc lib32-gcc-libs zlib
 ----
 endif::use-linux[]
 
-ifdef::use-mac[]
-On macOS X there are several ways to install GraalVM.
-But using https://sdkman.io/[SDKMAN!] is the preferred option, as it allows you to easily switch between different versions of GraalVM if needed.
+ifdef::use-linux,use-mac[]
+Using https://sdkman.io/[SDKMAN!] is the preferred option for installing GraalVM, as it allows you to easily switch between different versions of GraalVM if needed.
+endif::use-linux,use-mac[]
 
+ifdef::use-mac[]
 [source,shell]
 ----
 xcode-select --install
@@ -44,16 +45,16 @@ endif::use-windows[]
 
 == Installing GraalVM
 
-ifndef::use-mac[]
-GraalVM is installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases].
+ifdef::use-windows[]
+Where SDKMAN! is not available, GraalVM can be installed from the GraalVM project.footnote:[GraalVM Download https://github.com/graalvm/graalvm-ce-builds/releases].
 
 Version {graalvm-version} is required.
 Select the {jdk-version} version.
 
 Follow the https://www.graalvm.org/jdk{graalvm-version}/docs[installation instructions].
-endif::[]
+endif::use-windows[]
 
-ifdef::use-mac[]
+ifdef::use-linux,use-mac[]
 === Listing GraalVM Versions
 
 First of all, check if you already have the GraalVM Candidates installed on your machine.
@@ -87,7 +88,7 @@ Because we are using Java {jdk-version} in this fascicle, we will install the ve
 ----
 $ sdk install java {graalvm-version}.x-graalce
 ----
-endif::use-mac[]
+endif::use-linux,use-mac[]
 
 Once installed, define the `GRAALVM_HOME` environment variable to point to the directory where GraalVM is installed (eg. on Mac OS X it could be `~/.sdkman/candidates/java/{graalvm-version}.x-graalce`).
 
