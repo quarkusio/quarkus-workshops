@@ -33,7 +33,7 @@
         <quarkus.platform.version>3.33.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
-        <quarkus.pact.version>1.6.0</quarkus.pact.version>
+        <quarkus.pact.version>1.6.1</quarkus.pact.version>
     </properties>
     <dependencyManagement>
         <dependencies>
