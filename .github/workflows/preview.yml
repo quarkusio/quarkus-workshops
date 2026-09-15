@@ -23,11 +23,16 @@ jobs:
           github-token: ${{ github.token }}
           run-id: ${{ github.event.workflow_run.id }}
           name: site
-      - name: Store PR id as variable
+      - name: Validate and expose PR number
         id: pr
+        env:
+          RAW_PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
         run: |
-          echo "id=$(<pr-id.txt)" >> $GITHUB_OUTPUT
-          rm -f pr-id.txt
+          if ! [[ "$RAW_PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "Invalid PR number: $RAW_PR_NUMBER" >&2
+            exit 1
+          fi
+          echo "id=$RAW_PR_NUMBER" >> $GITHUB_OUTPUT
       - name: Trim site for preview
         run: |
           cd super-heroes/variants
@@ -35,7 +40,10 @@ jobs:
           du -sh ..
       - name: Publishing to surge for preview
         id: deploy
-        run: npx surge@0.23.1 ./ --domain quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        env:
+          PR_ID: ${{ steps.pr.outputs.id }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        run: npx surge@0.23.1 ./ --domain "quarkus-workshops-pr-${PR_ID}-preview.surge.sh" --token "$SURGE_TOKEN"
       - name: Update PR status comment on success
         uses: quarkusio/action-helpers@main
         with:
