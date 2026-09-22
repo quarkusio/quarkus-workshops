@@ -1,3 +1,6 @@
+# Looking for the Superheroes workshop?
+
+It's here: [quarkus.io/quarkus-workshops/super-heroes/](https://quarkus.io/quarkus-workshops/super-heroes/index.html)
 # Hosts Quarkus related workshops
 
 * quarkus-workshop-super-heroes: workshop where you build several microservices interoperating through HTTP and Kafka.
