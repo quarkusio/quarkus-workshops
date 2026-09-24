@@ -54,12 +54,6 @@ include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
 endif::use-no-quarkus-cli[]
 endif::use-gradle[]
 
-[NOTE]
-====
-Notice that we scaffold the project with Quarkus REST (`rest-jackson`).
-This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.
-====
-
 ifdef::use-maven[]
 Remember that `mvnw` is the Maven wrapper.
 It behaves like `mvn`, but allows a project's build dependencies to be encapsulated.
