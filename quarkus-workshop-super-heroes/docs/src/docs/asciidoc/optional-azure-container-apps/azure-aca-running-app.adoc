@@ -4,7 +4,12 @@
 '''
 
 Now that we have containerized our application, push it to Azure Container Registry and execute it locally, time to execute it on Azure Container Apps.
+ifndef::use-messaging[]
+In this chapter we will create the needed infrastructure in Azure Container Apps (database, etc.) and then deploy the containers so we can execute our application.
+endif::use-messaging[]
+ifdef::use-messaging[]
 In this chapter we will create the needed infrastructure in Azure Container Apps (database, Kafka, etc.) and then deploy the containers so we can execute our application.
+endif::use-messaging[]
 
 == Deploying the Infrastructure
 
@@ -340,19 +345,34 @@ endif::use-messaging[]
 
 === Fights Microservice
 
+ifndef::use-messaging[]
+The Fight microservice invokes the Heroes and Villains microservices and stores the fights into a MongoDB database.
+We need to configure the Postgres database.
+As for the microservice invocations, you need to set the URLs of both Heroes and Villains microservices.
+endif::use-messaging[]
+ifdef::use-messaging[]
 The Fight microservice invokes the Heroes and Villains microservices, sends fight messages to a Kafka topics and stores the fights into a MongoDB database.
 We need to configure Kafka (same connection string as the one used by the Statistics microservice) as well as the Postgres database.
 As for the microservice invocations, you need to set the URLs of both Heroes and Villains microservices.
+endif::use-messaging[]
 
 [role="cta"]
 ====
 
 Create the Fights container application with the following command:
 
+ifndef::use-messaging[]
+[source,shell,indent=0]
+----
+include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppFight;!adocKafkaConfig]
+----
+endif::use-messaging[]
+ifdef::use-messaging[]
 [source,shell,indent=0]
 ----
 include::{projectdir}/infrastructure/azure-deploy-aca.sh[tags=adocCreateAppFight]
 ----
+endif::use-messaging[]
 
 The following command sets the URL of the deployed application to the `FIGHTS_URL` variable:
 

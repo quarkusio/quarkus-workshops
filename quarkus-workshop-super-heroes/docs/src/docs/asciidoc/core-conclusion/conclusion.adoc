@@ -8,7 +8,12 @@ We hope you liked it, learnt a few things, and more importantly, will be able to
 
 This workshop started making sure your development environment was ready to develop the entire application.
 Then, there was some brief terminology to help you in understanding some concepts around Quarkus.
+ifndef::use-native[]
+If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, or Cloud Native, check the Quarkus website for more references.footnote:[Quarkus https://quarkus.io]
+endif::use-native[]
+ifdef::use-native[]
 If you find it was too short and need more details on Quarkus, Microservices, MicroProfile, Cloud Native, or GraalVM, check the Quarkus website for more references.footnote:[Quarkus https://quarkus.io]
+endif::use-native[]
 
 Then, we focused on developing several isolated microservices.
 Some written in pure JAX-RS (such as the Villain) others with Reactive JAX-RS and Reactive Hibernate (such as the Hero).
