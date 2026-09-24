@@ -25,13 +25,20 @@ In the following sections, we use the `quarkus-workshop` namespace.
 The first thing to deploy is the required infrastructure:
 
 * 3 PostgreSQL instances
+ifdef::use-messaging[]
 * Kafka brokers (3 brokers with 3 Zookeeper to follow the recommended approach)
+endif::use-messaging[]
 
 There are many ways to deploy this infrastructure.
+ifndef::use-messaging[]
+Here, we are going to use the PostgreSQL Operator by Dev4Ddevs.com.
+endif::use-messaging[]
+ifdef::use-messaging[]
 Here, we are going to use two operators:
 
 * PostgreSQL Operator by Dev4Ddevs.com
 * Strimzi Apache Kafka Operator by Red Hat
+endif::use-messaging[]
 
 [example, role="cta"]
 --
@@ -67,6 +74,11 @@ spec:
 
 This CRD creates the database for the Hero microservice.
 Duplicate this CRD for the fight and villain databases.
+--
+
+ifdef::use-messaging[]
+[example, role="cta"]
+--
 
 For the Kafka broker, create the following CRD:
 
@@ -126,8 +138,12 @@ spec:
     retention.ms: 604800000
     segment.bytes: 1073741824
 ----
+--
 
 Once everything is created, you should have the following resources:
+
+[example, role="cta"]
+--
 
 [source,shell]
 ----
@@ -142,6 +158,24 @@ NAME       DESIRED KAFKA REPLICAS   DESIRED ZK REPLICAS
 my-kafka   3
 ----
 --
+endif::use-messaging[]
+
+ifndef::use-messaging[]
+[example, role="cta"]
+--
+
+Once everything is created, you should have the following resources:
+
+[source,shell]
+----
+$ kubectl get database
+NAME                AGE
+fights-database     16h
+heroes-database     16h
+villains-database   16h
+----
+--
+endif::use-messaging[]
 
 === Deploying the Hero & Villain microservices
 
@@ -290,7 +324,9 @@ Follow the same approach for the fight microservice.
 Note that there are more properties to configure from the config map:
 
 * The location of the hero and villain microservice
+ifdef::use-messaging[]
 * The location of the Kafka broker
+endif::use-messaging[]
 
 Once everything is configured and deployed, your system is now running on Kubernetes.
 
