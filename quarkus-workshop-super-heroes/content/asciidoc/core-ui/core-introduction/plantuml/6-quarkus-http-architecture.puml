@@ -1,0 +1,30 @@
+@startuml
+!include style.puml
+allow_mixing
+
+component "Undertow (Servlet)" as undertow {
+}
+
+component "RESTEasy (JaxRS)" as resteasy {
+}
+
+component "Vert.x / Netty" as vertx {
+}
+
+component "Reactive Routes" as rr {
+}
+
+component "Reactive Messaging" as rm {
+}
+
+component "Reactive Data Access" as rdb {
+}
+
+vertx -up-> undertow
+vertx -up-> resteasy
+vertx -up-> rr
+vertx -up-> rm
+vertx -up-> rdb
+
+
+@enduml

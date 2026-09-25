@@ -1,0 +1,29 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+package "version-deployment" as deployment {
+    class VersionConfig <<(C,#D6E6FA)>> {
+        boolean enabled
+    }
+
+    class VersionExtensionProcessor <<(C,#D6E6FA)>> {
+        @BuildStep @Record recordVersion()
+    }
+}
+
+package "version" as runtime {
+    class VersionRecorder <<(C,#D6E6FA)>> {
+        print(String version)
+    }
+
+}
+
+
+
+deployment -up-> runtime : Maven dependency
+VersionExtensionProcessor <.up. VersionConfig : Mapped from configuration
+VersionExtensionProcessor ..> VersionRecorder : Use
+
+@enduml

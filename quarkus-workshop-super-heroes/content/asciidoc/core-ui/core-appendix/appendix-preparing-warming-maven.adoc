@@ -1,0 +1,59 @@
+ifdef::use-maven[]
+= Warming up Maven
+
+== Download the workshop scaffolding
+
+[role="cta"]
+====
+
+First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+This zip file contains _some_ of the code of the workshop, and you will need to complete it.
+====
+
+include::../common-no-zip-download.adoc[]
+
+== Download the Maven dependencies
+
+[role="cta"]
+====
+
+Now that you have the initial structure in place, navigate to the root directory and run:
+
+[source,shell]
+----
+./mvnw clean install
+----
+====
+
+By running this command, it downloads all the required dependencies.
+endif::use-maven[]
+
+ifdef::use-gradle[]
+= Warming up Gradle
+
+== Download the workshop scaffolding
+
+[role="cta"]
+====
+
+First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+This zip file contains _some_ of the code of the workshop, and you will need to complete it.
+====
+
+include::../common-no-zip-download.adoc[]
+
+== Download the Gradle dependencies
+
+[role="cta"]
+====
+
+Now that you have the initial structure in place, navigate to the root directory and run:
+
+[source,shell]
+----
+./gradlew clean build
+----
+====
+
+By running this command, it downloads all the required dependencies.
+endif::use-gradle[]

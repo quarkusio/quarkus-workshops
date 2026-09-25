@@ -1,0 +1,15 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+rectangle "Hero" as hero {
+    agent "QUARKUS_ICON Quarkus (reactive)" <<application>> as heroQuarkus
+    database "Postgresql" as heroPostgresql
+    heroQuarkus .up> heroPostgresql
+}
+
+() "REST" as rest #4695EB
+rest -- heroQuarkus
+
+@enduml

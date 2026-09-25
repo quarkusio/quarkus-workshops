@@ -1,0 +1,119 @@
+[[quarkus-lifecycle]]
+= Application Lifecycle
+
+Now that you know how Quarkus is structured let's continue using various extensions.
+You often need to execute custom actions when the application starts and clean up everything when the application stops.
+In this module, we will display a banner in the logs once the Villain microservice has started.
+
+== Directory Structure
+
+In this section, we will add an extra class (`VillainApplicationLifeCycle`) to handle the Villain API lifecycle.
+You will end up with the following directory structure:
+
+ifdef::use-maven[]
+[.tab-maven]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villains
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainApplication.java
+++++++++++  VillainApplicationLifeCycle.java <-- added
+++++++++++  VillainResource.java
+++++++++++  VillainService.java
+++  pom.xml
+}
+}
+@endsalt
+----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-villains
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  villain
+++++++++++  Villain.java
+++++++++++  VillainApplication.java
+++++++++++  VillainApplicationLifeCycle.java <-- added
+++++++++++  VillainResource.java
+++++++++++  VillainService.java
+++  build.gradle.kts
+}
+}
+@endsalt
+----
+--
+endif::use-gradle[]
+
+== Displaying a Banner
+
+When our application starts, the logs are dull and lack a banner (any decent application *must* have a banner nowadays).
+
+[example, role="cta"]
+--
+
+So the first thing that you need to do is to go to the http://patorjk.com/software/taag[following website] and pick up your favorite "Villain API" text banner.
+
+Create a new class named `VillainApplicationLifeCycle` (or pick another name, the name does not matter) in the `io.quarkus.workshop.superheroes.villain` package, and copy your banner, so you end up with something like the following:
+
+[source,java]
+----
+include::{projectdir}/rest-villains/src/main/java/io/quarkus/workshop/superheroes/villain/VillainApplicationLifeCycle.java[tags=!adocJavadoc;!adocProfile]
+----
+--
+
+Thanks to the CDI `@Observes`, the `VillainApplicationLifeCycle` is invoked.
+On startup with the `StartupEvent` so it can execute code (here, displaying the banner) when the application is starting
+
+[example, role="cta"]
+--
+
+Run the application in dev mode, the banner is printed to the console.
+When the application is stopped, the second log message is printed.
+--
+
+[NOTE]
+====
+If your application is still running, just send an HTTP request, like go to http://localhost:8084.
+====
+
+The method is called by ArC, the dependency injection framework used by Quarkus.
+Arc embraces the build-time principle, meaning that injection happens at build time.
+In addition, Arc can detect and remove unused beans at runtime, saving memory.
+
+[example, role="cta"]
+--
+
+With the application running in dev mode, open your browser to http://localhost:8084/q/dev/.
+In the ArC widget, you can see the number of components that have been removed ("Removed components"), and if you click on the link, see the list of removed beans.
+If you click on the "Observers" link, you will see the two methods we added.
+In the "Fired Events" view, you can see which event has been fired and when.
+--

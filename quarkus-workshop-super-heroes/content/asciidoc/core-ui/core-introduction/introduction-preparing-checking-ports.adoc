@@ -1,0 +1,31 @@
+[[introduction-preparing-checking-ports]]
+= Checking Ports
+
+During this workshop, we will use several ports.
+
+[example, role="cta"]
+--
+Use `lsof` to make sure the following ports are free, so you don't run into any conflicts.
+
+[source,shell]
+----
+lsof -i tcp:8080    # UI
+lsof -i tcp:8082    # Fight REST API
+lsof -i tcp:8083    # Hero REST API
+lsof -i tcp:8084    # Villain REST API
+ifdef::use-messaging[]
+lsof -i tcp:8085    # Statistics REST API
+endif::use-messaging[]
+ifdef::use-ai[]
+lsof -i tcp:8086    # Narration REST API
+endif::use-ai[]
+lsof -i tcp:5432    # Postgres
+ifdef::use_observability[]
+lsof -i tcp:9090    # Prometheus
+endif::use_observability[]
+ifdef::use-messaging[]
+lsof -i tcp:2181    # Zookeeper
+lsof -i tcp:9092    # Kafka
+endif::use-messaging[]
+----
+--

@@ -1,0 +1,51 @@
+---
+description: "Quarkus is a Java framework for building fast, efficient, cloud-native applications. It is Kubernetes-native, supports JVM and native executable deployments, provides live reload and delightful developer tooling, integrates with Jakarta and MicroProfile standards, and offers extensions for databases, messaging, security, observability and AI."
+cname: "quarkus.io"
+baseurl: ""
+twitter_username: "quarkusio"
+github_username: "quarkusio"
+github_fork_url: "https://github.com/quarkusio/quarkus"
+language: "en"
+error_mode: "strict"
+markdown: "kramdown"
+theme: "minima"
+keep_files:
+- "assets/javascripts/search-wc.js"
+sass:
+  style: "compressed"
+pagination:
+  enabled: true
+  debug: false
+  collection: "posts"
+  per_page: 10
+  permalink: "/page/:num/"
+  title: ":title - page :num"
+  limit: 0
+  sort_field: "date"
+  sort_reverse: true
+  category: "posts"
+  tag: ""
+  locale: ""
+  trail:
+    before: 2
+    after: 2
+publication:
+  group_by: "type"
+  sort_by: "date"
+  type_names:
+    article: "Article & Blogs"
+    podcast: "Podcasts"
+    video: "Videos"
+    training: "Training"
+    book: "Books"
+jekyll-archives:
+  enabled:
+  - "tags"
+  layouts:
+    tag: "tag-archive"
+  permalinks:
+    tag: "/blog/tag/:name/"
+feed:
+  posts_limit: 400
+include:
+- ".well-known"
