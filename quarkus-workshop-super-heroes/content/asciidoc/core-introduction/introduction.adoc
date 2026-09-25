@@ -3,12 +3,6 @@
 
 '''
 
-PLANTUML theme
-{plantuml-theme-dir}
-
-PLANTdir theme
-{plantDir}
-
 Let's start from the beginning.
 Quarkus.
 What's Quarkus?

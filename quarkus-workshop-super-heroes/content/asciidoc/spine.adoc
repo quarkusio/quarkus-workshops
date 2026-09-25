@@ -22,11 +22,15 @@ Antonio Goncalves; Clement Escoffier; Holly Cummins; Georgios Andrianakis; Emman
 :full-width: role=full-width
 :half-width: role=half-width
 :half-size: role=half-size
-:projectdir: {docdir}/../../super-heroes/
-:plantuml-theme-dir: https://quarkus.io/assets/plantuml/themes
-:plantDir: {docdir}/../../../plantuml
-// Conditional includes - can be overridden in the build to generate tailored docs
-include::{options-file}[]
+// projectdir, plantDir and plantuml-theme-dir are set in config/application.properties. They have
+// to be, because every .adoc here is also rendered as a standalone Roq page and so cannot rely on
+// attributes defined in spine.adoc. Attributes passed through the API are locked, so redefining
+// them here would have no effect anyway.
+// Conditional includes. The old Maven build swapped this for a generated per-variant options.adoc
+// to produce tailored docs; that step is not ported to the Roq build yet, so the defaults are
+// included directly. Referencing it through an attribute is not an option here, because Roq's
+// build-time header scanner resolves include:: without the attributes from application.properties.
+include::_default-options.adoc[]
 // Convert from named attributes to booleans
 ifeval::["{os}"=="mac"]
 :use-mac:
