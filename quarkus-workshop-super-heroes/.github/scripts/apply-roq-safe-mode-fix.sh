@@ -89,10 +89,12 @@ fi
 
 CP=$(cat "${TEMP_DIR}/classpath.txt")
 
-# Compile
+# Compile all related classes in the runtime package
+RUNTIME_SRC="${ROQSRC_DIR}/roq-plugin/asciidoc-jruby/runtime/src/main/java/io/quarkiverse/roq/plugin/asciidoctorj/runtime"
 javac -cp "${CP}" -d "${TEMP_DIR}/compiled" \
-    "${JAVA_FILE}" \
-    "${ROQSRC_DIR}/roq-plugin/asciidoc-jruby/runtime/src/main/java/io/quarkiverse/roq/plugin/asciidoctorj/runtime/AsciidocJInclude.java"
+    "${RUNTIME_SRC}/AsciidoctorJConfig.java" \
+    "${RUNTIME_SRC}/AsciidoctorJConverter.java" \
+    "${RUNTIME_SRC}/AsciidocJInclude.java"
 
 if [ $? -ne 0 ]; then
     echo "ERROR: Compilation failed"
