@@ -74,9 +74,7 @@ jobs:
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes/docs
-          # First compile without running tests
-          mvn -B package -DskipTests -Dos=${{ matrix.os }}
-          # Generate the ROQ site in batch mode
+          # Generate the ROQ site in batch mode (without running tests, which can't pass until after the build)
           QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B quarkus:run -Dos=${{ matrix.os }}
           # Now run the tests against the generated site
           mvn -B test -Dos=${{ matrix.os }}
