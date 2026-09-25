@@ -22,7 +22,9 @@
     </head>
     <title>Workshop configurator</title>
     <script>
-        const variantsConfig = __VARIANTS_CONFIG_JSON__;
+        // Inlined at build time from data/variants.json, which roq-data exposes as a JsonObject
+        // bean named `variants`. `.raw` keeps Qute from HTML-escaping the quotes in the JSON.
+        const variantsConfig = {=cdi:variants.raw};
 
         const allFlags = variantsConfig.flags;
         const enabledFlags = allFlags.filter(f => f.enabled);
@@ -278,7 +280,7 @@
             <a href="#" onclick="selectAll(); return false;">Select all</a> / <a href="#"
                                                                                  onclick="selectNone(); return false;">none</a>
         </div>
-        <!-- Checkboxes are generated dynamically from variants-config.json -->
+        <!-- Checkboxes are generated dynamically from data/variants.json -->
         <ul class="configurator" id="feature-checkboxes"></ul>
 
         <div id="standalone-section" style="display:none">

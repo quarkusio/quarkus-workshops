@@ -16,7 +16,7 @@ import jakarta.json.JsonString;
 public class VariantsConfig {
 
     private static final String CONFIG_PATH = System.getProperty("variants.config.path",
-        "docs/src/resource-generation/variants-config.json");
+        "docs/data/variants.json");
 
     private static VariantsConfig instance;
 

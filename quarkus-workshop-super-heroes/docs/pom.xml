@@ -126,7 +126,7 @@
                         </junit.jupiter.execution.parallel.config.fixed.parallelism>
                         <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
                         <os>${os}</os>
-                        <variants.config.path>${basedir}/src/resource-generation/variants-config.json
+                        <variants.config.path>${basedir}/data/variants.json
                         </variants.config.path>
                     </systemPropertyVariables>
                 </configuration>
