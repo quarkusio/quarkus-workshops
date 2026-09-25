@@ -1,2 +1,6 @@
 # generated as part of the build
 src/docs/asciidoc/images/qrcode.png
+/content/asciidoc/*.png
+/content/asciidoc/*.png.cache
+/content/asciidoc/*/*.png
+/content/asciidoc/*/*.png.cache
