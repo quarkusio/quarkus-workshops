@@ -74,7 +74,12 @@ jobs:
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes/docs
-          QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B package quarkus:run -Dos=${{ matrix.os }}
+          # First compile without running tests
+          mvn -B package -DskipTests -Dos=${{ matrix.os }}
+          # Generate the ROQ site in batch mode
+          QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B quarkus:run -Dos=${{ matrix.os }}
+          # Now run the tests against the generated site
+          mvn -B test -Dos=${{ matrix.os }}
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
