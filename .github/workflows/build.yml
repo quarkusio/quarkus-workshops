@@ -69,7 +69,7 @@ jobs:
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes
-          QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B package quarkus:run -DskipTests -Dos=${{ matrix.os }} # TODO DO NOT skip tests
+          QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B package quarkus:run -Dos=${{ matrix.os }}
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
-          path: ./quarkus-workshop-super-heroes/target/generated-asciidoc
+          path: ./quarkus-workshop-super-heroes/target/roq
           if-no-files-found: error
           retention-days: 3
   publication:
@@ -91,42 +91,42 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: all-fragments
-          path: target/generated-asciidoc
+          path: target/roq
           # take the all- package to be the top-level
       - name: Download Linux site
         uses: actions/download-artifact@v8
         with:
           name: linux-fragments
-          path: target/generated-asciidoc/linux
+          path: target/roq/linux
       - name: Download Mac site
         uses: actions/download-artifact@v8
         with:
           name: mac-fragments
-          path: target/generated-asciidoc/mac
+          path: target/roq/mac
       - name: Download Windows site
         uses: actions/download-artifact@v8
         with:
           name: windows-fragments
-          path: target/generated-asciidoc/windows
+          path: target/roq/windows
       - name: Site assembly
         run: |
           # aggregate the fragments
 
           # Take just the contents of the variants folders for the other platforms
-          cp -r target/generated-asciidoc/linux/variants/* target/generated-asciidoc/variants
-          cp -r target/generated-asciidoc/mac/variants/* target/generated-asciidoc/variants
-          cp -r target/generated-asciidoc/windows/variants/* target/generated-asciidoc/variants
+          cp -r target/roq/linux/variants/* target/roq/variants
+          cp -r target/roq/mac/variants/* target/roq/variants
+          cp -r target/roq/windows/variants/* target/roq/variants
 
           # Remove the OS-specific directories now that their variants are merged
-          rm -rf target/generated-asciidoc/linux
-          rm -rf target/generated-asciidoc/mac
-          rm -rf target/generated-asciidoc/windows
+          rm -rf target/roq/linux
+          rm -rf target/roq/mac
+          rm -rf target/roq/windows
 
           # Move things around to preserve the super-heroes structure
           mkdir -p target/site/super-heroes
-          cp -R target/generated-asciidoc/* target/site/super-heroes
+          cp -R target/roq/* target/site/super-heroes
           # Move the redirect.html page to the root
-          cp target/generated-asciidoc/redirect.html target/site/index.html
+          cp target/roq/redirect.html target/site/index.html
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7
         with:

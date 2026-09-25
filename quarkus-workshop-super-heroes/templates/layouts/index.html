@@ -34,7 +34,7 @@
         const sectionedFlags = nonStandaloneFlags.filter(f => f.section);
 
         const baseUrl = "./";
-        const filename = "spine.html";
+        const filename = "spine/index.html";
 
         function generateDefaultURL() {
             window.location.href = baseUrl + filename;
@@ -275,7 +275,8 @@
             include?
         </h4>
         <div class="select-controls">
-            <a href="#" onclick="selectAll(); return false;">Select all</a> / <a href="#" onclick="selectNone(); return false;">none</a>
+            <a href="#" onclick="selectAll(); return false;">Select all</a> / <a href="#"
+                                                                                 onclick="selectNone(); return false;">none</a>
         </div>
         <!-- Checkboxes are generated dynamically from variants-config.json -->
         <ul class="configurator" id="feature-checkboxes"></ul>
@@ -404,6 +405,7 @@
             }
         }
     }
+
     hideHeaderIfAllChildrenAreHidden();
 </script>
 
