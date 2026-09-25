@@ -67,7 +67,9 @@ fi
 
 echo "Patching AsciidoctorJConverter.java..."
 # Change .safe(SafeMode.SAFE) to .safe(SafeMode.UNSAFE)
-sed -i 's/\.safe(SafeMode\.SAFE)/\.safe(SafeMode.UNSAFE)/g' "${JAVA_FILE}"
+# Use a temporary file for cross-platform compatibility (macOS/BSD sed vs GNU sed)
+sed 's/\.safe(SafeMode\.SAFE)/\.safe(SafeMode.UNSAFE)/g' "${JAVA_FILE}" > "${JAVA_FILE}.tmp"
+mv "${JAVA_FILE}.tmp" "${JAVA_FILE}"
 
 # Verify the patch was applied
 if ! grep -q "\.safe(SafeMode\.UNSAFE)" "${JAVA_FILE}"; then
