@@ -1,0 +1,17 @@
+// Default workshop variant. Included by spine.adoc via {options-file}.
+//
+// This mirrors the `defaultValue` of every flag in src/resource-generation/variants-config.json,
+// i.e. what generate-variants.java writes out under `--defaults`. The old Maven build (see
+// old-pom.xml) generated it into target/generated-defaults/ and also produced one options.adoc per
+// combination of flags, so the docs could be built as tailored variants. That combinatorial step
+// has not been ported to the Roq build yet, so the defaults are checked in here instead.
+//
+// Keep in sync with variants-config.json until the generator is wired back in.
+:buildtool: maven
+:os: all
+:use-ai:
+:use-cli:
+:use-container:
+:use-kubernetes:
+:use-messaging:
+:use-native:
