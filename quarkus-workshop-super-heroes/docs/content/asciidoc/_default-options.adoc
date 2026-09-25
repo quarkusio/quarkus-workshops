@@ -1,5 +1,5 @@
 // Default workshop variant. Included by spine.adoc via {options-file}.
-//
+// TODO
 // This mirrors the `defaultValue` of every flag in src/resource-generation/variants-config.json,
 // i.e. what generate-variants.java writes out under `--defaults`. The old Maven build (see
 // old-pom.xml) generated it into target/generated-defaults/ and also produced one options.adoc per

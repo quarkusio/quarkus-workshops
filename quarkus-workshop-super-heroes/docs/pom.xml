@@ -110,14 +110,24 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
-                    <excludedGroups>e2e</excludedGroups>
-                    <argLine>@{argLine}</argLine>
                     <systemPropertyVariables>
-                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                        <maven.home>${maven.home}</maven.home>
+                        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
+                        <junit.jupiter.execution.parallel.mode.default>concurrent
+                        </junit.jupiter.execution.parallel.mode.default>
+                        <junit.jupiter.execution.parallel.mode.classes.default>concurrent
+                        </junit.jupiter.execution.parallel.mode.classes.default>
+                        <junit.jupiter.execution.parallel.config.strategy>fixed
+                        </junit.jupiter.execution.parallel.config.strategy>
+                        <junit.jupiter.execution.parallel.config.fixed.parallelism>4
+                        </junit.jupiter.execution.parallel.config.fixed.parallelism>
+                        <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
+                        <os>${os}</os>
+                        <variants.config.path>${basedir}/src/resource-generation/variants-config.json
+                        </variants.config.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -160,20 +170,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>e2e</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <groups>e2e</groups>
-                            <excludedGroups combine.self="override"/>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>native</id>
             <activation>
