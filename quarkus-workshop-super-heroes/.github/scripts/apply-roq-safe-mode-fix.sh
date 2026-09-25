@@ -77,12 +77,17 @@ fi
 
 echo "Recompiling patched class..."
 
-# Build classpath from dependencies
-CP="${M2_REPO}/org/asciidoctor/asciidoctorj-api/3.0.1/asciidoctorj-api-3.0.1.jar"
-CP="${CP}:${M2_REPO}/org/jboss/logging/jboss-logging/3.6.1.Final/jboss-logging-3.6.1.Final.jar"
-CP="${CP}:${M2_REPO}/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar"
-CP="${CP}:${M2_REPO}/io/quarkiverse/roq/roq-frontmatter-runtime/2.1.9/roq-frontmatter-runtime-2.1.9.jar"
-CP="${CP}:${M2_REPO}/io/quarkiverse/tools/quarkus-roq-util-string-paths/0.0.4/quarkus-roq-util-string-paths-0.0.4.jar"
+# Build the roq module to get proper classpath
+echo "Building roq module to resolve classpath..."
+cd "${ROQSRC_DIR}/roq-plugin/asciidoc-jruby/runtime"
+mvn -q dependency:build-classpath -Dmdep.outputFile="${TEMP_DIR}/classpath.txt" -DincludeScope=compile
+
+if [ ! -f "${TEMP_DIR}/classpath.txt" ]; then
+    echo "ERROR: Failed to build classpath"
+    exit 1
+fi
+
+CP=$(cat "${TEMP_DIR}/classpath.txt")
 
 # Compile
 javac -cp "${CP}" -d "${TEMP_DIR}/compiled" \
