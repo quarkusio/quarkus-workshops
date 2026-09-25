@@ -10,11 +10,7 @@ Let's ask an AI to narrate the fight!
 In this section we will introduce a new microservice that will use AI to narrate the fight between a superhero and a super villain.
 It will use Quarkus LangChain4j to invoke an OpenAI model.
 
-{#diagram asciidoc=true language="plantuml" align=center,width=300,theme="quarkus from {plantuml-theme-dir}" alt="Impossible trident" width=500 height=500 diagramOutputFormat="png"}
-
-include::{plantdir}/5b-ai-narration-microservice.puml[]
-
-{/}
+plantuml::{plantDir}/5b-ai-narration-microservice.puml[align=center,width=300,theme="quarkus from {plantuml-theme-dir}"]
 
 In the following sections, you will learn:
 
