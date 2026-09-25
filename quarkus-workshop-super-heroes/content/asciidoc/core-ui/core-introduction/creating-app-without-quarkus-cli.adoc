@@ -1,0 +1,116 @@
+// Reusable instructions for creating a Quarkus Gradle project by hand, without the
+// Quarkus CLI (used when the use-no-quarkus-cli attribute is set).
+// The including file must set the {app-name} attribute first, e.g. `:app-name: rest-villains`.
+[NOTE]
+====
+It is *much* easier to create a Quarkus project with the Quarkus CLI (`quarkus create app ...`) or from https://code.quarkus.io.
+These instructions assume the Quarkus CLI is not available in your environment (for example, a locked-down environment where it cannot be installed), so we create the project by hand instead.
+They do assume that Gradle is installed locally, so the `gradle` command is available.
+====
+
+Under the `quarkus-workshop-super-heroes/super-heroes` directory, create the module by hand:
+
+. Create the module directory and its source folders:
++
+[source,shell,subs="attributes+"]
+----
+mkdir -p {app-name}/src/main/java {app-name}/src/main/resources {app-name}/src/test/java
+----
+
+. Create `{app-name}/settings.gradle.kts` with the following content:
++
+[source,kotlin,subs="attributes+"]
+----
+pluginManagement {
+    val quarkusPluginVersion: String by settings
+    val quarkusPluginId: String by settings
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        mavenLocal()
+    }
+    plugins {
+        id(quarkusPluginId) version quarkusPluginVersion
+    }
+}
+rootProject.name="{app-name}"
+----
+
+. Create `{app-name}/gradle.properties` with the following content:
++
+[source,properties,subs="attributes+"]
+----
+quarkusPluginId=io.quarkus
+quarkusPluginVersion={quarkus-version}
+----
+
+. Create `{app-name}/build.gradle.kts` with the following content.
+Add one `implementation("io.quarkus:quarkus-<extension>")` line for each of the extensions listed for this service (the extensions are described just below):
++
+[source,kotlin,subs="attributes+"]
+----
+plugins {
+    java
+    id("io.quarkus")
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation(enforcedPlatform("io.quarkus.platform:quarkus-bom:{quarkus-version}"))
+    implementation("io.quarkus:quarkus-arc")
+    // Add one line per extension for this service, for example:
+    // implementation("io.quarkus:quarkus-rest-jackson")
+    testImplementation("io.quarkus:quarkus-junit")
+    testImplementation("io.rest-assured:rest-assured")
+}
+
+group = "io.quarkus.workshop.superheroes"
+version = "1.0.0-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_{jdk-version}
+    targetCompatibility = JavaVersion.VERSION_{jdk-version}
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    options.compilerArgs.add("-parameters")
+}
+----
+
+. Finally, generate the Gradle wrapper so that the `./gradlew` commands used throughout the rest of this workshop work.
+From inside the `{app-name}` directory, run:
++
+[source,shell]
+----
+gradle wrapper
+----
+
+ifdef::use-container[]
+. The Quarkus CLI would also have generated a set of `Dockerfile` files under `src/main/docker`.
+The _Building Containers_ section needs them: the `quarkus-container-image-docker` extension builds images from an *existing* `Dockerfile` (it does not generate one), so the build fails without them.
+Create the `src/main/docker` directory and add the Gradle Dockerfiles below (they reference Gradle's `build/` output directory rather than Maven's `target/`).
++
+`src/main/docker/Dockerfile.jvm-gradle` (for JVM mode):
++
+[source,text]
+----
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.jvm-gradle[tag=adocSnippet]
+----
+ifdef::use-native[]
++
+`src/main/docker/Dockerfile.native-gradle` (for native mode):
++
+[source,text]
+----
+include::{projectdir}/rest-heroes/src/main/docker/Dockerfile.native-gradle[tag=adocSnippet]
+----
+endif::use-native[]
+endif::use-container[]
+
+You now have an empty-but-buildable project.
+The rest of this section walks through the source files (the resource class, tests and configuration) that the Quarkus CLI would otherwise have generated for you; create them under the folders you just made.

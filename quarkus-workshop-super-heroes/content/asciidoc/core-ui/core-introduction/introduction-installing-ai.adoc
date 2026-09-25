@@ -1,0 +1,19 @@
+[[introduction-installing-ai]]
+
+= OpenAI
+
+https://openai.com/[OpenAI] is a leading artificial intelligence research organization creating cutting-edge AI technologies.
+OpenAI offers a range of APIs that enable developers to integrate AI capabilities into their applications.
+
+We will be using the GPT API to generate the text narrating the fight.
+
+First, you need to have an OpenAI subscription and then generate an API key.
+To get the API key, go to https://platform.openai.com/api-keys[OpenAI API keys] and create a new API key:
+
+image::openai-key.png[role=half-size]
+
+You will have to https://platform.openai.com/settings/organization/billing/overview[credit your OpenAI account] with some money to be able to use the API.
+
+image::openai-fund.png[role=half-size]
+
+Keep your API key handy — you will need it when configuring the Narration microservice.

@@ -1,0 +1,22 @@
+@startuml
+!include style.puml
+
+left to right direction
+
+rectangle "Narration" as hero {
+    agent "QUARKUS_ICON Quarkus" <<application>> as narrationQuarkus
+    hexagon "LangChain4j" as sk
+    narrationQuarkus .up> sk
+}
+
+!ifdef use_azure
+cloud "Open AI \n Azure OpenAI" as openai
+!else
+cloud "LLM Provider \n (OpenAI, Ollama, Gemini, etc.)" as openai
+!endif
+
+() "REST" as rest #4695EB
+rest -- narrationQuarkus
+sk --> openai : HTTP
+
+@enduml

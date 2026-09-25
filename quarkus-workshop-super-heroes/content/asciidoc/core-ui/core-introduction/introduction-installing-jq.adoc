@@ -1,0 +1,54 @@
+[[appendix-installing-jq]]
+
+= jq
+
+Very often, when using cURL to invoke a RESTful web service, we get some JSON payload.
+cURL does not format this JSON so that you will get a flat String such as:
+
+[source,shell]
+----
+curl http://localhost:8083/api/heroes
+[{"id":"1","name":"Chewbacca","level":"14"},{"id":"2","name":"Wonder Woman","level":"15"},{"id":"3","name":"Anakin Skywalker","level":"8"}]
+----
+
+But what we want is to format the JSON payload, so it is easier to read.
+For that, there is a neat utility tool called `jq` that we could use.
+`jq` is a tool for processing JSON inputs, applying the given filter to its JSON text inputs, and producing the filter's results as JSON on standard output.footnote:[jq https://stedolan.github.io/jq]
+
+== Installing jq
+
+ifdef::use-mac[You can install it on Mac OSX with a simple `brew install jq`.]
+ifdef::use-windows[You can install it on Windows with `winget install jqlang.jq` or, if you use Chocolatey, `choco install jq`.]
+ifdef::use-linux[You can install it on Linux with your distribution's package manager, for example `sudo apt-get install jq` (Debian/Ubuntu), `sudo dnf install jq` (Fedora), or `sudo yum install jq` (CentOS/RHEL).]
+
+For other platforms, see the download instructions at https://jqlang.github.io/jq/download/.
+
+ifdef::use-windows[TIP: If you would rather not install anything, Windows PowerShell can pretty-print JSON out of the box: `curl http://localhost:8083/api/heroes | ConvertFrom-Json | ConvertTo-Json`.]
+
+== Checking for jq Installation
+
+Once installed, it's just a matter of piping the cURL output to jq like this:
+
+[source,shell]
+----
+curl http://localhost:8083/api/heroes | jq
+
+[
+  {
+    "id": "1",
+    "name": "Chewbacca",
+    "lastName": "14"
+  },
+  {
+    "id": "2",
+    "name": "Wonder Woman",
+    "lastName": "15"
+  },
+  {
+    "id": "3",
+    "name": "Anakin Skywalker",
+    "lastName": "8"
+  }
+]
+----
+
