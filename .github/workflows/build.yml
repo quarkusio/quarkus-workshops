@@ -62,25 +62,30 @@ jobs:
           sudo apt-get install graphviz
           
           export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
+      - name: Apply roq safe mode patch
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn -B dependency:resolve -q
+          bash ../.github/scripts/apply-roq-safe-mode-fix.sh 2.1.9
       - name: Install Playwright
         run: |
-          cd quarkus-workshop-super-heroes
+          cd quarkus-workshop-super-heroes/docs
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Build and test site
         run: |
-          cd quarkus-workshop-super-heroes
+          cd quarkus-workshop-super-heroes/docs
           QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B package quarkus:run -Dos=${{ matrix.os }}
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
           report-name: 'Site Build Test Results (${{ matrix.os }})'
       - name: Publishing fragment
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
-          path: ./quarkus-workshop-super-heroes/target/roq
+          path: ./quarkus-workshop-super-heroes/docs/target/roq
           if-no-files-found: error
           retention-days: 3
   publication:
