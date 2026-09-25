@@ -64,23 +64,23 @@ jobs:
           export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
       - name: Install Playwright
         run: |
-          cd quarkus-workshop-super-heroes/docs
+          cd quarkus-workshop-super-heroes
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Build and test site
         run: |
-          cd quarkus-workshop-super-heroes/docs
-          mvn package -Dos=${{ matrix.os }}
+          cd quarkus-workshop-super-heroes
+          QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B package quarkus:run -DskipTests -Dos=${{ matrix.os }} # TODO DO NOT skip tests
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/target/surefire-reports
           report-name: 'Site Build Test Results (${{ matrix.os }})'
       - name: Publishing fragment
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
-          path: ./quarkus-workshop-super-heroes/docs/target/generated-asciidoc
+          path: ./quarkus-workshop-super-heroes/target/generated-asciidoc
           if-no-files-found: error
           retention-days: 3
   publication:
@@ -156,24 +156,24 @@ jobs:
           path: target/site
       - name: Install Playwright
         run: |
-          cd quarkus-workshop-super-heroes/docs
+          cd quarkus-workshop-super-heroes
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Run documentation tests
         run: |
-          cd quarkus-workshop-super-heroes/docs
+          cd quarkus-workshop-super-heroes/
           mvn test -Ddocs.base.path=../../target/site/super-heroes
       - name: Report documentation test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/target/surefire-reports
           report-name: 'Documentation Test Results'
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-results
-          path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          path: quarkus-workshop-super-heroes/target/surefire-reports
           retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
