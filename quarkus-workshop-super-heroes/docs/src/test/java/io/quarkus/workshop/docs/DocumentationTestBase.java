@@ -1,15 +1,23 @@
 package io.quarkus.workshop.docs;
 
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.BoundingBox;
-import com.microsoft.playwright.options.LoadState;
-import org.junit.jupiter.api.*;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.LoadState;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 public abstract class DocumentationTestBase {
 
@@ -18,8 +26,8 @@ public abstract class DocumentationTestBase {
     protected BrowserContext context;
     protected Page page;
 
-    protected static final File DOCS_BASE_PATH = new File(System.getProperty("docs.base.path", "target/generated-asciidoc/"));
-    protected static final String SPINE_HTML = "spine.html";
+    protected static final File DOCS_BASE_PATH = new File(System.getProperty("docs.base.path", "target/roq/"));
+    protected static final String SPINE_HTML = "asciidoc/spine/index.html";
 
     private static final Pattern URL_PATTERN = Pattern.compile(
         "^(https?://)([\\w.-]+)(:[0-9]+)?(/.*)?$",
@@ -27,7 +35,7 @@ public abstract class DocumentationTestBase {
     );
 
     static Browser getOrCreateBrowser() {
-        if (browser.get() == null) {
+        if (browser.get()==null) {
             Playwright pw = Playwright.create();
             playwright.set(pw);
             browser.set(pw.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true)));
@@ -43,12 +51,12 @@ public abstract class DocumentationTestBase {
     @AfterAll
     static void closeBrowser() {
         Browser b = browser.get();
-        if (b != null) {
+        if (b!=null) {
             b.close();
             browser.remove();
         }
         Playwright p = playwright.get();
-        if (p != null) {
+        if (p!=null) {
             p.close();
             playwright.remove();
         }
@@ -62,7 +70,7 @@ public abstract class DocumentationTestBase {
 
     @AfterEach
     void closeContext() {
-        if (context != null) {
+        if (context!=null) {
             context.close();
         }
     }
@@ -80,11 +88,11 @@ public abstract class DocumentationTestBase {
 
         for (int i = 0; i < linkCount; i++) {
             String href = internalLinks.nth(i).getAttribute("href");
-            if (href != null && !href.isEmpty()) {
+            if (href!=null && !href.isEmpty()) {
                 String targetId = href.substring(1);
                 // Use attribute selector — bare #id breaks on AsciiDoc IDs containing dots or colons
                 Locator target = page.locator("[id='" + escapeAttrValue(targetId) + "']");
-                if (target.count() == 0) {
+                if (target.count()==0) {
                     brokenLinks.add(href);
                 }
             }
@@ -102,12 +110,12 @@ public abstract class DocumentationTestBase {
             Locator img = images.nth(i);
             String src = img.getAttribute("src");
 
-            if (src != null && !src.isEmpty()) {
+            if (src!=null && !src.isEmpty()) {
                 try {
                     BoundingBox box = img.boundingBox();
-                    if (box == null || (box.width == 0 && box.height == 0)) {
+                    if (box==null || (box.width==0 && box.height==0)) {
                         Object naturalWidth = img.evaluate("img => img.naturalWidth");
-                        if (naturalWidth == null || ((Number) naturalWidth).intValue() == 0) {
+                        if (naturalWidth==null || ((Number) naturalWidth).intValue()==0) {
                             brokenImages.add(src);
                         }
                     }

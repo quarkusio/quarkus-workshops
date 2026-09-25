@@ -1,0 +1,516 @@
+[[ai]]
+= Artificial Intelligence
+
+'''
+
+On one side we have superheroes, and on the other side we have super villains.
+What happens when they fight?
+Let's ask an AI to narrate the fight!
+
+In this section we will introduce a new microservice that will use AI to narrate the fight between a superhero and a super villain.
+It will use Quarkus LangChain4j to invoke an OpenAI model.
+
+plantuml::{plantDir}/5b-ai-narration-microservice.puml[align=center,width=300,theme="quarkus from {plantuml-theme-dir}"]
+
+In the following sections, you will learn:
+
+* What is Quarkus LangChain4j?
+* How to create a declarative AI Service to invoke OpenAI
+* How to configure the OpenAI connection
+
+IMPORTANT: This service is exposed on the port 8086.
+
+== What's Quarkus LangChain4j?
+
+https://docs.quarkiverse.io/quarkus-langchain4j/dev/index.html[Quarkus LangChain4j] is a Quarkus extension that seamlessly integrates Large Language Models (LLMs) into Quarkus applications.
+It lets you define AI-powered services declaratively — using annotations like `@RegisterAiService`, `@SystemMessage`, and `@UserMessage` — so that interacting with an LLM is as simple as calling a Java method.
+
+Under the hood, it leverages https://docs.langchain4j.dev/[LangChain4j], a Java framework for building LLM-powered applications, while adding Quarkus-specific features such as CDI integration, configuration via `application.properties`, and native compilation support.
+
+== Narration Microservice
+
+Let's create a new microservice that will use Quarkus LangChain4j to narrate the fight between a superhero and a super villain.
+New microservice, new project!
+
+ifdef::use-maven[]
+As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to https://code.quarkus.io if you prefer).
+endif::use-maven[]
+ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
+As before, the easiest way to create this new Quarkus project is to use the Quarkus CLI (you can also go to https://code.quarkus.io if you prefer).
+endif::use-no-quarkus-cli[]
+endif::use-gradle[]
+Open a terminal and run the following command under the `quarkus-workshop-super-heroes/super-heroes` directory:
+
+[example,role="cta"]
+--
+
+ifdef::use-maven[]
+[.tab-maven]
+****
+[source,shell,subs="attributes+"]
+----
+./mvnw io.quarkus:quarkus-maven-plugin:{quarkus-version}:create \
+    -DplatformVersion={quarkus-version} \
+    -DprojectGroupId=io.quarkus.workshop.super-heroes \
+    -DprojectArtifactId=rest-narration \
+    -DclassName="io.quarkus.workshop.superheroes.narration.NarrationResource" \
+    -Dpath="api/narration" \
+    -Dextensions="rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance"
+----
+****
+endif::use-maven[]
+ifdef::use-gradle[]
+ifndef::use-no-quarkus-cli[]
+[.tab-gradle]
+****
+[source,shell,subs="attributes+"]
+----
+quarkus create app io.quarkus.workshop.superheroes:rest-narration \
+    --extension="rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance" \
+    --java={jdk-version} \
+    --gradle-kotlin-dsl
+----
+****
+endif::use-no-quarkus-cli[]
+ifdef::use-no-quarkus-cli[]
+:app-name: rest-narration
+include::../core-introduction/creating-app-without-quarkus-cli.adoc[]
+endif::use-no-quarkus-cli[]
+endif::use-gradle[]
+--
+
+This microservice needs less dependencies than the previous ones:
+
+* `rest-jackson` provides Quarkus REST and the ability to map JSON objects,
+* `quarkus-smallrye-openapi` provides the OpenAPI descriptor support and the Swagger UI in the dev console,
+* `quarkus-smallrye-fault-tolerance` provides the MicroProfile Fault Tolerance dependency so we can fallback in case OpenAI does not respond.
+
+ifdef::use-maven[]
+If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the `<modules>` section:
+
+[source,xml]
+----
+<module>super-heroes/rest-narration</module>
+----
+endif::use-maven[]
+
+=== Directory Structure
+
+At the end of this chapter, you will end up with the following directory structure:
+
+ifdef::use-maven[]
+[.tab-maven]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-narration
+++  src
++++  main
+++++  docker
++++++  ...
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  narration
+++++++++++  Fight.java
+++++++++++  NarrationResource.java
+++++++++++  NarrationService.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  narration
+++++++++++  NarrationResourceTest.java
+++++++++++  NarrationResourceIT.java
+++  mvnw
+++  mvnw.cmd
+++  pom.xml
+}
+}
+@endsalt
+----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+super-heroes
++  rest-narration
+++  src
++++  main
+++++  docker
++++++  ...
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  narration
+++++++++++  Fight.java
+++++++++++  NarrationResource.java
+++++++++++  NarrationService.java
+++++  resources
++++++  META-INF
+++++++  resources
++++++++  index.html
++++++  application.properties
++++  test
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  narration
+++++++++++  NarrationResourceTest.java
+++++++++++  NarrationResourceIT.java
+++  gradlew
+++  gradlew.bat
+++  build.gradle.kts
+++  gradle.properties
+++  settings.gradle.kts
+}
+}
+@endsalt
+----
+--
+endif::use-gradle[]
+
+=== Add the Quarkus LangChain4j dependency
+
+ifdef::use-maven[]
+[.tab-maven]
+--
+Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
+Add the following XML in the `rest-narration/pom.xml` file:
+
+[source,xml,subs="attributes+"]
+----
+  <properties>
+    <!-- ... -->
+    <quarkus-langchain4j.version>{quarkus-langchain4j-version}</quarkus-langchain4j.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <!-- ... -->
+      <dependency>
+        <groupId>io.quarkiverse.langchain4j</groupId>
+        <artifactId>quarkus-langchain4j-bom</artifactId>
+        <version>${quarkus-langchain4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <!-- ... -->
+    <dependency>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-openai</artifactId>
+    </dependency>
+  </dependencies>
+----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+Once the project is created, you need to add the Quarkus LangChain4j OpenAI dependency.
+Add the following to the `rest-narration/build.gradle.kts` file:
+
+[source,kotlin,subs="attributes+"]
+----
+val quarkusLangchain4jVersion = "{quarkus-langchain4j-version}"
+
+dependencies {
+    implementation(enforcedPlatform("io.quarkiverse.langchain4j:quarkus-langchain4j-bom:$quarkusLangchain4jVersion"))
+    implementation("io.quarkiverse.langchain4j:quarkus-langchain4j-openai")
+}
+----
+--
+endif::use-gradle[]
+
+=== The Fight bean
+
+Let's start with the `Fight` class.
+The fight is what is going to be narrated by the microservice and ultimately sent by the Fight microservice.
+
+[example,role="cta"]
+--
+
+Create the `io.quarkus.workshop.superheroes.narration.Fight` class in the created project with the following content:
+
+[source,java]
+----
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/Fight.java[]
+----
+--
+
+=== The Narration REST Resource
+
+The `NarrationResource` has one HTTP POST method to create a new narration.
+Given a fight, it will invoke the `NarrationService` to return a fight narration.
+The method is annotated with `@Timeout` and `@Fallback` so that if the OpenAI service is slow or unavailable, a fallback narration is returned instead of an error.
+
+[example,role="cta"]
+--
+Open the generated `io.quarkus.workshop.superheroes.narration.NarrationResource` and update the content to be:
+
+[source,java]
+----
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationResource.java[]
+----
+--
+
+=== The AI Narration Service
+
+Now it's time to implement the `NarrationService`.
+With Quarkus LangChain4j, instead of writing imperative code to call an LLM, you declare an _AI Service_ interface.
+The extension takes care of generating the implementation, sending the right prompt to the LLM, and returning the result.
+
+The key annotations are:
+
+* `@RegisterAiService` — marks this interface as an AI service; Quarkus generates the implementation automatically.
+* `@SystemMessage` — provides the system prompt that sets the persona and rules for the LLM.
+* `@UserMessage` — provides the user prompt template.
+Template variables like `{fight.winnerName}` are resolved from the method parameters.
+
+[example,role="cta"]
+--
+Create the `io.quarkus.workshop.superheroes.narration.NarrationService` interface in the created project with the following content:
+
+[source,java]
+----
+include::{projectdir}/rest-narration/src/main/java/io/quarkus/workshop/superheroes/narration/NarrationService.java[]
+----
+--
+
+That's it!
+No boilerplate, no manual HTTP calls, no JSON parsing.
+Quarkus LangChain4j handles all of that.
+The `@SystemMessage` tells the LLM to behave like a Marvel Comics writer, and the `@UserMessage` passes the fight data as a structured prompt.
+
+=== Configuring OpenAI access
+
+The OpenAI connection is configured entirely through `application.properties` — no separate configuration files needed.
+
+[WARNING]
+====
+Make sure that you have previously created an OpenAI subscription and obtained an API key.
+If not, go back to xref:introduction-installing-ai[xrefstyle=full].
+====
+
+[example,role="cta"]
+--
+Add the following configuration to the `rest-narration/src/main/resources/application.properties` file:
+
+[source,properties]
+----
+include::{projectdir}/rest-narration/src/main/resources/application.properties[]
+----
+
+Before running the application, set the `OPENAI_API_KEY` environment variable with your OpenAI API key:
+
+[source,shell]
+----
+export OPENAI_API_KEY=<your-openai-api-key>
+----
+--
+
+=== Testing the Narration Microservice
+
+Time for some tests!
+Since we don't want to call the real OpenAI API during tests, we will mock the `NarrationService` AI service using Quarkus' `@InjectMock`.
+
+First, make sure you have the Mockito dependency in the project:
+
+ifdef::use-maven[]
+[.tab-maven]
+--
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-junit-mockito</artifactId>
+    <scope>test</scope>
+</dependency>
+----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[source,kotlin]
+----
+testImplementation("io.quarkus:quarkus-junit-mockito")
+----
+--
+endif::use-gradle[]
+
+Open the `io.quarkus.workshop.superheroes.narration.NarrationResourceTest` class and copy the following content:
+
+[example,role="cta"]
+--
+
+[source,java]
+----
+include::{projectdir}/rest-narration/src/test/java/io/quarkus/workshop/superheroes/narration/NarrationResourceTest.java[]
+----
+--
+
+[example,role="cta"]
+--
+ifdef::use-maven[]
+Make sure the tests pass by executing the command `./mvnw test` (or from your IDE).
+endif::use-maven[]
+ifdef::use-gradle[]
+Make sure the tests pass by executing the command `./gradlew test` (or from your IDE).
+endif::use-gradle[]
+--
+
+=== Running the Narration Microservice
+
+Now that the tests are green, we are ready to run our Narration microservice.
+
+[example,role="cta"]
+--
+
+ifdef::use-maven[]
+Make sure you have set the `OPENAI_API_KEY` environment variable, then use `./mvnw quarkus:dev` to start it.
+endif::use-maven[]
+ifdef::use-gradle[]
+Make sure you have set the `OPENAI_API_KEY` environment variable, then use `./gradlew quarkusDev` to start it.
+endif::use-gradle[]
+Once the Narration microservice is started, create a new narration with the following cUrl command:
+
+[source,shell]
+----
+curl -X POST -d  '{"winnerName":"Super winner", "winnerLevel":42, "winnerPowers":"jumping", "loserName":"Super loser", "loserLevel":2, "loserPowers":"leaping", "winnerTeam":"heroes", "loserTeam":"villains" }'  -H "Content-Type: application/json" http://localhost:8086/api/narration -v
+----
+
+You should get something similar to the following response:
+
+[source,shell]
+----
+< HTTP/1.1 201 Created
+< Content-Type: text/plain;charset=UTF-8
+
+The battle between the towering Chewbacca and the dark and menacing Darth Vader was one for the ages. Chewbacca's incredible strength and agility were no match for Vader's mastery of the Force and his arsenal of weapons. The two clashed in a flurry of blows and energy blasts, each trying to gain the upper hand.
+
+Despite Chewbacca's valiant efforts, it was clear that Vader was the superior fighter. His precognition and danger sense allowed him to anticipate every move Chewbacca made, and his energy blasts and electrokinesis were devastating. In the end, Vader emerged victorious, leaving Chewbacca battered and defeated.
+----
+--
+
+The cUrl command returns the narration of the fight as `text/plain`.
+
+Remember that you can also check Swagger UI by going to the dev console: http://localhost:8086/q/dev.
+
+== Invoking the Narration Microservice from the Fight Microservice
+
+Now that we have a narration microservice up and running, we can invoke it from the fight microservice.
+
+plantuml::{plantDir}/5-rest-client-physical-architecture.puml[align=center,width=300,theme="quarkus from {plantuml-theme-dir}"]
+
+=== Adding narration to the Fight Microservice
+
+We now need to add a new endpoint to the Fight microservice to invoke the Narration microservice.
+Because it uses a remote call, we need to use the `@RegisterRestClient` annotation to register the `NarrationProxy` as a REST client.
+
+[example,role="cta"]
+--
+Go back to the `io.quarkus.workshop.superheroes.fight.FightResource` class and add the new `narrateFight` method:
+
+[source,java,indent=0]
+----
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightResource.java[tag=adocNarrate]
+----
+
+The `FightResource` invokes a new method of the `FightService`.
+Add the following method to the `io.quarkus.workshop.superheroes.fight.FightService` class and make sure to inject the `NarrationProxy`:
+
+[source,java,indent=0]
+----
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/FightService.java[tag=adocNarrate]
+----
+
+Under the `client` package, where all the other proxies are already located, create a new `NarrationProxy` class:
+
+[source,java]
+----
+include::{projectdir}/rest-fights/src/main/java/io/quarkus/workshop/superheroes/fight/client/NarrationProxy.java[]
+----
+
+To link both microservices, we need to add the following configuration to the `rest-fights/src/main/resources/application.properties` file of the fight microservice:
+
+[source,properties]
+----
+include::{projectdir}/rest-fights/src/main/resources/application.properties[tag=adocNarrate]
+----
+--
+
+=== Test and mock the Narration microservice invocation
+
+Like the other dependencies, the Narration microservice needs to be mocked so we can test the Fight microservice in isolation.
+
+[example,role="cta"]
+--
+
+Add the following `shouldNarrate` test to the `io.quarkus.workshop.superheroes.fight.FightResourceTest` class.
+And make sure you use the right imports:
+
+[source,java,indent=0]
+----
+import java.time.Instant;
+import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
+----
+
+[source,java,indent=0]
+----
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/FightResourceTest.java[tag=adocNarrate]
+----
+
+Create the `io.quarkus.workshop.superheroes.fight.client.MockNarrationProxy` class and add the new `narrateFight` method:
+
+[source,java]
+----
+include::{projectdir}/rest-fights/src/test/java/io/quarkus/workshop/superheroes/fight/client/MockNarrationProxy.java[]
+----
+--
+
+ifdef::use-maven[]
+Now execute `./mvnw test` and make sure that all the tests pass.
+endif::use-maven[]
+ifdef::use-gradle[]
+Now execute `./gradlew test` and make sure that all the tests pass.
+endif::use-gradle[]
+
+== Running, Testing and Packaging the Application
+
+Time to run the entire application!
+For that, start all the microservices (Heroes, Villains, Fight and Narration) as well as the frontend.
+When all the microservices are started, access the frontend at http://localhost:8080 and click on the `Fight` button.
+The result of the fight is displayed, and below, you have a "Narrate the Fight" button.
+Click on it, wait a few seconds (remember that the Narration microservice access a remote AI service that takes time) and the narration of the fight is displayed.
+Being _Generative AI_, you can click several times on the button and you will get different narrations.
+
+image::react-ui-ai.png[role=half-size]

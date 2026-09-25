@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * resolve to valid documentation pages.
  * <p>
  * Flag definitions, constraints, and standalone markers are read from
- * variants-config.json (the single source of truth).
+ * data/variants.json (the single source of truth).
  */
 public class ConfiguratorTest extends DocumentationTestBase {
 
@@ -431,7 +431,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
     private static String[] getBuildToolOptionsToTest(String[] allBtOptions) {
         String btProperty = System.getProperty("buildTool");
-        if (btProperty != null && !btProperty.isEmpty()) {
+        if (btProperty!=null && !btProperty.isEmpty()) {
             for (String validBt : allBtOptions) {
                 if (validBt.equals(btProperty)) {
                     return new String[]{btProperty};
@@ -445,7 +445,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
     private static String[] getOsOptionsToTest(String[] allOsOptions) {
         String osProperty = System.getProperty("os");
-        if (osProperty != null && !osProperty.isEmpty()) {
+        if (osProperty!=null && !osProperty.isEmpty()) {
             for (String validOs : allOsOptions) {
                 if (validOs.equals(osProperty)) {
                     return new String[]{osProperty};

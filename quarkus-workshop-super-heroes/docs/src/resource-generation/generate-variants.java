@@ -31,7 +31,7 @@ class generate_variants {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
-            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--template <template-path> <output-path>] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>]");
+            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>]");
             System.exit(1);
         }
 
@@ -39,17 +39,12 @@ class generate_variants {
         String outputDir = args[1];
         String osFilter = null;
         String buildToolFilter = null;
-        String templatePath = null;
-        String templateOutputPath = null;
         String defaultsOutputPath = null;
         String imagesSrcDir = null;
         String imagesDestDir = null;
 
         for (int i = 2; i < args.length; i++) {
-            if ("--template".equals(args[i]) && i + 2 < args.length) {
-                templatePath = args[++i];
-                templateOutputPath = args[++i];
-            } else if ("--defaults".equals(args[i]) && i + 1 < args.length) {
+            if ("--defaults".equals(args[i]) && i + 1 < args.length) {
                 defaultsOutputPath = args[++i];
             } else if ("--copy-images".equals(args[i]) && i + 2 < args.length) {
                 imagesSrcDir = args[++i];
@@ -143,10 +138,6 @@ class generate_variants {
 
         if (defaultsOutputPath != null) {
             writeDefaults(defaultsOutputPath, flags);
-        }
-
-        if (templatePath != null && templateOutputPath != null) {
-            processTemplate(templatePath, templateOutputPath, config);
         }
 
         if (imagesSrcDir != null && imagesDestDir != null) {
@@ -281,18 +272,6 @@ class generate_variants {
             }
         }
         System.out.println("Created " + configFile);
-    }
-
-    private static void processTemplate(String templatePath, String outputPath,
-                                          JsonObject config) throws IOException {
-        String template = Files.readString(Path.of(templatePath));
-        String configJson = config.toString();
-        String result = template.replace("__VARIANTS_CONFIG_JSON__", configJson);
-
-        Path out = Path.of(outputPath);
-        Files.createDirectories(out.getParent());
-        Files.writeString(out, result);
-        System.out.println("Processed template to " + outputPath);
     }
 
     private static List<Flag> parseFlags(JsonArray arr) {

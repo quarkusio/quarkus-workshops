@@ -50,21 +50,28 @@ $ mvn clean install
 
 * Run the infrastructure and build the complete system as explained above.
 * In a new terminal, run the heroes microservice
+
 ```bash
 $ cd rest-heroes
 $ mvn clean compile quarkus:dev
 ```
+
 * In a new terminal, run the villains microservice
+
 ```bash
 $ cd rest-villains
 $ mvn clean compile quarkus:dev
 ```
+
 * In a new terminal, run the fights microservice
+
 ```bash
 $ cd rest-fights
 $ mvn clean compile quarkus:dev
 ```
+
 * In a new terminal, run the fights microservice
+
 ```bash
 $ cd event-statistics
 $ mvn clean compile quarkus:dev
@@ -81,15 +88,14 @@ $ mvn clean compile quarkus:dev
 
 == Running without CI
 
-The GitHub actions take care of publishing a site with the workshop instructions,
-and also generating source zips. It's also possible to do these steps locally.
-
+The GitHub actions take care of publishing a site with the workshop instructions, and also generating source zips.
+It's also possible to do these steps locally.
 
 === Generate the documentation
 
 You can either generate the documentation for each exercise or for the entire workshop.
 For that, you just run the Maven command `mvn clean generate-resources` under the `docs` directory.
-You can then open the `docs/target/generated-asciidoc/spine.html` page and read the entire documentation of the workshop.
+You can then open the `docs/target/roq/spine/index.html` page and read the entire documentation of the workshop.
 
 === Generate the zip files
 
@@ -104,7 +110,6 @@ This generates the following zip files
 * `dist/quarkus-super-heroes-workshop.zip`: contains the bare minimum code to follow up the workshop
 * `dist/quarkus-super-heroes-core.zip`: contains the core microservices (heroes, villains, fights and the UI)
 * `dist/quarkus-super-heroes-workshop-complete.zip`: contains all the code (useful if you get lost or want to jump a section of the workshop)
-
 
 == References
 
