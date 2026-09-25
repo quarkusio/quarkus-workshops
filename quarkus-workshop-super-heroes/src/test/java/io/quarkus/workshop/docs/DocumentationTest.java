@@ -1,38 +1,42 @@
 package io.quarkus.workshop.docs;
 
-import com.microsoft.playwright.*;
-import org.junit.jupiter.api.*;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Response;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DocumentationTest extends DocumentationTestBase {
 
     @Test
-    @DisplayName("Main spine.html file should exist")
+    @DisplayName("Main spine/index.html file should exist")
     void testSpineFileExists() {
         Path spineFile = new File(DOCS_BASE_PATH, SPINE_HTML).toPath();
-        assertTrue(Files.exists(spineFile), "spine.html should exist at " + spineFile);
+        assertTrue(Files.exists(spineFile), "spine/index.html should exist at " + spineFile);
     }
 
     @Test
-    @DisplayName("Main spine.html should load without errors")
+    @DisplayName("Main spine/index.html should load without errors")
     void testSpineLoadsSuccessfully() {
         String fileUrl = "file://" + new File(DOCS_BASE_PATH, SPINE_HTML).toPath().toAbsolutePath();
 
         Response response = page.navigate(fileUrl);
         assertNotNull(response, "Page should load");
-        assertTrue(response.ok() || response.status() == 0,
+        assertTrue(response.ok() || response.status()==0,
             "Page should load successfully (status: " + response.status() + ")");
     }
 
     @Test
-    @DisplayName("Main spine.html should have proper title")
+    @DisplayName("Main spine/index.html should have proper title")
     void testSpineHasTitle() {
         navigateToSpine();
 
@@ -44,7 +48,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html should have table of contents")
+    @DisplayName("Main spine/index.html should have table of contents")
     void testSpineHasTableOfContents() {
         navigateToSpine();
 
@@ -53,7 +57,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html should have main content sections")
+    @DisplayName("Main spine/index.html should have main content sections")
     void testSpineHasMainSections() {
         navigateToSpine();
 
@@ -67,7 +71,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html should have code blocks")
+    @DisplayName("Main spine/index.html should have code blocks")
     void testSpineHasCodeBlocks() {
         navigateToSpine();
 
@@ -76,7 +80,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html internal links should work")
+    @DisplayName("Main spine/index.html internal links should work")
     void testSpineInternalLinksWork() {
         navigateToSpine();
 
@@ -87,7 +91,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html should not have broken image references")
+    @DisplayName("Main spine/index.html should not have broken image references")
     void testSpineImagesLoad() {
         navigateToSpine();
 
@@ -98,7 +102,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html external links should be valid URLs")
+    @DisplayName("Main spine/index.html external links should be valid URLs")
     void testSpineExternalLinksAreValid() {
         navigateToSpine();
 
@@ -109,7 +113,7 @@ public class DocumentationTest extends DocumentationTestBase {
 
         for (int i = 0; i < linkCount; i++) {
             String href = externalLinks.nth(i).getAttribute("href");
-            if (href != null && !isValidUrl(href)) {
+            if (href!=null && !isValidUrl(href)) {
                 invalidUrls.add(href);
             }
         }
@@ -119,7 +123,7 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html should have proper heading hierarchy")
+    @DisplayName("Main spine/index.html should have proper heading hierarchy")
     void testSpineHeadingHierarchy() {
         navigateToSpine();
 
@@ -139,25 +143,25 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Main spine.html should contain key workshop sections")
+    @DisplayName("Main spine/index.html should contain key workshop sections")
     void testSpineHasKeyContent() {
         navigateToSpine();
 
         String pageContent = page.content();
 
         assertTrue(pageContent.contains("Villain Microservice") ||
-                   pageContent.contains("Villain microservice") ||
-                   pageContent.contains("villain microservice"),
+                pageContent.contains("Villain microservice") ||
+                pageContent.contains("villain microservice"),
             "Page should contain 'Villain Microservice' section");
 
         assertTrue(pageContent.contains("Hero Microservice") ||
-                   pageContent.contains("Hero microservice") ||
-                   pageContent.contains("hero microservice"),
+                pageContent.contains("Hero microservice") ||
+                pageContent.contains("hero microservice"),
             "Page should contain 'Hero Microservice' section");
 
         assertTrue(pageContent.contains("Fight Microservice") ||
-                   pageContent.contains("Fight microservice") ||
-                   pageContent.contains("fight microservice"),
+                pageContent.contains("Fight microservice") ||
+                pageContent.contains("fight microservice"),
             "Page should contain 'Fight Microservice' section");
     }
 
