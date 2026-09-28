@@ -12,15 +12,15 @@ permissions:
   id-token: write
 
 jobs:
-  build_java:
+  build_java17:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install JDK 21
+      - name: Install JDK 17
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 17
           cache: maven
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
@@ -46,11 +46,11 @@ jobs:
         os: [ "all","linux","mac","windows" ]
     steps:
       - uses: actions/checkout@v7
-      - name: Install JDK 21
+      - name: Install JDK 17
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 17
           cache: maven
       - name: Cache Playwright browsers
         uses: actions/cache@v6
@@ -62,11 +62,6 @@ jobs:
           sudo apt-get install graphviz
           
           export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
-      - name: Apply roq safe mode patch
-        run: |
-          cd quarkus-workshop-super-heroes/docs
-          mvn -B dependency:resolve -q
-          bash ../.github/scripts/apply-roq-safe-mode-fix.sh 2.1.9
       - name: Install Playwright
         run: |
           cd quarkus-workshop-super-heroes/docs
@@ -74,10 +69,7 @@ jobs:
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes/docs
-          # Generate the ROQ site in batch mode (without running tests, which can't pass until after the build)
-          QUARKUS_ROQ_GENERATOR_BATCH=true mvn -B package quarkus:run -DskipTests -Dos=${{ matrix.os }}
-          # Now run the tests against the generated site
-          mvn -B test -Dos=${{ matrix.os }}
+          mvn package -Dos=${{ matrix.os }}
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
@@ -121,9 +113,10 @@ jobs:
           # aggregate the fragments
 
           # Take just the contents of the variants folders for the other platforms
-          cp -r target/roq/linux/variants/* target/roq/variants
-          cp -r target/roq/mac/variants/* target/roq/variants
-          cp -r target/roq/windows/variants/* target/roq/variants
+          mkdir -p target/roq/variants
+          [ -d target/roq/linux/variants ] && cp -r target/roq/linux/variants/* target/roq/variants || true
+          [ -d target/roq/mac/variants ] && cp -r target/roq/mac/variants/* target/roq/variants || true
+          [ -d target/roq/windows/variants ] && cp -r target/roq/windows/variants/* target/roq/variants || true
 
           # Remove the OS-specific directories now that their variants are merged
           rm -rf target/roq/linux
@@ -134,7 +127,7 @@ jobs:
           mkdir -p target/site/super-heroes
           cp -R target/roq/* target/site/super-heroes
           # Move the redirect.html page to the root
-          cp target/roq/redirect.html target/site/index.html
+          cp target/roq/index.html target/site/index.html
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7
         with:
@@ -146,11 +139,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install JDK 21
+      - name: Install JDK 17
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 17
           cache: maven
       - name: Cache Playwright browsers
         uses: actions/cache@v6
@@ -164,28 +157,28 @@ jobs:
           path: target/site
       - name: Install Playwright
         run: |
-          cd quarkus-workshop-super-heroes
+          cd quarkus-workshop-super-heroes/docs
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Run documentation tests
         run: |
-          cd quarkus-workshop-super-heroes/
+          cd quarkus-workshop-super-heroes/docs
           mvn test -Ddocs.base.path=../../target/site/super-heroes
       - name: Report documentation test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
           report-name: 'Documentation Test Results'
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-results
-          path: quarkus-workshop-super-heroes/target/surefire-reports
+          path: quarkus-workshop-super-heroes/docs/target/surefire-reports
           retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
-    needs: [ publication, test-docs, build_java ]
+    needs: [ publication, test-docs, build_java17 ]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
