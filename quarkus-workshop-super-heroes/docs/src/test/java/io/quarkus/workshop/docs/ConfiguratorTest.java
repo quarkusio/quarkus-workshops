@@ -65,21 +65,91 @@ public class ConfiguratorTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Configurator should have default workshop button")
-    void testIndexHasDefaultButton() {
+    @DisplayName("Configurator should have workshop button that defaults to 'Take me to my default workshop'")
+    void testIndexHasWorkshopButton() {
         navigateToIndex();
 
-        Locator defaultButton = page.locator("button:has-text('Take me to the default workshop')");
-        assertTrue(defaultButton.count() > 0, "Should have default workshop button");
+        Locator workshopButton = page.locator("button:has-text('Take me to my default workshop')");
+        assertTrue(workshopButton.count() > 0, "Should have workshop button showing default workshop text initially");
     }
 
     @Test
-    @DisplayName("Configurator should have custom workshop button")
-    void testIndexHasCustomButton() {
+    @DisplayName("Workshop button should change to 'custom' text when toggles are changed")
+    void testWorkshopButtonChangesToCustomWhenTogglesChanged() {
         navigateToIndex();
 
+        // Initially should say default
+        Locator defaultButton = page.locator("button:has-text('Take me to my default workshop')");
+        assertTrue(defaultButton.count() > 0, "Should initially show default workshop text");
+
+        // Verify button points to default spine.html
+        String initialUrl = (String) page.evaluate("() => { const url = window.location.href; const baseUrl = './'; return baseUrl + 'spine.html'; }");
+        assertNotNull(initialUrl, "Should be able to determine default URL");
+
+        // Change a toggle
+        page.locator("input[id='use-ai']").uncheck();
+
+        // Now should say custom
         Locator customButton = page.locator("button:has-text('Take me to my custom workshop')");
-        assertTrue(customButton.count() > 0, "Should have custom workshop button");
+        assertTrue(customButton.count() > 0, "Should show custom workshop text after toggle change");
+
+        // Default text should be gone
+        defaultButton = page.locator("button:has-text('Take me to my default workshop')");
+        assertEquals(0, defaultButton.count(), "Default workshop text should be gone");
+
+        // Verify button now points to variant URL
+        String customUrl = (String) page.evaluate("() => { " +
+            "const selectedOptions = []; " +
+            "const btOption = document.querySelector('input[name=\"buildToolOption\"]:checked');" +
+            "selectedOptions.push(`bt-${btOption?.value || 'maven'}`); " +
+            "const osOption = document.querySelector('input[name=\"osOption\"]:checked');" +
+            "selectedOptions.push(`os-${osOption?.value || 'all'}`); " +
+            "return selectedOptions.join('-'); " +
+            "}");
+        assertNotNull(customUrl, "Should generate custom URL");
+        assertTrue(customUrl.contains("bt-"), "Custom URL should contain build tool");
+        assertTrue(customUrl.contains("os-"), "Custom URL should contain OS");
+    }
+
+    @Test
+    @DisplayName("Workshop button should point to spine.html when using defaults")
+    void testDefaultWorkshopButtonHref() {
+        navigateToIndex();
+
+        // Get what URL the default button would navigate to
+        String defaultUrl = (String) page.evaluate("() => { return isUsingDefaults() ? './spine.html' : null; }");
+        assertEquals("./spine.html", defaultUrl, "Default button should point to spine.html");
+    }
+
+    @Test
+    @DisplayName("Workshop button should point to variant URL when using custom options")
+    void testCustomWorkshopButtonHref() {
+        navigateToIndex();
+
+        // Change a toggle to make it custom
+        page.locator("input[id='use-messaging']").uncheck();
+
+        // Verify it's no longer using defaults
+        Boolean isDefault = (Boolean) page.evaluate("() => { return isUsingDefaults(); }");
+        assertFalse(isDefault, "Should not be using defaults after toggle change");
+
+        // Generate the expected variant URL
+        String variantUrl = (String) page.evaluate("() => { " +
+            "if (!isUsingDefaults()) { " +
+            "  const selectedOptions = []; " +
+            "  const btOption = document.querySelector('input[name=\"buildToolOption\"]:checked');" +
+            "  selectedOptions.push(`bt-${btOption?.value || 'maven'}`); " +
+            "  const osOption = document.querySelector('input[name=\"osOption\"]:checked');" +
+            "  selectedOptions.push(`os-${osOption?.value || 'all'}`); " +
+            "  return 'variants/' + selectedOptions.join('-'); " +
+            "} " +
+            "return null; " +
+            "}");
+
+        assertNotNull(variantUrl, "Custom URL should be generated");
+        assertTrue(variantUrl.startsWith("variants/"), "Custom URL should be in variants directory");
+        assertTrue(variantUrl.contains("bt-"), "Custom URL should include build tool");
+        assertTrue(variantUrl.contains("os-"), "Custom URL should include OS");
     }
 
     @Test
@@ -234,7 +304,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Select all then custom workshop should navigate to valid everything variant")
+    @DisplayName("Select all then navigate should go to custom workshop variant")
     void testSelectAllThenNavigate() {
         Path variantsDir = new File(DOCS_BASE_PATH, "variants").toPath();
         Assumptions.assumeTrue(Files.isDirectory(variantsDir),
@@ -245,10 +315,12 @@ public class ConfiguratorTest extends DocumentationTestBase {
         // Click "Select all"
         page.locator("a:has-text('Select all')").click();
 
-        // Click "Take me to my custom workshop"
-        Locator customButton = page.locator("button:has-text('Take me to my custom workshop')");
+        // After selecting all, button should say "custom workshop"
+        Locator workshopButton = page.locator("button:has-text('Take me to my custom workshop')");
+        assertEquals(1, workshopButton.count(), "Should show custom workshop button after Select all");
+
         page.waitForLoadState();
-        customButton.click();
+        workshopButton.click();
         page.waitForLoadState();
 
         // Verify we navigated to a valid page
@@ -427,11 +499,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
             setCheckbox("use-" + flag.id(), params.flags.getOrDefault(flag.id(), false));
         }
 
-        // Click the "Take me to my custom workshop" button
-        Locator customButton = page.locator("button:has-text('Take me to my custom workshop')");
+        // Click the workshop button (may say "default" or "custom" depending on whether toggles changed)
+        Locator workshopButton = page.locator("button[onclick*='generateTailoredURL']");
+        if (workshopButton.count() == 0) {
+            workshopButton = page.locator("button[onclick*='generateDefaultURL']");
+        }
+        assertTrue(workshopButton.count() > 0, "Should find workshop button for: " + params);
 
         page.waitForLoadState();
-        customButton.click();
+        workshopButton.click();
         page.waitForLoadState();
 
         // Verify we navigated to a valid page

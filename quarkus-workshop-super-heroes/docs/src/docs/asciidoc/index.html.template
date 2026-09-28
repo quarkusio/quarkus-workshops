@@ -35,6 +35,58 @@
 
         const baseUrl = "./";
         const filename = "spine.html";
+        const defaultOsOption = variantsConfig.osOptions.defaultValue || "all";
+        const defaultBuildToolOption = variantsConfig.buildToolOptions.defaultValue || "maven";
+
+        function isUsingDefaults() {
+            // Check if all toggles are in their default state
+            for (const flag of enabledFlags) {
+                const cb = document.getElementById(`use-${flag.id}`);
+                if (cb) {
+                    const isChecked = cb.checked;
+                    const shouldBeChecked = flag.defaultValue;
+                    if (isChecked !== shouldBeChecked) {
+                        return false;
+                    }
+                }
+            }
+
+            // Check if OS is default
+            const osRadio = document.querySelector('input[name="osOption"]:checked');
+            if (!osRadio || osRadio.value !== defaultOsOption) {
+                return false;
+            }
+
+            // Check if build tool is default
+            const btRadio = document.querySelector('input[name="buildToolOption"]:checked');
+            if (!btRadio || btRadio.value !== defaultBuildToolOption) {
+                return false;
+            }
+
+            return true;
+        }
+
+        function updateWorkshopButton() {
+            const button = document.getElementById('workshop-button');
+            const description = document.getElementById('mode-description');
+            const usingDefaults = isUsingDefaults();
+
+            if (usingDefaults) {
+                button.textContent = 'Take me to my default workshop';
+                description.textContent = 'Go to the instructions for all operating systems, with default content.';
+            } else {
+                button.textContent = 'Take me to my custom workshop';
+                description.textContent = 'Tailor instructions to your operating system and interests.';
+            }
+        }
+
+        function navigateToWorkshop() {
+            if (isUsingDefaults()) {
+                window.location.href = baseUrl + filename;
+            } else {
+                generateTailoredURL();
+            }
+        }
 
         function generateDefaultURL() {
             window.location.href = baseUrl + filename;
@@ -51,6 +103,7 @@
             });
             // Re-apply dependency constraints (all enabled, so all requirements met)
             enforceConstraints(null, true);
+            updateWorkshopButton();
         }
 
         function selectNone() {
@@ -62,6 +115,7 @@
                     updateLabelStyle(f.id, false);
                 }
             });
+            updateWorkshopButton();
         }
 
         function generateTailoredURL() {
@@ -215,6 +269,11 @@
             if (!cb) return;
             enforceStandaloneConstraints(flagId, cb.checked);
             enforceConstraints(flagId, cb.checked);
+            updateWorkshopButton();
+        }
+
+        function onRadioChange() {
+            updateWorkshopButton();
         }
     </script>
 </head>
@@ -222,40 +281,37 @@
 <h2 class="title-band">Quarkus Workshop Configurator</h2>
 
 <div class="content-area">
-    <div class="mode">
-        <h3 class="no-underline squish">Default workshop configuration</h3>
-        <div>Go to the instructions for all operating systems, with default content.</div>
-        <button class="big" onclick="generateDefaultURL()">
-            Take me to the default workshop
-        </button>
-    </div>
     <div class="mode right">
-        <h3 class="no-underline squish">Customize workshop</h3>
-        <div>Tailor instructions to your operating system and interests.</div>
+        <h3 class="no-underline squish">Workshop configuration</h3>
+        <div id="mode-description">Go to the instructions for all operating systems, with default content.</div>
 
         <h4 class="no-underline"><i class="fas fa-desktop"></i>What operating system are you using?</h4>
         <ul class="configurator">
             <li>
                 <label for="allRadio">
+<<<<<<< HEAD
                     <input type="radio" name="osOption" id="allRadio" value="all" checked><i
+=======
+                    <input type="radio" name="osOption" id="allRadio" value="all" checked onchange="onRadioChange()"><i
+>>>>>>> afafdea69 (Display default workshop configuration and consolidate button)
                     class="fas fa-globe"></i>All operating systems
                 </label>
             </li>
             <li>
                 <label for="macRadio">
-                    <input type="radio" name="osOption" id="macRadio" value="mac"><i
+                    <input type="radio" name="osOption" id="macRadio" value="mac" onchange="onRadioChange()"><i
                     class="fab fa-apple"></i>MacOS
                 </label>
             </li>
             <li>
                 <label for="windowsRadio">
-                    <input type="radio" name="osOption" id="windowsRadio" value="windows"><i
+                    <input type="radio" name="osOption" id="windowsRadio" value="windows" onchange="onRadioChange()"><i
                     class="fab fa-windows"></i>Windows
                 </label>
             </li>
             <li>
                 <label for="linuxRadio">
-                    <input type="radio" name="osOption" id="linuxRadio" value="linux"><i
+                    <input type="radio" name="osOption" id="linuxRadio" value="linux" onchange="onRadioChange()"><i
                     class="fab fa-linux"></i>Linux
                 </label></li>
         </ul>
@@ -264,12 +320,12 @@
         <ul class="configurator">
             <li>
                 <label for="mavenRadio">
-                    <input type="radio" name="buildToolOption" id="mavenRadio" value="maven" checked>Maven
+                    <input type="radio" name="buildToolOption" id="mavenRadio" value="maven" checked onchange="onRadioChange()">Maven
                 </label>
             </li>
             <li>
                 <label for="gradleRadio">
-                    <input type="radio" name="buildToolOption" id="gradleRadio" value="gradle">Gradle
+                    <input type="radio" name="buildToolOption" id="gradleRadio" value="gradle" onchange="onRadioChange()">Gradle
                 </label>
             </li>
         </ul>
@@ -292,8 +348,8 @@
             <ul class="configurator" id="standalone-checkboxes"></ul>
         </div>
 
-        <button class="big" onclick="generateTailoredURL()">
-            Take me to my custom workshop
+        <button class="big" id="workshop-button" onclick="navigateToWorkshop()">
+            Take me to my default workshop
         </button>
     </div>
 </div>

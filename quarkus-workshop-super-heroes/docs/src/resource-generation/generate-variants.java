@@ -69,10 +69,8 @@ class generate_variants {
         }
 
         List<Flag> flags = parseFlags(config.getJsonArray("flags"));
-        List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
-        List<String> buildToolOptions = config.containsKey("buildToolOptions")
-                ? parseStringArray(config.getJsonArray("buildToolOptions"))
-                : List.of("maven");
+        List<String> osOptions = parseOptions(config.get("osOptions"));
+        List<String> buildToolOptions = parseOptions(config.get("buildToolOptions"));
 
         if (osFilter != null) {
             osOptions = List.of(osFilter);
@@ -309,6 +307,19 @@ class generate_variants {
             ));
         }
         return flags;
+    }
+
+    private static List<String> parseOptions(Object optionsObj) {
+        if (optionsObj instanceof JsonArray) {
+            // Legacy array format: ["all", "mac", "linux", "windows"]
+            return parseStringArray((JsonArray) optionsObj);
+        } else if (optionsObj instanceof JsonObject) {
+            // New object format: { "values": [...], "defaultValue": "..." }
+            JsonObject obj = (JsonObject) optionsObj;
+            JsonArray values = obj.getJsonArray("values");
+            return values != null ? parseStringArray(values) : List.of();
+        }
+        return List.of();
     }
 
     private static List<String> parseStringArray(JsonArray arr) {
