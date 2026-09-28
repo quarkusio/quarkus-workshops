@@ -184,6 +184,8 @@
                             <args>
                                 <arg>${basedir}/data/variants.json</arg>
                                 <arg>${basedir}/target/variant-combinations</arg>
+                                <arg>--os</arg>
+                                <arg>${os}</arg>
                             </args>
                         </configuration>
                     </execution>
