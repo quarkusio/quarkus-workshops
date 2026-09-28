@@ -236,6 +236,12 @@
         <h4 class="no-underline"><i class="fas fa-desktop"></i>What operating system are you using?</h4>
         <ul class="configurator">
             <li>
+                <label for="allRadio">
+                    <input type="radio" name="osOption" id="allRadio" value="all" checked><i
+                    class="fas fa-globe"></i>All operating systems
+                </label>
+            </li>
+            <li>
                 <label for="macRadio">
                     <input type="radio" name="osOption" id="macRadio" value="mac"><i
                     class="fab fa-apple"></i>MacOS
@@ -353,12 +359,23 @@
 
     buildCheckboxes();
 
+    // Pre-check toggles that match the default values (without applying constraints yet)
+    enabledFlags.forEach(flag => {
+        if (flag.defaultValue) {
+            const cb = document.getElementById(`use-${flag.id}`);
+            if (cb) {
+                cb.checked = true;
+            }
+        }
+    });
+
     // Handle URL parameters for pre-setting options
     const urlParams = new URLSearchParams(window.location.search);
     const hideDefined = urlParams.get("hideDefined")?.toLowerCase() === "true";
     for (const [key, value] of urlParams.entries()) {
         if (key === "os") {
-            const input = document.querySelector(`input[id="${value}Radio"]`);
+            const radioId = value === "all" ? "allRadio" : `${value}Radio`;
+            const input = document.querySelector(`input[id="${radioId}"]`);
             if (input) {
                 input.checked = true;
             }
@@ -383,7 +400,8 @@
         }
     }
 
-    // Re-apply constraints after URL params are set
+    // Apply constraints based on pre-checked defaults to ensure consistency
+    // This must happen after URL params are processed to respect any overrides
     enabledFlags.forEach(f => {
         const cb = document.getElementById(`use-${f.id}`);
         if (cb && cb.checked) {
