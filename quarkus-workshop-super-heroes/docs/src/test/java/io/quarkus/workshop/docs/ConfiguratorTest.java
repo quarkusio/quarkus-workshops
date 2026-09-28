@@ -500,10 +500,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
         }
 
         // Click the workshop button (may say "default" or "custom" depending on whether toggles changed)
-        Locator workshopButton = page.locator("button[onclick*='generateTailoredURL']");
-        if (workshopButton.count() == 0) {
-            workshopButton = page.locator("button[onclick*='generateDefaultURL']");
-        }
+        Locator workshopButton = page.locator("button#workshop-button");
         assertTrue(workshopButton.count() > 0, "Should find workshop button for: " + params);
 
         page.waitForLoadState();

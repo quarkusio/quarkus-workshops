@@ -289,11 +289,7 @@
         <ul class="configurator">
             <li>
                 <label for="allRadio">
-<<<<<<< HEAD
-                    <input type="radio" name="osOption" id="allRadio" value="all" checked><i
-=======
                     <input type="radio" name="osOption" id="allRadio" value="all" checked onchange="onRadioChange()"><i
->>>>>>> afafdea69 (Display default workshop configuration and consolidate button)
                     class="fas fa-globe"></i>All operating systems
                 </label>
             </li>
