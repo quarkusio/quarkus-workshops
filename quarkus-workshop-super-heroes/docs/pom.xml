@@ -230,6 +230,7 @@
                                         <version>${quarkus.platform.version}</version>
                                     </plugin>
                                     <goal>run</goal>
+                                    <configuration/>
                                 </pluginExecutor>
                             </pluginExecutors>
                         </configuration>
