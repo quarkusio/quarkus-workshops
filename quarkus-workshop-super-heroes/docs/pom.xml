@@ -166,6 +166,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
+                 This provides the input data for building individual variant sites later.
+                 For now, the single Roq build uses CDI bean injection to access variant configs at runtime. -->
+            <plugin>
+                <groupId>dev.jbang</groupId>
+                <artifactId>jbang-maven-plugin</artifactId>
+                <version>0.0.7</version>
+                <executions>
+                    <execution>
+                        <id>generate-variant-structure</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <script>src/resource-generation/generate-variants.java</script>
+                            <args>
+                                <arg>${basedir}/data/variants.json</arg>
+                                <arg>${basedir}/target/variant-combinations</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
