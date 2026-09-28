@@ -183,6 +183,9 @@ class generate_variants {
         Path dir = Path.of(outputDir, dirname.toString());
         Files.createDirectories(dir);
 
+        Path propsFile = dir.resolve("application.properties");
+        Files.writeString(propsFile, "workshop.variant.name=" + dirname + "\n");
+
         Path optionsFile = dir.resolve("options.adoc");
         try (PrintWriter pw = new PrintWriter(optionsFile.toFile())) {
             pw.println(":buildtool: " + buildTool);

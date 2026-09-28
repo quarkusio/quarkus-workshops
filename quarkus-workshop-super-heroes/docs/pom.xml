@@ -189,30 +189,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Generate application.properties files per variant (for iterator-maven-plugin).
-                 Creates application.properties in each variant directory with workshop.variant.name
-                 set to the variant's directory name. -->
-            <plugin>
-                <groupId>dev.jbang</groupId>
-                <artifactId>jbang-maven-plugin</artifactId>
-                <version>0.0.7</version>
-                <executions>
-                    <execution>
-                        <id>generate-variant-properties</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <script>src/resource-generation/generate-variant-properties.java</script>
-                            <args>
-                                <arg>${basedir}/target/variant-combinations</arg>
-                            </args>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Multi-variant HTML generation via iterator-maven-plugin.
                  For each variant directory, copies its application.properties to config/,
                  then runs quarkus:run which picks up the variant name via MicroProfile Config.
