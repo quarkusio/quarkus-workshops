@@ -240,7 +240,7 @@
                                     <goal>run</goal>
                                     <configuration>
                                         <target>
-                                            <copy file="${basedir}/target/variant-combinations/@item.name@/application.properties"
+                                            <copy file="${basedir}/target/variant-combinations/${item}/application.properties"
                                                   tofile="${basedir}/config/application.properties"
                                                   overwrite="true"/>
                                         </target>
