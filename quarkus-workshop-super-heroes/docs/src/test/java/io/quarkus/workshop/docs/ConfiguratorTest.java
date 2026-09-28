@@ -135,7 +135,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
     void testStandaloneModulesAreMutuallyExclusive() {
         navigateToIndex();
 
+        // Uncheck all defaults first
         VariantsConfig config = VariantsConfig.load();
+        for (VariantsConfig.Flag flag : config.enabledFlags()) {
+            Locator cb = page.locator("input[id='use-" + flag.id() + "']");
+            if (cb.isChecked()) {
+                cb.uncheck();
+            }
+        }
+
         List<VariantsConfig.Flag> standalone = config.standaloneFlags();
         Assumptions.assumeTrue(standalone.size() >= 2,
             "Need at least 2 standalone flags to test mutual exclusion");
@@ -190,7 +198,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
     void testSelectAllAfterStandaloneSelection() {
         navigateToIndex();
 
+        // Uncheck all defaults first
         VariantsConfig config = VariantsConfig.load();
+        for (VariantsConfig.Flag flag : config.enabledFlags()) {
+            Locator cb = page.locator("input[id='use-" + flag.id() + "']");
+            if (cb.isChecked()) {
+                cb.uncheck();
+            }
+        }
+
         List<VariantsConfig.Flag> standalone = config.standaloneFlags();
         Assumptions.assumeTrue(!standalone.isEmpty(),
             "Need at least 1 standalone flag");
@@ -260,7 +276,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
     void testSelectAllAfterNonStandaloneSelection() {
         navigateToIndex();
 
+        // Uncheck all defaults first
         VariantsConfig config = VariantsConfig.load();
+        for (VariantsConfig.Flag flag : config.enabledFlags()) {
+            Locator cb = page.locator("input[id='use-" + flag.id() + "']");
+            if (cb.isChecked()) {
+                cb.uncheck();
+            }
+        }
+
         List<VariantsConfig.Flag> nonStandalone = config.enabledNonStandaloneFlags();
         Assumptions.assumeTrue(!nonStandalone.isEmpty(),
             "Need at least 1 non-standalone flag");
@@ -314,7 +338,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
     void testNoneAfterStandaloneSelection() {
         navigateToIndex();
 
+        // Uncheck all defaults first
         VariantsConfig config = VariantsConfig.load();
+        for (VariantsConfig.Flag flag : config.enabledFlags()) {
+            Locator cb = page.locator("input[id='use-" + flag.id() + "']");
+            if (cb.isChecked()) {
+                cb.uncheck();
+            }
+        }
+
         List<VariantsConfig.Flag> standalone = config.standaloneFlags();
         Assumptions.assumeTrue(!standalone.isEmpty(),
             "Need at least 1 standalone flag");
