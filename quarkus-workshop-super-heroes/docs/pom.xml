@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- How to use this build file
+Run -Dquickly to just generate a default doc with every flag enabled
+Run -Dos=[linux|mac|windows|all] to generate a set of variants for a single OS. That should take around 2-3m.
+The default build will take around 10m.
+-->
+
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>io.quarkus.workshop.super-heroes</groupId>
-    <artifactId>super-parent-root</artifactId>
+    <artifactId>docs</artifactId>
     <version>2.0</version>
     <packaging>quarkus</packaging>
-    <name>Quarkus Workshop :: Super-Heroes :: R00T</name>
+    <name>Quarkus Workshop :: Super-Heroes :: Docs</name>
+
     <properties>
+        <version.asciidoctorj.diagram.plantuml>1.2026.2</version.asciidoctorj.diagram.plantuml>
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>
             https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes
@@ -24,25 +33,31 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.38.3</quarkus.platform.version>
-        <version.asciidoctorj.diagram.plantuml>1.2026.2</version.asciidoctorj.diagram.plantuml>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.6.0</surefire-plugin.version>
         <roq.version>2.1.9</roq.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>${quarkus.platform.artifact-id}</artifactId>
-                <version>${quarkus.platform.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
+        <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${compiler-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${surefire-plugin.version}</version>
+        </dependency>
+        <!-- Normal dependencies we want dependabot to apply updates to -->
+        <dependency>
+            <groupId>${quarkus.platform.group-id}</groupId>
+            <artifactId>${quarkus.platform.artifact-id}</artifactId>
+            <version>${quarkus.platform.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
         <dependency>
             <groupId>io.quarkiverse.roq</groupId>
             <artifactId>quarkus-roq</artifactId>
@@ -82,6 +97,18 @@
             <artifactId>asciidoctorj-diagram-plantuml</artifactId>
             <version>${version.asciidoctorj.diagram.plantuml}</version>
         </dependency>
+        <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${compiler-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${surefire-plugin.version}</version>
+        </dependency>
+        <!-- Normal dependencies we want dependabot to apply updates to -->
         <dependency>
             <groupId>io.quarkiverse.playwright</groupId>
             <artifactId>quarkus-playwright</artifactId>
@@ -218,9 +245,10 @@
                                     <goal>run</goal>
                                     <configuration>
                                         <target>
-                                            <copy file="${basedir}/target/variant-combinations/${item}/application.properties"
-                                                  tofile="${basedir}/config/application.properties"
-                                                  overwrite="true"/>
+                                            <copy
+                                                file="${basedir}/target/variant-combinations/${item}/application.properties"
+                                                tofile="${basedir}/config/application.properties"
+                                                overwrite="true"/>
                                         </target>
                                     </configuration>
                                 </pluginExecutor>
