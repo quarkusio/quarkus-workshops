@@ -141,11 +141,26 @@ public class VariantLeakTest {
     }
 
     private void assertDoesNotContain(String content, String variantName, String term, boolean caseInsensitive) {
-        String searchContent = caseInsensitive ? content.toLowerCase():content;
-        String searchTerm = caseInsensitive ? term.toLowerCase():term;
+        String searchContent = caseInsensitive ? content.toLowerCase() : content;
+        String searchTerm = caseInsensitive ? term.toLowerCase() : term;
 
-        boolean contains = searchContent.contains(searchTerm);
-        assertFalse(contains,
-            "Variant '" + variantName + "' contains '" + term + "' but that module is disabled");
+        int index = searchContent.indexOf(searchTerm);
+        if (index >= 0) {
+            String context = extractContext(content, index, searchTerm.length());
+            String message = String.format(
+                "Variant '%s' contains '%s' but that module is disabled.%nContext: %s",
+                variantName, term, context);
+            assertFalse(true, message);
+        }
+    }
+
+    private String extractContext(String content, int termIndex, int termLength) {
+        int contextStart = Math.max(0, termIndex - 200);
+        int contextEnd = Math.min(content.length(), termIndex + termLength + 200);
+        String context = content.substring(contextStart, contextEnd);
+
+        // Remove any leading/trailing HTML tags or partial words
+        context = context.replaceAll("^[^.!?]*", "").replaceAll("[^.!?]*$", "");
+        return " " + context.trim();
     }
 }
