@@ -269,6 +269,7 @@ The default build will take around 10m.
                                                 target/variants/@item@
                                             </quarkus.roq.generator.output-dir>
                                             <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
+                                            <skipTests>true</skipTests>
                                         </systemProperties>
                                     </configuration>
                                 </pluginExecutor>
