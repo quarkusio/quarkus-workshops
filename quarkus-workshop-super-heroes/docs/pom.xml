@@ -350,6 +350,43 @@ The default build will take around 10m.
             </build>
         </profile>
         <profile>
+            <!-- Allows running tests without running a full roq build, which would be slow -->
+            <id>tests-only</id>
+            <activation>
+                <property>
+                    <name>testy</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-build</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>default-run</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.soebes.maven.plugins</groupId>
+                        <artifactId>iterator-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-variant-sites</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>native</id>
             <activation>
                 <property>
