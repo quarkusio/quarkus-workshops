@@ -218,6 +218,7 @@ The default build will take around 10m.
                     </execution>
                     <execution>
                         <id>default-run</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -327,7 +328,12 @@ The default build will take around 10m.
 
     <profiles>
         <profile>
-            <id>quickly</id>
+            <id>quick-build</id>
+            <activation>
+                <property>
+                    <name>quickly</name>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
