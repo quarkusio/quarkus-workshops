@@ -298,7 +298,7 @@ The default build will take around 10m.
                                     <configuration>
                                         <systemProperties>
                                             <quarkus.roq.generator.output-dir>
-                                                variants/@item@
+                                                roq/variants/@item@
                                             </quarkus.roq.generator.output-dir>
                                             <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
                                             <skipTests>true</skipTests>
@@ -314,7 +314,7 @@ The default build will take around 10m.
                                     <goal>run</goal>
                                     <configuration>
                                         <additionalSystemProperties>
-                                            skipTests=true,workshop.variant.name=@item@,buildDir=variants/@item@
+                                            skipTests=true,workshop.variant.name=@item@,buildDir=roq/variants/@item@
                                         </additionalSystemProperties>
                                     </configuration>
                                 </pluginExecutor>
