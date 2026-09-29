@@ -168,7 +168,7 @@ jobs:
       - name: Run documentation tests
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn test -Ddocs.base.path=../../target/site/super-heroes
+          mvn test -Dtesty -Ddocs.base.path=../../target/site/super-heroes
       - name: Report documentation test results
         if: always()
         uses: ./.github/actions/test-reporter
