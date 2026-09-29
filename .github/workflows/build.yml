@@ -75,6 +75,7 @@ jobs:
         run: |
           cd quarkus-workshop-super-heroes/docs
           mvn package -Dos=${{ matrix.os }}
+          # TODO this runs the tests just once, should we run them for every variant?
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter

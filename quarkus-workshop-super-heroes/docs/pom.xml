@@ -198,6 +198,37 @@ The default build will take around 10m.
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-build</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <systemProperties>
+                                <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
+                                <skipTests>true</skipTests>
+                            </systemProperties>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-run</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <additionalSystemProperties>
+                                skipTests=true
+                            </additionalSystemProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
                  This provides the input data for building individual variant sites. -->
             <plugin>
@@ -266,7 +297,7 @@ The default build will take around 10m.
                                     <configuration>
                                         <systemProperties>
                                             <quarkus.roq.generator.output-dir>
-                                                target/variants/@item@
+                                                variants/@item@
                                             </quarkus.roq.generator.output-dir>
                                             <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
                                             <skipTests>true</skipTests>
@@ -282,7 +313,7 @@ The default build will take around 10m.
                                     <goal>run</goal>
                                     <configuration>
                                         <additionalSystemProperties>
-                                            skipTests=true,workshop.variant.name=@item@,buildDir=target/variants/@item@
+                                            skipTests=true,workshop.variant.name=@item@,buildDir=variants/@item@
                                         </additionalSystemProperties>
                                     </configuration>
                                 </pluginExecutor>
