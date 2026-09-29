@@ -159,8 +159,7 @@ The default build will take around 10m.
                         </junit.jupiter.execution.parallel.config.fixed.parallelism>
                         <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
                         <os>${os}</os>
-                        <variants.config.path>${basedir}/data/variants.json
-                        </variants.config.path>
+                        <variants.config.path>${basedir}/data/variants.json</variants.config.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -242,23 +241,37 @@ The default build will take around 10m.
                         <configuration>
                             <folder>${basedir}/target/variant-combinations</folder>
                             <pluginExecutors>
-                                <!-- Copy variant-specific application.properties to config/ -->
+                                <!-- Build the site for this variant -->
                                 <pluginExecutor>
                                     <plugin>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-antrun-plugin</artifactId>
+                                        <groupId>com.soebes.maven.plugins</groupId>
+                                        <artifactId>echo-maven-plugin</artifactId>
+                                        <version>0.5.0</version>
                                     </plugin>
-                                    <goal>run</goal>
+                                    <goal>echo</goal>
                                     <configuration>
-                                        <target>
-                                            <copy
-                                                file="${basedir}/target/variant-combinations/${item}/application.properties"
-                                                tofile="${basedir}/config/application.properties"
-                                                overwrite="true"/>
-                                        </target>
+                                        <echos>
+                                            <echo>Generating asciidoc using options from @item@</echo>
+                                        </echos>
                                     </configuration>
                                 </pluginExecutor>
-                                <!-- Build the site for this variant -->
+                                <!-- Build, then run, so we can pass build-time config -->
+                                <pluginExecutor>
+                                    <plugin>
+                                        <groupId>io.quarkus</groupId>
+                                        <artifactId>quarkus-maven-plugin</artifactId>
+                                        <version>${quarkus.platform.version}</version>
+                                    </plugin>
+                                    <goal>build</goal>
+                                    <configuration>
+                                        <systemProperties>
+                                            <quarkus.roq.generator.output-dir>
+                                                target/variants/@item@
+                                            </quarkus.roq.generator.output-dir>
+                                            <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
+                                        </systemProperties>
+                                    </configuration>
+                                </pluginExecutor>
                                 <pluginExecutor>
                                     <plugin>
                                         <groupId>io.quarkus</groupId>
@@ -266,7 +279,11 @@ The default build will take around 10m.
                                         <version>${quarkus.platform.version}</version>
                                     </plugin>
                                     <goal>run</goal>
-                                    <configuration/>
+                                    <configuration>
+                                        <additionalSystemProperties>
+                                            skipTests=true,workshop.variant.name=@item@,buildDir=target/variants/@item@
+                                        </additionalSystemProperties>
+                                    </configuration>
                                 </pluginExecutor>
                             </pluginExecutors>
                         </configuration>
