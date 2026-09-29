@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- How to use this build file
-Run -Dquickly to just generate a default doc with every flag enabled
-Run -Dos=[linux|mac|windows|all] to generate a set of variants for a single OS. That should take around 2-3m.
-The default build will take around 10m.
+Run mvn install to just generate a default doc
+Run -Dos=[linux|mac|windows|all] to generate docs for a single OS. Don't forget to run clean if you switch os.
+TODO it would be nice if that wasn't needed.
+Run -Dfull to generate a full set of docs, which will be a slow build.
+
 -->
 
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
@@ -331,7 +333,7 @@ The default build will take around 10m.
             <id>quick-build</id>
             <activation>
                 <property>
-                    <name>quickly</name>
+                    <name>!full</name>
                 </property>
             </activation>
             <build>
