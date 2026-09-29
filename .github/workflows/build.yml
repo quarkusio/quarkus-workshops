@@ -62,6 +62,11 @@ jobs:
           sudo apt-get install graphviz
           
           export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
+      - name: Apply roq safe mode patch
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn -B dependency:resolve -q
+          bash ../.github/scripts/apply-roq-safe-mode-fix.sh 2.1.9
       - name: Install Playwright
         run: |
           cd quarkus-workshop-super-heroes/docs
