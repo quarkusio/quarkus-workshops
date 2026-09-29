@@ -69,8 +69,7 @@ jobs:
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn package -Dos=${{ matrix.os }}  -DskipTests=true
-          # TODO should not have to skip tests
+          mvn package -Dos=${{ matrix.os }}
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter

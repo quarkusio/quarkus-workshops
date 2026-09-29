@@ -234,7 +234,7 @@ The default build will take around 10m.
                 <executions>
                     <execution>
                         <id>build-variant-sites</id>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>iterator</goal>
                         </goals>
