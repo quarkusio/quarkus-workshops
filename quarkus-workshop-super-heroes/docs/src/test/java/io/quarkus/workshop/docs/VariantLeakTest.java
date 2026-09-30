@@ -92,7 +92,6 @@ public class VariantLeakTest {
                     JsonObject termObj = (JsonObject) item;
                     VariantConfig.BannedTerm term = new VariantConfig.BannedTerm();
                     term.term = termObj.getString("term");
-                    term.caseInsensitive = termObj.getBoolean("caseInsensitive");
                     term.allowedPhrases = new ArrayList<>();
                     termObj.getJsonArray("allowedPhrases").stream()
                         .map(v -> v.toString().replaceAll("^\"|\"$", ""))
