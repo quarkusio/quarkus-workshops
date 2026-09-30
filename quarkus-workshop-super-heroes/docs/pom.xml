@@ -391,7 +391,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                         <artifactId>quarkus-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>default-build</id>
+                                <id>default-run</id>
                                 <phase>none</phase>
                             </execution>
                             <execution>
