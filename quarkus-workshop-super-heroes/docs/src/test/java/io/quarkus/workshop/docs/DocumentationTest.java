@@ -48,6 +48,19 @@ public class DocumentationTest extends DocumentationTestBase {
     }
 
     @Test
+    @DisplayName("Main spine/index.html should not have unescaped version attribute in the title")
+    void testSpineHasResolvedVersion() {
+        navigateToSpine();
+
+        Locator titles = page.locator("h1");
+        String title = titles.innerText();
+        assertNotNull(title, "Page should have a title");
+        assertFalse(title.isEmpty(), "Title should not be empty");
+        assertFalse(title.toLowerCase().contains("{quarkus"),
+            "Title should not contain unresolved attribute, but was: " + title);
+    }
+
+    @Test
     @DisplayName("Main spine/index.html should have table of contents")
     void testSpineHasTableOfContents() {
         navigateToSpine();

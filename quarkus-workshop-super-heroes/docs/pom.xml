@@ -188,6 +188,37 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             <systemProperties>
                                 <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
                                 <skipTests>true</skipTests>
+                                <!--                          TODO these fail because of the environment variable interpolation when run locally      -->
+                                <!--                                <quarkus.asciidoc.attributes.github-raw>${github.raw}-->
+                                <!--                                </quarkus.asciidoc.attributes.github-raw>-->
+                                <!--                                <quarkus.asciidoc.attributes.github-url>${github.url}-->
+                                <!--                                </quarkus.asciidoc.attributes.github-url>-->
+                                <!--                                <quarkus.asciidoc.attributes.github-repo>${github.repo}-->
+                                <!--                                </quarkus.asciidoc.attributes.github-repo>-->
+                                <!--                                <quarkus.asciidoc.attributes.github-issue>${github.issue}-->
+                                <!--                                </quarkus.asciidoc.attributes.github-issue>-->
+                                <quarkus.asciidoc.attributes.github-issue>${base.url}
+                                </quarkus.asciidoc.attributes.github-issue>
+                                <quarkus.asciidoc.attributes.give-solution>true
+                                </quarkus.asciidoc.attributes.give-solution>
+                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.source}
+                                </quarkus.asciidoc.attributes.jdk-version>
+                                <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
+                                <quarkus.asciidoc.attributes.graalvm-version>21
+                                </quarkus.asciidoc.attributes.graalvm-version>
+                                <quarkus.asciidoc.attributes.maven-version>3.9.x
+                                </quarkus.asciidoc.attributes.maven-version>
+                                <quarkus.asciidoc.attributes.quarkus-version>${quarkus.platform.version}
+                                </quarkus.asciidoc.attributes.quarkus-version>
+                                <quarkus.asciidoc.attributes.compiler-plugin-version>${compiler-plugin.version}
+                                </quarkus.asciidoc.attributes.compiler-plugin-version>
+                                <quarkus.asciidoc.attributes.surefire-plugin-version>${surefire-plugin.version}
+                                </quarkus.asciidoc.attributes.surefire-plugin-version>
+                                <quarkus.asciidoc.attributes.quarkus-pact-version>${quarkus.pact.version}
+                                </quarkus.asciidoc.attributes.quarkus-pact-version>
+                                <quarkus.asciidoc.attributes.quarkus-langchain4j-version>
+                                    ${quarkus-langchain4j.version}
+                                </quarkus.asciidoc.attributes.quarkus-langchain4j-version>
                             </systemProperties>
                         </configuration>
                     </execution>
@@ -234,6 +265,20 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 <delete dir="${basedir}/target/roq-cache" failonerror="false"/>
                                 <copy todir="${basedir}/target/roq-cache">
                                     <fileset dir="${basedir}/target/roq"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>restore-cached-roq-output</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${basedir}/target/roq">
+                                    <fileset dir="${basedir}/target/roq-cache"/>
                                 </copy>
                             </target>
                         </configuration>
@@ -396,6 +441,26 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>com.soebes.maven.plugins</groupId>
+                        <artifactId>iterator-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-variant-sites</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>restore-cached-roq-output</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -428,11 +493,11 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>com.soebes.maven.plugins</groupId>
-                        <artifactId>iterator-maven-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>build-variant-sites</id>
+                                <id>restore-cached-roq-output</id>
                                 <phase>none</phase>
                             </execution>
                         </executions>
