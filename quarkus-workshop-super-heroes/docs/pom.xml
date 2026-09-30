@@ -109,12 +109,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
     <build>
         <plugins>
             <plugin>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus.platform.version}</version>
-                <extensions>true</extensions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
                 <configuration>
@@ -181,6 +175,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
+                <extensions>true</extensions>
                 <executions>
                     <execution>
                         <id>default-build</id>
@@ -207,14 +202,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             </additionalSystemProperties>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-            <!-- Initial roq run and cache for variant reuse -->
-            <plugin>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus.platform.version}</version>
-                <executions>
                     <execution>
                         <id>cache-roq-run</id>
                         <phase>compile</phase>
