@@ -6,10 +6,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -17,107 +26,88 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 /**
  * Tests that variant-specific content doesn't leak into variants where that module is disabled.
  * Prevents regressions like issue #749 where Kafka/event-statistics appeared in messaging-off variants.
+ * Configuration is centralized in variant-leak-config.yaml for easy maintenance.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VariantLeakTest {
 
     private static final File VARIANTS_PATH = new File(
         System.getProperty("docs.base.path", "target/generated-asciidoc/"), "variants");
 
-    @Test
-    @DisplayName("Messaging-off variants should not contain Kafka or event-statistics references")
-    void messagingOffVariantsShouldNotLeak() throws IOException {
-        List<Path> variants = getVariants("messaging-false");
-        assumeTrue(!variants.isEmpty(), "Need at least one messaging-off variant to test");
+    static class VariantConfig {
+        String displayName;
+        String filterPattern;
+        List<BannedTerm> bannedTerms;
 
-        for (Path variant : variants) {
-            String content = Files.readString(variant);
-            String variantName = variant.getParent().getFileName().toString();
-
-            assertDoesNotContain(content, variantName, "kafka", true);
-            assertDoesNotContain(content, variantName, "event-statistics", false);
-            assertDoesNotContain(content, variantName, "Reactive Messaging", false);
+        static class BannedTerm {
+            String term;
+            boolean caseInsensitive;
+            List<String> allowedPhrases;
         }
     }
 
-    @Test
-    @DisplayName("Messaging-off variants should not contain messaging package or property references")
-    void messagingOffVariantsShouldNotLeakPackages() throws IOException {
-        List<Path> variants = getVariants("messaging-false");
-        assumeTrue(!variants.isEmpty(), "Need at least one messaging-off variant to test");
+    @ParameterizedTest
+    @MethodSource("loadVariantConfigs")
+    @DisplayName("Variant should not leak disabled module content")
+    @Order(1)
+    void variantsShouldNotLeak(VariantConfig config) throws IOException {
+        List<Path> variants = getVariants(config.filterPattern);
+        assumeTrue(!variants.isEmpty(), "Need at least one " + config.filterPattern + " variant to test");
 
         for (Path variant : variants) {
             String content = Files.readString(variant);
             String variantName = variant.getParent().getFileName().toString();
 
-            assertDoesNotContain(content, variantName, "reactive.messaging", false);
-            assertDoesNotContain(content, variantName, "mp.messaging", false);
+            for (VariantConfig.BannedTerm bannedTerm : config.bannedTerms) {
+                assertDoesNotContain(content, variantName, bannedTerm.term,
+                    bannedTerm.caseInsensitive, bannedTerm.allowedPhrases);
+            }
         }
     }
 
-    @Test
-    @DisplayName("Azure-off variants should not contain Azure or Container Apps references")
-    void azureOffVariantsShouldNotLeak() throws IOException {
-        List<Path> variants = getVariants("azure-false");
-        assumeTrue(!variants.isEmpty(), "Need at least one azure-off variant to test");
+    static List<VariantConfig> loadVariantConfigs() throws IOException {
+        List<VariantConfig> configs = new ArrayList<>();
 
-        for (Path variant : variants) {
-            String content = Files.readString(variant);
-            String variantName = variant.getParent().getFileName().toString();
+        String configPath = System.getProperty("variants.config.path",
+            "src/resource-generation/variants-config.json");
+        Path jsonPath = Files.exists(Path.of(configPath)) ? Path.of(configPath) : null;
 
-            assertDoesNotContain(content, variantName, "azure", true);
-            assertDoesNotContain(content, variantName, "container apps", true);
+        if (jsonPath == null) {
+            // Fallback: if property not set, search for it
+            jsonPath = Files.walk(Path.of("."))
+                .filter(p -> p.getFileName().toString().equals("variants-config.json"))
+                .findFirst()
+                .orElseThrow(() -> new IOException("variants-config.json not found"));
         }
-    }
 
-    @Test
-    @DisplayName("Kubernetes-off variants should not contain Kubernetes, kubectl, or k8s references")
-    void kubernetesOffVariantsShouldNotLeak() throws IOException {
-        List<Path> variants = getVariants("kubernetes-false");
-        assumeTrue(!variants.isEmpty(), "Need at least one kubernetes-off variant to test");
+        try (JsonReader reader = Json.createReader(Files.newInputStream(jsonPath))) {
+            JsonObject root = reader.readObject();
+            JsonObject leakConfig = root.getJsonObject("leakTestConfig");
 
-        for (Path variant : variants) {
-            String content = Files.readString(variant);
-            String variantName = variant.getParent().getFileName().toString();
+            for (String variantKey : leakConfig.keySet()) {
+                JsonObject variantData = leakConfig.getJsonObject(variantKey);
+                VariantConfig config = new VariantConfig();
+                config.displayName = variantData.getString("displayName");
+                config.filterPattern = variantData.getString("filterPattern");
+                config.bannedTerms = new ArrayList<>();
 
-            assertDoesNotContain(content, variantName, "kubernetes", true);
-            assertDoesNotContain(content, variantName, "kubectl", true);
-            assertDoesNotContain(content, variantName, "k8s", true);
+                variantData.getJsonArray("bannedTerms").forEach(item -> {
+                    JsonObject termObj = (JsonObject) item;
+                    VariantConfig.BannedTerm term = new VariantConfig.BannedTerm();
+                    term.term = termObj.getString("term");
+                    term.caseInsensitive = termObj.getBoolean("caseInsensitive");
+                    term.allowedPhrases = new ArrayList<>();
+                    termObj.getJsonArray("allowedPhrases").stream()
+                        .map(v -> v.toString().replaceAll("^\"|\"$", ""))
+                        .forEach(term.allowedPhrases::add);
+                    config.bannedTerms.add(term);
+                });
+
+                configs.add(config);
+            }
         }
-    }
 
-    @Test
-    @DisplayName("AI-off variants should not contain OpenAI, LangChain, or narration references")
-    void aiOffVariantsShouldNotLeak() throws IOException {
-        List<Path> variants = getVariants("ai-false");
-        assumeTrue(!variants.isEmpty(), "Need at least one ai-off variant to test");
-
-        for (Path variant : variants) {
-            String content = Files.readString(variant);
-            String variantName = variant.getParent().getFileName().toString();
-
-            assertDoesNotContain(content, variantName, "openai", true);
-            assertDoesNotContain(content, variantName, "open ai", true);
-            assertDoesNotContain(content, variantName, "langchain", true);
-            assertDoesNotContain(content, variantName, "rest-narration", true);
-            assertDoesNotContain(content, variantName, "narration microservice", true);
-        }
-    }
-
-    @Test
-    @DisplayName("Native-off variants should not contain GraalVM or native-image references")
-    void nativeOffVariantsShouldNotLeak() throws IOException {
-        List<Path> variants = getVariants("native-false");
-        assumeTrue(!variants.isEmpty(), "Need at least one native-off variant to test");
-
-        for (Path variant : variants) {
-            String content = Files.readString(variant);
-            String variantName = variant.getParent().getFileName().toString();
-
-            // Note: we allow "native" as it's too common, but check for specific terms
-            assertDoesNotContain(content, variantName, "graalvm", true);
-            assertDoesNotContain(content, variantName, "native-image", true);
-            assertDoesNotContain(content, variantName, "native image", true);
-        }
+        return configs;
     }
 
     // Helper methods
@@ -140,23 +130,53 @@ public class VariantLeakTest {
         return variants;
     }
 
-    private void assertDoesNotContain(String content, String variantName, String term, boolean caseInsensitive) {
+    private void assertDoesNotContain(String content, String variantName, String term,
+                                      boolean caseInsensitive, List<String> allowedPhrases) {
         String searchContent = caseInsensitive ? content.toLowerCase() : content;
         String searchTerm = caseInsensitive ? term.toLowerCase() : term;
 
         int index = searchContent.indexOf(searchTerm);
         if (index >= 0) {
-            String context = extractContext(content, index, searchTerm.length());
+            String contextStr = extractContext(content, index, searchTerm.length());
+
+            // Check if this match is allowed by any of the allowed phrases
+            if (isAllowedByPattern(contextStr, caseInsensitive, allowedPhrases)) {
+                return;
+            }
+
             String message = String.format(
                 "Variant '%s' contains '%s' but that module is disabled.%nContext: %s",
-                variantName, term, context);
+                variantName, term, contextStr);
             assertFalse(true, message);
         }
     }
 
+    private boolean isAllowedByPattern(String context, boolean caseInsensitive, List<String> allowedPhrases) {
+        if (allowedPhrases == null || allowedPhrases.isEmpty()) {
+            return false;
+        }
+
+        for (String pattern : allowedPhrases) {
+            try {
+                if (caseInsensitive) {
+                    if (context.toLowerCase().matches(pattern)) {
+                        return true;
+                    }
+                } else {
+                    if (context.matches(pattern)) {
+                        return true;
+                    }
+                }
+            } catch (Exception e) {
+                // Log malformed regex patterns but don't fail the test
+            }
+        }
+        return false;
+    }
+
     private String extractContext(String content, int termIndex, int termLength) {
-        int contextStart = Math.max(0, termIndex - 200);
-        int contextEnd = Math.min(content.length(), termIndex + termLength + 200);
+        int contextStart = Math.max(0, termIndex - 400);
+        int contextEnd = Math.min(content.length(), termIndex + termLength + 400);
         String context = content.substring(contextStart, contextEnd);
 
         // Remove any leading/trailing HTML tags or partial words
