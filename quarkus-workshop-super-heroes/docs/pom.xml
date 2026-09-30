@@ -20,6 +20,8 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
 
     <properties>
         <version.asciidoctorj.diagram.plantuml>1.2026.2</version.asciidoctorj.diagram.plantuml>
+        <version.playwright>1.63.0</version.playwright>
+        <!-- since we don't use roq-specific playwright features yet, do not pay the cost -->
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>
             https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes
@@ -90,10 +92,12 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
             <artifactId>asciidoctorj-diagram-plantuml</artifactId>
             <version>${version.asciidoctorj.diagram.plantuml}</version>
         </dependency>
+        <!-- Playwright for documentation testing -->
         <dependency>
-            <groupId>io.quarkiverse.playwright</groupId>
-            <artifactId>quarkus-playwright</artifactId>
-            <version>2.3.8</version>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>${version.playwright}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -191,6 +195,18 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             </systemProperties>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>default-run</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <additionalSystemProperties>
+                                skipTests=true
+                            </additionalSystemProperties>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
@@ -260,7 +276,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                     <goal>run</goal>
                                     <configuration>
                                         <additionalSystemProperties>
-                                            skipTests=true,workshop.variant.name=@item@,buildDir=roq/variants/@item@,quarkus.live-reload=false
+                                            skipTests=true,workshop.variant.name=@item@
                                         </additionalSystemProperties>
                                     </configuration>
                                 </pluginExecutor>
