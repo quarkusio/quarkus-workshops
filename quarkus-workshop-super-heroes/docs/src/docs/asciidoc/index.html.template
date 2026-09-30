@@ -35,61 +35,16 @@
 
         const baseUrl = "./";
         const filename = "spine.html";
-        const defaultOsOption = variantsConfig.osOptions.defaultValue || "all";
-        const defaultBuildToolOption = variantsConfig.buildToolOptions.defaultValue || "maven";
-
-        function isUsingDefaults() {
-            // Check if all toggles are in their default state
-            for (const flag of enabledFlags) {
-                const cb = document.getElementById(`use-${flag.id}`);
-                if (cb) {
-                    const isChecked = cb.checked;
-                    const shouldBeChecked = flag.defaultValue;
-                    if (isChecked !== shouldBeChecked) {
-                        return false;
-                    }
-                }
-            }
-
-            // Check if OS is default
-            const osRadio = document.querySelector('input[name="osOption"]:checked');
-            if (!osRadio || osRadio.value !== defaultOsOption) {
-                return false;
-            }
-
-            // Check if build tool is default
-            const btRadio = document.querySelector('input[name="buildToolOption"]:checked');
-            if (!btRadio || btRadio.value !== defaultBuildToolOption) {
-                return false;
-            }
-
-            return true;
-        }
-
-        function updateWorkshopButton() {
-            const button = document.getElementById('workshop-button');
-            const description = document.getElementById('mode-description');
-            const usingDefaults = isUsingDefaults();
-
-            if (usingDefaults) {
-                button.textContent = 'Take me to my default workshop';
-                description.textContent = 'Go to the instructions for all operating systems, with default content.';
-            } else {
-                button.textContent = 'Take me to my custom workshop';
-                description.textContent = 'Tailor instructions to your operating system and interests.';
-            }
-        }
+        let hasUserInteracted = false;
 
         function navigateToWorkshop() {
-            if (isUsingDefaults()) {
-                window.location.href = baseUrl + filename;
-            } else {
+            // If user has touched any toggles, always navigate to a variant directory
+            // Otherwise navigate to the default root
+            if (hasUserInteracted) {
                 generateTailoredURL();
+            } else {
+                window.location.href = baseUrl + filename;
             }
-        }
-
-        function generateDefaultURL() {
-            window.location.href = baseUrl + filename;
         }
 
         function selectAll() {
@@ -115,7 +70,6 @@
                     updateLabelStyle(f.id, false);
                 }
             });
-            updateWorkshopButton();
         }
 
         function generateTailoredURL() {
@@ -267,6 +221,7 @@
         function onCheckboxChange(flagId) {
             const cb = document.getElementById(`use-${flagId}`);
             if (!cb) return;
+            hasUserInteracted = true;
             enforceStandaloneConstraints(flagId, cb.checked);
             enforceConstraints(flagId, cb.checked);
             updateWorkshopButton();
@@ -411,14 +366,11 @@
 
     buildCheckboxes();
 
-    // Pre-check toggles that match the default values (without applying constraints yet)
-    enabledFlags.forEach(flag => {
-        if (flag.defaultValue) {
-            const cb = document.getElementById(`use-${flag.id}`);
-            if (cb) {
-                cb.checked = true;
-            }
-        }
+    // Track when OS or build tool options are changed
+    document.querySelectorAll('input[name="osOption"], input[name="buildToolOption"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            hasUserInteracted = true;
+        });
     });
 
     // Handle URL parameters for pre-setting options
@@ -452,8 +404,7 @@
         }
     }
 
-    // Apply constraints based on pre-checked defaults to ensure consistency
-    // This must happen after URL params are processed to respect any overrides
+    // Re-apply constraints after URL params are set
     enabledFlags.forEach(f => {
         const cb = document.getElementById(`use-${f.id}`);
         if (cb && cb.checked) {
