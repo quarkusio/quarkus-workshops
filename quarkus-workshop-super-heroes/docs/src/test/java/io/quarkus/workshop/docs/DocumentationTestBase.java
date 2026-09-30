@@ -27,7 +27,7 @@ public abstract class DocumentationTestBase {
     protected Page page;
 
     protected static final File DOCS_BASE_PATH = new File(System.getProperty("docs.base.path", "target/roq/"));
-    protected static final String SPINE_HTML = "asciidoc/spine/index.html";
+    protected static final String SPINE_HTML = "spine/index.html";
 
     private static final Pattern URL_PATTERN = Pattern.compile(
         "^(https?://)([\\w.-]+)(:[0-9]+)?(/.*)?$",
