@@ -1,4 +1,4 @@
-# Diagrams rendered from content/asciidoc/plantuml/*.puml by asciidoctor-diagram, which writes here
+# Diagrams rendered from content/plantuml/*.puml by asciidoctor-diagram, which writes here
 # because of quarkus.asciidoc.attributes.imagesoutdir. They are build output; the .puml sources are
 # what is under version control. Everything else in this directory is a hand-made image and is
 # tracked as normal.

@@ -377,9 +377,9 @@ public class ConfiguratorTest extends DocumentationTestBase {
     @Test
     @DisplayName("spine.adoc should have ifdef blocks for every enabled flag")
     void testSpineAdocHasAllFlags() throws Exception {
-        Path spineFile = Path.of(DOCS_BASE_PATH.getParent(), "src/docs/asciidoc/spine.adoc");
+        Path spineFile = Path.of(DOCS_BASE_PATH.getParent(), "src/docs/spine.adoc");
         if (!Files.exists(spineFile)) {
-            spineFile = Path.of("src/docs/asciidoc/spine.adoc");
+            spineFile = Path.of("src/docs/spine.adoc");
         }
         Assumptions.assumeTrue(Files.exists(spineFile), "spine.adoc not found");
 

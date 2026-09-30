@@ -90,7 +90,7 @@
                 selectedOptions.push(`${flag.id}-${value}`);
             });
 
-            window.location.href = baseUrl + 'variants/asciidoc/' + selectedOptions.join("-") + "/" + filename;
+            window.location.href = baseUrl + 'variants/' + selectedOptions.join("-") + "/" + filename;
         }
 
         function enforceConstraints(changedFlagId, isChecked) {
