@@ -63,5 +63,10 @@ We have not mentioned cURL up to now, because most modern operating systems ship
 If your system is missing cURL, the appendix includes xref:appendix-installing-curl[instructions for installing cURL].
 
 ifdef::use-ai[]
-And also make sure to have your OpenAI or Azure credentials ready if you want to develop the "Narration" microservice.
+And also make sure to have your OpenAI
+ifdef::use-azure[]
+or Azure
+endif::use-azure[]
+ credentials ready if you want to develop the "Narration" microservice.
 endif::use-ai[]
+

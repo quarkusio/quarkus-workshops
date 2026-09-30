@@ -42,9 +42,18 @@ The final structure will be the following (don't worry if you don't have all thi
 T
 quarkus-workshop-super-heroes
 + super-heroes
+ifdef::use-messaging[]
 ++ event-statistics        | UI and application dealing with fight statistics (you will create it)
+endif::use-messaging[]
+ifndef::use-messaging[]
+++ infrastructure          | All the needed infrastructure (Postgres...)
+endif::use-messaging[]
+ifdef::use-messaging[]
 ++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
+endif::use-messaging[]
+ifdef::use-kubernetes[]
 ++ kubernetes              | All the files required to deploy on Kubernetes
+endif::use-kubernetes[]
 ++ load-super-heroes       | CLI tool to load stress on heroes, villains and fights
 ++ rest-fights             | REST API allowing super heroes to fight (you will create it)
 ++ rest-heroes             | Reactive REST API for CRUD operations on Heroes (you will create it)

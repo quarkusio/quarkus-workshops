@@ -12,7 +12,12 @@ This is a way of saying that Quarkus is really fast, and it’s really light.
 But what does Quarkus _do_?
 
 In practice, Quarkus is a stack to develop distributed systems and modern applications in Java or Kotlin.
+ifndef::use-kubernetes[]
+Quarkus applications are tailored for the Cloud and containers.
+endif::use-kubernetes[]
+ifdef::use-kubernetes[]
 Quarkus applications are tailored for the Cloud, containers, and Kubernetes.
+endif::use-kubernetes[]
 That does not mean you can't use Quarkus in other environments, there are no limits, but the principles infused in Quarkus have made containerization of applications more efficient.
 In this workshop, we will explain what Quarkus is and because the best way to understand Quarkus is to use it, build a set of microservices with it.
 Again, Quarkus is not limited to microservices, but it's a generally well-understood type of architecture.
@@ -88,7 +93,12 @@ endif::use-observability[]
 ifdef::use-azure[]
 * What is Azure Container Apps
 * How to push the Docker images to Azure Registry
+ifndef::use-messaging[]
+* How to create managed services in Azure (Postgres database)
+endif::use-messaging[]
+ifdef::use-messaging[]
 * How to create managed services in Azure (Postgres database, Kafka)
+endif::use-messaging[]
 * How to deploy microservices to Azure Container Apps
 * How to configure Docker images in Azure Container Apps
 endif::use-azure[]

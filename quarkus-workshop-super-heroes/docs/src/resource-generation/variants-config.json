@@ -105,5 +105,110 @@
     "buildToolOptions": [
         "maven",
         "gradle"
-    ]
+    ],
+    "leakTestConfig": {
+        "messaging-false": {
+            "filterPattern": "messaging-false",
+            "bannedTerms": [
+                {
+                    "term": "kafka",
+                    "allowedPhrases": [
+                        "deprecated.*kafka",
+                        "removed.*kafka"
+                    ]
+                },
+                {
+                    "term": "event-statistics",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "Reactive Messaging",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "reactive.messaging",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "mp.messaging",
+                    "allowedPhrases": []
+                }
+            ]
+        },
+        "azure-false": {
+            "filterPattern": "azure-false",
+            "bannedTerms": [
+                {
+                    "term": "azure",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "container apps",
+                    "allowedPhrases": []
+                }
+            ]
+        },
+        "kubernetes-false": {
+            "filterPattern": "kubernetes-false",
+            "bannedTerms": [
+                {
+                    "term": "kubernetes",
+                    "allowedPhrases": [
+                        "complex infrastructure such as kubernetes",
+                        "no need to configure your K8s service"
+                    ]
+                },
+                {
+                    "term": "kubectl",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "k8s",
+                    "allowedPhrases": []
+                }
+            ]
+        },
+        "ai-false": {
+            "filterPattern": "ai-false",
+            "bannedTerms": [
+                {
+                    "term": "openai",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "open ai",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "langchain",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "rest-narration",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "narration microservice",
+                    "allowedPhrases": []
+                }
+            ]
+        },
+        "native-false": {
+            "filterPattern": "native-false",
+            "bannedTerms": [
+                {
+                    "term": "graalvm",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "native-image",
+                    "allowedPhrases": []
+                },
+                {
+                    "term": "native image",
+                    "allowedPhrases": []
+                }
+            ]
+        }
+    }
 }

@@ -111,7 +111,12 @@ this section introduces Quarkus and Azure Container Apps to make sure you have a
 * _Running the Application Locally_:
 in this section, you will build Docker images out of Quarkus microservices, execute them locally with Docker compose, push them to Azure Registry, all that using Docker and Azure CLI
 * _Running the Application on Azure Container Apps_:
+ifndef::use-messaging[]
+in this section, you will create an entire infrastructure on Azure (Postgres databases, etc.) and deploy the microservices to Azure Container Apps
+endif::use-messaging[]
+ifdef::use-messaging[]
 in this section, you will create an entire infrastructure on Azure (Postgres databases, Kafka, etc.) and deploy the microservices to Azure Container Apps
+endif::use-messaging[]
 endif::use-azure[]
 ifdef::use-cli[]
 * _Command Line Interface_:
