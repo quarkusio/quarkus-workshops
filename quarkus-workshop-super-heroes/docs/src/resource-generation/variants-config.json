@@ -165,7 +165,8 @@
                     "term": "kubernetes",
                     "caseInsensitive": true,
                     "allowedPhrases": [
-                        "complex infrastructure such as kubernetes"
+                        "complex infrastructure such as kubernetes",
+                        "no need to configure your K8s service"
                     ]
                 },
                 {
