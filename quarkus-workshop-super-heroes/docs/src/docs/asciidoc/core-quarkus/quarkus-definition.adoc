@@ -18,7 +18,10 @@ But all these features have a cost, and the memory required to run Java applicat
 The issue is not the JVM itself; it's also the Java ecosystem that needs to be reinvented.
 
 That's where Quarkus, and other projects, enter the game.
-Quarkus uses a build time principle.ifdef::use-native[]footnote:[Also called Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]endif::use-native[]
+Quarkus uses a build time principle.
+ifdef::use-native[]
+footnote:[Also called Ahead-of-Time Compilation https://www.graalvm.org/docs/reference-manual/native-image]
+endif::use-native[]
 During the build of the application, tasks that usually happen at runtime are executed at build time.
 
 image::quarkus-build-time-principle.png[role=half-size]

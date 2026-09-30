@@ -6,14 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -21,7 +19,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
@@ -36,7 +34,6 @@ public class VariantLeakTest {
         System.getProperty("docs.base.path", "target/generated-asciidoc/"), "variants");
 
     static class VariantConfig {
-        String displayName;
         String filterPattern;
         List<BannedTerm> bannedTerms;
 
@@ -61,7 +58,7 @@ public class VariantLeakTest {
 
             for (VariantConfig.BannedTerm bannedTerm : config.bannedTerms) {
                 assertDoesNotContain(content, variantName, bannedTerm.term,
-                    bannedTerm.caseInsensitive, bannedTerm.allowedPhrases);
+                    bannedTerm.allowedPhrases);
             }
         }
     }
@@ -71,9 +68,9 @@ public class VariantLeakTest {
 
         String configPath = System.getProperty("variants.config.path",
             "src/resource-generation/variants-config.json");
-        Path jsonPath = Files.exists(Path.of(configPath)) ? Path.of(configPath) : null;
+        Path jsonPath = Files.exists(Path.of(configPath)) ? Path.of(configPath):null;
 
-        if (jsonPath == null) {
+        if (jsonPath==null) {
             // Fallback: if property not set, search for it
             jsonPath = Files.walk(Path.of("."))
                 .filter(p -> p.getFileName().toString().equals("variants-config.json"))
@@ -88,7 +85,6 @@ public class VariantLeakTest {
             for (String variantKey : leakConfig.keySet()) {
                 JsonObject variantData = leakConfig.getJsonObject(variantKey);
                 VariantConfig config = new VariantConfig();
-                config.displayName = variantData.getString("displayName");
                 config.filterPattern = variantData.getString("filterPattern");
                 config.bannedTerms = new ArrayList<>();
 
@@ -132,39 +128,41 @@ public class VariantLeakTest {
     }
 
     private void assertDoesNotContain(String content, String variantName, String term,
-                                      boolean caseInsensitive, List<String> allowedPhrases) {
-        String searchContent = caseInsensitive ? content.toLowerCase() : content;
-        String searchTerm = caseInsensitive ? term.toLowerCase() : term;
+                                      List<String> allowedPhrases) {
+        String searchContent = content.toLowerCase();
+        String searchTerm = term.toLowerCase();
 
         int index = searchContent.indexOf(searchTerm);
         if (index >= 0) {
             String contextStr = extractContext(content, index, searchTerm.length());
 
             // Check if this match is allowed by any of the allowed phrases
-            if (isAllowedByPattern(contextStr, caseInsensitive, allowedPhrases)) {
+            if (isAllowedByPattern(contextStr, allowedPhrases)) {
                 return;
             }
 
             String message = String.format(
                 "Variant '%s' contains '%s' but that module is disabled.%nContext: %s",
                 variantName, term, contextStr);
-            assertFalse(true, message);
+            fail(message);
         }
     }
 
-    private boolean isAllowedByPattern(String context, boolean caseInsensitive, List<String> allowedPhrases) {
-        if (allowedPhrases == null || allowedPhrases.isEmpty()) {
+    private boolean isAllowedByPattern(String context, List<String> allowedPhrases) {
+        if (allowedPhrases==null || allowedPhrases.isEmpty()) {
             return false;
         }
 
         for (String pattern : allowedPhrases) {
             try {
-                int flags = caseInsensitive ? Pattern.CASE_INSENSITIVE : 0;
+                // TODO pull out this compilation
+                int flags = Pattern.CASE_INSENSITIVE;
                 if (Pattern.compile(pattern, flags).matcher(context).find()) {
                     return true;
                 }
             } catch (Exception e) {
                 // Log malformed regex patterns but don't fail the test
+                System.err.println(e.getMessage());
             }
         }
         return false;

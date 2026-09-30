@@ -108,12 +108,10 @@
     ],
     "leakTestConfig": {
         "messaging-false": {
-            "displayName": "Messaging-off variants should not leak messaging content",
             "filterPattern": "messaging-false",
             "bannedTerms": [
                 {
                     "term": "kafka",
-                    "caseInsensitive": true,
                     "allowedPhrases": [
                         "deprecated.*kafka",
                         "removed.*kafka"
@@ -121,49 +119,40 @@
                 },
                 {
                     "term": "event-statistics",
-                    "caseInsensitive": false,
                     "allowedPhrases": []
                 },
                 {
                     "term": "Reactive Messaging",
-                    "caseInsensitive": false,
                     "allowedPhrases": []
                 },
                 {
                     "term": "reactive.messaging",
-                    "caseInsensitive": false,
                     "allowedPhrases": []
                 },
                 {
                     "term": "mp.messaging",
-                    "caseInsensitive": false,
                     "allowedPhrases": []
                 }
             ]
         },
         "azure-false": {
-            "displayName": "Azure-off variants should not leak Azure content",
             "filterPattern": "azure-false",
             "bannedTerms": [
                 {
                     "term": "azure",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "container apps",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 }
             ]
         },
         "kubernetes-false": {
-            "displayName": "Kubernetes-off variants should not leak Kubernetes content",
             "filterPattern": "kubernetes-false",
             "bannedTerms": [
                 {
                     "term": "kubernetes",
-                    "caseInsensitive": true,
                     "allowedPhrases": [
                         "complex infrastructure such as kubernetes",
                         "no need to configure your K8s service"
@@ -171,64 +160,52 @@
                 },
                 {
                     "term": "kubectl",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "k8s",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 }
             ]
         },
         "ai-false": {
-            "displayName": "AI-off variants should not leak AI content",
             "filterPattern": "ai-false",
             "bannedTerms": [
                 {
                     "term": "openai",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "open ai",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "langchain",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "rest-narration",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "narration microservice",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 }
             ]
         },
         "native-false": {
-            "displayName": "Native-off variants should not leak native compilation content",
             "filterPattern": "native-false",
             "bannedTerms": [
                 {
                     "term": "graalvm",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "native-image",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 },
                 {
                     "term": "native image",
-                    "caseInsensitive": true,
                     "allowedPhrases": []
                 }
             ]
