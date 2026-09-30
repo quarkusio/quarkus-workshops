@@ -118,18 +118,15 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
         // Change a toggle to make it custom
         page.locator("input[id='use-messaging']").uncheck();
-        
+
         // Generate the expected variant URL
         String variantUrl = (String) page.evaluate("() => { " +
-            "if (!isUsingDefaults()) { " +
             "  const selectedOptions = []; " +
             "  const btOption = document.querySelector('input[name=\"buildToolOption\"]:checked');" +
             "  selectedOptions.push(`bt-${btOption?.value || 'maven'}`); " +
             "  const osOption = document.querySelector('input[name=\"osOption\"]:checked');" +
             "  selectedOptions.push(`os-${osOption?.value || 'all'}`); " +
             "  return 'variants/' + selectedOptions.join('-'); " +
-            "} " +
-            "return null; " +
             "}");
 
         assertNotNull(variantUrl, "Custom URL should be generated");
