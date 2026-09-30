@@ -237,6 +237,17 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             </target>
                         </configuration>
                     </execution>
+                    <execution>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/variants"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
@@ -300,18 +311,18 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 Restore cached roq output before running variant -->
                                 <pluginExecutor>
                                     <plugin>
-                                        <groupId>org.codehaus.mojo</groupId>
-                                        <artifactId>exec-maven-plugin</artifactId>
-                                        <version>3.1.0</version>
+                                        <artifactId>maven-resources-plugin</artifactId>
+                                        <version>2.6</version>
                                     </plugin>
-                                    <goal>exec</goal>
+                                    <goal>copy-resources</goal>
                                     <configuration>
-                                        <executable>cp</executable>
-                                        <arguments>
-                                            <arg value="-r"/>
-                                            <arg value="${project.build.directory}/roq-cache"/>
-                                            <arg value="${project.build.directory}/roq"/>
-                                        </arguments>
+                                        <outputDirectory>${project.build.directory}/roq</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/roq-cache</directory>
+                                                <filtering>false</filtering>
+                                            </resource>
+                                        </resources>
                                     </configuration>
                                 </pluginExecutor>
                                 <!-- Run only; build is done once in compile phase before iteration -->
@@ -341,8 +352,8 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                     <configuration>
                                         <executable>mv</executable>
                                         <arguments>
-                                            <arg value="${project.build.directory}/roq"/>
-                                            <arg value="${project.build.directory}/variants/@item@"/>
+                                            <argument>${project.build.directory}/roq</argument>
+                                            <argument>${project.build.directory}/variants/@item@</argument>
                                         </arguments>
                                     </configuration>
                                 </pluginExecutor>
