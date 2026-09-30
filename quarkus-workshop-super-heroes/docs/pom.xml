@@ -24,10 +24,10 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
         <!-- since we don't use roq-specific playwright features yet, do not pay the cost -->
         <!-- If building docs locally and urls matter, set environment variables for these values -->
         <github.raw>
-            https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes
+            https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY:[repo]}/${env.GITHUB_REF:[github-ref]}/quarkus-workshop-super-heroes
         </github.raw>
-        <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
-        <github.url>${github.repo}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
+        <github.repo>${env.GITHUB_SERVER_URL:[server]}/${env.GITHUB_REPOSITORY:[repo]}</github.repo>
+        <github.url>${github.repo}/tree/${env.GITHUB_REF:[github-ref]}/quarkus-workshop-super-heroes</github.url>
         <base.url>${env.BASE_URL}</base.url>
         <github.issue>${github.repo}/issues</github.issue>
         <compiler-plugin.version>3.16.0</compiler-plugin.version>
@@ -188,15 +188,14 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             <systemProperties>
                                 <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
                                 <skipTests>true</skipTests>
-                                <!--                          TODO these fail because of the environment variable interpolation when run locally      -->
-                                <!--                                <quarkus.asciidoc.attributes.github-raw>${github.raw}-->
-                                <!--                                </quarkus.asciidoc.attributes.github-raw>-->
-                                <!--                                <quarkus.asciidoc.attributes.github-url>${github.url}-->
-                                <!--                                </quarkus.asciidoc.attributes.github-url>-->
-                                <!--                                <quarkus.asciidoc.attributes.github-repo>${github.repo}-->
-                                <!--                                </quarkus.asciidoc.attributes.github-repo>-->
-                                <!--                                <quarkus.asciidoc.attributes.github-issue>${github.issue}-->
-                                <!--                                </quarkus.asciidoc.attributes.github-issue>-->
+                                <quarkus.asciidoc.attributes.github-raw>${github.raw}
+                                </quarkus.asciidoc.attributes.github-raw>
+                                <quarkus.asciidoc.attributes.github-url>${github.url}
+                                </quarkus.asciidoc.attributes.github-url>
+                                <quarkus.asciidoc.attributes.github-repo>${github.repo}
+                                </quarkus.asciidoc.attributes.github-repo>
+                                <quarkus.asciidoc.attributes.github-issue>${github.issue}
+                                </quarkus.asciidoc.attributes.github-issue>
                                 <quarkus.asciidoc.attributes.github-issue>${base.url}
                                 </quarkus.asciidoc.attributes.github-issue>
                                 <quarkus.asciidoc.attributes.give-solution>true
