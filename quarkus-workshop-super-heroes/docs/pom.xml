@@ -82,22 +82,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.roq</groupId>
-            <artifactId>quarkus-roq-plugin-aliases</artifactId>
-            <version>${roq.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.roq</groupId>
-            <artifactId>quarkus-roq-plugin-tagging</artifactId>
-            <version>${roq.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.roq</groupId>
             <artifactId>quarkus-roq-plugin-asciidoc-jruby</artifactId>
-            <version>${roq.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.roq</groupId>
-            <artifactId>quarkus-roq-plugin-toc</artifactId>
             <version>${roq.version}</version>
         </dependency>
         <dependency>
@@ -105,18 +90,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
             <artifactId>asciidoctorj-diagram-plantuml</artifactId>
             <version>${version.asciidoctorj.diagram.plantuml}</version>
         </dependency>
-        <!-- Yes, depending on a plugin is a bit unusual; it's so dependabot can manage it without affecting the docs build -->
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>${compiler-plugin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${surefire-plugin.version}</version>
-        </dependency>
-        <!-- Normal dependencies we want dependabot to apply updates to -->
         <dependency>
             <groupId>io.quarkiverse.playwright</groupId>
             <artifactId>quarkus-playwright</artifactId>
@@ -218,18 +191,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             </systemProperties>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>default-run</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <additionalSystemProperties>
-                                skipTests=true
-                            </additionalSystemProperties>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
@@ -289,24 +250,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                         </echos>
                                     </configuration>
                                 </pluginExecutor>
-                                <!-- Build, then run, so we can pass build-time config -->
-                                <pluginExecutor>
-                                    <plugin>
-                                        <groupId>io.quarkus</groupId>
-                                        <artifactId>quarkus-maven-plugin</artifactId>
-                                        <version>${quarkus.platform.version}</version>
-                                    </plugin>
-                                    <goal>build</goal>
-                                    <configuration>
-                                        <systemProperties>
-                                            <quarkus.roq.generator.output-dir>
-                                                roq/variants/@item@
-                                            </quarkus.roq.generator.output-dir>
-                                            <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
-                                            <skipTests>true</skipTests>
-                                        </systemProperties>
-                                    </configuration>
-                                </pluginExecutor>
+                                <!-- Run only; build is done once in compile phase before iteration -->
                                 <pluginExecutor>
                                     <plugin>
                                         <groupId>io.quarkus</groupId>
@@ -316,7 +260,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                     <goal>run</goal>
                                     <configuration>
                                         <additionalSystemProperties>
-                                            skipTests=true,workshop.variant.name=@item@,buildDir=roq/variants/@item@
+                                            skipTests=true,workshop.variant.name=@item@,buildDir=roq/variants/@item@,quarkus.live-reload=false
                                         </additionalSystemProperties>
                                     </configuration>
                                 </pluginExecutor>
