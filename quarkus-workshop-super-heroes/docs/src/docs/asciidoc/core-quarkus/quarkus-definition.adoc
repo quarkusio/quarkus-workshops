@@ -31,8 +31,18 @@ image::quarkus-augmentation.png[role=half-size]
 
 So, as depicted in the figure above, Quarkus does bring an infrastructure for frameworks to embrace build time metadata discovery (like annotations), replace proxies with generated classes, pre-configure most frameworks, and handle dependency injection at build time.
 
-Also, during the build, Quarkus detects which class needs to be accessed by reflection at runtime, boots framework at build time to record the result, and generally offers a lot of GraalVM optimization for free (or cheap at least).
+Also, during the build, Quarkus detects which class needs to be accessed by reflection at runtime, boots framework at build time to record the result, and generally offers a lot of
+ifdef::use-native[]
+GraalVM optimization for free (or cheap at least).
 Indeed, thanks to all this metadata, Quarkus can configure native compilers such as the GraalVM compiler to generate a native executable for your Java application.
-Thanks to an aggressive dead-code elimination, the final executable is smaller, faster to start, and uses a ridiculously small amount of memory.
+endif::use-native[]
+ifndef::use-native[]
+optimization for free (or cheap at least).
+endif::use-native[]
+Thanks to an aggressive dead-code elimination, the final executable is smaller, faster to start, and uses a
+ifdef::use-native[]
+ridiculously
+endif::use-native[]
+small amount of memory.
 
 image::quarkus-native-compilation.png[role=half-size]

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import jakarta.json.Json;
@@ -158,14 +159,9 @@ public class VariantLeakTest {
 
         for (String pattern : allowedPhrases) {
             try {
-                if (caseInsensitive) {
-                    if (context.toLowerCase().matches(pattern)) {
-                        return true;
-                    }
-                } else {
-                    if (context.matches(pattern)) {
-                        return true;
-                    }
+                int flags = caseInsensitive ? Pattern.CASE_INSENSITIVE : 0;
+                if (Pattern.compile(pattern, flags).matcher(context).find()) {
+                    return true;
                 }
             } catch (Exception e) {
                 // Log malformed regex patterns but don't fail the test

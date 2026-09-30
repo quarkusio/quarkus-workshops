@@ -115,8 +115,8 @@
                     "term": "kafka",
                     "caseInsensitive": true,
                     "allowedPhrases": [
-                        "(?i).*deprecated.*kafka.*",
-                        "(?i).*removed.*kafka.*"
+                        "deprecated.*kafka",
+                        "removed.*kafka"
                     ]
                 },
                 {
@@ -165,7 +165,7 @@
                     "term": "kubernetes",
                     "caseInsensitive": true,
                     "allowedPhrases": [
-                        "(?i).*complex infrastructure such as kubernetes.*"
+                        "complex infrastructure such as kubernetes"
                     ]
                 },
                 {
