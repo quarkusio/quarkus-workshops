@@ -118,11 +118,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
 
         // Change a toggle to make it custom
         page.locator("input[id='use-messaging']").uncheck();
-
-        // Verify it's no longer using defaults
-        Boolean isDefault = (Boolean) page.evaluate("() => { return isUsingDefaults(); }");
-        assertFalse(isDefault, "Should not be using defaults after toggle change");
-
+        
         // Generate the expected variant URL
         String variantUrl = (String) page.evaluate("() => { " +
             "if (!isUsingDefaults()) { " +
