@@ -121,6 +121,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <version>${surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
+                        <docs.base.path>${project.build.directory}/roq-cache</docs.base.path>
                         <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
                         <junit.jupiter.execution.parallel.mode.default>concurrent
                         </junit.jupiter.execution.parallel.mode.default>
@@ -384,6 +385,16 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 <phase>none</phase>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire-plugin.version}</version>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <docs.base.path>${project.build.directory}/roq</docs.base.path>
+                            </systemPropertyVariables>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
