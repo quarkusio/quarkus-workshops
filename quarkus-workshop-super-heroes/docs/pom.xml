@@ -209,6 +209,49 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                     </execution>
                 </executions>
             </plugin>
+            <!-- Initial roq run and cache for variant reuse -->
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <executions>
+                    <execution>
+                        <id>cache-roq-run</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <additionalSystemProperties>
+                                skipTests=true,docs.basedir=${basedir}
+                            </additionalSystemProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Cache the roq output for variant iterations -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>cache-roq-output</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <delete dir="${basedir}/target/roq-cache" failonerror="false"/>
+                                <copy todir="${basedir}/target/roq-cache">
+                                    <fileset dir="${basedir}/target/roq"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
                  This provides the input data for building individual variant sites. -->
             <plugin>
@@ -252,7 +295,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                         <configuration>
                             <folder>${basedir}/target/variant-combinations</folder>
                             <pluginExecutors>
-                                <!-- Build the site for this variant -->
+                                <!-- Restore cached roq output before running variant -->
                                 <pluginExecutor>
                                     <plugin>
                                         <groupId>com.soebes.maven.plugins</groupId>
@@ -264,6 +307,22 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                         <echos>
                                             <echo>Generating asciidoc using options from @item@</echo>
                                         </echos>
+                                    </configuration>
+                                </pluginExecutor>
+                                <!-- Copy cached build output before run -->
+                                <pluginExecutor>
+                                    <plugin>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-antrun-plugin</artifactId>
+                                        <version>3.1.0</version>
+                                    </plugin>
+                                    <goal>run</goal>
+                                    <configuration>
+                                        <target>
+                                            <copy todir="${basedir}/target/roq" failonerror="false">
+                                                <fileset dir="${basedir}/target/roq-cache"/>
+                                            </copy>
+                                        </target>
                                     </configuration>
                                 </pluginExecutor>
                                 <!-- Run only; build is done once in compile phase before iteration -->
@@ -278,6 +337,22 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                         <additionalSystemProperties>
                                             skipTests=true,workshop.variant.name=@item@
                                         </additionalSystemProperties>
+                                    </configuration>
+                                </pluginExecutor>
+                                <!-- Copy variant output to variants folder -->
+                                <pluginExecutor>
+                                    <plugin>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-antrun-plugin</artifactId>
+                                        <version>3.1.0</version>
+                                    </plugin>
+                                    <goal>run</goal>
+                                    <configuration>
+                                        <target>
+                                            <copy todir="${basedir}/variants/${os}">
+                                                <fileset dir="${basedir}/target/roq"/>
+                                            </copy>
+                                        </target>
                                     </configuration>
                                 </pluginExecutor>
                             </pluginExecutors>
