@@ -467,7 +467,8 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
             </build>
         </profile>
         <profile>
-            <!-- Allows running tests without running a full roq build, which would be slow -->
+            <!-- Allows running tests without running a full roq build, which would be slow
+            Annoyingly, it seems there's no way to say run just this phase, we have to manually exclude everything else -->
             <id>tests-only</id>
             <activation>
                 <property>

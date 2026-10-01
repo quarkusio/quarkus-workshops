@@ -46,6 +46,10 @@ jobs:
           echo "id=$RAW_PR_NUMBER" >> $GITHUB_OUTPUT
       - name: Trim site for preview
         run: |
+          echo supes
+          ls super-heroes
+          echo supes/vars
+          ls super-heroes/variants
           cd super-heroes/variants
           rm -rf os-linux-* os-windows-*
           du -sh ..
