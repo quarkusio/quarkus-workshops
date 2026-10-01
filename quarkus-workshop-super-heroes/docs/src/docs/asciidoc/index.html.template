@@ -46,6 +46,7 @@
         }
 
         function selectAll() {
+
             enabledFlags.forEach(f => {
                 const cb = document.getElementById(`use-${f.id}`);
                 if (cb) {
@@ -56,7 +57,7 @@
             });
             // Re-apply dependency constraints (all enabled, so all requirements met)
             enforceConstraints(null, true);
-            updateWorkshopButton();
+            userHasInteracted();
         }
 
         function selectNone() {
@@ -68,6 +69,9 @@
                     updateLabelStyle(f.id, false);
                 }
             });
+
+            userHasInteracted();
+
         }
 
         function generateTailoredURL() {
@@ -222,11 +226,10 @@
             userHasInteracted();
             enforceStandaloneConstraints(flagId, cb.checked);
             enforceConstraints(flagId, cb.checked);
-            updateWorkshopButton();
         }
 
         function onRadioChange() {
-            updateWorkshopButton();
+            userHasInteracted();
         }
     </script>
 </head>
@@ -318,7 +321,6 @@
         const button = document.getElementById('workshop-button');
         const description = document.getElementById('mode-description');
         button.textContent = 'Take me to my custom workshop';
-        description.textContent = 'Tailor instructions to your operating system and interests.';
 
         hasUserInteracted = true;
     }
