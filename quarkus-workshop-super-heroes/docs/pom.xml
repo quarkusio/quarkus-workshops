@@ -121,7 +121,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <version>${surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <docs.base.path>${project.build.directory}/roq-cache</docs.base.path>
                         <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
                         <junit.jupiter.execution.parallel.mode.default>concurrent
                         </junit.jupiter.execution.parallel.mode.default>
@@ -270,7 +269,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                     </execution>
                     <execution>
                         <id>restore-cached-roq-output</id>
-                        <phase>install</phase>
+                        <phase>post-compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
