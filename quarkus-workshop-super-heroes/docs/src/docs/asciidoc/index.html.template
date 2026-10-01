@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Quarkus Super-Heroes Workshop</title>
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
-        <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
-        <meta name="description" content="A hands on lab about Quarkus">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarkus Super-Heroes Workshop</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+    <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
+    <meta name="description" content="A hands on lab about Quarkus">
 
-        <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
-        <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
-        <link href="assets/css/hol.css" media="screen" rel="stylesheet">
-        <style>
-            .select-controls {
-                font-size: 0.9em;
-                margin-bottom: 0.5em;
-            }
-        </style>
-    </head>
+    <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+    <link href="assets/css/hol.css" media="screen" rel="stylesheet">
+    <style>
+        .select-controls {
+            font-size: 0.9em;
+            margin-bottom: 0.5em;
+        }
+    </style>
     <title>Workshop configurator</title>
     <script>
         const variantsConfig = __VARIANTS_CONFIG_JSON__;
@@ -35,12 +33,20 @@
 
         const baseUrl = "./";
         const filename = "spine.html";
+        let hasUserInteracted = false;
 
-        function generateDefaultURL() {
-            window.location.href = baseUrl + filename;
+        function navigateToWorkshop() {
+            // If user has touched any toggles, always navigate to a variant directory
+            // Otherwise navigate to the default root
+            if (hasUserInteracted) {
+                generateTailoredURL();
+            } else {
+                window.location.href = baseUrl + filename;
+            }
         }
 
         function selectAll() {
+
             enabledFlags.forEach(f => {
                 const cb = document.getElementById(`use-${f.id}`);
                 if (cb) {
@@ -51,6 +57,7 @@
             });
             // Re-apply dependency constraints (all enabled, so all requirements met)
             enforceConstraints(null, true);
+            userHasInteracted();
         }
 
         function selectNone() {
@@ -62,6 +69,9 @@
                     updateLabelStyle(f.id, false);
                 }
             });
+
+            userHasInteracted();
+
         }
 
         function generateTailoredURL() {
@@ -213,92 +223,108 @@
         function onCheckboxChange(flagId) {
             const cb = document.getElementById(`use-${flagId}`);
             if (!cb) return;
+            userHasInteracted();
             enforceStandaloneConstraints(flagId, cb.checked);
             enforceConstraints(flagId, cb.checked);
+        }
+
+        function onRadioChange() {
+            userHasInteracted();
         }
     </script>
 </head>
 <body>
 <h2 class="title-band">Quarkus Workshop Configurator</h2>
 
-<div class="content-area">
-    <div class="mode">
-        <h3 class="no-underline squish">Default workshop configuration</h3>
-        <div>Go to the instructions for all operating systems, with default content.</div>
-        <button class="big" onclick="generateDefaultURL()">
-            Take me to the default workshop
-        </button>
-    </div>
-    <div class="mode right">
-        <h3 class="no-underline squish">Customize workshop</h3>
-        <div>Tailor instructions to your operating system and interests.</div>
+<div class="configurator">
+    <div class="options-area">
+        <div class="mode left">
+            <h4 class="no-underline"><i class="fas fa-desktop"></i>What operating system are you using?</h4>
+            <ul class="configurator">
+                <li>
+                    <label for="allRadio">
+                        <input type="radio" name="osOption" id="allRadio" value="all" checked
+                               onchange="onRadioChange()"><i
+                        class="fas fa-globe"></i>All operating systems
+                    </label>
+                </li>
+                <li>
+                    <label for="macRadio">
+                        <input type="radio" name="osOption" id="macRadio" value="mac" onchange="onRadioChange()"><i
+                        class="fab fa-apple"></i>MacOS
+                    </label>
+                </li>
+                <li>
+                    <label for="windowsRadio">
+                        <input type="radio" name="osOption" id="windowsRadio" value="windows"
+                               onchange="onRadioChange()"><i
+                        class="fab fa-windows"></i>Windows
+                    </label>
+                </li>
+                <li>
+                    <label for="linuxRadio">
+                        <input type="radio" name="osOption" id="linuxRadio" value="linux" onchange="onRadioChange()"><i
+                        class="fab fa-linux"></i>Linux
+                    </label></li>
+            </ul>
 
-        <h4 class="no-underline"><i class="fas fa-desktop"></i>What operating system are you using?</h4>
-        <ul class="configurator">
-            <li>
-                <label for="allRadio">
-                    <input type="radio" name="osOption" id="allRadio" value="all" checked><i
-                    class="fas fa-globe"></i>All operating systems
-                </label>
-            </li>
-            <li>
-                <label for="macRadio">
-                    <input type="radio" name="osOption" id="macRadio" value="mac"><i
-                    class="fab fa-apple"></i>MacOS
-                </label>
-            </li>
-            <li>
-                <label for="windowsRadio">
-                    <input type="radio" name="osOption" id="windowsRadio" value="windows"><i
-                    class="fab fa-windows"></i>Windows
-                </label>
-            </li>
-            <li>
-                <label for="linuxRadio">
-                    <input type="radio" name="osOption" id="linuxRadio" value="linux"><i
-                    class="fab fa-linux"></i>Linux
-                </label></li>
-        </ul>
+            <h4 class="no-underline"><i class="fas fa-wrench"></i>What build tool are you using?</h4>
+            <ul class="configurator">
+                <li>
+                    <label for="mavenRadio">
+                        <input type="radio" name="buildToolOption" id="mavenRadio" value="maven" checked
+                               onchange="onRadioChange()">Maven
+                    </label>
+                </li>
+                <li>
+                    <label for="gradleRadio">
+                        <input type="radio" name="buildToolOption" id="gradleRadio" value="gradle"
+                               onchange="onRadioChange()">Gradle
+                    </label>
+                </li>
+            </ul>
 
-        <h4 class="no-underline"><i class="fas fa-wrench"></i>What build tool are you using?</h4>
-        <ul class="configurator">
-            <li>
-                <label for="mavenRadio">
-                    <input type="radio" name="buildToolOption" id="mavenRadio" value="maven" checked>Maven
-                </label>
-            </li>
-            <li>
-                <label for="gradleRadio">
-                    <input type="radio" name="buildToolOption" id="gradleRadio" value="gradle">Gradle
-                </label>
-            </li>
-        </ul>
+            <!-- Flags with a "section" (e.g. locked-down) are rendered here, each under its own heading -->
+            <div id="custom-sections"></div>
 
-        <!-- Flags with a "section" (e.g. locked-down) are rendered here, each under its own heading -->
-        <div id="custom-sections"></div>
-
-        <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
-            include?
-        </h4>
-        <div class="select-controls">
-            <a href="#" onclick="selectAll(); return false;">Select all</a> / <a href="#" onclick="selectNone(); return false;">none</a>
         </div>
-        <!-- Checkboxes are generated dynamically from variants-config.json -->
-        <ul class="configurator" id="feature-checkboxes"></ul>
 
-        <div id="standalone-section" style="display:none">
-            <h4 class="no-underline" id="standalone-selector"><i class="fas fa-puzzle-piece"></i>Standalone modules
+        <div class="mode right">
+
+
+            <h4 class="no-underline" id="feature-selector"><i class="fas fa-book"></i>What content would you like to
+                include?
             </h4>
-            <ul class="configurator" id="standalone-checkboxes"></ul>
-        </div>
+            <div class="select-controls">
+                <a href="#" onclick="selectAll(); return false;">Select all</a> / <a href="#"
+                                                                                     onclick="selectNone(); return false;">none</a>
+            </div>
 
-        <button class="big" onclick="generateTailoredURL()">
-            Take me to my custom workshop
-        </button>
+            <!-- Checkboxes are generated dynamically from variants-config.json -->
+            <ul class="configurator" id="feature-checkboxes"></ul>
+
+            <div id="standalone-section" style="display:none">
+                <h4 class="no-underline" id="standalone-selector"><i class="fas fa-puzzle-piece"></i>Standalone modules
+                </h4>
+                <ul class="configurator" id="standalone-checkboxes"></ul>
+            </div>
+        </div>
     </div>
+    <button class="big" id="workshop-button" onclick="navigateToWorkshop()">
+        Take me to the default workshop
+    </button>
 </div>
 
+
 <script>
+    function userHasInteracted() {
+        const button = document.getElementById('workshop-button');
+        const description = document.getElementById('mode-description');
+        button.textContent = 'Take me to my custom workshop';
+
+        hasUserInteracted = true;
+    }
+
     // Create the <li> for a single flag checkbox
     function createFlagCheckbox(flag) {
         const li = document.createElement('li');
@@ -359,7 +385,7 @@
 
     buildCheckboxes();
 
-    // Pre-check toggles that match the default values (without applying constraints yet)
+ // Pre-check toggles that match the default values (without applying constraints yet)
     enabledFlags.forEach(flag => {
         if (flag.defaultValue) {
             const cb = document.getElementById(`use-${flag.id}`);
@@ -367,6 +393,13 @@
                 cb.checked = true;
             }
         }
+    });
+
+    // Track when OS or build tool options are changed
+    document.querySelectorAll('input[name="osOption"], input[name="buildToolOption"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            userHasInteracted();
+        });
     });
 
     // Handle URL parameters for pre-setting options
