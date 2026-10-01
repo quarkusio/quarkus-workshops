@@ -278,6 +278,9 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 <copy todir="${basedir}/target/roq">
                                     <fileset dir="${basedir}/target/roq-cache"/>
                                 </copy>
+                                <copy todir="${basedir}/target/roq/variants">
+                                    <fileset dir="${basedir}/target/variants"/>
+                                </copy>
                             </target>
                         </configuration>
                     </execution>
