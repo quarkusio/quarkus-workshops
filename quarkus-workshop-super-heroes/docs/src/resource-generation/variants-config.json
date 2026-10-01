@@ -58,7 +58,7 @@
             "requires": [],
             "standalone": false,
             "icon": "fas fa-shield-alt",
-            "section": "Environment",
+            "section": "What kind of IT constraints are there?",
             "sectionIcon": "fas fa-building"
         },
         {

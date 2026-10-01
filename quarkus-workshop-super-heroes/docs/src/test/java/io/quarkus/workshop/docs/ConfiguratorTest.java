@@ -65,11 +65,11 @@ public class ConfiguratorTest extends DocumentationTestBase {
     }
 
     @Test
-    @DisplayName("Configurator should have workshop button that defaults to 'Take me to my default workshop'")
+    @DisplayName("Configurator should have workshop button that defaults to 'Take me to the default workshop'")
     void testIndexHasWorkshopButton() {
         navigateToIndex();
 
-        Locator workshopButton = page.locator("button:has-text('Take me to my default workshop')");
+        Locator workshopButton = page.locator("button:has-text('Take me to the default workshop')");
         assertTrue(workshopButton.count() > 0, "Should have workshop button showing default workshop text initially");
     }
 
@@ -79,7 +79,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
         navigateToIndex();
 
         // Initially should say default
-        Locator defaultButton = page.locator("button:has-text('Take me to my default workshop')");
+        Locator defaultButton = page.locator("button:has-text('Take me to the default workshop')");
         assertTrue(defaultButton.count() > 0, "Should initially show default workshop text");
 
         // Verify button points to default spine.html
@@ -94,7 +94,7 @@ public class ConfiguratorTest extends DocumentationTestBase {
         assertTrue(customButton.count() > 0, "Should show custom workshop text after toggle change");
 
         // Default text should be gone
-        defaultButton = page.locator("button:has-text('Take me to my default workshop')");
+        defaultButton = page.locator("button:has-text('Take me to the default workshop')");
         assertEquals(0, defaultButton.count(), "Default workshop text should be gone");
 
         // Verify button now points to variant URL
