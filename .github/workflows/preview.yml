@@ -47,7 +47,7 @@ jobs:
       - name: Trim site for preview
         run: |
           cd super-heroes/variants
-          rm -rf os-linux-* os-windows-*
+          rm -rf *os-linux-* *os-windows-*
           du -sh ..
       - name: Publishing to surge for preview
         id: deploy

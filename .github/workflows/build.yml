@@ -86,7 +86,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
-          path: ./quarkus-workshop-super-heroes/docs/target/roq
+          #          TODO will be missing images and css
+          # TODO need a test for that
+          path: ./quarkus-workshop-super-heroes/docs/target/roq/**/spine/index.html
           if-no-files-found: error
           retention-days: 3
   publication:
@@ -133,7 +135,7 @@ jobs:
           mkdir -p target/site/super-heroes
           cp -R target/roq/* target/site/super-heroes
           # Move the redirect.html page to the root
-          cp target/roq/index.html target/site/index.html
+          cp target/roq/redirect.html target/site/index.html
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7
         with:
