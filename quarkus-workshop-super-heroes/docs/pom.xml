@@ -502,6 +502,10 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 <id>restore-cached-roq-output</id>
                                 <phase>none</phase>
                             </execution>
+                            <execution>
+                                <id>cache-roq-output</id>
+                                <phase>none</phase>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>
