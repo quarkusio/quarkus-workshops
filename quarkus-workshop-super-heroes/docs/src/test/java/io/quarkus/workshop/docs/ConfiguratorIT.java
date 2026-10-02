@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Flag definitions, constraints, and standalone markers are read from
  * data/variants.json (the single source of truth).
  */
-public class ConfiguratorTest extends DocumentationTestBase {
+public class ConfiguratorIT extends DocumentationTestBase {
 
     private static final String INDEX_HTML = "index.html";
 

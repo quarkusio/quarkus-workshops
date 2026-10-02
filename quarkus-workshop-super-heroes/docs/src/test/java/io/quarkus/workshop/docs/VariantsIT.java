@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ParameterizedClass(name = "{0}", allowZeroInvocations = true)
 @MethodSource("findVariants")
 @Execution(ExecutionMode.CONCURRENT)
-public class VariantsTest extends DocumentationTestBase {
+public class VariantsIT extends DocumentationTestBase {
 
     static final File VARIANTS_PATH = new File(DOCS_BASE_PATH, "variants");
 

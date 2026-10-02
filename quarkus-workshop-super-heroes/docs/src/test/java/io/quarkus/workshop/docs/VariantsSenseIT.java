@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 /**
  * Tests for the variant spine/index.htmls that don't rely on Playwright.
  */
-public class VariantsSenseTest {
+public class VariantsSenseIT {
 
     private static final File VARIANTS_PATH = new File(
         System.getProperty("docs.base.path", "target/roq/"), "variants");

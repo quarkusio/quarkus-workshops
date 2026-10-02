@@ -429,7 +429,11 @@ Remember that you can also check Swagger UI by going to the dev console: http://
 
 Now that we have a narration microservice up and running, we can invoke it from the fight microservice.
 
-plantuml::{plantDir}/5-rest-client-physical-architecture.puml[align=center,width=300,theme="quarkus from {plantuml-theme-dir}"]
+// Keep these attributes identical to the rendering of the same .puml in
+// core-rest-client/rest-client.adoc. asciidoctor-diagram folds attributes such as width into the
+// cache key, so differing ones make the two pages invalidate each other's cache entry and rewrite
+// the .png on every render -- in dev mode that is a file change in public/, and so a restart.
+plantuml::{plantDir}/5-rest-client-physical-architecture.puml[align=center,theme="quarkus from {plantuml-theme-dir}"]
 
 === Adding narration to the Fight Microservice
 

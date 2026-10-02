@@ -74,13 +74,15 @@ jobs:
       - name: Build and test site
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn package -Dos=${{ matrix.os }} -Dfull
+          # verify, not package: the site is written by quarkus:run at pre-integration-test and
+          # the documentation tests are failsafe ITs that assert against it
+          mvn -B verify -Dos=${{ matrix.os }} -Dfull
           # TODO do we need tests both here and in the final assembled one?
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/docs/target/failsafe-reports
           report-name: 'Site Build Test Results (${{ matrix.os }})'
       - name: Publishing fragment
         uses: actions/upload-artifact@v7
@@ -158,19 +160,20 @@ jobs:
       - name: Run documentation tests
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn test -Dtesty -Ddocs.base.path=../../target/site/super-heroes
+          # -Dtesty skips the site build so the ITs run against the already-assembled site
+          mvn -B verify -Dtesty -Ddocs.base.path=../../target/site/super-heroes
       - name: Report documentation test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/docs/target/failsafe-reports
           report-name: 'Documentation Test Results'
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-results
-          path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          path: quarkus-workshop-super-heroes/docs/target/failsafe-reports
           retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"

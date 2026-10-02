@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- How to use this build file
-Run mvn install to just generate a default doc
+Run mvn verify (or install) to generate a default doc and test it. The site is written by
+quarkus:run at pre-integration-test, and the failsafe ITs in src/test assert against it, so
+anything short of verify (mvn compile, mvn package) builds no site and runs no tests.
+Run mvn quarkus:dev to preview the docs with live reload on http://localhost:8067.
+Run -Dtesty to re-run the ITs against an already-generated target/roq without rebuilding the site.
 Run -Dos=[linux|mac|windows|all] to generate docs for a single OS. Don't forget to run clean if you switch os.
 TODO it would be nice if that wasn't needed.
 Run -Dfull to generate a full set of docs, which will be a slow build.
@@ -28,8 +32,10 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
         </github.raw>
         <github.repo>${env.GITHUB_SERVER_URL:[server]}/${env.GITHUB_REPOSITORY:[repo]}</github.repo>
         <github.url>${github.repo}/tree/${env.GITHUB_REF:[github-ref]}/quarkus-workshop-super-heroes</github.url>
-        <base.url>${env.BASE_URL}</base.url>
+        <base.url>${env.BASE_URL:[base-url]}</base.url>
         <github.issue>${github.repo}/issues</github.issue>
+        <quarkus.pact.version>1.6.0</quarkus.pact.version>
+        <quarkus-langchain4j.version>1.9.2</quarkus-langchain4j.version>
         <compiler-plugin.version>3.16.0</compiler-plugin.version>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -38,7 +44,10 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.38.3</quarkus.platform.version>
         <os>all</os>
-        <skipITs>true</skipITs>
+        <!-- The documentation tests are failsafe ITs, because they assert against the generated
+             site and so have to run after quarkus:run has produced it. Skipping them by default
+             would mean `mvn verify` silently tests nothing. -->
+        <skipITs>false</skipITs>
         <surefire-plugin.version>3.6.0</surefire-plugin.version>
         <roq.version>2.1.9</roq.version>
     </properties>
@@ -51,6 +60,22 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <version>${quarkus.platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- Managed, not depended on: these are extensions the docs tell the reader to add to
+                 their own projects, so they must not join the docs application, but dependabot
+                 still has to see them to keep {quarkus-pact-version} and
+                 {quarkus-langchain4j-version} in step with super-heroes/rest-fights and
+                 super-heroes/rest-narration -->
+            <dependency>
+                <groupId>io.quarkiverse.pact</groupId>
+                <artifactId>quarkus-pact-consumer</artifactId>
+                <version>${quarkus.pact.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.langchain4j</groupId>
+                <artifactId>quarkus-langchain4j-bom</artifactId>
+                <version>${quarkus-langchain4j.version}</version>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -107,6 +132,15 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
     </dependencies>
 
     <build>
+        <resources>
+            <!-- src/main/resources/application.properties carries the doc attributes that come from
+                 Maven (versions, GitHub urls), so that they apply to quarkus:dev as well as to the
+                 static build. See the comments in that file. -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -119,22 +153,9 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
-                        <junit.jupiter.execution.parallel.mode.default>concurrent
-                        </junit.jupiter.execution.parallel.mode.default>
-                        <junit.jupiter.execution.parallel.mode.classes.default>concurrent
-                        </junit.jupiter.execution.parallel.mode.classes.default>
-                        <junit.jupiter.execution.parallel.config.strategy>fixed
-                        </junit.jupiter.execution.parallel.config.strategy>
-                        <junit.jupiter.execution.parallel.config.fixed.parallelism>4
-                        </junit.jupiter.execution.parallel.config.fixed.parallelism>
-                        <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
-                        <os>${os}</os>
-                        <variants.config.path>${basedir}/data/variants.json</variants.config.path>
-                    </systemPropertyVariables>
-                </configuration>
+                <!-- There are no unit tests; everything in src/test asserts against the generated
+                     site, so it runs under failsafe below. The declaration stays to pin the
+                     version, which dependabot tracks via the dependency on the plugin. -->
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -148,8 +169,19 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                     </execution>
                 </executions>
                 <configuration>
-                    <argLine>@{argLine}</argLine>
                     <systemPropertyVariables>
+                        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
+                        <junit.jupiter.execution.parallel.mode.default>concurrent
+                        </junit.jupiter.execution.parallel.mode.default>
+                        <junit.jupiter.execution.parallel.mode.classes.default>concurrent
+                        </junit.jupiter.execution.parallel.mode.classes.default>
+                        <junit.jupiter.execution.parallel.config.strategy>fixed
+                        </junit.jupiter.execution.parallel.config.strategy>
+                        <junit.jupiter.execution.parallel.config.fixed.parallelism>4
+                        </junit.jupiter.execution.parallel.config.fixed.parallelism>
+                        <!-- Pass through the os property so ConfiguratorIT can filter appropriately -->
+                        <os>${os}</os>
+                        <variants.config.path>${basedir}/data/variants.json</variants.config.path>
                         <native.image.path>${project.build.directory}/${project.build.finalName}-runner
                         </native.image.path>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
@@ -177,105 +209,49 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <version>${quarkus.platform.version}</version>
                 <extensions>true</extensions>
                 <executions>
+                    <!-- Phases matter here. Anything this plugin is bound to at or before
+                         process-classes is re-invoked by DevMojo, which injects a `mode` parameter
+                         that only generate-code declares, so `quarkus:dev` dies with
+                         "Cannot find 'mode' in class io.quarkus.maven.BuildMojo". Keeping build at
+                         its natural `package` and the site generation at pre-integration-test
+                         leaves dev mode alone and still lets one `mvn verify` build the site and
+                         then test it. -->
                     <execution>
                         <id>default-build</id>
-                        <phase>compile</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
                         <configuration>
+                            <!-- The quarkus.asciidoc.attributes.* that come from Maven live in
+                                 src/main/resources/application.properties, which is filtered, so that
+                                 they reach quarkus:dev as well as this forked build. These two are
+                                 the ones that must *differ* between dev and the static build, so
+                                 they stay here: the static build renders the per-variant copies
+                                 under target/content, dev renders the live content/ directory. -->
                             <systemProperties>
                                 <!-- TODO Cannot be absolute -->
                                 <site.content-dir>target/content</site.content-dir>
                                 <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
                                 <skipTests>true</skipTests>
-                                <quarkus.asciidoc.attributes.github-raw>${github.raw}
-                                </quarkus.asciidoc.attributes.github-raw>
-                                <quarkus.asciidoc.attributes.github-url>${github.url}
-                                </quarkus.asciidoc.attributes.github-url>
-                                <quarkus.asciidoc.attributes.github-repo>${github.repo}
-                                </quarkus.asciidoc.attributes.github-repo>
-                                <quarkus.asciidoc.attributes.github-issue>${github.issue}
-                                </quarkus.asciidoc.attributes.github-issue>
-                                <quarkus.asciidoc.attributes.github-issue>${base.url}
-                                </quarkus.asciidoc.attributes.github-issue>
-                                <quarkus.asciidoc.attributes.give-solution>true
-                                </quarkus.asciidoc.attributes.give-solution>
-                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.release}
-                                </quarkus.asciidoc.attributes.jdk-version>
-                                <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
-                                <quarkus.asciidoc.attributes.graalvm-version>21
-                                </quarkus.asciidoc.attributes.graalvm-version>
-                                <quarkus.asciidoc.attributes.maven-version>3.9.x
-                                </quarkus.asciidoc.attributes.maven-version>
-                                <quarkus.asciidoc.attributes.quarkus-version>${quarkus.platform.version}
-                                </quarkus.asciidoc.attributes.quarkus-version>
-                                <quarkus.asciidoc.attributes.compiler-plugin-version>${compiler-plugin.version}
-                                </quarkus.asciidoc.attributes.compiler-plugin-version>
-                                <quarkus.asciidoc.attributes.surefire-plugin-version>${surefire-plugin.version}
-                                </quarkus.asciidoc.attributes.surefire-plugin-version>
-                                <quarkus.asciidoc.attributes.quarkus-pact-version>${quarkus.pact.version}
-                                </quarkus.asciidoc.attributes.quarkus-pact-version>
-                                <quarkus.asciidoc.attributes.quarkus-langchain4j-version>
-                                    ${quarkus-langchain4j.version}
-                                </quarkus.asciidoc.attributes.quarkus-langchain4j-version>
                             </systemProperties>
                         </configuration>
                     </execution>
                     <execution>
                         <id>default-run</id>
-                        <phase>compile</phase>
+                        <phase>pre-integration-test</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
+                            <!-- Booting the built application is what makes the Roq generator write
+                                 the site to target/roq. The failsafe ITs that follow assert against
+                                 it. -->
                             <systemProperties>
                                 <site.content-dir>target/content</site.content-dir>
-                                <quarkus.asciidoc.attributes.github-raw>${github.raw}
-                                </quarkus.asciidoc.attributes.github-raw>
-                                <quarkus.asciidoc.attributes.github-url>${github.url}
-                                </quarkus.asciidoc.attributes.github-url>
-                                <quarkus.asciidoc.attributes.github-repo>${github.repo}
-                                </quarkus.asciidoc.attributes.github-repo>
-                                <quarkus.asciidoc.attributes.github-issue>${github.issue}
-                                </quarkus.asciidoc.attributes.github-issue>
-                                <quarkus.asciidoc.attributes.github-issue>${base.url}
-                                </quarkus.asciidoc.attributes.github-issue>
-                                <quarkus.asciidoc.attributes.give-solution>true
-                                </quarkus.asciidoc.attributes.give-solution>
-                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.release}
-                                </quarkus.asciidoc.attributes.jdk-version>
-                                <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
-                                <quarkus.asciidoc.attributes.graalvm-version>21
-                                </quarkus.asciidoc.attributes.graalvm-version>
-                                <quarkus.asciidoc.attributes.maven-version>3.9.x
-                                </quarkus.asciidoc.attributes.maven-version>
-                                <quarkus.asciidoc.attributes.quarkus-version>${quarkus.platform.version}
-                                </quarkus.asciidoc.attributes.quarkus-version>
-                                <quarkus.asciidoc.attributes.compiler-plugin-version>${compiler-plugin.version}
-                                </quarkus.asciidoc.attributes.compiler-plugin-version>
-                                <quarkus.asciidoc.attributes.surefire-plugin-version>${surefire-plugin.version}
-                                </quarkus.asciidoc.attributes.surefire-plugin-version>
-                                <quarkus.asciidoc.attributes.quarkus-pact-version>${quarkus.pact.version}
-                                </quarkus.asciidoc.attributes.quarkus-pact-version>
-                                <quarkus.asciidoc.attributes.quarkus-langchain4j-version>
-                                    ${quarkus-langchain4j.version}
-                                </quarkus.asciidoc.attributes.quarkus-langchain4j-version>
                             </systemProperties>
                             <additionalSystemProperties>
-                                skipTests=true,quarkus.asciidoc.attributes.jdk-version=hablaTODO
-                            </additionalSystemProperties>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>cache-roq-run</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <additionalSystemProperties>
-                                skipTests=true,docs.basedir=${basedir}
+                                skipTests=true
                             </additionalSystemProperties>
                         </configuration>
                     </execution>
@@ -323,6 +299,15 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.6</version>
+                <configuration>
+                    <!-- Filter on @...@ only. The filtered application.properties is full of
+                         ${...} Quarkus config expressions that have to reach the runtime intact,
+                         and the default ${...} delimiter would eat them. -->
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                </configuration>
                 <executions>
                     <execution>
                         <id>copy-content</id>
@@ -506,10 +491,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             </execution>
                             <execution>
                                 <id>default-run</id>
-                                <phase>none</phase>
-                            </execution>
-                            <execution>
-                                <id>cache-roq-run</id>
                                 <phase>none</phase>
                             </execution>
                         </executions>

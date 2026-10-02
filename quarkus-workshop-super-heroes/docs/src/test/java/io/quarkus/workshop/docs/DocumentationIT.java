@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DocumentationTest extends DocumentationTestBase {
+public class DocumentationIT extends DocumentationTestBase {
 
     @Test
     @DisplayName("Main spine/index.html file should exist")
