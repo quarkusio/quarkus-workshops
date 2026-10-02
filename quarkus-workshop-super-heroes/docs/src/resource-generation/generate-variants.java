@@ -1,4 +1,4 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
+/// usr/bin/env jbang "$0" "$@" ; exit $?
 
 //DEPS jakarta.json:jakarta.json-api:2.1.3
 //DEPS org.eclipse.parsson:parsson:1.1.6
@@ -53,7 +53,7 @@ class generate_variants {
                 buildToolFilter = args[++i];
             } else if ("--os".equals(args[i]) && i + 1 < args.length) {
                 osFilter = args[++i];
-            } else if (osFilter == null) {
+            } else if (osFilter==null) {
                 osFilter = args[i];
             }
         }
@@ -66,22 +66,22 @@ class generate_variants {
         List<Flag> flags = parseFlags(config.getJsonArray("flags"));
         List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
         List<String> buildToolOptions = config.containsKey("buildToolOptions")
-                ? parseStringArray(config.getJsonArray("buildToolOptions"))
-                : List.of("maven");
+            ? parseStringArray(config.getJsonArray("buildToolOptions"))
+            :List.of("maven");
 
-        if (osFilter != null) {
+        if (osFilter!=null) {
             osOptions = List.of(osFilter);
         }
-        if (buildToolFilter != null) {
+        if (buildToolFilter!=null) {
             buildToolOptions = List.of(buildToolFilter);
         }
 
         List<Flag> enabledNonStandalone = flags.stream()
-                .filter(f -> f.enabled() && !f.standalone())
-                .toList();
+            .filter(f -> f.enabled() && !f.standalone())
+            .toList();
         List<Flag> standaloneFlags = flags.stream()
-                .filter(f -> f.enabled() && f.standalone())
-                .toList();
+            .filter(f -> f.enabled() && f.standalone())
+            .toList();
 
         Set<String> diagramKeys = new LinkedHashSet<>();
         int variantCount = 0;
@@ -136,17 +136,17 @@ class generate_variants {
 
         System.out.println("Generated " + variantCount + " variant directories");
 
-        if (defaultsOutputPath != null) {
+        if (defaultsOutputPath!=null) {
             writeDefaults(defaultsOutputPath, flags);
         }
 
-        if (imagesSrcDir != null && imagesDestDir != null) {
+        if (imagesSrcDir!=null && imagesDestDir!=null) {
             copyStaticImages(imagesSrcDir, imagesDestDir, diagramKeys);
         }
     }
 
     private static Map<String, Boolean> buildAssignment(List<Flag> allFlags,
-                                                         List<Flag> enabledNonStandalone, int bits) {
+                                                        List<Flag> enabledNonStandalone, int bits) {
         Map<String, Boolean> assignment = new LinkedHashMap<>();
         for (Flag f : allFlags) {
             if (!f.enabled()) {
@@ -154,7 +154,7 @@ class generate_variants {
             }
         }
         for (int i = 0; i < enabledNonStandalone.size(); i++) {
-            assignment.put(enabledNonStandalone.get(i).id(), (bits & (1 << i)) != 0);
+            assignment.put(enabledNonStandalone.get(i).id(), (bits & (1 << i))!=0);
         }
         return assignment;
     }
@@ -173,18 +173,15 @@ class generate_variants {
     }
 
     private static void writeVariant(String outputDir, String buildTool, String os,
-                                      List<Flag> flags, Map<String, Boolean> assignment) throws IOException {
+                                     List<Flag> flags, Map<String, Boolean> assignment) throws IOException {
         StringBuilder dirname = new StringBuilder("bt-").append(buildTool)
-                .append("-os-").append(os);
+            .append("-os-").append(os);
         for (Flag f : flags) {
             dirname.append("-").append(f.id()).append("-").append(assignment.get(f.id()));
         }
 
         Path dir = Path.of(outputDir, dirname.toString());
         Files.createDirectories(dir);
-
-        Path propsFile = dir.resolve("application.properties");
-        Files.writeString(propsFile, "workshop.variant.name=" + dirname + "\n");
 
         Path optionsFile = dir.resolve("options.adoc");
         try (PrintWriter pw = new PrintWriter(optionsFile.toFile())) {
@@ -238,11 +235,11 @@ class generate_variants {
         else if (ai) parts.add("ai");
         if (messaging) parts.add("msg");
         if (observability) parts.add("obs");
-        return parts.isEmpty() ? "base" : String.join("-", parts);
+        return parts.isEmpty() ? "base":String.join("-", parts);
     }
 
     private static void copyStaticImages(String srcDir, String destDir,
-                                            Set<String> diagramKeys) throws IOException {
+                                         Set<String> diagramKeys) throws IOException {
         Path src = Path.of(srcDir);
         if (!Files.isDirectory(src)) {
             System.out.println("Images source directory not found: " + srcDir + " (skipping copy)");
@@ -265,7 +262,7 @@ class generate_variants {
     }
 
     private static void writePlantumlConfig(Path dir, List<Flag> flags,
-                                             Map<String, Boolean> assignment) throws IOException {
+                                            Map<String, Boolean> assignment) throws IOException {
         Path configFile = dir.resolve("plantuml-config.puml");
         try (PrintWriter pw = new PrintWriter(configFile.toFile())) {
             for (Flag f : flags) {
@@ -282,12 +279,12 @@ class generate_variants {
         for (JsonObject obj : arr.getValuesAs(JsonObject.class)) {
             List<String> requires = parseStringArray(obj.getJsonArray("requires"));
             flags.add(new Flag(
-                    obj.getString("id"),
-                    obj.getString("label"),
-                    obj.getBoolean("enabled"),
-                    obj.getBoolean("defaultValue"),
-                    requires,
-                    obj.getBoolean("standalone")
+                obj.getString("id"),
+                obj.getString("label"),
+                obj.getBoolean("enabled"),
+                obj.getBoolean("defaultValue"),
+                requires,
+                obj.getBoolean("standalone")
             ));
         }
         return flags;

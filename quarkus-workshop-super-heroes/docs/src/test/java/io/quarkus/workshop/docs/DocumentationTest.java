@@ -4,10 +4,12 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Response;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +60,21 @@ public class DocumentationTest extends DocumentationTestBase {
         assertFalse(title.isEmpty(), "Title should not be empty");
         assertFalse(title.toLowerCase().contains("{quarkus"),
             "Title should not contain unresolved attribute, but was: " + title);
+    }
+
+    @Disabled("NOT working for jdk-version, not sure why, TODO")
+    @Test
+    @DisplayName("Main spine/index.html should not have unescaped version attribute in the body")
+    void testSpineBodyHasResolvedVersion() {
+        navigateToSpine();
+
+        Locator allp = page.locator("p");
+        List<Locator> ps = allp.all();
+        for (Locator p : ps) {
+            String text = p.innerText();
+            assertFalse(text.toLowerCase().contains("-version}"),
+                "Body should not contain unresolved version attributes but found : " + text);
+        }
     }
 
     @Test

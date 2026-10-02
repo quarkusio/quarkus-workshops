@@ -4,6 +4,7 @@ layout: spine.html
 
 = Quarkus Super-Heroes Workshop: {docdate} Quarkus {quarkus-version}
 Antonio Goncalves; Clement Escoffier; Holly Cummins; Georgios Andrianakis; Emmanuel Bernard; George Gastaldi; Martin Stefanko; Eric Deandrea; Aurea Munoz Hernandez :doctype: book :source-highlighter: coderay :source-language: java
+:imagesdir: Appendix
 // Caption and XRef caption
 :appendix-caption: Appendix
 :listing-caption: Listing
@@ -30,7 +31,7 @@ Antonio Goncalves; Clement Escoffier; Holly Cummins; Georgios Andrianakis; Emman
 // to produce tailored docs; that step is not ported to the Roq build yet, so the defaults are
 // included directly. Referencing it through an attribute is not an option here, because Roq's
 // build-time header scanner resolves include:: without the attributes from application.properties.
-include::_default-options.adoc[]
+include::options.adoc[]
 // Convert from named attributes to booleans
 ifeval::["{os}"=="mac"]
 :use-mac:

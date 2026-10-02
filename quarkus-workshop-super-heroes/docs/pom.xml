@@ -185,6 +185,8 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                         </goals>
                         <configuration>
                             <systemProperties>
+                                <!-- TODO Cannot be absolute -->
+                                <site.content-dir>target/content</site.content-dir>
                                 <quarkus.roq.generator.batch>true</quarkus.roq.generator.batch>
                                 <skipTests>true</skipTests>
                                 <quarkus.asciidoc.attributes.github-raw>${github.raw}
@@ -227,8 +229,40 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             <goal>run</goal>
                         </goals>
                         <configuration>
+                            <systemProperties>
+                                <quarkus.asciidoc.attributes.github-raw>${github.raw}
+                                </quarkus.asciidoc.attributes.github-raw>
+                                <quarkus.asciidoc.attributes.github-url>${github.url}
+                                </quarkus.asciidoc.attributes.github-url>
+                                <quarkus.asciidoc.attributes.github-repo>${github.repo}
+                                </quarkus.asciidoc.attributes.github-repo>
+                                <quarkus.asciidoc.attributes.github-issue>${github.issue}
+                                </quarkus.asciidoc.attributes.github-issue>
+                                <quarkus.asciidoc.attributes.github-issue>${base.url}
+                                </quarkus.asciidoc.attributes.github-issue>
+                                <quarkus.asciidoc.attributes.give-solution>true
+                                </quarkus.asciidoc.attributes.give-solution>
+                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.source}
+                                </quarkus.asciidoc.attributes.jdk-version>
+                                <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
+                                <quarkus.asciidoc.attributes.graalvm-version>21
+                                </quarkus.asciidoc.attributes.graalvm-version>
+                                <quarkus.asciidoc.attributes.maven-version>3.9.x
+                                </quarkus.asciidoc.attributes.maven-version>
+                                <quarkus.asciidoc.attributes.quarkus-version>${quarkus.platform.version}
+                                </quarkus.asciidoc.attributes.quarkus-version>
+                                <quarkus.asciidoc.attributes.compiler-plugin-version>${compiler-plugin.version}
+                                </quarkus.asciidoc.attributes.compiler-plugin-version>
+                                <quarkus.asciidoc.attributes.surefire-plugin-version>${surefire-plugin.version}
+                                </quarkus.asciidoc.attributes.surefire-plugin-version>
+                                <quarkus.asciidoc.attributes.quarkus-pact-version>${quarkus.pact.version}
+                                </quarkus.asciidoc.attributes.quarkus-pact-version>
+                                <quarkus.asciidoc.attributes.quarkus-langchain4j-version>
+                                    ${quarkus-langchain4j.version}
+                                </quarkus.asciidoc.attributes.quarkus-langchain4j-version>
+                            </systemProperties>
                             <additionalSystemProperties>
-                                skipTests=true
+                                skipTests=true,quarkus.asciidoc.attributes.jdk-version=hablaTODO
                             </additionalSystemProperties>
                         </configuration>
                     </execution>
@@ -254,34 +288,21 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <executions>
                     <execution>
                         <id>cache-roq-output</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <delete dir="${basedir}/target/roq-cache" failonerror="false"/>
-                                <copy todir="${basedir}/target/roq-cache">
-                                    <fileset dir="${basedir}/target/roq"/>
-                                </copy>
-                            </target>
-                        </configuration>
-                    </execution>
-                    <!-- Put something back into /target/roq, same as there would be for a quick run -->
-                    <execution>
-                        <id>restore-cached-roq-output</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <copy todir="${basedir}/target/roq">
-                                    <fileset dir="${basedir}/target/roq-cache"/>
-                                </copy>
-                                <copy todir="${basedir}/target/roq/variants">
-                                    <fileset dir="${basedir}/target/variants"/>
-                                </copy>
+                                <!-- TODO why is this two up, not one up? -->
+                                <replace token="include::" value="include::../../"
+                                         dir="${project.build.directory}/content/variants/">
+                                    <include name="**/*adoc"/>
+                                </replace>
+                                <replace token="include::../../options.adoc" value="include::options.adoc"
+                                         dir="${project.build.directory}/content/variants/">
+                                    <include name="**/*adoc"/>
+                                </replace>
                             </target>
                         </configuration>
                     </execution>
@@ -289,12 +310,36 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                         <phase>compile</phase>
                         <configuration>
                             <target>
-                                <mkdir dir="${project.build.directory}/variants"/>
+                                <mkdir dir="${project.build.directory}/content/variants"/>
                             </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-content</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <!-- The directory should already exist -->
+                            <outputDirectory>${project.build.directory}/content/
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/content</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -307,7 +352,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <executions>
                     <execution>
                         <id>generate-variant-structure</id>
-                        <phase>generate-resources</phase>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -315,7 +360,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                             <script>src/resource-generation/generate-variants.java</script>
                             <args>
                                 <arg>${basedir}/data/variants.json</arg>
-                                <arg>${basedir}/target/variant-combinations</arg>
+                                <arg>${project.build.directory}/content/variants</arg>
                                 <arg>--os</arg>
                                 <arg>${os}</arg>
                             </args>
@@ -334,12 +379,12 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <executions>
                     <execution>
                         <id>build-variant-sites</id>
-                        <phase>compile</phase>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>iterator</goal>
                         </goals>
                         <configuration>
-                            <folder>${basedir}/target/variant-combinations</folder>
+                            <folder>${project.build.directory}/content/variants</folder>
                             <pluginExecutors>
                                 <pluginExecutor>
                                     <plugin>
@@ -364,45 +409,18 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                     </plugin>
                                     <goal>copy-resources</goal>
                                     <configuration>
-                                        <outputDirectory>${project.build.directory}/roq</outputDirectory>
+                                        <!-- The directory should already exist -->
+                                        <outputDirectory>${project.build.directory}/content/variants/@item@/
+                                        </outputDirectory>
                                         <resources>
                                             <resource>
-                                                <directory>${project.build.directory}/roq-cache</directory>
+                                                <directory>${project.basedir}/content</directory>
                                                 <filtering>false</filtering>
+                                                <includes>
+                                                    <include>spine.adoc</include>
+                                                </includes>
                                             </resource>
                                         </resources>
-                                    </configuration>
-                                </pluginExecutor>
-                                <!-- Run only; build is done once in compile phase before iteration -->
-                                <pluginExecutor>
-                                    <plugin>
-                                        <groupId>io.quarkus</groupId>
-                                        <artifactId>quarkus-maven-plugin</artifactId>
-                                        <version>${quarkus.platform.version}</version>
-                                    </plugin>
-                                    <goal>run</goal>
-                                    <configuration>
-                                        <additionalSystemProperties>
-                                            skipTests=true,workshop.variant.name=@item@
-                                        </additionalSystemProperties>
-                                    </configuration>
-                                </pluginExecutor>
-                                <!-- Copy variant output to variants folder
-                                 We have to do this because quarkus.roq.generator.output-dir is build-time fixed, and we do not want to spend the time to rebuild
-                                  -->
-                                <pluginExecutor>
-                                    <plugin>
-                                        <groupId>org.codehaus.mojo</groupId>
-                                        <artifactId>exec-maven-plugin</artifactId>
-                                        <version>3.1.0</version>
-                                    </plugin>
-                                    <goal>exec</goal>
-                                    <configuration>
-                                        <executable>mv</executable>
-                                        <arguments>
-                                            <argument>${project.build.directory}/roq</argument>
-                                            <argument>${project.build.directory}/variants/@item@</argument>
-                                        </arguments>
                                     </configuration>
                                 </pluginExecutor>
                             </pluginExecutors>
