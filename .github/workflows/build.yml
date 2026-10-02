@@ -75,7 +75,7 @@ jobs:
         run: |
           cd quarkus-workshop-super-heroes/docs
           mvn package -Dos=${{ matrix.os }} -Dfull
-          # TODO this runs the tests just once, should we run them for every variant?
+          # TODO do we need tests both here and in the final assembled one?
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
@@ -99,7 +99,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: all-fragments
-          path: target/roq
+          path: target/site/super-heroes
           # take the all- package to be the top-level
       - name: Download Linux site
         uses: actions/download-artifact@v8
@@ -122,20 +122,10 @@ jobs:
 
           # Take just the contents of the variants folders for the other platforms
           mkdir -p target/roq/variants
-          [ -d target/roq/linux/variants ] && cp -r target/roq/linux/variants/* target/roq/variants || true
-          [ -d target/roq/mac/variants ] && cp -r target/roq/mac/variants/* target/roq/variants || true
-          [ -d target/roq/windows/variants ] && cp -r target/roq/windows/variants/* target/roq/variants || true
+          [ -d target/roq/linux/variants ] && cp -r target/roq/linux/variants/* target/site/super-heroes/variants || true
+          [ -d target/roq/mac/variants ] && cp -r target/roq/mac/variants/* target/site/super-heroes//variants || true
+          [ -d target/roq/windows/variants ] && cp -r target/roq/windows/variants/* target/site/super-heroes//variants || true
 
-          # Remove the OS-specific directories now that their variants are merged
-          rm -rf target/roq/linux
-          rm -rf target/roq/mac
-          rm -rf target/roq/windows
-
-          # Move things around to preserve the super-heroes structure
-          mkdir -p target/site/super-heroes
-          cp -R target/roq/* target/site/super-heroes
-          # Move the redirect.html page to the root
-          cp target/roq/redirect.html target/site/index.html
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7
         with:
