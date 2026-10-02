@@ -36,7 +36,10 @@
         const sectionedFlags = nonStandaloneFlags.filter(f => f.section);
 
         const baseUrl = "./";
-        const filename = "spine/index.html";
+        // The directory, not spine/index.html. Roq routes by page url, so in dev mode the only
+        // thing serving the spine is /spine/ -- /spine/index.html is a 404 there. A served static
+        // site resolves /spine/ to the generated spine/index.html, so this works in both.
+        const filename = "spine/";
 
         function generateDefaultURL() {
             window.location.href = baseUrl + filename;
