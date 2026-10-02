@@ -9,7 +9,6 @@ import java.util.Set;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Response;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +61,6 @@ public class DocumentationTest extends DocumentationTestBase {
             "Title should not contain unresolved attribute, but was: " + title);
     }
 
-    @Disabled("NOT working for jdk-version, not sure why, TODO")
     @Test
     @DisplayName("Main spine/index.html should not have unescaped version attribute in the body")
     void testSpineBodyHasResolvedVersion() {

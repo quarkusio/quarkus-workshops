@@ -201,7 +201,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 </quarkus.asciidoc.attributes.github-issue>
                                 <quarkus.asciidoc.attributes.give-solution>true
                                 </quarkus.asciidoc.attributes.give-solution>
-                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.source}
+                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.release}
                                 </quarkus.asciidoc.attributes.jdk-version>
                                 <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
                                 <quarkus.asciidoc.attributes.graalvm-version>21
@@ -243,7 +243,7 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                                 </quarkus.asciidoc.attributes.github-issue>
                                 <quarkus.asciidoc.attributes.give-solution>true
                                 </quarkus.asciidoc.attributes.give-solution>
-                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.source}
+                                <quarkus.asciidoc.attributes.jdk-version>${maven.compiler.release}
                                 </quarkus.asciidoc.attributes.jdk-version>
                                 <!-- NOTE! Any version listed here should have an entry in the dependencies, so that dependabot keeps docs in sync with implementation -->
                                 <quarkus.asciidoc.attributes.graalvm-version>21
