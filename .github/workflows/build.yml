@@ -160,8 +160,10 @@ jobs:
       - name: Run documentation tests
         run: |
           cd quarkus-workshop-super-heroes/docs
-          # -Dtesty skips the site build so the ITs run against the already-assembled site
-          mvn -B verify -Dtesty -Ddocs.base.path=../../target/site/super-heroes
+          # -Dtesty skips the site build so the ITs run against the already-assembled site.
+          # -Dvariants.complete says every matrix shard's variants have been merged in, so
+          # AssemblySmokeIT checks every OS and fails on a missing variant instead of skipping.
+          mvn -B verify -Dtesty -Ddocs.base.path=../../target/site/super-heroes -Dvariants.complete=true
       - name: Report documentation test results
         if: always()
         uses: ./.github/actions/test-reporter

@@ -13,7 +13,6 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ParameterizedClass(name = "{0}", allowZeroInvocations = true)
 @MethodSource("findVariants")
 @Execution(ExecutionMode.CONCURRENT)
-public class VariantsIT extends DocumentationTestBase {
+public class VariantsIT extends BrowserIT {
 
     static final File VARIANTS_PATH = new File(DOCS_BASE_PATH, "variants");
 
@@ -96,8 +95,7 @@ public class VariantsIT extends DocumentationTestBase {
         Browser b = getOrCreateBrowser();
         holder.context = b.newContext();
         holder.page = holder.context.newPage();
-        holder.page.navigate("file://" + variantFile.toAbsolutePath());
-        holder.page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+        navigateTo(holder.page, urlFor(variantFile));
     }
 
     @Override
@@ -166,10 +164,10 @@ public class VariantsIT extends DocumentationTestBase {
 
     @Test
     @Execution(ExecutionMode.SAME_THREAD)
-    void shouldNotHaveBrokenImages() {
-        Set<String> brokenImages = findBrokenImages();
-        assertTrue(brokenImages.isEmpty(),
-            "Has broken images: " + String.join(", ", brokenImages));
+    void shouldNotHaveDeadImages() {
+        Set<String> deadImages = findDeadImages();
+        assertTrue(deadImages.isEmpty(),
+            "Has dead images: " + String.join(", ", deadImages));
     }
 
     @Test

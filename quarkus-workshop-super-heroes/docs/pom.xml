@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- How to use this build file
-Run mvn verify (or install) to generate a default doc and test it. The site is written by
-quarkus:run at pre-integration-test, and the failsafe ITs in src/test assert against it, so
-anything short of verify (mvn compile, mvn package) builds no site and runs no tests.
+Run mvn verify (or install) to generate a default doc and test it.
+
+Tests come in two halves. The *Test classes are @QuarkusTest + @RoqAndRoll: they generate the
+canonical site into target/roq-test in-process and serve it, so mvn test is enough to run them
+and they work from an IDE with no build first. The *IT classes assert against the assembled site
+in target/roq, which quarkus:run writes at pre-integration-test, so only verify runs those.
+
 Run mvn quarkus:dev to preview the docs with live reload on http://localhost:8067.
-Run -Dtesty to re-run the ITs against an already-generated target/roq without rebuilding the site.
+Run -Dtesty to re-run the tests against an already-generated target/roq without rebuilding the site.
 Run -Dos=[linux|mac|windows|all] to generate docs for a single OS. Don't forget to run clean if you switch os.
 TODO it would be nice if that wasn't needed.
 Run -Dfull to generate a full set of docs, which will be a slow build.
+Run -Dvariants.complete=true when the site under test has every OS's variants merged into it, as
+the assembled site in CI does; AssemblySmokeIT then checks them all instead of just -Dos.
 
 -->
 
@@ -153,9 +159,25 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
-                <!-- There are no unit tests; everything in src/test asserts against the generated
-                     site, so it runs under failsafe below. The declaration stays to pin the
-                     version, which dependabot tracks via the dependency on the plugin. -->
+                <!-- The *Test classes are @QuarkusTest + @RoqAndRoll: they generate the canonical
+                     site in-process and serve it, so they need no prior build and run from an IDE
+                     unchanged. Anything that needs the assembled variants runs under failsafe
+                     below instead.
+
+                     No parallel configuration here, deliberately: every @RoqAndRoll class binds
+                     the same port, so the classes have to run one at a time. -->
+                <configuration>
+                    <systemPropertyVariables>
+                        <!-- Somewhere of its own to generate into. Roq cleans its output directory,
+                             so sharing target/roq with the real build would delete the assembled
+                             variants out from under the ITs. -->
+                        <quarkus.roq.generator.output-dir>roq-test</quarkus.roq.generator.output-dir>
+                        <!-- Pass through the os property so ConfiguratorTest can filter appropriately -->
+                        <os>${os}</os>
+                        <variants.config.path>${basedir}/data/variants.json</variants.config.path>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -427,26 +449,6 @@ Run -Dfull to generate a full set of docs, which will be a slow build.
             </activation>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>com.soebes.maven.plugins</groupId>
-                        <artifactId>iterator-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>build-variant-sites</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire-plugin.version}</version>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <docs.base.path>${project.build.directory}/roq</docs.base.path>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
                     <plugin>
                         <groupId>com.soebes.maven.plugins</groupId>
                         <artifactId>iterator-maven-plugin</artifactId>

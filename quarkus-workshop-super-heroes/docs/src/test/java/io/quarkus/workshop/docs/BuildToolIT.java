@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * Tests that verify build tool variant content and tab behaviour.
  * Requires variants to be generated (run {@code mvn package} first).
  */
-public class BuildToolIT extends DocumentationTestBase {
+public class BuildToolIT extends BrowserIT {
 
     private static final File VARIANTS_PATH = new File(DOCS_BASE_PATH, "variants");
 

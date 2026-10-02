@@ -1,14 +1,13 @@
 package io.quarkus.workshop.docs;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Response;
+import io.quarkiverse.roq.testing.RoqAndRoll;
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,23 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DocumentationIT extends DocumentationTestBase {
-
-    @Test
-    @DisplayName("Main spine/index.html file should exist")
-    void testSpineFileExists() {
-        Path spineFile = new File(DOCS_BASE_PATH, SPINE_HTML).toPath();
-        assertTrue(Files.exists(spineFile), "spine/index.html should exist at " + spineFile);
-    }
+/**
+ * Assertions about the spine, the single page that stitches the whole workshop together.
+ */
+@QuarkusTest
+@RoqAndRoll(port = RoqSiteTest.ROQ_PORT)
+public class DocumentationTest extends RoqSiteTest {
 
     @Test
     @DisplayName("Main spine/index.html should load without errors")
     void testSpineLoadsSuccessfully() {
-        String fileUrl = "file://" + new File(DOCS_BASE_PATH, SPINE_HTML).toPath().toAbsolutePath();
-
-        Response response = page.navigate(fileUrl);
+        Response response = page.navigate(url(SPINE_HTML));
         assertNotNull(response, "Page should load");
-        assertTrue(response.ok() || response.status()==0,
+        assertTrue(response.ok(),
             "Page should load successfully (status: " + response.status() + ")");
     }
 
@@ -123,10 +118,10 @@ public class DocumentationIT extends DocumentationTestBase {
     void testSpineImagesLoad() {
         navigateToSpine();
 
-        Set<String> brokenImages = findBrokenImages();
+        Set<String> deadImages = findDeadImages();
 
-        assertTrue(brokenImages.isEmpty(),
-            "Found broken images: " + String.join(", ", brokenImages));
+        assertTrue(deadImages.isEmpty(),
+            "Found dead images: " + String.join(", ", deadImages));
     }
 
     @Test
@@ -194,6 +189,6 @@ public class DocumentationIT extends DocumentationTestBase {
     }
 
     private void navigateToSpine() {
-        navigateTo(new File(DOCS_BASE_PATH, SPINE_HTML).toPath());
+        navigateTo(url(SPINE_HTML));
     }
 }
