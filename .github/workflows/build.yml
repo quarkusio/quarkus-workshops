@@ -86,9 +86,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
-          #          TODO will be missing images and css
-          # TODO need a test for that
-          path: ./quarkus-workshop-super-heroes/docs/target/roq/**/spine/index.html
+          path: ./quarkus-workshop-super-heroes/docs/target/roq/
           if-no-files-found: error
           retention-days: 3
   publication:
