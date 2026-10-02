@@ -83,7 +83,6 @@ public class BuildToolIT extends BrowserIT {
 
     @Test
     @DisplayName("Gradle-only variant should not contain Maven commands in code blocks")
-    @Disabled("TODO not working")
     void gradleOnlyVariantShouldNotContainMavenCommands() throws IOException {
         // Exclude extension variants — the extension chapter legitimately uses ./mvnw
         Path spine = findVariant("bt-gradle-", "extension-false");
@@ -106,7 +105,6 @@ public class BuildToolIT extends BrowserIT {
 
     @Test
     @DisplayName("Gradle-only variant should contain Gradle commands")
-    @Disabled("TODO not working")
     void gradleOnlyVariantShouldContainGradleCommands() throws IOException {
         Path spine = findVariant("bt-gradle-");
         assumeTrue(spine!=null, "No bt-gradle variant found");

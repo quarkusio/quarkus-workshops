@@ -61,7 +61,6 @@ public class VariantsSenseIT {
 
     @Test
     @DisplayName("Maven and Gradle variants of same flags should have different build tool content")
-    @Disabled("TODO No idea why this is failing :( ")
     void buildToolVariantsShouldDiffer() throws IOException {
         Path variantsDir = VARIANTS_PATH.toPath();
         assumeTrue(Files.exists(variantsDir), "Variants directory not generated yet");
