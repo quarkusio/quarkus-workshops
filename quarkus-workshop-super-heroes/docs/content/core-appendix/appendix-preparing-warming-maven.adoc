@@ -10,7 +10,17 @@ First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zi
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 ====
 
-include::../common-no-zip-download.adoc[]
+// NOTE: Inlined from common-no-zip-download.adoc to work around Roq's lack of base-dir support for nested includes.
+// Once Roq 2.1.10+ is released, restore to: include::../common-no-zip-download.adoc[]
+ifdef::use-no-zip[]
+[NOTE]
+.Working without the zip
+====
+In some security-conscious environments, downloading the zip isn't an option.
+If that's a constraint you have, you can follow the workshop without it.
+We'll fill in the gaps as we go, showing you how to create the pieces the zip would have provided (and, where a piece is too big to paste, how to copy it from source control).
+====
+endif::use-no-zip[]
 
 == Download the Maven dependencies
 
@@ -40,7 +50,17 @@ First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zi
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 ====
 
-include::../common-no-zip-download.adoc[]
+// NOTE: Inlined from common-no-zip-download.adoc to work around Roq's lack of base-dir support for nested includes.
+// Once Roq 2.1.10+ is released, restore to: include::../common-no-zip-download.adoc[]
+ifdef::use-no-zip[]
+[NOTE]
+.Working without the zip
+====
+In some security-conscious environments, downloading the zip isn't an option.
+If that's a constraint you have, you can follow the workshop without it.
+We'll fill in the gaps as we go, showing you how to create the pieces the zip would have provided (and, where a piece is too big to paste, how to copy it from source control).
+====
+endif::use-no-zip[]
 
 == Download the Gradle dependencies
 
