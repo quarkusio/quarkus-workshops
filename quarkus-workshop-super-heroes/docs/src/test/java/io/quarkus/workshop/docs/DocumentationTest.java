@@ -188,6 +188,60 @@ public class DocumentationTest extends RoqSiteTest {
             "Page should contain 'Fight Microservice' section");
     }
 
+    @Test
+    @DisplayName("Main spine/index.html should contain warming cache appendix content")
+    void testSpineHasWarmingCacheAppendix() {
+        navigateToSpine();
+
+        String pageContent = page.content();
+
+        assertTrue(pageContent.contains("Warming the caches") ||
+                pageContent.contains("warming the caches"),
+            "Page should contain 'Warming the caches' appendix section");
+
+        // Verify the nested include content is present (this would fail if nested includes broke)
+        assertTrue(pageContent.contains("Warming up Maven") ||
+                pageContent.contains("warming up Maven") ||
+                pageContent.contains("./mvnw clean install"),
+            "Page should contain Maven warming content from appendix-preparing-warming-maven.adoc");
+
+        assertTrue(pageContent.contains("Warming up Docker") ||
+                pageContent.contains("warming up Docker") ||
+                pageContent.contains("docker compose"),
+            "Page should contain Docker warming content from appendix-preparing-warming-docker.adoc");
+    }
+
+    @Test
+    @DisplayName("Main spine/index.html should not have asciidoc include errors for warming appendix files")
+    void testSpineHasNoIncludeErrorsForWarmingAppendix() {
+        navigateToSpine();
+
+        String pageContent = page.content();
+
+        // Asciidoctor logs SEVERE errors for failed includes but may not always render them in HTML.
+        // This test verifies the warming appendix files and their nested includes are resolved correctly.
+        // These files use relative paths (../common-no-zip-*.adoc) which require proper base-dir support.
+
+        // Check for common error messages that might appear in the rendered output
+        assertFalse(pageContent.contains("Unresolved directive") &&
+                (pageContent.contains("common-no-zip-download") ||
+                 pageContent.contains("common-no-zip-infrastructure")),
+            "Page should not contain unresolved include directives for common-no-zip files");
+
+        assertFalse(pageContent.contains("Include file not found") &&
+                (pageContent.contains("common-no-zip-download") ||
+                 pageContent.contains("common-no-zip-infrastructure") ||
+                 pageContent.contains("warming-maven") ||
+                 pageContent.contains("warming-docker")),
+            "Page should not contain 'Include file not found' errors for warming appendix files");
+
+        // Verify the file paths don't appear as literal text (which would indicate broken includes)
+        assertFalse(pageContent.contains("appendix-preparing-warming-maven.adoc"),
+            "Page should not contain literal .adoc filename (indicates broken include)");
+        assertFalse(pageContent.contains("appendix-preparing-warming-docker.adoc"),
+            "Page should not contain literal .adoc filename (indicates broken include)");
+    }
+
     private void navigateToSpine() {
         navigateTo(url(SPINE_HTML));
     }
