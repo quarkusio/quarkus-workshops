@@ -1,0 +1,15 @@
+// Default workshop variant used by quarkus:dev and the @QuarkusTest surefire tests, which read
+// the live content/ directory. The Maven build generates a tailored options.adoc per variant
+// combination into target/content/variants/<name>/ (via generate-variants.java at generate-sources)
+// and passes site.content-dir=target/content so Roq picks those up instead.
+//
+// This file is regenerated from data/variants.json by the generate-variant-structure Maven execution
+// (--defaults flag). Do not edit by hand; change data/variants.json instead.
+:buildtool: maven
+:os: all
+:use-ai:
+:use-cli:
+:use-container:
+:use-kubernetes:
+:use-messaging:
+:use-native:

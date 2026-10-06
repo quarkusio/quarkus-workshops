@@ -1,11 +1,5 @@
 package io.quarkus.workshop.docs;
 
-import jakarta.json.Json;
-import jakarta.json.JsonArray;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
-import jakarta.json.JsonString;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,10 +7,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonString;
+
 public class VariantsConfig {
 
     private static final String CONFIG_PATH = System.getProperty("variants.config.path",
-            "src/resource-generation/variants-config.json");
+        "docs/data/variants.json");
 
     private static VariantsConfig instance;
 
@@ -35,13 +35,13 @@ public class VariantsConfig {
     }
 
     public static synchronized VariantsConfig load() {
-        if (instance == null) {
+        if (instance==null) {
             try (JsonReader reader = Json.createReader(new FileReader(CONFIG_PATH))) {
                 JsonObject config = reader.readObject();
                 List<Flag> flags = parseFlags(config.getJsonArray("flags"));
                 List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
                 JsonArray btArray = config.getJsonArray("buildToolOptions");
-                List<String> buildToolOptions = btArray != null ? parseStringArray(btArray) : List.of("maven");
+                List<String> buildToolOptions = btArray!=null ? parseStringArray(btArray):List.of("maven");
                 instance = new VariantsConfig(flags, osOptions, buildToolOptions);
             } catch (IOException e) {
                 throw new RuntimeException("Failed to read variants config from " + CONFIG_PATH, e);
@@ -94,7 +94,7 @@ public class VariantsConfig {
                 }
             }
             for (int i = 0; i < n; i++) {
-                assignment.put(nonStandalone.get(i).id(), (bits & (1 << i)) != 0);
+                assignment.put(nonStandalone.get(i).id(), (bits & (1 << i))!=0);
             }
             for (Flag sf : standalone) {
                 assignment.put(sf.id(), false);
@@ -146,12 +146,12 @@ public class VariantsConfig {
         List<Flag> flags = new ArrayList<>();
         for (JsonObject obj : arr.getValuesAs(JsonObject.class)) {
             flags.add(new Flag(
-                    obj.getString("id"),
-                    obj.getString("label"),
-                    obj.getBoolean("enabled"),
-                    obj.getBoolean("defaultValue"),
-                    parseStringArray(obj.getJsonArray("requires")),
-                    obj.getBoolean("standalone")
+                obj.getString("id"),
+                obj.getString("label"),
+                obj.getBoolean("enabled"),
+                obj.getBoolean("defaultValue"),
+                parseStringArray(obj.getJsonArray("requires")),
+                obj.getBoolean("standalone")
             ));
         }
         return flags;
