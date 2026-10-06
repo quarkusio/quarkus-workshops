@@ -17,12 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     steps:
-      - name: Download PR Artifact
-        uses: actions/download-artifact@v8
-        with:
-          github-token: ${{ github.token }}
-          run-id: ${{ github.event.workflow_run.id }}
-          name: site
       - name: Validate and expose PR number
         id: pr
         env:
@@ -33,17 +27,29 @@ jobs:
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           # workflow_run.pull_requests is empty for pull requests opened from forks:
-          # look the pull request up from the head of the documentation build instead
+          # look the pull request up from the branch the documentation build ran on instead.
           if [[ -z "$RAW_PR_NUMBER" ]]; then
             RAW_PR_NUMBER=$(gh api -X GET "repos/${GITHUB_REPOSITORY}/pulls" \
               -f state=open -f head="${HEAD_OWNER}:${HEAD_BRANCH}" -f per_page=100 \
-              --jq 'map(select(.head.sha == env.HEAD_SHA)) | .[0].number // empty')
+              --jq '.[0].number // empty')
+          fi
+          if [[ -z "$RAW_PR_NUMBER" ]]; then
+            # Closed or merged while the build was running. There is nothing to preview, and no
+            # open pull request to report a failure on, so stop
+            echo "No open pull request for ${HEAD_OWNER}:${HEAD_BRANCH}, so there is nothing to preview."
+            exit 1
           fi
           if ! [[ "$RAW_PR_NUMBER" =~ ^[0-9]+$ ]]; then
             echo "Invalid PR number: $RAW_PR_NUMBER" >&2
             exit 1
           fi
           echo "id=$RAW_PR_NUMBER" >> $GITHUB_OUTPUT
+      - name: Download PR Artifact
+        uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: site
       - name: Trim site for preview
         run: |
           cd super-heroes/variants
@@ -64,13 +70,15 @@ jobs:
             🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh/super-heroes. Note that in order to limit the site size, not all variants are deployed.
           body-marker: '<!-- Sticky Pull Request Comment -->'
           pr-number: ${{ steps.pr.outputs.id }}
+      # Only once there is a pull request to comment on: with an empty pr-number this step fails
+      # too, so a job that had already failed reported a second, more confusing failure.
       - name: Update PR status comment on failure
         uses: quarkusio/action-helpers@main
-        if: ${{ failure() }}
+        if: ${{ failure() && steps.pr.outputs.id != '' }}
         with:
           action: maintain-one-comment
           github-token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            😭 Deploy PR Preview failed.
+            😭 Deploy PR Preview failed. [See the run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for what went wrong.
           body-marker: '<!-- Sticky Pull Request Comment -->'
           pr-number: ${{ steps.pr.outputs.id }}
