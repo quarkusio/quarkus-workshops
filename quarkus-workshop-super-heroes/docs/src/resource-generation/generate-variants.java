@@ -1,4 +1,4 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
+/// usr/bin/env jbang "$0" "$@" ; exit $?
 
 //DEPS jakarta.json:jakarta.json-api:2.1.3
 //DEPS org.eclipse.parsson:parsson:1.1.6
@@ -31,7 +31,7 @@ class generate_variants {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
-            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--template <template-path> <output-path>] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>]");
+            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>] [--spine-source <spine.adoc-path>]");
             System.exit(1);
         }
 
@@ -39,26 +39,24 @@ class generate_variants {
         String outputDir = args[1];
         String osFilter = null;
         String buildToolFilter = null;
-        String templatePath = null;
-        String templateOutputPath = null;
         String defaultsOutputPath = null;
         String imagesSrcDir = null;
         String imagesDestDir = null;
+        String spineSourcePath = null;
 
         for (int i = 2; i < args.length; i++) {
-            if ("--template".equals(args[i]) && i + 2 < args.length) {
-                templatePath = args[++i];
-                templateOutputPath = args[++i];
-            } else if ("--defaults".equals(args[i]) && i + 1 < args.length) {
+            if ("--defaults".equals(args[i]) && i + 1 < args.length) {
                 defaultsOutputPath = args[++i];
             } else if ("--copy-images".equals(args[i]) && i + 2 < args.length) {
                 imagesSrcDir = args[++i];
                 imagesDestDir = args[++i];
+            } else if ("--spine-source".equals(args[i]) && i + 1 < args.length) {
+                spineSourcePath = args[++i];
             } else if ("--buildTool".equals(args[i]) && i + 1 < args.length) {
                 buildToolFilter = args[++i];
             } else if ("--os".equals(args[i]) && i + 1 < args.length) {
                 osFilter = args[++i];
-            } else if (osFilter == null) {
+            } else if (osFilter==null) {
                 osFilter = args[i];
             }
         }
@@ -71,22 +69,24 @@ class generate_variants {
         List<Flag> flags = parseFlags(config.getJsonArray("flags"));
         List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
         List<String> buildToolOptions = config.containsKey("buildToolOptions")
-                ? parseStringArray(config.getJsonArray("buildToolOptions"))
-                : List.of("maven");
+            ? parseStringArray(config.getJsonArray("buildToolOptions"))
+            :List.of("maven");
 
-        if (osFilter != null) {
+        if (osFilter!=null) {
             osOptions = List.of(osFilter);
         }
-        if (buildToolFilter != null) {
+        if (buildToolFilter!=null) {
             buildToolOptions = List.of(buildToolFilter);
         }
 
         List<Flag> enabledNonStandalone = flags.stream()
-                .filter(f -> f.enabled() && !f.standalone())
-                .toList();
+            .filter(f -> f.enabled() && !f.standalone())
+            .toList();
         List<Flag> standaloneFlags = flags.stream()
-                .filter(f -> f.enabled() && f.standalone())
-                .toList();
+            .filter(f -> f.enabled() && f.standalone())
+            .toList();
+
+        Path spineSource = spineSourcePath != null ? Path.of(spineSourcePath) : null;
 
         Set<String> diagramKeys = new LinkedHashSet<>();
         int variantCount = 0;
@@ -107,7 +107,7 @@ class generate_variants {
                     }
 
                     diagramKeys.add(diagramKey(assignment));
-                    writeVariant(outputDir, buildTool, os, flags, assignment);
+                    writeVariant(outputDir, buildTool, os, flags, assignment, spineSource);
                     variantCount++;
                 }
 
@@ -122,7 +122,7 @@ class generate_variants {
                         }
                     }
                     diagramKeys.add(diagramKey(assignment));
-                    writeVariant(outputDir, buildTool, os, flags, assignment);
+                    writeVariant(outputDir, buildTool, os, flags, assignment, spineSource);
                     variantCount++;
                 }
 
@@ -133,7 +133,7 @@ class generate_variants {
                 }
                 if (isValid(everything, flags)) {
                     diagramKeys.add(diagramKey(everything));
-                    writeVariant(outputDir, buildTool, os, flags, everything);
+                    writeVariant(outputDir, buildTool, os, flags, everything, spineSource);
                     variantCount++;
                 }
             }
@@ -141,21 +141,17 @@ class generate_variants {
 
         System.out.println("Generated " + variantCount + " variant directories");
 
-        if (defaultsOutputPath != null) {
+        if (defaultsOutputPath!=null) {
             writeDefaults(defaultsOutputPath, flags);
         }
 
-        if (templatePath != null && templateOutputPath != null) {
-            processTemplate(templatePath, templateOutputPath, config);
-        }
-
-        if (imagesSrcDir != null && imagesDestDir != null) {
+        if (imagesSrcDir!=null && imagesDestDir!=null) {
             copyStaticImages(imagesSrcDir, imagesDestDir, diagramKeys);
         }
     }
 
     private static Map<String, Boolean> buildAssignment(List<Flag> allFlags,
-                                                         List<Flag> enabledNonStandalone, int bits) {
+                                                        List<Flag> enabledNonStandalone, int bits) {
         Map<String, Boolean> assignment = new LinkedHashMap<>();
         for (Flag f : allFlags) {
             if (!f.enabled()) {
@@ -163,7 +159,7 @@ class generate_variants {
             }
         }
         for (int i = 0; i < enabledNonStandalone.size(); i++) {
-            assignment.put(enabledNonStandalone.get(i).id(), (bits & (1 << i)) != 0);
+            assignment.put(enabledNonStandalone.get(i).id(), (bits & (1 << i))!=0);
         }
         return assignment;
     }
@@ -182,9 +178,10 @@ class generate_variants {
     }
 
     private static void writeVariant(String outputDir, String buildTool, String os,
-                                      List<Flag> flags, Map<String, Boolean> assignment) throws IOException {
+                                     List<Flag> flags, Map<String, Boolean> assignment,
+                                     Path spineSource) throws IOException {
         StringBuilder dirname = new StringBuilder("bt-").append(buildTool)
-                .append("-os-").append(os);
+            .append("-os-").append(os);
         for (Flag f : flags) {
             dirname.append("-").append(f.id()).append("-").append(assignment.get(f.id()));
         }
@@ -204,6 +201,12 @@ class generate_variants {
             pw.println(":imagesdir: ../../images/d-" + diagramKey(assignment));
         }
         System.out.println("Created " + optionsFile);
+
+        // Copy spine.adoc into the variant directory if source is provided
+        if (spineSource != null && Files.exists(spineSource)) {
+            Path spineDestination = dir.resolve("spine.adoc");
+            Files.copy(spineSource, spineDestination, StandardCopyOption.REPLACE_EXISTING);
+        }
 
         writePlantumlConfig(dir, flags, assignment);
     }
@@ -244,11 +247,11 @@ class generate_variants {
         else if (ai) parts.add("ai");
         if (messaging) parts.add("msg");
         if (observability) parts.add("obs");
-        return parts.isEmpty() ? "base" : String.join("-", parts);
+        return parts.isEmpty() ? "base":String.join("-", parts);
     }
 
     private static void copyStaticImages(String srcDir, String destDir,
-                                            Set<String> diagramKeys) throws IOException {
+                                         Set<String> diagramKeys) throws IOException {
         Path src = Path.of(srcDir);
         if (!Files.isDirectory(src)) {
             System.out.println("Images source directory not found: " + srcDir + " (skipping copy)");
@@ -271,7 +274,7 @@ class generate_variants {
     }
 
     private static void writePlantumlConfig(Path dir, List<Flag> flags,
-                                             Map<String, Boolean> assignment) throws IOException {
+                                            Map<String, Boolean> assignment) throws IOException {
         Path configFile = dir.resolve("plantuml-config.puml");
         try (PrintWriter pw = new PrintWriter(configFile.toFile())) {
             for (Flag f : flags) {
@@ -283,29 +286,17 @@ class generate_variants {
         System.out.println("Created " + configFile);
     }
 
-    private static void processTemplate(String templatePath, String outputPath,
-                                          JsonObject config) throws IOException {
-        String template = Files.readString(Path.of(templatePath));
-        String configJson = config.toString();
-        String result = template.replace("__VARIANTS_CONFIG_JSON__", configJson);
-
-        Path out = Path.of(outputPath);
-        Files.createDirectories(out.getParent());
-        Files.writeString(out, result);
-        System.out.println("Processed template to " + outputPath);
-    }
-
     private static List<Flag> parseFlags(JsonArray arr) {
         List<Flag> flags = new ArrayList<>();
         for (JsonObject obj : arr.getValuesAs(JsonObject.class)) {
             List<String> requires = parseStringArray(obj.getJsonArray("requires"));
             flags.add(new Flag(
-                    obj.getString("id"),
-                    obj.getString("label"),
-                    obj.getBoolean("enabled"),
-                    obj.getBoolean("defaultValue"),
-                    requires,
-                    obj.getBoolean("standalone")
+                obj.getString("id"),
+                obj.getString("label"),
+                obj.getBoolean("enabled"),
+                obj.getBoolean("defaultValue"),
+                requires,
+                obj.getBoolean("standalone")
             ));
         }
         return flags;

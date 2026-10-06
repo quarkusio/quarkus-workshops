@@ -1,7 +1,9 @@
-# Looking for the Superheroes workshop?
+# Looking for the workshop instructions?
 
-It's here: [quarkus.io/quarkus-workshops/super-heroes/](https://quarkus.io/quarkus-workshops/super-heroes/index.html)
-# Hosts Quarkus related workshops
+They live
+here: [quarkus.io/quarkus-workshops/super-heroes/](https://quarkus.io/quarkus-workshops/super-heroes/index.html)
+
+# Workshops hosted in this repository
 
 * quarkus-workshop-super-heroes: workshop where you build several microservices interoperating through HTTP and Kafka.
   Instructions are available [here](https://quarkus.io/quarkus-workshops/super-heroes/).
@@ -19,7 +21,3 @@ The `hideDefined=true` locks and hides options which have been set in the url.
 As another example, https://quarkus.io/quarkus-workshops/super-heroes/index.html?os=mac would preconfigure the operating
 system to MacOS,
 and show all options.
-
-## Continuous Build
-
-Each push and pull requests is checked using GitHub Actions.

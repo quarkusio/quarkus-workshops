@@ -1,0 +1,481 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";
+@import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
+
+html, body {
+    font-family: 'Open Sans', Arial, sans-serif;
+
+    --quarkus-blue: #4695EB;
+    --dark-blue: #09131E;
+    --dark-blue-alt: #0D1C2C;
+    --dark-blue-1: #205894;
+    --white: white;
+
+    --link: #1259A5;
+    --link-dark-bg: #9BCAFA;
+    --link-light-bg: #1259A5;
+    --link-hover: --red;
+    --link-visited: #1259A5;
+
+    --cta-hover: var(--link-hover);
+
+    --soft-yellow: #FDE9BF;
+    --orange: #E37B40;
+    --light-blue: #e4edf7;
+    --red: #FF004A;
+    --dark-red: #cc0000;
+    --cta-blue: #0B58AB;
+
+    --grey-0: #EFEFEF;
+    --grey-1: #AAAAAA;
+    --grey-2: #555555;
+    --grey-3: #333333;
+    --grey-4: #222222;
+    --dark-grey: #4C4C4C;
+    --light-grey: #DCDCDC;
+
+    --border-radius: 10px;
+
+    --site-margins: 13rem;
+    --toc-width: 20rem;
+}
+
+body {
+    margin: 10px;
+}
+
+p,
+blockquote,
+dt,
+td.content,
+span.alt {
+    font-size: medium;
+}
+
+label {
+    font-weight: normal;
+}
+
+i {
+    padding-right: 0.5em;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 8px;
+}
+
+#header,
+#content,
+#footnotes {
+    max-width: 90.5em;
+}
+
+#footer, footer {
+    height: 42px;
+    width: 100%;
+    background-color: black;
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    padding-left: calc(var(--toc-width) + var(--site-margins));
+    padding-right: var(--site-margins);
+    position: fixed;
+    bottom: 0;
+    right: 0
+}
+
+footer a:visited {
+    color: white;
+}
+
+footer a {
+    color: white;
+}
+
+/*There's a font override on these, which we need to de-override*/
+.admonitionblock .title {
+    font-size: 1rem !important;
+    font-family: 'Open Sans', Arial, sans-serif !important;
+}
+
+.quoteblock blockquote,
+.quoteblock blockquote,
+td.content {
+    font-size: 1.2em;
+}
+
+.assignment pre code {
+    background-color: transparent;
+}
+
+.sidebarblock p,
+.sidebarblock dt,
+.sidebarblock td.content,
+p.tableblock {
+    font-size: 1em;
+}
+
+a[data-toggle='collapse'] {
+    margin-bottom: 10px;
+}
+
+#toctitle,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: inherit;
+    line-height: 1.1;
+    color: black;
+    font-weight: 600;
+    padding: 2rem 0 0.45rem 0;
+}
+
+h3, h4, .h3, .h4 {
+    border-bottom: 1px solid lightgray;
+}
+
+h1 {
+    margin: .67em 0;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 3rem 0 0.7rem 0;
+}
+
+h2 {
+    font-size: 1.8em;
+}
+
+h3 {
+    font-size: 1.6em;
+}
+
+h4 {
+    font-size: 1.4em;
+}
+
+li p {
+    font-size: medium;
+}
+
+code {
+    color: #c7254e;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.quoteblock blockquote:before {
+    vertical-align: baseline;
+}
+
+.listingblock:hover .clipboard {
+    display: block;
+}
+
+.title-band {
+    background: var(--dark-blue-alt) !important;
+    color: var(--white);
+    position: relative;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    /* Keep the full-width band's text lined up with the (centred, max-width)
+       content area below it on large screens. */
+    padding-left: max(4rem, calc((100% - 75rem) / 2 + 4rem))
+
+}
+
+/* This replicates the adoc toc2 styling, since we cannot apply that id to the toc */
+#toc {
+    width: var(--toc-width);
+    margin-top: 0 !important;
+    background: #f8f8f7;
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #e7e7e9;
+    border-top-width: 0 !important;
+    border-bottom-width: 0 !important;
+    z-index: 1000;
+    padding: 1.25em 1em;
+    height: 100%;
+    overflow: auto;
+    font-size: 0.95em;
+}
+
+.content-area {
+    /* Cap the width and centre it so the configurator doesn't stretch
+       edge-to-edge (and look sparse) on large monitors, while still using
+       comfortable gutters on smaller screens. */
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 4rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: 1em;
+
+}
+
+.mode {
+    width: 50%;
+    padding-top: 0em;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Keep the configurator headings compact so the call-to-action buttons stay
+   above the fold on a laptop screen (see issue #722). */
+.content-area h3,
+.content-area h4 {
+    padding-top: 0.6rem;
+    padding-bottom: 0.35rem;
+}
+
+.content-area .mode > h3:first-child {
+    padding-top: 0;
+}
+
+.right {
+    border-left: 1px lightgrey solid;
+}
+
+/* On narrow screens (small laptops in split view, tablets, phones) two 50%
+   columns get cramped, so stack them and swap the divider from a left border
+   to a top border. */
+@media (max-width: 55rem) {
+    .content-area {
+        flex-direction: column;
+        padding: 0 1.5rem;
+    }
+
+    .mode {
+        width: auto;
+        margin: 0.5em 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .right {
+        border-left: none;
+        border-top: 1px lightgrey solid;
+        padding-top: 0.5em;
+    }
+}
+
+.cta > .content {
+    /*We could set a background or other styling for the CTA blocks here,
+    but we also need to undo the default 'example' styling */
+    background-color: white;
+    border: 0 solid white;
+    box-shadow: none;
+    padding: 0;
+}
+
+button {
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+
+    white-space: nowrap;
+
+    background-color: var(--quarkus-blue);
+    border-radius: var(--border-radius);
+    border: var(--quarkus-blue);
+
+    padding: 0.5rem 2rem;
+
+    text-transform: uppercase;
+
+}
+
+button:visited {
+    color: var(--white);
+}
+
+button:hover {
+    color: var(--white);
+    background-color: var(--dark-red);
+    border: var(--dark-red);
+}
+
+.big {
+    width: 95%;
+    height: 60px;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    padding: 1em;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-underline {
+    border: none;
+}
+
+.squish {
+    margin-top: 0rem;
+    padding-top: 0rem;
+}
+
+/*See here for the list of unicode codes for fontawesome*/
+/*https://fontawesome.com/v5/cheatsheet*/
+
+.cta::before {
+    color: #cc0000;
+    vertical-align: top;
+    font-size: larger;
+    font-family: "Font Awesome 5 Free", 'Open Sans', Arial, sans-serif;
+    content: "\f135" " Time to code";
+    display: inline-block;
+    padding-right: 3px;
+    padding-top: 7px;
+    padding-bottom: 1.25em;
+    font-weight: 900;
+}
+
+.clipboard {
+    display: none;
+    border: 0;
+    font-size: .75em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 6px;
+    color: #999;
+    position: absolute;
+    top: .425rem;
+    right: .5rem;
+    background: transparent;
+}
+
+code + .clipboard {
+    top: 2rem !important;
+}
+
+.clipboard:hover, .clipboard:focus, .clipboard:active {
+    outline: 0;
+    background-color: #eee9e6;
+}
+
+.half-size {
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span.red.big {
+    vertical-align: top;
+}
+
+pre code, pre pre {
+    font-size: 14px;
+}
+
+ul.configurator {
+    list-style-type: none;
+    padding-left: 0;
+    padding-bottom: 0;
+    margin-top: 0.25em;
+    margin-bottom: 0;
+    /* Lay options out in rows that wrap, rather than one tall column, so the
+       whole configurator (and its button) fits on screen without scrolling. */
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: 1.5em;
+    row-gap: 0.15em;
+}
+
+ul.configurator li {
+    margin: 0;
+}
+
+/* The feature/standalone checkbox lists have longer labels, so give each item
+   room to form a comfortable multi-column grid that still wraps on narrow
+   screens. */
+#feature-checkboxes li,
+#standalone-checkboxes li {
+    flex: 1 1 18em;
+}
+
+/* Render the configurator's checkboxes as modern sliding toggle switches
+   instead of default checkboxes. The OS / build-tool radios are left as-is,
+   and the underlying inputs stay <input type="checkbox"> so all the existing
+   selection / constraint JS keeps working. */
+ul.configurator label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.1em;
+}
+
+ul.configurator input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    flex: 0 0 auto;
+    width: 2.6em;
+    height: 1.4em;
+    margin: 0 0.6em 0 0;
+    padding: 0;
+    border: none;
+    border-radius: 1em;
+    background: var(--grey-1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color 0.25s ease;
+}
+
+ul.configurator input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0.15em;
+    left: 0.15em;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease;
+}
+
+ul.configurator input[type="checkbox"]:checked {
+    background: var(--quarkus-blue);
+}
+
+ul.configurator input[type="checkbox"]:checked::before {
+    transform: translateX(1.2em);
+}
+
+ul.configurator input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--cta-blue);
+    outline-offset: 2px;
+}
+
+ul.configurator input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

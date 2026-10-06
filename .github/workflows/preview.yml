@@ -53,7 +53,7 @@ jobs:
       - name: Trim site for preview
         run: |
           cd super-heroes/variants
-          rm -rf os-linux-* os-windows-*
+          rm -rf *os-linux-* *os-windows-*
           du -sh ..
       - name: Publishing to surge for preview
         id: deploy
@@ -67,7 +67,7 @@ jobs:
           action: maintain-one-comment
           github-token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh/super-heroes. Note that in order to limit the site size, not all variants are deployed.
+            🚀 PR Preview ${{ github.sha }} has been successfully built and deployed to https://quarkus-workshops-pr-${{ steps.pr.outputs.id }}-preview.surge.sh/super-heroes. Note that the path depth is different from the live deploy, so some issues may not turn up in the preview. Also note that in order to limit the site size, not all variants are deployed.
           body-marker: '<!-- Sticky Pull Request Comment -->'
           pr-number: ${{ steps.pr.outputs.id }}
       # Only once there is a pull request to comment on: with an empty pr-number this step fails
