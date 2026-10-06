@@ -1,0 +1,79 @@
+ifdef::use-maven[]
+= Warming up Maven
+
+== Download the workshop scaffolding
+
+[role="cta"]
+====
+
+First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+This zip file contains _some_ of the code of the workshop, and you will need to complete it.
+====
+
+// NOTE: Inlined from common-no-zip-download.adoc to work around Roq's lack of base-dir support for nested includes.
+// Once Roq 2.1.10+ is released, restore to: include::../common-no-zip-download.adoc[]
+ifdef::use-no-zip[]
+[NOTE]
+.Working without the zip
+====
+In some security-conscious environments, downloading the zip isn't an option.
+If that's a constraint you have, you can follow the workshop without it.
+We'll fill in the gaps as we go, showing you how to create the pieces the zip would have provided (and, where a piece is too big to paste, how to copy it from source control).
+====
+endif::use-no-zip[]
+
+== Download the Maven dependencies
+
+[role="cta"]
+====
+
+Now that you have the initial structure in place, navigate to the root directory and run:
+
+[source,shell]
+----
+./mvnw clean install
+----
+====
+
+By running this command, it downloads all the required dependencies.
+endif::use-maven[]
+
+ifdef::use-gradle[]
+= Warming up Gradle
+
+== Download the workshop scaffolding
+
+[role="cta"]
+====
+
+First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+This zip file contains _some_ of the code of the workshop, and you will need to complete it.
+====
+
+// NOTE: Inlined from common-no-zip-download.adoc to work around Roq's lack of base-dir support for nested includes.
+// Once Roq 2.1.10+ is released, restore to: include::../common-no-zip-download.adoc[]
+ifdef::use-no-zip[]
+[NOTE]
+.Working without the zip
+====
+In some security-conscious environments, downloading the zip isn't an option.
+If that's a constraint you have, you can follow the workshop without it.
+We'll fill in the gaps as we go, showing you how to create the pieces the zip would have provided (and, where a piece is too big to paste, how to copy it from source control).
+====
+endif::use-no-zip[]
+
+== Download the Gradle dependencies
+
+[role="cta"]
+====
+
+Now that you have the initial structure in place, navigate to the root directory and run:
+
+[source,shell]
+----
+./gradlew clean build
+----
+====
+
+By running this command, it downloads all the required dependencies.
+endif::use-gradle[]

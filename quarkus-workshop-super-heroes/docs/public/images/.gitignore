@@ -1,0 +1,17 @@
+# Diagrams rendered by asciidoctor-diagram. Every other build writes them into the generated site
+# instead, but dev mode has no generated site and serves this directory live, so there they still
+# land here; see quarkus.asciidoc.attributes.imagesoutdir in config/application.properties. They are
+# build output: the .puml sources and the inline plantuml blocks in the .adoc are what is under
+# version control. Everything else in this directory is a hand-made image and is tracked as normal.
+diag-plantuml-md5-*.png
+0-introduction-physical-architecture.png
+1-rest-physical-architecture.png
+3-reactive-physical-architecture.png
+4-microservices-fights-sequence.png
+4-microservices-physical-architecture.png
+5-rest-client-physical-architecture.png
+5b-ai-narration-microservice.png
+6-messaging-physical-architecture.png
+6-quarkus-http-architecture.png
+7-observability-physical-architecture.png
+8-extension-architecture.png

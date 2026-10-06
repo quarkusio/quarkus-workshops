@@ -11,6 +11,28 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  # Where the site will be served under its domain. The prefix has to be baked into the generated
+  # html, because the asciidoc imagesdir and assetsdir are urls rather than filesystem paths, and
+  # the pages that share them sit at four different depths (index.html, spine/, core-rest/rest/,
+  # variants/<name>/spine/), so no single relative value is right for all of them.
+  #
+  # The two places the artifact gets served put it at different depths, so the prefix depends on
+  # which one this run is feeding:
+  #
+  #   pull_request -> the surge preview, which unpacks the artifact at its document root, so the
+  #                   pages end up at https://quarkus-workshops-pr-N-preview.surge.sh/super-heroes
+  #   push to main -> github pages, which serves the repository under its own name, so the pages
+  #                   end up at https://quarkusio.github.io/quarkus-workshops/super-heroes (and
+  #                   https://quarkus.io/quarkus-workshops/super-heroes)
+  #
+  # The two never share a build: the deploy job below only runs for a push to main, and preview.yml
+  # only runs for a workflow_run whose event was pull_request. Deciding here rather than in
+  # preview.yml is deliberate - preview.yml is triggered by workflow_run, so github always runs the
+  # copy on the default branch and a change to it in a pull request has no effect on that pull
+  # request's own preview.
+  SITE_PATH: ${{ github.event_name == 'pull_request' && '/super-heroes' || '/quarkus-workshops/super-heroes' }}
+
 jobs:
   build_java:
     runs-on: ubuntu-latest
@@ -53,34 +75,48 @@ jobs:
           java-version: 21
           cache: maven
       - name: Cache Playwright browsers
-        uses: actions/cache@v6
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ hashFiles('**/pom.xml') }}
       - name: Site generation prep
         run: |
           sudo apt-get install graphviz
-          
-          export BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
+          BASE_URL=`curl -Ls -o /dev/null -w %{url_effective} -I ${GITHUB_REPOSITORY_OWNER}.github.io`
+          echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
+      - name: Apply roq safe mode patch
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn -B dependency:resolve -q
+          bash ../.github/scripts/apply-roq-safe-mode-fix.sh 2.1.9
       - name: Install Playwright
         run: |
           cd quarkus-workshop-super-heroes/docs
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
       - name: Build and test site
+        env:
+          # Explicitly set GitHub variables for Maven to resolve ${env.*} expressions.
+          # While GitHub Actions provides these as default env vars, explicitly setting
+          # them ensures they're available to the Maven subprocess.
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn package -Dos=${{ matrix.os }}
+          # verify, not package: the site is written by quarkus:run at pre-integration-test and
+          # the documentation tests are failsafe ITs that assert against it
+          mvn -B verify -Dos=${{ matrix.os }} -Dfull -Ddocs.site-path="$SITE_PATH" -Dqrcode.url="${BASE_URL}${SITE_PATH}/"
       - name: Report site build test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/docs/target/failsafe-reports
           report-name: 'Site Build Test Results (${{ matrix.os }})'
       - name: Publishing fragment
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-fragments
-          path: ./quarkus-workshop-super-heroes/docs/target/generated-asciidoc
+          path: ./quarkus-workshop-super-heroes/docs/target/roq/
           if-no-files-found: error
           retention-days: 3
   publication:
@@ -91,42 +127,33 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: all-fragments
-          path: target/generated-asciidoc
+          path: target/site/super-heroes
           # take the all- package to be the top-level
       - name: Download Linux site
         uses: actions/download-artifact@v8
         with:
           name: linux-fragments
-          path: target/generated-asciidoc/linux
+          path: target/roq/linux
       - name: Download Mac site
         uses: actions/download-artifact@v8
         with:
           name: mac-fragments
-          path: target/generated-asciidoc/mac
+          path: target/roq/mac
       - name: Download Windows site
         uses: actions/download-artifact@v8
         with:
           name: windows-fragments
-          path: target/generated-asciidoc/windows
+          path: target/roq/windows
       - name: Site assembly
         run: |
           # aggregate the fragments
 
           # Take just the contents of the variants folders for the other platforms
-          cp -r target/generated-asciidoc/linux/variants/* target/generated-asciidoc/variants
-          cp -r target/generated-asciidoc/mac/variants/* target/generated-asciidoc/variants
-          cp -r target/generated-asciidoc/windows/variants/* target/generated-asciidoc/variants
+          mkdir -p target/roq/variants
+          [ -d target/roq/linux/variants ] && cp -r target/roq/linux/variants/* target/site/super-heroes/variants || true
+          [ -d target/roq/mac/variants ] && cp -r target/roq/mac/variants/* target/site/super-heroes/variants || true
+          [ -d target/roq/windows/variants ] && cp -r target/roq/windows/variants/* target/site/super-heroes/variants || true
 
-          # Remove the OS-specific directories now that their variants are merged
-          rm -rf target/generated-asciidoc/linux
-          rm -rf target/generated-asciidoc/mac
-          rm -rf target/generated-asciidoc/windows
-
-          # Move things around to preserve the super-heroes structure
-          mkdir -p target/site/super-heroes
-          cp -R target/generated-asciidoc/* target/site/super-heroes
-          # Move the redirect.html page to the root
-          cp target/generated-asciidoc/redirect.html target/site/index.html
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7
         with:
@@ -145,7 +172,7 @@ jobs:
           java-version: 21
           cache: maven
       - name: Cache Playwright browsers
-        uses: actions/cache@v6
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ hashFiles('**/pom.xml') }}
@@ -158,22 +185,32 @@ jobs:
         run: |
           cd quarkus-workshop-super-heroes/docs
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.classpathScope=test -D exec.args="install --with-deps --only-shell chromium"
+      - name: Apply roq safe mode patch
+        run: |
+          cd quarkus-workshop-super-heroes/docs
+          mvn -B dependency:resolve -q
+          bash ../.github/scripts/apply-roq-safe-mode-fix.sh 2.1.9
       - name: Run documentation tests
         run: |
           cd quarkus-workshop-super-heroes/docs
-          mvn test -Ddocs.base.path=../../target/site/super-heroes
+          # -Dtesty skips the site build so the ITs run against the already-assembled site.
+          # -Dvariants.complete says every matrix shard's variants have been merged in, so
+          # AssemblySmokeIT checks every OS and fails on a missing variant instead of skipping.
+          # -Ddocs.site-path has to match what the site was generated with, or SiteServer serves it at
+          # the document root and every asset url in it misses.
+          mvn -B verify -Dtesty -Ddocs.base.path=../../target/site/super-heroes -Dvariants.complete=true -Ddocs.site-path="$SITE_PATH"
       - name: Report documentation test results
         if: always()
         uses: ./.github/actions/test-reporter
         with:
-          report-path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          report-path: quarkus-workshop-super-heroes/docs/target/failsafe-reports
           report-name: 'Documentation Test Results'
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-results
-          path: quarkus-workshop-super-heroes/docs/target/surefire-reports
+          path: quarkus-workshop-super-heroes/docs/target/failsafe-reports
           retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
