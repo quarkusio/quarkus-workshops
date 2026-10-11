@@ -11,7 +11,6 @@ ifdef::use-gradle[]
 Quarkus extension development currently requires Maven.
 Even if you use Gradle for your applications, you will need Maven for this chapter.
 The extension creation command and multi-module structure rely on Maven.
-However, simple build and dev-mode commands have Gradle equivalents shown below.
 ====
 endif::use-gradle[]
 
@@ -249,23 +248,12 @@ Any invocations made on these proxies will be recorded, and bytecode will be wri
 ====
 From the root directory of the extension, run:
 
-ifdef::use-maven[]
-[.tab-maven]
 --
 [source,shell]
 ----
 ./mvnw clean install
 ----
---
-endif::use-maven[]
-ifdef::use-gradle[]
-[.tab-gradle]
---
-[source,shell]
-----
-./gradlew clean build
-----
---
+
 endif::use-gradle[]
 ====
 
@@ -298,24 +286,11 @@ endif::use-gradle[]
 
 If not yet started, start the microservice with:
 
-ifdef::use-maven[]
-[.tab-maven]
---
 [source,shell]
 ----
 ./mvnw quarkus:dev
 ----
---
-endif::use-maven[]
-ifdef::use-gradle[]
-[.tab-gradle]
---
-[source,shell]
-----
-./gradlew quarkusDev
-----
---
-endif::use-gradle[]
+
 ====
 
 And the version will be displayed:
