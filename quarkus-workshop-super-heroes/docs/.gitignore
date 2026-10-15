@@ -1,2 +1,5 @@
 # generated as part of the build
-src/docs/asciidoc/images/qrcode.png
+.jbang/**
+src/docs/images/qrcode.png
+public/images/qrcode.png
+public/images/azure-aca-qrcode.png
