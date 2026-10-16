@@ -354,7 +354,7 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.5.0</version>
                 <configuration>
                     <!-- Filter on @...@ only. The filtered application.properties is full of
                          ${...} Quarkus config expressions that have to reach the runtime intact,
