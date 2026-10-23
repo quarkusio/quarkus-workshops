@@ -1,0 +1,11 @@
+{
+  "catalogs": {},
+  "aliases": {
+    "qrcode": {
+      "script-ref": "quarkus-workshop-super-heroes/docs/src/resource-generation/qrcode.java",
+      "enable-preview": false,
+      "java-agents": []
+    }
+  },
+  "templates": {}
+}
