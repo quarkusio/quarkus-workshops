@@ -39,15 +39,20 @@ public class VariantsConfig {
             try (JsonReader reader = Json.createReader(new FileReader(CONFIG_PATH))) {
                 JsonObject config = reader.readObject();
                 List<Flag> flags = parseFlags(config.getJsonArray("flags"));
-                List<String> osOptions = parseStringArray(config.getJsonArray("osOptions"));
-                JsonArray btArray = config.getJsonArray("buildToolOptions");
-                List<String> buildToolOptions = btArray!=null ? parseStringArray(btArray):List.of("maven");
+                List<String> osOptions = parseOptions(config.get("osOptions"));
+                List<String> buildToolOptions = parseOptions(config.get("buildToolOptions"));
                 instance = new VariantsConfig(flags, osOptions, buildToolOptions);
             } catch (IOException e) {
                 throw new RuntimeException("Failed to read variants config from " + CONFIG_PATH, e);
             }
         }
         return instance;
+    }
+
+    private static List<String> parseOptions(Object optionsObj) {
+        JsonObject obj = (JsonObject) optionsObj;
+        JsonArray values = obj.getJsonArray("values");
+        return values!=null ? parseStringArray(values):List.of();
     }
 
     public List<Flag> flags() {
