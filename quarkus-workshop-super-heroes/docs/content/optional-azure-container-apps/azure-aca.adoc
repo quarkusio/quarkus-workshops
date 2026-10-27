@@ -25,8 +25,7 @@ image::azure-aca-compute.png[]
 
 Container Apps is built on top of Azure Kubernetes Service, including a deep integration with KEDA (event-driven auto scaling for Kubernetes), Dapr (distributed application runtime) and Envoy (a service proxy designed for cloud-native applications).
 The underlying complexity is completely abstracted for the end-user.
-So no need to configure your K8S service, deployment, ingress, volume manifests…
-You get a very simple API and user interface to configure the desired configuration for your containerized application.
+So no need to configure your K8s service, deployment, ingress, volume manifests… You get a very simple API and user interface to configure the desired configuration for your containerized application.
 This simplification means also less control, hence the difference with AKS.
 
 image::azure-aca-intro.png[]

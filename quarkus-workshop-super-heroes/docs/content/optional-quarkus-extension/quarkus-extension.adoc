@@ -25,7 +25,12 @@ Instead of extracting the version at runtime and printing it, we find the versio
 == The extension framework
 
 Quarkus's mission is to transform your entire application, including the libraries it uses, into an artifact that uses significantly fewer resources than traditional approaches.
+ifdef::use-native[]
 These can then be used to build JVM applications and native executables using the GraalVM `native-image` compiler.
+endif::use-native[]
+ifndef::use-native[]
+These can then be used to build JVM applications.
+endif::use-native[]
 
 To do this, you need to analyze and understand the application's "closed world".
 Without the full context, the best that can be achieved is partial and limited generic support.
@@ -36,7 +41,9 @@ To build an extension, Quarkus provides a framework to:
 * Read metadata from classes without having to load them; this includes classpath and annotation scanning,
 * Generate bytecode if needed (for proxies, for instance),
 * Pass sensible defaults to the application,
+ifdef::use-native[]
 * Make the application compatible with GraalVM (resources, reflection, substitutions),
+endif::use-native[]
 * Implement hot-reload
 
 == Structure of an extension
