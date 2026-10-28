@@ -224,6 +224,13 @@ class generate_variants {
         }
 
         try (PrintWriter pw = new PrintWriter(path.toFile())) {
+            pw.println("// Default workshop variant used by quarkus:dev and the @QuarkusTest surefire tests, which read");
+            pw.println("// the live content/ directory. The Maven build generates a tailored options.adoc per variant");
+            pw.println("// combination into target/content/variants/<name>/ (via generate-variants.java at generate-sources)");
+            pw.println("// and passes site.content-dir=target/content so Roq picks those up instead.");
+            pw.println("//");
+            pw.println("// This file is regenerated from data/variants.json by the generate-variant-structure Maven execution");
+            pw.println("// (--defaults flag). Do not edit by hand; change data/variants.json instead.");
             pw.println(":buildtool: maven");
             pw.println(":os: all");
             for (Flag f : flags) {
