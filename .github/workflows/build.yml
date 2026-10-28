@@ -12,6 +12,9 @@ permissions:
   id-token: write
 
 env:
+  # Shared by every job that sets up a JDK, so the Maven and Gradle builds always test the same one.
+  JAVA_VERSION: 21
+
   # Where the site will be served under its domain. The prefix has to be baked into the generated
   # html, because the asciidoc imagesdir and assetsdir are urls rather than filesystem paths, and
   # the pages that share them sit at four different depths (index.html, spine/, core-rest/rest/,
@@ -38,11 +41,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install JDK 21
+      - name: Install JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: ${{ env.JAVA_VERSION }}
           cache: maven
       - name: Microservices build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml
@@ -61,6 +64,29 @@ jobs:
           retention-days: 7
       - name: Native build with Maven
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs -pl '!:rest-narration,!:extension-version'
+  build_gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: gradle
+      - name: Report microservices test results
+        if: always()
+        uses: ./.github/actions/test-reporter
+        with:
+          report-path: quarkus-workshop-super-heroes/super-heroes
+          report-name: 'Microservices Test Results (Gradle)'
+      - name: Upload microservices test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: microservices-test-results-gradle
+          path: quarkus-workshop-super-heroes/super-heroes/*/build/test-results/**/TEST-*.xml
+          retention-days: 7
   docs:
     runs-on: ubuntu-latest
     strategy:
@@ -68,11 +94,11 @@ jobs:
         os: [ "all","linux","mac","windows" ]
     steps:
       - uses: actions/checkout@v7
-      - name: Install JDK 21
+      - name: Install JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: ${{ env.JAVA_VERSION }}
           cache: maven
       - name: Site generation prep
         run: |
@@ -151,11 +177,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install JDK 21
+      - name: Install JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: ${{ env.JAVA_VERSION }}
           cache: maven
       - name: Download assembled site
         uses: actions/download-artifact@v8
@@ -186,7 +212,7 @@ jobs:
           retention-days: 7
   deploy:
     if: "github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule')"
-    needs: [ publication, test-docs, build_java ]
+    needs: [ publication, test-docs, build_java, build_gradle ]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
