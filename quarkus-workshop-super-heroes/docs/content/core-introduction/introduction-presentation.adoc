@@ -46,7 +46,7 @@ ifdef::use-cli[]
 You will create a CLI application that adds load to the Fight, Hero, and Villain microservices.
 endif::use-cli[]
 
-plantuml::{plantDir}/0-introduction-physical-architecture.puml[align=center,theme="quarkus from {plantuml-theme-dir}"]
+plantuml::{plantDir}/0-introduction-physical-architecture.puml[target=0-introduction-physical-architecture-{diagram-key},align=center,theme="quarkus from {plantuml-theme-dir}"]
 
 The main UI allows you to pick up one random Hero and Villain by clicking on "New Fighters." Then it's just a matter of clicking on "Fight!" to get them to fight.
 ifdef::use-ai[]
