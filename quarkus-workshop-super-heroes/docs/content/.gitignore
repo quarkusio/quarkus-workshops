@@ -1,3 +1,5 @@
 # Asciidoctor PlantUML rendered output (generated at build time from .puml sources)
 *.png
 *.png.cache
+options.adoc
+plantuml-config.puml
