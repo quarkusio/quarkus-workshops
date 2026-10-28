@@ -23,6 +23,9 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-openapi")
     implementation("io.quarkus:quarkus-smallrye-health")
     implementation("io.quarkus:quarkus-container-image-docker")
+    // tag::extension-version[]
+    implementation("io.quarkus.workshop.super-heroes:extension-version:1.0.0-SNAPSHOT")
+    // end::extension-version[]
     testImplementation("io.quarkus:quarkus-junit")
     testImplementation("io.rest-assured:rest-assured")
 }

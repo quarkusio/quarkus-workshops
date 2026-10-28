@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import com.microsoft.playwright.Locator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -84,9 +83,8 @@ public class BuildToolIT extends BrowserIT {
     @Test
     @DisplayName("Gradle-only variant should not contain Maven commands in code blocks")
     void gradleOnlyVariantShouldNotContainMavenCommands() throws IOException {
-        // Exclude extension variants — the extension chapter legitimately uses ./mvnw
-        Path spine = findVariant("bt-gradle-", "extension-false");
-        assumeTrue(spine!=null, "No bt-gradle variant without extension found");
+        Path spine = findVariant("bt-gradle-", "extension-true");
+        assumeTrue(spine!=null, "No bt-gradle variant with extension found");
 
         navigateTo(spine);
 

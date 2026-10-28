@@ -5,16 +5,6 @@
 
 '''
 
-ifdef::use-gradle[]
-[NOTE]
-====
-Quarkus extension development currently requires Maven.
-Even if you use Gradle for your applications, you will need Maven for this chapter.
-The extension creation command and multi-module structure rely on Maven.
-However, simple build and dev-mode commands have Gradle equivalents shown below.
-====
-endif::use-gradle[]
-
 Most of the Quarkus magic happens inside extensions.
 The goal of an extension is to compute _just enough bytecode_ to start the services that the application requires and drop everything else.
 
@@ -57,11 +47,11 @@ plantuml::{plantDir}/8-extension-architecture.puml[align=center,theme="quarkus f
 
 [role="cta"]
 ====
-From the directory `super-heroes` execute the following commands:
-
 ifdef::use-maven[]
 [.tab-maven]
 --
+From the directory `super-heroes` execute the following commands:
+
 [source,shell,subs="attributes+"]
 ----
 ./mvnw io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create-extension -N \
@@ -76,30 +66,95 @@ endif::use-maven[]
 ifdef::use-gradle[]
 [.tab-gradle]
 --
-NOTE: Extension creation requires Maven.
-Use the Maven wrapper for this step:
+There is no Gradle command to generate an extension, so you will create its build files yourself.
+From the directory `super-heroes`, create the directories for the two modules of the extension:
 
-[source,shell,subs="attributes+"]
+[source,shell]
 ----
-./mvnw io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create-extension -N \
-    -DplatformVersion={quarkus-version} \
-    -DwithoutTests \
-    -DextensionId=extension-version \
-    -DgroupId=io.quarkus.workshop.super-heroes \
-    -DpackageName=io.quarkus.workshop.superheroes.version
+mkdir -p extension-version/runtime/src/main/java/io/quarkus/workshop/superheroes/version/runtime \
+    extension-version/runtime/src/main/resources/META-INF \
+    extension-version/deployment/src/main/java/io/quarkus/workshop/superheroes/version/deployment
+----
+
+Copy the Gradle wrapper from one of the microservices, so you can build the extension the same way:
+
+[source,shell]
+----
+cp -r rest-villains/gradlew rest-villains/gradlew.bat rest-villains/gradle extension-version/
+----
+
+Create the `extension-version/settings.gradle.kts` file, which declares the two modules and names them after the artifacts they produce:
+
+[source,kotlin]
+----
+include::{projectdir}/extension-version/settings.gradle.kts[]
+----
+
+Create the `extension-version/gradle.properties` file with the Quarkus version:
+
+[source,properties]
+----
+include::{projectdir}/extension-version/gradle.properties[]
+----
+
+Create the `extension-version/build.gradle.kts` file, which holds the configuration shared by the two modules:
+
+[source,kotlin]
+----
+include::{projectdir}/extension-version/build.gradle.kts[]
+----
+
+Create the `extension-version/runtime/build.gradle.kts` file:
+
+[source,kotlin]
+----
+include::{projectdir}/extension-version/runtime/build.gradle.kts[]
+----
+
+Create the `extension-version/deployment/build.gradle.kts` file:
+
+[source,kotlin]
+----
+include::{projectdir}/extension-version/deployment/build.gradle.kts[]
+----
+
+Finally, create the `extension-version/runtime/src/main/resources/META-INF/quarkus-extension.yaml` file, which describes the extension:
+
+[source,yaml]
+----
+include::{projectdir}/extension-version/runtime/src/main/resources/META-INF/quarkus-extension.yaml[]
 ----
 --
 endif::use-gradle[]
 ====
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 This command creates the structure for the version extension:
 
 * One parent `pom.xml` importing the `quarkus-bom`
 * A module for the runtime
 * A module for the deployment, with a dependency on the runtime artifact
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+These files give the version extension its structure:
+
+* A root build importing the `quarkus-bom`
+* A module for the runtime, which applies the `io.quarkus.extension` plugin.
+This plugin generates the extension descriptor, which tells Quarkus where to find the deployment module of the extension.
+* A module for the deployment, with a dependency on the runtime module
+--
+endif::use-gradle[]
 
 The final structure of the extension developed in this section is the following:
 
+ifdef::use-maven[]
+[.tab-maven]
+--
 [plantuml]
 ----
 @startsalt
@@ -117,7 +172,6 @@ extension-version
 ++++++++  superheroes
 +++++++++  version
 ++++++++++  deployment
-+++++++++++  VersionConfig.java
 +++++++++++  ExtensionVersionProcessor.java
 ++  pom.xml
 +  runtime
@@ -130,6 +184,7 @@ extension-version
 ++++++++  superheroes
 +++++++++  version
 ++++++++++  runtime
++++++++++++  VersionConfig.java
 +++++++++++  VersionRecorder.java
 ++++  resources
 +++++  META-INF
@@ -147,6 +202,60 @@ If you want your IDE to manage this new Maven project, you can declare it in the
 ----
 <module>super-heroes/extension-version</module>
 ----
+--
+endif::use-maven[]
+ifdef::use-gradle[]
+[.tab-gradle]
+--
+[plantuml]
+----
+@startsalt
+{
+{
+T
+extension-version
++  deployment
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  version
+++++++++++  deployment
++++++++++++  ExtensionVersionProcessor.java
+++  build.gradle.kts
++  gradle
++  runtime
+++  src
++++  main
+++++  java
++++++  io
+++++++  quarkus
++++++++  workshop
+++++++++  superheroes
++++++++++  version
+++++++++++  runtime
++++++++++++  VersionConfig.java
++++++++++++  VersionRecorder.java
+++++  resources
++++++  META-INF
+++++++  quarkus-extension.yaml
+++  build.gradle.kts
++  build.gradle.kts
++  gradle.properties
++  gradlew
++  gradlew.bat
++  settings.gradle.kts
+}
+}
+@endsalt
+----
+
+If your IDE manages the workshop through the root `settings.gradle.kts`, it picks up the extension without any change, since that file includes every directory under `super-heroes` that has its own `settings.gradle.kts`.
+--
+endif::use-gradle[]
 
 == The version extension
 
@@ -208,7 +317,12 @@ The version extension consists of a single build step that extracts the version 
 
 [role="cta"]
 ====
+ifdef::use-maven[]
 Next, open the `ExtensionVersionProcessor` class, and update the content to be:
+endif::use-maven[]
+ifdef::use-gradle[]
+Next, under the `deployment` module, create the `io.quarkus.workshop.superheroes.version.deployment.ExtensionVersionProcessor` class with the following content:
+endif::use-gradle[]
 
 [source,java]
 ----
@@ -219,8 +333,7 @@ include::{projectdir}/extension-version/deployment/src/main/java/io/quarkus/work
 This class is the core of the extension.
 It contains a set of methods annotated with `@BuildStep`.
 
-The command generated the first one we used to set up the project.
-It just produces a `FeatureBuildItem`.
+The first one just produces a `FeatureBuildItem`.
 When the application starts, Quarkus lists the enabled features.
 So, when this extension is present, `extension-version` will be printed.
 
@@ -263,8 +376,10 @@ ifdef::use-gradle[]
 --
 [source,shell]
 ----
-./gradlew clean build
+./gradlew clean publishToMavenLocal
 ----
+
+This builds the extension and publishes it to your local Maven repository, where the microservices look for it.
 --
 endif::use-gradle[]
 ====
@@ -287,11 +402,11 @@ endif::use-maven[]
 ifdef::use-gradle[]
 [.tab-gradle]
 --
-Go back to the _villain_ microservice, and add the following dependency to the `build.gradle` file:
+Go back to the _villain_ microservice, and add the following dependency to the `build.gradle.kts` file:
 
-[source,groovy,indent=0]
+[source,kotlin,indent=0]
 ----
-implementation 'io.quarkus.workshop.super-heroes:extension-version:1.0.0-SNAPSHOT'
+include::{projectdir}/rest-villains/build.gradle.kts[tags=extension-version]
 ----
 --
 endif::use-gradle[]
