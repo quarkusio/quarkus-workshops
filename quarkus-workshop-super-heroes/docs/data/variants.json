@@ -58,7 +58,7 @@
             "requires": [],
             "standalone": false,
             "icon": "fas fa-shield-alt",
-            "section": "Environment",
+            "section": "What kind of IT constraints are there?",
             "sectionIcon": "fas fa-building"
         },
         {
@@ -96,14 +96,20 @@
             "standalone": false
         }
     ],
-    "osOptions": [
-        "all",
-        "mac",
-        "linux",
-        "windows"
-    ],
-    "buildToolOptions": [
-        "maven",
-        "gradle"
-    ]
+    "osOptions": {
+        "values": [
+            "all",
+            "mac",
+            "linux",
+            "windows"
+        ],
+        "defaultValue": "all"
+    },
+    "buildToolOptions": {
+        "values": [
+            "maven",
+            "gradle"
+        ],
+        "defaultValue": "maven"
+    }
 }

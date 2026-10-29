@@ -60,6 +60,9 @@ public class AssemblySmokeIT extends BrowserIT {
 
         page.locator("input[id='mavenRadio']").check();
         page.locator("input[id='" + os + "Radio']").check();
+        // Leaving everything at its default goes to the default workshop; touching a toggle is what
+        // sends the visitor to a variant.
+        page.locator("input[id='use-ai']").uncheck();
 
         String variantUrl = followCustomWorkshopButton();
         String variantName = variantName(variantUrl);
@@ -91,7 +94,7 @@ public class AssemblySmokeIT extends BrowserIT {
         String before = page.url();
 
         Locator customButton = page.locator("button:has-text('Take me to my custom workshop')");
-        assertTrue(customButton.count() > 0, "Configurator should have a custom workshop button");
+        assertTrue(customButton.count() > 0, "Configurator should offer a custom workshop once options change");
         customButton.click();
 
         page.waitForURL(url -> !url.equals(before), new Page.WaitForURLOptions().setTimeout(20_000));
