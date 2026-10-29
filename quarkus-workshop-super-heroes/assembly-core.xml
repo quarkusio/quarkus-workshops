@@ -1,0 +1,67 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>workshop-core</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <!-- The name the docs use for the workshop root. GitHub wraps the zip of each download branch in a
+         directory of its own, so this is what the attendee finds inside it. -->
+    <baseDirectory>quarkus-workshop-super-heroes</baseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <outputDirectory>./</outputDirectory>
+            <directory>${basedir}/target/temp-project</directory>
+            <includes>
+                <include>mvnw*</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>./super-heroes</outputDirectory>
+            <directory>${basedir}/target/temp-project</directory>
+            <includes>
+                <include>mvnw*</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <excludes>
+                <exclude>**/dist/**</exclude>
+                <exclude>**/target/**</exclude>
+                <exclude>**/.idea/**</exclude>
+                <exclude>*.iml</exclude>
+                <exclude>*.settings</exclude>
+                <exclude>*.classpath</exclude>
+                <exclude>*.project</exclude>
+                <exclude>**/.quinoa/**</exclude>
+                <exclude>**/node_modules/**</exclude>
+            </excludes>
+            <includes>
+                <include>pom.xml</include>
+                <include>settings.gradle.kts</include>
+                <include>build.gradle.kts</include>
+                <include>gradle.properties</include>
+                <include>gradlew*</include>
+                <include>gradle/wrapper/*</include>
+                <include>.editorconfig</include>
+                <include>mvnw*</include>
+                <include>.mvn/wrapper/maven-wrapper.properties</include>
+
+                <include>super-heroes/mvnw*</include>
+                <include>super-heroes/.mvn/wrapper/maven-wrapper.properties</include>
+
+                <include>super-heroes/infrastructure/**/*</include>
+                <include>super-heroes/kubernetes/**/*</include>
+                <include>super-heroes/rest-fights/**/*</include>
+                <include>super-heroes/rest-heroes/**/*</include>
+                <include>super-heroes/rest-villains/**/*</include>
+                <include>super-heroes/ui-super-heroes/**/*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

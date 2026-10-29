@@ -1,0 +1,19 @@
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+    name: heroes-database
+    namespace: quarkus-workshop
+spec:
+    databaseCpu: 30m
+    databaseCpuLimit: 60m
+    databaseMemoryLimit: 512Mi
+    databaseMemoryRequest: 128Mi
+    databaseName: heroes-database
+    databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+    databasePassword: superman
+    databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+    databaseStorageRequest: 1Gi
+    databaseUser: superman
+    databaseUserKeyEnvVar: POSTGRESQL_USER
+    image: centos/postgresql-96-centos7
+    size: 1
