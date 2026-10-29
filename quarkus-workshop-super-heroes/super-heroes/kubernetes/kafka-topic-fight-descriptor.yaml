@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: fights
+  labels:
+    strimzi.io/cluster: my-kafka
+  namespace: quarkus-workshop
+spec:
+  partitions: 1
+  replicas: 3
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824

@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+    port: "8080"
+    database: "jdbc:postgresql://fights-database:5432/fight-database"
+    kafka: "my-kafka-kafka-brokers:9092"
+    hero: "http://quarkus-workshop-hero:8080"
+    villain: "http://quarkus-workshop-villain:8080"
+kind: ConfigMap
+metadata:
+    name: fight-config

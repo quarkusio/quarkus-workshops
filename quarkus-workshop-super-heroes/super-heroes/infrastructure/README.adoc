@@ -1,0 +1,13 @@
+= Infrastructure
+
+== Azure
+
+To deploy the Azure infrastructure, you need to have an Azure account and the Azure CLI installed.
+Then, execute the following scripts:
+
+```bash
+./azure-setup-azure-env.sh      # Create the Azure resources
+./azure-build-push-registry.sh  # Build and push the Docker images to the Azure Container Registry
+./azure-setup-aca-env.sh        # Create the Azure Container Apps resources
+./azure-deploy-aca.sh           # Deploys the application to Azure Container Apps
+```
