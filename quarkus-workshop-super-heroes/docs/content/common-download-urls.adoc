@@ -1,3 +1,23 @@
-// Where the workshop code is downloaded from.
-:download-url-start: {github-raw}/dist/quarkus-super-heroes-workshop.zip
-:download-url-complete: {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip
+// Where the workshop code is downloaded from. Every page that links to a download includes this
+// itself, rather than relying on spine.adoc, because each .adoc is also rendered as a standalone page.
+//
+// The zips workflow publishes the code to these branches, and GitHub zips a branch on demand.
+:download-branch-start: download/start
+:download-branch-complete: download/complete
+// The same code can be cloned instead. --single-branch, because main carries the workshop's whole
+// history and the download branches only one commit each. Either way, the code is in a
+// quarkus-workshop-super-heroes directory, as the rest of the docs expect. The complete clone gets a
+// directory of its own, so it does not land on top of the attendee's work.
+:download-clone-start: git clone --branch {download-branch-start} --single-branch {github-repo-url}.git
+:download-clone-complete: git clone --branch {download-branch-complete} --single-branch {github-repo-url}.git quarkus-workshops-complete
+// The documented archive url on github.com redirects to codeload.github.com, which serves the zip.
+// Locked-down networks are the ones most likely to block or not follow that redirect, so
+// locked-down variants link to codeload directly, leaving one host to allow and no redirect.
+ifdef::use-locked-down[]
+:download-url-start: https://codeload.github.com/{github-repo-full-name}/zip/refs/heads/{download-branch-start}
+:download-url-complete: https://codeload.github.com/{github-repo-full-name}/zip/refs/heads/{download-branch-complete}
+endif::use-locked-down[]
+ifndef::use-locked-down[]
+:download-url-start: {github-repo-url}/archive/refs/heads/{download-branch-start}.zip
+:download-url-complete: {github-repo-url}/archive/refs/heads/{download-branch-complete}.zip
+endif::use-locked-down[]

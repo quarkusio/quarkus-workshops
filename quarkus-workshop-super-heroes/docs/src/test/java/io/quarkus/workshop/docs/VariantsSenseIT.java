@@ -114,4 +114,48 @@ public class VariantsSenseIT {
         assertTrue(gradleContent.contains("gradlew"),
             "Gradle variant should contain 'gradlew'");
     }
+
+    @Test
+    @DisplayName("Locked-down variants should download from codeload, and the others from the archive url")
+    void downloadLinksShouldDependOnLockedDown() throws IOException {
+        String lockedDown = Files.readString(findSpine("locked-down-true"));
+        String open = Files.readString(findSpine("locked-down-false"));
+
+        assertTrue(lockedDown.contains("https://codeload.github.com/"),
+            "Locked-down variant should link to codeload.github.com");
+        assertFalse(lockedDown.contains("/archive/refs/heads/"),
+            "Locked-down variant should not link to the redirecting archive url");
+
+        assertTrue(open.contains("/archive/refs/heads/download/"),
+            "Variant that is not locked down should link to the archive url");
+        assertFalse(open.contains("codeload.github.com"),
+            "Variant that is not locked down should not link to codeload.github.com");
+    }
+
+    @Test
+    @DisplayName("Variants should explain how to clone the code, as well as how to download it")
+    void downloadsShouldAlsoBeClonable() throws IOException {
+        for (String lockedDown : List.of("locked-down-true", "locked-down-false")) {
+            String spine = Files.readString(findSpine(lockedDown));
+            assertTrue(spine.contains("git clone --branch download/start --single-branch "),
+                lockedDown + " variant should say how to clone the start code");
+            assertTrue(spine.contains("git clone --branch download/complete --single-branch "),
+                lockedDown + " variant should say how to clone the complete code");
+        }
+    }
+
+    private static Path findSpine(String mustContain) throws IOException {
+        Path variantsDir = VARIANTS_PATH.toPath();
+        assumeTrue(Files.exists(variantsDir), "Variants directory not generated yet");
+
+        try (Stream<Path> paths = Files.list(variantsDir)) {
+            Path spine = paths.filter(dir -> dir.getFileName().toString().contains(mustContain))
+                .map(dir -> dir.resolve("spine/index.html"))
+                .filter(Files::exists)
+                .findFirst()
+                .orElse(null);
+            assumeTrue(spine!=null, "No " + mustContain + " variant found");
+            return spine;
+        }
+    }
 }

@@ -34,7 +34,7 @@ You can browse to `quarkus-workshop-super-heroes/super-heroes/ui-super-heroes` a
 
 [source,shell,subs="attributes+"]
 ----
-git clone {github-repo}.git
+git clone {github-repo-url}.git
 cp -r quarkus-workshops/quarkus-workshop-super-heroes/super-heroes/ui-super-heroes super-heroes/
 ----
 
