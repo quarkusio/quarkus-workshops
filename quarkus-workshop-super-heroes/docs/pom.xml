@@ -29,7 +29,7 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
 
     <properties>
         <version.asciidoctorj.diagram.plantuml>1.2026.2</version.asciidoctorj.diagram.plantuml>
-        <version.playwright>1.63.0</version.playwright>
+        <version.playwright>1.64.0</version.playwright>
         <!-- since we don't use roq-specific playwright features yet, do not pay the cost -->
         <!-- If building docs locally and urls matter, set environment variables for these values.
              Tests set these via systemPropertyVariables in surefire plugin configuration. -->
