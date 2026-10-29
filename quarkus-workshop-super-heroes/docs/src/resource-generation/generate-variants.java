@@ -31,7 +31,7 @@ class generate_variants {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
-            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>] [--spine-source <spine.adoc-path>]");
+            System.err.println("Usage: generate-variants.java <config.json> <output-dir> [os] [--defaults <output-path>] [--copy-images <src-dir> <dest-dir>] [--spine-source <spine.adoc-path>] [--diagram-config-dir <dir>]");
             System.exit(1);
         }
 
@@ -43,6 +43,7 @@ class generate_variants {
         String imagesSrcDir = null;
         String imagesDestDir = null;
         String spineSourcePath = null;
+        String diagramConfigDir = null;
 
         for (int i = 2; i < args.length; i++) {
             if ("--defaults".equals(args[i]) && i + 1 < args.length) {
@@ -52,6 +53,8 @@ class generate_variants {
                 imagesDestDir = args[++i];
             } else if ("--spine-source".equals(args[i]) && i + 1 < args.length) {
                 spineSourcePath = args[++i];
+            } else if ("--diagram-config-dir".equals(args[i]) && i + 1 < args.length) {
+                diagramConfigDir = args[++i];
             } else if ("--buildTool".equals(args[i]) && i + 1 < args.length) {
                 buildToolFilter = args[++i];
             } else if ("--os".equals(args[i]) && i + 1 < args.length) {
@@ -107,7 +110,7 @@ class generate_variants {
                     }
 
                     diagramKeys.add(diagramKey(assignment));
-                    writeVariant(outputDir, buildTool, os, flags, assignment, spineSource);
+                    writeVariant(outputDir, buildTool, os, flags, assignment, spineSource, diagramConfigDir);
                     variantCount++;
                 }
 
@@ -122,7 +125,7 @@ class generate_variants {
                         }
                     }
                     diagramKeys.add(diagramKey(assignment));
-                    writeVariant(outputDir, buildTool, os, flags, assignment, spineSource);
+                    writeVariant(outputDir, buildTool, os, flags, assignment, spineSource, diagramConfigDir);
                     variantCount++;
                 }
 
@@ -133,7 +136,7 @@ class generate_variants {
                 }
                 if (isValid(everything, flags)) {
                     diagramKeys.add(diagramKey(everything));
-                    writeVariant(outputDir, buildTool, os, flags, everything, spineSource);
+                    writeVariant(outputDir, buildTool, os, flags, everything, spineSource, diagramConfigDir);
                     variantCount++;
                 }
             }
@@ -142,7 +145,7 @@ class generate_variants {
         System.out.println("Generated " + variantCount + " variant directories");
 
         if (defaultsOutputPath!=null) {
-            writeDefaults(defaultsOutputPath, flags);
+            writeDefaults(defaultsOutputPath, flags, diagramConfigDir);
         }
 
         if (imagesSrcDir!=null && imagesDestDir!=null) {
@@ -179,7 +182,7 @@ class generate_variants {
 
     private static void writeVariant(String outputDir, String buildTool, String os,
                                      List<Flag> flags, Map<String, Boolean> assignment,
-                                     Path spineSource) throws IOException {
+                                     Path spineSource, String diagramConfigDir) throws IOException {
         StringBuilder dirname = new StringBuilder("bt-").append(buildTool)
             .append("-os-").append(os);
         for (Flag f : flags) {
@@ -198,7 +201,7 @@ class generate_variants {
                     pw.println(":use-" + f.id() + ":");
                 }
             }
-            pw.println(":imagesdir: ../../images/d-" + diagramKey(assignment));
+            writeDiagramAttributes(pw, assignment, diagramConfigDir);
         }
         System.out.println("Created " + optionsFile);
 
@@ -208,10 +211,10 @@ class generate_variants {
             Files.copy(spineSource, spineDestination, StandardCopyOption.REPLACE_EXISTING);
         }
 
-        writePlantumlConfig(dir, flags, assignment);
+        writeDiagramConfig(diagramConfigDir, assignment);
     }
 
-    private static void writeDefaults(String outputPath, List<Flag> flags) throws IOException {
+    private static void writeDefaults(String outputPath, List<Flag> flags, String diagramConfigDir) throws IOException {
         Path path = Path.of(outputPath);
         Files.createDirectories(path.getParent());
 
@@ -228,26 +231,54 @@ class generate_variants {
                     pw.println(":use-" + f.id() + ":");
                 }
             }
+            writeDiagramAttributes(pw, assignment, diagramConfigDir);
         }
         System.out.println("Generated " + outputPath);
 
-        writePlantumlConfig(path.getParent(), flags, assignment);
+        writeDiagramConfig(diagramConfigDir, assignment);
     }
 
-    // Only flags that appear in !ifdef guards in .puml files need distinct diagram directories.
-    // Currently: ai, azure, messaging and observability. Update if new !ifdef guards are added to .puml files.
-    private static String diagramKey(Map<String, Boolean> assignment) {
+    // Only flags that appear in !ifdef guards in .puml files need distinct diagram renders.
+    // Currently: ai, azure, messaging and observability. Update if new !ifdef guards are added to .puml files;
+    // VariantDiagramsIT fails if a variant's diagrams do not match its flags.
+    private static List<String> diagramFlags(Map<String, Boolean> assignment) {
         boolean ai = Boolean.TRUE.equals(assignment.get("ai"));
         boolean azure = Boolean.TRUE.equals(assignment.get("azure"));
-        boolean messaging = Boolean.TRUE.equals(assignment.get("messaging"));
-        boolean observability = Boolean.TRUE.equals(assignment.get("observability"));
-        List<String> parts = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
+        if (ai) ids.add("ai");
         // azure only changes a diagram in combination with ai
-        if (ai && azure) parts.add("ai-azure");
-        else if (ai) parts.add("ai");
-        if (messaging) parts.add("msg");
-        if (observability) parts.add("obs");
+        if (ai && azure) ids.add("azure");
+        if (Boolean.TRUE.equals(assignment.get("messaging"))) ids.add("messaging");
+        if (Boolean.TRUE.equals(assignment.get("observability"))) ids.add("observability");
+        return ids;
+    }
+
+    private static String diagramKey(Map<String, Boolean> assignment) {
+        List<String> parts = new ArrayList<>();
+        for (String id : diagramFlags(assignment)) {
+            parts.add(switch (id) {
+                case "messaging" -> "msg";
+                case "observability" -> "obs";
+                default -> id;
+            });
+        }
         return parts.isEmpty() ? "base":String.join("-", parts);
+    }
+
+    // Every diagram whose .puml has !ifdef guards names its output after {diagram-key}, so that
+    // variants needing different renders of it write different files: they are all generated in one
+    // Roq run into one images directory, and a shared file name would leave every variant showing
+    // whichever render came last. The defines reach PlantUML through plantuml-config, which
+    // asciidoctor-diagram reads as a document attribute. {diagram-config-dir} is set in
+    // config/application.properties, and has to match the --diagram-config-dir argument.
+    private static void writeDiagramAttributes(PrintWriter pw, Map<String, Boolean> assignment,
+                                               String diagramConfigDir) {
+        if (diagramConfigDir==null) {
+            return;
+        }
+        String key = diagramKey(assignment);
+        pw.println(":diagram-key: " + key);
+        pw.println(":plantuml-config: {diagram-config-dir}/" + key + ".puml");
     }
 
     private static void copyStaticImages(String srcDir, String destDir,
@@ -273,17 +304,19 @@ class generate_variants {
         System.out.println("Copied static images to " + diagramKeys.size() + " diagram-key directories");
     }
 
-    private static void writePlantumlConfig(Path dir, List<Flag> flags,
-                                            Map<String, Boolean> assignment) throws IOException {
-        Path configFile = dir.resolve("plantuml-config.puml");
+    private static void writeDiagramConfig(String diagramConfigDir, Map<String, Boolean> assignment)
+        throws IOException {
+        if (diagramConfigDir==null) {
+            return;
+        }
+        Path dir = Path.of(diagramConfigDir);
+        Files.createDirectories(dir);
+        Path configFile = dir.resolve(diagramKey(assignment) + ".puml");
         try (PrintWriter pw = new PrintWriter(configFile.toFile())) {
-            for (Flag f : flags) {
-                if (Boolean.TRUE.equals(assignment.get(f.id()))) {
-                    pw.println("!define use_" + f.id());
-                }
+            for (String id : diagramFlags(assignment)) {
+                pw.println("!define use_" + id);
             }
         }
-        System.out.println("Created " + configFile);
     }
 
     private static List<Flag> parseFlags(JsonArray arr) {

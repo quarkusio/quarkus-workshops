@@ -1,4 +1,8 @@
 @startuml
+' This diagram has !ifdef use_<flag> guards, so it is rendered once per set of flags. Every
+' plantuml:: macro that uses it needs target=<this file's name>-{diagram-key}, or the variants
+' overwrite each other's renders; DiagramTargetsTest checks for it. A guard on a flag that no
+' diagram used before also needs that flag in diagramFlags in src/resource-generation/generate-variants.java.
 !include style.puml
 
 left to right direction

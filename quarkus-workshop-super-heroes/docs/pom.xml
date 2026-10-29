@@ -385,7 +385,8 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
                     </execution>
                 </executions>
             </plugin>
-            <!-- Generate variant directory structure (contains options.adoc, plantuml-config.puml per variant).
+            <!-- Generate variant directory structure (contains options.adoc per variant), and the
+                 PlantUML defines for each distinct set of diagram flags.
                  This provides the input data for building individual variant sites. -->
             <plugin>
                 <groupId>dev.jbang</groupId>
@@ -409,6 +410,10 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
                                 <arg>${basedir}/content/spine.adoc</arg>
                                 <arg>--defaults</arg>
                                 <arg>${basedir}/content/options.adoc</arg>
+                                <!-- Must match quarkus.asciidoc.attributes.diagram-config-dir in
+                                     config/application.properties. -->
+                                <arg>--diagram-config-dir</arg>
+                                <arg>${project.build.directory}/diagram-config</arg>
                             </args>
                         </configuration>
                     </execution>

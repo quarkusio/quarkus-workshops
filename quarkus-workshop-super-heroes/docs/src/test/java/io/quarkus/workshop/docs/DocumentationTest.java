@@ -1,7 +1,10 @@
 package io.quarkus.workshop.docs;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.microsoft.playwright.Locator;
@@ -240,6 +243,20 @@ public class DocumentationTest extends RoqSiteTest {
             "Page should not contain literal .adoc filename (indicates broken include)");
         assertFalse(pageContent.contains("appendix-preparing-warming-docker.adoc"),
             "Page should not contain literal .adoc filename (indicates broken include)");
+    }
+
+    @Test
+    @DisplayName("Diagrams on the main spine/index.html should be rendered for the default variant")
+    void testSpineDiagramsMatchDefaultVariant() throws IOException {
+        // The live content/ directory, which this site is generated from, gets the defaults in
+        // data/variants.json; see the --defaults execution of generate-variants.java.
+        Map<String, Boolean> defaults = new LinkedHashMap<>();
+        for (VariantsConfig.Flag flag : VariantsConfig.load().flags()) {
+            defaults.put(flag.id(), flag.defaultValue());
+        }
+
+        List<String> problems = Diagrams.problems(outputDir().resolve(SPINE_HTML), outputDir(), "", defaults);
+        assertTrue(problems.isEmpty(), String.join("\n", problems));
     }
 
     private void navigateToSpine() {

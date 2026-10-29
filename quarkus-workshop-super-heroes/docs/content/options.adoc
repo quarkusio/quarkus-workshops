@@ -13,3 +13,5 @@
 :use-kubernetes:
 :use-messaging:
 :use-native:
+:diagram-key: ai-msg
+:plantuml-config: {diagram-config-dir}/ai-msg.puml
