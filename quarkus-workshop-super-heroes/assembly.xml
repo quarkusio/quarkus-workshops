@@ -3,9 +3,12 @@
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
     <id>workshop</id>
     <formats>
-        <format>zip</format>
+        <format>dir</format>
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
+    <!-- The name the docs use for the workshop root. GitHub wraps the zip of each download branch in a
+         directory of its own, so this is what the attendee finds inside it. -->
+    <baseDirectory>quarkus-workshop-super-heroes</baseDirectory>
 
     <fileSets>
         <fileSet>

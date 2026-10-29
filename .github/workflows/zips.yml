@@ -6,15 +6,20 @@ on:
       - main
     paths-ignore:
       - 'quarkus-workshop-super-heroes/docs/**'
-      - 'quarkus-workshop-super-heroes/dist/**'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+# One run at a time, so two runs never push the download branches at once. A run that is already
+# publishing is left to finish; GitHub keeps only the newest waiting run, which has the latest code.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   build_java17:
     runs-on: ubuntu-latest
-    concurrency: zip-generation
     steps:
       - uses: actions/checkout@v7
       - name: Install JDK 17
@@ -28,8 +33,9 @@ jobs:
         run: mvn -B install --file quarkus-workshop-super-heroes/pom.xml -Pnative -Dquarkus.native.container-build=true -DskipITs -pl '!:rest-narration,!:extension-version'
   publication:
     needs: [ build_java17 ]
+    # workflow_dispatch can run from any branch, but only main's code belongs on the download branches
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    concurrency: zip-generation
     steps:
       - uses: actions/checkout@v7
       - name: Install JDK 17
@@ -37,13 +43,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Generate zips
+      - name: Assemble the downloads
         run: |
           cd quarkus-workshop-super-heroes/
           mvn package -N
-      - name: Commit zips
+      - name: Publish the download branches
         run: |
           git config --global user.name 'Github Actions'
           git config --global user.email 'ci-action@users.noreply.github.com'
-          git commit -am "Automated zip generation"
-          git push
+          .github/scripts/publish-download-branches.sh quarkus-workshop-super-heroes/target/download

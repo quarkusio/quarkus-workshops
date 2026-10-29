@@ -86,7 +86,7 @@
                         <descriptor>assembly-complete.xml</descriptor>
                         <descriptor>assembly-core.xml</descriptor>
                     </descriptors>
-                    <outputDirectory>dist</outputDirectory>
+                    <outputDirectory>${project.build.directory}/download</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>

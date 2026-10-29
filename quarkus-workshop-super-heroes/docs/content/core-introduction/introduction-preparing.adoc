@@ -25,7 +25,14 @@ include::../common-download-urls.adoc[]
 --
 
 We've done some of the layout for you. First, download the zip file  {download-url-start}, and unzip it wherever you want.
-This zip file contains _some_ of the code of the workshop, along with assets you will need to complete it.
+Or, if you would rather use Git, clone the same code:
+
+[source,shell,subs="attributes+"]
+----
+{download-clone-start}
+----
+
+Either way, you get _some_ of the code of the workshop, along with assets you will need to complete it.
 
 --
 

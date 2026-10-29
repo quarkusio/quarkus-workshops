@@ -36,13 +36,16 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
         <github.raw>
             https://raw.githubusercontent.com/${env.GITHUB_REPOSITORY}/${env.GITHUB_REF}/quarkus-workshop-super-heroes
         </github.raw>
-        <github.repo>${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}</github.repo>
-        <github.url>${github.repo}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
+        <!-- owner/name, e.g. quarkusio/quarkus-workshops -->
+        <github.repo-full-name>${env.GITHUB_REPOSITORY}</github.repo-full-name>
+        <!-- e.g. https://github.com/quarkusio/quarkus-workshops -->
+        <github.repo-url>${env.GITHUB_SERVER_URL}/${github.repo-full-name}</github.repo-url>
+        <github.url>${github.repo-url}/tree/${env.GITHUB_REF}/quarkus-workshop-super-heroes</github.url>
         <base.url>${env.BASE_URL}</base.url>
         <!-- qrcode.url needs a default because it's used at compile time by jbang plugin, before
              tests run. Override with -Dqrcode.url=... when building for a different base URL. -->
         <qrcode.url>https://quarkusio.github.io/quarkus-workshops/super-heroes/</qrcode.url>
-        <github.issue>${github.repo}/issues</github.issue>
+        <github.issue>${github.repo-url}/issues</github.issue>
         <!-- Note! Any versions listed here should have a dummy dependency clause so dependabot manages the versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
