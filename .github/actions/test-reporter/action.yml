@@ -20,11 +20,16 @@ runs:
       if: always()
       shell: bash
       run: |
-        cd "${{ inputs.report-path }}"
-        
         echo "## ${{ inputs.report-name }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        
+
+        # A module without tests never creates its report directory (gradle skips the test task as NO-SOURCE)
+        if [ ! -d "${{ inputs.report-path }}" ]; then
+          echo "No test reports found" >> $GITHUB_STEP_SUMMARY
+          exit 0
+        fi
+        cd "${{ inputs.report-path }}"
+
         # Find test report files
         if find . -name "${{ inputs.search-pattern }}" | grep -q .; then
           # Count test results

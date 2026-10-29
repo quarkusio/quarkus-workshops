@@ -58,6 +58,11 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <includes>
                 <include>pom.xml</include>
+                <include>settings.gradle.kts</include>
+                <include>build.gradle.kts</include>
+                <include>gradle.properties</include>
+                <include>gradlew*</include>
+                <include>gradle/wrapper/*</include>
                 <include>.editorconfig</include>
                 <include>.mvn/wrapper/maven-wrapper.properties</include>
             </includes>
