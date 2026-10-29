@@ -199,6 +199,16 @@ samp {
 
 }
 
+/* Quarkus version and build date, shown as small supporting text under the main page title. */
+.doc-meta p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
+}
+
 /* This replicates the adoc toc2 styling, since we cannot apply that id to the toc */
 #toc {
     width: var(--toc-width);
