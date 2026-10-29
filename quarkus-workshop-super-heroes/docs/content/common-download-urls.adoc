@@ -1,0 +1,3 @@
+// Where the workshop code is downloaded from.
+:download-url-start: {github-raw}/dist/quarkus-super-heroes-workshop.zip
+:download-url-complete: {github-raw}/dist/quarkus-super-heroes-workshop-complete.zip

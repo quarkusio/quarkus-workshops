@@ -3,10 +3,12 @@ ifdef::use-maven[]
 
 == Download the workshop scaffolding
 
+include::../common-download-urls.adoc[]
+
 [role="cta"]
 ====
 
-First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+First, download the zip file  {download-url-start}, and unzip it wherever you want.
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 ====
 
@@ -33,10 +35,12 @@ ifdef::use-gradle[]
 
 == Download the workshop scaffolding
 
+include::../common-download-urls.adoc[]
+
 [role="cta"]
 ====
 
-First, download the zip file  {github-raw}/dist/quarkus-super-heroes-workshop.zip, and unzip it wherever you want.
+First, download the zip file  {download-url-start}, and unzip it wherever you want.
 This zip file contains _some_ of the code of the workshop, and you will need to complete it.
 ====
 
