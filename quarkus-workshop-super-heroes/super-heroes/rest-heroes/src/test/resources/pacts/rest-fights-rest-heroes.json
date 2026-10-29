@@ -1,0 +1,113 @@
+{
+  "consumer": {
+    "name": "rest-fights"
+  },
+  "interactions": [
+    {
+      "comments": {
+        "testname": "io.quarkus.workshop.superheroes.fight.FightResourceConsumerTest.randomHeroFound()",
+        "text": [
+
+        ]
+      },
+      "description": "A request for a random hero",
+      "key": "df5e15cd",
+      "pending": false,
+      "request": {
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "GET",
+        "path": "/api/heroes/random"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "level": 42,
+            "name": "Super Baguette",
+            "picture": "super_baguette.png"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.level": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.picture": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "comments": {
+        "testname": "io.quarkus.workshop.superheroes.fight.FightResourceConsumerTest.shouldGetRandomFighters()",
+        "text": [
+
+        ]
+      },
+      "description": "A request for a random hero",
+      "key": "ad777651",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "No random hero found"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "GET",
+        "path": "/api/heroes/random"
+      },
+      "response": {
+        "status": 404
+      },
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.3.17"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "rest-heroes"
+  }
+}

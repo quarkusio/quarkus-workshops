@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: rest-villains API
+  version: 1.0.0-SNAPSHOT
+paths:
+  /api/villains:
+    get:
+      tags:
+      - Villain Resource
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Villain'
+    put:
+      tags:
+      - Villain Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Villain'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Villain'
+    post:
+      tags:
+      - Villain Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Villain'
+      responses:
+        "201":
+          description: Created
+  /api/villains/hello:
+    get:
+      tags:
+      - Villain Resource
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/villains/random:
+    get:
+      tags:
+      - Villain Resource
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Villain'
+  /api/villains/{id}:
+    get:
+      tags:
+      - Villain Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Villain'
+    delete:
+      tags:
+      - Villain Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "204":
+          description: No Content
+components:
+  schemas:
+    Villain:
+      required:
+      - name
+      - level
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          maxLength: 50
+          minLength: 3
+          type: string
+        otherName:
+          type: string
+        level:
+          format: int32
+          minimum: 1
+          type: integer
+        picture:
+          type: string
+        powers:
+          type: string
+  securitySchemes:
+    SecurityScheme:
+      type: http
+      description: Authentication
+      scheme: basic

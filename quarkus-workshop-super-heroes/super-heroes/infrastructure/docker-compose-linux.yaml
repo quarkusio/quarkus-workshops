@@ -1,0 +1,21 @@
+version: "3"
+services:
+    database:
+        image: "postgres:14"
+        container_name: "super-database"
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: password
+        volumes:
+            - ./db-init/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
+
+    monitoring:
+        image: "prom/prometheus:v2.30.3"
+        network_mode: 'host' # On Linux, this is required to let Prometheus access the other containers.
+        container_name: "super-visor"
+        ports:
+          - 9090:9090
+        volumes:
+          - ./monitoring/prometheus-linux.yml:/etc/prometheus/prometheus.yml
+
