@@ -126,7 +126,9 @@ This "à la carte" mode lets you make the most of this 6-hour long hands-on lab.
 This workshop should be as self-explanatory as possible.
 So your job is to follow the instructions by yourself, do what you are supposed to do, and do not hesitate to ask for any clarification or assistance; that's why the team is here.
 
-You will download a zip file ({github-raw}/dist/quarkus-super-heroes-workshop.zip[`quarkus-super-heroes-workshop.zip`]) containing _some_ of the code and you will need to complete it.
+include::../common-download-urls.adoc[]
+
+You will download a zip file ({download-url-start}[`quarkus-super-heroes-workshop.zip`]) containing _some_ of the code and you will need to complete it.
 
 include::../common-no-zip-download.adoc[]
 
