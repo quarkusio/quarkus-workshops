@@ -166,6 +166,15 @@ jobs:
           [ -d target/roq/mac/variants ] && cp -r target/roq/mac/variants/* target/site/super-heroes/variants || true
           [ -d target/roq/windows/variants ] && cp -r target/roq/windows/variants/* target/site/super-heroes/variants || true
 
+      - name: Create thumbnails
+        run: |
+          # https://quarkus.io/workshops/ (_data/workshops.yaml in quarkusio/quarkusio.github.io) uses
+          # these as the workshop's thumbnail, so their names must not change. The diagram renders are
+          # named after their variant, so publish the base intro diagram under stable names. 
+          cd target/site/super-heroes/images
+          cp 0-introduction-physical-architecture-base.png workshop-thumbnail-light.png
+          cp 0-introduction-physical-architecture-base.png workshop-thumbnail-dark.png
+
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7
         with:
