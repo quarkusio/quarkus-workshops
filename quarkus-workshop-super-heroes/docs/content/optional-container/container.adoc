@@ -170,7 +170,12 @@ Now that we have all our Docker images created, let's execute them all to be sur
 [example, role="cta"]
 --
 Under `super-heroes/infrastructure` you will find the `docker-compose-app-local.yaml` file.
+ifndef::use-messaging[]
+It declares all the needed infrastructure (databases) as well as our microservices.
+endif::use-messaging[]
+ifdef::use-messaging[]
 It declares all the needed infrastructure (databases, Kafka) as well as our microservices.
+endif::use-messaging[]
 
 [WARNING]
 ====
@@ -209,7 +214,9 @@ ifdef::use-ai[]
 rest-narration     agoncal<org/rest-narration:1.0.0-SNAPSHOT     Up             0.0.0.0:8086->8086/tcp
 endif::use-ai[]
 super-database     postgres:14                                   Up (healthy)   0.0.0.0:5432->5432/tcp
+ifdef::use-messaging[]
 super-kafka        quay.io/strimzi/kafka:0.28.0-kafka-3.1.0      Up             0.0.0.0:9092->9092/tcp
+endif::use-messaging[]
 ----
 
 Once all the containers are started, you can:
@@ -317,9 +324,11 @@ cd rest-fights
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
+ifdef::use-messaging[]
 cd event-statistics
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true -DskipTests
 cd ..
+endif::use-messaging[]
 ----
 --
 endif::use-maven[]
@@ -338,9 +347,11 @@ cd rest-fights
 cp -R ../ui-super-heroes/dist/* src/main/resources/META-INF/resources
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
+ifdef::use-messaging[]
 cd event-statistics
 ./gradlew clean build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -x test
 cd ..
+endif::use-messaging[]
 ----
 --
 endif::use-gradle[]
@@ -397,9 +408,11 @@ cd ..
 cd rest-fights
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-fight .
 cd ..
+ifdef::use-messaging[]
 cd event-statistics
 docker build -f src/main/docker/Dockerfile.native -t $ORG/quarkus-workshop-stats .
 cd ..
+endif::use-messaging[]
 ----
 --
 endif::use-maven[]
@@ -418,9 +431,11 @@ cd ..
 cd rest-fights
 docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-fight .
 cd ..
+ifdef::use-messaging[]
 cd event-statistics
 docker build -f src/main/docker/Dockerfile.native-gradle -t $ORG/quarkus-workshop-stats .
 cd ..
+endif::use-messaging[]
 ----
 --
 endif::use-gradle[]
