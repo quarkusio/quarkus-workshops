@@ -8,6 +8,9 @@
     <link href="{=assetsdir}/css/font-awesome.min.css" media="screen" rel="stylesheet">
     <link href="{=assetsdir}/css/hol.css" media="screen" rel="stylesheet">
     <link href="{=assetsdir}/css/github.css" media="screen" rel="stylesheet">
+    <link href="{=assetsdir}/css/dark.css" media="screen" rel="stylesheet">
+    <!-- Not deferred: it has to set the colour scheme before the page paints. -->
+    <script src="https://quarkus.io/assets/javascript/colormode.js"></script>
     <script src="{=assetsdir}/js/jquery-3.1.1.js"></script>
     <script src="{=assetsdir}/js/bootstrap.js"></script>
     <!-- be aware that only a few languages have been included-->
@@ -53,6 +56,4 @@
         });
     </script>
 </head>
-<header>
-    <img src="{=imagesdir}/quarkus-logo.png" alt="Quarkus Logo"/>
-</header>
+{#include partials/header.html /}

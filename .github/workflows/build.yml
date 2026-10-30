@@ -173,7 +173,7 @@ jobs:
           # named after their variant, so publish the base intro diagram under stable names. 
           cd target/site/super-heroes/images
           cp 0-introduction-physical-architecture-base.png workshop-thumbnail-light.png
-          cp 0-introduction-physical-architecture-base.png workshop-thumbnail-dark.png
+          cp 0-introduction-physical-architecture-base-dark.png workshop-thumbnail-dark.png
 
       - name: Publishing directory for PR preview
         uses: actions/upload-artifact@v7

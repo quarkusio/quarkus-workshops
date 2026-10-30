@@ -1,0 +1,12 @@
+<!-- Modelled on quarkus.io's header (templates/partials/header-navigation.html there): the reverse
+     logo on a dark bar, and the same light/dark/system switcher. public/assets/js/colormode.js
+     wires up the switcher, and hol.css shows the icon for the current choice. -->
+<header class="nav-wrapper">
+    <nav class="main-nav">
+        <a class="logo-wrapper" href="https://quarkus.io/"><img src="{=imagesdir}/quarkus-logo-reverse.svg"
+                                                                 class="project-logo" title="Quarkus"
+                                                                 alt="Quarkus"/></a>
+        <span class="modeswitcher" id="theme-toggle" role="button" tabindex="0"><i class="fas fa-sun"></i><i
+            class="fas fa-moon"></i><i class="fas fa-cog"></i></span>
+    </nav>
+</header>

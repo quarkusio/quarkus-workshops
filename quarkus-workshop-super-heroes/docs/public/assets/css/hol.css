@@ -35,12 +35,38 @@ html, body {
 
     --border-radius: 10px;
 
+    /* Side gutters for the header and footer. These, and the breakpoints below, are quarkus.io's,
+       so the logo and the colour scheme toggle line up with the main site's. */
     --site-margins: 13rem;
     --toc-width: 20rem;
+    --header-height: calc(40px + 3rem);
+}
+
+@media (max-width: 1366px) {
+    html, body {
+        --site-margins: 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    html, body {
+        --site-margins: 2rem;
+    }
 }
 
 body {
-    margin: 10px;
+    margin: 0;
+}
+
+/* Asciidoctor makes room for the table of contents by padding the body, but by less than the TOC
+   is wide on narrower screens, so the TOC covered the start of the text. Pad by its real width. */
+body.toc2 {
+    padding-left: var(--toc-width);
+}
+
+/* The header runs across the top of the TOC too, so it reaches back over that padding. */
+body.toc2 > .nav-wrapper {
+    margin-left: calc(-1 * var(--toc-width));
 }
 
 p,
@@ -191,6 +217,7 @@ samp {
     background: var(--dark-blue-alt) !important;
     color: var(--white);
     position: relative;
+    margin-top: 0;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
     /* Keep the full-width band's text lined up with the (centred, max-width)
@@ -216,13 +243,14 @@ samp {
     background: #f8f8f7;
     position: fixed;
     left: 0;
-    top: 0;
+    /* Below the header, which runs across the top of it */
+    top: var(--header-height);
     border-right: 1px solid #e7e7e9;
     border-top-width: 0 !important;
     border-bottom-width: 0 !important;
     z-index: 1000;
     padding: 1.25em 1em;
-    height: 100%;
+    height: calc(100% - var(--header-height));
     overflow: auto;
     font-size: 0.95em;
 }
@@ -494,4 +522,74 @@ ul.configurator input[type="checkbox"]:focus-visible {
 ul.configurator input[type="checkbox"]:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+/* Header bar, modelled on quarkus.io's (web/includes/_header-navigation.scss there), down to the
+   gutters and logo size, so the logo and toggle sit where they do on the main site. It is dark in
+   both colour schemes, so it uses the reverse logo.
+
+   It stays put while the page scrolls, above the fixed table of contents, which starts below it. */
+.nav-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    box-sizing: border-box;
+    height: var(--header-height);
+    background-color: black;
+    padding: 0 var(--site-margins);
+}
+
+.main-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.main-nav .logo-wrapper {
+    display: flex;
+    align-items: center;
+    width: 13rem;
+    height: 40px;
+}
+
+@media (max-width: 768px) {
+    .main-nav .logo-wrapper {
+        width: 8rem;
+    }
+}
+
+.main-nav .project-logo {
+    width: 100%;
+}
+
+#theme-toggle {
+    color: var(--white);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#theme-toggle i {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    padding: 0;
+}
+
+#theme-toggle:focus-visible {
+    outline: 2px solid var(--quarkus-blue);
+    outline-offset: 4px;
+}
+
+/* One icon at a time, for the stored choice: sun for light, moon for dark, cog for system. */
+#theme-toggle i.fa-sun,
+#theme-toggle i.fa-moon,
+html[data-stored-theme="light"] #theme-toggle i.fa-cog,
+html[data-stored-theme="dark"] #theme-toggle i.fa-cog {
+    display: none;
+}
+
+html[data-stored-theme="light"] #theme-toggle i.fa-sun,
+html[data-stored-theme="dark"] #theme-toggle i.fa-moon {
+    display: inline-block;
 }

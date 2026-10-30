@@ -1,0 +1,247 @@
+/* Dark mode. colormode.js puts the dark class on <html>; everything here hangs off it.
+   The palette is quarkus.io's (web/_colormode.scss there), so the workshop matches the main site.
+   This has to load after hol.css and github.css, which it overrides. */
+
+html.dark {
+    --dark-main-background: #121212;
+    --dark-main-text: #B5B5B5;
+    --dark-heading-text: #D8D8D8;
+    --dark-link: #9BCAFA;
+    --dark-code: #F59B00;
+    --dark-sec-background: #333333;
+    --dark-card-background: #1E1E1E;
+    --dark-border: #444444;
+    --dark-toc-background: #0F0F0F;
+    /* Behind images that were drawn for a white page; see the image rules at the end. */
+    --dark-img-background: #C8C8C8;
+
+    color-scheme: dark;
+    background: var(--dark-main-background);
+}
+
+html.dark body {
+    background: var(--dark-main-background);
+    color: var(--dark-main-text);
+}
+
+html.dark p,
+html.dark li,
+html.dark dt,
+html.dark dd,
+html.dark td,
+html.dark th,
+html.dark label,
+html.dark .admonitionblock > table td.content,
+html.dark .quoteblock blockquote,
+html.dark .quoteblock .attribution {
+    color: var(--dark-main-text);
+}
+
+html.dark #toctitle,
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+html.dark .h1, html.dark .h2, html.dark .h3, html.dark .h4, html.dark .h5, html.dark .h6,
+html.dark #content > h1:first-child:not([class]) {
+    color: var(--dark-heading-text);
+}
+
+html.dark h3, html.dark h4, html.dark .h3, html.dark .h4,
+html.dark #content > h1:first-child:not([class]),
+html.dark .sect1 + .sect1,
+html.dark hr {
+    border-color: var(--dark-border);
+}
+
+html.dark #content h1 > a.link, html.dark h2 > a.link, html.dark h3 > a.link,
+html.dark h4 > a.link, html.dark h5 > a.link, html.dark h6 > a.link {
+    color: var(--dark-heading-text);
+}
+
+html.dark a,
+html.dark a:visited {
+    color: var(--dark-link);
+}
+
+html.dark a:hover,
+html.dark a:focus {
+    color: #CC0000;
+}
+
+/* Block titles: asciidoctor's dark red is unreadable on a dark background. */
+html.dark .subheader,
+html.dark .admonitionblock td.content > .title,
+html.dark .exampleblock > .title,
+html.dark .imageblock > .title,
+html.dark .listingblock > .title,
+html.dark .literalblock > .title,
+html.dark .openblock > .title,
+html.dark .paragraph > .title,
+html.dark .quoteblock > .title,
+html.dark table.tableblock > .title,
+html.dark .dlist > .title,
+html.dark .olist > .title,
+html.dark .ulist > .title,
+html.dark .sidebarblock > .content > .title {
+    color: var(--dark-heading-text);
+}
+
+/* Table of contents. It sits inside #content, so this has to outrank asciidoctor's #content #toc. */
+html.dark #toc,
+html.dark #content #toc {
+    background: var(--dark-toc-background);
+    border-color: var(--dark-border) !important;
+}
+
+/* Code */
+html.dark code {
+    color: var(--dark-code);
+}
+
+html.dark :not(pre):not([class^=L]) > code {
+    background: var(--dark-sec-background);
+}
+
+html.dark pre,
+html.dark .literalblock pre,
+html.dark .listingblock > .content > pre,
+html.dark .listingblock > .content > pre:not(.highlight),
+html.dark .listingblock > .content > pre[class=highlight],
+html.dark .listingblock > .content > pre[class^="highlight "],
+html.dark .hljs {
+    background: var(--dark-card-background);
+    color: var(--dark-main-text);
+    border-color: var(--dark-border);
+}
+
+html.dark pre code {
+    color: var(--dark-main-text);
+}
+
+html.dark kbd {
+    color: var(--dark-main-text);
+    background: var(--dark-sec-background);
+    border-color: var(--dark-border);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .2), inset 0 0 0 .1em var(--dark-card-background);
+}
+
+/* Syntax highlighting, as on quarkus.io */
+html.dark .hljs-keyword, html.dark .hljs-subst { color: #CC99CD; }
+html.dark .hljs-built_in, html.dark .hljs-selector-tag, html.dark .hljs-section,
+html.dark .hljs-link, html.dark .hljs-function, html.dark .hljs-params { color: #6A9FB5 !important; }
+html.dark .hljs-title, html.dark .hljs-attr { color: #D28445 !important; }
+html.dark .hljs-string, html.dark .hljs-meta, html.dark .hljs-name, html.dark .hljs-type,
+html.dark .hljs-symbol, html.dark .hljs-bullet, html.dark .hljs-addition, html.dark .hljs-variable,
+html.dark .hljs-template-tag, html.dark .hljs-template-variable { color: #90A959 !important; }
+html.dark .hljs-comment, html.dark .hljs-quote, html.dark .hljs-deletion { color: #75B5AA !important; }
+html.dark .hljs-literal, html.dark .hljs-number { color: #D28445 !important; }
+
+html.dark .clipboard:hover,
+html.dark .clipboard:focus,
+html.dark .clipboard:active {
+    background-color: var(--dark-sec-background);
+}
+
+html.dark .conum[data-value] {
+    background: var(--dark-main-text);
+}
+
+html.dark .conum[data-value],
+html.dark .conum[data-value] * {
+    color: var(--dark-main-background) !important;
+}
+
+/* Blocks */
+html.dark .exampleblock > .content,
+html.dark .cta > .content {
+    background: var(--dark-main-background);
+    border-color: var(--dark-border);
+    box-shadow: none;
+}
+
+html.dark .sidebarblock {
+    background: var(--dark-card-background);
+    border-color: var(--dark-border);
+}
+
+html.dark .admonitionblock > table td.content,
+html.dark blockquote,
+html.dark .quoteblock.excerpt > blockquote,
+html.dark .quoteblock .quoteblock {
+    border-color: var(--dark-border);
+}
+
+html.dark .admonitionblock td.icon .icon-note::before { color: var(--dark-link); }
+html.dark .admonitionblock td.icon .icon-tip::before { color: #F0CA4D; text-shadow: none; }
+
+html.dark mark {
+    background: #F0CA4D;
+    color: #121212;
+}
+
+/* Tables */
+html.dark table,
+html.dark table.tableblock,
+html.dark th.tableblock,
+html.dark td.tableblock {
+    background: var(--dark-main-background);
+    border-color: var(--dark-border);
+}
+
+html.dark table thead,
+html.dark table tfoot,
+html.dark tbody tr th {
+    background: var(--dark-sec-background);
+}
+
+html.dark table tr.even,
+html.dark table tr.alt,
+html.dark table.stripes-all > * > tr,
+html.dark table.stripes-odd > * > tr:nth-of-type(odd),
+html.dark table.stripes-even > * > tr:nth-of-type(even),
+html.dark table.stripes-hover > * > tr:hover {
+    background: var(--dark-card-background);
+}
+
+/* Maven/Gradle tabs (templates/partials/docinfo-footer.html) */
+html.dark .buildtool-tabs .tab-bar button {
+    background: var(--dark-sec-background);
+    border-color: var(--dark-border);
+    color: var(--dark-main-text);
+}
+
+html.dark .buildtool-tabs .tab-bar button.active {
+    background: #4695EB;
+    border-color: #4695EB;
+    color: white;
+}
+
+html.dark .buildtool-tabs .tab-panel {
+    border-color: var(--dark-border);
+}
+
+/* Configurator page */
+html.dark .right,
+html.dark .content-area .right {
+    border-color: var(--dark-border);
+}
+
+/* Images.
+   Diagrams, and images that have an x-dark.png beside them, come in a light and a dark copy
+   (src/main/resources/asciidoctor/dark-mode.rb), and only the one for the current scheme is shown. */
+html:not(.dark) .dark-only,
+html.dark .light-only {
+    display: none;
+}
+
+/* Salt file trees are black on white and PlantUML will not recolour them, so invert them instead.
+   These numbers map white to the dark background (#121212) and black to the dark text (#B5B5B5). */
+html.dark .invert-in-dark img {
+    filter: invert(.91) brightness(.78);
+}
+
+/* Everything else was drawn for a white page. Screenshots are opaque and don't care, but the
+   transparent images without a dark copy lose their dark lines and text, so give them a light
+   backing, as quarkus.io does for its guides. */
+html.dark .imageblock:not(.dark-only):not(.invert-in-dark) img {
+    background-color: var(--dark-img-background);
+    padding: .25rem;
+}
