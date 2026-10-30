@@ -9,15 +9,25 @@
     <meta name="keywords" content="Quarkus, Workshop, Microservice, Kafka">
     <meta name="description" content="A hands on lab about Quarkus">
 
-    <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
-    <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
-    <link href="assets/css/hol.css" media="screen" rel="stylesheet">
-    <style>
-        .select-controls {
-            font-size: 0.9em;
-            margin-bottom: 0.5em;
-        }
-    </style>
+        <link href="assets/css/bootstrap.css" media="screen" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" media="screen" rel="stylesheet">
+        <link href="assets/css/hol.css" media="screen" rel="stylesheet">
+        <link href="assets/css/dark.css" media="screen" rel="stylesheet">
+        <!-- Not deferred: it has to set the colour scheme before the page paints. -->
+        <script src="https://quarkus.io/assets/javascript/colormode.js"></script>
+        <style>
+            .select-controls {
+                font-size: 0.9em;
+                margin-bottom: 0.5em;
+            }
+
+            /* The configurator's band is its page title, so it gets more room than a chapter's */
+            .title-band {
+                padding-top: 2.5rem;
+                padding-bottom: 2.5rem;
+            }
+        </style>
+    </head>
     <title>Workshop configurator</title>
     <script>
         // Inlined at build time from data/variants.json, which roq-data exposes as a JsonObject
@@ -239,6 +249,7 @@
     </script>
 </head>
 <body>
+{#include partials/header.html /}
 <h2 class="title-band">Quarkus Workshop Configurator</h2>
 
 <div class="configurator">
