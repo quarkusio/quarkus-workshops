@@ -248,7 +248,7 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
             <plugin>
                 <groupId>io.smallrye</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <id>make-index</id>
