@@ -41,7 +41,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 
 cURL is a command-line utility where you can use several parameters and options to invoke URLs.
 You invoke `curl` with zero, one, or several command-line options to accompany the URL (or set of URLs) you want the transfer to be about.
-cURL supports over two hundred different options, and I would recommend reading the documentation for more help.footnote:[cURL commands https://ec.haxx.se/cmdline.html]
+cURL supports over two hundred different options, and I would recommend reading the documentation for more help.footnote:[cURL commands https://everything.curl.dev/cmdline/]
 To get some help on the commands and options, you can type, use the following command:
 
 [source,shell]
