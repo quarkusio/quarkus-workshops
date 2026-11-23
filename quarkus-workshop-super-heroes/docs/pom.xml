@@ -73,7 +73,7 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
              site and so have to run after quarkus:run has produced it. Skipping them by default
              would mean `mvn verify` silently tests nothing. -->
         <skipITs>false</skipITs>
-        <roq.version>2.2.0</roq.version>
+        <roq.version>2.2.1</roq.version>
     </properties>
 
     <dependencyManagement>
