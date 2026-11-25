@@ -394,7 +394,7 @@ the assembled site in CI does; AssemblySmokeIT then checks them all instead of j
             <plugin>
                 <groupId>dev.jbang</groupId>
                 <artifactId>jbang-maven-plugin</artifactId>
-                <version>0.0.7</version>
+                <version>0.0.8</version>
                 <executions>
                     <execution>
                         <id>generate-variant-structure</id>
